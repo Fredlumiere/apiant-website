@@ -702,7 +702,6 @@
                 <a href="#Benefits" class="nav-link w-nav-link">Benefits</a>
                 <a href="#Reviews" class="nav-link w-nav-link">Reviews</a>
                 <a href="#Features" class="nav-link w-nav-link">Features</a>
-                <a href="#Pricing" class="nav-link w-nav-link">Pricing</a>
                 <a href="#Faq" class="nav-link w-nav-link">FAQ</a>
               </div>
             </nav>
@@ -1295,7 +1294,6 @@
       <div id="demomaker-embed" style="width:100%; min-height:500px; margin: 32px 0;"></div>
       <div class="demo-transition fade-in-on-scroll">
         <p>Seen enough? Here's what it costs.</p>
-        <a href="#Pricing" class="btn-primary">View Pricing &darr;</a>
       </div>
     </div>
   </div>
@@ -1307,7 +1305,7 @@
       </div>
     </div>
   </div>
-  <div id="Pricing" class="section">
+  <div id="Pricing" class="section" style="display:none;">
     <div class="container">
       <div class="features-wrapper">
         <div class="center-text">
@@ -1895,7 +1893,6 @@
         <p>Join hundreds of wellness businesses already using CRMConnect.</p>
         <div class="dual-cta">
           <a href="#Demo" class="btn-primary">See It In Action &rarr;</a>
-          <a href="#Pricing" class="btn-secondary">View Pricing</a>
         </div>
       </div>
     </div>
@@ -2916,6 +2913,21 @@
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') closeLightbox();
       });
+    })();
+  </script>
+  <script>
+    /* Reveal pricing when demo transition comes into view */
+    (function() {
+      var pricing = document.getElementById('Pricing');
+      var trigger = document.querySelector('.demo-transition');
+      if (!pricing || !trigger) return;
+      var observer = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          pricing.style.display = '';
+          observer.disconnect();
+        }
+      }, { threshold: 0.5 });
+      observer.observe(trigger);
     })();
   </script>
 </body>
