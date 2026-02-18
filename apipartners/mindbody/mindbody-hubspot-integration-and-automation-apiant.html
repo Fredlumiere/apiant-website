@@ -314,6 +314,57 @@
         border-radius: 12px;
         border: 2px solid var(--_white-mode---accent-color);
         box-shadow: 0 4px 20px rgba(31,64,105,0.1);
+        cursor: pointer;
+        transition: box-shadow 0.2s ease;
+      }
+      .feature-row-image img:hover {
+        box-shadow: 0 6px 28px rgba(31,64,105,0.2);
+      }
+
+      /* Lightbox */
+      .lightbox-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(0,0,0,0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+        pointer-events: none;
+        transition: background 0.35s ease;
+      }
+      .lightbox-overlay.active {
+        background: rgba(0,0,0,0.85);
+        pointer-events: auto;
+      }
+      .lightbox-overlay img {
+        max-width: 90vw;
+        max-height: 90vh;
+        border-radius: 8px;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+        transform: scale(0.4);
+        opacity: 0;
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+      }
+      .lightbox-overlay.active img {
+        transform: scale(1);
+        opacity: 1;
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 28px;
+        font-size: 36px;
+        color: #fff;
+        cursor: pointer;
+        line-height: 1;
+        font-weight: 300;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.15s;
+      }
+      .lightbox-overlay.active .lightbox-close {
+        opacity: 1;
       }
       .feature-row-text {
         flex: 1;
@@ -486,6 +537,44 @@
       .mid-section-cta {
         text-align: center;
         padding: 40px 0;
+      }
+
+      /* ===== Scrolling logo marquee ===== */
+      @keyframes scrollLogos {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .company-logo-holder.customer-logos-holder {
+        opacity: 1;
+      }
+      .logo-scroll-track {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: max-content;
+        animation: scrollLogos 35s linear infinite;
+        will-change: transform;
+      }
+      .logo-scroll-track:hover {
+        animation-play-state: paused;
+      }
+      .company-logo-holder.customer-logos-holder .company-logo-container {
+        gap: 60px;
+        padding-right: 60px;
+        align-items: center;
+      }
+      .company-logo-holder.customer-logos-holder .company-logo.customer-logo {
+        max-height: 50px;
+        opacity: 0.55;
+        filter: grayscale(100%);
+        transition: opacity 0.3s, filter 0.3s;
+      }
+      .company-logo-holder.customer-logos-holder .company-logo.customer-logo:hover {
+        opacity: 1;
+        filter: grayscale(0%);
+      }
+      .parnter-fade-holder .parnter-fade {
+        z-index: 2;
       }
 
       /* Responsive */
@@ -670,6 +759,7 @@
             </div>
             <div class="fade-in-on-scroll">
               <div class="company-logo-holder customer-logos-holder">
+                <div class="logo-scroll-track">
                 <div class="company-logo-container">
                   <div class="company-logo-wrapper"><img src="../../images/64971b64b2594a61d1e60579_ds-logo-white.png" loading="lazy" alt="" class="company-logo customer-logo"></div>
                   <div class="company-logo-wrapper"><img src="../../images/64971b64b2594a61d1e60565_UCRYO.png" loading="lazy" alt="" class="company-logo customer-logo"></div>
@@ -701,6 +791,7 @@
                   <div class="company-logo-wrapper"><img src="../../images/Court16.avif" loading="lazy" alt="" sizes="100vw" srcset="../../images/Court16-p-500.png 500w, ../../images/Court16-p-800.png 800w, ../../images/Court16-p-1080.png 1080w, ../../images/Court16.avif 1500w" class="company-logo customer-logo"></div>
                   <div class="company-logo-wrapper"><img src="../../images/Beauty-Fix.avif" loading="lazy" alt="" class="company-logo customer-logo"></div>
                   <div class="company-logo-wrapper"><img src="../../images/wellway.svg" loading="lazy" alt="" class="company-logo customer-logo"></div>
+                </div>
                 </div>
               </div>
             </div>
@@ -2773,5 +2864,36 @@
         }
       });
     </script>
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img src="" alt="">
+  </div>
+  <script>
+    (function() {
+      var overlay = document.getElementById('lightbox');
+      var lbImg = overlay.querySelector('img');
+      function openLightbox(src, alt) {
+        lbImg.src = src;
+        lbImg.alt = alt;
+        requestAnimationFrame(function() {
+          overlay.classList.add('active');
+        });
+      }
+      function closeLightbox() {
+        overlay.classList.remove('active');
+        setTimeout(function() { lbImg.src = ''; }, 400);
+      }
+      document.querySelectorAll('.feature-row-image img').forEach(function(img) {
+        img.addEventListener('click', function() {
+          openLightbox(this.src, this.alt);
+        });
+      });
+      overlay.addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+  </script>
 </body>
 </html>
