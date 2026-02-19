@@ -483,6 +483,65 @@
       .fit-diagram { flex-direction: column; }
       .fit-arrow { transform: rotate(90deg); }
     }
+
+    /* ── Automation Editor Illustration ── */
+    .ae-illustration { max-width: 1000px; margin: 0 auto 80px; padding: 0 24px; }
+    .ae-frame {
+      background: #0c0c15; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+      overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,0.55), 0 0 100px rgba(16,185,129,0.05);
+      transition: box-shadow 0.4s, transform 0.4s;
+    }
+    .ae-frame:hover { box-shadow: 0 30px 90px rgba(0,0,0,0.65), 0 0 120px rgba(16,185,129,0.08); transform: translateY(-3px); }
+    .ae-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #111120; border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0 16px; height: 32px; font-size: 10px; color: rgba(255,255,255,0.3); font-family: 'Inter', sans-serif;
+    }
+    .ae-topbar-left { display: flex; align-items: center; gap: 6px; }
+    .ae-topbar-left img, .ae-topbar-logo { height: 14px; opacity: 0.5; margin-right: 8px; }
+    .ae-topbar-link { padding: 4px 10px; }
+    .ae-topbar-link.active { color: rgba(255,255,255,0.7); }
+    .ae-namebar {
+      display: flex; align-items: center; gap: 12px; padding: 6px 16px;
+      background: rgba(16,185,129,0.04); border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 10px; font-family: 'Inter', sans-serif; color: rgba(255,255,255,0.4);
+    }
+    .ae-namebar strong { color: rgba(255,255,255,0.7); font-weight: 600; }
+    .ae-namebar .ae-btn { padding: 3px 14px; border-radius: 4px; font-size: 9px; font-weight: 600; }
+    .ae-namebar .ae-btn-save { background: #059669; color: #fff; }
+    .ae-namebar .ae-btn-cancel { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+    .ae-canvas { position: relative; }
+    .ae-canvas svg { width: 100%; height: auto; display: block; }
+    .ae-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 16px; border-top: 1px solid rgba(255,255,255,0.04);
+      background: #0e0e18; font-size: 9px; color: rgba(255,255,255,0.25); font-family: 'Inter', sans-serif;
+    }
+    .ae-zoom { display: flex; align-items: center; gap: 8px; }
+    @keyframes aeFlowPulse { 0%,100%{opacity:0.7} 50%{opacity:0.3} }
+    .ae-conn-dot { animation: aeFlowPulse 2.5s ease-in-out infinite; }
+
+    /* ── Compact Screenshot Mockups ── */
+    .ss-mockup {
+      background: #0c0c15; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;
+      overflow: hidden; padding: 0; margin: 32px 0;
+    }
+    .ss-mockup-sm {
+      background: #0c0c15; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;
+      overflow: hidden; padding: 0;
+    }
+    .ss-bar {
+      padding: 6px 12px; background: #111120; border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 8px; color: rgba(255,255,255,0.3); font-family: 'Inter', sans-serif;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .ss-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .ss-dot-r { background: #ef4444; } .ss-dot-y { background: #eab308; } .ss-dot-g { background: #22c55e; }
+    .ss-body { padding: 16px; }
+    .ss-body svg { width: 100%; height: auto; display: block; }
+    @media (max-width: 768px) {
+      .ae-topbar-link:not(.active) { display: none; }
+    }
   </style>
 </head>
 <body class="body-dark">
@@ -494,8 +553,28 @@
         <div class="nav-menu-holder">
           <nav role="navigation" class="nav-menu w-nav-menu">
             <div class="navlinks-holder">
-              <a href="../index.html#api-apps" class="nav-link white-text w-nav-link">API Apps</a>
-              <a href="../index.html#who-is-apiant-for" class="nav-link white-text w-nav-link">Who is APIANT For?</a>
+              <!-- Solutions Dropdown -->
+              <div data-delay="0" data-hover="false" class="_w-dropdown w-dropdown">
+                <div class="ease-dropdown-toggle w-dropdown-toggle">
+                  <div class="ease-dropdown-title-text">Solutions</div><img loading="lazy" src="../images/Dropdown-Icon.svg" alt="Drop Down Icon" class="ease-drop-down-icon">
+                </div>
+                <nav class="ease-dropdown-list w-dropdown-list">
+                  <div class="ease-dropdown-03-holder">
+                    <div class="ease-dropdown-01-container">
+                      <div class="drop-down-wrapper">
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../for-saas.html" class="ease-dropdown-link ease-large w-dropdown-link">For SaaS Companies</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../for-si.html" class="ease-dropdown-link ease-large w-dropdown-link">For System Integrators</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../for-enterprises.html" class="ease-dropdown-link ease-large w-dropdown-link">For Enterprises</a></div></div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.08); margin: 8px 0;"></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../apipartners/mindbody-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">Mindbody Integrations</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../apipartners/cliniko-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">Cliniko Integrations</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../apipartners/donorperfect-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">DonorPerfect Integrations</a></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+              <!-- Platform Dropdown -->
               <div data-delay="0" data-hover="false" class="_w-dropdown w-dropdown">
                 <div class="ease-dropdown-toggle w-dropdown-toggle">
                   <div class="ease-dropdown-title-text">Platform</div><img loading="lazy" src="../images/Dropdown-Icon.svg" alt="Drop Down Icon" class="ease-drop-down-icon">
@@ -504,23 +583,29 @@
                   <div class="ease-dropdown-03-holder">
                     <div class="ease-dropdown-01-container">
                       <div class="drop-down-wrapper">
-                        <div class="line-bot _01">
-                          <div class="ease-drop-down-larg-icon">
-                            <div class="ease-dropdown-list-holder">
-                              <a href="assembly-editor.html" class="ease-dropdown-link ease-large w-dropdown-link">Assembly Editor + AI Co-Pilot</a>
-                            </div>
-                          </div>
-                          <div class="ease-drop-down-larg-icon">
-                            <div class="ease-dropdown-list-holder">
-                              <a href="automation-editor.html" class="ease-dropdown-link ease-large w-dropdown-link">Automation Editor</a>
-                            </div>
-                          </div>
-                          <div class="ease-drop-down-larg-icon">
-                            <div class="ease-dropdown-list-holder">
-                              <a href="admin-console.html" class="ease-dropdown-link ease-large w-dropdown-link">Admin Console</a>
-                            </div>
-                          </div>
-                        </div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="index.html" class="ease-dropdown-link ease-large w-dropdown-link">The APIANT Platform</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="automation-editor.html" class="ease-dropdown-link ease-large w-dropdown-link">Automation Editor</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="assembly-editor.html" class="ease-dropdown-link ease-large w-dropdown-link">Assembly Editor + AI Co-Pilot</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="admin-console.html" class="ease-dropdown-link ease-large w-dropdown-link">Admin Console</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../ai.html" class="ease-dropdown-link ease-large w-dropdown-link">AI Capabilities</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../formapps.html" class="ease-dropdown-link ease-large w-dropdown-link">FormApps</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="../mcp-servers.html" class="ease-dropdown-link ease-large w-dropdown-link">MCP Servers</a></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+              <!-- Resources Dropdown -->
+              <div data-delay="0" data-hover="false" class="_w-dropdown w-dropdown">
+                <div class="ease-dropdown-toggle w-dropdown-toggle">
+                  <div class="ease-dropdown-title-text">Resources</div><img loading="lazy" src="../images/Dropdown-Icon.svg" alt="Drop Down Icon" class="ease-drop-down-icon">
+                </div>
+                <nav class="ease-dropdown-list w-dropdown-list">
+                  <div class="ease-dropdown-03-holder">
+                    <div class="ease-dropdown-01-container">
+                      <div class="drop-down-wrapper">
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="https://info.apiant.com" class="ease-dropdown-link ease-large w-dropdown-link">Documentation</a></div></div>
+                        <div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a href="https://forum.apiant.com" class="ease-dropdown-link ease-large w-dropdown-link">Community Forum</a></div></div>
                       </div>
                     </div>
                   </div>
@@ -557,12 +642,100 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════ DEMO PLACEHOLDER ══════════════════════════════ -->
-  <div class="demo-placeholder">
-    <div class="demo-placeholder-inner">
-      <div class="play-icon"></div>
-      <div class="demo-label">Screen Recording: Building a Multi-Step Automation with Branching</div>
-      <div class="demo-sublabel">From ingredient selection to deployed production automation -- coming soon</div>
+  <!-- ══════════════════════════════ AUTOMATION EDITOR VISUAL ══════════════════════════════ -->
+  <div class="ae-illustration">
+    <div class="ae-frame">
+      <div class="ae-topbar">
+        <div class="ae-topbar-left">
+          <span style="font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;">APIANT</span>
+          <span class="ae-topbar-link active">Editor</span>
+          <span class="ae-topbar-link">Subroutines</span>
+          <span class="ae-topbar-link">Connections</span>
+          <span class="ae-topbar-link">Dashboard</span>
+          <span class="ae-topbar-link">Assembly Editor</span>
+        </div>
+        <span style="color:rgba(255,255,255,0.2)">CRMConnect Mindbody HubSpot</span>
+      </div>
+      <div class="ae-namebar">
+        <strong>Automation #4147</strong>
+        <span>03 - Mindbody appointments &rarr; HubSpot deals v3.7</span>
+        <span style="flex:1"></span>
+        <span class="ae-btn ae-btn-save">Save</span>
+        <span class="ae-btn ae-btn-cancel">Cancel</span>
+      </div>
+      <div class="ae-canvas">
+        <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <pattern id="aegrid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/>
+            </pattern>
+            <filter id="aeDotGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="700" height="440" fill="url(#aegrid)"/>
+          <!-- Connection lines -->
+          <line x1="350" y1="38" x2="350" y2="55" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="350" y1="95" x2="200" y2="120" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="350" y1="95" x2="500" y2="120" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="500" y1="120" x2="500" y2="145" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="500" y1="175" x2="500" y2="195" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="500" y1="235" x2="380" y2="260" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="500" y1="235" x2="620" y2="260" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="620" y1="260" x2="620" y2="280" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="620" y1="310" x2="620" y2="330" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="620" y1="360" x2="620" y2="380" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="200" y1="120" x2="200" y2="280" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="380" y1="260" x2="380" y2="340" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="4,4"/>
+          <!-- Connection dots -->
+          <circle cx="350" cy="38" r="4" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)"/>
+          <circle cx="350" cy="95" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:0.3s"/>
+          <circle cx="500" cy="175" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:0.6s"/>
+          <circle cx="500" cy="235" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:0.9s"/>
+          <circle cx="620" cy="310" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:1.2s"/>
+          <circle cx="620" cy="360" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:1.5s"/>
+          <!-- CONDITION 1: Custom Objects Client Services -->
+          <rect x="320" y="55" width="60" height="40" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 350 75)"/>
+          <text x="328" y="72" font-size="6" fill="#ef4444" font-family="Inter,sans-serif" font-weight="600">False</text>
+          <text x="362" y="72" font-size="6" fill="#22c55e" font-family="Inter,sans-serif" font-weight="600">True</text>
+          <text x="310" y="78" font-size="7" fill="rgba(255,255,255,0.25)" font-family="Inter,sans-serif" text-anchor="middle">Condition</text>
+          <text x="350" y="108" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Custom Objects Client Services</text>
+          <!-- ACTION: Get client visits (Mindbody) -->
+          <circle cx="500" cy="160" r="18" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
+          <text x="500" y="164" font-size="12" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">M</text>
+          <text x="500" y="188" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Get client visits</text>
+          <!-- CONDITION 2: Found Appointment ID -->
+          <rect x="470" y="195" width="60" height="40" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 500 215)"/>
+          <text x="478" y="212" font-size="6" fill="#ef4444" font-family="Inter,sans-serif" font-weight="600">False</text>
+          <text x="512" y="212" font-size="6" fill="#22c55e" font-family="Inter,sans-serif" font-weight="600">True</text>
+          <text x="500" y="248" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Found Appointment ID</text>
+          <!-- ACTION: Get client purchased service -->
+          <circle cx="620" cy="295" r="18" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
+          <text x="620" y="299" font-size="12" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">M</text>
+          <text x="620" y="320" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Get purchased service by ID</text>
+          <!-- ACTION: Convert MBO Date (clock icon) -->
+          <circle cx="620" cy="345" r="14" fill="#1e293b" stroke="rgba(245,158,11,0.3)"/>
+          <text x="620" y="349" font-size="10" fill="#f59e0b" font-family="Inter,sans-serif" text-anchor="middle">&#9201;</text>
+          <text x="620" y="370" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Convert MBO Date to HubSpot</text>
+          <!-- ACTION: Get HubSpot field (Eq icon) -->
+          <rect x="605" y="385" width="30" height="24" rx="5" fill="#1e293b" stroke="rgba(59,130,246,0.3)"/>
+          <text x="620" y="401" font-size="9" fill="#3b82f6" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">Eq</text>
+          <text x="620" y="420" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Get HubSpot_client_service_id</text>
+          <!-- HubSpot action node (bottom right) -->
+          <circle cx="500" cy="400" r="16" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
+          <text x="500" y="404" font-size="9" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">&#9850;</text>
+          <line x1="500" y1="235" x2="500" y2="384" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+          <text x="500" y="425" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" text-anchor="middle">Update custom object</text>
+          <!-- Iterator node -->
+          <circle cx="350" cy="28" r="10" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
+          <text x="350" y="32" font-size="7" fill="rgba(255,255,255,0.4)" font-family="Inter,sans-serif" text-anchor="middle">&#8634;</text>
+          <text x="350" y="14" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" text-anchor="middle">Array Iterator</text>
+        </svg>
+      </div>
+      <div class="ae-footer">
+        <div class="ae-zoom"><span>+</span> <span>25%</span> <span>&minus;</span></div>
+        <span>123 of 150 actions</span>
+      </div>
     </div>
   </div>
 
@@ -580,8 +753,61 @@
         "The same automation that serves a single-location yoga studio also serves a 228-location franchise. The logic is identical. The settings are different."
       </div>
 
-      <div class="screenshot-placeholder">
-        <div class="placeholder-label">Screenshot: Automation Editor canvas showing a multi-step MindBody-to-CRM workflow with conditional branching</div>
+      <div class="ss-mockup">
+        <div class="ss-bar"><span class="ss-dot ss-dot-r"></span><span class="ss-dot ss-dot-y"></span><span class="ss-dot ss-dot-g"></span>&nbsp; Automation Editor &mdash; MindBody &rarr; HubSpot CRM Sync</div>
+        <div class="ss-body">
+          <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="aegrid2" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/></pattern>
+            </defs>
+            <rect width="800" height="320" fill="url(#aegrid2)"/>
+            <!-- Trigger node -->
+            <rect x="340" y="10" width="120" height="30" rx="4" fill="#1e293b" stroke="rgba(16,185,129,0.3)"/>
+            <text x="400" y="29" font-size="8" fill="#34d399" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">New Booking Trigger</text>
+            <line x1="400" y1="40" x2="400" y2="55" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+            <!-- Iterator -->
+            <circle cx="400" cy="65" r="12" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
+            <text x="400" y="69" font-size="8" fill="rgba(255,255,255,0.4)" font-family="Inter,sans-serif" text-anchor="middle">&#8634;</text>
+            <line x1="400" y1="77" x2="400" y2="92" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+            <!-- Condition 1: Custom Objects -->
+            <rect x="375" y="92" width="50" height="36" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 400 110)"/>
+            <text x="400" y="114" font-size="6.5" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Custom Obj?</text>
+            <!-- False branch (left) -->
+            <line x1="375" y1="110" x2="200" y2="140" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
+            <text x="280" y="118" font-size="6" fill="#ef4444" font-family="Inter,sans-serif">False</text>
+            <!-- True branch (right) -->
+            <line x1="425" y1="110" x2="600" y2="140" stroke="#22c55e" stroke-width="1" opacity="0.4"/>
+            <text x="510" y="118" font-size="6" fill="#22c55e" font-family="Inter,sans-serif">True</text>
+            <!-- Left branch: Flat field update -->
+            <rect x="130" y="140" width="140" height="28" rx="4" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
+            <text x="200" y="158" font-size="7" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle">HubSpot: Update Contact</text>
+            <line x1="200" y1="168" x2="200" y2="185" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            <rect x="140" y="185" width="120" height="24" rx="4" fill="#1e293b" stroke="rgba(59,130,246,0.3)"/>
+            <text x="200" y="201" font-size="7" fill="#3b82f6" font-family="Inter,sans-serif" text-anchor="middle">Log Sync Result</text>
+            <!-- Right branch: Custom object path -->
+            <circle cx="600" cy="155" r="16" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
+            <text x="600" y="159" font-size="10" fill="rgba(255,255,255,0.4)" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">M</text>
+            <text x="600" y="180" font-size="6.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" text-anchor="middle">Get Client Visits</text>
+            <line x1="600" y1="171" x2="600" y2="192" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+            <!-- Condition 2: Found Appointment -->
+            <rect x="575" y="192" width="50" height="36" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 600 210)"/>
+            <text x="600" y="214" font-size="6.5" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Found ID?</text>
+            <line x1="575" y1="210" x2="480" y2="245" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
+            <text x="520" y="222" font-size="6" fill="#ef4444" font-family="Inter,sans-serif">False</text>
+            <line x1="625" y1="210" x2="700" y2="245" stroke="#22c55e" stroke-width="1" opacity="0.4"/>
+            <text x="660" y="222" font-size="6" fill="#22c55e" font-family="Inter,sans-serif">True</text>
+            <!-- Right-True: Continue processing -->
+            <circle cx="700" cy="258" r="14" fill="#1e293b" stroke="rgba(245,158,11,0.3)"/>
+            <text x="700" y="262" font-size="9" fill="#f59e0b" font-family="Inter,sans-serif" text-anchor="middle">&#9201;</text>
+            <text x="700" y="280" font-size="6" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" text-anchor="middle">Convert Date</text>
+            <line x1="700" y1="272" x2="700" y2="290" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            <rect x="650" y="290" width="100" height="24" rx="4" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
+            <text x="700" y="306" font-size="7" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle">Update Custom Obj</text>
+            <!-- Right-False: Skip -->
+            <rect x="430" y="245" width="100" height="24" rx="4" fill="#1e293b" stroke="rgba(59,130,246,0.3)"/>
+            <text x="480" y="261" font-size="7" fill="#3b82f6" font-family="Inter,sans-serif" text-anchor="middle">Skip &amp; Log</text>
+          </svg>
+        </div>
       </div>
     </div>
   </section>
@@ -660,8 +886,72 @@
         <strong style="color:#fff;">Concrete example:</strong> A CRM integration supports custom objects for class bookings. Some customers want custom objects, some don't. In the settings, there is a checkbox: "Custom object appointments: Yes/No." The automation logic branches based on that setting -- branch left for custom objects, branch right for flat field updates. Same codebase handles both. When a franchise adds five new locations, those locations inherit the master settings but can be individually configured.
       </div>
 
-      <div class="screenshot-placeholder">
-        <div class="placeholder-label">Screenshot: Settings panel alongside automation logic -- showing per-customer configuration controlling branching behavior</div>
+      <div class="ss-mockup">
+        <div class="ss-bar"><span class="ss-dot ss-dot-r"></span><span class="ss-dot ss-dot-y"></span><span class="ss-dot ss-dot-g"></span>&nbsp; Settings &amp; Logic &mdash; Per-Customer Configuration</div>
+        <div class="ss-body" style="display:flex;gap:16px;">
+          <!-- Settings panel side -->
+          <div style="flex:0 0 38%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:14px;">
+            <div style="font-size:9px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;font-family:Inter,sans-serif;">Customer Settings</div>
+            <!-- Setting rows -->
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
+              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Custom object appointments</span>
+              <span style="background:#059669;color:#fff;font-size:7px;padding:2px 8px;border-radius:3px;font-weight:600;">YES</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
+              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Timezone</span>
+              <span style="font-size:8px;color:rgba(255,255,255,0.35);">America/Chicago</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
+              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Multi-location tracking</span>
+              <span style="background:#059669;color:#fff;font-size:7px;padding:2px 8px;border-radius:3px;font-weight:600;">YES</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
+              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Sync memberships</span>
+              <span style="background:rgba(239,68,68,0.2);color:#ef4444;font-size:7px;padding:2px 8px;border-radius:3px;font-weight:600;">NO</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
+              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Snowbird support</span>
+              <span style="background:#059669;color:#fff;font-size:7px;padding:2px 8px;border-radius:3px;font-weight:600;">YES</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-family:Inter,sans-serif;">
+              <span style="font-size:8px;color:rgba(255,255,255,0.5);">HubSpot pipeline ID</span>
+              <span style="font-size:8px;color:rgba(255,255,255,0.35);">pipeline_82a</span>
+            </div>
+          </div>
+          <!-- Logic flow side -->
+          <div style="flex:1;">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <defs><pattern id="setgrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/></pattern></defs>
+              <rect width="300" height="200" fill="url(#setgrid)"/>
+              <!-- Settings check node -->
+              <rect x="100" y="8" width="100" height="24" rx="4" fill="#1e293b" stroke="rgba(16,185,129,0.3)"/>
+              <text x="150" y="24" font-size="7" fill="#34d399" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">Read Settings</text>
+              <line x1="150" y1="32" x2="150" y2="46" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+              <!-- Diamond: Custom Objects? -->
+              <rect x="128" y="46" width="44" height="30" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 150 61)"/>
+              <text x="150" y="65" font-size="5.5" fill="rgba(255,255,255,0.4)" font-family="Inter,sans-serif" text-anchor="middle">Custom Obj?</text>
+              <!-- Highlight connecting settings to logic -->
+              <line x1="0" y1="61" x2="128" y2="61" stroke="#34d399" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/>
+              <!-- False left -->
+              <line x1="128" y1="61" x2="50" y2="100" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
+              <text x="82" y="76" font-size="5.5" fill="#ef4444" font-family="Inter,sans-serif">False</text>
+              <rect x="10" y="100" width="80" height="20" rx="3" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
+              <text x="50" y="114" font-size="6" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle">Update Fields</text>
+              <!-- True right -->
+              <line x1="172" y1="61" x2="240" y2="100" stroke="#22c55e" stroke-width="1" opacity="0.4"/>
+              <text x="210" y="76" font-size="5.5" fill="#22c55e" font-family="Inter,sans-serif">True</text>
+              <rect x="200" y="100" width="90" height="20" rx="3" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
+              <text x="245" y="114" font-size="6" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle">Create Custom Obj</text>
+              <!-- Snowbird check -->
+              <line x1="245" y1="120" x2="245" y2="138" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <rect x="215" y="138" width="60" height="30" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.12)" transform="rotate(45 245 153)"/>
+              <text x="245" y="157" font-size="5.5" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Snowbird?</text>
+              <line x1="245" y1="168" x2="245" y2="182" stroke="#22c55e" stroke-width="1" opacity="0.3"/>
+              <rect x="205" y="182" width="80" height="16" rx="3" fill="#1e293b" stroke="rgba(59,130,246,0.3)"/>
+              <text x="245" y="193" font-size="5.5" fill="#3b82f6" font-family="Inter,sans-serif" text-anchor="middle">Multi-Loc Update</text>
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -775,7 +1065,6 @@
                 <div class="title-small">Resources</div>
                 <a href="https://forum.apiant.com" target="_blank" class="footer-link">Community</a>
                 <a href="https://info.apiant.com" target="_blank" class="footer-link">Documentation</a>
-                <a href="https://blog.apiant.com" class="footer-link">Blog</a>
               </div>
             </div>
           </div>

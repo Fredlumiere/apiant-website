@@ -181,6 +181,104 @@
     @media (max-width: 480px) {
       .hp-stats-grid { grid-template-columns: 1fr !important; }
     }
+
+    /* ── Hero: static line above rotating words ── */
+    .hero-static-line {
+      color: #ffffff;
+      text-align: center;
+      font-size: 65px;
+      font-weight: bold;
+      margin: 0 0 4px 0;
+      line-height: 1.2;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── Conic shimmer angle (matches video-box border sweep) ── */
+    @property --shimmer-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    /* ── Hero rotating text: conic shimmer over green base ── */
+    .hero-text.changing-words {
+      background:
+        conic-gradient(
+          from var(--shimmer-angle) at 50% 50%,
+          transparent 0%,
+          transparent 79%,
+          rgba(255, 255, 255, 0.4) 83%,
+          transparent 87%,
+          transparent 100%
+        ),
+        linear-gradient(90deg, #1ab759, #34d399, #86efac, #34d399, #1ab759) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      text-align: center !important;
+    }
+
+    @keyframes conicSweep {
+      to { --shimmer-angle: 360deg; }
+    }
+
+    /* ── Override layout for slide + dissolve ── */
+    .div-block-5 {
+      overflow: visible !important;
+      animation: glowPulse 3s ease-in-out infinite alternate;
+    }
+
+    .div-block-4 {
+      display: block !important;
+      grid-template-columns: 1fr !important;
+      height: 78px !important;
+      position: relative !important;
+      overflow: visible !important;
+    }
+
+    .left-words {
+      position: relative !important;
+      height: 78px !important;
+      width: 100% !important;
+      animation: none !important;
+    }
+
+    /* ── Each word: slow slide-from-left + dissolve ── */
+    .left-words h1.hero-text.changing-words {
+      position: absolute !important;
+      top: 0;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      opacity: 0;
+      transform: translateX(-30px);
+      animation: conicSweep 5s linear infinite, slideInWord 15s ease-in-out infinite;
+    }
+
+    .left-words h1:nth-child(1) { animation-delay: 0s, 0s; }
+    .left-words h1:nth-child(2) { animation-delay: 0s, 5s; }
+    .left-words h1:nth-child(3) { animation-delay: 0s, 10s; }
+    .left-words h1:nth-child(4) { display: none !important; }
+
+    @keyframes slideInWord {
+      0%      { opacity: 0; transform: translateX(-30px); }
+      7%      { opacity: 1; transform: translateX(0); }
+      27%     { opacity: 1; transform: translateX(0); }
+      33.33%  { opacity: 0; transform: translateX(0); }
+      100%    { opacity: 0; transform: translateX(-30px); }
+    }
+
+    /* ── Pulsing green glow behind the text ── */
+    @keyframes glowPulse {
+      from {
+        filter: drop-shadow(0 0 20px rgba(26, 183, 89, 0.2))
+                drop-shadow(0 0 60px rgba(26, 183, 89, 0.08));
+      }
+      to {
+        filter: drop-shadow(0 0 40px rgba(26, 183, 89, 0.4))
+                drop-shadow(0 0 80px rgba(26, 183, 89, 0.15));
+      }
+    }
   </style>
 
   <!-- NAVIGATION -->
@@ -191,6 +289,52 @@
         <div class="nav-menu-holder">
           <nav role="navigation" class="nav-menu w-nav-menu">
             <div class="navlinks-holder">
+
+              <!-- Solutions Dropdown -->
+              <div data-delay="0" data-hover="false" class="_w-dropdown w-dropdown">
+                <div class="ease-dropdown-toggle w-dropdown-toggle">
+                  <div class="ease-dropdown-title-text">Solutions</div><img loading="lazy" src="images/Dropdown-Icon.svg" alt="Drop Down Icon" class="ease-drop-down-icon">
+                </div>
+                <nav class="ease-dropdown-list w-dropdown-list">
+                  <div class="ease-dropdown-03-holder">
+                    <div class="ease-dropdown-01-container">
+                      <div class="drop-down-wrapper">
+                        <div class="ease-drop-down-larg-icon">
+                          <div class="ease-dropdown-list-holder">
+                            <a href="for-saas.html" class="ease-dropdown-link ease-large w-dropdown-link">For SaaS Companies</a>
+                          </div>
+                        </div>
+                        <div class="ease-drop-down-larg-icon">
+                          <div class="ease-dropdown-list-holder">
+                            <a href="for-si.html" class="ease-dropdown-link ease-large w-dropdown-link">For System Integrators</a>
+                          </div>
+                        </div>
+                        <div class="ease-drop-down-larg-icon">
+                          <div class="ease-dropdown-list-holder">
+                            <a href="for-enterprises.html" class="ease-dropdown-link ease-large w-dropdown-link">For Enterprises</a>
+                          </div>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.08); margin: 8px 0;"></div>
+                        <div class="ease-drop-down-larg-icon">
+                          <div class="ease-dropdown-list-holder">
+                            <a href="apipartners/mindbody-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">Mindbody Integrations</a>
+                          </div>
+                        </div>
+                        <div class="ease-drop-down-larg-icon">
+                          <div class="ease-dropdown-list-holder">
+                            <a href="apipartners/cliniko-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">Cliniko Integrations</a>
+                          </div>
+                        </div>
+                        <div class="ease-drop-down-larg-icon">
+                          <div class="ease-dropdown-list-holder">
+                            <a href="apipartners/donorperfect-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">DonorPerfect Integrations</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
 
               <!-- Platform Dropdown -->
               <div data-delay="0" data-hover="false" class="_w-dropdown w-dropdown">
@@ -242,50 +386,6 @@
                 </nav>
               </div>
 
-              <!-- Solutions Dropdown -->
-              <div data-delay="0" data-hover="false" class="_w-dropdown w-dropdown">
-                <div class="ease-dropdown-toggle w-dropdown-toggle">
-                  <div class="ease-dropdown-title-text">Solutions</div><img loading="lazy" src="images/Dropdown-Icon.svg" alt="Drop Down Icon" class="ease-drop-down-icon">
-                </div>
-                <nav class="ease-dropdown-list w-dropdown-list">
-                  <div class="ease-dropdown-03-holder">
-                    <div class="ease-dropdown-01-container">
-                      <div class="drop-down-wrapper">
-                        <div class="ease-drop-down-larg-icon">
-                          <div class="ease-dropdown-list-holder">
-                            <a href="for-saas.html" class="ease-dropdown-link ease-large w-dropdown-link">For SaaS Companies</a>
-                          </div>
-                        </div>
-                        <div class="ease-drop-down-larg-icon">
-                          <div class="ease-dropdown-list-holder">
-                            <a href="for-si.html" class="ease-dropdown-link ease-large w-dropdown-link">For System Integrators</a>
-                          </div>
-                        </div>
-                        <div style="border-top: 1px solid rgba(255,255,255,0.08); margin: 8px 0;"></div>
-                        <div class="ease-drop-down-larg-icon">
-                          <div class="ease-dropdown-list-holder">
-                            <a href="apipartners/mindbody-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">Mindbody Integrations</a>
-                          </div>
-                        </div>
-                        <div class="ease-drop-down-larg-icon">
-                          <div class="ease-dropdown-list-holder">
-                            <a href="apipartners/cliniko-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">Cliniko Integrations</a>
-                          </div>
-                        </div>
-                        <div class="ease-drop-down-larg-icon">
-                          <div class="ease-dropdown-list-holder">
-                            <a href="apipartners/donorperfect-turnkey-integration-solutions.html" class="ease-dropdown-link ease-large w-dropdown-link">DonorPerfect Integrations</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </nav>
-              </div>
-
-              <!-- Connectors Link -->
-              <a href="apps.html" class="nav-link white-text w-nav-link">Connectors</a>
-
               <!-- Resources Dropdown -->
               <div data-delay="0" data-hover="false" class="_w-dropdown w-dropdown">
                 <div class="ease-dropdown-toggle w-dropdown-toggle">
@@ -298,11 +398,6 @@
                         <div class="ease-drop-down-larg-icon">
                           <div class="ease-dropdown-list-holder">
                             <a href="https://info.apiant.com" class="ease-dropdown-link ease-large w-dropdown-link">Documentation</a>
-                          </div>
-                        </div>
-                        <div class="ease-drop-down-larg-icon">
-                          <div class="ease-dropdown-list-holder">
-                            <a href="https://blog.apiant.com" class="ease-dropdown-link ease-large w-dropdown-link">Blog</a>
                           </div>
                         </div>
                         <div class="ease-drop-down-larg-icon">
@@ -345,16 +440,18 @@
       <div class="center-text hero-center">
         <div style="-webkit-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="animate-on-load-01">
           <div class="center-text hero-center">
+            <h1 class="hero-static-line">AI-Powered iPaaS for</h1>
             <div class="div-block-5">
               <div class="div-block-4">
-                <div data-w-id="b0136dc4-4a10-1bcf-efc6-acf9ac0f4df4" class="left-words">
-                  <h1 class="hero-text changing-words">Your iPaaS. Your Brand. Your Revenue.</h1>
-                  <h1 class="hero-text changing-words">The Integration Platform Builders Own.</h1>
-                  <h1 class="hero-text changing-words">Ship Deep Integrations. Not Shallow Connectors.</h1>
+                <div class="left-words">
+                  <h1 class="hero-text changing-words">SaaS Companies</h1>
+                  <h1 class="hero-text changing-words">System Integrators</h1>
+                  <h1 class="hero-text changing-words">Enterprises</h1>
+                  <h1 class="hero-text changing-words">SaaS Companies</h1>
                 </div>
               </div>
             </div>
-            <p style="color: rgba(255,255,255,0.75); font-size: 20px; line-height: 1.6; max-width: 720px; margin: 24px auto 0; font-family: 'DM Sans', sans-serif;">APIANT gives SaaS companies and System Integrators a dedicated, white-label integration platform — with AI co-pilots, embeddable UIs, and the deepest automation engine on the market.</p>
+            <p style="color: rgba(255,255,255,0.75); font-size: 20px; line-height: 1.6; max-width: 720px; margin: 24px auto 0; font-family: 'DM Sans', sans-serif;">APIANT gives SaaS companies, System Integrators, and Enterprises a dedicated, white-label integration platform - with AI co-pilots, embeddable UIs, and the deepest automation engine on the market.</p>
           </div>
         </div>
         <div style="-webkit-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="animate-on-load-02">
@@ -465,13 +562,13 @@
       </div>
       <div style="max-width: 800px;">
         <div class="fade-in-on-scroll">
-          <p style="color: rgba(255,255,255,0.7); font-size: 18px; line-height: 1.7; margin-bottom: 24px;">Every SaaS company and SI hits the same wall. Integration surfaces as a priority when there's a deal on the line — and it's the first thing deprioritized when AI features, core product work, or new revenue initiatives need your developers.</p>
+          <p style="color: rgba(255,255,255,0.7); font-size: 18px; line-height: 1.7; margin-bottom: 24px;">Every SaaS company and SI hits the same wall. Integration surfaces as a priority when there's a deal on the line - and it's the first thing deprioritized when AI features, core product work, or new revenue initiatives need your developers.</p>
         </div>
         <div class="fade-in-on-scroll">
-          <p style="color: rgba(255,255,255,0.7); font-size: 18px; line-height: 1.7; margin-bottom: 24px;">You're left with two bad options: build shallow connectors that disappoint customers, or divert your best engineers from your product to build integrations that still won't be deep enough. And there's a real difference — a shallow integration syncs a contact; a deep one knows when your customer's client last visited, when they're coming next, that they canceled Tuesday's class so next visit is now Thursday, and that their 10-pack has one session remaining.</p>
+          <p style="color: rgba(255,255,255,0.7); font-size: 18px; line-height: 1.7; margin-bottom: 24px;">You're left with two bad options: build shallow connectors that disappoint customers, or divert your best engineers from your product to build integrations that still won't be deep enough. And there's a real difference - a shallow integration syncs a contact; a deep one knows when your customer's client last visited, when they're coming next, that they canceled Tuesday's class so next visit is now Thursday, and that their 10-pack has one session remaining.</p>
         </div>
         <div class="fade-in-on-scroll">
-          <p style="color: rgba(255,255,255,0.7); font-size: 18px; line-height: 1.7; margin-bottom: 32px;">APIANT is the third option. A dedicated integration platform — managed, scalable, AI-assisted — that makes integration the easiest part of your conversation. Assign a workflow architect, not a developer. Go deep, not wide. And never cut integration from your roadmap again.</p>
+          <p style="color: rgba(255,255,255,0.7); font-size: 18px; line-height: 1.7; margin-bottom: 32px;">APIANT is the third option. A dedicated integration platform - managed, scalable, AI-assisted - that makes integration the easiest part of your conversation. Assign a workflow architect, not a developer. Go deep, not wide. And never cut integration from your roadmap again.</p>
         </div>
         <a href="platform/index.html" style="color: #1ab759; font-size: 16px; font-weight: 600; text-decoration: none;">See how it works &rarr;</a>
       </div>
@@ -488,7 +585,7 @@
             <svg width="24" height="24" fill="none" stroke="#1ab759" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <h3 style="font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 16px;">Own Your Platform</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6; margin-bottom: 24px;">Get a dedicated APIANT server — white-labeled, fully managed, entirely yours. For SaaS companies adding deep, native integrations to their product without diverting developers.</p>
+          <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6; margin-bottom: 24px;">Get a dedicated APIANT server - white-labeled, fully managed, entirely yours. For SaaS companies adding deep, native integrations to their product without diverting developers.</p>
           <a href="for-saas.html" style="color: #1ab759; font-size: 15px; font-weight: 600; text-decoration: none;">For SaaS Companies &rarr;</a>
         </div>
         <!-- Card 2: Build & Monetize -->
@@ -506,7 +603,7 @@
             <svg width="24" height="24" fill="none" stroke="#1ab759" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg>
           </div>
           <h3 style="font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 16px;">Go Deep, Not Wide</h3>
-          <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6; margin-bottom: 24px;">Ship integrations with real logic, real error handling, real business value. The platform behind 17 turnkey products serving thousands of businesses — and counting.</p>
+          <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6; margin-bottom: 24px;">Ship integrations with real logic, real error handling, real business value. The platform behind 17 turnkey products serving thousands of businesses - and counting.</p>
           <a href="platform/index.html" style="color: #1ab759; font-size: 15px; font-weight: 600; text-decoration: none;">See the Platform &rarr;</a>
         </div>
       </div>
@@ -558,13 +655,13 @@
       </div>
       <div style="max-width: 800px; margin: 0 auto 60px;">
         <div class="fade-in-on-scroll">
-          <p style="color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.7; margin-bottom: 20px;">Exercise Coach runs 228 MindBody locations syncing to a single HubSpot instance through APIANT. Five custom object types — class bookings, appointments, memberships, client services, and contracts — with bi-directional sync, 120+ fields per contact, rate limiting, and real-time monitoring.</p>
+          <p style="color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.7; margin-bottom: 20px;">Exercise Coach runs 228 MindBody locations syncing to a single HubSpot instance through APIANT. Five custom object types - class bookings, appointments, memberships, client services, and contracts - with bi-directional sync, 120+ fields per contact, rate limiting, and real-time monitoring.</p>
         </div>
         <div class="fade-in-on-scroll">
-          <p style="color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.7; margin-bottom: 20px;">Every location runs the same core logic but consumes the integration differently — different time zones, different configurations, different feature toggles. APIANT separates settings from logic, so one codebase serves all 228 locations. When we upgrade, we select the entire codebase group and deploy to everyone simultaneously.</p>
+          <p style="color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.7; margin-bottom: 20px;">Every location runs the same core logic but consumes the integration differently - different time zones, different configurations, different feature toggles. APIANT separates settings from logic, so one codebase serves all 228 locations. When we upgrade, we select the entire codebase group and deploy to everyone simultaneously.</p>
         </div>
         <div class="fade-in-on-scroll">
-          <p style="color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.7;">The architecture: a master account routes all CRM data to the correct MindBody site out of 228. All locations share a single CRM connection with rate limiting configured at 185 API calls per 10 seconds — a threshold calibrated to never exceed the CRM's limits even when every location renews memberships on Monday morning on January 1st. The Splunk dashboard proves it: zero errors, zero rate limit violations.</p>
+          <p style="color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.7;">The architecture: a master account routes all CRM data to the correct MindBody site out of 228. All locations share a single CRM connection with rate limiting configured at 185 API calls per 10 seconds - a threshold calibrated to never exceed the CRM's limits even when every location renews memberships on Monday morning on January 1st. The Splunk dashboard proves it: zero errors, zero rate limit violations.</p>
         </div>
       </div>
       <!-- Stats strip -->
@@ -845,7 +942,6 @@
                 <div class="title-small">Resources</div>
                 <a href="https://forum.apiant.com" target="_blank" class="footer-link">Community</a>
                 <a href="https://info.apiant.com" target="_blank" class="footer-link">Documentation</a>
-                <a href="https://blog.apiant.com" class="footer-link">Blog</a>
                 <a href="apps.html" class="footer-link">Connectors</a>
               </div>
               <div class="footer-block">
@@ -1824,7 +1920,7 @@
             dropdown.addEventListener('change', function() {
               update(this.value);
             });
-            // Link buttons (optional — if you use them globally)
+            // Link buttons (optional - if you use them globally)
             document.getElementById('select-saas')?.addEventListener('click', () => update('saas'));
             document.getElementById('select-si')?.addEventListener('click', () => update('si'));
             document.getElementById('select-enterprise')?.addEventListener('click', () => update('enterprise'));
