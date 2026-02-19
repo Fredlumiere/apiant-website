@@ -33,7 +33,8 @@ There is no build step, test suite, or linter. To develop:
 When a user prompt starts with `b:`, treat it as a bug report:
 1. Create a GitHub issue using `gh issue create --repo Fredlumiere/apiant-website --title "..." --body "..." --label bug` before starting work.
 2. Work on the fix.
-3. When committing the fix, include `Fixes #<number>` in the commit message so the issue closes automatically on push.
+3. Ask the user to verify the fix before committing.
+4. Once confirmed, commit with `Fixes #<number>` in the commit message so the issue closes automatically on push.
 
 ## Site Architecture
 
