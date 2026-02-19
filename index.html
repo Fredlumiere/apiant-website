@@ -195,6 +195,16 @@
     .hero-rotate-wrap {
       display: grid;
       min-height: 78px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    }
+    .hero-rotate-icon {
+      height: 55px;
+      width: auto;
+      flex-shrink: 0;
+      opacity: 0.5;
+      filter: sepia(0.1) hue-rotate(90deg) saturate(0.8);
     }
     .hero-rotate-word {
       grid-row: 1;
@@ -207,19 +217,25 @@
       line-height: 1.2;
       font-family: 'DM Sans', sans-serif;
       margin: 0;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
       opacity: 0;
-      animation: heroFade 12s ease-in-out infinite;
+      visibility: hidden;
+      animation: heroSlide 22.5s linear infinite both;
     }
     .hero-rotate-word:nth-child(1) { animation-delay: 0s; }
-    .hero-rotate-word:nth-child(2) { animation-delay: 4s; }
-    .hero-rotate-word:nth-child(3) { animation-delay: 8s; }
+    .hero-rotate-word:nth-child(2) { animation-delay: 7.5s; }
+    .hero-rotate-word:nth-child(3) { animation-delay: 15s; }
 
-    @keyframes heroFade {
-      0%   { opacity: 0; }
-      8%   { opacity: 1; }
-      25%  { opacity: 1; }
-      33%  { opacity: 0; }
-      100% { opacity: 0; }
+    @keyframes heroSlide {
+      0%            { transform: translateX(0%); opacity: 0; visibility: hidden; }
+      3%            { opacity: 1; visibility: visible; }
+      30%           { opacity: 1; visibility: visible; }
+      33%           { transform: translateX(60%); opacity: 0; visibility: hidden; }
+      33.01%, 100%  { transform: translateX(0%); opacity: 0; visibility: hidden; }
     }
   </style>
 
@@ -384,17 +400,17 @@
           <div class="center-text hero-center">
             <h1 class="hero-static-line">AI-Powered iPaaS for</h1>
             <div class="hero-rotate-wrap">
-              <div class="hero-rotate-word">SaaS Companies</div>
-              <div class="hero-rotate-word">System Integrators</div>
-              <div class="hero-rotate-word">Enterprises</div>
+              <div class="hero-rotate-word"><img src="images/apiapp.png" class="hero-rotate-icon" alt=""> SaaS Companies <img src="images/apiapp.png" class="hero-rotate-icon" alt=""></div>
+              <div class="hero-rotate-word"><img src="images/apiapp.png" class="hero-rotate-icon" alt=""> System Integrators <img src="images/apiapp.png" class="hero-rotate-icon" alt=""></div>
+              <div class="hero-rotate-word"><img src="images/apiapp.png" class="hero-rotate-icon" alt=""> Enterprises <img src="images/apiapp.png" class="hero-rotate-icon" alt=""></div>
             </div>
             <p style="color: rgba(255,255,255,0.75); font-size: 20px; line-height: 1.6; max-width: 720px; margin: 24px auto 0; font-family: 'DM Sans', sans-serif;">APIANT gives SaaS companies, System Integrators, and Enterprises a dedicated, white-label integration platform with AI co-pilots, embeddable UIs, and the deepest automation engine on the market.</p>
           </div>
         </div>
         <div class="animate-on-load-02">
           <div class="button-holder" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="platform/index.html" class="button dark-mode mobile-100 w-button" style="background-color: #1ab759; border-color: #1ab759;">See the Platform</a>
-            <a href="#" data-w-id="hero-talk-to-us" class="button dark-mode mobile-100 w-button" style="background: transparent; border: 2px solid rgba(255,255,255,0.3); color: #fff;">Talk to Us</a>
+            <a href="platform/index.html" class="button dark-mode mobile-100 w-button" style="background-color: #1ab759; border-color: #1ab759; min-width: 200px; text-align: center;">See the Platform</a>
+            <a href="#" data-w-id="hero-talk-to-us" class="button dark-mode mobile-100 w-button" style="background: transparent; border: 2px solid rgba(255,255,255,0.3); color: #fff; min-width: 200px; text-align: center;">Talk to Us</a>
           </div>
         </div>
       </div>
