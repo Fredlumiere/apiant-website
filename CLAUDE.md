@@ -31,9 +31,9 @@ There is no build step, test suite, or linter. To develop:
 **GitHub repo**: `Fredlumiere/apiant-website`
 
 When a user prompt starts with `b:`, treat it as a bug report:
-1. Create a GitHub issue using the `mcp__github__create_issue` tool (owner: `Fredlumiere`, repo: `apiant-website`) with a title and body describing the bug before starting work. Add the `bug` label.
+1. Create a GitHub issue using `gh issue create --repo Fredlumiere/apiant-website --title "..." --body "..." --label bug` before starting work.
 2. Work on the fix.
-3. When the fix is complete, close the issue using the `mcp__github__update_issue` tool with `state: "closed"`.
+3. When committing the fix, include `Fixes #<number>` in the commit message so the issue closes automatically on push.
 
 ## Site Architecture
 
