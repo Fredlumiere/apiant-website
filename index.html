@@ -182,7 +182,6 @@
       .hp-stats-grid { grid-template-columns: 1fr !important; }
     }
 
-    /* ── Hero: static line above rotating words ── */
     .hero-static-line {
       color: #ffffff;
       text-align: center;
@@ -193,97 +192,34 @@
       font-family: 'DM Sans', sans-serif;
     }
 
-    /* ── Conic shimmer angle (matches video-box border sweep) ── */
-    @property --shimmer-angle {
-      syntax: '<angle>';
-      initial-value: 0deg;
-      inherits: false;
+    .hero-rotate-wrap {
+      display: grid;
+      min-height: 78px;
     }
-
-    /* ── Hero rotating text: conic shimmer over green base ── */
-    .hero-text.changing-words {
-      background:
-        conic-gradient(
-          from var(--shimmer-angle) at 50% 50%,
-          transparent 0%,
-          transparent 79%,
-          rgba(255, 255, 255, 0.4) 83%,
-          transparent 87%,
-          transparent 100%
-        ),
-        linear-gradient(90deg, #1ab759, #34d399, #86efac, #34d399, #1ab759) !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      text-align: center !important;
-    }
-
-    @keyframes conicSweep {
-      to { --shimmer-angle: 360deg; }
-    }
-
-    /* Keep hero behind the sticky navbar (z-index: 21) */
-    .section.hero {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Override layout for slide + dissolve ── */
-    .div-block-5 {
-      overflow: visible !important;
-      animation: glowPulse 3s ease-in-out infinite alternate;
-    }
-
-    .div-block-4 {
-      display: block !important;
-      grid-template-columns: 1fr !important;
-      height: 78px !important;
-      position: relative !important;
-      overflow: visible !important;
-    }
-
-    .left-words {
-      position: relative !important;
-      height: 78px !important;
-      width: 100% !important;
-      animation: none !important;
-    }
-
-    /* ── Each word: slow slide-from-left + dissolve ── */
-    .left-words h1.hero-text.changing-words {
-      position: absolute !important;
-      top: 0;
-      left: 0;
-      width: 100%;
+    .hero-rotate-word {
+      grid-row: 1;
+      grid-column: 1;
+      color: #1ab759 !important;
+      -webkit-text-fill-color: #1ab759 !important;
+      text-align: center;
+      font-size: 65px;
+      font-weight: bold;
+      line-height: 1.2;
+      font-family: 'DM Sans', sans-serif;
       margin: 0;
       opacity: 0;
-      transform: translateX(-30px);
-      animation: conicSweep 5s linear infinite, slideInWord 15s ease-in-out infinite;
+      animation: heroFade 12s ease-in-out infinite;
     }
+    .hero-rotate-word:nth-child(1) { animation-delay: 0s; }
+    .hero-rotate-word:nth-child(2) { animation-delay: 4s; }
+    .hero-rotate-word:nth-child(3) { animation-delay: 8s; }
 
-    .left-words h1:nth-child(1) { animation-delay: 0s, 0s; }
-    .left-words h1:nth-child(2) { animation-delay: 0s, 5s; }
-    .left-words h1:nth-child(3) { animation-delay: 0s, 10s; }
-    .left-words h1:nth-child(4) { display: none !important; }
-
-    @keyframes slideInWord {
-      0%      { opacity: 0; transform: translateX(-30px); }
-      7%      { opacity: 1; transform: translateX(0); }
-      27%     { opacity: 1; transform: translateX(0); }
-      33.33%  { opacity: 0; transform: translateX(0); }
-      100%    { opacity: 0; transform: translateX(-30px); }
-    }
-
-    /* ── Pulsing green glow behind the text ── */
-    @keyframes glowPulse {
-      from {
-        filter: drop-shadow(0 0 20px rgba(26, 183, 89, 0.2))
-                drop-shadow(0 0 60px rgba(26, 183, 89, 0.08));
-      }
-      to {
-        filter: drop-shadow(0 0 40px rgba(26, 183, 89, 0.4))
-                drop-shadow(0 0 80px rgba(26, 183, 89, 0.15));
-      }
+    @keyframes heroFade {
+      0%   { opacity: 0; }
+      8%   { opacity: 1; }
+      25%  { opacity: 1; }
+      33%  { opacity: 0; }
+      100% { opacity: 0; }
     }
   </style>
 
@@ -444,30 +380,25 @@
   <div class="section hero">
     <div class="container">
       <div class="center-text hero-center">
-        <div style="-webkit-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="animate-on-load-01">
+        <div class="animate-on-load-01">
           <div class="center-text hero-center">
             <h1 class="hero-static-line">AI-Powered iPaaS for</h1>
-            <div class="div-block-5">
-              <div class="div-block-4">
-                <div class="left-words">
-                  <h1 class="hero-text changing-words">SaaS Companies</h1>
-                  <h1 class="hero-text changing-words">System Integrators</h1>
-                  <h1 class="hero-text changing-words">Enterprises</h1>
-                  <h1 class="hero-text changing-words">SaaS Companies</h1>
-                </div>
-              </div>
+            <div class="hero-rotate-wrap">
+              <div class="hero-rotate-word">SaaS Companies</div>
+              <div class="hero-rotate-word">System Integrators</div>
+              <div class="hero-rotate-word">Enterprises</div>
             </div>
-            <p style="color: rgba(255,255,255,0.75); font-size: 20px; line-height: 1.6; max-width: 720px; margin: 24px auto 0; font-family: 'DM Sans', sans-serif;">APIANT gives SaaS companies, System Integrators, and Enterprises a dedicated, white-label integration platform - with AI co-pilots, embeddable UIs, and the deepest automation engine on the market.</p>
+            <p style="color: rgba(255,255,255,0.75); font-size: 20px; line-height: 1.6; max-width: 720px; margin: 24px auto 0; font-family: 'DM Sans', sans-serif;">APIANT gives SaaS companies, System Integrators, and Enterprises a dedicated, white-label integration platform with AI co-pilots, embeddable UIs, and the deepest automation engine on the market.</p>
           </div>
         </div>
-        <div style="-webkit-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="animate-on-load-02">
+        <div class="animate-on-load-02">
           <div class="button-holder" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
             <a href="platform/index.html" class="button dark-mode mobile-100 w-button" style="background-color: #1ab759; border-color: #1ab759;">See the Platform</a>
             <a href="#" data-w-id="hero-talk-to-us" class="button dark-mode mobile-100 w-button" style="background: transparent; border: 2px solid rgba(255,255,255,0.3); color: #fff;">Talk to Us</a>
           </div>
         </div>
       </div>
-      <div style="-webkit-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="animate-on-load-03">
+      <div class="animate-on-load-03">
         <div class="hero-animation-holder">
           <div class="hero-animation-image-holder"><img src="images/APIANT-MACHINE-FINAL_11zon.png" loading="lazy" sizes="(max-width: 4000px) 100vw, 4000px" srcset="images/APIANT-MACHINE-FINAL_11zon-p-500.png 500w, images/APIANT-MACHINE-FINAL_11zon-p-800.png 800w, images/APIANT-MACHINE-FINAL_11zon-p-1080.png 1080w, images/APIANT-MACHINE-FINAL_11zon-p-1600.png 1600w, images/APIANT-MACHINE-FINAL_11zon-p-2000.png 2000w, images/APIANT-MACHINE-FINAL_11zon-p-2600.png 2600w, images/APIANT-MACHINE-FINAL_11zon.png 4000w" alt="" class="hero-animation-image hide">
             <div data-poster-url="videos/1-poster-00001.jpg" data-video-urls="videos/1-transcode.mp4,videos/1-transcode.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="hero-animation-image w-background-video w-background-video-atom"><video id="ac8cfd02-bb20-c423-4cc7-6c16876c6b2c-video" autoplay="" loop="" style="background-image:url(&quot;videos/1-poster-00001.jpg&quot;)" muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover">
