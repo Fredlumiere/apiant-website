@@ -35,6 +35,11 @@ When a user prompt starts with `b:`, treat it as a bug report:
 2. Work on the fix.
 3. Ask the user to verify the fix before committing.
 4. Once confirmed, commit with `Fixes #<number>` in the commit message so the issue closes automatically on push.
+5. After the fix is pushed, add a troubleshooting log to the issue using `gh issue comment <number> --repo Fredlumiere/apiant-website --body "..."`. The comment must include:
+   - **Root cause**: What was actually causing the bug.
+   - **What was tried**: Each approach attempted, in order, and why it did or didn't work.
+   - **Resolution**: The final fix and why it works.
+   This creates a knowledge base of past issues and solutions for future debugging.
 
 ## Site Architecture
 
