@@ -50,6 +50,7 @@ for-saas.html                         For SaaS Companies
 for-si.html                           For System Integrators
 for-enterprises.html                  For Enterprises
 ai.html                               AI Capabilities
+chatbot.html                          AI Chatbot (GDPR compliance example)
 formapps.html                         FormApps (embeddable UIs)
 mcp-servers.html                      MCP Servers
 

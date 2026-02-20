@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <!-- Green glow filter for center -->
+    <filter id="greenGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.102
+                0 0 0 0 0.718
+                0 0 0 0 0.349
+                0 0 0 0.35 0" result="greenBlur"/>
+      <feMerge>
+        <feMergeNode in="greenBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Arrowhead marker -->
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 L2,3 Z" fill="#1ab759"/>
+    </marker>
+
+    <!-- Subtle outer glow for icon circles -->
+    <filter id="iconGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.102
+                0 0 0 0 0.718
+                0 0 0 0 0.349
+                0 0 0 0.2 0" result="greenBlur"/>
+      <feMerge>
+        <feMergeNode in="greenBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    text { font-family: 'Inter', sans-serif; }
+  </style>
+
+  <!-- ==================== CURVED ARROWS (clockwise between segments) ==================== -->
+  <!-- Positions of 8 segments at radius 210, starting from top (270deg) going clockwise -->
+  <!-- Seg1: 270deg (0,-210) => (300,90) -->
+  <!-- Seg2: 315deg (148.5,-148.5) => (448.5,151.5) -->
+  <!-- Seg3: 0deg (210,0) => (510,300) -->
+  <!-- Seg4: 45deg (148.5,148.5) => (448.5,448.5) -->
+  <!-- Seg5: 90deg (0,210) => (300,510) -->
+  <!-- Seg6: 135deg (-148.5,148.5) => (151.5,448.5) -->
+  <!-- Seg7: 180deg (-210,0) => (90,300) -->
+  <!-- Seg8: 225deg (-148.5,-148.5) => (151.5,151.5) -->
+
+  <!-- Arrow arcs: each goes from one segment to the next along r=170 arc -->
+  <!-- Using offset points slightly away from icon centers for cleaner look -->
+
+  <!-- Arrow 1: Identify (top) to Build (top-right) -->
+  <path d="M 330,105 A 195,195 0 0,1 435,165" fill="none" stroke="#1ab759" stroke-width="1.8" stroke-opacity="0.7" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow 2: Build (top-right) to Separate (right) -->
+  <path d="M 460,180 A 195,195 0 0,1 495,275" fill="none" stroke="#1ab759" stroke-width="1.8" stroke-opacity="0.7" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow 3: Separate (right) to Package (bottom-right) -->
+  <path d="M 495,330 A 195,195 0 0,1 460,425" fill="none" stroke="#1ab759" stroke-width="1.8" stroke-opacity="0.7" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow 4: Package (bottom-right) to Distribute (bottom) -->
+  <path d="M 435,445 A 195,195 0 0,1 330,497" fill="none" stroke="#1ab759" stroke-width="1.8" stroke-opacity="0.7" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow 5: Distribute (bottom) to Support (bottom-left) -->
+  <path d="M 270,497 A 195,195 0 0,1 167,445" fill="none" stroke="#1ab759" stroke-width="1.8" stroke-opacity="0.7" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow 6: Support (bottom-left) to Grow (left) -->
+  <path d="M 142,425 A 195,195 0 0,1 107,330" fill="none" stroke="#1ab759" stroke-width="1.8" stroke-opacity="0.7" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow 7: Grow (left) to Expand (top-left) -->
+  <path d="M 107,275 A 195,195 0 0,1 142,180" fill="none" stroke="#1ab759" stroke-width="1.8" stroke-opacity="0.7" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow 8: Expand (top-left) to Identify (top) -->
+  <path d="M 167,165 A 195,195 0 0,1 270,105" fill="none" stroke="#1ab759" stroke-width="1.8" stroke-opacity="0.7" marker-end="url(#arrowhead)"/>
+
+
+  <!-- ==================== SEGMENT 1: Identify (top, 270deg) ==================== -->
+  <g transform="translate(300, 82)" filter="url(#iconGlow)">
+    <circle cx="0" cy="0" r="28" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Magnifying glass icon -->
+    <g transform="translate(-12,-12)" stroke="#1ab759" stroke-width="1.8" fill="none">
+      <circle cx="11" cy="11" r="7"/>
+      <line x1="16" y1="16" x2="22" y2="22" stroke-linecap="round"/>
+    </g>
+  </g>
+  <text x="300" y="126" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="500">Identify</text>
+
+  <!-- ==================== SEGMENT 2: Build (top-right, 315deg) ==================== -->
+  <g transform="translate(454, 146)" filter="url(#iconGlow)">
+    <circle cx="0" cy="0" r="28" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Wrench icon -->
+    <g transform="translate(-12,-12)" stroke="#1ab759" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14.7,6.3a4.8,4.8 0 0,0-6.3,4.5c0,.5.1,1,.2,1.5L3.3,17.6a1.5,1.5 0 0,0,0,2.1l1,1a1.5,1.5 0 0,0,2.1,0l5.3-5.3c.5.1,1,.2,1.5.2a4.8,4.8 0 0,0,4.5-6.3l-2.8,2.8-2-0.5-0.5-2Z"/>
+    </g>
+  </g>
+  <text x="454" y="190" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="500">Build</text>
+
+  <!-- ==================== SEGMENT 3: Separate (right, 0deg) ==================== -->
+  <g transform="translate(518, 300)" filter="url(#iconGlow)">
+    <circle cx="0" cy="0" r="28" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Scissors/split icon -->
+    <g transform="translate(-12,-12)" stroke="#1ab759" stroke-width="1.8" fill="none" stroke-linecap="round">
+      <circle cx="6" cy="18" r="3"/>
+      <circle cx="18" cy="18" r="3"/>
+      <line x1="12" y1="4" x2="8" y2="15.2"/>
+      <line x1="12" y1="4" x2="16" y2="15.2"/>
+    </g>
+  </g>
+  <text x="518" y="344" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="500">Separate</text>
+
+  <!-- ==================== SEGMENT 4: Package (bottom-right, 45deg) ==================== -->
+  <g transform="translate(454, 454)" filter="url(#iconGlow)">
+    <circle cx="0" cy="0" r="28" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Box/package icon -->
+    <g transform="translate(-12,-12)" stroke="#1ab759" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3,7 L12,2 L21,7 L21,17 L12,22 L3,17 Z"/>
+      <line x1="12" y1="12" x2="12" y2="22"/>
+      <line x1="3" y1="7" x2="12" y2="12"/>
+      <line x1="21" y1="7" x2="12" y2="12"/>
+    </g>
+  </g>
+  <text x="454" y="498" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="500">Package</text>
+
+  <!-- ==================== SEGMENT 5: Distribute (bottom, 90deg) ==================== -->
+  <g transform="translate(300, 518)" filter="url(#iconGlow)">
+    <circle cx="0" cy="0" r="28" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Share/network icon -->
+    <g transform="translate(-12,-12)" stroke="#1ab759" stroke-width="1.8" fill="none" stroke-linecap="round">
+      <circle cx="18" cy="5" r="3"/>
+      <circle cx="6" cy="12" r="3"/>
+      <circle cx="18" cy="19" r="3"/>
+      <line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/>
+      <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/>
+    </g>
+  </g>
+  <text x="300" y="562" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="500">Distribute</text>
+
+  <!-- ==================== SEGMENT 6: Support (bottom-left, 135deg) ==================== -->
+  <g transform="translate(146, 454)" filter="url(#iconGlow)">
+    <circle cx="0" cy="0" r="28" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Headset icon -->
+    <g transform="translate(-12,-12)" stroke="#1ab759" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4,17 V12 A8,8 0 0,1 20,12 V17"/>
+      <rect x="2" y="14" width="4" height="6" rx="1"/>
+      <rect x="18" y="14" width="4" height="6" rx="1"/>
+      <path d="M20,20 V21 A2,2 0 0,1 18,23 H14"/>
+    </g>
+  </g>
+  <text x="146" y="498" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="500">Support</text>
+
+  <!-- ==================== SEGMENT 7: Grow (left, 180deg) ==================== -->
+  <g transform="translate(82, 300)" filter="url(#iconGlow)">
+    <circle cx="0" cy="0" r="28" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Trending up arrow icon -->
+    <g transform="translate(-12,-12)" stroke="#1ab759" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="4,18 10,12 14,16 20,6"/>
+      <polyline points="15,6 20,6 20,11"/>
+    </g>
+  </g>
+  <text x="82" y="344" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="500">Grow</text>
+
+  <!-- ==================== SEGMENT 8: Expand (top-left, 225deg) ==================== -->
+  <g transform="translate(146, 146)" filter="url(#iconGlow)">
+    <circle cx="0" cy="0" r="28" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Arrows outward icon -->
+    <g transform="translate(-12,-12)" stroke="#1ab759" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="4,4 10,4 4,4 4,10"/>
+      <line x1="4" y1="4" x2="10.5" y2="10.5"/>
+      <polyline points="20,4 14,4 20,4 20,10"/>
+      <line x1="20" y1="4" x2="13.5" y2="10.5"/>
+      <polyline points="4,20 10,20 4,20 4,14"/>
+      <line x1="4" y1="20" x2="10.5" y2="13.5"/>
+      <polyline points="20,20 14,20 20,20 20,14"/>
+      <line x1="20" y1="20" x2="13.5" y2="13.5"/>
+    </g>
+  </g>
+  <text x="146" y="190" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="500">Expand</text>
+
+
+  <!-- ==================== CENTER CIRCLE ==================== -->
+  <g filter="url(#greenGlow)">
+    <circle cx="300" cy="300" r="56" fill="rgba(26,183,89,0.15)" stroke="#1ab759" stroke-width="2"/>
+    <circle cx="300" cy="300" r="64" fill="none" stroke="#1ab759" stroke-width="0.5" stroke-opacity="0.3"/>
+  </g>
+  <!-- Outer ring hint -->
+  <circle cx="300" cy="300" r="66" fill="none" stroke="#1ab759" stroke-width="0.5" stroke-opacity="0.15"/>
+
+  <text x="300" y="294" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="600">Recurring</text>
+  <text x="300" y="312" text-anchor="middle" fill="#f7f8f8" font-size="13" font-weight="600">Revenue</text>
+
+  <!-- Subtle connecting lines from center to each segment (very faint) -->
+  <g stroke="#1ab759" stroke-width="0.5" stroke-opacity="0.08" stroke-dasharray="4,6">
+    <line x1="300" y1="234" x2="300" y2="110"/>
+    <line x1="347" y1="253" x2="426" y2="174"/>
+    <line x1="366" y1="300" x2="490" y2="300"/>
+    <line x1="347" y1="347" x2="426" y2="426"/>
+    <line x1="300" y1="366" x2="300" y2="490"/>
+    <line x1="253" y1="347" x2="174" y2="426"/>
+    <line x1="234" y1="300" x2="110" y2="300"/>
+    <line x1="253" y1="253" x2="174" y2="174"/>
+  </g>
+
+</svg>

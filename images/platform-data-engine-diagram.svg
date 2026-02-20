@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1052 300" width="1052" height="300">
+  <defs>
+    <!-- Green glow filter for the central engine -->
+    <filter id="engineGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.102
+                0 0 0 0 0.718
+                0 0 0 0 0.349
+                0 0 0 0.35 0" result="greenBlur"/>
+      <feMerge>
+        <feMergeNode in="greenBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Arrowhead marker pointing right -->
+    <marker id="arrowRight" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="none" stroke="#1ab759" stroke-width="1.2" stroke-linejoin="round"/>
+    </marker>
+
+    <!-- Arrowhead marker pointing right (for output) -->
+    <marker id="arrowRightOut" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="none" stroke="#1ab759" stroke-width="1.2" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1052" height="300" fill="#0c0c0c"/>
+
+  <!-- ===================== -->
+  <!-- LEFT: Data Format Nodes -->
+  <!-- ===================== -->
+
+  <!-- JSON Node -->
+  <g transform="translate(120, 36)">
+    <rect x="0" y="0" width="120" height="48" rx="8" ry="8"
+          fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <!-- JSON icon: curly braces -->
+    <text x="28" y="29" font-family="'Inter','DM Sans',sans-serif" font-size="16" font-weight="600" fill="#f5a623" text-anchor="middle">{ }</text>
+    <text x="72" y="29" font-family="'Inter','DM Sans',sans-serif" font-size="14" font-weight="500" fill="#f7f8f8" text-anchor="middle">JSON</text>
+  </g>
+
+  <!-- XML Node -->
+  <g transform="translate(120, 102)">
+    <rect x="0" y="0" width="120" height="48" rx="8" ry="8"
+          fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <!-- XML icon: angle brackets -->
+    <text x="28" y="29" font-family="'Inter','DM Sans',sans-serif" font-size="15" font-weight="600" fill="#5b9bd5" text-anchor="middle">&lt;/&gt;</text>
+    <text x="72" y="29" font-family="'Inter','DM Sans',sans-serif" font-size="14" font-weight="500" fill="#f7f8f8" text-anchor="middle">XML</text>
+  </g>
+
+  <!-- CSV Node -->
+  <g transform="translate(120, 168)">
+    <rect x="0" y="0" width="120" height="48" rx="8" ry="8"
+          fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <!-- CSV icon: comma-separated dots -->
+    <g transform="translate(16, 20)">
+      <circle cx="4" cy="4" r="3" fill="none" stroke="#8bc34a" stroke-width="1.2"/>
+      <circle cx="14" cy="4" r="3" fill="none" stroke="#8bc34a" stroke-width="1.2"/>
+      <circle cx="24" cy="4" r="3" fill="none" stroke="#8bc34a" stroke-width="1.2"/>
+    </g>
+    <text x="72" y="29" font-family="'Inter','DM Sans',sans-serif" font-size="14" font-weight="500" fill="#f7f8f8" text-anchor="middle">CSV</text>
+  </g>
+
+  <!-- SOAP Node -->
+  <g transform="translate(120, 234)">
+    <rect x="0" y="0" width="120" height="48" rx="8" ry="8"
+          fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <!-- SOAP icon: envelope shape -->
+    <g transform="translate(14, 14)">
+      <rect x="0" y="0" width="24" height="18" rx="2" ry="2" fill="none" stroke="#ce93d8" stroke-width="1.2"/>
+      <polyline points="0,0 12,10 24,0" fill="none" stroke="#ce93d8" stroke-width="1.2"/>
+    </g>
+    <text x="72" y="29" font-family="'Inter','DM Sans',sans-serif" font-size="14" font-weight="500" fill="#f7f8f8" text-anchor="middle">SOAP</text>
+  </g>
+
+  <!-- ===================== -->
+  <!-- FLOW LINES: Left nodes to convergence point, then to engine -->
+  <!-- ===================== -->
+
+  <!-- Convergence X point -->
+  <!-- Lines from each node to a convergence column at x=380, then merge into engine at ~460 -->
+
+  <!-- JSON flow line -->
+  <path d="M240,60 L340,60 Q380,60 380,100 L380,140"
+        fill="none" stroke="#1ab759" stroke-width="1.5" stroke-opacity="0.7"/>
+
+  <!-- XML flow line -->
+  <path d="M240,126 L340,126 Q380,126 380,136 L380,140"
+        fill="none" stroke="#1ab759" stroke-width="1.5" stroke-opacity="0.7"/>
+
+  <!-- CSV flow line -->
+  <path d="M240,192 L340,192 Q380,192 380,172 L380,160"
+        fill="none" stroke="#1ab759" stroke-width="1.5" stroke-opacity="0.7"/>
+
+  <!-- SOAP flow line -->
+  <path d="M240,258 L340,258 Q380,258 380,200 L380,160"
+        fill="none" stroke="#1ab759" stroke-width="1.5" stroke-opacity="0.7"/>
+
+  <!-- Merged line from convergence to engine -->
+  <line x1="380" y1="150" x2="448" y2="150"
+        stroke="#1ab759" stroke-width="1.5" stroke-opacity="0.8" marker-end="url(#arrowRight)"/>
+
+  <!-- Small convergence dot -->
+  <circle cx="380" cy="150" r="3" fill="#1ab759" fill-opacity="0.6"/>
+
+  <!-- ===================== -->
+  <!-- CENTER: Hexagonal Engine -->
+  <!-- ===================== -->
+
+  <!-- Engine hexagon with glow -->
+  <g filter="url(#engineGlow)">
+    <!-- Hexagon centered at (526, 150), roughly 140px wide, 100px tall -->
+    <polygon points="456,150 491,100 561,100 596,150 561,200 491,200"
+             fill="rgba(26,183,89,0.06)" stroke="#1ab759" stroke-width="1.8"/>
+  </g>
+
+  <!-- Inner hexagon accent -->
+  <polygon points="472,150 498,114 554,114 580,150 554,186 498,186"
+           fill="none" stroke="rgba(26,183,89,0.15)" stroke-width="1"/>
+
+  <!-- Engine label -->
+  <text x="526" y="143" font-family="'Inter','DM Sans',sans-serif" font-size="13" font-weight="600" fill="#f7f8f8" text-anchor="middle" letter-spacing="0.5">Unified</text>
+  <text x="526" y="163" font-family="'Inter','DM Sans',sans-serif" font-size="13" font-weight="600" fill="#f7f8f8" text-anchor="middle" letter-spacing="0.5">Engine</text>
+
+  <!-- Small processing indicator dots inside engine -->
+  <circle cx="488" cy="150" r="2" fill="#1ab759" fill-opacity="0.4"/>
+  <circle cx="564" cy="150" r="2" fill="#1ab759" fill-opacity="0.4"/>
+
+  <!-- ===================== -->
+  <!-- FLOW LINE: Engine to output -->
+  <!-- ===================== -->
+
+  <line x1="596" y1="150" x2="720" y2="150"
+        stroke="#1ab759" stroke-width="1.5" stroke-opacity="0.8" marker-end="url(#arrowRightOut)"/>
+
+  <!-- Small pulse dots along the output line -->
+  <circle cx="640" cy="150" r="2" fill="#1ab759" fill-opacity="0.3"/>
+  <circle cx="670" cy="150" r="2" fill="#1ab759" fill-opacity="0.5"/>
+  <circle cx="700" cy="150" r="2" fill="#1ab759" fill-opacity="0.7"/>
+
+  <!-- ===================== -->
+  <!-- RIGHT: Normalized Data Node -->
+  <!-- ===================== -->
+
+  <g transform="translate(730, 120)">
+    <rect x="0" y="0" width="170" height="60" rx="10" ry="10"
+          fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <!-- Subtle green left accent bar -->
+    <rect x="0" y="10" width="3" height="40" rx="1.5" ry="1.5" fill="#1ab759" fill-opacity="0.6"/>
+    <!-- Check/clean data icon -->
+    <g transform="translate(20, 18)">
+      <rect x="0" y="2" width="18" height="20" rx="3" ry="3" fill="none" stroke="rgba(247,248,248,0.35)" stroke-width="1.2"/>
+      <polyline points="4,13 8,17 16,7" fill="none" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="100" y="27" font-family="'Inter','DM Sans',sans-serif" font-size="14" font-weight="600" fill="#f7f8f8" text-anchor="middle">Normalized</text>
+    <text x="100" y="46" font-family="'Inter','DM Sans',sans-serif" font-size="14" font-weight="600" fill="#f7f8f8" text-anchor="middle">Data</text>
+  </g>
+
+</svg>

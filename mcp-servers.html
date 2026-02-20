@@ -487,6 +487,11 @@
                         </div>
                         <div class="ease-drop-down-larg-icon">
                           <div class="ease-dropdown-list-holder">
+                            <a href="chatbot.html" class="ease-dropdown-link ease-large w-dropdown-link">AI Chatbot</a>
+                          </div>
+                        </div>
+                        <div class="ease-drop-down-larg-icon">
+                          <div class="ease-dropdown-list-holder">
                             <a href="formapps.html" class="ease-dropdown-link ease-large w-dropdown-link">FormApps</a>
                           </div>
                         </div>
@@ -564,6 +569,45 @@
       <h2 class="mcp-section-title">What Are MCP Servers?</h2>
       <p class="mcp-section-text">The Model Context Protocol (MCP) is an open standard that enables AI applications to connect with external tools and data sources. APIANT implements MCP servers that expose the full platform to AI systems, giving them native access to 500+ connectors, automation workflows, and business logic.</p>
       <p class="mcp-section-text">Instead of building custom API integrations for every AI use case, MCP provides a standardized interface. AI agents, chatbots, and LLM applications can discover available tools, understand their capabilities, and execute operations through a single, consistent protocol.</p>
+      <img src="/images/mcp-protocol-architecture.svg" alt="Three-layer MCP architecture: AI Applications connect through MCP Protocol to the APIANT Platform" style="width:100%;margin:32px 0 48px;border-radius:12px" loading="lazy">
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2B: CONCRETE EXAMPLE ===== -->
+  <div class="mcp-section">
+    <div class="mcp-container">
+      <h2 class="mcp-section-title">MCP in Action</h2>
+      <p class="mcp-section-text">Here's what it looks like when an AI agent uses MCP to interact with the APIANT platform. The agent discovers available tools, then executes a real integration operation.</p>
+      <div style="margin-top: 32px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden;">
+        <div style="padding: 12px 20px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 8px;">
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: #1ab759;"></div>
+          <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: rgba(255,255,255,0.5);">MCP Tool Call</span>
+        </div>
+        <pre style="margin: 0; padding: 24px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.75);"><code><span style="color: #94a3b8;">// AI agent discovers available APIANT tools via MCP</span>
+<span style="color: #1ab759;">tools/list</span> -> [
+  { name: <span style="color: #f59e0b;">"apiant_run_automation"</span>, description: <span style="color: #f59e0b;">"Execute an automation workflow"</span> },
+  { name: <span style="color: #f59e0b;">"apiant_query_data"</span>,    description: <span style="color: #f59e0b;">"Query connected system data"</span> },
+  { name: <span style="color: #f59e0b;">"apiant_list_connections"</span>, description: <span style="color: #f59e0b;">"List active API connections"</span> }
+]
+
+<span style="color: #94a3b8;">// Agent calls a tool to sync a contact across systems</span>
+<span style="color: #1ab759;">tools/call</span> apiant_run_automation {
+  automation: <span style="color: #f59e0b;">"sync-contact-to-hubspot"</span>,
+  params: {
+    email: <span style="color: #f59e0b;">"jane@acme.com"</span>,
+    fields: [<span style="color: #f59e0b;">"name"</span>, <span style="color: #f59e0b;">"company"</span>, <span style="color: #f59e0b;">"lifecycle_stage"</span>]
+  }
+}
+
+<span style="color: #94a3b8;">// APIANT executes the full automation and returns the result</span>
+<span style="color: #1ab759;">result</span> -> {
+  status: <span style="color: #f59e0b;">"success"</span>,
+  synced_fields: <span style="color: #60a5fa;">3</span>,
+  hubspot_contact_id: <span style="color: #f59e0b;">"501"</span>,
+  execution_time: <span style="color: #f59e0b;">"1.2s"</span>
+}</code></pre>
+      </div>
+      <p style="margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.45); font-family: 'Inter', sans-serif;">The AI agent never needs to know the HubSpot API. It communicates through MCP, and APIANT handles the rest: authentication, rate limiting, error handling, and data transformation.</p>
     </div>
   </div>
 
@@ -609,6 +653,7 @@
     <div class="mcp-container">
       <h2 class="mcp-section-title">Part of the APIANT AI Stack</h2>
       <p class="mcp-section-text">MCP Servers are the protocol layer. AI Agents are the execution layer. The Assembly Editor AI Co-Pilot is the creation layer. The Chatbot is the interaction layer. Together, they make APIANT one of the most AI-native integration platforms available.</p>
+      <img src="/images/mcp-ai-stack.svg" alt="APIANT AI Stack: AI Co-Pilot, AI Agents, AI Chatbot, and MCP Servers layers on the Integration Platform foundation" style="width:100%;margin:32px 0;border-radius:12px" loading="lazy">
       <div class="mcp-stack-links">
         <a href="ai.html" class="mcp-stack-link">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v4"></path><path d="M12 19v4"></path><path d="M4.22 4.22l2.83 2.83"></path><path d="M16.95 16.95l2.83 2.83"></path><path d="M1 12h4"></path><path d="M19 12h4"></path><path d="M4.22 19.78l2.83-2.83"></path><path d="M16.95 7.05l2.83-2.83"></path></svg>
@@ -638,12 +683,41 @@
     </div>
   </div>
 
+  <!-- ===== WHITE PAPER CTA ===== -->
+  <div class="section">
+    <div class="container">
+      <div>
+        <a href="#" class="card-holder-cta w-inline-block">
+          <div class="card api">
+            <div class="card-content-api">
+              <h2 class="title">&quot;The Deep Integration Gap&quot;</h2>
+              <div class="paragraph-holder">
+                <p>Bridging The Divide Between Open APIs and Business Needs</p>
+              </div>
+              <div class="button dark-mode">
+                <div>Download White Paper</div>
+              </div>
+            </div>
+            <div class="card-blur-effect cta">
+              <div class="blured-box left"></div>
+              <div class="blured-box top"></div>
+              <div class="blured-box bot"></div>
+              <div class="blured-box right"></div>
+              <div class="orange-blur _02 api"></div>
+              <div class="orange-blur _01 cta"></div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== FOOTER ===== -->
   <div class="footer-section mcp-footer">
     <div class="footer-container">
       <div class="container">
         <div class="footer-wrapper">
-          <a href="index.html" class="footer-brand w-inline-block"><img loading="lazy" src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="" class="footer-brand-image">
+          <a href="index.html" class="footer-brand w-inline-block"><img loading="lazy" src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" class="footer-brand-image">
             <div class="footer-paragraph-holder">
               <p>&copy; 2026, Apiant, Inc.<br>All Rights Reserved.</p>
             </div>

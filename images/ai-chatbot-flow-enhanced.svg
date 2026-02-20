@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 250" fill="none">
+  <defs>
+    <!-- Subtle glow for green elements -->
+    <filter id="greenGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.102  0 0 0 0 0.718  0 0 0 0 0.349  0 0 0 0.4 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Arrow marker -->
+    <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#1ab759"/>
+    </marker>
+
+    <!-- Small downward arrow marker -->
+    <marker id="arrowDown" markerWidth="6" markerHeight="8" refX="3" refY="8" orient="auto">
+      <path d="M0,0 L3,8 L6,0" fill="#1ab759"/>
+    </marker>
+
+    <!-- Processing card gradient -->
+    <linearGradient id="processingBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.03)"/>
+    </linearGradient>
+
+    <!-- Green top border gradient for output card -->
+    <linearGradient id="greenBorder" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1ab759" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#1ab759"/>
+      <stop offset="100%" stop-color="#1ab759" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- Animated pulse for green dots -->
+    <style>
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      @keyframes flowRight {
+        0% { transform: translateX(-4px); opacity: 0.4; }
+        50% { transform: translateX(4px); opacity: 1; }
+        100% { transform: translateX(-4px); opacity: 0.4; }
+      }
+      @keyframes stepGlow {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      .pulse1 { animation: pulse 2s ease-in-out infinite; }
+      .pulse2 { animation: pulse 2s ease-in-out 0.4s infinite; }
+      .pulse3 { animation: pulse 2s ease-in-out 0.8s infinite; }
+      .arrow-flow { animation: flowRight 1.5s ease-in-out infinite; }
+      .step-highlight { animation: stepGlow 2.5s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <!-- ==================== STAGE 1: User Input ==================== -->
+
+  <!-- Chat bubble body -->
+  <rect x="72" y="18" width="248" height="80" rx="16" ry="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+  <!-- Chat bubble tail (bottom-left pointer) -->
+  <path d="M88,98 L78,116 L104,98" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <!-- Cover the stroke overlap inside bubble -->
+  <line x1="89" y1="97.5" x2="103" y2="97.5" stroke="rgba(255,255,255,0.06)" stroke-width="2.5"/>
+
+  <!-- Chat bubble text -->
+  <text x="196" y="52" text-anchor="middle" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="12.5" font-weight="500" letter-spacing="0.01em">
+    <tspan>"What are my upcoming</tspan>
+  </text>
+  <text x="196" y="72" text-anchor="middle" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="12.5" font-weight="500" letter-spacing="0.01em">
+    <tspan>appointments?"</tspan>
+  </text>
+
+  <!-- User avatar circle -->
+  <circle cx="58" cy="116" r="16" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <!-- Person icon inside avatar -->
+  <circle cx="58" cy="110" r="5" fill="rgba(255,255,255,0.5)"/>
+  <path d="M47,127 Q47,119 58,119 Q69,119 69,127" fill="rgba(255,255,255,0.5)"/>
+
+  <!-- Label below -->
+  <text x="148" y="162" text-anchor="middle" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="11" font-weight="400">User asks a question</text>
+
+  <!-- Stage label -->
+  <text x="148" y="200" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="'Inter', sans-serif" font-size="10" font-weight="600" letter-spacing="0.1em">USER INPUT</text>
+
+
+  <!-- ==================== GREEN ARROW 1 ==================== -->
+
+  <!-- "Trigger" label -->
+  <text x="360" y="48" text-anchor="middle" fill="#1ab759" font-family="'Inter', sans-serif" font-size="10" font-weight="600" letter-spacing="0.08em" opacity="0.8">TRIGGER</text>
+
+  <!-- Arrow shaft -->
+  <g filter="url(#greenGlow)">
+    <line x1="332" y1="68" x2="388" y2="68" stroke="#1ab759" stroke-width="2.5" stroke-linecap="round" class="arrow-flow"/>
+    <!-- Arrowhead -->
+    <path d="M382,60 L396,68 L382,76" fill="none" stroke="#1ab759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="arrow-flow"/>
+  </g>
+
+  <!-- Decorative dots along arrow path -->
+  <circle cx="340" cy="68" r="1.5" fill="#1ab759" opacity="0.3" class="pulse1"/>
+  <circle cx="355" cy="68" r="1.5" fill="#1ab759" opacity="0.5" class="pulse2"/>
+  <circle cx="370" cy="68" r="1.5" fill="#1ab759" opacity="0.3" class="pulse3"/>
+
+
+  <!-- ==================== STAGE 2: Processing Engine ==================== -->
+
+  <!-- Main processing card -->
+  <rect x="406" y="8" width="314" height="216" rx="12" ry="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+  <!-- Card header bar -->
+  <rect x="406" y="8" width="314" height="38" rx="12" ry="12" fill="rgba(26,183,89,0.08)"/>
+  <rect x="406" y="34" width="314" height="12" fill="rgba(26,183,89,0.08)"/>
+
+  <!-- Header divider -->
+  <line x1="406" y1="46" x2="720" y2="46" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+  <!-- Gear icon in header -->
+  <g transform="translate(426, 19)" fill="none" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round">
+    <circle cx="8" cy="8" r="3"/>
+    <path d="M8,1.5 L8,0 M8,14.5 L8,16 M1.5,8 L0,8 M14.5,8 L16,8 M3.3,3.3 L2.2,2.2 M12.7,12.7 L13.8,13.8 M3.3,12.7 L2.2,13.8 M12.7,3.3 L13.8,2.2"/>
+  </g>
+
+  <!-- Header text -->
+  <text x="452" y="31" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="13" font-weight="600" letter-spacing="0.02em">Automation Engine</text>
+
+  <!-- Step 1: Interpret Intent -->
+  <rect x="422" y="56" width="282" height="40" rx="8" ry="8" fill="rgba(255,255,255,0.04)" stroke="rgba(26,183,89,0.2)" stroke-width="1" class="step-highlight"/>
+
+  <!-- Brain icon -->
+  <g transform="translate(434, 67)">
+    <path d="M9,1 C6,1 4,3 4,5 C2,5.5 1,7 1,9 C1,11 2.5,12.5 4.5,13 C5,14.5 6.5,16 9,16 C11.5,16 13,14.5 13.5,13 C15.5,12.5 17,11 17,9 C17,7 16,5.5 14,5 C14,3 12,1 9,1Z" fill="none" stroke="#1ab759" stroke-width="1.3"/>
+    <path d="M9,5 L9,13 M6,8 L12,8" stroke="#1ab759" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+  </g>
+
+  <!-- Green dot -->
+  <circle cx="460" cy="76" r="3.5" fill="#1ab759" class="pulse1"/>
+
+  <!-- Step 1 text -->
+  <text x="472" y="80" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="12" font-weight="500">Interpret Intent</text>
+
+  <!-- Downward arrow 1 -->
+  <g filter="url(#greenGlow)">
+    <line x1="563" y1="98" x2="563" y2="110" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M559,107 L563,114 L567,107" fill="none" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Step 2: Query Mindbody API -->
+  <rect x="422" y="118" width="282" height="40" rx="8" ry="8" fill="rgba(255,255,255,0.04)" stroke="rgba(26,183,89,0.2)" stroke-width="1" class="step-highlight" style="animation-delay: 0.3s"/>
+
+  <!-- API/plug icon -->
+  <g transform="translate(434, 129)">
+    <path d="M4,5 L4,2 C4,1 5,0 6.5,0 C8,0 9,1 9,2 L9,5" fill="none" stroke="#1ab759" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M9,13 L9,16 C9,17 10,18 11.5,18 C13,18 14,17 14,16 L14,13" fill="none" stroke="#1ab759" stroke-width="1.3" stroke-linecap="round"/>
+    <rect x="1" y="5" width="16" height="8" rx="2" fill="none" stroke="#1ab759" stroke-width="1.3"/>
+    <circle cx="6" cy="9" r="1" fill="#1ab759" opacity="0.8"/>
+    <circle cx="12" cy="9" r="1" fill="#1ab759" opacity="0.8"/>
+  </g>
+
+  <!-- Green dot -->
+  <circle cx="460" cy="138" r="3.5" fill="#1ab759" class="pulse2"/>
+
+  <!-- Step 2 text -->
+  <text x="472" y="142" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="12" font-weight="500">Query Mindbody API</text>
+
+  <!-- Downward arrow 2 -->
+  <g filter="url(#greenGlow)">
+    <line x1="563" y1="160" x2="563" y2="172" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M559,169 L563,176 L567,169" fill="none" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Step 3: Format Response -->
+  <rect x="422" y="180" width="282" height="40" rx="8" ry="8" fill="rgba(255,255,255,0.04)" stroke="rgba(26,183,89,0.2)" stroke-width="1" class="step-highlight" style="animation-delay: 0.6s"/>
+
+  <!-- Template/format icon -->
+  <g transform="translate(434, 191)">
+    <rect x="1" y="0" width="16" height="18" rx="2" fill="none" stroke="#1ab759" stroke-width="1.3"/>
+    <line x1="5" y1="5" x2="13" y2="5" stroke="#1ab759" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+    <line x1="5" y1="9" x2="11" y2="9" stroke="#1ab759" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+    <line x1="5" y1="13" x2="13" y2="13" stroke="#1ab759" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- Green dot -->
+  <circle cx="460" cy="200" r="3.5" fill="#1ab759" class="pulse3"/>
+
+  <!-- Step 3 text -->
+  <text x="472" y="204" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="12" font-weight="500">Format Response</text>
+
+  <!-- Stage label -->
+  <text x="563" y="244" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="'Inter', sans-serif" font-size="10" font-weight="600" letter-spacing="0.1em">PROCESSING ENGINE</text>
+
+
+  <!-- ==================== GREEN ARROW 2 ==================== -->
+
+  <!-- "Response" label -->
+  <text x="760" y="48" text-anchor="middle" fill="#1ab759" font-family="'Inter', sans-serif" font-size="10" font-weight="600" letter-spacing="0.08em" opacity="0.8">RESPONSE</text>
+
+  <!-- Arrow shaft -->
+  <g filter="url(#greenGlow)">
+    <line x1="732" y1="68" x2="788" y2="68" stroke="#1ab759" stroke-width="2.5" stroke-linecap="round" class="arrow-flow" style="animation-delay: 0.5s"/>
+    <!-- Arrowhead -->
+    <path d="M782,60 L796,68 L782,76" fill="none" stroke="#1ab759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="arrow-flow" style="animation-delay: 0.5s"/>
+  </g>
+
+  <!-- Decorative dots along arrow path -->
+  <circle cx="740" cy="68" r="1.5" fill="#1ab759" opacity="0.3" class="pulse3"/>
+  <circle cx="755" cy="68" r="1.5" fill="#1ab759" opacity="0.5" class="pulse1"/>
+  <circle cx="770" cy="68" r="1.5" fill="#1ab759" opacity="0.3" class="pulse2"/>
+
+
+  <!-- ==================== STAGE 3: Formatted Output ==================== -->
+
+  <!-- Output card -->
+  <rect x="806" y="18" width="274" height="160" rx="12" ry="12" fill="rgba(26,183,89,0.04)" stroke="rgba(26,183,89,0.15)" stroke-width="1"/>
+
+  <!-- Green top border accent -->
+  <rect x="806" y="18" width="274" height="3" rx="1.5" ry="1.5" fill="url(#greenBorder)"/>
+
+  <!-- Green top corners overlay to match card radius -->
+  <path d="M806,30 L806,21 Q806,18 809,18 L815,18 L815,18 L806,18 L806,30Z" fill="rgba(26,183,89,0.04)"/>
+
+  <!-- Card title -->
+  <text x="826" y="48" fill="#1ab759" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="0.02em">Upcoming Appointments</text>
+
+  <!-- Divider under title -->
+  <line x1="826" y1="56" x2="1060" y2="56" stroke="rgba(26,183,89,0.15)" stroke-width="1"/>
+
+  <!-- Appointment 1 -->
+  <circle cx="834" cy="76" r="3" fill="#1ab759" opacity="0.7"/>
+  <text x="846" y="73" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="11.5" font-weight="600">Mon 10am</text>
+  <text x="920" y="73" fill="rgba(255,255,255,0.5)" font-family="'Inter', sans-serif" font-size="11"> - </text>
+  <text x="846" y="88" fill="rgba(255,255,255,0.6)" font-family="'Inter', sans-serif" font-size="11">Yoga Class (Studio B)</text>
+
+  <!-- Appointment 2 -->
+  <circle cx="834" cy="112" r="3" fill="#1ab759" opacity="0.7"/>
+  <text x="846" y="109" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="11.5" font-weight="600">Wed 2pm</text>
+  <text x="846" y="124" fill="rgba(255,255,255,0.6)" font-family="'Inter', sans-serif" font-size="11">Personal Training</text>
+
+  <!-- Appointment 3 -->
+  <circle cx="834" cy="148" r="3" fill="#1ab759" opacity="0.7"/>
+  <text x="846" y="145" fill="#f7f8f8" font-family="'Inter', sans-serif" font-size="11.5" font-weight="600">Fri 9am</text>
+  <text x="846" y="160" fill="rgba(255,255,255,0.6)" font-family="'Inter', sans-serif" font-size="11">Pilates (Studio A)</text>
+
+  <!-- Label below output -->
+  <text x="943" y="202" text-anchor="middle" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="11" font-weight="400">Response delivered</text>
+
+  <!-- Stage label -->
+  <text x="943" y="236" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="'Inter', sans-serif" font-size="10" font-weight="600" letter-spacing="0.1em">FORMATTED OUTPUT</text>
+
+</svg>
