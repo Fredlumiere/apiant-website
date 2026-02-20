@@ -192,50 +192,83 @@
       font-family: 'DM Sans', sans-serif;
     }
 
+    .popup-x-holder {
+      background-color: #1ab759;
+      border-color: #159a4a;
+    }
+    .popup-x-holder:hover {
+      background-color: #159a4a;
+    }
+    .button.dark-mode {
+      background-color: #1ab759;
+      color: #fff;
+    }
+    .button.dark-mode:hover {
+      background-color: #159a4a;
+    }
+
+    .card.api .orange-blur {
+      background-color: #1ab759;
+    }
+    .card.api .blured-box.top {
+      background-color: rgba(26, 183, 89, 0.2);
+    }
+
+    .hero-animation-image-holder {
+      position: relative;
+    }
+    .hero-animation-image-holder::after,
+    .card.api::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 183, 89, 0.07);
+      pointer-events: none;
+      z-index: 1;
+    }
+
     .hero-rotate-wrap {
-      display: grid;
-      min-height: 78px;
       overflow: hidden;
-      -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-      mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+      min-height: 78px;
+      max-width: 780px;
+      margin: 0 auto;
+      -webkit-mask-image: linear-gradient(to right, transparent, black 25%, black 75%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 25%, black 75%, transparent);
+      opacity: 0;
+      animation: heroFadeIn 1.5s ease-out 0.3s forwards;
     }
-    .hero-rotate-icon {
-      height: 55px;
-      width: auto;
+    .hero-rotate-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 24px;
+      white-space: nowrap;
+      animation: heroScroll 29.75s linear infinite;
+    }
+    .hero-rotate-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #f36725;
+      opacity: 0.25;
       flex-shrink: 0;
-      opacity: 0.5;
-      filter: sepia(0.1) hue-rotate(90deg) saturate(0.8);
     }
-    .hero-rotate-word {
-      grid-row: 1;
-      grid-column: 1;
-      color: #1ab759 !important;
-      -webkit-text-fill-color: #1ab759 !important;
-      text-align: center;
+    .hero-rotate-text {
+      color: #1ab759;
+      -webkit-text-fill-color: #1ab759;
       font-size: 65px;
       font-weight: bold;
       line-height: 1.2;
       font-family: 'DM Sans', sans-serif;
-      margin: 0;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      opacity: 0;
-      visibility: hidden;
-      animation: heroSlide 22.5s linear infinite both;
     }
-    .hero-rotate-word:nth-child(1) { animation-delay: 0s; }
-    .hero-rotate-word:nth-child(2) { animation-delay: 7.5s; }
-    .hero-rotate-word:nth-child(3) { animation-delay: 15s; }
 
-    @keyframes heroSlide {
-      0%            { transform: translateX(0%); opacity: 0; visibility: hidden; }
-      3%            { opacity: 1; visibility: visible; }
-      30%           { opacity: 1; visibility: visible; }
-      33%           { transform: translateX(60%); opacity: 0; visibility: hidden; }
-      33.01%, 100%  { transform: translateX(0%); opacity: 0; visibility: hidden; }
+    @keyframes heroFadeIn {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes heroScroll {
+      0%   { transform: translateX(-50%); }
+      100% { transform: translateX(0%); }
     }
   </style>
 
@@ -400,9 +433,20 @@
           <div class="center-text hero-center">
             <h1 class="hero-static-line">AI-Powered iPaaS for</h1>
             <div class="hero-rotate-wrap">
-              <div class="hero-rotate-word"><img src="images/apiapp.png" class="hero-rotate-icon" alt=""> SaaS Companies <img src="images/apiapp.png" class="hero-rotate-icon" alt=""></div>
-              <div class="hero-rotate-word"><img src="images/apiapp.png" class="hero-rotate-icon" alt=""> System Integrators <img src="images/apiapp.png" class="hero-rotate-icon" alt=""></div>
-              <div class="hero-rotate-word"><img src="images/apiapp.png" class="hero-rotate-icon" alt=""> Enterprises <img src="images/apiapp.png" class="hero-rotate-icon" alt=""></div>
+              <div class="hero-rotate-track">
+                <span class="hero-rotate-text">SaaS Companies</span>
+                <span class="hero-rotate-dot"></span>
+                <span class="hero-rotate-text">System Integrators</span>
+                <span class="hero-rotate-dot"></span>
+                <span class="hero-rotate-text">Enterprises</span>
+                <span class="hero-rotate-dot"></span>
+                <span class="hero-rotate-text">SaaS Companies</span>
+                <span class="hero-rotate-dot"></span>
+                <span class="hero-rotate-text">System Integrators</span>
+                <span class="hero-rotate-dot"></span>
+                <span class="hero-rotate-text">Enterprises</span>
+                <span class="hero-rotate-dot"></span>
+              </div>
             </div>
             <p style="color: rgba(255,255,255,0.75); font-size: 20px; line-height: 1.6; max-width: 720px; margin: 24px auto 0; font-family: 'DM Sans', sans-serif;">APIANT gives SaaS companies, System Integrators, and Enterprises a dedicated, white-label integration platform with AI co-pilots, embeddable UIs, and the deepest automation engine on the market.</p>
           </div>
@@ -429,7 +473,7 @@
                   .card-bkg {
                     background-size: 100% 100%;
                     background-position: 0px 0px;
-                    background-image: conic-gradient(from 90deg at 50% 50%, var(--border-background-color) 81%, var(--border-background-glow) 85%, var(--border-background-color) 85%);
+                    background-image: conic-gradient(from 90deg at 50% 50%, var(--border-background-color) 81%, rgba(255, 255, 255, 0.8) 85%, var(--border-background-color) 85%);
                     width: 100vw;
                     height: 100vh;
                   }
@@ -508,7 +552,7 @@
   </div>
 
   <!-- SECTION 2: THE PAIN WE SOLVE -->
-  <div class="section" style="background: linear-gradient(180deg, #0a0f14 0%, #0f1419 100%); padding: 120px 0;">
+  <div class="section" style="padding: 120px 0;">
     <div class="container">
       <div class="fade-in-on-scroll">
         <h2 style="font-size: 42px; font-weight: 700; color: #fff; margin-bottom: 32px;">Integration is always the first thing to cut.</h2>
@@ -564,7 +608,7 @@
   </div>
 
   <!-- SECTION 4: PLATFORM GLIMPSE -->
-  <div class="section" style="padding: 100px 0; background: linear-gradient(180deg, #0f1419 0%, #141a21 100%);">
+  <div class="section" style="padding: 100px 0;">
     <div class="container">
       <div class="hp-platform-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
         <!-- Left: Visual placeholder -->
@@ -601,7 +645,7 @@
   </div>
 
   <!-- SECTION 5: EXERCISE COACH PROOF -->
-  <div class="section" style="padding: 100px 0; background: linear-gradient(180deg, #141a21 0%, #0f1419 100%);">
+  <div class="section" style="padding: 100px 0;">
     <div class="container">
       <div class="fade-in-on-scroll">
         <h2 style="font-size: 42px; font-weight: 700; color: #fff; margin-bottom: 32px; text-align: center;">228 Locations. One Platform. Zero Errors.</h2>
@@ -799,7 +843,7 @@
     <div class="testimonial-fade"></div>
   </div>
   <!-- Section 8: AI Capabilities -->
-  <div class="section" style="padding: 100px 0; background: #0a0f14;">
+  <div class="section" style="padding: 100px 0;">
     <div class="container">
       <div class="center-text">
         <div class="heading-holder">
