@@ -111,11 +111,17 @@ The nav and footer are duplicated in each HTML file (no includes/partials system
 
 ## Key Reference Documents
 
+- `docs/README.md`: Index of technical documentation
+- `docs/site-maintenance-guide.md`: Shared elements, CSS architecture, cross-page updates
+- `docs/forms-and-integrations.md`: Form flows, webhooks, analytics, third-party scripts
+- `docs/servlet-templates.md`: `{TEMPLATE_*}` placeholder system for dynamic SEO pages
 - `SITE-DOCUMENTATION.md`: Complete page-by-page content documentation
 - `APIANT-Website-Revision-Plan-v2-FINAL.md`: Strategic plan for site restructure, messaging guidelines, voice principles, competitive positioning
 - `API-APP-PAGE-PLAYBOOK.md`: Template/playbook for redesigning API App product pages (proven on Mindbody+HubSpot)
 - `API_APPS_FEATURES.md`: Complete feature reference for all 17 products
 - `HOMEPAGE-COPY-WEBFLOW-READY.md`: Approved homepage copy
+
+**Keeping docs current**: When a code change affects behavior documented in `docs/`, update the relevant doc in the same commit. This includes changes to: shared page elements (nav, footer, head boilerplate), forms, webhook URLs, analytics setup, CSS architecture, or servlet templates.
 
 ## Voice and Messaging Rules
 
