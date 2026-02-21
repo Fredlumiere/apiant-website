@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>APIANT Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0c0c0c;
+      color: #f7f8f8;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .admin-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-header-left a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .admin-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      background: rgba(26,183,89,0.15);
+      color: #1ab759;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(26,183,89,0.25);
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-nav a {
+      color: rgba(247,248,248,0.5);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover {
+      color: #f7f8f8;
+    }
+
+    .dirty-indicator {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #f59e0b;
+      font-weight: 500;
+    }
+
+    .dirty-indicator.visible {
+      display: flex;
+    }
+
+    .dirty-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #f59e0b;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Main content */
+    .admin-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 120px;
+    }
+
+    /* Section heading */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(26,183,89,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: #1ab759;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: rgba(247,248,248,0.45);
+      margin-top: 2px;
+    }
+
+    /* Action buttons */
+    .action-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-primary {
+      background: #1ab759;
+      color: #0c0c0c;
+    }
+
+    .btn-primary:hover {
+      background: #15a34d;
+    }
+
+    .btn-primary:disabled {
+      background: rgba(26,183,89,0.3);
+      color: rgba(12,12,12,0.5);
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: #f7f8f8;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .btn-danger {
+      background: rgba(239,68,68,0.1);
+      color: #ef4444;
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+
+    .btn-danger:hover {
+      background: rgba(239,68,68,0.18);
+    }
+
+    /* Vertical group */
+    .vertical-group {
+      margin-bottom: 32px;
+    }
+
+    .vertical-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(247,248,248,0.35);
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+
+    .vertical-count {
+      color: rgba(247,248,248,0.2);
+      margin-left: 6px;
+    }
+
+    /* Demo row */
+    .demo-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .demo-card:hover {
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .demo-card-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      flex-wrap: wrap;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .status-dot.active {
+      background: #1ab759;
+      box-shadow: 0 0 6px rgba(26,183,89,0.4);
+    }
+
+    .status-dot.empty {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .demo-label {
+      font-size: 14px;
+      font-weight: 500;
+      min-width: 180px;
+      flex-shrink: 0;
+    }
+
+    .demo-input-wrap {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .demo-input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: #f7f8f8;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+
+    .demo-input:focus {
+      border-color: rgba(26,183,89,0.5);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .demo-input::placeholder {
+      color: rgba(247,248,248,0.25);
+    }
+
+    .demo-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+      transition: all 0.2s;
+      color: rgba(247,248,248,0.5);
+    }
+
+    .btn-icon:hover {
+      background: rgba(255,255,255,0.08);
+      color: #f7f8f8;
+    }
+
+    .btn-icon.active {
+      background: rgba(26,183,89,0.12);
+      border-color: rgba(26,183,89,0.25);
+      color: #1ab759;
+    }
+
+    .btn-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .page-link {
+      font-size: 11px;
+      color: rgba(247,248,248,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .page-link:hover {
+      color: #1ab759;
+    }
+
+    /* Preview area */
+    .demo-preview {
+      display: none;
+      padding: 0 16px 16px;
+    }
+
+    .demo-preview.open {
+      display: block;
+    }
+
+    .preview-frame-wrap {
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .preview-frame-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .preview-frame-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .preview-frame-dot:nth-child(1) { background: #ef4444; }
+    .preview-frame-dot:nth-child(2) { background: #f59e0b; }
+    .preview-frame-dot:nth-child(3) { background: #22c55e; }
+
+    .preview-frame-url {
+      font-size: 11px;
+      color: rgba(247,248,248,0.3);
+      margin-left: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .preview-frame-wrap iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+      display: block;
+    }
+
+    .preview-empty {
+      padding: 40px 16px;
+      text-align: center;
+      color: rgba(247,248,248,0.25);
+      font-size: 13px;
+    }
+
+    /* Status bar */
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 32px;
+      background: rgba(12,12,12,0.92);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(247,248,248,0.4);
+      z-index: 100;
+    }
+
+    .status-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-message {
+      transition: color 0.2s;
+    }
+
+    .status-message.success {
+      color: #1ab759;
+    }
+
+    .status-message.error {
+      color: #ef4444;
+    }
+
+    /* Token modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #161616;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 28px;
+      width: 100%;
+      max-width: 460px;
+      margin: 16px;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      color: rgba(247,248,248,0.5);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .modal-input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: #f7f8f8;
+      font-family: 'DM Sans', monospace;
+      font-size: 13px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .modal-input:focus {
+      border-color: rgba(26,183,89,0.5);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .modal-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: rgba(247,248,248,0.6);
+    }
+
+    .modal-check input[type="checkbox"] {
+      accent-color: #1ab759;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      z-index: 300;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      max-width: 360px;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      background: rgba(26,183,89,0.15);
+      color: #1ab759;
+      border: 1px solid rgba(26,183,89,0.3);
+    }
+
+    .toast.error {
+      background: rgba(239,68,68,0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+
+    /* Loading skeleton */
+    .loading-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(247,248,248,0.3);
+      font-size: 14px;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(26,183,89,0.2);
+      border-top-color: #1ab759;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-bottom: 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .admin-header {
+        padding: 12px 16px;
+      }
+
+      .admin-main {
+        padding: 20px 12px 120px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .demo-card-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .demo-label {
+        min-width: auto;
+      }
+
+      .demo-input-wrap {
+        width: 100%;
+      }
+
+      .demo-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .status-bar {
+        padding: 10px 16px;
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+
+      .action-bar {
+        width: 100%;
+      }
+
+      .action-bar .btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <a href="../index.html">
+        <span class="admin-title">APIANT Admin</span>
+        <span class="admin-badge">Internal</span>
+      </a>
+    </div>
+    <div class="header-nav">
+      <div class="dirty-indicator" id="dirtyIndicator">
+        <span class="dirty-dot"></span>
+        <span>Unsaved changes</span>
+      </div>
+      <a href="../index.html">Main Site</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+
+    <!-- Section: Demo Embeds -->
+    <div class="section-header">
+      <div class="section-header-left">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div>
+          <h1 class="section-title">Demo Embeds Manager</h1>
+          <p class="section-subtitle">Manage demo embed URLs for all 17 API App product pages</p>
+        </div>
+      </div>
+      <div class="action-bar">
+        <button class="btn btn-primary" id="btnSave" disabled>
+          <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save to GitHub
+        </button>
+        <button class="btn btn-secondary" id="btnDownload">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download JSON
+        </button>
+        <button class="btn btn-danger" id="btnReset" disabled>
+          <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg>
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Demo list container -->
+    <div id="demoList">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <div>Loading configuration...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status-bar-left">
+      <span class="status-message" id="statusMessage">Loading...</span>
+    </div>
+    <div>
+      <span id="lastSaved">Last saved: checking...</span>
+    </div>
+  </div>
+
+  <!-- Token Modal -->
+  <div class="modal-overlay" id="tokenModal">
+    <div class="modal">
+      <div class="modal-title">GitHub Personal Access Token</div>
+      <div class="modal-desc">
+        To save changes directly to the repository, enter a GitHub personal access token with "Contents" read/write permission for the Fredlumiere/apiant-website repo.
+      </div>
+      <input type="password" class="modal-input" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+      <label class="modal-check">
+        <input type="checkbox" id="tokenRemember" checked>
+        Remember in this browser (stored in localStorage)
+      </label>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="tokenCancel">Cancel</button>
+        <button class="btn btn-primary" id="tokenConfirm">Save Token</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // ── State ──
+      var config = null;
+      var originalConfig = null;
+      var fileSha = null;
+      var isDirty = false;
+      var openPreviews = {};
+      var pendingSaveResolve = null;
+
+      var REPO = 'Fredlumiere/apiant-website';
+      var FILE_PATH = 'admin/config.json';
+      var API_BASE = 'https://api.github.com/repos/' + REPO + '/contents/' + FILE_PATH;
+
+      // Vertical grouping order
+      var verticals = [
+        {
+          name: 'Mindbody',
+          keys: [
+            'mindbody-shopify-integration-and-automation-apiant',
+            'mindbody-hubspot-integration-and-automation-apiant',
+            'mindbody-activecampaign-integration-and-automation-apiant',
+            'mindbody-keap-integration-and-automation-apiant',
+            'mindbody-klaviyo-integration-and-automation-apiant',
+            'mindbody-highlevel-integration-and-automation-apiant',
+            'mindbody-zoho-crm-integration-and-automation-apiant',
+            'mindbody-zoom-integration-and-automation-apiant',
+            'mindbody-calendly-integration-and-automation-apiant',
+            'mindbody-zapier-integration-and-automation-apiant'
+          ]
+        },
+        {
+          name: 'Cliniko',
+          keys: [
+            'cliniko-activecampaign-integration-and-automation-apiant',
+            'cliniko-hubspot-integration-automation-apiant',
+            'cliniko-salesforce-integration-and-automation-apiant'
+          ]
+        },
+        {
+          name: 'DonorPerfect',
+          keys: [
+            'donorperfect-activecampaign-integration-and-automation-apiant',
+            'donorperfect-hubspot-integration-and-automation-apiant',
+            'donorperfect-keap-integration-and-automation-apiant',
+            'donorperfect-mailchimp-integration-and-automation-apiant'
+          ]
+        }
+      ];
+
+      // ── DOM refs ──
+      var demoListEl = document.getElementById('demoList');
+      var btnSave = document.getElementById('btnSave');
+      var btnDownload = document.getElementById('btnDownload');
+      var btnReset = document.getElementById('btnReset');
+      var dirtyIndicator = document.getElementById('dirtyIndicator');
+      var statusMessage = document.getElementById('statusMessage');
+      var lastSavedEl = document.getElementById('lastSaved');
+      var tokenModal = document.getElementById('tokenModal');
+      var tokenInput = document.getElementById('tokenInput');
+      var tokenRemember = document.getElementById('tokenRemember');
+      var tokenCancel = document.getElementById('tokenCancel');
+      var tokenConfirm = document.getElementById('tokenConfirm');
+      var toastEl = document.getElementById('toast');
+
+      // ── Utilities ──
+      function deepClone(obj) {
+        return JSON.parse(JSON.stringify(obj));
+      }
+
+      function showToast(message, type) {
+        toastEl.textContent = message;
+        toastEl.className = 'toast ' + type;
+        // Force reflow
+        void toastEl.offsetWidth;
+        toastEl.classList.add('show');
+        setTimeout(function() {
+          toastEl.classList.remove('show');
+        }, 3500);
+      }
+
+      function setStatus(message, type) {
+        statusMessage.textContent = message;
+        statusMessage.className = 'status-message' + (type ? ' ' + type : '');
+      }
+
+      function updateDirtyState() {
+        isDirty = JSON.stringify(config) !== JSON.stringify(originalConfig);
+        btnSave.disabled = !isDirty;
+        btnReset.disabled = !isDirty;
+        if (isDirty) {
+          dirtyIndicator.classList.add('visible');
+        } else {
+          dirtyIndicator.classList.remove('visible');
+        }
+      }
+
+      function getToken() {
+        return localStorage.getItem('apiant_admin_gh_token') || null;
+      }
+
+      function setToken(token, remember) {
+        if (remember) {
+          localStorage.setItem('apiant_admin_gh_token', token);
+        }
+      }
+
+      function formatTimestamp(date) {
+        var d = date || new Date();
+        var hours = d.getHours();
+        var minutes = d.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+        var minuteStr = minutes < 10 ? '0' + minutes : minutes;
+        var month = d.toLocaleString('en-US', { month: 'short' });
+        return month + ' ' + d.getDate() + ', ' + d.getFullYear() + ' at ' + hours + ':' + minuteStr + ' ' + ampm;
+      }
+
+      // ── Render ──
+      function render() {
+        if (!config || !config.demos) {
+          demoListEl.innerHTML = '<div class="loading-state">Failed to load configuration.</div>';
+          return;
+        }
+
+        var html = '';
+
+        verticals.forEach(function(vertical) {
+          html += '<div class="vertical-group">';
+          html += '<div class="vertical-label">' + escapeHtml(vertical.name) +
+                  '<span class="vertical-count">' + vertical.keys.length + ' products</span></div>';
+
+          vertical.keys.forEach(function(key) {
+            var demo = config.demos[key];
+            if (!demo) return;
+
+            var hasUrl = demo.demoUrl && demo.demoUrl.trim() !== '';
+            var dotClass = hasUrl ? 'active' : 'empty';
+            var isOpen = openPreviews[key] || false;
+
+            html += '<div class="demo-card" data-key="' + escapeAttr(key) + '">';
+            html += '  <div class="demo-card-main">';
+            html += '    <span class="status-dot ' + dotClass + '" id="dot-' + escapeAttr(key) + '"></span>';
+            html += '    <span class="demo-label">' + escapeHtml(demo.label) + '</span>';
+            html += '    <div class="demo-input-wrap">';
+            html += '      <input type="url" class="demo-input" id="input-' + escapeAttr(key) + '"';
+            html += '        value="' + escapeAttr(demo.demoUrl || '') + '"';
+            html += '        placeholder="https://www.demomaker.ai/demo/..."';
+            html += '        data-key="' + escapeAttr(key) + '">';
+            html += '    </div>';
+            html += '    <div class="demo-actions">';
+            html += '      <a class="page-link" href="../' + escapeAttr(demo.page) + '" target="_blank" title="View product page">View page</a>';
+            html += '      <button class="btn-icon' + (isOpen ? ' active' : '') + '" id="toggle-' + escapeAttr(key) + '"';
+            html += '        title="Toggle preview" data-key="' + escapeAttr(key) + '" data-action="preview">';
+            html += '        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+            html += '      </button>';
+            html += '    </div>';
+            html += '  </div>';
+            html += '  <div class="demo-preview' + (isOpen ? ' open' : '') + '" id="preview-' + escapeAttr(key) + '">';
+            if (isOpen && hasUrl) {
+              html += buildPreviewHtml(demo.demoUrl);
+            } else if (isOpen) {
+              html += '<div class="preview-empty">No demo URL set. Enter a URL above and toggle preview again.</div>';
+            }
+            html += '  </div>';
+            html += '</div>';
+          });
+
+          html += '</div>';
+        });
+
+        demoListEl.innerHTML = html;
+        bindInputEvents();
+        bindPreviewToggles();
+      }
+
+      function buildPreviewHtml(url) {
+        var h = '<div class="preview-frame-wrap">';
+        h += '<div class="preview-frame-bar">';
+        h += '<span class="preview-frame-dot"></span>';
+        h += '<span class="preview-frame-dot"></span>';
+        h += '<span class="preview-frame-dot"></span>';
+        h += '<span class="preview-frame-url">' + escapeHtml(url) + '</span>';
+        h += '</div>';
+        h += '<iframe src="' + escapeAttr(url) + '" loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups allow-forms" allowfullscreen></iframe>';
+        h += '</div>';
+        return h;
+      }
+
+      function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+      }
+
+      function escapeAttr(str) {
+        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      // ── Event binding ──
+      function bindInputEvents() {
+        var inputs = demoListEl.querySelectorAll('.demo-input');
+        inputs.forEach(function(input) {
+          input.addEventListener('input', function() {
+            var key = this.getAttribute('data-key');
+            config.demos[key].demoUrl = this.value;
+
+            var dot = document.getElementById('dot-' + key);
+            if (this.value.trim() !== '') {
+              dot.className = 'status-dot active';
+            } else {
+              dot.className = 'status-dot empty';
+            }
+
+            updateDirtyState();
+          });
+        });
+      }
+
+      function bindPreviewToggles() {
+        var buttons = demoListEl.querySelectorAll('[data-action="preview"]');
+        buttons.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var key = this.getAttribute('data-key');
+            openPreviews[key] = !openPreviews[key];
+
+            var previewEl = document.getElementById('preview-' + key);
+            var toggleBtn = document.getElementById('toggle-' + key);
+            var demo = config.demos[key];
+
+            if (openPreviews[key]) {
+              toggleBtn.classList.add('active');
+              previewEl.classList.add('open');
+              if (demo.demoUrl && demo.demoUrl.trim() !== '') {
+                previewEl.innerHTML = buildPreviewHtml(demo.demoUrl);
+              } else {
+                previewEl.innerHTML = '<div class="preview-empty">No demo URL set. Enter a URL above and toggle preview again.</div>';
+              }
+            } else {
+              toggleBtn.classList.remove('active');
+              previewEl.classList.remove('open');
+              previewEl.innerHTML = '';
+            }
+          });
+        });
+      }
+
+      // ── Load config ──
+      function loadConfig() {
+        setStatus('Loading configuration...', '');
+
+        fetch('config.json?t=' + Date.now())
+          .then(function(res) {
+            if (!res.ok) throw new Error('Failed to load config.json (HTTP ' + res.status + ')');
+            return res.json();
+          })
+          .then(function(data) {
+            config = data;
+            originalConfig = deepClone(data);
+            render();
+            setStatus('Configuration loaded', 'success');
+            loadFileSha();
+          })
+          .catch(function(err) {
+            setStatus('Error: ' + err.message, 'error');
+            demoListEl.innerHTML = '<div class="loading-state">Failed to load config.json. Make sure the file exists and the server is running.</div>';
+          });
+      }
+
+      // ── Load SHA from GitHub ──
+      function loadFileSha() {
+        var token = getToken();
+        var headers = { 'Accept': 'application/vnd.github.v3+json' };
+        if (token) {
+          headers['Authorization'] = 'Bearer ' + token;
+        }
+
+        fetch(API_BASE, { headers: headers })
+          .then(function(res) {
+            if (!res.ok) {
+              lastSavedEl.textContent = 'Last saved: unknown (could not fetch SHA)';
+              return null;
+            }
+            return res.json();
+          })
+          .then(function(data) {
+            if (data && data.sha) {
+              fileSha = data.sha;
+              // Use the GitHub API "updated_at" or just show we have the SHA
+              lastSavedEl.textContent = 'File SHA: ' + fileSha.substring(0, 7);
+            }
+          })
+          .catch(function() {
+            lastSavedEl.textContent = 'Last saved: unknown';
+          });
+      }
+
+      // ── Save to GitHub ──
+      function saveToGitHub() {
+        var token = getToken();
+        if (!token) {
+          showTokenModal();
+          return;
+        }
+
+        doGitHubSave(token);
+      }
+
+      function showTokenModal() {
+        tokenInput.value = '';
+        tokenModal.classList.add('open');
+        setTimeout(function() { tokenInput.focus(); }, 100);
+      }
+
+      function hideTokenModal() {
+        tokenModal.classList.remove('open');
+        tokenInput.value = '';
+      }
+
+      function doGitHubSave(token) {
+        btnSave.disabled = true;
+        setStatus('Saving to GitHub...', '');
+
+        var content = JSON.stringify(config, null, 2) + '\n';
+        var encoded = btoa(unescape(encodeURIComponent(content)));
+
+        var body = {
+          message: 'Update demo embed URLs via admin panel',
+          content: encoded,
+          branch: 'main'
+        };
+
+        if (fileSha) {
+          body.sha = fileSha;
+        }
+
+        fetch(API_BASE, {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        })
+          .then(function(res) {
+            if (!res.ok) {
+              return res.json().then(function(data) {
+                throw new Error(data.message || 'GitHub API error (HTTP ' + res.status + ')');
+              });
+            }
+            return res.json();
+          })
+          .then(function(data) {
+            fileSha = data.content.sha;
+            originalConfig = deepClone(config);
+            updateDirtyState();
+
+            var now = new Date();
+            lastSavedEl.textContent = 'Last saved: ' + formatTimestamp(now);
+            setStatus('Saved to GitHub successfully', 'success');
+            showToast('Changes saved to GitHub', 'success');
+          })
+          .catch(function(err) {
+            setStatus('Save failed: ' + err.message, 'error');
+            showToast('Save failed: ' + err.message, 'error');
+            btnSave.disabled = false;
+
+            // If auth error, clear token and re-prompt
+            if (err.message.indexOf('Bad credentials') !== -1 || err.message.indexOf('401') !== -1) {
+              localStorage.removeItem('apiant_admin_gh_token');
+              showTokenModal();
+            }
+          });
+      }
+
+      // ── Download JSON ──
+      function downloadJson() {
+        var content = JSON.stringify(config, null, 2) + '\n';
+        var blob = new Blob([content], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'config.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('JSON downloaded', 'success');
+      }
+
+      // ── Reset ──
+      function resetChanges() {
+        config = deepClone(originalConfig);
+        openPreviews = {};
+        render();
+        updateDirtyState();
+        setStatus('Changes reverted', '');
+        showToast('All changes reverted', 'success');
+      }
+
+      // ── Event listeners ──
+      btnSave.addEventListener('click', saveToGitHub);
+      btnDownload.addEventListener('click', downloadJson);
+      btnReset.addEventListener('click', resetChanges);
+
+      tokenCancel.addEventListener('click', hideTokenModal);
+      tokenConfirm.addEventListener('click', function() {
+        var token = tokenInput.value.trim();
+        if (!token) {
+          tokenInput.style.borderColor = '#ef4444';
+          return;
+        }
+        var remember = tokenRemember.checked;
+        setToken(token, remember);
+        hideTokenModal();
+        doGitHubSave(token);
+      });
+
+      tokenInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          tokenConfirm.click();
+        }
+        if (e.key === 'Escape') {
+          hideTokenModal();
+        }
+      });
+
+      // Close modal on overlay click
+      tokenModal.addEventListener('click', function(e) {
+        if (e.target === tokenModal) {
+          hideTokenModal();
+        }
+      });
+
+      // Warn on unsaved changes
+      window.addEventListener('beforeunload', function(e) {
+        if (isDirty) {
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      });
+
+      // ── Init ──
+      loadConfig();
+    })();
+  </script>
+</body>
+</html>
