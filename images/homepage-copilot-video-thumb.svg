@@ -1,147 +1,155 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 356" width="570" height="356">
   <defs>
-    <!-- Radial green glow for background -->
-    <radialGradient id="bgGlow" cx="40%" cy="50%" r="60%" fx="40%" fy="50%">
-      <stop offset="0%" stop-color="#1ab759" stop-opacity="0.08"/>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#1ab759" stop-opacity="0.06"/>
       <stop offset="100%" stop-color="#1ab759" stop-opacity="0"/>
     </radialGradient>
-
-    <!-- Green glow filter behind play button -->
-    <filter id="playGlow" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur"/>
-      <feColorMatrix in="blur" type="matrix"
-        values="0 0 0 0 0.102
-                0 0 0 0 0.718
-                0 0 0 0 0.349
-                0 0 0 0.45 0" result="greenBlur"/>
-      <feMerge>
-        <feMergeNode in="greenBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <!-- Slight inner shadow on the UI mockup area -->
-    <linearGradient id="panelFade" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#161b22" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#0f1317" stop-opacity="1"/>
+    <linearGradient id="inputGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(26,183,89,0.12)"/>
+      <stop offset="100%" stop-color="rgba(26,183,89,0.03)"/>
     </linearGradient>
-
-    <!-- Vignette overlay to focus attention on center -->
-    <radialGradient id="vignette" cx="50%" cy="50%" r="55%">
-      <stop offset="0%" stop-color="#0c0c0c" stop-opacity="0"/>
-      <stop offset="85%" stop-color="#0c0c0c" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#0c0c0c" stop-opacity="0.85"/>
-    </radialGradient>
+    <linearGradient id="progressGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1ab759"/>
+      <stop offset="60%" stop-color="#1ab759"/>
+      <stop offset="100%" stop-color="#15a04c"/>
+    </linearGradient>
+    <filter id="cardShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <clipPath id="progressClip">
+      <rect x="44" y="308" width="482" height="4" rx="2"/>
+    </clipPath>
   </defs>
 
   <!-- Background -->
-  <rect width="570" height="356" fill="#0c0c0c"/>
+  <rect width="570" height="356" rx="10" fill="#0d1117"/>
+  <rect width="570" height="356" rx="10" fill="url(#bgGlow)"/>
 
-  <!-- Radial green glow -->
-  <rect width="570" height="356" fill="url(#bgGlow)"/>
+  <!-- Subtle grid -->
+  <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="40" y2="0" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/>
+    <line x1="0" y1="0" x2="0" y2="40" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/>
+  </pattern>
+  <rect width="570" height="356" rx="10" fill="url(#grid)"/>
 
-  <!-- ====== BEHIND-THE-SCENES UI MOCKUP (dimmed to ~55% opacity) ====== -->
-  <g opacity="0.55">
+  <!-- Main window frame -->
+  <rect x="28" y="18" width="514" height="320" rx="10" fill="#111518" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#cardShadow)"/>
 
-    <!-- Outer frame of the editor mockup -->
-    <rect x="45" y="38" width="480" height="280" rx="8" ry="8" fill="#111518" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <!-- Title bar -->
+  <rect x="28" y="18" width="514" height="32" rx="10" fill="#161b22"/>
+  <rect x="28" y="38" width="514" height="12" fill="#161b22"/>
+  <!-- Window dots -->
+  <circle cx="48" cy="34" r="4.5" fill="#ff5f57" opacity="0.8"/>
+  <circle cx="63" cy="34" r="4.5" fill="#febc2e" opacity="0.8"/>
+  <circle cx="78" cy="34" r="4.5" fill="#28c840" opacity="0.8"/>
+  <!-- Title -->
+  <text x="285" y="38" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="'Inter','DM Sans',sans-serif" font-size="11" font-weight="500">APIANT AI Co-Pilot</text>
 
-    <!-- Title bar -->
-    <rect x="45" y="38" width="480" height="28" rx="8" ry="8" fill="#161b22"/>
-    <rect x="45" y="54" width="480" height="12" fill="#161b22"/>
-    <!-- Window dots -->
-    <circle cx="63" cy="52" r="4" fill="#ff5f57" opacity="0.7"/>
-    <circle cx="77" cy="52" r="4" fill="#febc2e" opacity="0.7"/>
-    <circle cx="91" cy="52" r="4" fill="#28c840" opacity="0.7"/>
-    <!-- Title bar text -->
-    <rect x="220" y="47" width="130" height="10" rx="3" fill="rgba(255,255,255,0.12)"/>
+  <!-- Search input area -->
+  <rect x="44" y="60" width="482" height="40" rx="8" fill="url(#inputGrad)" stroke="rgba(26,183,89,0.3)" stroke-width="1"/>
+  <!-- Search icon -->
+  <circle cx="64" cy="80" r="7" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+  <line x1="69" y1="85" x2="73" y2="89" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Typed text -->
+  <text x="82" y="84" fill="#f7f8f8" font-family="'SF Mono','Fira Code',monospace" font-size="13" font-weight="400">Stripe</text>
+  <!-- Cursor blink -->
+  <rect x="118" y="72" width="2" height="16" rx="1" fill="#1ab759">
+    <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+  <!-- Hint text -->
+  <text x="490" y="84" text-anchor="end" fill="rgba(255,255,255,0.2)" font-family="'Inter','DM Sans',sans-serif" font-size="10">Type any app name...</text>
 
-    <!-- Divider: left panel vs right panel -->
-    <line x1="248" y1="66" x2="248" y2="318" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-
-    <!-- ====== LEFT PANEL: Chat / Co-Pilot interface ====== -->
-
-    <!-- Section label bar -->
-    <rect x="55" y="74" width="100" height="8" rx="3" fill="rgba(26,183,89,0.25)"/>
-
-    <!-- Chat message 1 (user) -->
-    <rect x="80" y="96" width="148" height="10" rx="4" fill="rgba(255,255,255,0.08)"/>
-    <rect x="80" y="112" width="110" height="10" rx="4" fill="rgba(255,255,255,0.06)"/>
-
-    <!-- Chat message 2 (AI response, greenish tint) -->
-    <rect x="60" y="136" width="155" height="10" rx="4" fill="rgba(26,183,89,0.12)"/>
-    <rect x="60" y="152" width="170" height="10" rx="4" fill="rgba(26,183,89,0.09)"/>
-    <rect x="60" y="168" width="120" height="10" rx="4" fill="rgba(26,183,89,0.07)"/>
-
-    <!-- Chat message 3 (user) -->
-    <rect x="80" y="194" width="130" height="10" rx="4" fill="rgba(255,255,255,0.08)"/>
-
-    <!-- Chat message 4 (AI response) -->
-    <rect x="60" y="218" width="160" height="10" rx="4" fill="rgba(26,183,89,0.12)"/>
-    <rect x="60" y="234" width="140" height="10" rx="4" fill="rgba(26,183,89,0.09)"/>
-    <rect x="60" y="250" width="100" height="10" rx="4" fill="rgba(26,183,89,0.07)"/>
-
-    <!-- Input bar at bottom of chat -->
-    <rect x="55" y="278" width="183" height="26" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-    <rect x="64" y="287" width="90" height="8" rx="3" fill="rgba(255,255,255,0.06)"/>
-
-    <!-- ====== RIGHT PANEL: API endpoints / connector cards ====== -->
-
-    <!-- Section label -->
-    <rect x="260" y="74" width="80" height="8" rx="3" fill="rgba(255,255,255,0.1)"/>
-
-    <!-- Endpoint card 1 -->
-    <rect x="260" y="94" width="252" height="36" rx="5" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-    <rect x="272" y="102" width="8" height="8" rx="2" fill="rgba(26,183,89,0.35)"/>
-    <rect x="286" y="102" width="80" height="8" rx="3" fill="rgba(255,255,255,0.1)"/>
-    <rect x="286" y="115" width="120" height="6" rx="2" fill="rgba(255,255,255,0.05)"/>
-    <rect x="468" y="105" width="34" height="14" rx="4" fill="rgba(26,183,89,0.15)"/>
-
-    <!-- Endpoint card 2 -->
-    <rect x="260" y="140" width="252" height="36" rx="5" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-    <rect x="272" y="148" width="8" height="8" rx="2" fill="rgba(26,183,89,0.35)"/>
-    <rect x="286" y="148" width="95" height="8" rx="3" fill="rgba(255,255,255,0.1)"/>
-    <rect x="286" y="161" width="105" height="6" rx="2" fill="rgba(255,255,255,0.05)"/>
-    <rect x="468" y="151" width="34" height="14" rx="4" fill="rgba(26,183,89,0.15)"/>
-
-    <!-- Endpoint card 3 -->
-    <rect x="260" y="186" width="252" height="36" rx="5" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-    <rect x="272" y="194" width="8" height="8" rx="2" fill="rgba(255,255,255,0.35)"/>
-    <rect x="286" y="194" width="70" height="8" rx="3" fill="rgba(255,255,255,0.1)"/>
-    <rect x="286" y="207" width="130" height="6" rx="2" fill="rgba(255,255,255,0.05)"/>
-    <rect x="468" y="197" width="34" height="14" rx="4" fill="rgba(255,255,255,0.08)"/>
-
-    <!-- Endpoint card 4 -->
-    <rect x="260" y="232" width="252" height="36" rx="5" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-    <rect x="272" y="240" width="8" height="8" rx="2" fill="rgba(255,255,255,0.35)"/>
-    <rect x="286" y="240" width="88" height="8" rx="3" fill="rgba(255,255,255,0.1)"/>
-    <rect x="286" y="253" width="115" height="6" rx="2" fill="rgba(255,255,255,0.05)"/>
-    <rect x="468" y="243" width="34" height="14" rx="4" fill="rgba(255,255,255,0.08)"/>
-
-    <!-- Status bar at bottom -->
-    <rect x="260" y="282" width="252" height="22" rx="4" fill="rgba(255,255,255,0.02)"/>
-    <circle cx="274" cy="293" r="4" fill="rgba(26,183,89,0.4)"/>
-    <rect x="284" y="289" width="60" height="7" rx="2" fill="rgba(255,255,255,0.06)"/>
-
+  <!-- Step 1: Finding API docs (completed) -->
+  <g>
+    <!-- Check circle -->
+    <circle cx="60" cy="120" r="9" fill="rgba(26,183,89,0.15)" stroke="#1ab759" stroke-width="1.2"/>
+    <polyline points="55,120 58,123 65,116" fill="none" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Text -->
+    <text x="78" y="118" fill="rgba(255,255,255,0.8)" font-family="'Inter','DM Sans',sans-serif" font-size="12" font-weight="500">Found Stripe API documentation</text>
+    <text x="78" y="132" fill="rgba(255,255,255,0.3)" font-family="'Inter','DM Sans',sans-serif" font-size="10">v2024-11-20 | 247 endpoints detected | RESTful</text>
+    <!-- Time badge -->
+    <rect x="462" y="111" width="54" height="18" rx="9" fill="rgba(26,183,89,0.1)"/>
+    <text x="489" y="123" text-anchor="middle" fill="rgba(26,183,89,0.7)" font-family="'Inter','DM Sans',sans-serif" font-size="9" font-weight="500">1.2s</text>
   </g>
 
-  <!-- Vignette overlay to darken edges and focus on center -->
-  <rect width="570" height="356" fill="url(#vignette)"/>
+  <!-- Divider -->
+  <line x1="60" y1="130" x2="60" y2="148" stroke="rgba(26,183,89,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
 
-  <!-- ====== PLAY BUTTON with green glow ====== -->
-  <g filter="url(#playGlow)">
-    <!-- Play button circle -->
-    <circle cx="285" cy="168" r="40" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
-    <!-- Play triangle (offset slightly right for visual centering) -->
-    <polygon points="275,148 275,188 307,168" fill="rgba(255,255,255,0.9)"/>
+  <!-- Step 2: Authentication (completed) -->
+  <g>
+    <circle cx="60" cy="158" r="9" fill="rgba(26,183,89,0.15)" stroke="#1ab759" stroke-width="1.2"/>
+    <polyline points="55,158 58,161 65,154" fill="none" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="78" y="156" fill="rgba(255,255,255,0.8)" font-family="'Inter','DM Sans',sans-serif" font-size="12" font-weight="500">Authentication configured</text>
+    <text x="78" y="170" fill="rgba(255,255,255,0.3)" font-family="'Inter','DM Sans',sans-serif" font-size="10">OAuth 2.0 + API key | Webhook signatures verified</text>
+    <rect x="462" y="149" width="54" height="18" rx="9" fill="rgba(26,183,89,0.1)"/>
+    <text x="489" y="161" text-anchor="middle" fill="rgba(26,183,89,0.7)" font-family="'Inter','DM Sans',sans-serif" font-size="9" font-weight="500">0.8s</text>
   </g>
 
-  <!-- Extra subtle ring around play button -->
-  <circle cx="285" cy="168" r="52" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <!-- Divider -->
+  <line x1="60" y1="168" x2="60" y2="186" stroke="rgba(26,183,89,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
 
-  <!-- ====== BOTTOM LABELS ====== -->
-  <!-- Main label -->
-  <text x="285" y="242" text-anchor="middle" fill="#f7f8f8" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="14" font-weight="500" letter-spacing="0.5">Watch AI Co-Pilot Demo</text>
-  <!-- Subtitle -->
-  <text x="285" y="260" text-anchor="middle" fill="#94a3b8" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="11" font-weight="400" letter-spacing="0.3">Build connectors in minutes, not months</text>
+  <!-- Step 3: Building connector (completed) -->
+  <g>
+    <circle cx="60" cy="196" r="9" fill="rgba(26,183,89,0.15)" stroke="#1ab759" stroke-width="1.2"/>
+    <polyline points="55,196 58,199 65,192" fill="none" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="78" y="194" fill="rgba(255,255,255,0.8)" font-family="'Inter','DM Sans',sans-serif" font-size="12" font-weight="500">Connector built</text>
+    <text x="78" y="208" fill="rgba(255,255,255,0.3)" font-family="'Inter','DM Sans',sans-serif" font-size="10">Customers, Payments, Subscriptions, Invoices, Products</text>
+    <rect x="462" y="187" width="54" height="18" rx="9" fill="rgba(26,183,89,0.1)"/>
+    <text x="489" y="199" text-anchor="middle" fill="rgba(26,183,89,0.7)" font-family="'Inter','DM Sans',sans-serif" font-size="9" font-weight="500">3.4s</text>
+  </g>
+
+  <!-- Divider -->
+  <line x1="60" y1="206" x2="60" y2="224" stroke="rgba(26,183,89,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <!-- Step 4: Testing (in progress, animated) -->
+  <g>
+    <!-- Spinning loader -->
+    <circle cx="60" cy="234" r="9" fill="rgba(26,183,89,0.08)" stroke="rgba(26,183,89,0.2)" stroke-width="1.2"/>
+    <circle cx="60" cy="234" r="9" fill="none" stroke="#1ab759" stroke-width="1.5" stroke-dasharray="14,42" stroke-linecap="round">
+      <animateTransform attributeName="transform" type="rotate" from="0 60 234" to="360 60 234" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <text x="78" y="232" fill="#1ab759" font-family="'Inter','DM Sans',sans-serif" font-size="12" font-weight="600">Testing all endpoints...</text>
+    <text x="78" y="246" fill="rgba(255,255,255,0.3)" font-family="'Inter','DM Sans',sans-serif" font-size="10">
+      <tspan fill="rgba(26,183,89,0.6)">189 passed</tspan> | 58 remaining | 0 failed
+    </text>
+    <!-- Animated counter effect -->
+    <rect x="462" y="225" width="54" height="18" rx="9" fill="rgba(26,183,89,0.05)" stroke="rgba(26,183,89,0.15)" stroke-width="0.5"/>
+    <text x="489" y="237" text-anchor="middle" fill="rgba(26,183,89,0.5)" font-family="'Inter','DM Sans',sans-serif" font-size="9" font-weight="500">
+      <animate attributeName="textContent" values="12.1s;12.2s;12.3s;12.4s" dur="4s" repeatCount="indefinite" fill="freeze"/>
+      12.1s
+    </text>
+  </g>
+
+  <!-- Endpoint mini-cards (right side, showing what was built) -->
+  <g opacity="0.6">
+    <!-- Mini card row -->
+    <rect x="340" y="264" width="70" height="22" rx="5" fill="rgba(26,183,89,0.08)" stroke="rgba(26,183,89,0.15)" stroke-width="0.5"/>
+    <text x="375" y="278" text-anchor="middle" fill="rgba(26,183,89,0.7)" font-family="'SF Mono','Fira Code',monospace" font-size="8">GET /v1</text>
+
+    <rect x="416" y="264" width="70" height="22" rx="5" fill="rgba(26,183,89,0.08)" stroke="rgba(26,183,89,0.15)" stroke-width="0.5"/>
+    <text x="451" y="278" text-anchor="middle" fill="rgba(26,183,89,0.7)" font-family="'SF Mono','Fira Code',monospace" font-size="8">POST /v1</text>
+
+    <rect x="340" y="290" width="70" height="22" rx="5" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+    <text x="375" y="304" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="'SF Mono','Fira Code',monospace" font-size="8">PUT /v1</text>
+
+    <rect x="416" y="290" width="70" height="22" rx="5" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+    <text x="451" y="304" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="'SF Mono','Fira Code',monospace" font-size="8">DEL /v1</text>
+  </g>
+
+  <!-- Total time + overall label -->
+  <rect x="44" y="264" width="148" height="48" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+  <text x="54" y="280" fill="rgba(255,255,255,0.35)" font-family="'Inter','DM Sans',sans-serif" font-size="9" font-weight="500" letter-spacing="1">TOTAL TIME</text>
+  <text x="54" y="302" fill="#1ab759" font-family="'DM Sans',sans-serif" font-size="20" font-weight="700">17.5s</text>
+  <text x="108" y="302" fill="rgba(255,255,255,0.25)" font-family="'Inter','DM Sans',sans-serif" font-size="10">/ 247 endpoints</text>
+
+  <!-- Progress bar at bottom -->
+  <rect x="44" y="322" width="482" height="4" rx="2" fill="rgba(255,255,255,0.04)"/>
+  <g clip-path="url(#progressClip)">
+    <rect x="44" y="322" width="370" height="4" rx="2" fill="url(#progressGrad)">
+      <animate attributeName="width" values="350;380;350" dur="3s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Bottom label -->
+  <text x="285" y="348" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-family="'Inter','DM Sans',sans-serif" font-size="9" letter-spacing="0.5">NO DEVELOPER NEEDED. NO API DOCS TO READ.</text>
 </svg>
