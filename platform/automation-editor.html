@@ -483,6 +483,11 @@
       .dp-features { grid-template-columns: 1fr; }
       .fit-diagram { flex-direction: column; }
       .fit-arrow { transform: rotate(90deg); }
+      .ae-split-view { flex-direction: column; }
+      .ae-split-left { flex: none; }
+      .ae-split-divider { width: 100%; height: 2px; background: linear-gradient(to right, transparent 5%, rgba(16,185,129,0.3) 50%, transparent 95%); }
+      .ae-split-lens { display: none; }
+      .ae-split-right { min-height: 220px; }
     }
 
     /* ── Automation Editor Illustration ── */
@@ -521,6 +526,92 @@
     .ae-zoom { display: flex; align-items: center; gap: 8px; }
     @keyframes aeFlowPulse { 0%,100%{opacity:0.7} 50%{opacity:0.3} }
     .ae-conn-dot { animation: aeFlowPulse 2.5s ease-in-out infinite; }
+
+    /* ── Split Zoom View ── */
+    .ae-split-view {
+      display: flex;
+      align-items: stretch;
+    }
+    .ae-split-left {
+      flex: 0 0 55%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 14px;
+      background: rgba(0,0,0,0.25);
+    }
+    .ae-overview-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+    .ae-zoom-box {
+      position: absolute;
+      top: 30%;
+      left: 32%;
+      width: 34%;
+      height: 34%;
+      border: 1.5px dashed rgba(16,185,129,0.5);
+      border-radius: 4px;
+      pointer-events: none;
+      animation: aeZoomPulse 3s ease-in-out infinite;
+    }
+    @keyframes aeZoomPulse {
+      0%, 100% { border-color: rgba(16,185,129,0.4); box-shadow: 0 0 12px rgba(16,185,129,0.04); }
+      50% { border-color: rgba(16,185,129,0.75); box-shadow: 0 0 24px rgba(16,185,129,0.1); }
+    }
+    .ae-split-divider {
+      width: 2px;
+      background: linear-gradient(to bottom, transparent 5%, rgba(16,185,129,0.3) 50%, transparent 95%);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .ae-split-lens {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      background: #0c0c15;
+      border: 1px solid rgba(16,185,129,0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ae-split-right {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+    }
+    .ae-detail-crop {
+      width: 100%;
+      height: 100%;
+      background: url(../images/automation-editor-screenshot.png) no-repeat;
+      background-size: 260%;
+      background-position: 48% 50%;
+    }
+    .ae-split-tag {
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      z-index: 2;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #34d399;
+      background: rgba(12,12,21,0.88);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(16,185,129,0.2);
+      font-family: Inter, sans-serif;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
 
     /* ── Compact Screenshot Mockups ── */
     .ss-mockup {
@@ -651,96 +742,24 @@
   <!-- ══════════════════════════════ AUTOMATION EDITOR VISUAL ══════════════════════════════ -->
   <div class="ae-illustration reveal page-load-3">
     <div class="ae-frame">
-      <div class="ae-topbar">
-        <div class="ae-topbar-left">
-          <span style="font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;">APIANT</span>
-          <span class="ae-topbar-link active">Editor</span>
-          <span class="ae-topbar-link">Subroutines</span>
-          <span class="ae-topbar-link">Connections</span>
-          <span class="ae-topbar-link">Dashboard</span>
-          <span class="ae-topbar-link">Assembly Editor</span>
+      <div class="ae-split-view">
+        <div class="ae-split-left">
+          <span class="ae-split-tag">Full Flow</span>
+          <img src="../images/automation-editor-screenshot.png" alt="APIANT Automation Editor showing a real Mindbody to HubSpot integration flow with conditional branching, data transformations, and 123 actions" class="ae-overview-img" loading="lazy">
+          <div class="ae-zoom-box"></div>
         </div>
-        <span style="color:rgba(255,255,255,0.2)">CRMConnect Mindbody HubSpot</span>
-      </div>
-      <div class="ae-namebar">
-        <strong>Automation #4147</strong>
-        <span>03 - Mindbody appointments &rarr; HubSpot deals v3.7</span>
-        <span style="flex:1"></span>
-        <span class="ae-btn ae-btn-save">Save</span>
-        <span class="ae-btn ae-btn-cancel">Cancel</span>
-      </div>
-      <div class="ae-canvas">
-        <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <pattern id="aegrid" width="30" height="30" patternUnits="userSpaceOnUse">
-              <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/>
-            </pattern>
-            <filter id="aeDotGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <rect width="700" height="440" fill="url(#aegrid)"/>
-          <!-- Connection lines -->
-          <line x1="350" y1="38" x2="350" y2="55" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="350" y1="95" x2="200" y2="120" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="350" y1="95" x2="500" y2="120" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="500" y1="120" x2="500" y2="145" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="500" y1="175" x2="500" y2="195" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="500" y1="235" x2="380" y2="260" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="500" y1="235" x2="620" y2="260" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="620" y1="260" x2="620" y2="280" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="620" y1="310" x2="620" y2="330" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="620" y1="360" x2="620" y2="380" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="200" y1="120" x2="200" y2="280" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="380" y1="260" x2="380" y2="340" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="4,4"/>
-          <!-- Connection dots -->
-          <circle cx="350" cy="38" r="4" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)"/>
-          <circle cx="350" cy="95" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:0.3s"/>
-          <circle cx="500" cy="175" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:0.6s"/>
-          <circle cx="500" cy="235" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:0.9s"/>
-          <circle cx="620" cy="310" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:1.2s"/>
-          <circle cx="620" cy="360" r="3" fill="#34d399" class="ae-conn-dot" filter="url(#aeDotGlow)" style="animation-delay:1.5s"/>
-          <!-- CONDITION 1: Custom Objects Client Services -->
-          <rect x="320" y="55" width="60" height="40" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 350 75)"/>
-          <text x="328" y="72" font-size="6" fill="#ef4444" font-family="Inter,sans-serif" font-weight="600">False</text>
-          <text x="362" y="72" font-size="6" fill="#22c55e" font-family="Inter,sans-serif" font-weight="600">True</text>
-          <text x="310" y="78" font-size="7" fill="rgba(255,255,255,0.25)" font-family="Inter,sans-serif" text-anchor="middle">Condition</text>
-          <text x="350" y="108" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Custom Objects Client Services</text>
-          <!-- ACTION: Get client visits (Mindbody) -->
-          <circle cx="500" cy="160" r="18" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
-          <text x="500" y="164" font-size="12" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">M</text>
-          <text x="500" y="188" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Get client visits</text>
-          <!-- CONDITION 2: Found Appointment ID -->
-          <rect x="470" y="195" width="60" height="40" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 500 215)"/>
-          <text x="478" y="212" font-size="6" fill="#ef4444" font-family="Inter,sans-serif" font-weight="600">False</text>
-          <text x="512" y="212" font-size="6" fill="#22c55e" font-family="Inter,sans-serif" font-weight="600">True</text>
-          <text x="500" y="248" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Found Appointment ID</text>
-          <!-- ACTION: Get client purchased service -->
-          <circle cx="620" cy="295" r="18" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
-          <text x="620" y="299" font-size="12" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">M</text>
-          <text x="620" y="320" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Get purchased service by ID</text>
-          <!-- ACTION: Convert MBO Date (clock icon) -->
-          <circle cx="620" cy="345" r="14" fill="#1e293b" stroke="rgba(245,158,11,0.3)"/>
-          <text x="620" y="349" font-size="10" fill="#f59e0b" font-family="Inter,sans-serif" text-anchor="middle">&#9201;</text>
-          <text x="620" y="370" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Convert MBO Date to HubSpot</text>
-          <!-- ACTION: Get HubSpot field (Eq icon) -->
-          <rect x="605" y="385" width="30" height="24" rx="5" fill="#1e293b" stroke="rgba(59,130,246,0.3)"/>
-          <text x="620" y="401" font-size="9" fill="#3b82f6" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">Eq</text>
-          <text x="620" y="420" font-size="7" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Get HubSpot_client_service_id</text>
-          <!-- HubSpot action node (bottom right) -->
-          <circle cx="500" cy="400" r="16" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
-          <text x="500" y="404" font-size="9" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">&#9850;</text>
-          <line x1="500" y1="235" x2="500" y2="384" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
-          <text x="500" y="425" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" text-anchor="middle">Update custom object</text>
-          <!-- Iterator node -->
-          <circle cx="350" cy="28" r="10" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
-          <text x="350" y="32" font-size="7" fill="rgba(255,255,255,0.4)" font-family="Inter,sans-serif" text-anchor="middle">&#8634;</text>
-          <text x="350" y="14" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" text-anchor="middle">Array Iterator</text>
-        </svg>
-      </div>
-      <div class="ae-footer">
-        <div class="ae-zoom"><span>+</span> <span>25%</span> <span>&minus;</span></div>
-        <span>123 of 150 actions</span>
+        <div class="ae-split-divider">
+          <div class="ae-split-lens">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="7" cy="7" r="5" stroke="#34d399" stroke-width="1.5"/>
+              <line x1="11" y1="11" x2="14.5" y2="14.5" stroke="#34d399" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="ae-split-right">
+          <span class="ae-split-tag">Close-up</span>
+          <div class="ae-detail-crop"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -751,8 +770,8 @@
       <div class="section-label reveal">What It Does</div>
       <h2 class="section-title reveal delay-1">Where Ingredients Become Recipes</h2>
       <div class="section-body reveal delay-2">
-        <p>The Automation Editor is where you build the logic -- the conditional branching, error handling, data transformation, and business rules that turn a basic sync into a deep integration. Each automation does one thing well: when a class booking comes in, process it. When a membership renews, handle it. When a client service depletes to one session remaining, trigger the replenishment campaign.</p>
-        <p>Every automation separates core logic from configuration. That means one codebase serves hundreds of customers who consume the integration differently -- different time zones, different settings, different business rules. Deploy once. Upgrade everyone simultaneously.</p>
+        <p>Each automation does one thing well: when a class booking comes in, process it. When a membership renews, handle it. When a client service depletes to one session remaining, trigger the replenishment campaign.</p>
+        <p>Every automation separates core logic from configuration. One codebase serves hundreds of customers with different time zones, settings, and business rules. Deploy once, upgrade everyone simultaneously.</p>
       </div>
 
       <div class="platform-callout reveal">
@@ -889,7 +908,7 @@
       </div>
 
       <div class="platform-callout reveal" style="margin-top: 40px;">
-        <strong style="color:#fff;">Concrete example:</strong> A CRM integration supports custom objects for class bookings. Some customers want custom objects, some don't. In the settings, there is a checkbox: "Custom object appointments: Yes/No." The automation logic branches based on that setting -- branch left for custom objects, branch right for flat field updates. Same codebase handles both. When a franchise adds five new locations, those locations inherit the master settings but can be individually configured.
+        <strong style="color:#fff;">Concrete example:</strong> A CRM integration has a setting: "Custom object appointments: Yes/No." The automation branches based on that choice. Same codebase handles both paths. When a franchise adds five new locations, those locations inherit the master settings but can be individually configured.
       </div>
 
       <div class="ss-mockup reveal">
@@ -973,8 +992,8 @@
 
       <div class="data-processing-box reveal">
         <h3>The Engine Under the Hood</h3>
-        <p>Most integration platforms choke on nested JSON, paginated responses, or high-volume syncs. APIANT's data engine was built for exactly these scenarios. It processes data format-agnostically -- whether the source sends JSON, XML, CSV, or custom formats, the engine normalizes and transforms without manual parsing.</p>
-        <p>XPath expressions work everywhere in the platform, giving you precision control over data selection, filtering, and transformation at every step of every automation.</p>
+        <p>Most integration platforms choke on nested JSON, paginated responses, or high-volume syncs. APIANT's data engine normalizes every format (JSON, XML, CSV, custom) into a single model and transforms without manual parsing.</p>
+        <p>XPath expressions work everywhere, giving you precision control over data selection, filtering, and transformation at every step.</p>
 
         <div class="dp-features">
           <div class="dp-feature">
@@ -1018,7 +1037,7 @@
       <h2 class="reveal">Ready to Build?</h2>
       <p class="reveal delay-1">See the Automation Editor in action or explore the full platform.</p>
       <div class="cta-buttons reveal delay-2">
-        <a href="../index.html" class="btn-primary">Schedule a Demo</a>
+        <a href="../index.html#contact" class="btn-primary">Schedule a Demo</a>
         <a href="admin-console.html" class="btn-secondary">Explore the Admin Console</a>
       </div>
     </div>
