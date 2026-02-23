@@ -109,9 +109,12 @@
 
     /* Badge */
     .cb-badge {
-      display: inline-block;
-      background: rgba(26,183,89,0.12);
-      color: #1ab759;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6,182,212,0.1);
+      border: 1px solid rgba(6,182,212,0.25);
+      color: #06b6d4;
       font-size: 13px;
       font-weight: 600;
       padding: 6px 18px;
@@ -124,7 +127,7 @@
     /* Buttons */
     .cb-btn-primary {
       display: inline-block;
-      background: #1ab759;
+      background: linear-gradient(160deg, #22d3ee 0%, #06b6d4 40%, #0891b2 100%);
       color: #fff;
       font-size: 16px;
       font-weight: 600;
@@ -132,38 +135,53 @@
       border-radius: 8px;
       text-decoration: none;
       font-family: 'Inter', sans-serif;
-      transition: background 0.3s, transform 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 24px rgba(6,182,212,0.2), 0 2px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cb-btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.06) 45%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 55%, transparent 60%);
+      background-size: 250% 100%;
+      animation: ctaSweep 5s ease-in-out infinite;
+      pointer-events: none;
     }
     .cb-btn-primary:hover {
-      background: #15a34d;
-      transform: translateY(-2px);
+      background: linear-gradient(160deg, #67e8f9 0%, #22d3ee 40%, #06b6d4 100%);
+      box-shadow: 0 0 36px rgba(6,182,212,0.35), 0 6px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.18);
+      transform: translateY(-2px) scale(1.03);
+      border-color: rgba(255,255,255,0.18);
     }
     .cb-btn-secondary {
       display: inline-block;
       background: transparent;
-      color: #1ab759;
+      color: #06b6d4;
       font-size: 16px;
       font-weight: 600;
       padding: 16px 40px;
       border-radius: 8px;
-      border: 1px solid rgba(26,183,89,0.4);
+      border: 1px solid rgba(6,182,212,0.4);
       text-decoration: none;
       font-family: 'Inter', sans-serif;
       transition: background 0.3s, border-color 0.3s;
       margin-left: 16px;
     }
     .cb-btn-secondary:hover {
-      background: rgba(26,183,89,0.08);
-      border-color: #1ab759;
+      background: rgba(6,182,212,0.08);
+      border-color: #06b6d4;
     }
 
-    /* Green glow */
+    /* Cyan glow */
     .cb-glow {
       position: absolute;
       width: 600px;
       height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(26,183,89,0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
       top: -200px;
@@ -187,12 +205,12 @@
       text-align: center;
     }
     .cb-flow-step.trigger {
-      border-color: rgba(26,183,89,0.3);
-      background: rgba(26,183,89,0.06);
+      border-color: rgba(6,182,212,0.3);
+      background: rgba(6,182,212,0.06);
     }
     .cb-flow-step.action {
-      border-color: rgba(26,183,89,0.3);
-      background: rgba(26,183,89,0.06);
+      border-color: rgba(6,182,212,0.3);
+      background: rgba(6,182,212,0.06);
     }
     .cb-flow-step.logic {
       background: rgba(255,255,255,0.06);
@@ -201,7 +219,7 @@
     .cb-flow-step h4 {
       font-size: 14px;
       font-weight: 700;
-      color: #1ab759;
+      color: #06b6d4;
       margin-bottom: 8px;
       font-family: 'DM Sans', sans-serif;
       text-transform: uppercase;
@@ -236,12 +254,12 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #1ab759;
+      background: #06b6d4;
       transform: translateY(-50%);
     }
     .cb-flow-arrow {
       text-align: center;
-      color: rgba(26,183,89,0.5);
+      color: rgba(6,182,212,0.5);
       padding: 0 8px;
     }
 
@@ -265,11 +283,11 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: rgba(26,183,89,0.15);
+      background: rgba(6,182,212,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #1ab759;
+      color: #06b6d4;
       flex-shrink: 0;
     }
     .cb-chat-header-text h4 {
@@ -281,7 +299,7 @@
     }
     .cb-chat-header-text span {
       font-size: 12px;
-      color: #1ab759;
+      color: #06b6d4;
       font-family: 'Inter', sans-serif;
     }
     .cb-chat-body {
@@ -302,7 +320,7 @@
     }
     .cb-msg.user {
       align-self: flex-end;
-      background: rgba(26,183,89,0.12);
+      background: rgba(6,182,212,0.12);
       color: rgba(255,255,255,0.9);
       border-bottom-right-radius: 4px;
     }
@@ -314,7 +332,7 @@
     }
     .cb-msg.bot .cb-msg-label {
       font-size: 11px;
-      color: #1ab759;
+      color: #06b6d4;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -334,7 +352,7 @@
       font-family: 'Courier New', monospace;
     }
     .cb-processing-step .cb-check {
-      color: #1ab759;
+      color: #06b6d4;
       font-weight: 700;
     }
     .cb-processing-step .cb-label {
@@ -410,8 +428,8 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: rgba(26,183,89,0.12);
-      color: #1ab759;
+      background: rgba(6,182,212,0.12);
+      color: #06b6d4;
       font-size: 13px;
       font-weight: 700;
       display: flex;
@@ -449,19 +467,19 @@
       transition: border-color 0.3s, background 0.3s;
     }
     .cb-card:hover {
-      border-color: rgba(26,183,89,0.3);
-      background: rgba(26,183,89,0.04);
+      border-color: rgba(6,182,212,0.3);
+      background: rgba(6,182,212,0.04);
     }
     .cb-card-icon {
       width: 48px;
       height: 48px;
       border-radius: 12px;
-      background: rgba(26,183,89,0.12);
+      background: rgba(6,182,212,0.12);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-      color: #1ab759;
+      color: #06b6d4;
     }
     .cb-card h3 {
       font-size: 18px;
@@ -494,7 +512,7 @@
     .cb-value-num {
       font-size: 36px;
       font-weight: 700;
-      color: #1ab759;
+      color: #06b6d4;
       margin-bottom: 8px;
       font-family: 'DM Sans', sans-serif;
     }
@@ -532,7 +550,7 @@
       margin-top: 40px;
       padding: 28px 32px;
       background: rgba(255,255,255,0.02);
-      border-left: 3px solid #1ab759;
+      border-left: 3px solid #06b6d4;
       border-radius: 4px;
     }
     .cb-quote p {
@@ -753,7 +771,7 @@
   <section class="cb-hero">
     <div class="cb-glow"></div>
     <div class="cb-container" style="position: relative; z-index: 1;">
-      <div class="cb-badge page-load-1">AI Chatbot</div>
+      <div class="cb-badge page-load-1"><svg class="ai-spark-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 1l1.5 4.5L14 7l-4.5 1.5L8 13l-1.5-4.5L2 7l4.5-1.5L8 1z" fill="#06b6d4"/><circle cx="13" cy="3" r="1.5" fill="#22d3ee" opacity="0.6"/><circle cx="3" cy="12" r="1" fill="#22d3ee" opacity="0.4"/></svg>AI Chatbot</div>
       <h1 class="page-load-1">Build Chatbots That Act,<br>Not Just Answer</h1>
       <p class="hero-sub page-load-2">An APIANT chatbot is deceptively simple: a trigger (the user's message) and an action (the response). But between those two points lies the full power of the platform: AI reasoning, API calls to any connected system, data transformation, conditional logic, and multi-step workflows.</p>
       <div class="page-load-2">
@@ -766,7 +784,7 @@
   <!-- ===== 2. HOW IT WORKS ===== -->
   <section class="cb-section">
     <div class="cb-container">
-      <div class="cb-badge">Architecture</div>
+      <div class="cb-badge"><svg class="ai-spark-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 1l1.5 4.5L14 7l-4.5 1.5L8 13l-1.5-4.5L2 7l4.5-1.5L8 1z" fill="#06b6d4"/><circle cx="13" cy="3" r="1.5" fill="#22d3ee" opacity="0.6"/><circle cx="3" cy="12" r="1" fill="#22d3ee" opacity="0.4"/></svg>Architecture</div>
       <h2 class="cb-section-title reveal">One Trigger. One Action. Unlimited Possibilities.</h2>
       <p class="cb-section-subtitle reveal delay-1">Every APIANT chatbot follows the same structure. The user sends a message (trigger). The platform processes it through any combination of AI, API calls, data lookups, conditional logic, and workflow execution. Then a response is returned (action). The complexity lives in the middle, and you build it visually.</p>
 
@@ -807,7 +825,7 @@
   <!-- ===== 3. GDPR COMPLIANCE CHATBOT EXAMPLE ===== -->
   <section class="cb-section-alt" id="gdpr-example">
     <div class="cb-container">
-      <div class="cb-badge">Real-World Example</div>
+      <div class="cb-badge"><svg class="ai-spark-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 1l1.5 4.5L14 7l-4.5 1.5L8 13l-1.5-4.5L2 7l4.5-1.5L8 1z" fill="#06b6d4"/><circle cx="13" cy="3" r="1.5" fill="#22d3ee" opacity="0.6"/><circle cx="3" cy="12" r="1" fill="#22d3ee" opacity="0.4"/></svg>Real-World Example</div>
       <h2 class="cb-section-title reveal">GDPR Compliance Chatbot</h2>
       <p class="cb-section-subtitle reveal delay-1">A customer submits a Data Subject Access Request (DSAR) through your chatbot. The chatbot verifies their identity, queries every system that holds their data, compiles a structured report, and delivers it. What used to take your legal team 20+ hours of manual work happens in under two minutes.</p>
 
@@ -948,8 +966,8 @@
             </div>
           </div>
 
-          <div style="margin-top: 32px; padding: 20px; background: rgba(26,183,89,0.06); border: 1px solid rgba(26,183,89,0.2); border-radius: 8px;">
-            <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin: 0; line-height: 1.6;"><strong style="color: #1ab759;">Every step is auditable.</strong> APIANT logs every API call, every data access, and every action taken. Your DPO gets a complete audit trail for every DSAR, automatically.</p>
+          <div style="margin-top: 32px; padding: 20px; background: rgba(6,182,212,0.06); border: 1px solid rgba(6,182,212,0.2); border-radius: 8px;">
+            <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin: 0; line-height: 1.6;"><strong style="color: #06b6d4;">Every step is auditable.</strong> APIANT logs every API call, every data access, and every action taken. Your DPO gets a complete audit trail for every DSAR, automatically.</p>
           </div>
         </div>
       </div>
@@ -959,7 +977,7 @@
   <!-- ===== 4. BUSINESS VALUE ===== -->
   <section class="cb-section">
     <div class="cb-container">
-      <div class="cb-badge">Business Impact</div>
+      <div class="cb-badge"><svg class="ai-spark-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 1l1.5 4.5L14 7l-4.5 1.5L8 13l-1.5-4.5L2 7l4.5-1.5L8 1z" fill="#06b6d4"/><circle cx="13" cy="3" r="1.5" fill="#22d3ee" opacity="0.6"/><circle cx="3" cy="12" r="1" fill="#22d3ee" opacity="0.4"/></svg>Business Impact</div>
       <h2 class="cb-section-title centered reveal">Why This Matters</h2>
       <p class="cb-section-subtitle centered reveal delay-1">GDPR compliance is mandatory for any company handling EU citizen data. Manual DSAR processing is slow, error-prone, and expensive. An APIANT chatbot eliminates the bottleneck.</p>
 
@@ -987,7 +1005,7 @@
   <!-- ===== 5. MORE USE CASES ===== -->
   <section class="cb-section-alt">
     <div class="cb-container">
-      <div class="cb-badge">Use Cases</div>
+      <div class="cb-badge"><svg class="ai-spark-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 1l1.5 4.5L14 7l-4.5 1.5L8 13l-1.5-4.5L2 7l4.5-1.5L8 1z" fill="#06b6d4"/><circle cx="13" cy="3" r="1.5" fill="#22d3ee" opacity="0.6"/><circle cx="3" cy="12" r="1" fill="#22d3ee" opacity="0.4"/></svg>Use Cases</div>
       <h2 class="cb-section-title centered reveal">What Else You Can Build</h2>
       <p class="cb-section-subtitle centered reveal delay-1">The GDPR chatbot is one example. The same architecture powers any chatbot that needs to act on real data across real systems.</p>
 

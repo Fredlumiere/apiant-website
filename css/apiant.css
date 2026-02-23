@@ -2151,7 +2151,7 @@ a {
 }
 
 .white-box-holder.apiapp {
-  min-width: 350px;
+  min-width: 0;
   height: auto;
   min-height: 550px;
   overflow: hidden;
@@ -3139,9 +3139,9 @@ a {
 }
 
 .popup-x-holder {
-  background-color: var(--accent-color);
+  background-color: rgba(255,255,255,0.08);
   cursor: pointer;
-  border: 1px solid #c43333;
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 6px;
   justify-content: center;
   align-items: center;
@@ -3154,7 +3154,7 @@ a {
 }
 
 .popup-x-holder:hover {
-  background-color: #ca541d;
+  background-color: rgba(255,255,255,0.15);
   transform: scale(1.1);
 }
 
@@ -7044,7 +7044,7 @@ a {
   }
 
   .white-box-holder.apiapp {
-    min-width: auto;
+    min-height: 400px;
   }
 
   .white-box-container {
@@ -7925,4 +7925,106 @@ a {
   }
 }
 
+/* === AI Spark Animation (site-wide) === */
+@keyframes ai-spark-pulse {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 0.6; filter: brightness(1.4); }
+}
+@keyframes ai-spark-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.ai-spark-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  animation: ai-spark-rotate 6s linear infinite;
+}
+.ai-spark-icon circle {
+  animation: ai-spark-pulse 2s ease-in-out infinite;
+}
+.ai-spark-icon circle:last-child {
+  animation-delay: 0.6s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-spark-icon,
+  .ai-spark-icon circle { animation: none; }
+}
 
+/* === Premium CTA Buttons (site-wide) === */
+@keyframes ctaSweep {
+  0%, 30% { background-position: 200% 0; }
+  70%, 100% { background-position: -50% 0; }
+}
+
+/* Primary CTA link buttons */
+.button[style*="1ab759"],
+.w-button[style*="1ab759"] {
+  background: linear-gradient(160deg, #22c95e 0%, #1ab759 40%, #128a42 100%) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  box-shadow:
+    0 0 24px rgba(26,183,89,0.2),
+    0 2px 8px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.12) !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.button[style*="1ab759"]::before,
+.w-button[style*="1ab759"]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255,255,255,0.06) 45%,
+    rgba(255,255,255,0.1) 50%,
+    rgba(255,255,255,0.06) 55%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  animation: ctaSweep 5s ease-in-out infinite;
+  pointer-events: none;
+}
+.button[style*="1ab759"]:hover,
+.w-button[style*="1ab759"]:hover {
+  background: linear-gradient(160deg, #2dd96b 0%, #1ecb62 40%, #16a84e 100%) !important;
+  box-shadow:
+    0 0 36px rgba(26,183,89,0.35),
+    0 6px 20px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.18) !important;
+  transform: translateY(-2px) scale(1.03) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+}
+.button[style*="1ab759"]:active,
+.w-button[style*="1ab759"]:active {
+  transform: translateY(0) scale(0.98) !important;
+  box-shadow:
+    0 0 16px rgba(26,183,89,0.2),
+    0 1px 4px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.08) !important;
+}
+
+/* Form submit buttons */
+input[type="submit"][style*="1ab759"] {
+  background: linear-gradient(160deg, #22c95e 0%, #1ab759 40%, #128a42 100%) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow:
+    0 0 16px rgba(26,183,89,0.15),
+    0 2px 6px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.1) !important;
+  transition: all 0.3s ease !important;
+}
+input[type="submit"][style*="1ab759"]:hover {
+  background: linear-gradient(160deg, #2dd96b 0%, #1ecb62 40%, #16a84e 100%) !important;
+  box-shadow:
+    0 0 28px rgba(26,183,89,0.3),
+    0 4px 12px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button[style*="1ab759"]::before,
+  .w-button[style*="1ab759"]::before { animation: none; }
+}

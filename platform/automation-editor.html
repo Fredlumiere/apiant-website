@@ -443,17 +443,32 @@
     .btn-primary {
       display: inline-block;
       padding: 14px 32px;
-      background: #059669;
+      background: linear-gradient(160deg, #10b981 0%, #059669 40%, #047857 100%);
       color: #ffffff;
       font-size: 15px;
       font-weight: 600;
       border-radius: 8px;
       text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 24px rgba(5,150,105,0.2), 0 2px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.06) 45%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 55%, transparent 60%);
+      background-size: 250% 100%;
+      animation: ctaSweep 5s ease-in-out infinite;
+      pointer-events: none;
     }
     .btn-primary:hover {
-      background: #047857;
-      transform: translateY(-1px);
+      background: linear-gradient(160deg, #34d399 0%, #10b981 40%, #059669 100%);
+      box-shadow: 0 0 36px rgba(5,150,105,0.35), 0 6px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.18);
+      transform: translateY(-2px) scale(1.03);
+      border-color: rgba(255,255,255,0.18);
     }
     .btn-secondary {
       display: inline-block;
@@ -781,57 +796,7 @@
       <div class="ss-mockup reveal">
         <div class="ss-bar"><span class="ss-dot ss-dot-r"></span><span class="ss-dot ss-dot-y"></span><span class="ss-dot ss-dot-g"></span>&nbsp; Automation Editor: MindBody &rarr; HubSpot CRM Sync</div>
         <div class="ss-body">
-          <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <pattern id="aegrid2" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/></pattern>
-            </defs>
-            <rect width="800" height="320" fill="url(#aegrid2)"/>
-            <!-- Trigger node -->
-            <rect x="340" y="10" width="120" height="30" rx="4" fill="#1e293b" stroke="rgba(16,185,129,0.3)"/>
-            <text x="400" y="29" font-size="8" fill="#34d399" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">New Booking Trigger</text>
-            <line x1="400" y1="40" x2="400" y2="55" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-            <!-- Iterator -->
-            <circle cx="400" cy="65" r="12" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
-            <text x="400" y="69" font-size="8" fill="rgba(255,255,255,0.4)" font-family="Inter,sans-serif" text-anchor="middle">&#8634;</text>
-            <line x1="400" y1="77" x2="400" y2="92" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-            <!-- Condition 1: Custom Objects -->
-            <rect x="375" y="92" width="50" height="36" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 400 110)"/>
-            <text x="400" y="114" font-size="6.5" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Custom Obj?</text>
-            <!-- False branch (left) -->
-            <line x1="375" y1="110" x2="200" y2="140" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
-            <text x="280" y="118" font-size="6" fill="#ef4444" font-family="Inter,sans-serif">False</text>
-            <!-- True branch (right) -->
-            <line x1="425" y1="110" x2="600" y2="140" stroke="#22c55e" stroke-width="1" opacity="0.4"/>
-            <text x="510" y="118" font-size="6" fill="#22c55e" font-family="Inter,sans-serif">True</text>
-            <!-- Left branch: Flat field update -->
-            <rect x="130" y="140" width="140" height="28" rx="4" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
-            <text x="200" y="158" font-size="7" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle">HubSpot: Update Contact</text>
-            <line x1="200" y1="168" x2="200" y2="185" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-            <rect x="140" y="185" width="120" height="24" rx="4" fill="#1e293b" stroke="rgba(59,130,246,0.3)"/>
-            <text x="200" y="201" font-size="7" fill="#3b82f6" font-family="Inter,sans-serif" text-anchor="middle">Log Sync Result</text>
-            <!-- Right branch: Custom object path -->
-            <circle cx="600" cy="155" r="16" fill="#1e293b" stroke="rgba(255,255,255,0.12)"/>
-            <text x="600" y="159" font-size="10" fill="rgba(255,255,255,0.4)" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">M</text>
-            <text x="600" y="180" font-size="6.5" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" text-anchor="middle">Get Client Visits</text>
-            <line x1="600" y1="171" x2="600" y2="192" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-            <!-- Condition 2: Found Appointment -->
-            <rect x="575" y="192" width="50" height="36" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 600 210)"/>
-            <text x="600" y="214" font-size="6.5" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Found ID?</text>
-            <line x1="575" y1="210" x2="480" y2="245" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
-            <text x="520" y="222" font-size="6" fill="#ef4444" font-family="Inter,sans-serif">False</text>
-            <line x1="625" y1="210" x2="700" y2="245" stroke="#22c55e" stroke-width="1" opacity="0.4"/>
-            <text x="660" y="222" font-size="6" fill="#22c55e" font-family="Inter,sans-serif">True</text>
-            <!-- Right-True: Continue processing -->
-            <circle cx="700" cy="258" r="14" fill="#1e293b" stroke="rgba(245,158,11,0.3)"/>
-            <text x="700" y="262" font-size="9" fill="#f59e0b" font-family="Inter,sans-serif" text-anchor="middle">&#9201;</text>
-            <text x="700" y="280" font-size="6" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" text-anchor="middle">Convert Date</text>
-            <line x1="700" y1="272" x2="700" y2="290" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-            <rect x="650" y="290" width="100" height="24" rx="4" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
-            <text x="700" y="306" font-size="7" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle">Update Custom Obj</text>
-            <!-- Right-False: Skip -->
-            <rect x="430" y="245" width="100" height="24" rx="4" fill="#1e293b" stroke="rgba(59,130,246,0.3)"/>
-            <text x="480" y="261" font-size="7" fill="#3b82f6" font-family="Inter,sans-serif" text-anchor="middle">Skip &amp; Log</text>
-          </svg>
+          <img src="../images/ae-search-diagram.svg" alt="APIANT Automation Editor showing a Mindbody to HubSpot CRM sync flow with search, conditional branching, and data transformations" style="width:100%; display:block;" loading="lazy">
         </div>
       </div>
     </div>
@@ -913,69 +878,8 @@
 
       <div class="ss-mockup reveal">
         <div class="ss-bar"><span class="ss-dot ss-dot-r"></span><span class="ss-dot ss-dot-y"></span><span class="ss-dot ss-dot-g"></span>&nbsp; Settings &amp; Logic: Per-Customer Configuration</div>
-        <div class="ss-body" style="display:flex;gap:16px;">
-          <!-- Settings panel side -->
-          <div style="flex:0 0 38%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:14px;">
-            <div style="font-size:9px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;font-family:Inter,sans-serif;">Customer Settings</div>
-            <!-- Setting rows -->
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
-              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Custom object appointments</span>
-              <span style="background:#059669;color:#fff;font-size:7px;padding:2px 8px;border-radius:3px;font-weight:600;">YES</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
-              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Timezone</span>
-              <span style="font-size:8px;color:rgba(255,255,255,0.35);">America/Chicago</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
-              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Multi-location tracking</span>
-              <span style="background:#059669;color:#fff;font-size:7px;padding:2px 8px;border-radius:3px;font-weight:600;">YES</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
-              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Sync memberships</span>
-              <span style="background:rgba(239,68,68,0.2);color:#ef4444;font-size:7px;padding:2px 8px;border-radius:3px;font-weight:600;">NO</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:Inter,sans-serif;">
-              <span style="font-size:8px;color:rgba(255,255,255,0.5);">Snowbird support</span>
-              <span style="background:#059669;color:#fff;font-size:7px;padding:2px 8px;border-radius:3px;font-weight:600;">YES</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-family:Inter,sans-serif;">
-              <span style="font-size:8px;color:rgba(255,255,255,0.5);">HubSpot pipeline ID</span>
-              <span style="font-size:8px;color:rgba(255,255,255,0.35);">pipeline_82a</span>
-            </div>
-          </div>
-          <!-- Logic flow side -->
-          <div style="flex:1;">
-            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-              <defs><pattern id="setgrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/></pattern></defs>
-              <rect width="300" height="200" fill="url(#setgrid)"/>
-              <!-- Settings check node -->
-              <rect x="100" y="8" width="100" height="24" rx="4" fill="#1e293b" stroke="rgba(16,185,129,0.3)"/>
-              <text x="150" y="24" font-size="7" fill="#34d399" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">Read Settings</text>
-              <line x1="150" y1="32" x2="150" y2="46" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-              <!-- Diamond: Custom Objects? -->
-              <rect x="128" y="46" width="44" height="30" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.15)" transform="rotate(45 150 61)"/>
-              <text x="150" y="65" font-size="5.5" fill="rgba(255,255,255,0.4)" font-family="Inter,sans-serif" text-anchor="middle">Custom Obj?</text>
-              <!-- Highlight connecting settings to logic -->
-              <line x1="0" y1="61" x2="128" y2="61" stroke="#34d399" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/>
-              <!-- False left -->
-              <line x1="128" y1="61" x2="50" y2="100" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
-              <text x="82" y="76" font-size="5.5" fill="#ef4444" font-family="Inter,sans-serif">False</text>
-              <rect x="10" y="100" width="80" height="20" rx="3" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
-              <text x="50" y="114" font-size="6" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle">Update Fields</text>
-              <!-- True right -->
-              <line x1="172" y1="61" x2="240" y2="100" stroke="#22c55e" stroke-width="1" opacity="0.4"/>
-              <text x="210" y="76" font-size="5.5" fill="#22c55e" font-family="Inter,sans-serif">True</text>
-              <rect x="200" y="100" width="90" height="20" rx="3" fill="#1e293b" stroke="rgba(255,113,69,0.3)"/>
-              <text x="245" y="114" font-size="6" fill="#ff7145" font-family="Inter,sans-serif" text-anchor="middle">Create Custom Obj</text>
-              <!-- Snowbird check -->
-              <line x1="245" y1="120" x2="245" y2="138" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-              <rect x="215" y="138" width="60" height="30" rx="3" fill="#1e293b" stroke="rgba(255,255,255,0.12)" transform="rotate(45 245 153)"/>
-              <text x="245" y="157" font-size="5.5" fill="rgba(255,255,255,0.35)" font-family="Inter,sans-serif" text-anchor="middle">Snowbird?</text>
-              <line x1="245" y1="168" x2="245" y2="182" stroke="#22c55e" stroke-width="1" opacity="0.3"/>
-              <rect x="205" y="182" width="80" height="16" rx="3" fill="#1e293b" stroke="rgba(59,130,246,0.3)"/>
-              <text x="245" y="193" font-size="5.5" fill="#3b82f6" font-family="Inter,sans-serif" text-anchor="middle">Multi-Loc Update</text>
-            </svg>
-          </div>
+        <div class="ss-body">
+          <img src="../images/ae-settings-logic.svg" alt="APIANT Admin Console showing per-customer settings panel with toggles driving automation logic branching" style="width:100%; display:block;" loading="lazy">
         </div>
       </div>
     </div>
