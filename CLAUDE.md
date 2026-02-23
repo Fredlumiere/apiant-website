@@ -143,3 +143,7 @@ From the revision plan (these apply to all page copy):
 - Videos are in `/videos/`. Some pages also embed YouTube/Wistia/Calendly.
 - The `backup/` directory contains staging/backup versions of pages, not live content.
 - Hidden placeholder testimonials ("Emily Chen / DevOps Specialist") exist in product page code with `class="hide"`. These are template filler, not real content.
+
+## UI Reference Assets (uisnap)
+
+When asked to generate SVG illustrations, Lottie animations, or animated SVGs from screenshots or recordings, look in `.uisnap/` for processed reference materials. Each subdirectory contains a `manifest.json` describing the source material, extracted frames (if video/GIF), and any style or format hints provided by the user. Read the manifest first, then read the image files to understand the visual content before generating assets.
