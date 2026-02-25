@@ -509,24 +509,6 @@
         border-bottom: none;
       }
 
-      /* Demo section */
-      .demo-section {
-        text-align: center;
-        padding: 80px 0 60px;
-      }
-      .demo-section h2 {
-        font-size: 36px;
-        font-weight: 700;
-        color: var(--_white-mode---heading-color);
-        margin: 0 0 12px;
-      }
-      .demo-section .demo-subtitle {
-        font-size: 17px;
-        color: var(--_white-mode---paragraph-color);
-        margin: 0 0 32px;
-        line-height: 1.5;
-      }
-
       /* Trust callout */
 
       /* Final CTA banner */
@@ -746,7 +728,7 @@
           </div>
           <div style="-webkit-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 35px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="animate-on-load-04">
             <div class="dual-cta">
-              <a href="#Demo" class="btn-primary">See It In Action &rarr;</a>
+              <a href="#" class="btn-primary demo-toggle">See It In Action &rarr;</a>
             </div>
             <div class="risk-reversal">2-minute interactive demo &middot; No signup required</div>
           </div>
@@ -894,7 +876,7 @@
           </div>
         </div>
         <div class="mid-section-cta fade-in-on-scroll">
-          <a href="#Demo" class="btn-primary">See It In Action &rarr;</a>
+          <a href="#" class="btn-primary demo-scroll-activate">See It In Action &rarr;</a>
         </div>
       </div>
     </div>
@@ -979,7 +961,7 @@
         </div>
         <!-- Mid-section CTA -->
         <div class="mid-section-cta fade-in-on-scroll">
-          <a href="#Demo" class="btn-primary">See It In Action &rarr;</a>
+          <a href="#" class="btn-primary demo-scroll-activate">See It In Action &rarr;</a>
           <div class="risk-reversal">Takes 2 minutes &middot; No signup required</div>
         </div>
         <!-- ===== FEATURE CHECKLIST GRID ===== -->
@@ -1260,16 +1242,6 @@
             <div class="cmp-val cmp-dim">$2,000+/mo</div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- ===== DEMO SECTION ===== -->
-  <div id="Demo" class="section">
-    <div class="container">
-      <div class="demo-section">
-        <h2>Watch how it works in 2 minutes</h2>
-        <p class="demo-subtitle">Most customers understand the ROI before the demo is even over.</p>
-        <div id="demomaker-embed" style="width:100%; min-height:500px; margin: 32px 0;"></div>
       </div>
     </div>
   </div>
@@ -1606,7 +1578,7 @@
     <h2>Ready to Connect DonorPerfect and HubSpot?</h2>
     <p>Join nonprofits that have eliminated manual data entry and started focusing on what matters - building donor relationships.</p>
     <div class="dual-cta" style="justify-content:center;">
-      <a href="#Demo" class="btn-primary" onclick="document.getElementById('Demo')?.scrollIntoView({behavior:'smooth'});return false;">Watch the Demo →</a>
+      <a href="#" class="btn-primary demo-scroll-activate">See It In Action &rarr;</a>
     </div>
     <p class="risk-reversal" style="margin-top:.75rem;">2-minute interactive demo · No signup required</p>
   </div>
@@ -2052,6 +2024,29 @@ document.addEventListener("DOMContentLoaded", function() {
       document.body.style.overflow = '';
       if (popupHolder) popupHolder.style.display = 'none';
     }
+  });
+  // Hero demo toggle: click "See It In Action" in hero to show/hide demo
+  var heroSection = document.querySelector('.section.white-hero');
+  document.querySelectorAll('.demo-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (heroSection) {
+        heroSection.classList.toggle('demo-active');
+        this.textContent = heroSection.classList.contains('demo-active') ? 'Back to Overview' : 'See It In Action \u2192';
+      }
+    });
+  });
+  // Scroll-to-hero and activate demo from elsewhere on the page
+  document.querySelectorAll('.demo-scroll-activate').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (heroSection) {
+        heroSection.classList.add('demo-active');
+        heroSection.scrollIntoView({ behavior: 'smooth' });
+        var heroBtn = document.querySelector('.demo-toggle');
+        if (heroBtn) heroBtn.textContent = 'Back to Overview';
+      }
+    });
   });
 });
 </script>
