@@ -44,7 +44,7 @@
 - [x] Feature comparison table
 - [x] FAQ section
 - [x] Annual billing toggle (20% discount)
-- [ ] Add SI margin calculator on for-si.html
+- [x] Add SI margin calculator on for-si.html
 
 | Tier | Price | Connections | Infrastructure |
 |------|-------|-------------|----------------|
@@ -78,10 +78,10 @@
 ## 2. Pricing Architecture
 
 - [x] Pricing page created (adapted from strategy recommendations)
-- [ ] Add usage-based overlay pricing
-  - [ ] Automation runs beyond tier: $0.005/run
-  - [ ] Additional connections: $30/mo (Scale), $25 (Pro)
-  - [ ] Additional Co-Pilot builds: $5/build beyond limit
+- [x] Add usage-based overlay pricing
+  - [x] Automation runs beyond tier: $0.005/run
+  - [x] Additional connections: $20/mo each (Pro and Scale)
+  - [x] Additional Co-Pilot builds: $5/build beyond limit
 - [ ] Display usage limits per tier (automations, runs/month, Co-Pilot builds)
 
 ---
@@ -311,6 +311,9 @@
 - [x] Alt text on nav/footer logos and partner icons
 - [x] Empty lightbox src="" fixed across 17 product pages
 - [x] 29 hand-coded SVG graphics across 8 pages
+- [x] SI margin calculator on for-si.html (interactive sliders, live revenue/margin calc)
+- [x] Usage-based overlay pricing on pricing.html ($20/connection, $5/build, $0.005/run)
+- [x] Start Building CTA button gradient styling
 
 ### This Week
 - [ ] Record 90-second AI Co-Pilot video
@@ -336,7 +339,7 @@
 | Health scoring + churn prevention in HubSpot | 2-3 weeks | CS Ops |
 | Run all 5 marketing campaigns | 12 weeks | Marketing |
 | Reduce demo form to 3 fields | 1 hour | Website |
-| SI margin calculator on for-si.html | 1-2 days | Website |
+| SI margin calculator on for-si.html | 1-2 days | Website | DONE |
 
 ---
 
