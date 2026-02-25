@@ -248,7 +248,7 @@
 ### Friction Points
 - [x] "Start Building" CTA text updated
 - [ ] Fix "Start Building" to link to actual self-serve signup (currently /editor login wall)
-- [ ] Reduce demo form from 8 fields to 3 (work email, company, integration needs)
+- [x] Reduce demo form from 8 fields to 3 (work email, company, integration needs)
 - [ ] Fix hero CTAs to lead somewhere useful
 
 ### UX Priorities
@@ -258,7 +258,7 @@
 | P0 | Pricing visibility | DONE |
 | P0 | Fix "Start Building" CTA destination | Not started |
 | P1 | Interactive AI Co-Pilot demo | Not started |
-| P1 | Reduce demo form to 3 fields | Not started |
+| P1 | Reduce demo form to 3 fields | DONE |
 | P1 | Onboarding checklist for first-run | Not started |
 | P2 | "Start Here" guided path on platform page | Not started |
 | P2 | Public status page | Not started |
