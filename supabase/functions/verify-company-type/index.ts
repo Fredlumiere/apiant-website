@@ -1,17 +1,23 @@
 /**
  * verify-company-type
  *
- * Scrapes a company's website via Firecrawl and uses AI to verify
- * whether the company matches the claimed type (SaaS, SI, Enterprise).
+ * Scrapes a company's website via Firecrawl and uses AI to analyze
+ * what the company does and whether it matches the claimed type.
  *
  * POST { domain: string, claimed_type: "saas" | "si" | "enterprise" }
- * Returns { verified: boolean, confidence: string, reason: string }
+ * Returns {
+ *   description: string,        // 1-2 sentence description of the company
+ *   detected_type: string,      // saas, si, enterprise, fitness, healthcare, nonprofit, other
+ *   verified: boolean,          // true if detected_type matches claimed_type
+ *   confidence: string,         // high, medium, low
+ *   reason: string,             // explanation
+ *   suggested_vertical: string  // mindbody, cliniko, donorperfect, or "" if none
+ * }
  */
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
 
 const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
-const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");  // or use Anthropic/Gemini
 
 const TYPE_LABELS: Record<string, string> = {
   saas: "SaaS Company (a company that sells software as a service)",
@@ -66,14 +72,23 @@ async function scrapeHomepage(domain: string): Promise<string> {
   }
 }
 
+interface ClassificationResult {
+  description: string;
+  detected_type: string;
+  verified: boolean;
+  confidence: string;
+  reason: string;
+  suggested_vertical: string;
+}
+
 async function classifyCompany(
   content: string,
   domain: string,
   claimedType: string
-): Promise<{ verified: boolean; confidence: string; reason: string }> {
+): Promise<ClassificationResult> {
   const typeLabel = TYPE_LABELS[claimedType] || claimedType;
 
-  const prompt = `You are a company classifier for APIANT, an integration platform. Analyze this website content and determine if the company matches the claimed type.
+  const prompt = `You are a company classifier for APIANT, an integration platform. Analyze this website content and determine what the company does and whether it matches the claimed type.
 
 CLAIMED TYPE: ${typeLabel}
 DOMAIN: ${domain}
@@ -81,21 +96,34 @@ DOMAIN: ${domain}
 WEBSITE CONTENT:
 ${content}
 
-CLASSIFICATION RULES:
-- SaaS Company: Sells software/platform as a service. Has product pages, pricing, sign-up flows. Their customers use their software.
-- System Integrator: Provides IT consulting, custom development, or integration services to other businesses. May be a consulting firm, agency, or managed services provider.
-- Enterprise: A large organization (not primarily a software or consulting company) that would need integrations for internal operations. Could be healthcare, manufacturing, retail, finance, etc.
+INSTRUCTIONS:
+1. Write a 1-2 sentence description of what this company actually does. Be specific and concise.
+2. Determine the company's actual type from these categories:
+   - "saas": Sells software/platform as a service. Has product pages, pricing, sign-up flows.
+   - "si": System Integrator. Provides IT consulting, custom development, or integration services.
+   - "enterprise": Large organization needing internal integrations. Could be healthcare org, manufacturer, retailer, financial institution, etc.
+   - "fitness": Gym, fitness studio, wellness center, yoga studio, personal training, strength training, martial arts, pilates, etc.
+   - "healthcare": Medical clinic, physiotherapy, chiropractic, allied health practice, dental, optometry, etc.
+   - "nonprofit": Nonprofit, charity, foundation, NGO, fundraising organization, church, school, etc.
+   - "other": None of the above (restaurant, retail shop, personal blog, freelancer, etc.)
+3. Check if the detected type matches the claimed type.
+4. If the detected type is "fitness", set suggested_vertical to "mindbody".
+   If "healthcare", set suggested_vertical to "cliniko".
+   If "nonprofit", set suggested_vertical to "donorperfect".
+   Otherwise set suggested_vertical to "".
 
-IMPORTANT: Be reasonably generous. If the website plausibly fits the claimed type, verify it. Only reject if the website clearly contradicts the claim (e.g., a personal blog claiming to be an Enterprise, or a restaurant claiming to be a SaaS company).
+Be accurate. A strength training studio is "fitness", not "saas". A physiotherapy clinic is "healthcare", not "enterprise". A charity is "nonprofit", not "enterprise".
 
 Respond with ONLY a JSON object:
 {
+  "description": "One to two sentences describing what this company does",
+  "detected_type": "saas|si|enterprise|fitness|healthcare|nonprofit|other",
   "verified": true or false,
-  "confidence": "high", "medium", or "low",
-  "reason": "One sentence explaining why"
+  "confidence": "high|medium|low",
+  "reason": "One sentence explaining why",
+  "suggested_vertical": "mindbody|cliniko|donorperfect|"
 }`;
 
-  // Use Anthropic Claude API for classification
   const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
 
   if (ANTHROPIC_API_KEY) {
@@ -108,7 +136,7 @@ Respond with ONLY a JSON object:
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 256,
+        max_tokens: 512,
         messages: [{ role: "user", content: prompt }],
       }),
     });
@@ -125,9 +153,16 @@ Respond with ONLY a JSON object:
     return JSON.parse(jsonMatch[0]);
   }
 
-  // Fallback: if no AI key, accept all (log warning)
-  console.warn("No AI API key configured. Auto-verifying.");
-  return { verified: true, confidence: "low", reason: "Auto-verified (no AI key configured)" };
+  // Fallback: if no AI key, return basic result
+  console.warn("No AI API key configured. Returning unverified result.");
+  return {
+    description: "We could not analyze this website (AI classification not configured).",
+    detected_type: "other",
+    verified: false,
+    confidence: "low",
+    reason: "AI classification not available",
+    suggested_vertical: "",
+  };
 }
 
 serve(async (req) => {
@@ -173,7 +208,7 @@ serve(async (req) => {
     const content = await scrapeHomepage(cleanDomain);
     const result = await classifyCompany(content, cleanDomain, claimed_type);
 
-    console.log(`[verify] ${cleanDomain}: verified=${result.verified}, confidence=${result.confidence}`);
+    console.log(`[verify] ${cleanDomain}: detected=${result.detected_type}, verified=${result.verified}, confidence=${result.confidence}`);
 
     return new Response(
       JSON.stringify(result),

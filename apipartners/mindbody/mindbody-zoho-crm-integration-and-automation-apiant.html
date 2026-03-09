@@ -2260,7 +2260,60 @@
           </div>
         </div>
         <div id="cq-domain-status" style="display:none; margin-top:12px; padding:16px; border-radius:10px; font-size:14px; line-height:1.5;"></div>
+        <div id="cq-domain-confirm" style="display:none;">
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:20px; margin-top:16px;">
+            <p style="color:rgba(255,255,255,0.5); font-size:13px; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">We found</p>
+            <p id="cq-confirm-desc" style="font-size:15px; line-height:1.6; color:#f7f8f8; margin-bottom:16px;"></p>
+            <div style="display:flex; gap:10px;">
+              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany(true)" style="flex:1;">Yes, that's us</button>
+              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany(false)" style="flex:1; background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.12);">No, try again</button>
+            </div>
+          </div>
+        </div>
         <a class="apiant-popup-back" id="cq-domain-back" onclick="cqGoTo('cq-step-type')">&larr; Back</a>
+      </div>
+
+      <!-- Step: API Apps routing for non-qualifying leads -->
+      <div class="apiant-popup-step" id="cq-step-apiapps">
+        <h3 class="apiant-popup-title">We have solutions for you</h3>
+        <p class="apiant-popup-subtitle" id="cq-apiapps-subtitle">Based on what we found, here are integration products that might be a great fit.</p>
+        <div class="apiant-popup-qual-options" style="margin-top:16px;">
+          <a class="apiant-popup-qual-option" href="/apipartners/mindbody-turnkey-integration-solutions.html" id="cq-apiapp-mindbody" style="text-decoration:none; color:inherit;">
+            <div class="apiant-popup-qual-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </div>
+            <div class="apiant-popup-qual-text">
+              <div class="apiant-popup-qual-label">Mindbody Integrations</div>
+              <div class="apiant-popup-qual-desc">CRM, e-commerce, calendar, and more for fitness and wellness</div>
+            </div>
+            <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+          <a class="apiant-popup-qual-option" href="/apipartners/cliniko-turnkey-integration-solutions.html" id="cq-apiapp-cliniko" style="text-decoration:none; color:inherit;">
+            <div class="apiant-popup-qual-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div class="apiant-popup-qual-text">
+              <div class="apiant-popup-qual-label">Cliniko Integrations</div>
+              <div class="apiant-popup-qual-desc">CRM and automation for allied health practices</div>
+            </div>
+            <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+          <a class="apiant-popup-qual-option" href="/apipartners/donorperfect-turnkey-integration-solutions.html" id="cq-apiapp-donorperfect" style="text-decoration:none; color:inherit;">
+            <div class="apiant-popup-qual-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            <div class="apiant-popup-qual-text">
+              <div class="apiant-popup-qual-label">DonorPerfect Integrations</div>
+              <div class="apiant-popup-qual-desc">CRM and automation for nonprofits and fundraising</div>
+            </div>
+            <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </div>
+        <div class="apiant-popup-forum" style="margin-top:16px;">
+          <p style="font-size:14px; color:rgba(255,255,255,0.4);">Don't see what you need? Post on our community forum and find a builder who can help.</p>
+          <a href="https://forum.apiant.com" target="_blank" rel="noopener" class="apiant-popup-forum-btn" style="margin-top:10px;">Post on Community Forum</a>
+        </div>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-domain'); document.getElementById('cq-domain-input').style.display=''; document.getElementById('cq-domain-scanning').style.display='none'; document.getElementById('cq-domain-confirm').style.display='none'; document.getElementById('cq-domain-status').style.display='none';">&larr; Back</a>
       </div>
 
       <!-- Step 3: Contact Form -->
@@ -2503,6 +2556,8 @@
       cqGoTo('cq-step-forum');
     }
 
+    var CQ_VERIFY_RESULT = null; // Stores the verification response
+
     function cqVerifyDomain() {
       var domain = document.getElementById('cq-domain').value.trim();
       if (!domain) { document.getElementById('cq-domain').focus(); return; }
@@ -2512,6 +2567,7 @@
       var inputEl = document.getElementById('cq-domain-input');
       var scanEl = document.getElementById('cq-domain-scanning');
       var statusEl = document.getElementById('cq-domain-status');
+      var confirmEl = document.getElementById('cq-domain-confirm');
       var scanUrl = document.getElementById('cq-scan-url');
       var scanBar = document.getElementById('cq-scan-bar');
       var scanStatus = document.getElementById('cq-scan-status');
@@ -2520,6 +2576,7 @@
       // Show scanning UI
       inputEl.style.display = 'none';
       statusEl.style.display = 'none';
+      confirmEl.style.display = 'none';
       scanEl.style.display = '';
       backBtn.style.display = 'none';
       scanUrl.textContent = 'https://' + domain;
@@ -2537,27 +2594,39 @@
         scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Analyzing company type...';
       }, 3000);
 
-      function showResult() { backBtn.style.display = ''; }
-      function resetInput() {
+      function showConfirm(description) {
+        scanEl.style.display = 'none';
+        confirmEl.style.display = '';
+        backBtn.style.display = '';
+        document.getElementById('cq-confirm-desc').textContent = description;
+      }
+
+      function showError(html) {
         inputEl.style.display = '';
         scanEl.style.display = 'none';
         backBtn.style.display = '';
+        statusEl.style.display = 'block';
+        statusEl.innerHTML = html;
       }
 
       if (!CQ_SUPABASE_URL) {
-        // No backend: simulate quick scan then proceed
+        // No backend: simulate scan, skip confirmation, proceed
         setTimeout(function() {
           scanBar.style.width = '100%';
-          scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Verified!';
+          scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Complete';
           setTimeout(function() {
             CQ_VERIFIED_DOMAIN = domain;
             document.getElementById('cq-company-domain').value = domain;
-            resetInput();
+            inputEl.style.display = '';
+            scanEl.style.display = 'none';
+            backBtn.style.display = '';
             cqGoTo('cq-step-form');
           }, 600);
         }, 2000);
         return;
       }
+
+      CQ_VERIFIED_DOMAIN = domain;
 
       fetch(CQ_SUPABASE_URL + '/functions/v1/verify-company-type', {
         method: 'POST',
@@ -2567,50 +2636,102 @@
       .then(function(r) { return r.json(); })
       .then(function(data) {
         scanBar.style.width = '100%';
+
         if (data.error) {
           scanStatus.innerHTML = '<span style="color:#fca5a5;">Could not reach website</span>';
           setTimeout(function() {
-            resetInput();
-            statusEl.style.display = 'block';
+            showError('<span style="color:#fca5a5;">' + data.error + '</span><br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Check the URL and try again, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post on our forum</a>.</span>');
             statusEl.style.background = 'rgba(239,68,68,0.08)';
             statusEl.style.border = '1px solid rgba(239,68,68,0.2)';
             statusEl.style.color = '#fca5a5';
-            statusEl.innerHTML = data.error + '<br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Check the URL and try again, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post on our forum</a>.</span>';
-            showResult();
           }, 800);
           return;
         }
-        if (data.verified) {
-          scanStatus.innerHTML = '<span style="color:#1ab759;">&#10003; Verified as ' + cqTypeLabel(CQ_SELECTED_TYPE) + '</span>';
-          setTimeout(function() {
-            CQ_VERIFIED_DOMAIN = domain;
-            document.getElementById('cq-company-domain').value = domain;
-            resetInput();
-            cqGoTo('cq-step-form');
-          }, 800);
-        } else {
-          scanStatus.innerHTML = '<span style="color:#fcd34d;">Could not confirm company type</span>';
-          setTimeout(function() {
-            resetInput();
-            statusEl.style.display = 'block';
-            statusEl.style.background = 'rgba(245,158,11,0.08)';
-            statusEl.style.border = '1px solid rgba(245,158,11,0.2)';
-            statusEl.style.color = '#fcd34d';
-            statusEl.innerHTML = 'We couldn\'t confirm from your website that you\'re ' + cqTypeLabel(CQ_SELECTED_TYPE) + '.<br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Try a different URL, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post your request on our forum</a>.</span>';
-            showResult();
-          }, 1000);
-        }
+
+        // Store the result for the confirmation step
+        CQ_VERIFY_RESULT = data;
+        var desc = data.description || 'We analyzed your website.';
+
+        scanStatus.innerHTML = '<span style="color:#1ab759;">&#10003; Analysis complete</span>';
+        setTimeout(function() {
+          showConfirm(desc);
+        }, 600);
       })
       .catch(function() {
+        // On network error, proceed without verification
         scanBar.style.width = '100%';
         scanStatus.innerHTML = '<span style="color:#1ab759;">&#10003; Proceeding</span>';
+        CQ_VERIFY_RESULT = null;
         setTimeout(function() {
-          CQ_VERIFIED_DOMAIN = domain;
           document.getElementById('cq-company-domain').value = domain;
-          resetInput();
+          inputEl.style.display = '';
+          scanEl.style.display = 'none';
+          backBtn.style.display = '';
           cqGoTo('cq-step-form');
         }, 600);
       });
+    }
+
+    function cqConfirmCompany(confirmed) {
+      var confirmEl = document.getElementById('cq-domain-confirm');
+      var inputEl = document.getElementById('cq-domain-input');
+
+      if (!confirmed) {
+        // They said "No, try again" - go back to domain input
+        confirmEl.style.display = 'none';
+        inputEl.style.display = '';
+        document.getElementById('cq-domain').value = '';
+        document.getElementById('cq-domain').focus();
+        return;
+      }
+
+      // They confirmed the description is correct
+      document.getElementById('cq-company-domain').value = CQ_VERIFIED_DOMAIN;
+
+      if (CQ_VERIFY_RESULT && CQ_VERIFY_RESULT.verified) {
+        // Matches claimed type - proceed to contact form
+        confirmEl.style.display = 'none';
+        inputEl.style.display = '';
+        cqGoTo('cq-step-form');
+        return;
+      }
+
+      // Doesn't match claimed type - route to API apps or explain
+      var result = CQ_VERIFY_RESULT || {};
+      var detectedType = result.detected_type || 'other';
+      var vertical = result.suggested_vertical || '';
+
+      // Highlight the suggested vertical if applicable
+      var mbEl = document.getElementById('cq-apiapp-mindbody');
+      var ckEl = document.getElementById('cq-apiapp-cliniko');
+      var dpEl = document.getElementById('cq-apiapp-donorperfect');
+      // Reset styles
+      [mbEl, ckEl, dpEl].forEach(function(el) {
+        el.style.borderColor = 'rgba(255,255,255,0.08)';
+        el.style.background = 'rgba(255,255,255,0.02)';
+      });
+      // Highlight match
+      if (vertical === 'mindbody' && mbEl) {
+        mbEl.style.borderColor = 'rgba(var(--popup-accent-rgb, 26,183,89),0.4)';
+        mbEl.style.background = 'rgba(var(--popup-accent-rgb, 26,183,89),0.06)';
+      } else if (vertical === 'cliniko' && ckEl) {
+        ckEl.style.borderColor = 'rgba(var(--popup-accent-rgb, 26,183,89),0.4)';
+        ckEl.style.background = 'rgba(var(--popup-accent-rgb, 26,183,89),0.06)';
+      } else if (vertical === 'donorperfect' && dpEl) {
+        dpEl.style.borderColor = 'rgba(var(--popup-accent-rgb, 26,183,89),0.4)';
+        dpEl.style.background = 'rgba(var(--popup-accent-rgb, 26,183,89),0.06)';
+      }
+
+      var subtitle = document.getElementById('cq-apiapps-subtitle');
+      if (vertical) {
+        subtitle.textContent = 'It looks like you\'re not ' + cqTypeLabel(CQ_SELECTED_TYPE) + ', but we have turnkey integration products that might be a perfect fit.';
+      } else {
+        subtitle.textContent = 'We weren\'t able to confirm you\'re ' + cqTypeLabel(CQ_SELECTED_TYPE) + '. Here are some options that might help.';
+      }
+
+      confirmEl.style.display = 'none';
+      inputEl.style.display = '';
+      cqGoTo('cq-step-apiapps');
     }
 
     function cqTypeLabel(type) {
@@ -2785,6 +2906,7 @@
         document.getElementById('cq-step-type').classList.add('active');
         document.getElementById('cq-domain-input').style.display = '';
         document.getElementById('cq-domain-scanning').style.display = 'none';
+        document.getElementById('cq-domain-confirm').style.display = 'none';
         document.getElementById('cq-domain-status').style.display = 'none';
         document.getElementById('cq-domain-back').style.display = '';
         document.getElementById('cq-verify-btn').disabled = false;
@@ -2796,6 +2918,7 @@
         CQ_SELECTED_TYPE = '';
         CQ_VERIFIED_DOMAIN = '';
         CQ_FORM_DATA = {};
+        CQ_VERIFY_RESULT = null;
       }
       origOpenPopup(id);
     };
