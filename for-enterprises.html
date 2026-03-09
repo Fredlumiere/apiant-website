@@ -1166,17 +1166,30 @@
 
       <!-- Step 2: Domain Entry + Verification -->
       <div class="apiant-popup-step" id="cq-step-domain">
-        <h3 class="apiant-popup-title">What's your company website?</h3>
-        <p class="apiant-popup-subtitle">We'll take a quick look to learn about your business.</p>
-        <div class="apiant-popup-form">
-          <div class="apiant-popup-field">
-            <label for="cq-domain">Company website</label>
-            <input type="text" id="cq-domain" placeholder="acme.com" maxlength="256" autocomplete="url">
+        <div id="cq-domain-input">
+          <h3 class="apiant-popup-title">What's your company website?</h3>
+          <p class="apiant-popup-subtitle">We'll take a quick look to learn about your business.</p>
+          <div class="apiant-popup-form">
+            <div class="apiant-popup-field">
+              <label for="cq-domain">Company website</label>
+              <input type="text" id="cq-domain" placeholder="acme.com" maxlength="256" autocomplete="url">
+            </div>
+            <button type="button" class="apiant-popup-submit" id="cq-verify-btn" onclick="cqVerifyDomain()">Continue</button>
           </div>
-          <button type="button" class="apiant-popup-submit" id="cq-verify-btn" onclick="cqVerifyDomain()">Continue</button>
-          <div id="cq-domain-status" style="display:none; margin-top:12px; padding:16px; border-radius:10px; font-size:14px; line-height:1.5;"></div>
         </div>
-        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-type')">&larr; Back</a>
+        <div id="cq-domain-scanning" style="display:none; text-align:center; padding:20px 0;">
+          <div style="margin-bottom:20px;">
+            <div id="cq-scan-url" style="font-family:monospace; font-size:13px; color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 16px; display:inline-block; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></div>
+          </div>
+          <div style="position:relative; height:4px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; margin:0 20px 20px;">
+            <div id="cq-scan-bar" style="position:absolute; top:0; left:0; height:100%; width:0%; background:linear-gradient(90deg, var(--popup-accent, #1ab759), rgba(255,255,255,0.3)); border-radius:4px; transition:width 0.4s ease;"></div>
+          </div>
+          <div id="cq-scan-status" style="font-size:14px; color:rgba(255,255,255,0.6); min-height:24px;">
+            <span class="cq-scan-dot"></span> Visiting website...
+          </div>
+        </div>
+        <div id="cq-domain-status" style="display:none; margin-top:12px; padding:16px; border-radius:10px; font-size:14px; line-height:1.5;"></div>
+        <a class="apiant-popup-back" id="cq-domain-back" onclick="cqGoTo('cq-step-type')">&larr; Back</a>
       </div>
 
       <!-- Step 3: Contact Form -->
@@ -1368,19 +1381,56 @@
     function cqVerifyDomain() {
       var domain = document.getElementById('cq-domain').value.trim();
       if (!domain) { document.getElementById('cq-domain').focus(); return; }
+      // Normalize: strip protocol and trailing slash
+      domain = domain.replace(/^https?:\/\//, '').replace(/\/+$/, '');
 
-      var btn = document.getElementById('cq-verify-btn');
-      var status = document.getElementById('cq-domain-status');
-      btn.disabled = true;
-      btn.textContent = 'Verifying...';
-      status.style.display = 'none';
+      var inputEl = document.getElementById('cq-domain-input');
+      var scanEl = document.getElementById('cq-domain-scanning');
+      var statusEl = document.getElementById('cq-domain-status');
+      var scanUrl = document.getElementById('cq-scan-url');
+      var scanBar = document.getElementById('cq-scan-bar');
+      var scanStatus = document.getElementById('cq-scan-status');
+      var backBtn = document.getElementById('cq-domain-back');
+
+      // Show scanning UI
+      inputEl.style.display = 'none';
+      statusEl.style.display = 'none';
+      scanEl.style.display = '';
+      backBtn.style.display = 'none';
+      scanUrl.textContent = 'https://' + domain;
+      scanBar.style.width = '0%';
+      scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Visiting website...';
+
+      // Animate progress bar with timed status messages
+      setTimeout(function() { scanBar.style.width = '25%'; }, 200);
+      setTimeout(function() {
+        scanBar.style.width = '50%';
+        scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Reading page content...';
+      }, 1500);
+      setTimeout(function() {
+        scanBar.style.width = '75%';
+        scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Analyzing company type...';
+      }, 3000);
+
+      function showResult() { backBtn.style.display = ''; }
+      function resetInput() {
+        inputEl.style.display = '';
+        scanEl.style.display = 'none';
+        backBtn.style.display = '';
+      }
 
       if (!CQ_SUPABASE_URL) {
-        CQ_VERIFIED_DOMAIN = domain;
-        document.getElementById('cq-company-domain').value = domain;
-        btn.disabled = false;
-        btn.textContent = 'Continue';
-        cqGoTo('cq-step-form');
+        // No backend: simulate quick scan then proceed
+        setTimeout(function() {
+          scanBar.style.width = '100%';
+          scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Verified!';
+          setTimeout(function() {
+            CQ_VERIFIED_DOMAIN = domain;
+            document.getElementById('cq-company-domain').value = domain;
+            resetInput();
+            cqGoTo('cq-step-form');
+          }, 600);
+        }, 2000);
         return;
       }
 
@@ -1391,34 +1441,50 @@
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        btn.disabled = false;
-        btn.textContent = 'Continue';
+        scanBar.style.width = '100%';
         if (data.error) {
-          status.style.display = 'block';
-          status.style.background = 'rgba(239,68,68,0.08)';
-          status.style.border = '1px solid rgba(239,68,68,0.2)';
-          status.style.color = '#fca5a5';
-          status.innerHTML = data.error + '<br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Check the URL and try again, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post on our forum</a>.</span>';
+          scanStatus.innerHTML = '<span style="color:#fca5a5;">Could not reach website</span>';
+          setTimeout(function() {
+            resetInput();
+            statusEl.style.display = 'block';
+            statusEl.style.background = 'rgba(239,68,68,0.08)';
+            statusEl.style.border = '1px solid rgba(239,68,68,0.2)';
+            statusEl.style.color = '#fca5a5';
+            statusEl.innerHTML = data.error + '<br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Check the URL and try again, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post on our forum</a>.</span>';
+            showResult();
+          }, 800);
           return;
         }
         if (data.verified) {
-          CQ_VERIFIED_DOMAIN = domain;
-          document.getElementById('cq-company-domain').value = domain;
-          cqGoTo('cq-step-form');
+          scanStatus.innerHTML = '<span style="color:#1ab759;">&#10003; Verified as ' + cqTypeLabel(CQ_SELECTED_TYPE) + '</span>';
+          setTimeout(function() {
+            CQ_VERIFIED_DOMAIN = domain;
+            document.getElementById('cq-company-domain').value = domain;
+            resetInput();
+            cqGoTo('cq-step-form');
+          }, 800);
         } else {
-          status.style.display = 'block';
-          status.style.background = 'rgba(245,158,11,0.08)';
-          status.style.border = '1px solid rgba(245,158,11,0.2)';
-          status.style.color = '#fcd34d';
-          status.innerHTML = 'We couldn\'t confirm from your website that you\'re ' + cqTypeLabel(CQ_SELECTED_TYPE) + '.<br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Try a different URL, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post your request on our forum</a>.</span>';
+          scanStatus.innerHTML = '<span style="color:#fcd34d;">Could not confirm company type</span>';
+          setTimeout(function() {
+            resetInput();
+            statusEl.style.display = 'block';
+            statusEl.style.background = 'rgba(245,158,11,0.08)';
+            statusEl.style.border = '1px solid rgba(245,158,11,0.2)';
+            statusEl.style.color = '#fcd34d';
+            statusEl.innerHTML = 'We couldn\'t confirm from your website that you\'re ' + cqTypeLabel(CQ_SELECTED_TYPE) + '.<br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Try a different URL, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post your request on our forum</a>.</span>';
+            showResult();
+          }, 1000);
         }
       })
       .catch(function() {
-        btn.disabled = false;
-        btn.textContent = 'Continue';
-        CQ_VERIFIED_DOMAIN = domain;
-        document.getElementById('cq-company-domain').value = domain;
-        cqGoTo('cq-step-form');
+        scanBar.style.width = '100%';
+        scanStatus.innerHTML = '<span style="color:#1ab759;">&#10003; Proceeding</span>';
+        setTimeout(function() {
+          CQ_VERIFIED_DOMAIN = domain;
+          document.getElementById('cq-company-domain').value = domain;
+          resetInput();
+          cqGoTo('cq-step-form');
+        }, 600);
       });
     }
 
@@ -1592,7 +1658,10 @@
       if (id === 'contact-popup') {
         document.querySelectorAll('#contact-popup .apiant-popup-step').forEach(function(s) { s.classList.remove('active'); });
         document.getElementById('cq-step-type').classList.add('active');
+        document.getElementById('cq-domain-input').style.display = '';
+        document.getElementById('cq-domain-scanning').style.display = 'none';
         document.getElementById('cq-domain-status').style.display = 'none';
+        document.getElementById('cq-domain-back').style.display = '';
         document.getElementById('cq-verify-btn').disabled = false;
         document.getElementById('cq-verify-btn').textContent = 'Continue';
         document.getElementById('cq-verify-send').style.display = '';
