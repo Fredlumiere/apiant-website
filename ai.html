@@ -971,35 +971,205 @@
       <div class="apiant-popup-close" aria-label="Close dialog" onclick="closePopup('contact-popup')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </div>
-      <h3 class="apiant-popup-title">Talk to Us</h3>
-      <p class="apiant-popup-subtitle">Tell us what you're building. We'll show you how APIANT fits.</p>
-      <form id="contact-form" class="apiant-popup-form" method="get">
-        <input type="hidden" name="Source-Page" value="ai">
-        <div class="apiant-popup-field">
-          <label for="contact-email">Work Email</label>
-          <input type="email" id="contact-email" name="Work-Email" placeholder="you@company.com" maxlength="256" required>
+
+      <!-- Step 1: Company Type Selection -->
+      <div class="apiant-popup-step active" id="cq-step-type">
+        <h3 class="apiant-popup-title">Talk to Us</h3>
+        <p class="apiant-popup-subtitle">Tell us what you're building. We'll show you how APIANT fits.</p>
+        <div class="apiant-popup-qual-options">
+          <div class="apiant-popup-qual-option" onclick="cqSelectType('saas')">
+            <div class="apiant-popup-qual-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 9v12"/></svg>
+            </div>
+            <div class="apiant-popup-qual-text">
+              <div class="apiant-popup-qual-label">I'm a SaaS Company</div>
+              <div class="apiant-popup-qual-desc">We embed integrations in our product</div>
+            </div>
+            <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="apiant-popup-qual-option" onclick="cqSelectType('si')">
+            <div class="apiant-popup-qual-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <div class="apiant-popup-qual-text">
+              <div class="apiant-popup-qual-label">I'm a System Integrator</div>
+              <div class="apiant-popup-qual-desc">We build integrations for clients</div>
+            </div>
+            <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="apiant-popup-qual-option" onclick="cqSelectType('enterprise')">
+            <div class="apiant-popup-qual-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5"><path d="M3 21h18M5 21V7l8-4v18M13 21V3l6 4v14"/><path d="M9 9v.01M9 13v.01M9 17v.01M17 9v.01M17 13v.01M17 17v.01"/></svg>
+            </div>
+            <div class="apiant-popup-qual-text">
+              <div class="apiant-popup-qual-label">I'm an Enterprise</div>
+              <div class="apiant-popup-qual-desc">We need internal system integration</div>
+            </div>
+            <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="apiant-popup-qual-option other" onclick="cqShowForum()">
+            <div class="apiant-popup-qual-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div class="apiant-popup-qual-text">
+              <div class="apiant-popup-qual-label">Something else</div>
+              <div class="apiant-popup-qual-desc">Looking for a specific connector</div>
+            </div>
+            <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
         </div>
-        <div class="apiant-popup-field">
-          <label for="contact-company">Company</label>
-          <input type="text" id="contact-company" name="Company" placeholder="Acme Inc." maxlength="256" required>
-        </div>
-        <div class="apiant-popup-field">
-          <label for="contact-needs">What are you looking to integrate?</label>
-          <textarea id="contact-needs" name="IntegrationNeeds" placeholder="e.g. We need to sync HubSpot contacts with our app for 200+ customers..." maxlength="5000"></textarea>
-        </div>
-        <div class="apiant-popup-recaptcha">
-          <div class="g-recaptcha" data-sitekey="6LdTIVkrAAAAAOYkqcvyOhFE7IfuXC-VAivaS6RY"></div>
-        </div>
-        <button type="submit" class="apiant-popup-submit">Get in Touch</button>
-        <p class="apiant-popup-privacy">We'll only use your info to respond. No spam, ever.</p>
-      </form>
-      <div class="apiant-popup-success" id="contact-success">
-        <div class="apiant-popup-success-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
-        </div>
-        <h4>Message Received</h4>
-        <p>We'll get back to you within one business day.</p>
       </div>
+
+      <!-- Step Forum: Redirect to community -->
+      <div class="apiant-popup-step" id="cq-step-forum">
+        <h3 class="apiant-popup-title">Looking for a specific connector?</h3>
+        <p class="apiant-popup-subtitle">We may not have a turnkey product for your app yet.</p>
+        <div class="apiant-popup-forum">
+          <p>Our builder community can help. Post your integration request on the forum and let the community know what you need.</p>
+          <a href="https://forum.apiant.com" target="_blank" rel="noopener" class="apiant-popup-forum-btn">Post on Community Forum</a>
+        </div>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-type')">&larr; Back</a>
+      </div>
+
+      <!-- Step 2: Domain Entry + Verification -->
+      <div class="apiant-popup-step" id="cq-step-domain">
+        <h3 class="apiant-popup-title">What's your company website?</h3>
+        <p class="apiant-popup-subtitle">We'll take a quick look to learn about your business.</p>
+        <div class="apiant-popup-form">
+          <div class="apiant-popup-field">
+            <label for="cq-domain">Company website</label>
+            <input type="text" id="cq-domain" placeholder="acme.com" maxlength="256" autocomplete="url">
+          </div>
+          <button type="button" class="apiant-popup-submit" id="cq-verify-btn" onclick="cqVerifyDomain()">Continue</button>
+          <div id="cq-domain-status" style="display:none; margin-top:12px; padding:16px; border-radius:10px; font-size:14px; line-height:1.5;"></div>
+        </div>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-type')">&larr; Back</a>
+      </div>
+
+      <!-- Step 3: Contact Form -->
+      <div class="apiant-popup-step" id="cq-step-form">
+        <h3 class="apiant-popup-title">Tell us about your needs</h3>
+        <p class="apiant-popup-subtitle">We'll get back to you within one business day.</p>
+        <form id="contact-form" class="apiant-popup-form" method="get">
+          <input type="hidden" name="Source-Page" value="ai">
+          <input type="hidden" id="cq-company-type" name="Company-Type" value="">
+          <input type="hidden" id="cq-company-domain" name="Company-Domain" value="">
+          <div class="apiant-popup-field">
+            <label for="contact-email">Work Email</label>
+            <input type="email" id="contact-email" name="Work-Email" placeholder="you@company.com" maxlength="256" required>
+          </div>
+          <div class="apiant-popup-field">
+            <label for="contact-company">Company</label>
+            <input type="text" id="contact-company" name="Company" placeholder="Acme Inc." maxlength="256" required>
+          </div>
+          <div class="apiant-popup-field">
+            <label for="contact-needs">What are you looking to integrate?</label>
+            <textarea id="contact-needs" name="IntegrationNeeds" placeholder="e.g. We need to sync HubSpot contacts with our app for 200+ customers..." maxlength="5000"></textarea>
+          </div>
+          <div class="apiant-popup-recaptcha">
+            <div class="g-recaptcha" data-sitekey="6LdTIVkrAAAAAOYkqcvyOhFE7IfuXC-VAivaS6RY"></div>
+          </div>
+          <button type="submit" class="apiant-popup-submit">Continue</button>
+        </form>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-domain')">&larr; Back</a>
+      </div>
+
+      <!-- Step 4: Phone/Email Verification -->
+      <div class="apiant-popup-step" id="cq-step-verify">
+        <h3 class="apiant-popup-title">Verify your identity</h3>
+        <p class="apiant-popup-subtitle">Choose how you'd like to receive your verification code.</p>
+        <div class="apiant-popup-form" id="cq-verify-send">
+          <div class="apiant-popup-field">
+            <label for="cq-phone">Mobile or WhatsApp number</label>
+            <input type="tel" id="cq-phone" placeholder="+1 (555) 000-0000" maxlength="20">
+          </div>
+          <div class="apiant-popup-qual-options" style="margin-top:12px;">
+            <div class="apiant-popup-qual-option" onclick="cqSendOTP('sms')" style="padding:12px 16px;">
+              <div class="apiant-popup-qual-icon" style="width:32px;height:32px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5" style="width:16px;height:16px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </div>
+              <div class="apiant-popup-qual-text">
+                <div class="apiant-popup-qual-label" style="font-size:14px;">Text me a code (SMS)</div>
+              </div>
+            </div>
+            <div class="apiant-popup-qual-option" onclick="cqSendOTP('whatsapp')" style="padding:12px 16px;">
+              <div class="apiant-popup-qual-icon" style="width:32px;height:32px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5" style="width:16px;height:16px;"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+              </div>
+              <div class="apiant-popup-qual-text">
+                <div class="apiant-popup-qual-label" style="font-size:14px;">Send via WhatsApp</div>
+              </div>
+            </div>
+            <div class="apiant-popup-qual-option" onclick="cqSendOTP('email')" style="padding:12px 16px;">
+              <div class="apiant-popup-qual-icon" style="width:32px;height:32px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5" style="width:16px;height:16px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="apiant-popup-qual-text">
+                <div class="apiant-popup-qual-label" style="font-size:14px;">Email me a code</div>
+              </div>
+            </div>
+          </div>
+          <div id="cq-otp-status" style="display:none; margin-top:8px; font-size:14px; color:rgba(255,255,255,0.5);"></div>
+        </div>
+        <div class="apiant-popup-form" id="cq-verify-code" style="display:none;">
+          <p style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:16px;" id="cq-otp-sent-msg">Code sent!</p>
+          <div class="apiant-popup-field">
+            <label for="cq-otp-code">Enter 6-digit code</label>
+            <input type="text" id="cq-otp-code" placeholder="000000" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" style="text-align:center; font-size:24px; letter-spacing:8px; font-family:monospace;">
+          </div>
+          <button type="button" class="apiant-popup-submit" onclick="cqVerifyOTP()">Verify</button>
+          <p style="color:rgba(255,255,255,0.3); font-size:13px; margin-top:8px; text-align:center;">
+            Didn't receive it? <a onclick="cqGoTo('cq-step-verify'); document.getElementById('cq-verify-send').style.display=''; document.getElementById('cq-verify-code').style.display='none';" style="color:var(--popup-accent); cursor:pointer; text-decoration:underline;">Try again</a>
+          </p>
+        </div>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-form')">&larr; Back</a>
+      </div>
+
+      <!-- Step 5: Call Now or Schedule -->
+      <div class="apiant-popup-step" id="cq-step-call">
+        <div id="cq-call-available" style="display:none;">
+          <h3 class="apiant-popup-title">Want to talk now?</h3>
+          <p class="apiant-popup-subtitle">Someone from our team is available right now.</p>
+          <div class="apiant-popup-qual-options" style="margin-top:20px;">
+            <div class="apiant-popup-qual-option" onclick="cqCallNow()" style="border-color:rgba(var(--popup-accent-rgb),0.3); background:rgba(var(--popup-accent-rgb),0.06);">
+              <div class="apiant-popup-qual-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </div>
+              <div class="apiant-popup-qual-text">
+                <div class="apiant-popup-qual-label">Yes, call me now</div>
+                <div class="apiant-popup-qual-desc">We'll ring you in the next few minutes</div>
+              </div>
+            </div>
+            <div class="apiant-popup-qual-option" onclick="cqShowCalendly()">
+              <div class="apiant-popup-qual-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div class="apiant-popup-qual-text">
+                <div class="apiant-popup-qual-label">Schedule for later</div>
+                <div class="apiant-popup-qual-desc">Pick a time that works for you</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="cq-call-schedule" style="display:none;">
+          <h3 class="apiant-popup-title">Schedule a Call</h3>
+          <p class="apiant-popup-subtitle">Pick a time that works for you.</p>
+          <div id="cq-calendly-embed" style="min-height:400px; margin-top:16px; border-radius:12px; overflow:hidden;"></div>
+        </div>
+      </div>
+
+      <!-- Success state -->
+      <div class="apiant-popup-step" id="cq-step-success">
+        <div class="apiant-popup-success active">
+          <div class="apiant-popup-success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h4 id="cq-success-title">We'll be in touch!</h4>
+          <p id="cq-success-msg">Expect to hear from us within one business day.</p>
+        </div>
+      </div>
+
+      <!-- Error state -->
       <div class="apiant-popup-error" id="contact-error">
         <p>Something went wrong. Please try again.</p>
       </div>
@@ -1061,25 +1231,273 @@
         document.body.style.overflow = '';
       }
     });
+    // ===== Contact Qualification Flow =====
+    var CQ_SUPABASE_URL = ''; // Set after creating Supabase project
+    var CQ_SESSION_ID = '';
+    var CQ_SELECTED_TYPE = '';
+    var CQ_VERIFIED_DOMAIN = '';
+    var CQ_FORM_DATA = {};
+
+    function cqGenerateSessionId() {
+      return 'cq_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    function cqGoTo(stepId) {
+      document.querySelectorAll('#contact-popup .apiant-popup-step').forEach(function(s) { s.classList.remove('active'); });
+      var step = document.getElementById(stepId);
+      if (step) step.classList.add('active');
+    }
+
+    function cqSelectType(type) {
+      CQ_SELECTED_TYPE = type;
+      document.getElementById('cq-company-type').value = type;
+      cqGoTo('cq-step-domain');
+    }
+
+    function cqShowForum() {
+      cqGoTo('cq-step-forum');
+    }
+
+    function cqVerifyDomain() {
+      var domain = document.getElementById('cq-domain').value.trim();
+      if (!domain) { document.getElementById('cq-domain').focus(); return; }
+
+      var btn = document.getElementById('cq-verify-btn');
+      var status = document.getElementById('cq-domain-status');
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
+      status.style.display = 'none';
+
+      if (!CQ_SUPABASE_URL) {
+        CQ_VERIFIED_DOMAIN = domain;
+        document.getElementById('cq-company-domain').value = domain;
+        btn.disabled = false;
+        btn.textContent = 'Continue';
+        cqGoTo('cq-step-form');
+        return;
+      }
+
+      fetch(CQ_SUPABASE_URL + '/functions/v1/verify-company-type', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ domain: domain, claimed_type: CQ_SELECTED_TYPE })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        btn.disabled = false;
+        btn.textContent = 'Continue';
+        if (data.error) {
+          status.style.display = 'block';
+          status.style.background = 'rgba(239,68,68,0.08)';
+          status.style.border = '1px solid rgba(239,68,68,0.2)';
+          status.style.color = '#fca5a5';
+          status.innerHTML = data.error + '<br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Check the URL and try again, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post on our forum</a>.</span>';
+          return;
+        }
+        if (data.verified) {
+          CQ_VERIFIED_DOMAIN = domain;
+          document.getElementById('cq-company-domain').value = domain;
+          cqGoTo('cq-step-form');
+        } else {
+          status.style.display = 'block';
+          status.style.background = 'rgba(245,158,11,0.08)';
+          status.style.border = '1px solid rgba(245,158,11,0.2)';
+          status.style.color = '#fcd34d';
+          status.innerHTML = 'We couldn\'t confirm from your website that you\'re ' + cqTypeLabel(CQ_SELECTED_TYPE) + '.<br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Try a different URL, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post your request on our forum</a>.</span>';
+        }
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Continue';
+        CQ_VERIFIED_DOMAIN = domain;
+        document.getElementById('cq-company-domain').value = domain;
+        cqGoTo('cq-step-form');
+      });
+    }
+
+    function cqTypeLabel(type) {
+      var labels = { saas: 'a SaaS company', si: 'a System Integrator', enterprise: 'an Enterprise' };
+      return labels[type] || type;
+    }
+
+    // Contact form submission (Step 3 -> Step 4)
     $("#contact-form").submit(function() {
       var captchaToken = grecaptcha.getResponse();
       if (!captchaToken) { alert("Please complete the reCAPTCHA before submitting."); return false; }
+      CQ_FORM_DATA = {
+        PageTitle: document.title,
+        CompanyType: CQ_SELECTED_TYPE,
+        CompanyDomain: CQ_VERIFIED_DOMAIN,
+        WorkEmail: $("#contact-email").val(),
+        Company: $("#contact-company").val(),
+        IntegrationNeeds: $("#contact-needs").val()
+      };
+      CQ_SESSION_ID = cqGenerateSessionId();
+      cqGoTo('cq-step-verify');
+      return false;
+    });
+
+    function cqSendOTP(method) {
+      var contact = '';
+      if (method === 'email') {
+        contact = CQ_FORM_DATA.WorkEmail;
+        if (!contact) { alert('No email address provided.'); return; }
+      } else {
+        contact = document.getElementById('cq-phone').value.trim();
+        if (!contact) { document.getElementById('cq-phone').focus(); return; }
+      }
+
+      var statusEl = document.getElementById('cq-otp-status');
+      statusEl.style.display = 'block';
+      statusEl.textContent = 'Sending code...';
+      statusEl.style.color = 'rgba(255,255,255,0.5)';
+
+      if (!CQ_SUPABASE_URL) {
+        statusEl.style.display = 'none';
+        document.getElementById('cq-verify-send').style.display = 'none';
+        document.getElementById('cq-verify-code').style.display = '';
+        document.getElementById('cq-otp-sent-msg').textContent = 'Code sent to ' + contact + '!';
+        return;
+      }
+
+      fetch(CQ_SUPABASE_URL + '/functions/v1/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contact: contact, type: method, session_id: CQ_SESSION_ID })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.error) {
+          statusEl.textContent = data.error;
+          statusEl.style.color = '#fca5a5';
+          return;
+        }
+        statusEl.style.display = 'none';
+        document.getElementById('cq-verify-send').style.display = 'none';
+        document.getElementById('cq-verify-code').style.display = '';
+        document.getElementById('cq-otp-sent-msg').textContent = data.message || 'Code sent!';
+        CQ_FORM_DATA.Phone = contact;
+        CQ_FORM_DATA.PhoneType = method;
+      })
+      .catch(function() {
+        statusEl.textContent = 'Failed to send code. Please try again.';
+        statusEl.style.color = '#fca5a5';
+      });
+    }
+
+    function cqVerifyOTP() {
+      var code = document.getElementById('cq-otp-code').value.trim();
+      if (!code || code.length < 6) { document.getElementById('cq-otp-code').focus(); return; }
+
+      if (!CQ_SUPABASE_URL) {
+        cqSubmitAndRoute();
+        return;
+      }
+
+      fetch(CQ_SUPABASE_URL + '/functions/v1/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code, session_id: CQ_SESSION_ID })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.error) {
+          var msg = document.getElementById('cq-otp-sent-msg');
+          msg.textContent = data.error;
+          msg.style.color = '#fca5a5';
+          return;
+        }
+        if (data.verified) {
+          cqSubmitAndRoute();
+        }
+      })
+      .catch(function() {
+        cqSubmitAndRoute();
+      });
+    }
+
+    function cqSubmitAndRoute() {
       $.ajax({
         url: "https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26",
         type: "POST",
-        data: {
-          "PageTitle": document.title,
-          "WorkEmail": $("#contact-email").val(),
-          "Company": $("#contact-company").val(),
-          "IntegrationNeeds": $("#contact-needs").val()
-        },
-        success: function() {
-          $("#contact-form").hide();
-          $("#contact-success").addClass("active");
-        }
+        data: CQ_FORM_DATA
       });
-      return false;
-    });
+
+      if (!CQ_SUPABASE_URL) {
+        cqGoTo('cq-step-success');
+        return;
+      }
+
+      fetch(CQ_SUPABASE_URL + '/functions/v1/check-availability')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.available) {
+          document.getElementById('cq-call-available').style.display = '';
+          document.getElementById('cq-call-schedule').style.display = 'none';
+          cqGoTo('cq-step-call');
+        } else if (data.calendly_url) {
+          cqEmbedCalendly(data.calendly_url);
+        } else {
+          cqGoTo('cq-step-success');
+        }
+      })
+      .catch(function() {
+        cqGoTo('cq-step-success');
+      });
+    }
+
+    function cqCallNow() {
+      CQ_FORM_DATA.WantsCallNow = 'yes';
+      $.ajax({
+        url: "https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26",
+        type: "POST",
+        data: CQ_FORM_DATA
+      });
+      document.getElementById('cq-success-title').textContent = 'We\'ll call you shortly!';
+      document.getElementById('cq-success-msg').textContent = 'Someone from our team will ring you in the next few minutes at ' + (CQ_FORM_DATA.Phone || 'your number') + '.';
+      cqGoTo('cq-step-success');
+    }
+
+    function cqShowCalendly() {
+      fetch(CQ_SUPABASE_URL + '/functions/v1/check-availability')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.calendly_url) {
+          cqEmbedCalendly(data.calendly_url);
+        } else {
+          cqGoTo('cq-step-success');
+        }
+      })
+      .catch(function() { cqGoTo('cq-step-success'); });
+    }
+
+    function cqEmbedCalendly(url) {
+      document.getElementById('cq-call-available').style.display = 'none';
+      document.getElementById('cq-call-schedule').style.display = '';
+      var embed = document.getElementById('cq-calendly-embed');
+      embed.innerHTML = '<iframe src="' + url + '?hide_gdpr_banner=1&background_color=0c0e12&text_color=f7f8f8&primary_color=1ab759" style="width:100%;min-height:500px;border:none;border-radius:12px;"></iframe>';
+      cqGoTo('cq-step-call');
+    }
+
+    // Reset qualification flow when popup opens
+    var origOpenPopup = openPopup;
+    openPopup = function(id) {
+      if (id === 'contact-popup') {
+        document.querySelectorAll('#contact-popup .apiant-popup-step').forEach(function(s) { s.classList.remove('active'); });
+        document.getElementById('cq-step-type').classList.add('active');
+        document.getElementById('cq-domain-status').style.display = 'none';
+        document.getElementById('cq-verify-btn').disabled = false;
+        document.getElementById('cq-verify-btn').textContent = 'Continue';
+        document.getElementById('cq-verify-send').style.display = '';
+        document.getElementById('cq-verify-code').style.display = 'none';
+        document.getElementById('cq-otp-code').value = '';
+        CQ_SESSION_ID = '';
+        CQ_SELECTED_TYPE = '';
+        CQ_VERIFIED_DOMAIN = '';
+        CQ_FORM_DATA = {};
+      }
+      origOpenPopup(id);
+    };
     $("#wp-form").submit(function() {
       $.ajax({
         url: "https://apiant.com/webhook/a09f77e9c3464783852ca5c2a899ef1a_6bfabf2825da440585332741327d6f46",
