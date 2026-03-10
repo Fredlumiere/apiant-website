@@ -2779,6 +2779,12 @@ document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll('.apiant-popup.active').forEach(function(p) { closePopup(p.id); });
       if (popupHolder) popupHolder.style.display = 'none';
     }
+      if (e.key === 'Enter') {
+        var el = document.activeElement;
+        if (el && el.id === 'cq-domain') { e.preventDefault(); cqVerifyDomain(); }
+        else if (el && el.id === 'cq-phone') { e.preventDefault(); cqSendOTP('sms'); }
+        else if (el && el.id === 'cq-otp-code') { e.preventDefault(); cqVerifyOTP(); }
+      }
   });
 });
 </script>

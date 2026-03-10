@@ -1739,6 +1739,12 @@
       if (e.key === 'Escape') {
         document.querySelectorAll('.apiant-popup.active').forEach(function(p) { closePopup(p.id); });
       }
+      if (e.key === 'Enter') {
+        var el = document.activeElement;
+        if (el && el.id === 'cq-domain') { e.preventDefault(); cqVerifyDomain(); }
+        else if (el && el.id === 'cq-phone') { e.preventDefault(); cqSendOTP('sms'); }
+        else if (el && el.id === 'cq-otp-code') { e.preventDefault(); cqVerifyOTP(); }
+      }
     });
     // Contact form submission
     // ===== Contact Qualification Flow =====
