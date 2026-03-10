@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>APIANT Builder Adoption Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: #0c0c0c;
+    color: rgba(255,255,255,0.8);
+    font-size: 11px;
+    line-height: 1.55;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 40px 48px;
+    page-break-after: always;
+    position: relative;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  /* Cover page */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 297mm;
+  }
+  .cover-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 12px;
+  }
+  .cover h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #1ab759;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .cover .subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+  .cover-stats {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 60px;
+  }
+  .cover-stat {
+    text-align: center;
+  }
+  .cover-stat .value {
+    font-size: 36px;
+    font-weight: 700;
+    color: #f7f8f8;
+  }
+  .cover-stat .label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+  .cover-agents {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .agent-badge {
+    font-size: 10px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .agent-nova { border-color: #1ab759; color: #1ab759; }
+  .agent-joy { border-color: #f59e0b; color: #f59e0b; }
+  .agent-ava { border-color: #f97316; color: #f97316; }
+  .agent-gil { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
+  .agent-vic { border-color: #3b82f6; color: #3b82f6; }
+  .agent-bri { border-color: #ec4899; color: #ec4899; }
+  .agent-wes { border-color: #14b8a6; color: #14b8a6; }
+  .agent-sam { border-color: #8b5cf6; color: #8b5cf6; }
+  .agent-pete { border-color: #ef4444; color: #ef4444; }
+  .cover-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* Section headers */
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1ab759;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(26,183,89,0.3);
+  }
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f7f8f8;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    margin-top: 14px;
+    margin-bottom: 6px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 16px;
+    font-size: 10.5px;
+  }
+  thead th {
+    background: rgba(26,183,89,0.12);
+    color: #1ab759;
+    font-weight: 600;
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  tbody td {
+    padding: 7px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.7);
+  }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  /* Status badges */
+  .done {
+    display: inline-block;
+    background: rgba(26,183,89,0.15);
+    color: #1ab759;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .pending {
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.4);
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .in-progress {
+    display: inline-block;
+    background: rgba(245,158,11,0.15);
+    color: #f59e0b;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0;
+  }
+  .checklist li {
+    padding: 4px 0 4px 22px;
+    position: relative;
+    color: rgba(255,255,255,0.7);
+  }
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 13px;
+    height: 13px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 3px;
+  }
+  .checklist li.checked::before {
+    background: #1ab759;
+    border-color: #1ab759;
+  }
+  .checklist li.checked::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 9px;
+    width: 7px;
+    height: 4px;
+    border-left: 2px solid #0c0c0c;
+    border-bottom: 2px solid #0c0c0c;
+    transform: rotate(-45deg);
+  }
+  .checklist li.checked {
+    color: rgba(255,255,255,0.45);
+  }
+  .checklist .sub {
+    margin-left: 22px;
+  }
+
+  /* Callout box */
+  .callout {
+    background: rgba(26,183,89,0.06);
+    border-left: 3px solid #1ab759;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    font-style: italic;
+  }
+
+  /* Card grid */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .card.highlight {
+    border-color: #1ab759;
+    background: rgba(26,183,89,0.04);
+  }
+  .card .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f7f8f8;
+    margin-bottom: 4px;
+  }
+  .card .card-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f7f8f8;
+    margin-bottom: 2px;
+  }
+  .card .card-price span {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.4);
+  }
+  .card .card-detail {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 8px;
+  }
+  .card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .card ul li {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.6);
+    padding: 2px 0 2px 14px;
+    position: relative;
+  }
+  .card ul li::before {
+    content: "\2713";
+    position: absolute;
+    left: 0;
+    color: #1ab759;
+    font-size: 9px;
+  }
+
+  /* Score bars */
+  .score-row {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+    gap: 12px;
+  }
+  .score-label {
+    width: 140px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  .score-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-bar {
+    height: 100%;
+    border-radius: 4px;
+  }
+  .score-bar.green { background: #1ab759; }
+  .score-bar.orange { background: #f59e0b; }
+  .score-bar.red { background: #ef4444; }
+  .score-value {
+    width: 36px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    color: #f7f8f8;
+  }
+
+  /* Two column */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  /* Page number */
+  .page-num {
+    position: absolute;
+    bottom: 28px;
+    right: 48px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.2);
+  }
+  .page-footer-left {
+    position: absolute;
+    bottom: 28px;
+    left: 48px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.2);
+  }
+
+  p { margin-bottom: 8px; }
+  strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+
+  .spacer-8 { height: 8px; }
+  .spacer-16 { height: 16px; }
+  .spacer-24 { height: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<div class="page cover">
+  <img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" style="height: 40px; margin-bottom: 32px; opacity: 0.9;">
+  <div class="cover-label">Strategic Plan &middot; February 2026</div>
+  <h1>Builder Adoption Plan</h1>
+  <p class="subtitle">From $980K to $5M ARR: How to get builders to sign up, activate, and scale on the APIANT platform.</p>
+
+  <div class="cover-stats">
+    <div class="cover-stat">
+      <div class="value">$980K</div>
+      <div class="label">Current ARR</div>
+    </div>
+    <div class="cover-stat">
+      <div class="value" style="color: #1ab759;">$5M</div>
+      <div class="label">Target ARR</div>
+    </div>
+    <div class="cover-stat">
+      <div class="value">8</div>
+      <div class="label">Quarters</div>
+    </div>
+  </div>
+
+  <div style="font-size: 10px; color: rgba(255,255,255,0.3); margin-bottom: 12px;">8 Specialist Agents | Cross-Functional Analysis</div>
+  <div class="cover-agents">
+    <span class="agent-badge agent-nova">Nova - Coordinator</span>
+    <span class="agent-badge agent-joy">Joy - Product</span>
+    <span class="agent-badge agent-ava">Ava - Marketing</span>
+    <span class="agent-badge agent-gil">Gil - Sales</span>
+    <span class="agent-badge agent-vic">Vic - Ops/Finance</span>
+    <span class="agent-badge agent-bri">Bri - Outbound</span>
+    <span class="agent-badge agent-wes">Wes - Customer Success</span>
+    <span class="agent-badge agent-sam">Sam - Architecture</span>
+    <span class="agent-badge agent-pete">Pete - UX</span>
+  </div>
+  <div class="cover-footer">APIANT Builder Adoption Plan &middot; Confidential</div>
+</div>
+
+<!-- ==================== PAGE 2: STATUS + SCORES ==================== -->
+<div class="page">
+  <h2>Executive Summary</h2>
+
+  <div class="callout">
+    <strong style="color: #1ab759;">The Diagnosis:</strong> The product is a 9/10. The go-to-market is a 3/10. The gap between how good the technology is and how hard it is to try it is where all the growth is hiding.
+  </div>
+
+  <div class="spacer-16"></div>
+  <h3>Current Scores by Area</h3>
+
+  <div class="score-row">
+    <div class="score-label">Product/Technology</div>
+    <div class="score-bar-bg"><div class="score-bar green" style="width: 90%"></div></div>
+    <div class="score-value">9/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">Product Packaging</div>
+    <div class="score-bar-bg"><div class="score-bar orange" style="width: 50%"></div></div>
+    <div class="score-value">5/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">Sales Readiness</div>
+    <div class="score-bar-bg"><div class="score-bar red" style="width: 30%"></div></div>
+    <div class="score-value">3/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">Customer Success</div>
+    <div class="score-bar-bg"><div class="score-bar red" style="width: 30%"></div></div>
+    <div class="score-value">3/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">Ops Readiness</div>
+    <div class="score-bar-bg"><div class="score-bar green" style="width: 60%"></div></div>
+    <div class="score-value">6/10</div>
+  </div>
+
+  <div class="spacer-24"></div>
+  <h3>What's Been Done (Website Quick Wins)</h3>
+  <ul class="checklist">
+    <li class="checked">Pricing page live (4 tiers, comparison table, FAQ, billing toggle)</li>
+    <li class="checked">Pricing link in main nav</li>
+    <li class="checked">"Start Building" CTA text updated</li>
+    <li class="checked">AI Co-Pilot animation on homepage (above the fold)</li>
+    <li class="checked">Resources and Docs moved from nav to footer (cleaner nav)</li>
+    <li class="checked">Pricing cards alignment fixed (equal height at all viewports)</li>
+    <li class="checked">29 hand-coded SVG graphics across 8 pages</li>
+    <li class="checked">Placeholder testimonials hidden across product pages</li>
+    <li class="checked">Alt text + empty lightbox fixes across 17 product pages</li>
+  </ul>
+
+  <div class="spacer-16"></div>
+  <h3>Current Pricing Tiers</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">Sandbox</div>
+      <div class="card-price">$99<span>/mo</span></div>
+      <div class="card-detail">$79/mo annual | 14-day trial</div>
+      <ul>
+        <li>3 connections</li>
+        <li>Full platform access</li>
+        <li>AI Co-Pilot</li>
+        <li>250+ API connectors</li>
+        <li>Community support</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Pro</div>
+      <div class="card-price">$499<span>/mo</span></div>
+      <div class="card-detail">$399/mo annual | 1 prod server</div>
+      <ul>
+        <li>10 connections</li>
+        <li>White-label branding</li>
+        <li>FormApps</li>
+        <li>250+ API connectors</li>
+        <li>Email support</li>
+      </ul>
+    </div>
+    <div class="card highlight">
+      <div class="card-title" style="color: #1ab759;">Scale (Most Popular)</div>
+      <div class="card-price">$1,500<span>/mo</span></div>
+      <div class="card-detail">$1,200/mo annual | 1 prod server</div>
+      <ul>
+        <li>50 connections</li>
+        <li>MCP Servers</li>
+        <li>AI Chatbot</li>
+        <li>Admin Console</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Enterprise</div>
+      <div class="card-price" style="font-size: 18px;">Custom</div>
+      <div class="card-detail">From $3,500/mo | 2 dedicated AWS</div>
+      <ul>
+        <li>Bulk connection pricing</li>
+        <li>Fully managed infra</li>
+        <li>Custom SLA</li>
+        <li>SSO / SAML</li>
+        <li>Dedicated account manager</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page-footer-left"><img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" style="height: 14px; opacity: 0.3; vertical-align: middle; margin-right: 6px;">Builder Adoption Plan</div>
+  <div class="page-num">2</div>
+</div>
+
+<!-- ==================== PAGE 3: TOP 5 RECS ==================== -->
+<div class="page">
+  <h2>Top 5 Recommendations</h2>
+
+  <h3>1. Launch a Builder Sandbox</h3>
+  <p>Entry is Sandbox at $99/mo with 14-day trial. No $0 free tier (revisit if conversion data warrants it).</p>
+  <ul class="checklist">
+    <li class="checked">Pricing page created with tiered plans</li>
+    <li>Build sandbox environment (Engineering, 6-9 months)</li>
+    <li class="sub">Multi-tenant runtime, tenant isolation, execution metering</li>
+    <li class="sub">Resource caps, noisy-neighbor protection, disable white-label on sandbox</li>
+  </ul>
+
+  <h3>2. Make the AI Co-Pilot the Hero</h3>
+  <p>"Point our AI at an API doc. Get a production connector back."</p>
+  <ul class="checklist">
+    <li class="checked">AI Co-Pilot animation on homepage (above the fold)</li>
+    <li>Record 90-second video of Co-Pilot building a real connector</li>
+    <li>Make Co-Pilot the first sandbox experience</li>
+    <li>Center every campaign around Co-Pilot</li>
+  </ul>
+
+  <h3>3. Publish Real Pricing</h3>
+  <ul class="checklist">
+    <li class="checked">/pricing page with all four tiers, comparison table, FAQ</li>
+    <li class="checked">Annual billing toggle (20% discount)</li>
+    <li>Add SI margin calculator on for-si.html</li>
+    <li>Add usage-based overlay pricing</li>
+  </ul>
+
+  <h3>4. Restructure Sales Motion by Segment</h3>
+  <table>
+    <thead><tr><th>Segment</th><th>Motion</th><th>Entry Point</th><th>Target Close</th></tr></thead>
+    <tbody>
+      <tr><td><strong>SaaS Companies</strong></td><td>PLG into sales-assisted</td><td>Sandbox, self-serve</td><td>Pro at $499, expand to Scale</td></tr>
+      <tr><td><strong>System Integrators</strong></td><td>Partner program + direct</td><td>Sandbox + guided demo</td><td>Scale at $1,500, 60-day pilot</td></tr>
+      <tr><td><strong>Enterprises</strong></td><td>AE-led with 30-day POC</td><td>Executive briefing, scoped POC</td><td>Enterprise $3,500+, annual</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5. Build World-Class Onboarding</h3>
+  <p><strong>Activation metric:</strong> First real data through a builder-created automation. Target: 60% of signups within 14 days.</p>
+  <table>
+    <thead><tr><th>Day</th><th>Milestone</th><th>Activation Weight</th></tr></thead>
+    <tbody>
+      <tr><td>Day 0</td><td>Account provisioned, kickoff scheduled</td><td>5%</td></tr>
+      <tr><td>Day 1-2</td><td>Kickoff call, live Co-Pilot demo</td><td>10%</td></tr>
+      <tr><td>Day 7</td><td>First automation running with real data</td><td>25%</td></tr>
+      <tr><td>Day 14</td><td>First customer-facing connection live</td><td>25%</td></tr>
+      <tr><td>Day 21</td><td>White-label configured</td><td>10%</td></tr>
+      <tr><td>Day 30</td><td>3+ integrations in production</td><td>10%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer-left"><img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" style="height: 14px; opacity: 0.3; vertical-align: middle; margin-right: 6px;">Builder Adoption Plan</div>
+  <div class="page-num">3</div>
+</div>
+
+<!-- ==================== PAGE 4: MARKETING + OUTBOUND ==================== -->
+<div class="page">
+  <h2>Marketing and Demand Generation</h2>
+
+  <h3>Messaging Hierarchy</h3>
+  <table>
+    <thead><tr><th>Old Frame (Commodity)</th><th>New Frame (APIANT)</th></tr></thead>
+    <tbody>
+      <tr><td>"Connect App A to App B"</td><td>"Ship an integration product to your customers"</td></tr>
+      <tr><td>"No-code automation"</td><td>"Your AI co-pilot writes the connector code"</td></tr>
+      <tr><td>"Integration platform"</td><td>"White-label integration infrastructure"</td></tr>
+      <tr><td>"We have 500 connectors"</td><td>"Point our AI at any API doc and get a connector"</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Campaign Concepts (Next 90 Days)</h3>
+  <table>
+    <thead><tr><th>Campaign</th><th>Timeline</th><th>Budget</th><th>Goal</th></tr></thead>
+    <tbody>
+      <tr><td><strong>15-Minute Integration Challenge</strong></td><td>Weeks 1-4</td><td>~$3K</td><td>500 site visits, 50 email captures</td></tr>
+      <tr><td><strong>Build vs. Buy Calculator</strong></td><td>Weeks 2-6</td><td>~$4K</td><td>200 completions, 30 email captures</td></tr>
+      <tr><td><strong>Integration Teardown Series</strong></td><td>Weeks 3-8</td><td>~$1K</td><td>1,000 organic visits, 40 captures</td></tr>
+      <tr><td><strong>Free Connector Sprint</strong></td><td>Weeks 4-8</td><td>~$5K</td><td>25 applications, 3-5 convert</td></tr>
+      <tr><td><strong>API App Marketplace Launch</strong></td><td>Weeks 6-12</td><td>~$2K</td><td>PH top-10, 100 email captures</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Channel Priority</h3>
+  <table>
+    <thead><tr><th>Channel</th><th>Effort %</th><th>Focus</th></tr></thead>
+    <tbody>
+      <tr><td>LinkedIn</td><td>30%</td><td>AI Co-Pilot demos, integration math posts</td></tr>
+      <tr><td>Email outbound</td><td>30%</td><td>Personalized sequences to ICPs</td></tr>
+      <tr><td>Developer communities</td><td>15%</td><td>HN, Reddit, Dev.to (genuine participation)</td></tr>
+      <tr><td>Content/SEO</td><td>10%</td><td>Comparison pages, tutorials, case studies</td></tr>
+      <tr><td>Events/Partnerships</td><td>15%</td><td>SaaStr, INBOUND, Mindbody BOLD</td></tr>
+    </tbody>
+  </table>
+
+  <div class="spacer-24"></div>
+  <h2>Outbound Playbook</h2>
+
+  <h3>ICP Definitions</h3>
+  <table>
+    <thead><tr><th>Priority</th><th>ICP</th><th>Titles</th><th>Trigger Events</th></tr></thead>
+    <tbody>
+      <tr><td><strong>#1</strong></td><td>Mid-Market SaaS VP</td><td>VP Product, VP Partnerships, Head of Integrations</td><td>Job posting for "Integration Engineer," Series B/C</td></tr>
+      <tr><td><strong>#2</strong></td><td>SI / Consultancy Owner</td><td>Founder, Managing Director, Practice Lead</td><td>Won large client with multi-system needs</td></tr>
+      <tr><td><strong>#3</strong></td><td>Enterprise IT Director</td><td>Director of IT, Enterprise Architect, VP Engineering</td><td>M&A, digital transformation initiative</td></tr>
+      <tr><td><strong>#4</strong></td><td>SaaS Founder / CTO</td><td>CTO, Co-Founder (Technical), Head of Engineering</td><td>First enterprise customer asking for integrations</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Partnership Priorities</h3>
+  <table>
+    <thead><tr><th>Timeline</th><th>Partner</th><th>Play</th></tr></thead>
+    <tbody>
+      <tr><td>This quarter</td><td>HubSpot App Marketplace</td><td>List CRMConnect, pursue App Partner status</td></tr>
+      <tr><td>This quarter</td><td>Salesforce AppExchange</td><td>List as integration platform, pursue ISV partnership</td></tr>
+      <tr><td>This quarter</td><td>Mindbody</td><td>Formalize 10-product relationship, co-marketing</td></tr>
+      <tr><td>Next quarter</td><td>Cliniko, DonorPerfect</td><td>Same model, smaller ecosystems</td></tr>
+      <tr><td>Next quarter</td><td>SI Channel Program</td><td>White-label, revenue share, training</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer-left"><img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" style="height: 14px; opacity: 0.3; vertical-align: middle; margin-right: 6px;">Builder Adoption Plan</div>
+  <div class="page-num">4</div>
+</div>
+
+<!-- ==================== PAGE 5: COMPETITIVE + UX ==================== -->
+<div class="page">
+  <h2>Competitive Positioning</h2>
+
+  <h3>Three Pillars of Differentiation</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="card">
+      <div class="card-title" style="color: #3b82f6;">Pillar 1: Ownership</div>
+      <div class="card-detail">vs. Workato, Tray.io</div>
+      <p style="font-size: 10px;">"APIANT gives you your own platform. Dedicated server, your brand, your pricing, your customer relationships. Infrastructure you own, not SaaS you rent."</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color: #f59e0b;">Pillar 2: Depth</div>
+      <div class="card-detail">vs. Merge, Pandium, Paragon</div>
+      <p style="font-size: 10px;">"APIANT syncs 120+ fields per contact across 228 locations with custom objects, rate limiting, and bi-directional conflict resolution. No ceiling."</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color: #8b5cf6;">Pillar 3: AI Co-Pilot</div>
+      <div class="card-detail">vs. everyone</div>
+      <p style="font-size: 10px;">"APIANT's Co-Pilot reads API documentation, builds connectors from scratch, tests against live APIs, and self-corrects. Name an app. Have a working connector in minutes."</p>
+    </div>
+  </div>
+
+  <h3>Competitive Landscape</h3>
+  <table>
+    <thead><tr><th>Competitor</th><th>Positioning</th><th>Strength</th><th>APIANT Exploits</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Workato</strong> ($15-50K/yr)</td><td>Enterprise automation</td><td>Brand, relationships</td><td>Not white-label-able, shallow AI</td></tr>
+      <tr><td><strong>Tray.io</strong> ($5-10K/mo)</td><td>Flexible ops automation</td><td>UI polish, connectors</td><td>Not embeddable, not white-label</td></tr>
+      <tr><td><strong>Merge</strong> ($650/mo+)</td><td>Unified API</td><td>Simple, category-based</td><td>Shallow: reads only, no custom logic</td></tr>
+      <tr><td><strong>Pandium</strong> ($499/mo+)</td><td>Embedded for SaaS</td><td>Quick marketplace embed</td><td>No AI, shallow connectors</td></tr>
+      <tr><td><strong>Paragon</strong></td><td>Embedded integrations</td><td>Clean developer experience</td><td>Limited depth for complex use cases</td></tr>
+      <tr><td><strong>Cyclr</strong></td><td>Embedded iPaaS</td><td>White-label embedded</td><td>No AI, smaller connector library</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Comparison Pages to Build</h3>
+  <ul class="checklist">
+    <li>APIANT vs. Unified APIs (Merge, Apideck): Focus on depth gap</li>
+    <li>APIANT vs. Embedded iPaaS (Pandium, Cyclr, Paragon): Focus on ownership + AI</li>
+    <li>APIANT vs. Enterprise iPaaS (Workato, Tray.io): Focus on cost and white-labeling</li>
+  </ul>
+
+  <div class="spacer-24"></div>
+  <h2>UX and Builder Experience</h2>
+
+  <h3>Priority Recommendations</h3>
+  <table>
+    <thead><tr><th>Priority</th><th>Action</th><th>Effort</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><strong>P0</strong></td><td>Create sandbox/free trial environment</td><td>High</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td><strong>P0</strong></td><td>Pricing visibility (page or section)</td><td>Low</td><td><span class="done">Done</span></td></tr>
+      <tr><td><strong>P0</strong></td><td>Fix "Start Building" CTA destination</td><td>Low</td><td><span class="in-progress">Partial</span></td></tr>
+      <tr><td><strong>P1</strong></td><td>Interactive AI Co-Pilot demo</td><td>Medium</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td><strong>P1</strong></td><td>Reduce demo form to 3 fields</td><td>Low</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td><strong>P1</strong></td><td>Onboarding checklist for first-run</td><td>Medium</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td><strong>P2</strong></td><td>Public status page</td><td>Low</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td><strong>P2</strong></td><td>Public changelog</td><td>Low</td><td><span class="pending">Not started</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Trust Signals to Add</h3>
+  <ul class="checklist">
+    <li>Public status page (StatusPage or Instatus)</li>
+    <li>Public changelog (monthly feature updates)</li>
+    <li>Team page (real photos and bios)</li>
+    <li>Case studies (one per segment: SaaS, SI, Enterprise)</li>
+    <li class="checked">Placeholder testimonials hidden across product pages</li>
+  </ul>
+
+  <div class="page-footer-left"><img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" style="height: 14px; opacity: 0.3; vertical-align: middle; margin-right: 6px;">Builder Adoption Plan</div>
+  <div class="page-num">5</div>
+</div>
+
+<!-- ==================== PAGE 6: EXECUTION TIMELINE ==================== -->
+<div class="page">
+  <h2>Execution Timeline</h2>
+
+  <h3>This Week</h3>
+  <ul class="checklist">
+    <li>Record 90-second AI Co-Pilot video</li>
+  </ul>
+
+  <h3>This Month</h3>
+  <table>
+    <thead><tr><th>Action</th><th>Effort</th><th>Owner</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Enable self-serve signup</td><td>2-4 weeks</td><td>Engineering</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Publish 2 customer case studies</td><td>1 week each</td><td>Marketing</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Build 2 competitive comparison pages</td><td>1 week each</td><td>Marketing</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Launch outbound for ICP #1 and #2</td><td>1 week setup</td><td>Sales</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Build 30-day onboarding email sequence</td><td>1 week</td><td>CS + Marketing</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>HubSpot App Marketplace listing</td><td>1-2 weeks</td><td>Partnerships</td><td><span class="pending">Not started</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>This Quarter</h3>
+  <table>
+    <thead><tr><th>Action</th><th>Effort</th><th>Owner</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Interactive AI Co-Pilot demo (DemoMaker/Navattic)</td><td>2-3 weeks</td><td>Marketing + Product</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Guided first-run onboarding in editor</td><td>2-3 weeks</td><td>Engineering</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Build vs. Buy calculator on website</td><td>1-2 weeks</td><td>Marketing</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>SI Partner Program page</td><td>1-2 weeks</td><td>Sales</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Integration Template Gallery</td><td>3-4 weeks</td><td>Product</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Health scoring in HubSpot</td><td>2-3 weeks</td><td>CS Ops</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Run all 5 marketing campaigns</td><td>12 weeks</td><td>Marketing</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>Reduce demo form to 3 fields</td><td>1 hour</td><td>Website</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>SI margin calculator on for-si.html</td><td>1-2 days</td><td>Website</td><td><span class="pending">Not started</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="spacer-24"></div>
+  <h2>Platform Architecture Investments</h2>
+  <table>
+    <thead><tr><th>#</th><th>Investment</th><th>Effort</th><th>Impact</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Sandbox tier with AI Co-Pilot</td><td>6-9 months</td><td>Top-of-funnel pipeline</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>2</td><td>Guided first-integration experience</td><td>2-3 months</td><td>Signup to activation</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>3</td><td>Integration Template Gallery</td><td>2-3 months</td><td>Reduce time-to-value</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>4</td><td>CLI tool and public API</td><td>2-3 months</td><td>Serves technical builders</td><td><span class="pending">Not started</span></td></tr>
+      <tr><td>5</td><td>Developer documentation overhaul</td><td>Ongoing</td><td>Supports all of the above</td><td><span class="pending">Not started</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Technical Moats</h3>
+  <table>
+    <thead><tr><th>Investment</th><th>Timeline</th><th>Moat Depth</th><th>Difficulty to Replicate</th></tr></thead>
+    <tbody>
+      <tr><td>AI Co-Pilot data flywheel</td><td>3-6 months</td><td>Deep</td><td>Very high</td></tr>
+      <tr><td>Connector marketplace (network effects)</td><td>6-12 months</td><td>Deep</td><td>High</td></tr>
+      <tr><td>MCP as AI agent runtime</td><td>3-6 months</td><td>Deep</td><td>High (first-mover)</td></tr>
+      <tr><td>Built-in observability</td><td>3-6 months</td><td>Medium</td><td>Medium</td></tr>
+      <tr><td>Data quality engine</td><td>6-9 months</td><td>Deep</td><td>High</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer-left"><img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" style="height: 14px; opacity: 0.3; vertical-align: middle; margin-right: 6px;">Builder Adoption Plan</div>
+  <div class="page-num">6</div>
+</div>
+
+<!-- ==================== PAGE 7: PATH TO $5M ==================== -->
+<div class="page">
+  <h2>Path to $5M ARR</h2>
+
+  <h3>Revenue Ramp (from $980K)</h3>
+  <table>
+    <thead><tr><th>Quarter</th><th>Self-Serve (Pro)</th><th>Sales-Assisted (Scale)</th><th>Enterprise</th><th>New ARR</th><th>Cumulative</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Current</strong></td><td>Existing base</td><td>Existing base</td><td>Existing base</td><td>--</td><td><strong>~$980K</strong></td></tr>
+      <tr><td>Q1</td><td>+10 Pro ($60K)</td><td>+2 Scale ($36K)</td><td>+1 ($72K)</td><td>$168K</td><td>$1.15M</td></tr>
+      <tr><td>Q2</td><td>+15 Pro + $30K expansion</td><td>+3 Scale ($54K)</td><td>+1 ($84K)</td><td>$258K</td><td>$1.4M</td></tr>
+      <tr><td>Q3</td><td>+20 Pro + $50K expansion</td><td>+4 Scale ($72K)</td><td>+2 ($168K)</td><td>$410K</td><td>$1.8M</td></tr>
+      <tr><td>Q4</td><td>+25 Pro + $80K expansion</td><td>+5 Scale ($90K)</td><td>+2 ($180K)</td><td>$500K</td><td>$2.3M</td></tr>
+      <tr><td>Q5</td><td>+30 Pro + $120K expansion</td><td>+6 Scale ($108K)</td><td>+3 ($252K)</td><td>$660K</td><td>$3.0M</td></tr>
+      <tr><td>Q6</td><td>+35 Pro + $160K expansion</td><td>+7 Scale ($126K)</td><td>+3 ($288K)</td><td>$784K</td><td>$3.8M</td></tr>
+      <tr><td>Q7</td><td>+40 Pro + $200K expansion</td><td>+8 Scale ($144K)</td><td>+4 ($384K)</td><td>$968K</td><td>$4.7M</td></tr>
+      <tr><td><strong>Q8</strong></td><td>Continued growth</td><td>Continued</td><td>+2-3 more</td><td>$300K+</td><td><strong>$5M</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Revenue Mix at $5M ARR</h3>
+  <table>
+    <thead><tr><th>Segment</th><th>% of ARR</th><th>Revenue</th><th>Customers</th><th>Avg ACV</th></tr></thead>
+    <tbody>
+      <tr><td>Self-serve (Pro)</td><td>~35%</td><td>$1.75M</td><td>~290</td><td>$6K</td></tr>
+      <tr><td>Sales-assisted (Scale)</td><td>~30%</td><td>$1.5M</td><td>~83</td><td>$18K</td></tr>
+      <tr><td>Enterprise</td><td>~35%</td><td>$1.75M</td><td>~25</td><td>$70K</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>100%</strong></td><td><strong>$5M</strong></td><td><strong>~398</strong></td><td><strong>$12.6K</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Metrics to Track</h3>
+  <div class="two-col">
+    <div>
+      <table>
+        <thead><tr><th>Metric</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td>Sandbox-to-Pro conversion</td><td>8-12% / 30 days</td></tr>
+          <tr><td>Pro-to-Scale upgrade</td><td>15-20% / 6 months</td></tr>
+          <tr><td>Sales cycle (Enterprise)</td><td>Under 120 days</td></tr>
+          <tr><td>Net Revenue Retention</td><td>115-125%</td></tr>
+          <tr><td>CAC Payback (Pro)</td><td>Under 6 months</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>Metric</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td>CAC Payback (Enterprise)</td><td>Under 12 months</td></tr>
+          <tr><td>Monthly churn (Pro)</td><td>Under 5%</td></tr>
+          <tr><td>Monthly churn (Scale/Ent)</td><td>Under 2%</td></tr>
+          <tr><td>Visitor-to-signup</td><td>5-8%</td></tr>
+          <tr><td>Signup to first connector</td><td>>60% / first session</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="spacer-24"></div>
+
+  <div class="callout">
+    <strong style="color: #1ab759;">The Bottom Line:</strong> The product is the hard part, and it is already built. The AI Co-Pilot, the unified data engine, the settings-vs-logic architecture, the Exercise Coach proof point at 228 locations: these are capabilities that competitors cannot replicate quickly. The changes needed are in how the product is sold, not what it does. Fix the funnel. Ship the sandbox. Let the product sell itself.
+  </div>
+
+  <div class="spacer-16"></div>
+  <div style="text-align: center; font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 24px;">
+    APIANT Builder Adoption Plan &middot; 8 Specialist Agents &middot; February 2026<br>
+    Prepared by Nova (Executive Coordinator) with Joy, Ava, Gil, Vic, Bri, Wes, Sam, and Pete
+  </div>
+
+  <div class="page-footer-left"><img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" style="height: 14px; opacity: 0.3; vertical-align: middle; margin-right: 6px;">Builder Adoption Plan</div>
+  <div class="page-num">7</div>
+</div>
+
+</body>
+</html>
