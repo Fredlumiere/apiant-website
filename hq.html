@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>HQ</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="https://apiant.com/favicon.ico">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e6;
+      min-height: 100vh;
+    }
+    a { color: #1ab759; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Login */
+    .login-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .login-card {
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(26,183,89,0.12);
+      border-radius: 16px;
+      padding: 40px 32px;
+      position: relative;
+    }
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 20%; right: 20%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #1ab759, transparent);
+    }
+    .login-card h1 { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+    .login-card .sub { color: rgba(255,255,255,0.35); font-size: 14px; margin-bottom: 24px; }
+
+    /* Form elements */
+    label {
+      display: block;
+      color: rgba(255,255,255,0.45);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 11px 14px;
+      color: #e0e0e6;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      margin-bottom: 14px;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: rgba(26,183,89,0.4);
+      box-shadow: 0 0 0 2px rgba(26,183,89,0.06);
+    }
+    .btn {
+      display: inline-block;
+      background: linear-gradient(160deg, #22c95e 0%, #1ab759 40%, #128a42 100%);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .btn:hover { box-shadow: 0 0 24px rgba(26,183,89,0.25); transform: translateY(-1px); }
+    .btn-sm { padding: 8px 16px; font-size: 13px; }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); color: #fff; box-shadow: none; transform: none; }
+    .error-msg { color: #fca5a5; font-size: 13px; margin-top: 10px; text-align: center; }
+
+    /* Dashboard Layout */
+    .dashboard { display: none; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+    .topbar-brand { font-weight: 700; font-size: 16px; color: #1ab759; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .topbar-right .btn-ghost { font-size: 12px; padding: 6px 12px; }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.015);
+    }
+    .tab {
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: rgba(255,255,255,0.7); }
+    .tab.active { color: #1ab759; border-bottom-color: #1ab759; }
+
+    /* Content */
+    .content { padding: 24px 28px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 6px;
+    }
+    .stat-value { font-size: 28px; font-weight: 700; color: #f7f8f8; }
+    .stat-value.green { color: #1ab759; }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+    .filter-bar .field { flex: 1; min-width: 150px; }
+    .filter-bar label { margin-bottom: 3px; }
+    .filter-bar input, .filter-bar select { margin-bottom: 0; }
+
+    /* Table */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.025);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.75);
+      max-width: 250px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    tr:hover td { background: rgba(26,183,89,0.03); }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-saas { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .badge-si { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .badge-enterprise { background: rgba(139,92,246,0.15); color: #a78bfa; }
+    .badge-verified { background: rgba(26,183,89,0.15); color: #1ab759; }
+    .badge-unverified { background: rgba(252,165,165,0.15); color: #fca5a5; }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+    .pagination .btn-sm { margin: 0 4px; }
+
+    /* Breakdown lists */
+    .breakdown { margin-top: 20px; }
+    .breakdown h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      font-size: 13px;
+    }
+    .breakdown-row .label { color: rgba(255,255,255,0.65); }
+    .breakdown-row .value { font-weight: 600; color: #f7f8f8; }
+    .bar-bg {
+      flex: 1;
+      margin: 0 12px;
+      height: 4px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .bar-fill { height: 100%; background: #1ab759; border-radius: 2px; }
+
+    /* Session detail */
+    .session-detail {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 18px;
+      margin-top: 12px;
+    }
+    .session-detail h4 { font-size: 14px; margin-bottom: 10px; }
+    .session-event {
+      display: flex;
+      gap: 12px;
+      padding: 6px 0;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .session-event .time { color: rgba(255,255,255,0.3); white-space: nowrap; font-family: monospace; font-size: 12px; }
+    .session-event .type { color: #1ab759; font-weight: 600; min-width: 120px; }
+    .session-event .data { color: rgba(255,255,255,0.55); }
+
+    .loading { text-align: center; padding: 40px; color: rgba(255,255,255,0.3); }
+    .empty { text-align: center; padding: 40px; color: rgba(255,255,255,0.25); font-size: 14px; }
+
+    @media (max-width: 768px) {
+      .topbar, .tabs, .content { padding-left: 16px; padding-right: 16px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .filter-bar { flex-direction: column; }
+      .filter-bar .field { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login -->
+  <div class="login-wrap" id="login-wrap">
+    <div class="login-card">
+      <h1>Headquarters</h1>
+      <p class="sub">Lead intelligence dashboard</p>
+      <label for="hq-pass">Password</label>
+      <input type="password" id="hq-pass" placeholder="Enter password" autofocus>
+      <button class="btn" style="width:100%" onclick="hqLogin()">Sign In</button>
+      <div class="error-msg" id="login-error"></div>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard" id="dashboard">
+    <div class="topbar">
+      <div class="topbar-brand">APIANT HQ</div>
+      <div class="topbar-right">
+        <span id="last-refresh" style="font-size:11px; color:rgba(255,255,255,0.25);"></span>
+        <button class="btn-ghost btn-sm" onclick="refreshAll()">Refresh</button>
+        <button class="btn-ghost btn-sm" onclick="hqLogout()">Sign Out</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="overview" onclick="switchTab('overview')">Overview</div>
+      <div class="tab" data-tab="leads" onclick="switchTab('leads')">Leads</div>
+      <div class="tab" data-tab="interactions" onclick="switchTab('interactions')">Interactions</div>
+    </div>
+
+    <div class="content">
+      <!-- Overview Tab -->
+      <div class="tab-panel active" id="panel-overview">
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><div class="stat-label">Total Leads</div><div class="stat-value" id="stat-leads-total">--</div></div>
+          <div class="stat-card"><div class="stat-label">Leads Today</div><div class="stat-value green" id="stat-leads-today">--</div></div>
+          <div class="stat-card"><div class="stat-label">Leads This Week</div><div class="stat-value" id="stat-leads-week">--</div></div>
+          <div class="stat-card"><div class="stat-label">Total Interactions</div><div class="stat-value" id="stat-interactions-total">--</div></div>
+          <div class="stat-card"><div class="stat-label">Interactions Today</div><div class="stat-value green" id="stat-interactions-today">--</div></div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="breakdown" id="type-breakdown">
+            <h3>By Company Type</h3>
+            <div id="type-breakdown-rows"></div>
+          </div>
+          <div class="breakdown" id="page-breakdown">
+            <h3>Top Source Pages</h3>
+            <div id="page-breakdown-rows"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leads Tab -->
+      <div class="tab-panel" id="panel-leads">
+        <div class="filter-bar">
+          <div class="field">
+            <label>Search</label>
+            <input type="text" id="leads-search" placeholder="Domain, email, or company..." onkeydown="if(event.key==='Enter')loadLeads(1)">
+          </div>
+          <div class="field" style="max-width:160px">
+            <label>Type</label>
+            <select id="leads-type" onchange="loadLeads(1)">
+              <option value="">All</option>
+              <option value="saas">SaaS</option>
+              <option value="si">SI</option>
+              <option value="enterprise">Enterprise</option>
+            </select>
+          </div>
+          <button class="btn btn-sm" onclick="loadLeads(1)">Filter</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Company</th>
+                <th>Domain</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Verified</th>
+                <th>Source</th>
+                <th>Needs</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody">
+              <tr><td colspan="9" class="loading">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="leads-info"></span>
+          <div>
+            <button class="btn-ghost btn-sm" id="leads-prev" onclick="loadLeads(leadsPage-1)" disabled>Prev</button>
+            <button class="btn-ghost btn-sm" id="leads-next" onclick="loadLeads(leadsPage+1)">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactions Tab -->
+      <div class="tab-panel" id="panel-interactions">
+        <div class="filter-bar">
+          <div class="field">
+            <label>Session ID</label>
+            <input type="text" id="ix-session" placeholder="Filter by session..." onkeydown="if(event.key==='Enter')loadInteractions(1)">
+          </div>
+          <div class="field" style="max-width:180px">
+            <label>Event Type</label>
+            <select id="ix-type" onchange="loadInteractions(1)">
+              <option value="">All Events</option>
+              <option value="popup_open">popup_open</option>
+              <option value="popup_close">popup_close</option>
+              <option value="type_select">type_select</option>
+              <option value="domain_submit">domain_submit</option>
+              <option value="verify_result">verify_result</option>
+              <option value="confirm_accept">confirm_accept</option>
+              <option value="confirm_retry">confirm_retry</option>
+              <option value="form_submit">form_submit</option>
+              <option value="otp_send">otp_send</option>
+              <option value="otp_verified">otp_verified</option>
+              <option value="call_request">call_request</option>
+              <option value="category_toggle">category_toggle</option>
+              <option value="product_click">product_click</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Source Page</label>
+            <input type="text" id="ix-page" placeholder="e.g. mindbody" onkeydown="if(event.key==='Enter')loadInteractions(1)">
+          </div>
+          <button class="btn btn-sm" onclick="loadInteractions(1)">Filter</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Event</th>
+                <th>Session</th>
+                <th>Source Page</th>
+                <th>Data</th>
+                <th>IP</th>
+              </tr>
+            </thead>
+            <tbody id="ix-tbody">
+              <tr><td colspan="6" class="loading">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="ix-info"></span>
+          <div>
+            <button class="btn-ghost btn-sm" id="ix-prev" onclick="loadInteractions(ixPage-1)" disabled>Prev</button>
+            <button class="btn-ghost btn-sm" id="ix-next" onclick="loadInteractions(ixPage+1)">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var SUPABASE_URL = 'https://kereljzjgeerrdnssttu.supabase.co';
+    var HQ_PASSWORD = '';
+    var leadsPage = 1;
+    var ixPage = 1;
+
+    // Login
+    document.getElementById('hq-pass').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') hqLogin();
+    });
+
+    function hqLogin() {
+      HQ_PASSWORD = document.getElementById('hq-pass').value.trim();
+      if (!HQ_PASSWORD) return;
+      document.getElementById('login-error').textContent = '';
+
+      apiCall('stats', {}).then(function(data) {
+        if (data.error) {
+          document.getElementById('login-error').textContent = data.error;
+          return;
+        }
+        sessionStorage.setItem('hq_pass', HQ_PASSWORD);
+        document.getElementById('login-wrap').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        renderStats(data);
+        loadLeads(1);
+        loadInteractions(1);
+      }).catch(function(err) {
+        document.getElementById('login-error').textContent = err.message || 'Connection failed';
+      });
+    }
+
+    function hqLogout() {
+      sessionStorage.removeItem('hq_pass');
+      HQ_PASSWORD = '';
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('login-wrap').style.display = 'flex';
+      document.getElementById('hq-pass').value = '';
+    }
+
+    // Auto-login from session
+    (function() {
+      var saved = sessionStorage.getItem('hq_pass');
+      if (saved) {
+        HQ_PASSWORD = saved;
+        document.getElementById('hq-pass').value = saved;
+        hqLogin();
+      }
+    })();
+
+    // API helper
+    function apiCall(action, opts) {
+      return fetch(SUPABASE_URL + '/functions/v1/admin-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({ password: HQ_PASSWORD, action: action }, opts))
+      }).then(function(r) { return r.json(); });
+    }
+
+    // Tabs
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(function(t) { t.classList.toggle('active', t.dataset.tab === tab); });
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.toggle('active', p.id === 'panel-' + tab); });
+    }
+
+    // Refresh
+    function refreshAll() {
+      apiCall('stats', {}).then(renderStats);
+      loadLeads(leadsPage);
+      loadInteractions(ixPage);
+      document.getElementById('last-refresh').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    }
+
+    // Stats
+    function renderStats(data) {
+      document.getElementById('stat-leads-total').textContent = data.leads_total || 0;
+      document.getElementById('stat-leads-today').textContent = data.leads_today || 0;
+      document.getElementById('stat-leads-week').textContent = data.leads_week || 0;
+      document.getElementById('stat-interactions-total').textContent = data.interactions_total || 0;
+      document.getElementById('stat-interactions-today').textContent = data.interactions_today || 0;
+
+      // Type breakdown
+      var types = data.company_types || {};
+      var total = Object.values(types).reduce(function(a, b) { return a + b; }, 0) || 1;
+      var html = '';
+      ['saas', 'si', 'enterprise'].forEach(function(t) {
+        var count = types[t] || 0;
+        var pct = Math.round((count / total) * 100);
+        html += '<div class="breakdown-row"><span class="label">' + t.toUpperCase() + '</span><div class="bar-bg"><div class="bar-fill" style="width:' + pct + '%"></div></div><span class="value">' + count + '</span></div>';
+      });
+      document.getElementById('type-breakdown-rows').innerHTML = html || '<div class="empty">No data yet</div>';
+
+      // Source pages
+      var pages = data.top_source_pages || [];
+      var maxCount = pages.length ? pages[0].count : 1;
+      html = '';
+      pages.forEach(function(p) {
+        var pct = Math.round((p.count / maxCount) * 100);
+        var shortPage = p.page.replace(/.*\//, '').replace('.html', '').replace(/-integration.*/, '');
+        html += '<div class="breakdown-row"><span class="label" title="' + p.page + '">' + shortPage + '</span><div class="bar-bg"><div class="bar-fill" style="width:' + pct + '%"></div></div><span class="value">' + p.count + '</span></div>';
+      });
+      document.getElementById('page-breakdown-rows').innerHTML = html || '<div class="empty">No data yet</div>';
+
+      document.getElementById('last-refresh').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    }
+
+    // Leads
+    function loadLeads(page) {
+      if (page < 1) return;
+      leadsPage = page;
+      var filters = {};
+      var search = document.getElementById('leads-search').value.trim();
+      var type = document.getElementById('leads-type').value;
+      if (search) filters.search = search;
+      if (type) filters.company_type = type;
+
+      document.getElementById('leads-tbody').innerHTML = '<tr><td colspan="9" class="loading">Loading...</td></tr>';
+
+      apiCall('leads', { page: page, per_page: 50, filters: filters }).then(function(data) {
+        if (data.error) { document.getElementById('leads-tbody').innerHTML = '<tr><td colspan="9" class="empty">' + data.error + '</td></tr>'; return; }
+        var leads = data.leads || [];
+        if (!leads.length) {
+          document.getElementById('leads-tbody').innerHTML = '<tr><td colspan="9" class="empty">No leads found</td></tr>';
+          document.getElementById('leads-info').textContent = '0 results';
+          return;
+        }
+        var html = '';
+        leads.forEach(function(l) {
+          var date = new Date(l.created_at).toLocaleDateString() + ' ' + new Date(l.created_at).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+          var typeBadge = '<span class="badge badge-' + l.company_type + '">' + l.company_type + '</span>';
+          var verifiedBadge = l.domain_verified ? '<span class="badge badge-verified">Yes</span>' : '<span class="badge badge-unverified">No</span>';
+          var sourcePage = (l.source_page || '').replace(/.*\//, '').replace('.html', '').replace(/-integration.*/, '');
+          var needs = (l.integration_needs || '').substring(0, 60);
+          html += '<tr>' +
+            '<td>' + date + '</td>' +
+            '<td>' + typeBadge + '</td>' +
+            '<td>' + (l.company_name || '--') + '</td>' +
+            '<td>' + (l.domain || '--') + '</td>' +
+            '<td>' + (l.work_email || '--') + '</td>' +
+            '<td>' + (l.phone || '--') + '</td>' +
+            '<td>' + verifiedBadge + '</td>' +
+            '<td title="' + (l.source_page || '') + '">' + sourcePage + '</td>' +
+            '<td title="' + (l.integration_needs || '') + '">' + needs + '</td>' +
+            '</tr>';
+        });
+        document.getElementById('leads-tbody').innerHTML = html;
+
+        var total = data.total || 0;
+        var from = (page - 1) * 50 + 1;
+        var to = Math.min(page * 50, total);
+        document.getElementById('leads-info').textContent = from + '-' + to + ' of ' + total;
+        document.getElementById('leads-prev').disabled = page <= 1;
+        document.getElementById('leads-next').disabled = to >= total;
+      });
+    }
+
+    // Interactions
+    function loadInteractions(page) {
+      if (page < 1) return;
+      ixPage = page;
+      var filters = {};
+      var session = document.getElementById('ix-session').value.trim();
+      var type = document.getElementById('ix-type').value;
+      var sourcePage = document.getElementById('ix-page').value.trim();
+      if (session) filters.session_id = session;
+      if (type) filters.event_type = type;
+      if (sourcePage) filters.source_page = sourcePage;
+
+      document.getElementById('ix-tbody').innerHTML = '<tr><td colspan="6" class="loading">Loading...</td></tr>';
+
+      apiCall('interactions', { page: page, per_page: 50, filters: filters }).then(function(data) {
+        if (data.error) { document.getElementById('ix-tbody').innerHTML = '<tr><td colspan="6" class="empty">' + data.error + '</td></tr>'; return; }
+        var logs = data.logs || [];
+        if (!logs.length) {
+          document.getElementById('ix-tbody').innerHTML = '<tr><td colspan="6" class="empty">No interactions found</td></tr>';
+          document.getElementById('ix-info').textContent = '0 results';
+          return;
+        }
+        var html = '';
+        logs.forEach(function(l) {
+          var time = new Date(l.created_at).toLocaleDateString() + ' ' + new Date(l.created_at).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+          var eventData = '';
+          try { eventData = JSON.stringify(l.event_data || {}).substring(0, 80); } catch(e) {}
+          if (eventData === '{}') eventData = '';
+          var sourcePage = (l.source_page || '').replace(/.*\//, '').replace('.html', '').replace(/-integration.*/, '');
+          var shortSession = (l.session_id || '').substring(0, 12) + '...';
+          html += '<tr onclick="filterSession(\'' + l.session_id + '\')" style="cursor:pointer">' +
+            '<td>' + time + '</td>' +
+            '<td><span class="badge" style="background:rgba(26,183,89,0.1);color:#1ab759;">' + l.event_type + '</span></td>' +
+            '<td title="' + l.session_id + '">' + shortSession + '</td>' +
+            '<td title="' + (l.source_page || '') + '">' + sourcePage + '</td>' +
+            '<td title="' + eventData + '">' + eventData + '</td>' +
+            '<td>' + (l.ip_address || '') + '</td>' +
+            '</tr>';
+        });
+        document.getElementById('ix-tbody').innerHTML = html;
+
+        var total = data.total || 0;
+        var from = (page - 1) * 50 + 1;
+        var to = Math.min(page * 50, total);
+        document.getElementById('ix-info').textContent = from + '-' + to + ' of ' + total;
+        document.getElementById('ix-prev').disabled = page <= 1;
+        document.getElementById('ix-next').disabled = to >= total;
+      });
+    }
+
+    function filterSession(sessionId) {
+      document.getElementById('ix-session').value = sessionId;
+      loadInteractions(1);
+    }
+  </script>
+</body>
+</html>
