@@ -2430,15 +2430,18 @@
         </div>
       </div>
 
-      <!-- Step Forum: Redirect to community -->
+      <!-- Step Forum: Integration question for non-API-App leads -->
       <div class="apiant-popup-step" id="cq-step-forum">
-        <h3 class="apiant-popup-title">Looking for a specific connector?</h3>
-        <p class="apiant-popup-subtitle">We may not have a turnkey product for your app yet.</p>
-        <div class="apiant-popup-forum">
-          <p>Our builder community can help. Post your integration request on the forum and let the community know what you need.</p>
-          <a href="https://forum.apiant.com" target="_blank" rel="noopener" class="apiant-popup-forum-btn">Post on Community Forum</a>
+        <h3 class="apiant-popup-title">What do you need to integrate?</h3>
+        <p class="apiant-popup-subtitle">Tell us what you're looking for and our builder community can help.</p>
+        <div class="apiant-popup-form">
+          <div class="apiant-popup-field">
+            <label for="cq-integration-need">Describe your integration need</label>
+            <textarea id="cq-integration-need" placeholder="e.g. I need to connect my booking system with my accounting software..." maxlength="2000" style="min-height:80px;"></textarea>
+          </div>
+          <a href="https://forum.apiant.com" target="_blank" rel="noopener" class="apiant-popup-submit" style="text-align:center; text-decoration:none; display:block;">Post on Community Forum</a>
         </div>
-        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-type')">&larr; Back</a>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-apiapps')" style="cursor:pointer;">&larr; Back</a>
       </div>
 
       <!-- Step 2: Domain Entry + Verification -->
@@ -2468,11 +2471,12 @@
         <div id="cq-domain-status" style="display:none; margin-top:12px; padding:16px; border-radius:10px; font-size:14px; line-height:1.5;"></div>
         <div id="cq-domain-confirm" style="display:none;">
           <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:20px; margin-top:16px;">
-            <p style="color:rgba(255,255,255,0.5); font-size:13px; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">We found</p>
+            <p style="color:rgba(255,255,255,0.5); font-size:13px; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Our analysis</p>
             <p id="cq-confirm-desc" style="font-size:15px; line-height:1.6; color:#f7f8f8; margin-bottom:16px;"></p>
+            <p id="cq-confirm-mismatch" style="font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:16px;">Does this sound right?</p>
             <div style="display:flex; gap:10px;">
-              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany(true)" style="flex:1;">Yes, that's us</button>
-              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany(false)" style="flex:1; background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.12);">No, try again</button>
+              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany(true)" style="flex:1;">Yes, that's correct</button>
+              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany(false)" style="flex:1; background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.12);">No, let me try again</button>
             </div>
           </div>
         </div>
@@ -2515,11 +2519,18 @@
             <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
           </a>
         </div>
-        <div class="apiant-popup-forum" style="margin-top:16px;">
-          <p style="font-size:14px; color:rgba(255,255,255,0.4);">Don't see what you need? Post on our community forum and find a builder who can help.</p>
-          <a href="https://forum.apiant.com" target="_blank" rel="noopener" class="apiant-popup-forum-btn" style="margin-top:10px;">Post on Community Forum</a>
+          <div class="apiant-popup-qual-option other" onclick="cqGoTo('cq-step-forum')" style="text-decoration:none; color:inherit;">
+            <div class="apiant-popup-qual-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="apiant-popup-qual-text">
+              <div class="apiant-popup-qual-label">None of these</div>
+              <div class="apiant-popup-qual-desc">I use a different platform</div>
+            </div>
+            <svg class="apiant-popup-qual-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
         </div>
-        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-domain'); document.getElementById('cq-domain-input').style.display=''; document.getElementById('cq-domain-scanning').style.display='none'; document.getElementById('cq-domain-confirm').style.display='none'; document.getElementById('cq-domain-status').style.display='none';">&larr; Back</a>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-type')" style="cursor:pointer;">&larr; Back</a>
       </div>
 
       <!-- Step 3: Contact Form -->
@@ -2547,13 +2558,13 @@
           </div>
           <button type="submit" class="apiant-popup-submit">Continue</button>
         </form>
-        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-domain')">&larr; Back</a>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-verify')" style="cursor:pointer;">&larr; Back</a>
       </div>
 
-      <!-- Step 4: Phone/Email Verification -->
+      <!-- Step 4: Phone Verification -->
       <div class="apiant-popup-step" id="cq-step-verify">
-        <h3 class="apiant-popup-title">Verify your identity</h3>
-        <p class="apiant-popup-subtitle">Choose how you'd like to receive your verification code.</p>
+        <h3 class="apiant-popup-title">Verify your phone number</h3>
+        <p class="apiant-popup-subtitle">Enter your mobile number and we'll send a quick verification code.</p>
         <div class="apiant-popup-form" id="cq-verify-send">
           <div class="apiant-popup-field">
             <label for="cq-phone">Mobile or WhatsApp number</label>
@@ -2576,14 +2587,6 @@
                 <div class="apiant-popup-qual-label" style="font-size:14px;">Send via WhatsApp</div>
               </div>
             </div>
-            <div class="apiant-popup-qual-option" onclick="cqSendOTP('email')" style="padding:12px 16px;">
-              <div class="apiant-popup-qual-icon" style="width:32px;height:32px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--popup-accent)" stroke-width="1.5" style="width:16px;height:16px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              </div>
-              <div class="apiant-popup-qual-text">
-                <div class="apiant-popup-qual-label" style="font-size:14px;">Email me a code</div>
-              </div>
-            </div>
           </div>
           <div id="cq-otp-status" style="display:none; margin-top:8px; font-size:14px; color:rgba(255,255,255,0.5);"></div>
         </div>
@@ -2595,10 +2598,10 @@
           </div>
           <button type="button" class="apiant-popup-submit" onclick="cqVerifyOTP()">Verify</button>
           <p style="color:rgba(255,255,255,0.3); font-size:13px; margin-top:8px; text-align:center;">
-            Didn't receive it? <a onclick="cqGoTo('cq-step-verify'); document.getElementById('cq-verify-send').style.display=''; document.getElementById('cq-verify-code').style.display='none';" style="color:var(--popup-accent); cursor:pointer; text-decoration:underline;">Try again</a>
+            Didn't receive it? <a onclick="document.getElementById('cq-verify-send').style.display=''; document.getElementById('cq-verify-code').style.display='none';" style="color:var(--popup-accent); cursor:pointer; text-decoration:underline;">Try again</a>
           </p>
         </div>
-        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-form')">&larr; Back</a>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-domain')" style="cursor:pointer;">&larr; Back</a>
       </div>
 
       <!-- Step 5: Call Now or Schedule -->
@@ -2632,7 +2635,7 @@
           <p class="apiant-popup-subtitle">Pick a time that works for you.</p>
           <div id="cq-calendly-embed" style="min-height:400px; margin-top:16px; border-radius:12px; overflow:hidden;"></div>
         </div>
-        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-verify')" style="cursor:pointer;">&larr; Back</a>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-form')" style="cursor:pointer;">&larr; Back</a>
       </div>
 
       <!-- Success state -->
@@ -2737,6 +2740,9 @@
   <script>
     // Contact form submission
     // ===== Contact Qualification Flow =====
+    // Flow: Type -> Domain -> [Verified: Verify Phone -> Form -> Call/Schedule]
+    //                         [Not verified: Confirm -> API Apps -> Forum]
+    //       "Something else" -> API Apps -> Forum
     var CQ_SUPABASE_URL = ''; // Set after creating Supabase project
     var CQ_SESSION_ID = '';
     var CQ_SELECTED_TYPE = '';
@@ -2771,8 +2777,9 @@
       cqGoTo('cq-step-domain');
     }
 
+    // "Something else" from Step 1 -> go straight to API Apps
     function cqShowForum() {
-      cqGoTo('cq-step-forum');
+      cqGoTo('cq-step-apiapps');
     }
 
     function cqClearScanTimeouts() {
@@ -2834,13 +2841,29 @@
         scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Analyzing company type...';
       }, 3000));
 
-      function showConfirm(description) {
+      // Show mismatch confirmation (only for unverified results)
+      function showConfirm(description, mismatchMsg) {
         CQ_SUBMITTING = false;
         scanEl.style.display = 'none';
         confirmEl.style.display = '';
         backBtn.style.display = '';
         verifyBtn.disabled = false;
         document.getElementById('cq-confirm-desc').textContent = description;
+        var mismatchEl = document.getElementById('cq-confirm-mismatch');
+        mismatchEl.textContent = mismatchMsg || 'This doesn\'t look like ' + cqTypeLabel(CQ_SELECTED_TYPE) + '. Is that correct?';
+      }
+
+      // Verified lead: skip confirmation, go straight to phone verify
+      function proceedVerified(domain) {
+        CQ_SUBMITTING = false;
+        CQ_VERIFIED_DOMAIN = domain;
+        CQ_SESSION_ID = cqGenerateSessionId();
+        document.getElementById('cq-company-domain').value = domain;
+        inputEl.style.display = '';
+        scanEl.style.display = 'none';
+        backBtn.style.display = '';
+        verifyBtn.disabled = false;
+        cqGoTo('cq-step-verify');
       }
 
       function showError(msg) {
@@ -2857,19 +2880,13 @@
         statusEl.textContent = msg;
       }
 
+      // Fallback: no backend configured, treat as verified
       if (!CQ_SUPABASE_URL) {
         CQ_SCAN_TIMEOUTS.push(setTimeout(function() {
           scanBar.style.width = '100%';
           scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Complete';
           CQ_SCAN_TIMEOUTS.push(setTimeout(function() {
-            CQ_SUBMITTING = false;
-            CQ_VERIFIED_DOMAIN = domain;
-            document.getElementById('cq-company-domain').value = domain;
-            inputEl.style.display = '';
-            scanEl.style.display = 'none';
-            backBtn.style.display = '';
-            verifyBtn.disabled = false;
-            cqGoTo('cq-step-form');
+            proceedVerified(domain);
           }, 600));
         }, 2000));
         return;
@@ -2897,10 +2914,19 @@
         CQ_VERIFY_RESULT = data;
         var desc = data.description || 'We analyzed your website.';
 
-        scanStatus.innerHTML = '<span style="color:#1ab759;">&#10003; Analysis complete</span>';
-        setTimeout(function() {
-          showConfirm(desc);
-        }, 600);
+        if (data.verified) {
+          // Confirmed SaaS/SI/Enterprise: go to phone verification
+          scanStatus.innerHTML = '<span style="color:#1ab759;">&#10003; Verified</span>';
+          setTimeout(function() {
+            proceedVerified(domain);
+          }, 600);
+        } else {
+          // Mismatch: show confirmation with findings
+          scanStatus.innerHTML = '<span style="color:#f59e0b;">&#9888; Needs review</span>';
+          setTimeout(function() {
+            showConfirm(desc);
+          }, 600);
+        }
       })
       .catch(function() {
         cqClearScanTimeouts();
@@ -2917,6 +2943,7 @@
       var inputEl = document.getElementById('cq-domain-input');
 
       if (!confirmed) {
+        // "No, let me try again" -> clear domain and retry
         confirmEl.style.display = 'none';
         inputEl.style.display = '';
         document.getElementById('cq-domain').value = '';
@@ -2924,17 +2951,11 @@
         return;
       }
 
+      // "Yes, that's correct" -> they confirmed they're NOT SaaS/SI/Enterprise
+      // Route to API Apps
       document.getElementById('cq-company-domain').value = CQ_VERIFIED_DOMAIN;
 
-      if (CQ_VERIFY_RESULT && CQ_VERIFY_RESULT.verified) {
-        confirmEl.style.display = 'none';
-        inputEl.style.display = '';
-        cqGoTo('cq-step-form');
-        return;
-      }
-
       var result = CQ_VERIFY_RESULT || {};
-      var detectedType = result.detected_type || 'other';
       var vertical = result.suggested_vertical || '';
 
       var mbEl = document.getElementById('cq-apiapp-mindbody');
@@ -2957,9 +2978,9 @@
 
       var subtitle = document.getElementById('cq-apiapps-subtitle');
       if (vertical) {
-        subtitle.textContent = 'It looks like you\'re not ' + cqTypeLabel(CQ_SELECTED_TYPE) + ', but we have turnkey integration products that might be a perfect fit.';
+        subtitle.textContent = 'Based on what we found, you might be interested in our turnkey integration products.';
       } else {
-        subtitle.textContent = 'We weren\'t able to confirm you\'re ' + cqTypeLabel(CQ_SELECTED_TYPE) + '. Here are some options that might help.';
+        subtitle.textContent = 'We have pre-built integration products that might be a great fit for your needs.';
       }
 
       confirmEl.style.display = 'none';
@@ -2972,7 +2993,7 @@
       return labels[type] || type;
     }
 
-    // Contact form submission (Step 3 -> Step 4)
+    // Contact form submission (Step 6): collect form data and submit
     $("#contact-form").submit(function() {
       // Hide any previous inline error
       var prevErr = document.querySelector('#contact-form .cq-inline-error');
@@ -2992,41 +3013,29 @@
         cqShowInlineError('contact-form', 'Please enter your work email.');
         return false;
       }
-      CQ_FORM_DATA = {
-        PageTitle: document.title,
-        CompanyType: CQ_SELECTED_TYPE,
-        CompanyDomain: CQ_VERIFIED_DOMAIN,
-        WorkEmail: email,
-        Company: $("#contact-company").val().trim(),
-        IntegrationNeeds: $("#contact-needs").val().trim()
-      };
-      CQ_SESSION_ID = cqGenerateSessionId();
-      cqGoTo('cq-step-verify');
+      // Preserve phone data from OTP step, add form fields
+      CQ_FORM_DATA.PageTitle = document.title;
+      CQ_FORM_DATA.CompanyType = CQ_SELECTED_TYPE;
+      CQ_FORM_DATA.CompanyDomain = CQ_VERIFIED_DOMAIN;
+      CQ_FORM_DATA.WorkEmail = email;
+      CQ_FORM_DATA.Company = $("#contact-company").val().trim();
+      CQ_FORM_DATA.IntegrationNeeds = $("#contact-needs").val().trim();
+      // Submit and route to call/schedule
+      cqSubmitAndRoute();
       return false;
     });
 
+    // Phone-only OTP (SMS or WhatsApp)
     function cqSendOTP(method) {
       if (CQ_SUBMITTING) return;
-      var contact = '';
-      if (method === 'email') {
-        contact = CQ_FORM_DATA.WorkEmail;
-        if (!contact) {
-          var s = document.getElementById('cq-otp-status');
-          s.style.display = 'block';
-          s.textContent = 'No email address provided.';
-          s.style.color = '#fca5a5';
-          return;
-        }
-      } else {
-        contact = document.getElementById('cq-phone').value.trim();
-        if (!contact) { document.getElementById('cq-phone').focus(); return; }
-        if (!/^\+?[\d\s\-\(\)]{7,20}$/.test(contact)) {
-          var s = document.getElementById('cq-otp-status');
-          s.style.display = 'block';
-          s.textContent = 'Please enter a valid phone number.';
-          s.style.color = '#fca5a5';
-          return;
-        }
+      var contact = document.getElementById('cq-phone').value.trim();
+      if (!contact) { document.getElementById('cq-phone').focus(); return; }
+      if (!/^\+?[\d\s\-\(\)]{7,20}$/.test(contact)) {
+        var s = document.getElementById('cq-otp-status');
+        s.style.display = 'block';
+        s.textContent = 'Please enter a valid phone number.';
+        s.style.color = '#fca5a5';
+        return;
       }
 
       CQ_SUBMITTING = true;
@@ -3049,6 +3058,10 @@
         });
       }
 
+      // Store phone early (before form)
+      CQ_FORM_DATA.Phone = contact;
+      CQ_FORM_DATA.PhoneType = method;
+
       if (!CQ_SUPABASE_URL) {
         setTimeout(function() {
           reenableOtpButtons();
@@ -3058,10 +3071,6 @@
           var sentMsg = document.getElementById('cq-otp-sent-msg');
           sentMsg.textContent = 'Code sent to ' + contact + '! Enter it within 10 minutes.';
           sentMsg.style.color = 'rgba(255,255,255,0.5)';
-          if (method !== 'email') {
-            CQ_FORM_DATA.Phone = contact;
-            CQ_FORM_DATA.PhoneType = method;
-          }
         }, 500);
         return;
       }
@@ -3085,8 +3094,6 @@
         var sentMsg = document.getElementById('cq-otp-sent-msg');
         sentMsg.textContent = (data.message || 'Code sent!') + ' Enter it within 10 minutes.';
         sentMsg.style.color = 'rgba(255,255,255,0.5)';
-        CQ_FORM_DATA.Phone = contact;
-        CQ_FORM_DATA.PhoneType = method;
       })
       .catch(function() {
         reenableOtpButtons();
@@ -3095,6 +3102,7 @@
       });
     }
 
+    // OTP verify -> on success, go to contact form (Step 6)
     function cqVerifyOTP() {
       if (CQ_SUBMITTING) return;
       var code = document.getElementById('cq-otp-code').value.trim();
@@ -3114,7 +3122,7 @@
         setTimeout(function() {
           CQ_SUBMITTING = false;
           if (verifyBtn) { verifyBtn.disabled = false; verifyBtn.textContent = 'Verify'; }
-          cqSubmitAndRoute();
+          cqGoTo('cq-step-form');
         }, 500);
         return;
       }
@@ -3135,7 +3143,7 @@
           return;
         }
         if (data.verified) {
-          cqSubmitAndRoute();
+          cqGoTo('cq-step-form');
         }
       })
       .catch(function() {
@@ -3281,6 +3289,8 @@
         document.getElementById('cq-domain').value = '';
         document.getElementById('cq-otp-code').value = '';
         document.getElementById('cq-phone').value = '';
+        var integrationNeed = document.getElementById('cq-integration-need');
+        if (integrationNeed) integrationNeed.value = '';
         var contactForm = document.getElementById('contact-form');
         if (contactForm) {
           contactForm.reset();
