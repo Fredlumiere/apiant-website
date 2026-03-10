@@ -1735,9 +1735,10 @@
             <p style="color:rgba(255,255,255,0.5); font-size:13px; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Our analysis</p>
             <p id="cq-confirm-desc" style="font-size:15px; line-height:1.6; color:#f7f8f8; margin-bottom:16px;"></p>
             <p id="cq-confirm-mismatch" style="font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:16px;">Does this sound right?</p>
-            <div style="display:flex; gap:10px;">
-              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany(true)" style="flex:1;">Yes, that's correct</button>
-              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany(false)" style="flex:1; background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.12);">No, let me try again</button>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany('accept')" style="width:100%;">Yes, that's us</button>
+              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany('override')" style="width:100%; background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.12);">That's not right, but we are a <span id="cq-override-type">SaaS company</span></button>
+              <button type="button" class="apiant-popup-submit" onclick="cqConfirmCompany('retry')" style="width:100%; background:transparent; border-color:rgba(255,255,255,0.08); font-size:13px; padding:10px;">Not us, let me try again</button>
             </div>
           </div>
         </div>
@@ -2308,7 +2309,13 @@
         verifyBtn.disabled = false;
         document.getElementById('cq-confirm-desc').textContent = description;
         var mismatchEl = document.getElementById('cq-confirm-mismatch');
-        mismatchEl.textContent = mismatchMsg || 'This doesn\'t look like ' + cqTypeLabel(CQ_SELECTED_TYPE) + '. Is that correct?';
+        mismatchEl.textContent = mismatchMsg || 'Does this sound right?';
+        // Set override button label to match their selected type
+        var overrideEl = document.getElementById('cq-override-type');
+        if (overrideEl) {
+          var labels = { saas: 'a SaaS company', si: 'a System Integrator', enterprise: 'an Enterprise' };
+          overrideEl.textContent = labels[CQ_SELECTED_TYPE] || CQ_SELECTED_TYPE;
+        }
       }
 
       // Verified lead: skip confirmation, go straight to phone verify
@@ -2397,12 +2404,12 @@
       });
     }
 
-    function cqConfirmCompany(confirmed) {
+    function cqConfirmCompany(action) {
       var confirmEl = document.getElementById('cq-domain-confirm');
       var inputEl = document.getElementById('cq-domain-input');
 
-      if (!confirmed) {
-        // "No, let me try again" -> clear domain and retry
+      if (action === 'retry') {
+        // "Not us, let me try again" -> clear domain and retry
         cqLog('confirm_retry', { domain: CQ_VERIFIED_DOMAIN });
         confirmEl.style.display = 'none';
         inputEl.style.display = '';
@@ -2411,8 +2418,18 @@
         return;
       }
 
+      if (action === 'override') {
+        // "That's not right, we ARE a SaaS/SI/Enterprise" -> override AI, proceed to qualification
+        cqLog('confirm_override', { domain: CQ_VERIFIED_DOMAIN, claimed_type: CQ_SELECTED_TYPE });
+        confirmEl.style.display = 'none';
+        inputEl.style.display = '';
+        document.getElementById('cq-company-domain').value = CQ_VERIFIED_DOMAIN;
+        cqGoTo('cq-step-verify');
+        return;
+      }
+
       cqLog('confirm_accept', { domain: CQ_VERIFIED_DOMAIN, routed_to: 'apiapps' });
-      // "Yes, that's correct" -> they confirmed they're NOT SaaS/SI/Enterprise
+      // "Yes, that's us" -> they confirmed they match the analysis (not SaaS/SI/Enterprise)
       // Route to API Apps
       document.getElementById('cq-company-domain').value = CQ_VERIFIED_DOMAIN;
 
