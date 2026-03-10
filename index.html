@@ -1662,7 +1662,7 @@
     </div>
   </div>
   <!-- ===== POPUP: CONTACT FORM (Multi-Step Qualification) ===== -->
-  <div class="apiant-popup" id="contact-popup">
+  <div class="apiant-popup" id="contact-popup" role="dialog" aria-modal="true" aria-labelledby="cq-popup-title">
     <div class="apiant-popup-card">
       <div class="apiant-popup-close" aria-label="Close dialog" onclick="closePopup('contact-popup')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -1670,7 +1670,7 @@
 
       <!-- Step 1: Company Type Selection -->
       <div class="apiant-popup-step active" id="cq-step-type">
-        <h3 class="apiant-popup-title">Talk to Us</h3>
+        <h3 class="apiant-popup-title" id="cq-popup-title">Talk to Us</h3>
         <p class="apiant-popup-subtitle">Tell us what you're building. We'll show you how APIANT fits.</p>
         <div class="apiant-popup-qual-options">
           <div class="apiant-popup-qual-option" onclick="cqSelectType('saas')">
@@ -1812,7 +1812,7 @@
       <div class="apiant-popup-step" id="cq-step-form">
         <h3 class="apiant-popup-title">Tell us about your needs</h3>
         <p class="apiant-popup-subtitle">We'll get back to you within one business day.</p>
-        <form id="contact-form" class="apiant-popup-form" method="get">
+        <form id="contact-form" class="apiant-popup-form" method="post" action="javascript:void(0)">
           <input type="hidden" name="Source-Page" value="homepage">
           <input type="hidden" id="cq-company-type" name="Company-Type" value="">
           <input type="hidden" id="cq-company-domain" name="Company-Domain" value="">
@@ -1826,7 +1826,7 @@
           </div>
           <div class="apiant-popup-field">
             <label for="contact-needs">What are you looking to integrate?</label>
-            <textarea id="contact-needs" name="IntegrationNeeds" placeholder="e.g. We need to sync HubSpot contacts with our app for 200+ customers..." maxlength="5000"></textarea>
+            <textarea id="contact-needs" name="IntegrationNeeds" placeholder="e.g. We need to sync HubSpot contacts with our app for 200+ customers..." maxlength="5000" required></textarea>
           </div>
           <div class="apiant-popup-recaptcha">
             <div class="g-recaptcha" data-sitekey="6LdTIVkrAAAAAOYkqcvyOhFE7IfuXC-VAivaS6RY"></div>
@@ -1918,6 +1918,7 @@
           <p class="apiant-popup-subtitle">Pick a time that works for you.</p>
           <div id="cq-calendly-embed" style="min-height:400px; margin-top:16px; border-radius:12px; overflow:hidden;"></div>
         </div>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-verify')" style="cursor:pointer;">&larr; Back</a>
       </div>
 
       <!-- Success state -->
@@ -2034,8 +2035,7 @@
     });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        document.querySelectorAll('.apiant-popup.active').forEach(function(p) { p.classList.remove('active'); });
-        document.body.style.overflow = '';
+        document.querySelectorAll('.apiant-popup.active').forEach(function(p) { closePopup(p.id); });
       }
     });
     // ===== Contact Qualification Flow =====
@@ -2044,15 +2044,27 @@
     var CQ_SELECTED_TYPE = '';
     var CQ_VERIFIED_DOMAIN = '';
     var CQ_FORM_DATA = {};
+    var CQ_VERIFY_RESULT = null;
+    var CQ_SCAN_TIMEOUTS = [];
+    var CQ_SUBMITTING = false;
 
     function cqGenerateSessionId() {
-      return 'cq_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 9);
+      if (window.crypto && window.crypto.getRandomValues) {
+        var arr = new Uint8Array(16);
+        crypto.getRandomValues(arr);
+        return 'cq_' + Array.from(arr, function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+      }
+      return 'cq_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 11);
     }
 
     function cqGoTo(stepId) {
       document.querySelectorAll('#contact-popup .apiant-popup-step').forEach(function(s) { s.classList.remove('active'); });
       var step = document.getElementById(stepId);
-      if (step) step.classList.add('active');
+      if (step) {
+        step.classList.add('active');
+        var focusTarget = step.querySelector('h3, button, input, a[href]');
+        if (focusTarget) focusTarget.focus();
+      }
     }
 
     function cqSelectType(type) {
@@ -2065,14 +2077,34 @@
       cqGoTo('cq-step-forum');
     }
 
-    var CQ_VERIFY_RESULT = null; // Stores the verification response
+    function cqClearScanTimeouts() {
+      CQ_SCAN_TIMEOUTS.forEach(function(t) { clearTimeout(t); });
+      CQ_SCAN_TIMEOUTS = [];
+    }
+
+    function cqShowInlineError(formId, msg) {
+      var form = document.getElementById(formId);
+      if (!form) return;
+      var errEl = form.querySelector('.cq-inline-error');
+      if (!errEl) {
+        errEl = document.createElement('div');
+        errEl.className = 'cq-inline-error';
+        errEl.style.cssText = 'color:#fca5a5; font-size:14px; margin-bottom:12px; padding:10px 14px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:8px;';
+        var submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) form.insertBefore(errEl, submitBtn);
+        else form.appendChild(errEl);
+      }
+      errEl.textContent = msg;
+      errEl.style.display = '';
+    }
 
     function cqVerifyDomain() {
+      if (CQ_SUBMITTING) return;
       var domain = document.getElementById('cq-domain').value.trim();
       if (!domain) { document.getElementById('cq-domain').focus(); return; }
-      // Normalize: strip protocol and trailing slash
       domain = domain.replace(/^https?:\/\//, '').replace(/\/+$/, '');
 
+      var verifyBtn = document.getElementById('cq-verify-btn');
       var inputEl = document.getElementById('cq-domain-input');
       var scanEl = document.getElementById('cq-domain-scanning');
       var statusEl = document.getElementById('cq-domain-status');
@@ -2082,7 +2114,8 @@
       var scanStatus = document.getElementById('cq-scan-status');
       var backBtn = document.getElementById('cq-domain-back');
 
-      // Show scanning UI
+      CQ_SUBMITTING = true;
+      verifyBtn.disabled = true;
       inputEl.style.display = 'none';
       statusEl.style.display = 'none';
       confirmEl.style.display = 'none';
@@ -2092,50 +2125,57 @@
       scanBar.style.width = '0%';
       scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Visiting website...';
 
-      // Animate progress bar with timed status messages
-      setTimeout(function() { scanBar.style.width = '25%'; }, 200);
-      setTimeout(function() {
+      cqClearScanTimeouts();
+      CQ_SCAN_TIMEOUTS.push(setTimeout(function() { scanBar.style.width = '25%'; }, 200));
+      CQ_SCAN_TIMEOUTS.push(setTimeout(function() {
         scanBar.style.width = '50%';
         scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Reading page content...';
-      }, 1500);
-      setTimeout(function() {
+      }, 1500));
+      CQ_SCAN_TIMEOUTS.push(setTimeout(function() {
         scanBar.style.width = '75%';
         scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Analyzing company type...';
-      }, 3000);
+      }, 3000));
 
       function showConfirm(description) {
+        CQ_SUBMITTING = false;
         scanEl.style.display = 'none';
         confirmEl.style.display = '';
         backBtn.style.display = '';
+        verifyBtn.disabled = false;
         document.getElementById('cq-confirm-desc').textContent = description;
       }
 
-      function showError(html) {
+      function showError(msg) {
+        CQ_SUBMITTING = false;
+        cqClearScanTimeouts();
         inputEl.style.display = '';
         scanEl.style.display = 'none';
         backBtn.style.display = '';
+        verifyBtn.disabled = false;
         statusEl.style.display = 'block';
-        statusEl.innerHTML = html;
+        statusEl.style.background = 'rgba(239,68,68,0.08)';
+        statusEl.style.border = '1px solid rgba(239,68,68,0.2)';
+        statusEl.style.color = '#fca5a5';
+        statusEl.textContent = msg;
       }
 
       if (!CQ_SUPABASE_URL) {
-        // No backend: simulate scan, skip confirmation, proceed
-        setTimeout(function() {
+        CQ_SCAN_TIMEOUTS.push(setTimeout(function() {
           scanBar.style.width = '100%';
           scanStatus.innerHTML = '<span class="cq-scan-dot"></span> Complete';
-          setTimeout(function() {
+          CQ_SCAN_TIMEOUTS.push(setTimeout(function() {
+            CQ_SUBMITTING = false;
             CQ_VERIFIED_DOMAIN = domain;
             document.getElementById('cq-company-domain').value = domain;
             inputEl.style.display = '';
             scanEl.style.display = 'none';
             backBtn.style.display = '';
+            verifyBtn.disabled = false;
             cqGoTo('cq-step-form');
-          }, 600);
-        }, 2000);
+          }, 600));
+        }, 2000));
         return;
       }
-
-      CQ_VERIFIED_DOMAIN = domain;
 
       fetch(CQ_SUPABASE_URL + '/functions/v1/verify-company-type', {
         method: 'POST',
@@ -2144,20 +2184,18 @@
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
+        cqClearScanTimeouts();
         scanBar.style.width = '100%';
 
         if (data.error) {
           scanStatus.innerHTML = '<span style="color:#fca5a5;">Could not reach website</span>';
           setTimeout(function() {
-            showError('<span style="color:#fca5a5;">' + data.error + '</span><br><span style="color:rgba(255,255,255,0.4);font-size:13px;">Check the URL and try again, or <a href="https://forum.apiant.com" target="_blank" style="color:var(--popup-accent);">post on our forum</a>.</span>');
-            statusEl.style.background = 'rgba(239,68,68,0.08)';
-            statusEl.style.border = '1px solid rgba(239,68,68,0.2)';
-            statusEl.style.color = '#fca5a5';
+            showError(data.error || 'Could not verify this domain. Check the URL and try again.');
           }, 800);
           return;
         }
 
-        // Store the result for the confirmation step
+        CQ_VERIFIED_DOMAIN = domain;
         CQ_VERIFY_RESULT = data;
         var desc = data.description || 'We analyzed your website.';
 
@@ -2167,17 +2205,12 @@
         }, 600);
       })
       .catch(function() {
-        // On network error, proceed without verification
+        cqClearScanTimeouts();
         scanBar.style.width = '100%';
-        scanStatus.innerHTML = '<span style="color:#1ab759;">&#10003; Proceeding</span>';
-        CQ_VERIFY_RESULT = null;
+        scanStatus.innerHTML = '<span style="color:#fca5a5;">Connection failed</span>';
         setTimeout(function() {
-          document.getElementById('cq-company-domain').value = domain;
-          inputEl.style.display = '';
-          scanEl.style.display = 'none';
-          backBtn.style.display = '';
-          cqGoTo('cq-step-form');
-        }, 600);
+          showError('Could not connect to verification service. Please try again.');
+        }, 800);
       });
     }
 
@@ -2186,7 +2219,6 @@
       var inputEl = document.getElementById('cq-domain-input');
 
       if (!confirmed) {
-        // They said "No, try again" - go back to domain input
         confirmEl.style.display = 'none';
         inputEl.style.display = '';
         document.getElementById('cq-domain').value = '';
@@ -2194,32 +2226,26 @@
         return;
       }
 
-      // They confirmed the description is correct
       document.getElementById('cq-company-domain').value = CQ_VERIFIED_DOMAIN;
 
       if (CQ_VERIFY_RESULT && CQ_VERIFY_RESULT.verified) {
-        // Matches claimed type - proceed to contact form
         confirmEl.style.display = 'none';
         inputEl.style.display = '';
         cqGoTo('cq-step-form');
         return;
       }
 
-      // Doesn't match claimed type - route to API apps or explain
       var result = CQ_VERIFY_RESULT || {};
       var detectedType = result.detected_type || 'other';
       var vertical = result.suggested_vertical || '';
 
-      // Highlight the suggested vertical if applicable
       var mbEl = document.getElementById('cq-apiapp-mindbody');
       var ckEl = document.getElementById('cq-apiapp-cliniko');
       var dpEl = document.getElementById('cq-apiapp-donorperfect');
-      // Reset styles
-      [mbEl, ckEl, dpEl].forEach(function(el) {
+      [mbEl, ckEl, dpEl].filter(Boolean).forEach(function(el) {
         el.style.borderColor = 'rgba(255,255,255,0.08)';
         el.style.background = 'rgba(255,255,255,0.02)';
       });
-      // Highlight match
       if (vertical === 'mindbody' && mbEl) {
         mbEl.style.borderColor = 'rgba(var(--popup-accent-rgb, 26,183,89),0.4)';
         mbEl.style.background = 'rgba(var(--popup-accent-rgb, 26,183,89),0.06)';
@@ -2250,43 +2276,95 @@
 
     // Contact form submission (Step 3 -> Step 4)
     $("#contact-form").submit(function() {
+      // Hide any previous inline error
+      var prevErr = document.querySelector('#contact-form .cq-inline-error');
+      if (prevErr) prevErr.style.display = 'none';
+
+      if (typeof grecaptcha === 'undefined') {
+        cqShowInlineError('contact-form', 'reCAPTCHA failed to load. Please refresh the page and try again.');
+        return false;
+      }
       var captchaToken = grecaptcha.getResponse();
-      if (!captchaToken) { alert("Please complete the reCAPTCHA before submitting."); return false; }
+      if (!captchaToken) {
+        cqShowInlineError('contact-form', 'Please complete the reCAPTCHA before submitting.');
+        return false;
+      }
+      var email = $("#contact-email").val().trim();
+      if (!email) {
+        cqShowInlineError('contact-form', 'Please enter your work email.');
+        return false;
+      }
       CQ_FORM_DATA = {
         PageTitle: document.title,
         CompanyType: CQ_SELECTED_TYPE,
         CompanyDomain: CQ_VERIFIED_DOMAIN,
-        WorkEmail: $("#contact-email").val(),
-        Company: $("#contact-company").val(),
-        IntegrationNeeds: $("#contact-needs").val()
+        WorkEmail: email,
+        Company: $("#contact-company").val().trim(),
+        IntegrationNeeds: $("#contact-needs").val().trim()
       };
       CQ_SESSION_ID = cqGenerateSessionId();
-      // Pre-fill email for OTP
       cqGoTo('cq-step-verify');
       return false;
     });
 
     function cqSendOTP(method) {
+      if (CQ_SUBMITTING) return;
       var contact = '';
       if (method === 'email') {
         contact = CQ_FORM_DATA.WorkEmail;
-        if (!contact) { alert('No email address provided.'); return; }
+        if (!contact) {
+          var s = document.getElementById('cq-otp-status');
+          s.style.display = 'block';
+          s.textContent = 'No email address provided.';
+          s.style.color = '#fca5a5';
+          return;
+        }
       } else {
         contact = document.getElementById('cq-phone').value.trim();
         if (!contact) { document.getElementById('cq-phone').focus(); return; }
+        if (!/^\+?[\d\s\-\(\)]{7,20}$/.test(contact)) {
+          var s = document.getElementById('cq-otp-status');
+          s.style.display = 'block';
+          s.textContent = 'Please enter a valid phone number.';
+          s.style.color = '#fca5a5';
+          return;
+        }
       }
 
+      CQ_SUBMITTING = true;
       var statusEl = document.getElementById('cq-otp-status');
       statusEl.style.display = 'block';
       statusEl.textContent = 'Sending code...';
       statusEl.style.color = 'rgba(255,255,255,0.5)';
 
+      // Disable OTP method buttons during send
+      document.querySelectorAll('#cq-verify-send .apiant-popup-qual-option').forEach(function(btn) {
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.5';
+      });
+
+      function reenableOtpButtons() {
+        CQ_SUBMITTING = false;
+        document.querySelectorAll('#cq-verify-send .apiant-popup-qual-option').forEach(function(btn) {
+          btn.style.pointerEvents = '';
+          btn.style.opacity = '';
+        });
+      }
+
       if (!CQ_SUPABASE_URL) {
-        // No backend yet, simulate success
-        statusEl.style.display = 'none';
-        document.getElementById('cq-verify-send').style.display = 'none';
-        document.getElementById('cq-verify-code').style.display = '';
-        document.getElementById('cq-otp-sent-msg').textContent = 'Code sent to ' + contact + '!';
+        setTimeout(function() {
+          reenableOtpButtons();
+          statusEl.style.display = 'none';
+          document.getElementById('cq-verify-send').style.display = 'none';
+          document.getElementById('cq-verify-code').style.display = '';
+          var sentMsg = document.getElementById('cq-otp-sent-msg');
+          sentMsg.textContent = 'Code sent to ' + contact + '! Enter it within 10 minutes.';
+          sentMsg.style.color = 'rgba(255,255,255,0.5)';
+          if (method !== 'email') {
+            CQ_FORM_DATA.Phone = contact;
+            CQ_FORM_DATA.PhoneType = method;
+          }
+        }, 500);
         return;
       }
 
@@ -2297,6 +2375,7 @@
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
+        reenableOtpButtons();
         if (data.error) {
           statusEl.textContent = data.error;
           statusEl.style.color = '#fca5a5';
@@ -2305,23 +2384,40 @@
         statusEl.style.display = 'none';
         document.getElementById('cq-verify-send').style.display = 'none';
         document.getElementById('cq-verify-code').style.display = '';
-        document.getElementById('cq-otp-sent-msg').textContent = data.message || 'Code sent!';
+        var sentMsg = document.getElementById('cq-otp-sent-msg');
+        sentMsg.textContent = (data.message || 'Code sent!') + ' Enter it within 10 minutes.';
+        sentMsg.style.color = 'rgba(255,255,255,0.5)';
         CQ_FORM_DATA.Phone = contact;
         CQ_FORM_DATA.PhoneType = method;
       })
       .catch(function() {
+        reenableOtpButtons();
         statusEl.textContent = 'Failed to send code. Please try again.';
         statusEl.style.color = '#fca5a5';
       });
     }
 
     function cqVerifyOTP() {
+      if (CQ_SUBMITTING) return;
       var code = document.getElementById('cq-otp-code').value.trim();
-      if (!code || code.length < 6) { document.getElementById('cq-otp-code').focus(); return; }
+      if (!code || code.length < 6 || !/^\d{6}$/.test(code)) {
+        var msg = document.getElementById('cq-otp-sent-msg');
+        msg.textContent = 'Please enter a valid 6-digit code.';
+        msg.style.color = '#fca5a5';
+        document.getElementById('cq-otp-code').focus();
+        return;
+      }
+
+      var verifyBtn = document.querySelector('#cq-verify-code .apiant-popup-submit');
+      CQ_SUBMITTING = true;
+      if (verifyBtn) { verifyBtn.disabled = true; verifyBtn.textContent = 'Verifying...'; }
 
       if (!CQ_SUPABASE_URL) {
-        // No backend, skip verification and submit
-        cqSubmitAndRoute();
+        setTimeout(function() {
+          CQ_SUBMITTING = false;
+          if (verifyBtn) { verifyBtn.disabled = false; verifyBtn.textContent = 'Verify'; }
+          cqSubmitAndRoute();
+        }, 500);
         return;
       }
 
@@ -2332,9 +2428,11 @@
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
+        CQ_SUBMITTING = false;
+        if (verifyBtn) { verifyBtn.disabled = false; verifyBtn.textContent = 'Verify'; }
         if (data.error) {
           var msg = document.getElementById('cq-otp-sent-msg');
-          msg.textContent = data.error;
+          msg.textContent = data.error + (data.remaining !== undefined ? ' (' + data.remaining + ' attempts left)' : '');
           msg.style.color = '#fca5a5';
           return;
         }
@@ -2343,21 +2441,30 @@
         }
       })
       .catch(function() {
-        cqSubmitAndRoute(); // On error, proceed anyway
+        CQ_SUBMITTING = false;
+        if (verifyBtn) { verifyBtn.disabled = false; verifyBtn.textContent = 'Verify'; }
+        var msg = document.getElementById('cq-otp-sent-msg');
+        msg.textContent = 'Verification failed. Please check your connection and try again.';
+        msg.style.color = '#fca5a5';
       });
     }
 
     function cqSubmitAndRoute() {
+      if (CQ_SUBMITTING) return;
+      CQ_SUBMITTING = true;
+
       // Submit lead data to APIANT webhook
       $.ajax({
         url: "https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26",
         type: "POST",
-        data: CQ_FORM_DATA
+        data: CQ_FORM_DATA,
+        error: function() {
+          console.warn('[CQ] Webhook submission failed');
+        }
       });
 
-      // Check availability for live call
       if (!CQ_SUPABASE_URL) {
-        // No backend, show success
+        CQ_SUBMITTING = false;
         cqGoTo('cq-step-success');
         return;
       }
@@ -2365,28 +2472,32 @@
       fetch(CQ_SUPABASE_URL + '/functions/v1/check-availability')
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        if (data.available) {
+        CQ_SUBMITTING = false;
+        if (data.available && CQ_FORM_DATA.Phone) {
           document.getElementById('cq-call-available').style.display = '';
           document.getElementById('cq-call-schedule').style.display = 'none';
           cqGoTo('cq-step-call');
-        } else if (data.calendly_url) {
+        } else if (data.calendly_url && /^https:\/\/calendly\.com\//.test(data.calendly_url)) {
           cqEmbedCalendly(data.calendly_url);
         } else {
           cqGoTo('cq-step-success');
         }
       })
       .catch(function() {
+        CQ_SUBMITTING = false;
         cqGoTo('cq-step-success');
       });
     }
 
     function cqCallNow() {
+      if (CQ_SUBMITTING) return;
+      CQ_SUBMITTING = true;
       CQ_FORM_DATA.WantsCallNow = 'yes';
-      // Notify via webhook that lead wants immediate call
       $.ajax({
         url: "https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26",
         type: "POST",
-        data: CQ_FORM_DATA
+        data: CQ_FORM_DATA,
+        complete: function() { CQ_SUBMITTING = false; }
       });
       document.getElementById('cq-success-title').textContent = 'We\'ll call you shortly!';
       document.getElementById('cq-success-msg').textContent = 'Someone from our team will ring you in the next few minutes at ' + (CQ_FORM_DATA.Phone || 'your number') + '.';
@@ -2394,10 +2505,14 @@
     }
 
     function cqShowCalendly() {
+      if (!CQ_SUPABASE_URL) {
+        cqGoTo('cq-step-success');
+        return;
+      }
       fetch(CQ_SUPABASE_URL + '/functions/v1/check-availability')
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        if (data.calendly_url) {
+        if (data.calendly_url && /^https:\/\/calendly\.com\//.test(data.calendly_url)) {
           cqEmbedCalendly(data.calendly_url);
         } else {
           cqGoTo('cq-step-success');
@@ -2407,10 +2522,17 @@
     }
 
     function cqEmbedCalendly(url) {
+      if (!/^https:\/\/calendly\.com\//.test(url)) { cqGoTo('cq-step-success'); return; }
       document.getElementById('cq-call-available').style.display = 'none';
       document.getElementById('cq-call-schedule').style.display = '';
       var embed = document.getElementById('cq-calendly-embed');
-      embed.innerHTML = '<iframe src="' + url + '?hide_gdpr_banner=1&background_color=0c0e12&text_color=f7f8f8&primary_color=1ab759" style="width:100%;min-height:500px;border:none;border-radius:12px;"></iframe>';
+      var iframe = document.createElement('iframe');
+      var accentColor = '1ab759';
+      try { accentColor = getComputedStyle(document.getElementById('contact-popup')).getPropertyValue('--popup-accent').trim().replace('#', '') || '1ab759'; } catch(e) {}
+      iframe.src = url + '?hide_gdpr_banner=1&background_color=0c0e12&text_color=f7f8f8&primary_color=' + accentColor;
+      iframe.style.cssText = 'width:100%;min-height:500px;border:none;border-radius:12px;';
+      embed.innerHTML = '';
+      embed.appendChild(iframe);
       cqGoTo('cq-step-call');
     }
 
@@ -2418,18 +2540,57 @@
     var origOpenPopup = openPopup;
     openPopup = function(id) {
       if (id === 'contact-popup') {
+        cqClearScanTimeouts();
+        CQ_SUBMITTING = false;
         document.querySelectorAll('#contact-popup .apiant-popup-step').forEach(function(s) { s.classList.remove('active'); });
         document.getElementById('cq-step-type').classList.add('active');
+        // Reset domain step
         document.getElementById('cq-domain-input').style.display = '';
         document.getElementById('cq-domain-scanning').style.display = 'none';
         document.getElementById('cq-domain-confirm').style.display = 'none';
-        document.getElementById('cq-domain-status').style.display = 'none';
+        var domainStatus = document.getElementById('cq-domain-status');
+        domainStatus.style.display = 'none';
+        domainStatus.style.background = '';
+        domainStatus.style.border = '';
+        domainStatus.style.color = '';
+        domainStatus.textContent = '';
         document.getElementById('cq-domain-back').style.display = '';
         document.getElementById('cq-verify-btn').disabled = false;
         document.getElementById('cq-verify-btn').textContent = 'Continue';
+        // Reset verify step
         document.getElementById('cq-verify-send').style.display = '';
         document.getElementById('cq-verify-code').style.display = 'none';
+        var otpStatus = document.getElementById('cq-otp-status');
+        otpStatus.style.display = 'none';
+        otpStatus.textContent = '';
+        var sentMsg = document.getElementById('cq-otp-sent-msg');
+        sentMsg.textContent = 'Code sent!';
+        sentMsg.style.color = 'rgba(255,255,255,0.5)';
+        document.querySelectorAll('#cq-verify-send .apiant-popup-qual-option').forEach(function(btn) {
+          btn.style.pointerEvents = '';
+          btn.style.opacity = '';
+        });
+        var verifyOtpBtn = document.querySelector('#cq-verify-code .apiant-popup-submit');
+        if (verifyOtpBtn) { verifyOtpBtn.disabled = false; verifyOtpBtn.textContent = 'Verify'; }
+        // Reset call step
+        document.getElementById('cq-call-available').style.display = 'none';
+        document.getElementById('cq-call-schedule').style.display = 'none';
+        document.getElementById('cq-calendly-embed').innerHTML = '';
+        // Reset success step
+        document.getElementById('cq-success-title').textContent = 'We\'ll be in touch!';
+        document.getElementById('cq-success-msg').textContent = 'Expect to hear from us within one business day.';
+        // Clear form fields
+        document.getElementById('cq-domain').value = '';
         document.getElementById('cq-otp-code').value = '';
+        document.getElementById('cq-phone').value = '';
+        var contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+          contactForm.reset();
+          var inlineErr = contactForm.querySelector('.cq-inline-error');
+          if (inlineErr) inlineErr.style.display = 'none';
+        }
+        if (typeof grecaptcha !== 'undefined') { try { grecaptcha.reset(); } catch(e) {} }
+        // Reset state
         CQ_SESSION_ID = '';
         CQ_SELECTED_TYPE = '';
         CQ_VERIFIED_DOMAIN = '';
