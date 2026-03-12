@@ -110,7 +110,7 @@
 
 ### Footer
 - Copyright 2026, Apiant, Inc.
-- Links: Privacy Policy, Cookie Policy, Terms of Service, Community (forum.apiant.com), Documentation (info.apiant.com), Blog (blog.apiant.com)
+- Links: Privacy Policy, Cookie Policy, Terms of Service, Community (discord.gg/tx5PankREq), Documentation (info.apiant.com), Blog (blog.apiant.com)
 
 ---
 
@@ -694,7 +694,7 @@ All marked `noindex`. Shown after a user signs up for a free trial.
 - APIANT logo
 - Copyright 2026, Apiant, Inc.
 - Company: Privacy Policy, Cookie Policy, Terms of Service
-- Resources: Community (forum.apiant.com), Documentation (info.apiant.com), Blog (blog.apiant.com)
+- Resources: Community (discord.gg/tx5PankREq), Documentation (info.apiant.com), Blog (blog.apiant.com)
 
 ### White Paper CTA (on most pages)
 - "The Deep Integration Gap: Bridging The Divide Between Open APIs and Business Needs"

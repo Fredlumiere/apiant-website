@@ -76,7 +76,7 @@ Homepage (revised — builder-first gateway)
 │   ├── White Paper (existing)
 │   ├── Blog (blog.apiant.com)
 │   ├── Documentation (info.apiant.com)
-│   └── Community (forum.apiant.com)
+│   └── Community (discord.gg/tx5PankREq)
 │
 └── Legal / Utility (existing)
 ```
@@ -134,7 +134,7 @@ Logo | Platform ▾ | Solutions ▾ | Connectors | Resources ▾ | Start Buildin
 **Resources dropdown:**
 - Documentation
 - Blog
-- Community Forum
+- Discord Community
 - White Paper: The Deep Integration Gap
 
 **Why this works:** The nav immediately signals "this is a platform" — not just a collection of integration products. Builders scanning the nav see the tools they care about. The audience-specific pages (SaaS / SI / Enterprise) sit in Solutions, right next to proof (the turnkey products APIANT has already shipped).

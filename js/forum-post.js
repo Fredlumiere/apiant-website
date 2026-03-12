@@ -1,23 +1,17 @@
 /* forum-post.js
-   Intercepts the "Post on Community Forum" button in cq-step-forum.
+   Intercepts the "Post on Discord" button in cq-step-forum.
    1. Saves the integration-need text to Supabase (if available).
-   2. Opens a pre-filled Discourse new-topic in a new tab.
+   2. Opens the Discord invite link in a new tab.
    3. Persists the draft in sessionStorage so nothing is lost.
+   (Discord webhook posting will be added later once we have the webhook URL.)
 */
 (function () {
   'use strict';
 
-  var DISCOURSE   = 'https://forum.apiant.com';
-  var CATEGORY_ID = 23;                       // "Connector Wanted"
+  var DISCORD     = 'https://discord.gg/tx5PankREq';
   var DRAFT_KEY   = 'cq_forum_draft';
 
-  /* ── helpers ──────────────────────────────────────────────── */
-
-  function titleFrom(text) {
-    var first = text.split(/[.\n]/)[0].trim();
-    if (first.length > 80) first = first.substring(0, 77) + '...';
-    return first || 'Integration Request';
-  }
+  /* -- helpers -------------------------------------------------- */
 
   function saveToDB(text) {
     var url = window.CQ_SUPABASE_URL;
@@ -38,7 +32,7 @@
     } catch (_) { /* silent */ }
   }
 
-  /* ── init ─────────────────────────────────────────────────── */
+  /* -- init ----------------------------------------------------- */
 
   function init() {
     var step = document.getElementById('cq-step-forum');
@@ -68,13 +62,8 @@
       // 1. Persist to DB
       saveToDB(text);
 
-      // 2. Open Discourse with pre-filled topic
-      var href = DISCOURSE + '/new-topic?title=' +
-        encodeURIComponent(titleFrom(text)) +
-        '&body=' + encodeURIComponent(text) +
-        '&category_id=' + CATEGORY_ID;
-
-      window.open(href, '_blank', 'noopener');
+      // 2. Open Discord invite link
+      window.open(DISCORD, '_blank', 'noopener');
     });
   }
 

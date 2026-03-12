@@ -56,7 +56,7 @@ Logo | Platform ▾ | Solutions ▾ | Connectors | Resources ▾ | [Start Buildi
 |-------|------|
 | Documentation | https://info.apiant.com |
 | Blog | https://blog.apiant.com |
-| Community Forum | https://forum.apiant.com |
+| Discord Community | https://discord.gg/tx5PankREq |
 | White Paper: The Deep Integration Gap | (existing white paper link) |
 
 **CTA button:** "Start Building" → https://apiant.com/editor
@@ -437,7 +437,7 @@ Logo | Platform ▾ | Solutions ▾ | Connectors | Resources ▾ | [Start Buildi
 |-------|------|
 | Documentation | https://info.apiant.com |
 | Blog | https://blog.apiant.com |
-| Community Forum | https://forum.apiant.com |
+| Discord Community | https://discord.gg/tx5PankREq |
 | White Paper | (existing link) |
 | Connectors | apps.html |
 
