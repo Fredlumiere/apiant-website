@@ -1889,14 +1889,14 @@
 
       <!-- Step Forum: Integration question for non-API-App leads -->
       <div class="apiant-popup-step" id="cq-step-forum">
-        <h3 class="apiant-popup-title">What do you need to integrate?</h3>
-        <p class="apiant-popup-subtitle">Tell us what you're looking for. Join our Discord community to connect with other builders.</p>
+        <h3 class="apiant-popup-title">Describe your integration need</h3>
+        <p class="apiant-popup-subtitle">Your request will be posted to our Discord community, where independent builders who run their own APIANT-powered platforms can see it and reach out to you directly to build the integration.</p>
         <div class="apiant-popup-form">
           <div class="apiant-popup-field">
-            <label for="cq-integration-need">Describe your integration need</label>
-            <textarea id="cq-integration-need" placeholder="e.g. I need to connect my booking system with my accounting software..." maxlength="2000" style="min-height:80px;"></textarea>
+            <label for="cq-integration-need">What systems do you need to connect?</label>
+            <textarea id="cq-integration-need" placeholder="e.g. I need to sync customer data between my booking system and QuickBooks, with real-time updates when appointments are created or canceled..." maxlength="2000" style="min-height:80px;"></textarea>
           </div>
-          <a href="https://discord.gg/tx5PankREq" target="_blank" rel="noopener" class="apiant-popup-submit" style="text-align:center; text-decoration:none; display:block;">Post on Discord</a>
+          <a href="https://discord.gg/tx5PankREq" target="_blank" rel="noopener" class="apiant-popup-submit" style="text-align:center; text-decoration:none; display:block;">Post to Builder Community</a>
         </div>
         <a class="apiant-popup-back" onclick="cqGoTo('cq-step-apiapps')" style="cursor:pointer;">&larr; Back</a>
       </div>
@@ -2075,10 +2075,49 @@
           </div>
           <button type="submit" class="apiant-popup-submit">Continue</button>
         </form>
-        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-verify')" style="cursor:pointer;">&larr; Back</a>
+        <a class="apiant-popup-back" onclick="cqGoTo('cq-step-domain')" style="cursor:pointer;">&larr; Back</a>
       </div>
 
-      <!-- Step 4: Phone Verification -->
+      <!-- Step: WhatsApp Handoff (replaces OTP + Call routing) -->
+      <div class="apiant-popup-step" id="cq-step-whatsapp">
+        <div style="text-align:center;">
+          <div style="margin-bottom:20px;">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="28" cy="28" r="28" fill="#25D366"/>
+              <path d="M37.6 18.4C35.9 16.7 33.8 15.4 31.5 14.8C29.2 14.2 26.8 14.2 24.5 14.8C22.2 15.4 20.1 16.7 18.4 18.4C15.7 21.1 14.2 24.8 14.5 28.5C14.7 31.1 15.7 33.5 17.2 35.5L15 41L20.6 38.9C22.5 40.2 24.7 41 27 41.2C27.3 41.2 27.6 41.2 28 41.2C31.8 41.2 35.4 39.8 38.1 37.1C40.7 34.4 42 30.8 42 27C41.8 24.4 40.8 21.9 39.3 19.9L37.6 18.4Z" fill="white"/>
+              <path d="M34.8 30.2C34.4 30 32.8 29.2 32.5 29.1C32.2 28.9 32 28.9 31.8 29.2C31.5 29.5 30.9 30.3 30.7 30.5C30.5 30.7 30.3 30.8 30 30.6C28.3 29.8 26.9 28.8 25.8 27.4C25.5 27.1 25.8 26.9 26 26.6C26.2 26.4 26.4 26.2 26.5 26C26.7 25.8 26.7 25.6 26.5 25.4C26.4 25.2 25.7 23.6 25.4 22.9C25.1 22.3 24.9 22.4 24.7 22.4C24.5 22.4 24.3 22.4 24.1 22.4C23.8 22.4 23.4 22.5 23.2 22.8C22.9 23.1 22 23.9 22 25.5C22 27.1 23.2 28.6 23.4 28.8C23.6 29.1 25.8 32.5 29.1 33.8C29.9 34.1 30.5 34.3 31 34.4C31.8 34.6 32.6 34.5 33.2 34.4C33.9 34.3 35.2 33.6 35.5 32.9C35.8 32.2 35.8 31.5 35.7 31.4C35.5 31.1 35.2 31 34.8 30.2Z" fill="#25D366"/>
+            </svg>
+          </div>
+          <h3 class="apiant-popup-title">Let's continue on WhatsApp</h3>
+          <p class="apiant-popup-subtitle" style="max-width:360px; margin:0 auto 20px;">Your integration specialist Alex is ready to pick up where we left off. Alex already knows your platform and what you're looking to integrate.</p>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:24px; text-align:left; max-width:280px; margin-left:auto; margin-right:auto;">
+            <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.7); font-size:14px;">
+              <span style="color:#25D366; font-weight:bold;">&#10003;</span> Get answers in real time, on your schedule
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.7); font-size:14px;">
+              <span style="color:#25D366; font-weight:bold;">&#10003;</span> Pick the conversation back up anytime
+            </div>
+          </div>
+          <a id="cq-whatsapp-link" href="#" target="_blank" rel="noopener"
+             style="display:inline-flex; align-items:center; justify-content:center; gap:8px;
+                    background:#25D366; color:#fff; font-size:16px; font-weight:600;
+                    padding:14px 32px; border-radius:8px; text-decoration:none;
+                    width:100%; max-width:320px; cursor:pointer; transition:all 0.25s ease;"
+             onmouseover="this.style.boxShadow='0 0 36px rgba(37,211,102,0.3), 0 6px 20px rgba(0,0,0,0.3)'; this.style.transform='translateY(-1px)';"
+             onmouseout="this.style.boxShadow=''; this.style.transform='';">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.124 1.528 5.858L0 24l6.335-1.488A11.936 11.936 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.1c-1.888 0-3.674-.508-5.238-1.468l-.376-.223-3.896.986 1.04-3.8-.245-.388A9.965 9.965 0 011.9 12c0-5.565 4.535-10.1 10.1-10.1 5.565 0 10.1 4.535 10.1 10.1 0 5.565-4.535 10.1-10.1 10.1z"/></svg>
+            Continue on WhatsApp
+          </a>
+          <p style="color:rgba(255,255,255,0.35); font-size:12px; margin-top:12px;">
+            Opens WhatsApp with our team. No app install needed on desktop.
+          </p>
+          <p style="color:rgba(255,255,255,0.35); font-size:12px; margin-top:8px;">
+            Prefer email? We'll follow up at <span id="cq-fallback-email" style="color:rgba(255,255,255,0.55);"></span> within 2 hours.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 4: Phone Verification (legacy, kept for backward compat) -->
       <div class="apiant-popup-step" id="cq-step-verify">
         <h3 class="apiant-popup-title">Verify your phone number</h3>
         <p class="apiant-popup-subtitle">Enter your mobile number and we'll send a quick verification code.</p>
@@ -2352,7 +2391,7 @@
   <script>
     // Contact form submission
     // ===== Contact Qualification Flow =====
-    // Flow: Type -> Domain -> [Verified: Verify Phone -> Form -> Call/Schedule]
+    // Flow: Type -> Domain -> [Verified: Form -> WhatsApp Handoff]
     //                         [Not verified: Confirm -> API Apps -> Forum]
     //       "Something else" -> API Apps -> Forum
     var CQ_SUPABASE_URL = 'https://kereljzjgeerrdnssttu.supabase.co'; // Set after creating Supabase project
@@ -2518,13 +2557,13 @@
       function proceedVerified(domain) {
         CQ_SUBMITTING = false;
         CQ_VERIFIED_DOMAIN = domain;
-        cqLog('domain_verified', { domain: domain, routed_to: 'phone_verify' });
+        cqLog('domain_verified', { domain: domain, routed_to: 'contact_form' });
         document.getElementById('cq-company-domain').value = domain;
         inputEl.style.display = '';
         scanEl.style.display = 'none';
         backBtn.style.display = '';
         verifyBtn.disabled = false;
-        cqGoTo('cq-step-verify');
+        cqGoTo('cq-step-form');
       }
 
       function showError(msg) {
@@ -2620,7 +2659,7 @@
         confirmEl.style.display = 'none';
         inputEl.style.display = '';
         document.getElementById('cq-company-domain').value = CQ_VERIFIED_DOMAIN;
-        cqGoTo('cq-step-verify');
+        cqGoTo('cq-step-form');
         return;
       }
 
@@ -2844,7 +2883,7 @@
     function cqSubmitAndRoute() {
       if (CQ_SUBMITTING) return;
       CQ_SUBMITTING = true;
-      cqLog('form_submit', { email: CQ_FORM_DATA['Work-Email'], company: CQ_FORM_DATA.Company, company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN });
+      cqLog('form_submit', { email: CQ_FORM_DATA.WorkEmail, company: CQ_FORM_DATA.Company, company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN });
 
       // Submit lead data to APIANT webhook
       $.ajax({
@@ -2856,30 +2895,62 @@
         }
       });
 
+      // Save lead to Supabase and get session ID for WhatsApp handoff
+      var verifyResult = CQ_VERIFY_RESULT || {};
+      var leadData = {
+        company_type: CQ_SELECTED_TYPE,
+        domain: CQ_VERIFIED_DOMAIN || '',
+        company_description: verifyResult.description || '',
+        detected_type: verifyResult.detected_type || '',
+        email: CQ_FORM_DATA.WorkEmail,
+        company_name: CQ_FORM_DATA.Company || '',
+        integration_needs: CQ_FORM_DATA.IntegrationNeeds || '',
+        source_page: document.title
+      };
+
       if (!CQ_SUPABASE_URL) {
         CQ_SUBMITTING = false;
-        cqGoTo('cq-step-success');
+        // Fallback: show WhatsApp step with a placeholder session
+        cqShowWhatsApp('apt_demo0000', CQ_FORM_DATA.WorkEmail);
         return;
       }
 
-      fetch(CQ_SUPABASE_URL + '/functions/v1/check-availability')
+      fetch(CQ_SUPABASE_URL + '/functions/v1/submit-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadData)
+      })
       .then(function(r) { return r.json(); })
       .then(function(data) {
         CQ_SUBMITTING = false;
-        if (data.available && CQ_FORM_DATA.Phone) {
-          document.getElementById('cq-call-available').style.display = '';
-          document.getElementById('cq-call-schedule').style.display = 'none';
-          cqGoTo('cq-step-call');
-        } else if (data.calendly_url && /^https:\/\/calendly\.com\//.test(data.calendly_url)) {
-          cqEmbedCalendly(data.calendly_url);
+        if (data.session_id) {
+          cqShowWhatsApp(data.session_id, CQ_FORM_DATA.WorkEmail);
         } else {
-          cqGoTo('cq-step-success');
+          // Fallback if session creation failed
+          cqShowWhatsApp('apt_fallback', CQ_FORM_DATA.WorkEmail);
         }
       })
       .catch(function() {
         CQ_SUBMITTING = false;
-        cqGoTo('cq-step-success');
+        cqShowWhatsApp('apt_fallback', CQ_FORM_DATA.WorkEmail);
       });
+    }
+
+    function cqShowWhatsApp(sessionId, email) {
+      var message = encodeURIComponent('Hi Alex, I just came from the APIANT website.\n\nSession: ' + sessionId);
+      var waLink = 'https://wa.me/12154863858?text=' + message;
+      document.getElementById('cq-whatsapp-link').href = waLink;
+      var fallbackEl = document.getElementById('cq-fallback-email');
+      if (fallbackEl) fallbackEl.textContent = email || '';
+      cqLog('whatsapp_handoff_shown', { session_id: sessionId });
+
+      // Track WhatsApp link click
+      var waBtn = document.getElementById('cq-whatsapp-link');
+      waBtn.onclick = function() {
+        cqLog('whatsapp_link_clicked', { session_id: sessionId });
+      };
+
+      cqGoTo('cq-step-whatsapp');
     }
 
     function cqCallNow() {

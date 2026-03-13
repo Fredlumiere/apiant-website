@@ -1,5 +1,5 @@
 /* forum-post.js
-   Intercepts the "Post on Discord" button in cq-step-forum.
+   Intercepts the "Post to Builder Community" button in cq-step-forum.
    1. Saves the integration-need text to Supabase (if available).
    2. Posts to #connector-wanted via Discord webhook.
    3. Opens the Discord invite link in a new tab.
