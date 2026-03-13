@@ -224,9 +224,11 @@
   <!-- Login -->
   <div class="admin-login" id="admin-login">
     <h1>APIANT Admin</h1>
-    <p class="subtitle">Enter your admin password to continue.</p>
-    <label for="admin-pass">Password</label>
-    <input type="password" id="admin-pass" placeholder="Enter password" autofocus>
+    <p class="subtitle">Sign in to continue.</p>
+    <label for="admin-email">Email</label>
+    <input type="email" id="admin-email" placeholder="you@company.com" autofocus>
+    <label for="admin-pass" style="margin-top:12px;">Password</label>
+    <input type="password" id="admin-pass" placeholder="Enter password">
     <button class="btn" onclick="adminLogin()">Sign In</button>
     <div id="login-error" style="color:#fca5a5; font-size:14px; margin-top:12px; text-align:center;"></div>
   </div>
@@ -315,8 +317,12 @@
     });
 
     function adminLogin() {
+      var email = document.getElementById('admin-email').value.trim();
       ADMIN_PASSWORD = document.getElementById('admin-pass').value;
-      if (!ADMIN_PASSWORD) return;
+      if (!email || !ADMIN_PASSWORD) {
+        document.getElementById('login-error').textContent = 'Enter your email and password.';
+        return;
+      }
 
       if (!SUPABASE_URL) {
         document.getElementById('login-error').textContent = 'Supabase URL not configured. Set SUPABASE_URL in admin.html.';
@@ -326,10 +332,10 @@
       fetch(SUPABASE_URL + '/functions/v1/check-availability', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'get_settings', password: ADMIN_PASSWORD })
+        body: JSON.stringify({ action: 'get_settings', password: ADMIN_PASSWORD, email: email })
       })
       .then(function(r) {
-        if (r.status === 401) throw new Error('Invalid password');
+        if (r.status === 401) throw new Error('Invalid email or password');
         return r.json();
       })
       .then(function(data) {

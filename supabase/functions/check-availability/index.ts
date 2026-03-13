@@ -60,18 +60,26 @@ function isWithinBusinessHours(
   }
 }
 
-async function verifyAdmin(supabase: ReturnType<typeof getServiceClient>, password: string): Promise<boolean> {
+async function verifyAdmin(supabase: ReturnType<typeof getServiceClient>, password: string, email?: string): Promise<boolean> {
   const { data } = await supabase
     .from("admin_settings")
-    .select("admin_password_hash")
+    .select("admin_password_hash, admin_email")
     .eq("id", 1)
     .single();
 
   if (!data?.admin_password_hash) return false;
 
-  // Simple comparison for now. In production, use bcrypt.
-  // The hash is stored as a plain comparison token for this MVP.
-  return data.admin_password_hash === password;
+  if (email && data.admin_email && email.toLowerCase() !== data.admin_email.toLowerCase()) {
+    return false;
+  }
+
+  const encoder = new TextEncoder();
+  const hashBuffer = await crypto.subtle.digest("SHA-256", encoder.encode(password));
+  const hashHex = Array.from(new Uint8Array(hashBuffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return hashHex === data.admin_password_hash;
 }
 
 serve(async (req) => {
@@ -90,7 +98,7 @@ serve(async (req) => {
 
       if (body.action) {
         // Admin actions require password
-        if (!body.password || !(await verifyAdmin(supabase, body.password as string))) {
+        if (!body.password || !(await verifyAdmin(supabase, body.password as string, body.email as string | undefined))) {
           return new Response(
             JSON.stringify({ error: "Unauthorized" }),
             { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
