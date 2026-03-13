@@ -1864,8 +1864,8 @@
           <h3 class="apiant-popup-title">Connect with Alex</h3>
           <p class="apiant-popup-subtitle" style="max-width:380px; margin:0 auto 20px;">Your integration specialist is ready. Alex already knows your platform and what you're looking to build. Choose how you'd like to connect:</p>
           <div style="display:flex; flex-direction:column; gap:10px; max-width:340px; margin:0 auto 20px;">
-            <!-- Option 1: Live Voice Call -->
-            <a id="cq-wa-call" href="#" target="_blank" rel="noopener" class="cq-wa-option"
+            <!-- Option 1: Live Voice Call (in-browser via ElevenLabs) -->
+            <a id="cq-wa-call" href="javascript:void(0)" class="cq-wa-option"
                style="display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:10px;
                       background:rgba(37,211,102,0.12); border:1px solid rgba(37,211,102,0.3);
                       text-decoration:none; cursor:pointer; transition:all 0.2s ease; text-align:left;"
@@ -1876,7 +1876,7 @@
               </div>
               <div style="flex:1; min-width:0;">
                 <div style="color:#fff; font-weight:600; font-size:15px; line-height:1.3;">Live Voice Call</div>
-                <div style="color:rgba(255,255,255,0.55); font-size:13px; line-height:1.3; margin-top:2px;">Talk to Alex in real time on WhatsApp</div>
+                <div style="color:rgba(255,255,255,0.55); font-size:13px; line-height:1.3; margin-top:2px;">Talk to Alex right now in your browser</div>
               </div>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
             </a>
@@ -1914,7 +1914,7 @@
             </a>
           </div>
           <p style="color:rgba(255,255,255,0.35); font-size:12px; margin-top:4px;">
-            All options open WhatsApp. No app install needed on desktop.
+            Voice call happens right in your browser. WhatsApp options open the app.
           </p>
           <p style="color:rgba(255,255,255,0.35); font-size:12px; margin-top:8px;">
             Prefer email? We'll follow up at <span id="cq-fallback-email" style="color:rgba(255,255,255,0.55);"></span> within 2 hours.
@@ -2751,7 +2751,10 @@
       });
     }
 
+    var CQ_CURRENT_SESSION_ID = '';
+
     function cqShowWhatsApp(sessionId, email) {
+      CQ_CURRENT_SESSION_ID = sessionId;
       var waNum = '15559217213';
       var baseMsg = 'Hi Alex, I just came from the APIANT website.\n\nSession: ' + sessionId;
 
@@ -2763,15 +2766,10 @@
       var voiceMsg = encodeURIComponent(baseMsg + '\n\nI prefer voice messages.');
       var voiceLink = 'https://wa.me/' + waNum + '?text=' + voiceMsg;
 
-      // Voice call: send initial message, then user taps call icon
-      var callMsg = encodeURIComponent(baseMsg + '\n\nI would like a voice call.');
-      var callLink = 'https://wa.me/' + waNum + '?text=' + callMsg;
-
       var callEl = document.getElementById('cq-wa-call');
       var voiceEl = document.getElementById('cq-wa-voice');
       var textEl = document.getElementById('cq-wa-text');
 
-      if (callEl) callEl.href = callLink;
       if (voiceEl) voiceEl.href = voiceLink;
       if (textEl) textEl.href = textLink;
 
@@ -2779,12 +2777,40 @@
       if (fallbackEl) fallbackEl.textContent = email || '';
       cqLog('whatsapp_handoff_shown', { session_id: sessionId });
 
-      // Track clicks on each option
-      if (callEl) callEl.onclick = function() { cqLog('whatsapp_call_clicked', { session_id: sessionId }); };
+      // Live Voice Call: launch ElevenLabs widget in browser
+      if (callEl) callEl.onclick = function(e) {
+        e.preventDefault();
+        cqLog('voice_call_clicked', { session_id: sessionId });
+        cqStartVoiceCall(sessionId);
+      };
       if (voiceEl) voiceEl.onclick = function() { cqLog('whatsapp_voice_clicked', { session_id: sessionId }); };
       if (textEl) textEl.onclick = function() { cqLog('whatsapp_text_clicked', { session_id: sessionId }); };
 
       cqGoTo('cq-step-whatsapp');
+    }
+
+    function cqStartVoiceCall(sessionId) {
+      // Close the popup
+      var overlay = document.getElementById('cq-overlay');
+      if (overlay) overlay.style.display = 'none';
+      document.body.style.overflow = '';
+
+      // Remove any existing widget
+      var existing = document.querySelector('elevenlabs-convai');
+      if (existing) existing.remove();
+
+      // Create the ElevenLabs conversational AI widget
+      var widget = document.createElement('elevenlabs-convai');
+      widget.setAttribute('agent-id', 'agent_1801kkkq5qhtf7bb48kfnd0cef2j');
+      widget.setAttribute('dynamic-variables', JSON.stringify({
+        session_id: sessionId
+      }));
+      widget.setAttribute('avatar-orb-color-1', '#1ab759');
+      widget.setAttribute('avatar-orb-color-2', '#25D366');
+      widget.setAttribute('action-text', 'Talk to Alex');
+      widget.setAttribute('start-call-text', 'Start Call');
+      widget.setAttribute('end-call-text', 'End Call');
+      document.body.appendChild(widget);
     }
 
     function cqCallNow() {
@@ -2993,5 +3019,6 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
+  <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 </body>
 </html>
