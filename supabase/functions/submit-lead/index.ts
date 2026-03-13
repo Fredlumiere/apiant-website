@@ -78,18 +78,20 @@ serve(async (req) => {
     }
 
     // Also save to qualified_leads for backward compat with admin dashboard
-    await supabase.from("qualified_leads").insert({
-      company_type,
-      domain: domain || "",
-      domain_verified: !!company_description,
-      verification_result: company_description
-        ? { description: company_description, detected_type }
-        : null,
-      work_email: email,
-      company_name: company_name || "",
-      integration_needs: integration_needs || "",
-      source_page: source_page || "",
-    }).catch(() => { /* non-critical */ });
+    try {
+      await supabase.from("qualified_leads").insert({
+        company_type,
+        domain: domain || "",
+        domain_verified: !!company_description,
+        verification_result: company_description
+          ? { description: company_description, detected_type }
+          : null,
+        work_email: email,
+        company_name: company_name || "",
+        integration_needs: integration_needs || "",
+        source_page: source_page || "",
+      });
+    } catch { /* non-critical */ }
 
     return new Response(
       JSON.stringify({ session_id }),
