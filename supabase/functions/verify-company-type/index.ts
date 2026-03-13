@@ -74,6 +74,7 @@ async function scrapeHomepage(domain: string): Promise<string> {
 
 interface ClassificationResult {
   description: string;
+  company_name: string;
   detected_type: string;
   verified: boolean;
   confidence: string;
@@ -97,8 +98,9 @@ WEBSITE CONTENT:
 ${content}
 
 INSTRUCTIONS:
-1. Write a 1-2 sentence description of what this company actually does. Be specific and concise.
-2. Determine the company's actual type from these categories:
+1. Extract the company's official name as it appears on their website (e.g., "Acme Corp", "FitLife Studio"). Use the name from the site, not the domain.
+2. Write a 1-2 sentence description of what this company actually does. Be specific and concise.
+3. Determine the company's actual type from these categories:
    - "saas": Sells software/platform as a service. Has product pages, pricing, sign-up flows.
    - "si": System Integrator. Provides IT consulting, custom development, or integration services.
    - "enterprise": Large organization needing internal integrations. Could be healthcare org, manufacturer, retailer, financial institution, etc.
@@ -106,8 +108,8 @@ INSTRUCTIONS:
    - "healthcare": Medical clinic, physiotherapy, chiropractic, allied health practice, dental, optometry, etc.
    - "nonprofit": Nonprofit, charity, foundation, NGO, fundraising organization, church, school, etc.
    - "other": None of the above (restaurant, retail shop, personal blog, freelancer, etc.)
-3. Check if the detected type matches the claimed type.
-4. If the detected type is "fitness", set suggested_vertical to "mindbody".
+4. Check if the detected type matches the claimed type.
+5. If the detected type is "fitness", set suggested_vertical to "mindbody".
    If "healthcare", set suggested_vertical to "cliniko".
    If "nonprofit", set suggested_vertical to "donorperfect".
    Otherwise set suggested_vertical to "".
@@ -116,6 +118,7 @@ Be accurate. A strength training studio is "fitness", not "saas". A physiotherap
 
 Respond with ONLY a JSON object:
 {
+  "company_name": "The company's official name",
   "description": "One to two sentences describing what this company does",
   "detected_type": "saas|si|enterprise|fitness|healthcare|nonprofit|other",
   "verified": true or false,

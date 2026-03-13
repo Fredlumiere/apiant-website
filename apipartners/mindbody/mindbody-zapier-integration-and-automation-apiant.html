@@ -2496,6 +2496,11 @@
         CQ_VERIFIED_DOMAIN = domain;
         cqLog('domain_verified', { domain: domain, routed_to: 'contact_form' });
         document.getElementById('cq-company-domain').value = domain;
+        // Pre-fill company name from verification if available
+        var companyName = (CQ_VERIFY_RESULT && CQ_VERIFY_RESULT.company_name) || '';
+        if (companyName) {
+          document.getElementById('contact-company').value = companyName;
+        }
         inputEl.style.display = '';
         scanEl.style.display = 'none';
         backBtn.style.display = '';
@@ -2596,6 +2601,11 @@
         confirmEl.style.display = 'none';
         inputEl.style.display = '';
         document.getElementById('cq-company-domain').value = CQ_VERIFIED_DOMAIN;
+        // Pre-fill company name from verification if available
+        var overrideName = (CQ_VERIFY_RESULT && CQ_VERIFY_RESULT.company_name) || '';
+        if (overrideName) {
+          document.getElementById('contact-company').value = overrideName;
+        }
         cqGoTo('cq-step-form');
         return;
       }
