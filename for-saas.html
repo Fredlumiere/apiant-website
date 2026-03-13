@@ -473,6 +473,15 @@
 
     /* -- Green accent highlight -- */
     .fs-green { color: #3b82f6; }
+
+    /* -- Image lightbox -- */
+    .fs-diagram { cursor:pointer; transition:opacity 0.2s ease; }
+    .fs-diagram:hover { opacity:0.85; }
+    .fs-lightbox { display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding:24px; cursor:pointer; }
+    .fs-lightbox.open { display:flex; }
+    .fs-lightbox img { max-width:95vw; max-height:90vh; object-fit:contain; cursor:default; border-radius:8px; }
+    .fs-lightbox-close { position:absolute; top:16px; right:20px; color:#fff; font-size:32px; cursor:pointer; line-height:1; opacity:0.7; transition:opacity 0.2s; z-index:100000; }
+    .fs-lightbox-close:hover { opacity:1; }
   </style>
 </head>
 <body class="fs-body">
@@ -685,7 +694,7 @@
       <p>APIANT gives you a dedicated integration platform: your own servers, your own brand, fully managed by us. Assign a workflow architect (not a developer) to build and manage integrations using our visual tools and AI Co-Pilot. Your engineering team stays focused on your product.</p>
     </div>
 
-    <img src="/images/for-saas-how-it-works.svg" alt="Four-step process: Assign Architect, AI Builds Connectors, Configure per Customer, Embed and Go Live" style="width:100%;margin-bottom:48px;border-radius:12px" loading="lazy">
+    <img class="fs-diagram" src="/images/for-saas-how-it-works.svg" alt="Four-step process: Assign Architect, AI Builds Connectors, Configure per Customer, Embed and Go Live" style="width:100%;margin-bottom:48px;border-radius:12px" loading="lazy">
 
     <div class="fs-steps reveal delay-2">
       <div class="fs-step">
@@ -2122,5 +2131,24 @@
     });
   </script>
   <script src="js/reveal.js"></script>
+
+  <!-- Image lightbox -->
+  <div class="fs-lightbox" id="fs-lightbox" onclick="if(event.target===this)this.classList.remove('open')">
+    <span class="fs-lightbox-close" onclick="document.getElementById('fs-lightbox').classList.remove('open')">&times;</span>
+    <img id="fs-lightbox-img" src="" alt="">
+  </div>
+  <script>
+  document.querySelectorAll('.fs-diagram').forEach(function(img) {
+    img.onclick = function() {
+      var lb = document.getElementById('fs-lightbox');
+      document.getElementById('fs-lightbox-img').src = this.src;
+      document.getElementById('fs-lightbox-img').alt = this.alt;
+      lb.classList.add('open');
+    };
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('fs-lightbox').classList.remove('open');
+  });
+  </script>
 </body>
 </html>

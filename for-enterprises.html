@@ -523,6 +523,15 @@
 
     /* -- Purple accent highlight -- */
     .fs-purple { color: #8b5cf6; }
+
+    /* -- Image lightbox -- */
+    .fs-diagram { cursor:pointer; transition:opacity 0.2s ease; }
+    .fs-diagram:hover { opacity:0.85; }
+    .fs-lightbox { display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding:24px; cursor:pointer; }
+    .fs-lightbox.open { display:flex; }
+    .fs-lightbox img { max-width:95vw; max-height:90vh; object-fit:contain; cursor:default; border-radius:8px; }
+    .fs-lightbox-close { position:absolute; top:16px; right:20px; color:#fff; font-size:32px; cursor:pointer; line-height:1; opacity:0.7; transition:opacity 0.2s; z-index:100000; }
+    .fs-lightbox-close:hover { opacity:1; }
   </style>
 </head>
 <body class="fs-body">
@@ -706,7 +715,7 @@
       <p style="margin-top: 16px;">You have two bad options today: DIY tools like Zapier and Make that your teams cobble together without IT oversight, or enterprise iPaaS platforms like MuleSoft and Workato that demand specialized developers and six-figure contracts. Meanwhile, the deep integrations your business actually needs don't get built.</p>
     </div>
 
-    <img src="/images/for-enterprises-integration-gap.svg" alt="Comparison of shallow integration with a single fragile connection versus deep integration with multiple data streams and error handling" style="width:100%;margin:32px 0 48px;border-radius:12px" loading="lazy">
+    <img src="/images/for-enterprises-integration-gap.svg" alt="Comparison of shallow integration with a single fragile connection versus deep integration with multiple data streams and error handling" class="fs-diagram" style="width:100%;margin:32px 0 48px;border-radius:12px" loading="lazy">
 
     <div class="fs-pain-cards reveal delay-2">
       <div class="fs-pain-card">
@@ -723,7 +732,7 @@
       </div>
     </div>
 
-    <img src="/images/for-enterprises-shadow-it.svg" alt="Before and after comparison: Shadow IT chaos with tangled connections versus centralized APIANT governance with clean routing" style="width:100%;margin:32px 0;border-radius:12px" loading="lazy">
+    <img src="/images/for-enterprises-shadow-it.svg" alt="Before and after comparison: Shadow IT chaos with tangled connections versus centralized APIANT governance with clean routing" class="fs-diagram" style="width:100%;margin:32px 0;border-radius:12px" loading="lazy">
 
     <div class="fs-deep-example reveal delay-3">
       <h3>What the gap actually looks like</h3>
@@ -740,7 +749,7 @@
       <p>APIANT gives your enterprise a dedicated integration server: fully managed infrastructure, your own environment, complete visibility. Build, deploy, and monitor deep integrations across every department without writing code.</p>
     </div>
 
-    <img src="/images/for-enterprises-architecture.svg" alt="Enterprise architecture with APIANT dedicated server connecting Marketing, Operations, HR, Finance, and Sales departments" style="width:100%;margin:32px 0 48px;border-radius:12px" loading="lazy">
+    <img src="/images/for-enterprises-architecture.svg" alt="Enterprise architecture with APIANT dedicated server connecting Marketing, Operations, HR, Finance, and Sales departments" class="fs-diagram" style="width:100%;margin:32px 0 48px;border-radius:12px" loading="lazy">
 
     <div class="fs-steps reveal delay-2">
       <div class="fs-step">
@@ -2269,5 +2278,23 @@
     });
   </script>
   <script src="js/reveal.js"></script>
+  <!-- Image lightbox -->
+  <div class="fs-lightbox" id="fs-lightbox" onclick="if(event.target===this)this.classList.remove('open')">
+    <span class="fs-lightbox-close" onclick="document.getElementById('fs-lightbox').classList.remove('open')">&times;</span>
+    <img id="fs-lightbox-img" src="" alt="">
+  </div>
+  <script>
+  document.querySelectorAll('.fs-diagram').forEach(function(img) {
+    img.onclick = function() {
+      var lb = document.getElementById('fs-lightbox');
+      document.getElementById('fs-lightbox-img').src = this.src;
+      document.getElementById('fs-lightbox-img').alt = this.alt;
+      lb.classList.add('open');
+    };
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('fs-lightbox').classList.remove('open');
+  });
+  </script>
 </body>
 </html>

@@ -662,6 +662,15 @@
       border-top: 1px solid rgba(245, 158, 11, 0.2);
       margin: 4px 0;
     }
+
+    /* -- Image lightbox -- */
+    .fs-diagram { cursor:pointer; transition:opacity 0.2s ease; }
+    .fs-diagram:hover { opacity:0.85; }
+    .fs-lightbox { display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding:24px; cursor:pointer; }
+    .fs-lightbox.open { display:flex; }
+    .fs-lightbox img { max-width:95vw; max-height:90vh; object-fit:contain; cursor:default; border-radius:8px; }
+    .fs-lightbox-close { position:absolute; top:16px; right:20px; color:#fff; font-size:32px; cursor:pointer; line-height:1; opacity:0.7; transition:opacity 0.2s; z-index:100000; }
+    .fs-lightbox-close:hover { opacity:1; }
   </style>
 </head>
 <body class="fs-body">
@@ -878,7 +887,7 @@
       <p>Every step feeds the next. The more you build, the more you earn. The more you earn, the more you can build.</p>
     </div>
 
-    <img src="/images/for-si-flywheel.svg" alt="Flywheel diagram showing the 8-step SI business model: Identify, Build, Separate, Package, Distribute, Support, Grow, Expand" style="width:100%;max-width:600px;margin:0 auto 48px;display:block" loading="lazy">
+    <img class="fs-diagram" src="/images/for-si-flywheel.svg" alt="Flywheel diagram showing the 8-step SI business model: Identify, Build, Separate, Package, Distribute, Support, Grow, Expand" style="width:100%;max-width:600px;margin:0 auto 48px;display:block" loading="lazy">
 
     <div class="fs-flywheel reveal delay-2">
       <div class="fs-fly-step">
@@ -1036,7 +1045,7 @@
       <p>Build one integration product. Price it at $99/month. Watch what happens.</p>
     </div>
 
-    <img src="/images/for-si-revenue-chart.svg" alt="Revenue growth chart showing $59K to $594K annual recurring revenue as customer count grows from 50 to 500" style="width:100%;margin-bottom:48px;border-radius:12px" loading="lazy">
+    <img class="fs-diagram" src="/images/for-si-revenue-chart.svg" alt="Revenue growth chart showing $59K to $594K annual recurring revenue as customer count grows from 50 to 500" style="width:100%;margin-bottom:48px;border-radius:12px" loading="lazy">
 
     <div class="fs-revenue-grid reveal delay-2">
       <div class="fs-revenue-card">
@@ -2475,5 +2484,24 @@
     });
   </script>
   <script src="js/reveal.js"></script>
+
+  <!-- Image lightbox -->
+  <div class="fs-lightbox" id="fs-lightbox" onclick="if(event.target===this)this.classList.remove('open')">
+    <span class="fs-lightbox-close" onclick="document.getElementById('fs-lightbox').classList.remove('open')">&times;</span>
+    <img id="fs-lightbox-img" src="" alt="">
+  </div>
+  <script>
+  document.querySelectorAll('.fs-diagram').forEach(function(img) {
+    img.onclick = function() {
+      var lb = document.getElementById('fs-lightbox');
+      document.getElementById('fs-lightbox-img').src = this.src;
+      document.getElementById('fs-lightbox-img').alt = this.alt;
+      lb.classList.add('open');
+    };
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('fs-lightbox').classList.remove('open');
+  });
+  </script>
 </body>
 </html>
