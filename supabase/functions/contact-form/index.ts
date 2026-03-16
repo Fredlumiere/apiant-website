@@ -48,7 +48,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "APIANT <notifications@apiant.com>",
+        from: "APIANT <verify@apiant.com>",
         to: ["fredl@apiant.com"],
         reply_to: email,
         subject: `AI Advantage Inquiry from ${name}${company ? ` (${company})` : ""}`,
