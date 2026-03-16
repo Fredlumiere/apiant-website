@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>APIANT | The Integration Platform That AI Can Operate</title>
+  <meta name="description" content="APIANT is the only integration platform where AI can build new API connectors from scratch, assemble automations, and troubleshoot issues. 20 years of architecture meets AI.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/components.css" rel="stylesheet" type="text/css">
+  <link href="css/apiant.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    WebFont.load({
+      google: {
+        families: ["Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic", "Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic", "DM Sans:300,400,500,600,700", "Inter:300,400,500,600,700"]
+      }
+    });
+  </script>
+  <link href="images/favicon.png" rel="shortcut icon" type="image/x-icon">
+  <link rel="icon" href="https://apiant.com/favicon.ico">
+  <style>
+    /* ===== ONE-PAGER STYLES ===== */
+
+    :root {
+      --op-bg: #0c0c0c;
+      --op-green: #1ab759;
+      --op-green-dim: rgba(26, 183, 89, 0.15);
+      --op-green-glow: rgba(26, 183, 89, 0.08);
+      --op-heading: #f7f8f8;
+      --op-body: #e2e8f0;
+      --op-muted: #94a3b8;
+      --op-border: rgba(255, 255, 255, 0.08);
+      --op-card-bg: rgba(255, 255, 255, 0.03);
+    }
+
+    body {
+      background-color: var(--op-bg);
+      color: var(--op-body);
+      font-family: 'Inter', 'DM Sans', sans-serif;
+      line-height: 1.7;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 5% 5%, rgba(26, 183, 89, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 95% 15%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+      background-repeat: no-repeat, no-repeat, repeat, repeat;
+      background-attachment: fixed, fixed, scroll, scroll;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* -- Nav override for this page -- */
+    .op-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(12, 12, 12, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--op-border);
+      padding: 0 40px;
+    }
+    .op-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .op-nav-logo {
+      height: 22px;
+      width: auto;
+      opacity: 0.95;
+    }
+    .op-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .op-nav-link {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .op-nav-link:hover {
+      color: #fff;
+    }
+    .op-nav-cta {
+      background: linear-gradient(135deg, #0d7a3a, #1ab759);
+      color: #fff;
+      border-radius: 8px;
+      padding: 8px 20px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .op-nav-cta:hover {
+      opacity: 0.9;
+    }
+
+    /* -- Page Content -- */
+    .op-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 40px 80px;
+    }
+
+    /* -- Hero Header -- */
+    .op-hero {
+      text-align: center;
+      margin-bottom: 72px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--op-border);
+      position: relative;
+    }
+    .op-hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(26, 183, 89, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .op-hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--op-heading);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+    .op-hero h1 span {
+      color: var(--op-green);
+    }
+    .op-hero-sub {
+      font-size: 18px;
+      color: var(--op-muted);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* -- Section Styles -- */
+    .op-section {
+      margin-bottom: 64px;
+    }
+
+    .op-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--op-green);
+      background: rgba(26, 183, 89, 0.1);
+      border: 1px solid rgba(26, 183, 89, 0.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-bottom: 16px;
+    }
+
+    .op-section-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--op-heading);
+      margin-bottom: 16px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .op-section p {
+      margin-bottom: 16px;
+      font-size: 16px;
+      color: var(--op-body);
+      line-height: 1.7;
+    }
+
+    .op-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* -- Feature List -- */
+    .op-features {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0;
+    }
+
+    .op-features li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 14px;
+      font-size: 16px;
+      color: var(--op-body);
+      line-height: 1.6;
+    }
+
+    .op-features li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      background: var(--op-green);
+      border-radius: 50%;
+    }
+
+    .op-features li strong {
+      color: var(--op-heading);
+    }
+
+    /* -- Numbered Steps -- */
+    .op-steps {
+      list-style: none;
+      padding: 0;
+      margin: 28px 0;
+    }
+
+    .op-steps li {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      align-items: flex-start;
+    }
+
+    .op-step-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--op-green-dim);
+      color: var(--op-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .op-step-content {
+      flex: 1;
+      padding-top: 4px;
+    }
+
+    .op-step-content strong {
+      color: var(--op-heading);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+
+    .op-step-content span {
+      color: var(--op-muted);
+      font-size: 15px;
+    }
+
+    /* -- Diagrams -- */
+    .op-diagram {
+      margin: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .op-diagram svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* -- Comparison Table -- */
+    .op-table-wrap {
+      margin: 28px 0;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--op-border);
+      background: var(--op-card-bg);
+    }
+
+    .op-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    .op-table thead th {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 14px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--op-muted);
+      border-bottom: 1px solid var(--op-border);
+      white-space: nowrap;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .op-table tbody td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--op-border);
+      vertical-align: top;
+      color: var(--op-body);
+    }
+
+    .op-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* -- Stat Cards -- */
+    .op-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .op-stat {
+      background: var(--op-card-bg);
+      border: 1px solid var(--op-border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .op-stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--op-green);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .op-stat-label {
+      font-size: 14px;
+      color: var(--op-muted);
+      line-height: 1.5;
+    }
+
+    /* -- Closing Checklist -- */
+    .op-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0;
+    }
+
+    .op-checklist li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      font-size: 16px;
+      color: var(--op-body);
+      line-height: 1.6;
+      align-items: flex-start;
+    }
+
+    .op-check-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+    }
+
+    .op-checklist li strong {
+      color: var(--op-heading);
+    }
+
+    /* -- Moat Callout -- */
+    .op-callout {
+      background: linear-gradient(135deg, rgba(26, 183, 89, 0.06) 0%, rgba(26, 183, 89, 0.02) 100%);
+      border-left: 3px solid var(--op-green);
+      border-radius: 0 12px 12px 0;
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+
+    .op-callout p {
+      font-size: 15px;
+      color: var(--op-body);
+      margin-bottom: 0;
+      line-height: 1.7;
+    }
+
+    .op-callout strong {
+      color: var(--op-heading);
+    }
+
+    /* -- CTA Footer -- */
+    .op-footer {
+      text-align: center;
+      margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid var(--op-border);
+    }
+
+    .op-footer-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--op-muted);
+      margin-bottom: 24px;
+    }
+
+    .op-footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .op-footer-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--op-heading);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .op-footer-link:hover {
+      color: var(--op-green);
+    }
+
+    /* -- Responsive -- */
+    @media (max-width: 768px) {
+      .op-wrapper {
+        padding: 40px 20px 60px;
+      }
+      .op-hero h1 {
+        font-size: 32px;
+      }
+      .op-section-title {
+        font-size: 24px;
+      }
+      .op-stats {
+        grid-template-columns: 1fr;
+      }
+      .op-footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      .op-table {
+        font-size: 13px;
+      }
+      .op-table thead th,
+      .op-table tbody td {
+        padding: 10px 14px;
+      }
+      .op-nav {
+        padding: 0 20px;
+      }
+      .op-nav-links {
+        gap: 16px;
+      }
+    }
+
+    /* -- Print Styles -- */
+    @media print {
+      body {
+        background: #fff !important;
+        background-image: none !important;
+        color: #334155;
+        font-size: 11pt;
+        line-height: 1.5;
+      }
+      .op-nav { display: none; }
+      .op-wrapper {
+        max-width: 100%;
+        padding: 20px 0;
+      }
+      .op-hero::before { display: none; }
+      .op-hero h1 { font-size: 22pt; color: #0f172a; }
+      .op-hero h1 span { color: #16a34a; }
+      .op-hero-sub { color: #64748b; }
+      .op-section { margin-bottom: 28px; page-break-inside: avoid; }
+      .op-section-title { font-size: 14pt; color: #0f172a; }
+      .op-section p { color: #334155; }
+      .op-badge { border-color: #16a34a; color: #16a34a; background: rgba(22, 163, 74, 0.05); }
+      .op-diagram svg { max-height: 180px; }
+      .op-callout { border-color: #16a34a; }
+      .op-stat { border-color: #e2e8f0; background: #f8fafc; }
+      .op-stat-value { color: #16a34a; }
+      .op-stat-label { color: #64748b; }
+      .op-table thead th { background: #f1f5f9; color: #64748b; }
+      .op-table tbody td { color: #334155; }
+      .op-table-wrap { border-color: #e2e8f0; }
+      .op-footer { margin-top: 36px; padding-top: 24px; }
+      .op-footer-link { color: #0f172a; }
+      .op-features li strong, .op-checklist li strong, .op-callout strong { color: #0f172a; }
+      .op-features li::before { background: #16a34a; }
+      a { text-decoration: none; color: inherit; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav Bar -->
+  <div class="op-nav">
+    <div class="op-nav-inner">
+      <a href="index.html"><img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" class="op-nav-logo"></a>
+      <div class="op-nav-links">
+        <a href="platform/index.html" class="op-nav-link">Platform</a>
+        <a href="pricing.html" class="op-nav-link">Pricing</a>
+        <a href="#" class="op-nav-cta popup-trigger">Start Building</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="op-wrapper">
+
+    <!-- Hero -->
+    <header class="op-hero">
+      <h1>The Integration Platform<br>That <span>AI Can Operate</span></h1>
+      <p class="op-hero-sub">20 years of architecture created the only platform where AI builds new connectors, assembles automations, and manages integrations from end to end.</p>
+    </header>
+
+    <!-- Section 1: The Problem -->
+    <section class="op-section">
+      <div class="op-badge">The Problem</div>
+      <h2 class="op-section-title">Integrations Are the Tax on Every SaaS Company</h2>
+      <p>Every SaaS company needs integrations. Customers demand them. But building deep, reliable integrations into hundreds of APIs is enormously expensive and slow. Engineering teams get pulled away from core product work, spending months on connectivity instead of innovation.</p>
+      <p>Most "integration platforms" offer shallow, point-to-point connections that break under real-world complexity. They work for simple triggers, but fall apart when customers need bi-directional sync, conditional logic, error recovery, or multi-step workflows across dozens of APIs.</p>
+    </section>
+
+    <!-- Section 2: The Foundation -->
+    <section class="op-section">
+      <div class="op-badge">The Foundation</div>
+      <h2 class="op-section-title">Integrations as Data, Not Code</h2>
+      <p>For 20 years, APIANT built something fundamentally different: a platform where integrations are stored as structured data (like a recipe), not as code. This single architectural decision changes everything.</p>
+
+      <ul class="op-features">
+        <li><strong>Productizable.</strong> Build an integration once, configure it differently for each customer, like apps in an app store.</li>
+        <li><strong>Massively scalable.</strong> The platform's unified data processing engine runs the integrations. No custom code per customer. Scales to hundreds of thousands of users.</li>
+        <li><strong>Deeply sophisticated.</strong> Conditions, loops, error handling, multi-step workflows, bi-directional sync, all expressed as data structures, not brittle scripts.</li>
+        <li><strong>White-label ready.</strong> SaaS companies embed the entire platform under their own brand and monetize integrations directly.</li>
+      </ul>
+
+      <!-- Architecture Comparison SVG -->
+      <div class="op-diagram">
+        <svg width="760" height="260" viewBox="0 0 760 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Left side: Traditional -->
+          <text x="170" y="28" fill="#94a3b8" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" letter-spacing="1">TRADITIONAL PLATFORMS</text>
+          <rect x="40" y="44" width="260" height="180" rx="12" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <path d="M70 80 Q120 70 160 95 T250 85" stroke="#ef4444" stroke-opacity="0.4" stroke-width="1.5" fill="none"/>
+          <path d="M80 100 Q130 120 170 90 T260 110" stroke="#f97316" stroke-opacity="0.4" stroke-width="1.5" fill="none"/>
+          <path d="M65 120 Q110 100 155 130 T255 115" stroke="#ef4444" stroke-opacity="0.3" stroke-width="1.5" fill="none"/>
+          <path d="M75 140 Q125 160 165 135 T245 150" stroke="#f97316" stroke-opacity="0.35" stroke-width="1.5" fill="none"/>
+          <path d="M60 155 Q115 145 150 170 T250 160" stroke="#ef4444" stroke-opacity="0.3" stroke-width="1.5" fill="none"/>
+          <path d="M85 170 Q120 185 160 165 T240 180" stroke="#f97316" stroke-opacity="0.4" stroke-width="1.5" fill="none"/>
+          <path d="M70 190 Q130 175 165 195 T255 188" stroke="#ef4444" stroke-opacity="0.35" stroke-width="1.5" fill="none"/>
+          <text x="80" y="92" fill="#ef4444" fill-opacity="0.5" font-family="monospace" font-size="10">if (err) throw</text>
+          <text x="150" y="112" fill="#f97316" fill-opacity="0.5" font-family="monospace" font-size="10">async fn()</text>
+          <text x="90" y="152" fill="#ef4444" fill-opacity="0.5" font-family="monospace" font-size="10">try { catch }</text>
+          <text x="140" y="178" fill="#f97316" fill-opacity="0.5" font-family="monospace" font-size="10">callback()</text>
+          <text x="170" y="245" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle" fill-opacity="0.6">Brittle code, per-customer scripts</text>
+
+          <!-- Divider -->
+          <line x1="380" y1="44" x2="380" y2="224" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="380" y="246" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle" font-weight="500">vs</text>
+
+          <!-- Right side: APIANT -->
+          <text x="570" y="28" fill="#1ab759" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" letter-spacing="1">APIANT</text>
+          <rect x="440" y="44" width="260" height="180" rx="12" fill="rgba(26,183,89,0.03)" stroke="rgba(26,183,89,0.15)" stroke-width="1"/>
+          <rect x="470" y="66" width="80" height="32" rx="6" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-opacity="0.3" stroke-width="1"/>
+          <text x="510" y="86" fill="#1ab759" font-family="Inter, sans-serif" font-size="10" font-weight="500" text-anchor="middle">Connector</text>
+          <rect x="570" y="66" width="80" height="32" rx="6" fill="rgba(26,183,89,0.12)" stroke="#1ab759" stroke-opacity="0.3" stroke-width="1"/>
+          <text x="610" y="86" fill="#1ab759" font-family="Inter, sans-serif" font-size="10" font-weight="500" text-anchor="middle">Connector</text>
+          <rect x="470" y="112" width="80" height="32" rx="6" fill="rgba(26,183,89,0.08)" stroke="#1ab759" stroke-opacity="0.2" stroke-width="1"/>
+          <text x="510" y="132" fill="#1ab759" fill-opacity="0.8" font-family="Inter, sans-serif" font-size="10" font-weight="500" text-anchor="middle">Logic</text>
+          <rect x="570" y="112" width="80" height="32" rx="6" fill="rgba(26,183,89,0.08)" stroke="#1ab759" stroke-opacity="0.2" stroke-width="1"/>
+          <text x="610" y="132" fill="#1ab759" fill-opacity="0.8" font-family="Inter, sans-serif" font-size="10" font-weight="500" text-anchor="middle">Transform</text>
+          <rect x="470" y="158" width="80" height="32" rx="6" fill="rgba(26,183,89,0.08)" stroke="#1ab759" stroke-opacity="0.2" stroke-width="1"/>
+          <text x="510" y="178" fill="#1ab759" fill-opacity="0.8" font-family="Inter, sans-serif" font-size="10" font-weight="500" text-anchor="middle">Sync</text>
+          <rect x="570" y="158" width="80" height="32" rx="6" fill="rgba(26,183,89,0.08)" stroke="#1ab759" stroke-opacity="0.2" stroke-width="1"/>
+          <text x="610" y="178" fill="#1ab759" fill-opacity="0.8" font-family="Inter, sans-serif" font-size="10" font-weight="500" text-anchor="middle">Error Handling</text>
+          <path d="M550 82 L570 82" stroke="#1ab759" stroke-opacity="0.4" stroke-width="1" marker-end="none"/>
+          <path d="M510 98 L510 112" stroke="#1ab759" stroke-opacity="0.3" stroke-width="1"/>
+          <path d="M610 98 L610 112" stroke="#1ab759" stroke-opacity="0.3" stroke-width="1"/>
+          <path d="M550 128 L570 128" stroke="#1ab759" stroke-opacity="0.3" stroke-width="1"/>
+          <path d="M510 144 L510 158" stroke="#1ab759" stroke-opacity="0.3" stroke-width="1"/>
+          <path d="M610 144 L610 158" stroke="#1ab759" stroke-opacity="0.3" stroke-width="1"/>
+          <rect x="460" y="200" width="220" height="16" rx="8" fill="rgba(26,183,89,0.1)" stroke="#1ab759" stroke-opacity="0.2" stroke-width="1"/>
+          <text x="570" y="211" fill="#1ab759" fill-opacity="0.7" font-family="Inter, sans-serif" font-size="8" font-weight="600" text-anchor="middle" letter-spacing="1">DATA PROCESSING ENGINE</text>
+          <text x="570" y="245" fill="#1ab759" fill-opacity="0.7" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Structured data, one engine runs all</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Section 3: The Breakthrough -->
+    <section class="op-section">
+      <div class="op-badge">The Breakthrough</div>
+      <h2 class="op-section-title">AI Can Now Operate the Entire Platform</h2>
+      <p>Because integration logic is data, not code, AI (specifically Claude via command line) can now perform the full lifecycle of integration development:</p>
+
+      <ol class="op-steps">
+        <li>
+          <span class="op-step-num">1</span>
+          <div class="op-step-content">
+            <strong>Build new API connectors from scratch</strong>
+            <span>Reads API documentation, builds the connector, tests it against live APIs, iterates until it works. No other platform can do this.</span>
+          </div>
+        </li>
+        <li>
+          <span class="op-step-num">2</span>
+          <div class="op-step-content">
+            <strong>Assemble connectors into sophisticated automations</strong>
+            <span>Chains together connectors with business logic, conditions, error handling, into production-ready integration products.</span>
+          </div>
+        </li>
+        <li>
+          <span class="op-step-num">3</span>
+          <div class="op-step-content">
+            <strong>Troubleshoot and fix issues</strong>
+            <span>Inspects execution logs, diagnoses failures, applies fixes, all without human intervention.</span>
+          </div>
+        </li>
+      </ol>
+
+      <!-- Flywheel SVG -->
+      <div class="op-diagram">
+        <svg width="480" height="400" viewBox="0 0 480 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="240" cy="200" r="60" fill="rgba(26,183,89,0.06)" stroke="#1ab759" stroke-opacity="0.2" stroke-width="1"/>
+          <text x="240" y="193" fill="#1ab759" font-family="Inter, sans-serif" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="0.5">AI</text>
+          <text x="240" y="210" fill="#1ab759" font-family="Inter, sans-serif" font-size="10" font-weight="500" text-anchor="middle" fill-opacity="0.7">FLYWHEEL</text>
+          <rect x="160" y="20" width="160" height="48" rx="24" fill="rgba(26,183,89,0.1)" stroke="#1ab759" stroke-opacity="0.4" stroke-width="1.5"/>
+          <text x="240" y="49" fill="#f7f8f8" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">AI Builds Connectors</text>
+          <rect x="340" y="176" width="130" height="48" rx="24" fill="rgba(26,183,89,0.1)" stroke="#1ab759" stroke-opacity="0.4" stroke-width="1.5"/>
+          <text x="405" y="205" fill="#f7f8f8" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Catalog Grows</text>
+          <rect x="148" y="332" width="184" height="48" rx="24" fill="rgba(26,183,89,0.1)" stroke="#1ab759" stroke-opacity="0.4" stroke-width="1.5"/>
+          <text x="240" y="361" fill="#f7f8f8" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">AI Builds Automations</text>
+          <rect x="6" y="176" width="148" height="48" rx="24" fill="rgba(26,183,89,0.1)" stroke="#1ab759" stroke-opacity="0.4" stroke-width="1.5"/>
+          <text x="80" y="205" fill="#f7f8f8" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">More Integrations</text>
+          <path d="M310 56 Q380 80 400 170" stroke="#1ab759" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <polygon points="404,168 396,164 398,174" fill="#1ab759"/>
+          <path d="M390 228 Q370 300 320 340" stroke="#1ab759" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <polygon points="322,344 318,334 328,338" fill="#1ab759"/>
+          <path d="M160 348 Q90 320 70 232" stroke="#1ab759" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <polygon points="68,234 76,236 72,226" fill="#1ab759"/>
+          <path d="M88 172 Q100 90 168 56" stroke="#1ab759" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <polygon points="166,52 168,62 158,56" fill="#1ab759"/>
+        </svg>
+      </div>
+
+      <div class="op-callout">
+        <p><strong>Why can APIANT do this and nobody else can?</strong> Competitors store integrations as JavaScript, Ruby, or TypeScript code. When AI tries to build or modify code-based integrations, it hallucinates, makes syntax errors, and produces unreliable results. APIANT's structured data approach means AI manipulates validated data structures through standard tools. It is the difference between filling out a form and writing a program from scratch.</p>
+      </div>
+    </section>
+
+    <!-- Section 4: Business Impact -->
+    <section class="op-section">
+      <div class="op-badge">Business Impact</div>
+      <h2 class="op-section-title">What This Means for SaaS Companies</h2>
+      <p>A SaaS company can now offer a comprehensive integration marketplace to their customers: fully branded, deeply sophisticated, and continuously expanding, without dedicating engineering resources.</p>
+
+      <div class="op-table-wrap">
+        <table class="op-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Before AI</th>
+              <th style="color: var(--op-green);">With APIANT + AI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color: var(--op-muted); font-weight: 500; white-space: nowrap;">New API connector</td>
+              <td style="color: #ef4444; opacity: 0.8;">Weeks of developer time</td>
+              <td style="color: var(--op-green); font-weight: 500;">Hours, built by AI</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-muted); font-weight: 500; white-space: nowrap;">Integration catalog</td>
+              <td style="color: #ef4444; opacity: 0.8;">10-20 integrations</td>
+              <td style="color: var(--op-green); font-weight: 500;">As many as you need, AI builds them</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-muted); font-weight: 500; white-space: nowrap;">Engineering cost</td>
+              <td style="color: #ef4444; opacity: 0.8;">$200K-500K/year</td>
+              <td style="color: var(--op-green); font-weight: 500;">Fraction of that</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-muted); font-weight: 500; white-space: nowrap;">Time to market</td>
+              <td style="color: #ef4444; opacity: 0.8;">Months</td>
+              <td style="color: var(--op-green); font-weight: 500;">Days</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-muted); font-weight: 500; white-space: nowrap;">Scale</td>
+              <td style="color: #ef4444; opacity: 0.8;">Fragile at volume</td>
+              <td style="color: var(--op-green); font-weight: 500;">Battle-tested engine, 20 years proven</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section: Competitive Landscape -->
+    <section class="op-section">
+      <div class="op-badge">Competitive Landscape</div>
+      <h2 class="op-section-title">Why Nobody Else Can Do This</h2>
+      <p>Every competitor stores integration logic as code. APIANT stores it as data. That one difference determines whether AI can reliably operate the platform.</p>
+
+      <div class="op-table-wrap" style="margin-top: 28px;">
+        <table class="op-table" style="font-size: 14px;">
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Built On</th>
+              <th>AI Builds New Connectors?</th>
+              <th>AI Maturity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color: var(--op-heading); font-weight: 600;">Zapier</td>
+              <td>JavaScript code</td>
+              <td style="color: #ef4444;">No</td>
+              <td>Basic linear workflows only</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-heading); font-weight: 600;">Make</td>
+              <td>JSON declarations</td>
+              <td style="color: #ef4444;">No</td>
+              <td>Early access, closed platform</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-heading); font-weight: 600;">n8n</td>
+              <td>TypeScript code</td>
+              <td style="color: #ef4444;">No</td>
+              <td>Beta, cloud-only, 1K char prompt limit</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-heading); font-weight: 600;">Workato</td>
+              <td>Ruby code</td>
+              <td style="color: #ef4444;">No</td>
+              <td>Generates drafts, not production-ready</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-heading); font-weight: 600;">MuleSoft</td>
+              <td>DataWeave code</td>
+              <td style="color: #ef4444;">No</td>
+              <td>~80% correctness, Salesforce-locked</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-heading); font-weight: 600;">Tray.io</td>
+              <td>Configurable code</td>
+              <td style="color: #ef4444;">No</td>
+              <td>Agent builder, enterprise only</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-heading); font-weight: 600;">Gumloop</td>
+              <td>Code (YC-backed, $70M)</td>
+              <td style="color: #ef4444;">No</td>
+              <td>AI-native but code-based</td>
+            </tr>
+            <tr>
+              <td style="color: var(--op-heading); font-weight: 600;">Composio</td>
+              <td>Code ($29M raised)</td>
+              <td style="color: #ef4444;">No</td>
+              <td>Agent tooling, no automation builder</td>
+            </tr>
+            <tr style="background: rgba(26, 183, 89, 0.05);">
+              <td style="color: var(--op-green); font-weight: 700;">APIANT</td>
+              <td style="color: var(--op-green); font-weight: 500;">Structured data (XML)</td>
+              <td style="color: var(--op-green); font-weight: 700;">Yes</td>
+              <td style="color: var(--op-green); font-weight: 500;">Full lifecycle: build, assemble, troubleshoot</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section: Market Opportunity -->
+    <section class="op-section">
+      <div class="op-badge">Market Opportunity</div>
+      <h2 class="op-section-title">Massive, Validated, Accelerating</h2>
+
+      <div class="op-stats">
+        <div class="op-stat">
+          <div class="op-stat-value">$8.5B to $108B</div>
+          <div class="op-stat-label">iPaaS market today, projected to reach $108B by 2034</div>
+        </div>
+        <div class="op-stat">
+          <div class="op-stat-value">~$450B</div>
+          <div class="op-stat-label">Expected agentic AI enterprise software revenue by 2035</div>
+        </div>
+        <div class="op-stat">
+          <div class="op-stat-value">40%</div>
+          <div class="op-stat-label">Of enterprise apps expected to embed AI agents by end of 2026. Every one needs integration infrastructure.</div>
+        </div>
+        <div class="op-stat">
+          <div class="op-stat-value">$279M+</div>
+          <div class="op-stat-label">Raised by competitors (n8n $180M, Gumloop $70M, Composio $29M), validating the space. None have APIANT's structural advantage.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Why Now -->
+    <section class="op-section">
+      <div class="op-badge">Why APIANT, Why Now</div>
+      <h2 class="op-section-title">The Window Is Open</h2>
+
+      <ul class="op-checklist">
+        <li>
+          <svg class="op-check-icon" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="20" height="20" rx="4" stroke="#1ab759" stroke-width="1.5"/>
+            <path d="M6 11L10 15L16 7" stroke="#1ab759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span><strong>20-year battle-tested architecture,</strong> not a startup experiment. Real customers, real scale, real production workloads.</span>
+        </li>
+        <li>
+          <svg class="op-check-icon" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="20" height="20" rx="4" stroke="#1ab759" stroke-width="1.5"/>
+            <path d="M6 11L10 15L16 7" stroke="#1ab759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span><strong>The only platform where AI can build new connectors</strong> (not just use existing ones). This is a structural capability, not a feature.</span>
+        </li>
+        <li>
+          <svg class="op-check-icon" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="20" height="20" rx="4" stroke="#1ab759" stroke-width="1.5"/>
+            <path d="M6 11L10 15L16 7" stroke="#1ab759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span><strong>Structural moat.</strong> Competitors cannot easily switch from code to data architecture. This is a years-long head start that compounds.</span>
+        </li>
+        <li>
+          <svg class="op-check-icon" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="20" height="20" rx="4" stroke="#1ab759" stroke-width="1.5"/>
+            <path d="M6 11L10 15L16 7" stroke="#1ab759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span><strong>The timing is now.</strong> AI agent adoption is accelerating and every agent needs integration infrastructure. The window for establishing AI-native integration leadership will not stay open long.</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- CTA Footer -->
+    <footer class="op-footer">
+      <div class="op-footer-label">Learn More</div>
+      <div class="op-footer-links">
+        <a href="https://apiant.com" class="op-footer-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="8" stroke="#1ab759" stroke-width="1.5"/>
+            <path d="M10 2C10 2 6 6 6 10C6 14 10 18 10 18" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M10 2C10 2 14 6 14 10C14 14 10 18 10 18" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="3" y1="10" x2="17" y2="10" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          apiant.com
+        </a>
+        <a href="mailto:fredl@apiant.com" class="op-footer-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="4" width="16" height="12" rx="2" stroke="#1ab759" stroke-width="1.5"/>
+            <path d="M2 6L10 12L18 6" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          fredl@apiant.com
+        </a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
