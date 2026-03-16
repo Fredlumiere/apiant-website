@@ -1109,8 +1109,8 @@
     <!-- Section 4: Business Impact -->
     <section class="op-section">
       <div class="op-badge">Business Impact</div>
-      <h2 class="op-section-title">What This Means for SaaS Companies</h2>
-      <p>Your customers want integrations with every tool they use. Now AI builds them for you. Branded as yours, production-ready, continuously expanding, without pulling a single engineer off your core product.</p>
+      <h2 class="op-section-title">What This Means for Your Business</h2>
+      <p>Whether you're a SaaS company, enterprise, or system integrator, anyone who needs professional-grade, scalable integrations gets the same advantage: AI builds them for you. Production-ready, continuously expanding, without dedicating engineering resources.</p>
 
       <div class="op-table-wrap">
         <table class="op-table">
@@ -1318,11 +1318,7 @@
         <div style="position: absolute; top: 0; left: 15%; right: 15%; height: 2px; background: linear-gradient(90deg, transparent, #1ab759, transparent); border-radius: 0 0 2px 2px;"></div>
         <h3 class="apiant-popup-title" style="text-align: center;">Contact APIANT</h3>
         <p class="apiant-popup-subtitle" style="text-align: center;">Whether you're exploring a partnership, investment opportunity, press inquiry, or want to see the platform in action, we'd like to hear from you.</p>
-        <form id="ai-advantage-form" class="apiant-popup-form" action="https://formsubmit.co/fredl@apiant.com" method="POST" onsubmit="return validateAdvantageForm()">
-          <input type="hidden" name="_next" value="https://apiant-website.vercel.app/apiant-ai-advantage.html?sent=1">
-          <input type="hidden" name="_subject" value="APIANT AI Advantage Page Inquiry">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_captcha" value="false">
+        <form id="ai-advantage-form" class="apiant-popup-form" onsubmit="return submitAdvantageForm(event)">
           <div class="apiant-popup-field-row">
             <div class="apiant-popup-field">
               <label for="aaf-name">Name</label>
@@ -1346,7 +1342,11 @@
           </div>
           <button type="submit" class="apiant-popup-submit" id="aaf-submit-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send Message</button>
         </form>
-        <p id="aaf-sent-msg" style="display:none; text-align:center; color: #1ab759; font-size: 15px; margin-top: 16px; font-weight: 500;">Message sent. We'll be in touch shortly.</p>
+        <div id="aaf-success" style="display:none; text-align:center; padding: 32px 20px;">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom: 16px;"><circle cx="24" cy="24" r="24" fill="rgba(26,183,89,0.1)"/><circle cx="24" cy="24" r="18" fill="rgba(26,183,89,0.15)"/><path d="M15 24.5L21 30.5L33 18.5" stroke="#1ab759" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3 class="apiant-popup-title" style="font-size: 20px; margin-bottom: 8px;">Message Received</h3>
+          <p class="apiant-popup-subtitle" style="margin-bottom: 0;">Thank you for reaching out. A member of the APIANT team will respond shortly.</p>
+        </div>
       </div>
     </section>
 
@@ -1413,24 +1413,41 @@
       btn.style.cursor = 'pointer';
     }
 
-    function validateAdvantageForm() {
+    function submitAdvantageForm(e) {
+      e.preventDefault();
       if (!aafTurnstileToken) return false;
+
       var btn = document.getElementById('aaf-submit-btn');
       btn.disabled = true;
       btn.textContent = 'Sending...';
-      return true;
-    }
 
-    // Show success message if redirected back after submission
-    if (window.location.search.indexOf('sent=1') !== -1) {
-      document.addEventListener('DOMContentLoaded', function() {
-        var msg = document.getElementById('aaf-sent-msg');
-        if (msg) msg.style.display = 'block';
-        var form = document.getElementById('ai-advantage-form');
-        if (form) form.style.display = 'none';
-        // Clean URL
-        history.replaceState(null, '', window.location.pathname);
+      var name = document.getElementById('aaf-name').value.trim();
+      var company = document.getElementById('aaf-company').value.trim();
+      var email = document.getElementById('aaf-email').value.trim();
+      var message = document.getElementById('aaf-message').value.trim();
+
+      fetch('https://kereljzjgeerrdnssttu.supabase.co/functions/v1/contact-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, company: company, message: message })
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.success) {
+          document.getElementById('ai-advantage-form').style.display = 'none';
+          document.getElementById('aaf-success').style.display = 'block';
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Send Message';
+          alert('Something went wrong. Please try again.');
+        }
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+        alert('Something went wrong. Please try again.');
       });
+      return false;
     }
   </script>
 </body>
