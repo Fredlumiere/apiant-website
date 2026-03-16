@@ -344,6 +344,9 @@
     }
 
     /* -- Responsive -- */
+    /* -- Prevent horizontal overflow globally -- */
+    html, body { overflow-x: hidden; }
+
     @media (max-width: 768px) {
       .op-wrapper {
         padding: 80px 16px 60px;
@@ -374,8 +377,13 @@
       .op-stat-value {
         font-size: 24px;
       }
+      .op-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
       .op-table {
         font-size: 12px;
+        min-width: 520px;
       }
       .op-table thead th,
       .op-table tbody td {
@@ -407,22 +415,31 @@
         gap: 10px;
       }
       .op-callout {
-        padding: 20px 20px;
+        padding: 20px 16px;
       }
       .op-callout p {
         font-size: 14px;
       }
+      .op-diagram {
+        overflow: hidden;
+      }
       .op-diagram svg {
         max-width: 100%;
+        height: auto;
       }
       .apiant-popup-field-row {
         grid-template-columns: 1fr;
+      }
+      /* Contact form card */
+      .apiant-popup-card,
+      [style*="max-width: 480px"][style*="padding: 44px 40px"] {
+        padding: 32px 20px 28px !important;
       }
     }
 
     @media (max-width: 480px) {
       .op-wrapper {
-        padding: 72px 14px 48px;
+        padding: 72px 12px 48px;
       }
       .op-hero h1 {
         font-size: 22px;
@@ -436,12 +453,13 @@
       .op-section p {
         font-size: 14px;
       }
+      .op-table {
+        font-size: 11px;
+        min-width: 480px;
+      }
       .op-table thead th,
       .op-table tbody td {
         padding: 6px 6px;
-      }
-      .op-table {
-        font-size: 10px;
       }
       .op-table thead th {
         font-size: 8px;
@@ -460,17 +478,20 @@
         width: 18px;
         height: 18px;
       }
+      .op-callout {
+        padding: 18px 14px;
+      }
     }
 
     @media (max-width: 360px) {
+      .op-wrapper {
+        padding: 68px 10px 40px;
+      }
       .op-hero h1 {
         font-size: 20px;
       }
       .op-section-title {
         font-size: 17px;
-      }
-      .op-table {
-        font-size: 9px;
       }
     }
 
@@ -803,12 +824,12 @@
       <div class="op-badge" style="margin-bottom: 20px; font-size: 13px; letter-spacing: 2px; padding: 7px 18px;">WORLD'S FIRST</div>
       <h1>The Integration Platform<br>AI Can <span>Build and Operate</span></h1>
       <p class="op-hero-sub">Every integration platform stores logic as code. APIANT stores it as structured data. That single architectural decision, 20 years in the making, means AI can now build new API connectors from scratch, assemble production automations, and troubleshoot failures without human intervention.</p>
-      <p style="font-size: 15px; color: var(--op-muted); margin-top: 20px; max-width: 580px; margin-left: auto; margin-right: auto; line-height: 1.6; position: relative;">APIANT is a white-label integration platform that SaaS companies embed under their own brand. Now, AI operates the entire platform.</p>
+      <p style="font-size: clamp(13px, 3vw, 15px); color: var(--op-muted); margin-top: 20px; max-width: 580px; margin-left: auto; margin-right: auto; line-height: 1.6; position: relative;">APIANT is a white-label integration platform that SaaS companies embed under their own brand. Now, AI operates the entire platform.</p>
     </header>
 
     <!-- Competitive Reality -->
-    <div class="op-callout" style="margin-bottom: 64px; text-align: center; border-left: none; border: 1px solid rgba(26, 183, 89, 0.2); border-radius: 12px; padding: 32px 28px;">
-      <p style="font-size: 17px; line-height: 1.7;"><strong style="color: var(--op-green); font-size: 24px; display: block; margin-bottom: 12px;">Over $1.1B raised by competitors. None can do this.</strong>Workato raised $421M. MuleSoft raised $259M before its $6.5B Salesforce acquisition. n8n raised $180M. Tray.io raised $149M. Gumloop raised $70M. Composio raised $29M. Newer AI startups like Composio and Membrane let AI call APIs, but they do it by generating raw code on the fly. That approach works for one-off scripts. It does not produce structured, production-grade connectors with error handling, rate limiting, pagination, and multi-location support. APIANT's AI builds real connectors, not disposable code. That is not a feature gap. It is an architectural divide.</p>
+    <div class="op-callout" style="margin-bottom: 64px; text-align: center; border-left: none; border: 1px solid rgba(26, 183, 89, 0.2); border-radius: 12px; padding: 32px 28px; box-sizing: border-box;">
+      <p style="font-size: clamp(14px, 3.5vw, 17px); line-height: 1.7;"><strong style="color: var(--op-green); font-size: clamp(18px, 4vw, 24px); display: block; margin-bottom: 12px;">Over $1.1B raised by competitors. None can do this.</strong>Workato raised $421M. MuleSoft raised $259M before its $6.5B Salesforce acquisition. n8n raised $180M. Tray.io raised $149M. Gumloop raised $70M. Composio raised $29M. Newer AI startups like Composio and Membrane let AI call APIs, but they do it by generating raw code on the fly. That approach works for one-off scripts. It does not produce structured, production-grade connectors with error handling, rate limiting, pagination, and multi-location support. APIANT's AI builds real connectors, not disposable code. That is not a feature gap. It is an architectural divide.</p>
     </div>
 
     <!-- Section 1: The Problem -->
@@ -1033,7 +1054,7 @@
       </ol>
 
       <!-- How It Works -->
-      <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--op-border); border-radius: 14px; padding: 32px 28px; margin: 36px 0;">
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--op-border); border-radius: 14px; padding: clamp(20px, 4vw, 32px) clamp(16px, 3.5vw, 28px); margin: 36px 0; box-sizing: border-box;">
         <h3 style="color: var(--op-heading); font-size: 18px; font-weight: 600; margin: 0 0 16px 0; letter-spacing: -0.01em;">How it works: Claude Code + APIANT CLI</h3>
         <p style="color: var(--op-body); font-size: 15px; line-height: 1.7; margin: 0 0 16px 0;">APIANT exposes its entire platform through a command-line interface. <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener" style="color: var(--op-green); text-decoration: underline; text-underline-offset: 3px;">Claude Code</a> (Anthropic's AI coding agent) connects to this CLI, reads API documentation, defines endpoints, maps fields, tests against live APIs, and iterates until everything works. It is not generating code. It is filling in structured data through validated commands, at machine speed.</p>
         <p style="color: var(--op-body); font-size: 15px; line-height: 1.7; margin: 0 0 16px 0;">The visual no-code editors that humans use today remain fully available. Teams can build connectors, automations, and integrations through the UI exactly as before. Claude Code can also maintain, enhance, and fix any integration previously built by humans using those no-code tools. AI and human workflows are fully interchangeable on the same platform.</p>
@@ -1410,8 +1431,8 @@
     </section>
 
     <!-- Contact Form -->
-    <section class="op-section" style="padding-top: 140px; padding-bottom: 120px; margin-bottom: 0; border-top: 1px solid var(--op-border);">
-      <div style="--popup-accent: #1ab759; --popup-accent-rgb: 26, 183, 89; --popup-accent-dark: #0d7a3a; max-width: 480px; margin: 0 auto; background: rgba(12, 14, 18, 0.97); border: 1px solid rgba(26, 183, 89, 0.12); border-radius: 20px; padding: 44px 40px 36px; position: relative; box-shadow: 0 0 80px rgba(26, 183, 89, 0.05), 0 25px 60px rgba(0, 0, 0, 0.6);">
+    <section class="op-section" style="padding-top: clamp(60px, 12vw, 140px); padding-bottom: clamp(60px, 10vw, 120px); margin-bottom: 0; border-top: 1px solid var(--op-border);">
+      <div style="--popup-accent: #1ab759; --popup-accent-rgb: 26, 183, 89; --popup-accent-dark: #0d7a3a; max-width: 480px; margin: 0 auto; background: rgba(12, 14, 18, 0.97); border: 1px solid rgba(26, 183, 89, 0.12); border-radius: 20px; padding: clamp(28px, 5vw, 44px) clamp(18px, 4vw, 40px) clamp(24px, 4vw, 36px); position: relative; box-shadow: 0 0 80px rgba(26, 183, 89, 0.05), 0 25px 60px rgba(0, 0, 0, 0.6); box-sizing: border-box;">
         <div style="position: absolute; top: 0; left: 15%; right: 15%; height: 2px; background: linear-gradient(90deg, transparent, #1ab759, transparent); border-radius: 0 0 2px 2px;"></div>
         <h3 class="apiant-popup-title" style="text-align: center;">Contact APIANT</h3>
         <p class="apiant-popup-subtitle" style="text-align: center;">Whether you're exploring a partnership, investment opportunity, press inquiry, or want to see the platform in action, we'd like to hear from you.</p>
