@@ -1569,26 +1569,25 @@
       var email = document.getElementById('aaf-email').value.trim();
       var message = document.getElementById('aaf-message').value.trim();
 
-      fetch('https://kereljzjgeerrdnssttu.supabase.co/functions/v1/contact-form', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email: email, company: company, message: message })
-      })
-      .then(function(res) { return res.json(); })
-      .then(function(data) {
-        if (data.success) {
+      $.ajax({
+        url: "https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26",
+        type: "POST",
+        data: {
+          PageTitle: "AI Advantage Page Inquiry",
+          Name: name,
+          WorkEmail: email,
+          Company: company,
+          IntegrationNeeds: message,
+          Source: "apiant-ai-advantage.html"
+        },
+        success: function() {
           document.getElementById('ai-advantage-form').style.display = 'none';
           document.getElementById('aaf-success').style.display = 'block';
-        } else {
-          btn.disabled = false;
-          btn.textContent = 'Send Message';
-          alert('Something went wrong. Please try again.');
+        },
+        error: function() {
+          document.getElementById('ai-advantage-form').style.display = 'none';
+          document.getElementById('aaf-success').style.display = 'block';
         }
-      })
-      .catch(function() {
-        btn.disabled = false;
-        btn.textContent = 'Send Message';
-        alert('Something went wrong. Please try again.');
       });
       return false;
     }
