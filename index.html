@@ -2746,8 +2746,7 @@
 
       if (!CQ_SUPABASE_URL) {
         CQ_SUBMITTING = false;
-        // Fallback: show WhatsApp step with a placeholder session
-        cqShowWhatsApp('apt_demo0000', CQ_FORM_DATA.WorkEmail);
+        cqGoTo('cq-step-success');
         return;
       }
 
@@ -2757,18 +2756,13 @@
         body: JSON.stringify(leadData)
       })
       .then(function(r) { return r.json(); })
-      .then(function(data) {
+      .then(function() {
         CQ_SUBMITTING = false;
-        if (data.session_id) {
-          cqShowWhatsApp(data.session_id, CQ_FORM_DATA.WorkEmail);
-        } else {
-          // Fallback if session creation failed
-          cqShowWhatsApp('apt_fallback', CQ_FORM_DATA.WorkEmail);
-        }
+        cqGoTo('cq-step-success');
       })
       .catch(function() {
         CQ_SUBMITTING = false;
-        cqShowWhatsApp('apt_fallback', CQ_FORM_DATA.WorkEmail);
+        cqGoTo('cq-step-success');
       });
     }
 
@@ -2797,6 +2791,19 @@
       var fallbackEl = document.getElementById('cq-fallback-email');
       if (fallbackEl) fallbackEl.textContent = email || '';
       cqLog('whatsapp_handoff_shown', { session_id: sessionId });
+
+      // Check if voice agent is enabled before showing the option
+      if (callEl && CQ_SUPABASE_URL) {
+        callEl.style.display = 'none';
+        fetch(CQ_SUPABASE_URL + '/functions/v1/check-availability')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.voice_agent_enabled) {
+            callEl.style.display = '';
+          }
+        })
+        .catch(function() {});
+      }
 
       // Live Voice Call: launch ElevenLabs widget in browser
       if (callEl) callEl.onclick = function(e) {

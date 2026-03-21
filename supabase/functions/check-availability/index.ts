@@ -128,7 +128,7 @@ serve(async (req) => {
         if (body.action === "get_settings") {
           const { data } = await supabase
             .from("admin_settings")
-            .select("available, timezone, business_hours_start, business_hours_end, business_days, calendly_url")
+            .select("available, timezone, business_hours_start, business_hours_end, business_days, calendly_url, voice_agent_enabled")
             .eq("id", 1)
             .single();
 
@@ -146,6 +146,7 @@ serve(async (req) => {
           if (body.business_days !== undefined) updates.business_days = body.business_days;
           if (body.calendly_url !== undefined) updates.calendly_url = body.calendly_url;
           if (body.available !== undefined) updates.available = body.available;
+          if (body.voice_agent_enabled !== undefined) updates.voice_agent_enabled = body.voice_agent_enabled;
 
           await supabase
             .from("admin_settings")
@@ -163,7 +164,7 @@ serve(async (req) => {
     // Public availability check
     const { data: settings } = await supabase
       .from("admin_settings")
-      .select("available, timezone, business_hours_start, business_hours_end, business_days, calendly_url")
+      .select("available, timezone, business_hours_start, business_hours_end, business_days, calendly_url, voice_agent_enabled")
       .eq("id", 1)
       .single();
 
@@ -198,6 +199,7 @@ serve(async (req) => {
         available,
         calendly_url: settings.calendly_url || "",
         reason,
+        voice_agent_enabled: settings.voice_agent_enabled !== false,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
