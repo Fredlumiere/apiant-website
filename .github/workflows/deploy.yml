@@ -1,0 +1,49 @@
+name: Deploy to apiant.com
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.claude/' \
+            --exclude='.firecrawl/' \
+            --exclude='.uisnap/' \
+            --exclude='supabase/' \
+            --exclude='backup/' \
+            --exclude='docs/' \
+            --exclude='other-pages/' \
+            --exclude='CLAUDE.md' \
+            --exclude='SITE-DOCUMENTATION.md' \
+            --exclude='APIANT-Website-Revision-Plan-v2-FINAL.md' \
+            --exclude='API-APP-PAGE-PLAYBOOK.md' \
+            --exclude='API_APPS_FEATURES.md' \
+            --exclude='HOMEPAGE-COPY-WEBFLOW-READY.md' \
+            --exclude='ADOPTION-PLAN.md' \
+            --exclude='ADOPTION-PLAN.html' \
+            --exclude='APACHE-PROXY-SETUP.md' \
+            --exclude='apache-vercel-proxy.conf' \
+            --exclude='*.py' \
+            --exclude='*.md' \
+            --exclude='temp.html' \
+            --exclude='hq.html' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
