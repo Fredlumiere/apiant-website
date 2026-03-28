@@ -712,40 +712,6 @@
 </head>
 <body>
 
-  <!-- Password Gate -->
-  <div id="auth-gate" style="position:fixed;inset:0;z-index:99999;background:#0c0c0c;display:flex;align-items:center;justify-content:center;">
-    <div style="max-width:380px;width:90%;text-align:center;font-family:'Inter','DM Sans',sans-serif;">
-      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:#1ab759;background:rgba(26,183,89,0.1);border:1px solid rgba(26,183,89,0.2);border-radius:20px;padding:5px 14px;display:inline-block;margin-bottom:24px;">Confidential</div>
-      <h2 style="color:#f7f8f8;font-size:22px;font-weight:700;margin:0 0 8px;letter-spacing:-0.02em;">For Authorized Recipients Only</h2>
-      <p style="color:#94a3b8;font-size:14px;margin:0 0 28px;line-height:1.6;">Enter your credentials to continue.</p>
-      <form id="auth-form" onsubmit="return checkAuth()" style="display:flex;flex-direction:column;gap:12px;">
-        <input type="text" id="auth-user" placeholder="Username" autocomplete="off" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;color:#f7f8f8;font-size:15px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='rgba(26,183,89,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-        <input type="password" id="auth-pass" placeholder="Password" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;color:#f7f8f8;font-size:15px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='rgba(26,183,89,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-        <button type="submit" style="background:linear-gradient(160deg,#22c95e 0%,#1ab759 40%,#128a42 100%);color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px;">Continue</button>
-        <p id="auth-error" style="color:#ef4444;font-size:13px;margin:0;display:none;">Invalid credentials. Please try again.</p>
-      </form>
-    </div>
-  </div>
-  <script>
-    (function(){
-      var k='aai_auth';
-      if(sessionStorage.getItem(k)==='1'){document.getElementById('auth-gate').style.display='none';}
-      else{document.body.style.overflow='hidden';}
-    })();
-    function checkAuth(){
-      var u=document.getElementById('auth-user').value;
-      var p=document.getElementById('auth-pass').value;
-      if(u==='insider'&&p==='NoRivals!'){
-        sessionStorage.setItem('aai_auth','1');
-        document.getElementById('auth-gate').style.display='none';
-        document.body.style.overflow='';
-        return false;
-      }
-      document.getElementById('auth-error').style.display='block';
-      return false;
-    }
-  </script>
-
   <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
     <div class="container navbar dark">
       <div class="nav-holder">
