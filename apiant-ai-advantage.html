@@ -713,8 +713,6 @@
 </head>
 <body>
 
-  <div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:rgba(239,68,68,0.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);text-align:center;padding:10px 20px;font-family:'Inter','DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#fff;">Confidential &mdash; For Authorized Recipients Only &mdash; Do Not Distribute</div>
-
   <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
     <div class="container navbar dark">
       <div class="nav-holder">
@@ -789,216 +787,34 @@
     </div>
   </div>
 
-  <!-- Lighting effect (adapted from homepage) -->
-  <div class="light-wrapper" style="pointer-events: none; z-index: 0;">
-    <div class="lights-holder" style="opacity: 0.3; top: -400px; left: -200px; transform: rotate(-25deg);">
-      <div class="light left" style="opacity: 0.15; background-image: linear-gradient(rgba(26,183,89,0.6) 5%, transparent 67%);"></div>
-      <div class="light middle" style="opacity: 0.35; background-image: linear-gradient(rgba(26,183,89,0.4) 5%, transparent 67%);"></div>
-      <div class="light right" style="opacity: 0.2; background-image: linear-gradient(rgba(255,255,255,0.3) 5%, transparent 67%);"></div>
+  <!-- Auth Gate: login form (shown when not authenticated) -->
+  <div id="auth-gate" style="min-height: 60vh; display: flex; align-items: center; justify-content: center; padding: 120px 20px 80px;">
+    <div style="max-width: 400px; width: 100%; background: var(--op-card-bg); border: 1px solid var(--op-border); border-radius: 16px; padding: 40px 32px; position: relative;">
+      <div style="position: absolute; top: 0; left: 15%; right: 15%; height: 2px; background: linear-gradient(90deg, transparent, var(--op-green), transparent); border-radius: 0 0 2px 2px;"></div>
+      <div style="text-align: center; margin-bottom: 32px;">
+        <div style="margin-bottom: 20px;">
+          <img src="images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT" style="height: 32px;">
+        </div>
+        <h2 style="font-size: 22px; font-weight: 700; color: var(--op-heading); margin: 0 0 8px;">Protected Content</h2>
+        <p style="font-size: 14px; color: var(--op-muted); margin: 0; line-height: 1.5;">This page requires authentication to view.</p>
+      </div>
+      <form id="auth-form" onsubmit="return handleAuth(event)">
+        <div style="margin-bottom: 16px;">
+          <label for="auth-user" style="display: block; font-size: 13px; font-weight: 500; color: var(--op-muted); margin-bottom: 6px;">Username</label>
+          <input type="text" id="auth-user" name="username" required autocomplete="username" style="width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--op-border); border-radius: 8px; color: var(--op-heading); font-size: 15px; font-family: inherit; outline: none; box-sizing: border-box; transition: border-color 0.2s;" onfocus="this.style.borderColor='rgba(26,183,89,0.4)'" onblur="this.style.borderColor='var(--op-border)'">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label for="auth-pass" style="display: block; font-size: 13px; font-weight: 500; color: var(--op-muted); margin-bottom: 6px;">Password</label>
+          <input type="password" id="auth-pass" name="password" required autocomplete="current-password" style="width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--op-border); border-radius: 8px; color: var(--op-heading); font-size: 15px; font-family: inherit; outline: none; box-sizing: border-box; transition: border-color 0.2s;" onfocus="this.style.borderColor='rgba(26,183,89,0.4)'" onblur="this.style.borderColor='var(--op-border)'">
+        </div>
+        <div id="auth-error" style="display: none; color: #ef4444; font-size: 13px; margin-bottom: 12px; text-align: center;"></div>
+        <button type="submit" id="auth-submit" style="width: 100%; padding: 12px; background: var(--op-green); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; transition: opacity 0.2s;">Sign In</button>
+      </form>
     </div>
   </div>
-  <div class="light-wrapper" style="pointer-events: none; z-index: 0; opacity: 0.25; justify-content: flex-end; align-items: flex-start;">
-    <div class="lights-holder" style="opacity: 0.3; top: -300px; left: auto; right: 5vw; transform: rotate(20deg); grid-column-gap: 50px; justify-content: flex-end;">
-      <div class="light" style="opacity: 0.2; filter: blur(14px); background-image: linear-gradient(rgba(26,183,89,0.3) 5%, transparent 67%); width: 120px;"></div>
-      <div class="light" style="opacity: 0.3; filter: blur(20px); background-image: linear-gradient(rgba(255,255,255,0.15) 5%, transparent 67%); width: 140px;"></div>
-    </div>
-  </div>
 
-  <div class="op-wrapper" style="position: relative; z-index: 1;">
-
-    <!-- Hero -->
-    <header class="op-hero">
-      <div style="display: flex; justify-content: center; margin-bottom: 28px; position: relative;">
-        <!-- Animated glow behind icon -->
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: radial-gradient(circle, rgba(26,183,89,0.15) 0%, transparent 70%); border-radius: 50%; animation: iconGlow 3s ease-in-out infinite;"></div>
-        <svg width="56" height="56" viewBox="0 0 207.94 212.06" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: relative; filter: drop-shadow(0 0 12px rgba(26,183,89,0.2)); animation: iconFloat 4s ease-in-out infinite;">
-          <defs>
-            <linearGradient id="ig1" x1="80.66" y1="139.64" x2="126.98" y2="143.55" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#facd61"/><stop offset=".47" stop-color="#f8a434"/><stop offset="1" stop-color="#d96c27"/></linearGradient>
-            <linearGradient id="ig2" x1="92.68" y1="144.28" x2="90.93" y2="161.24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#bd5a29"/><stop offset=".81" stop-color="#ee9223"/></linearGradient>
-            <linearGradient id="ig3" x1="102.72" y1="121.57" x2="86.88" y2="141.39" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#faa841"/><stop offset=".46" stop-color="#fdda9f"/><stop offset="1" stop-color="#f9a23d"/></linearGradient>
-            <linearGradient id="ig4" x1="104.4" y1="126.25" x2="125.39" y2="131.78" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d37228"/><stop offset=".86" stop-color="#f4a246"/></linearGradient>
-            <linearGradient id="ig5" x1="109.79" y1="148.09" x2="114.99" y2="153.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#aa4126"/><stop offset="1" stop-color="#d46928"/></linearGradient>
-          </defs>
-          <path fill="#e6e7e8" d="M104.53,22.32h0c2.1,0,3.98,1.27,4.77,3.22l39.45,102.52,8.67,19.42,26.77,64.58h23.75L126.33,14.4c-1.79-4.29-4.83-7.94-8.73-10.48-11.09-7.26-25.97-4.15-33.22,6.95-.71,1.08-1.32,2.21-1.85,3.39L0,212.06h24.13l26.59-64.6L99.78,25.47c.8-1.91,2.67-3.16,4.75-3.16Z"/>
-          <path fill="url(#ig1)" d="M105.17,116.57l-.07,2.16c.1.96.13,1.93.2,2.9-.42-.12-.27.91-.27,1.17.05,3.67.31,8.06,2.26,11.22.82,1.33,1.87,2.48,3.13,3.4,3.92,2.86,10.13,3.01,14.85,3.06.54,0,1.09,0,1.63,0l-.1-.27c.91.48,1.6.83,1.07,2.03-3.66,2.32-8.24,3.36-12.05,5.49.14-.49,1.07-.64,1.43-.8,2.17-.97,4.36-1.96,6.46-2.86.58-.25,2.03-.66,2.46-.93.1-.06.15-.2.3-.23l-.1-.1c-.8.09-1.62.05-2.43.07.03-.2-.18-.13-.3-.13-3.55-.1-9.84.4-12.79,2.46-4.68,3.28-5.71,8.24-5.83,13.22-.04,1.66.05,3.31.13,4.96-.02,1.04-.08,2.1,0,3.13-.3.66-.52,1.3-1.5,1.13-.81-.14-.99-1.2-1.23-1.8.2,0,.17.16.2-.1.11-.82.07-2.41.07-3.3.11-.06.12-.19.13-.3.32-3.72-.42-9.99-2.13-12.92-.17-.29-1.59-2.2-1.76-2.23-.59.11.57,1.11.77,1.43.31.53.57,1.38.93,1.93l-.27-.8c.08-.02.23.21.27.27.5.77.78,1.97,1,2.86.06.26,0,.28,0,.3-.71-2.4-2.25-4.82-4.16-6.46-1.07-.92-3.19-2.17-4.53-2.53-.62-.17-1.22-.3-1.86-.2l.13-.2c-.71-.16-1.41-.21-2.13-.13l.13-.2c-.64-.16-1.31-.19-2-.27-.23-.02.08-.07,0-.13l-6.56-.07c-1.12-.67-1.12-1.73,0-2.4,1.1.02,2.23,0,3.33-.07.21.17.51.14.77.13,6.58-.2,13.78-1.22,16.68-8.03,1.28-3.01,1.85-12.3,1.33-15.55-.01-.09.05-.25-.07-.27.2-.42.29-.95.9-1.07.88-.17,1.25.33,1.57,1Z"/>
-          <path fill="url(#ig4)" d="M101.64,153c.74,3.14,1.04,6.21,1.07,9.46,0,.89.04,2.48-.07,3.3-.03.26,0,.11-.2.1-2.71-6.84-3.58-14.53-10.69-18.31-3.31-1.76-8.03-2.89-11.09-4.73l6.56.07c.08.06-.23.11,0,.13.69.07,1.36.1,2,.27l-.13.2c.72-.08,1.42-.03,2.13.13l-.13.2c.64-.1,1.24.03,1.86.2,1.34.36,3.46,1.61,4.53,2.53,1.91,1.64,3.45,4.06,4.16,6.46Z"/>
-          <path fill="url(#ig3)" d="M102.77,116.9c-.51,7.15.47,15.74-6.23,20.31-3.4,2.32-8.51,2.85-12.55,3.13-1.1.08-2.23.09-3.33.07,4-2.38,9.56-3.3,13.35-6.26,5.52-4.31,5.92-11.6,8.69-17.52.12.02.05.18.07.27Z"/>
-          <path fill="url(#ig2)" d="M105.17,116.57c2.38,5.12,3.06,11.8,7.06,16.08,3.77,4.03,9.84,5.07,14.58,7.56l.1.27c-.54,0-1.09,0-1.63,0,.03-.2-.18-.13-.3-.13-4.31-.15-10.28-.77-13.89-3.26-1.04-.72-1.99-1.71-2.73-2.73-2.61-3.6-2.77-8.4-3.06-12.72-.07-.96-.1-1.94-.2-2.9l.07-2.16Z"/>
-          <path fill="url(#ig5)" d="M115.82,147.74c-7.33,4.1-7.57,11.86-10.66,18.78-.08-1.03-.02-2.1,0-3.13.02-.95.03-1.91.07-2.86.2.03.13-.18.13-.3.3-8.8,2.71-14.82,11.95-16.62l5.23-.67c.47-.02.93-.06,1.4-.07.81-.01,1.63.03,2.43-.07l.1.1c-.15.03-.2.17-.3.23-.44.28-1.88.68-2.46.93-2.1.91-4.29,1.9-6.46,2.86-.36.16-1.29.31-1.43.8Z"/>
-          <path fill="#fce6b5" d="M83.99,140.34c4.05-.28,9.15-.81,12.55-3.13,6.7-4.57,5.72-13.16,6.23-20.31.51,3.25-.05,12.54-1.33,15.55-2.9,6.8-10.11,7.82-16.68,8.03-.25,0-.56.04-.77-.13Z"/>
-          <path fill="#f6a433" d="M123.95,142.88c-.47,0-.93.05-1.4.07-13.22.51-16.8,4.55-17.32,17.58-.04.95-.04,1.91-.07,2.86-.08-1.65-.17-3.31-.13-4.96.12-4.98,1.14-9.94,5.83-13.22,2.95-2.07,9.24-2.57,12.79-2.46.12,0,.33-.07.3.13Z"/>
-          <path fill="#f6a433" d="M105.3,121.63c.29,4.32.45,9.12,3.06,12.72-.2-.17-.4.21-.43.2-.21-.09-.31-.88-.63-.53-1.96-3.16-2.21-7.55-2.26-11.22,0-.26-.16-1.29.27-1.17Z"/>
-          <path fill="#fdcd6e" d="M111.1,137.08c3.61,2.49,9.57,3.12,13.89,3.26.12,0,.33-.07.3.13-4.72-.06-10.93-.21-14.85-3.06-.02-.44.29-.06.3-.07.12-.12-.14-.26.37-.27Z"/>
-          <path fill="#fdcd6e" d="M102.7,162.46c-.03-3.25-.33-6.31-1.07-9.46,0-.02.06-.04,0-.3-.22-.89-.5-2.09-1-2.86-.04-.06-.19-.29-.27-.27l.27.8c-.36-.55-.62-1.4-.93-1.93-.19-.32-1.35-1.32-.77-1.43.18.03,1.6,1.95,1.76,2.23,1.71,2.93,2.45,9.2,2.13,12.92,0,.11-.02.24-.13.3Z"/>
-          <path fill="#f6a433" d="M108.37,134.35c.74,1.02,1.69,2.01,2.73,2.73-.51,0-.24.14-.37.27-.01.01-.32-.37-.3.07-1.26-.92-2.31-2.07-3.13-3.4.33-.35.42.44.63.53.03.01.23-.37.43-.2Z"/>
-          <path fill="#d56d28" d="M122.55,142.94l-5.23.67c-9.24,1.79-11.66,7.81-11.95,16.62,0,.12.07.33-.13.3.52-13.04,4.09-17.07,17.32-17.58Z"/>
-        </svg>
-      </div>
-      <h1>The <span>AI-Operable</span><br>Integration Platform</h1>
-      <p class="op-hero-sub">The only platform where AI autonomously closes the loop: build, execute, inspect, fix, and improve integrations without human intervention.</p>
-    </header>
-
-    <!-- Executive Summary -->
-    <section class="op-section" style="margin-bottom: 0;">
-
-      <!-- The Landscape -->
-      <div style="margin-bottom: 56px;">
-        <div class="op-badge">The Landscape</div>
-        <h2 class="op-section-title">Everyone Has AI-Built Integrations Now</h2>
-        <p style="font-size: clamp(15px, 3.5vw, 18px); line-height: 1.8;">Most major integration platforms are now using AI to build integrations from natural language. Zapier, Workato, MuleSoft, Boomi, SAP, SnapLogic, and dozens of well-funded startups all demo some version of this. That capability alone is no longer differentiating.</p>
-      </div>
-
-      <!-- The Difference -->
-      <div style="margin-bottom: 56px;">
-        <div style="text-align: center; margin-bottom: 40px;">
-          <h2 style="font-size: clamp(24px, 5.5vw, 42px); font-weight: 700; color: var(--op-heading); line-height: 1.15; letter-spacing: -0.02em;">Here is what makes APIANT<br><span style="color: var(--op-green);">fundamentally different</span></h2>
-          <p style="font-size: clamp(15px, 3.5vw, 19px); color: var(--op-body); max-width: 720px; margin: 20px auto 0; line-height: 1.8;">The ability to <strong style="color: var(--op-heading);">close the loop</strong>.</p>
-        </div>
-        <div class="op-callout" style="border-left: 3px solid var(--op-green); border-radius: 0 12px 12px 0; padding: clamp(20px, 4vw, 32px); margin-bottom: 32px;">
-          <p style="font-size: clamp(14px, 3.2vw, 16px); line-height: 1.85; margin-bottom: 0;">Most platforms built on code execution, then bolted AI on top. Their AI generates integrations, but code-based architectures make it significantly harder to <strong>inspect them mid-execution</strong>, <strong>mutate state</strong> to test alternate paths, <strong>diagnose failures from the inside</strong>, <strong>autonomously fix what broke</strong>, and <strong>improve the integration over time</strong> at any meaningful depth. To get there, they would likely need to rebuild from the ground up. As of today, no platform we are aware of has shipped this capability.</p>
-        </div>
-      </div>
-
-      <!-- The Closed Loop -->
-      <div style="margin-bottom: 56px;">
-        <div class="op-badge">Closing the Loop</div>
-        <h2 class="op-section-title">What Autonomous Integration Actually Looks Like</h2>
-        <p style="font-size: clamp(15px, 3.5vw, 17px); line-height: 1.85;">APIANT's architecture was built a decade ago for entirely different reasons, but it turns out to be uniquely suited for AI to operate autonomously across the full integration lifecycle.</p>
-
-        <div style="background: var(--op-card-bg); border: 1px solid var(--op-border); border-radius: 16px; padding: clamp(24px, 4vw, 40px); margin: 32px 0;">
-          <ol class="op-steps" style="margin: 0;">
-            <li>
-              <span class="op-step-num">1</span>
-              <div class="op-step-content"><strong>AI builds an integration</strong></div>
-            </li>
-            <li>
-              <span class="op-step-num">2</span>
-              <div class="op-step-content"><strong>Executes it</strong></div>
-            </li>
-            <li>
-              <span class="op-step-num">3</span>
-              <div class="op-step-content"><strong>Inspects the per-step data output</strong></div>
-            </li>
-            <li>
-              <span class="op-step-num">4</span>
-              <div class="op-step-content"><strong>Discovers a date format mismatch at step 7</strong></div>
-            </li>
-            <li>
-              <span class="op-step-num">5</span>
-              <div class="op-step-content"><strong>Inserts a transformation</strong></div>
-            </li>
-            <li>
-              <span class="op-step-num">6</span>
-              <div class="op-step-content"><strong>Re-executes from that step using mutated execution state</strong></div>
-            </li>
-            <li>
-              <span class="op-step-num">7</span>
-              <div class="op-step-content"><strong>Verifies the fix</strong></div>
-            </li>
-            <li style="margin-bottom: 0;">
-              <span class="op-step-num">8</span>
-              <div class="op-step-content"><strong>Tests the alternate conditional branch by synthetically flipping the trigger data</strong></div>
-            </li>
-          </ol>
-          <div style="text-align: center; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--op-border);">
-            <p style="font-size: clamp(14px, 3vw, 16px); color: var(--op-green); font-weight: 600; margin: 0;">All without human intervention.</p>
-          </div>
-        </div>
-        <p style="font-size: clamp(14px, 3.2vw, 16px); line-height: 1.85; color: var(--op-muted);">To our knowledge, no other platform has shipped this capability. It requires structured, inspectable execution state at every stage.</p>
-      </div>
-
-      <!-- Enterprise Depth -->
-      <div style="margin-bottom: 56px;">
-        <div class="op-badge">Enterprise Depth</div>
-        <h2 class="op-section-title">Deep Integrations, Built Autonomously</h2>
-        <p style="font-size: clamp(15px, 3.5vw, 17px); line-height: 1.85;">Enterprise platforms like Boomi, Workato, and MuleSoft power deep integrations, but as far as we have seen, none have shipped the ability to build integrations of that depth autonomously with AI.</p>
-        <div class="op-callout" style="border-left: 3px solid var(--op-green); margin: 28px 0;">
-          <p style="font-size: clamp(14px, 3.2vw, 16px); line-height: 1.85; margin-bottom: 0;"><strong>APIANT can:</strong> thousands of logic points, caching layers, error handling, and deeply nested business rules, all built autonomously on a battle-tested production platform that has been powering complex integrations for over a decade.</p>
-        </div>
-      </div>
-
-      <!-- IP & Patent -->
-      <div style="background: linear-gradient(135deg, rgba(26, 183, 89, 0.04) 0%, rgba(26, 183, 89, 0.01) 100%); border: 1px solid rgba(26, 183, 89, 0.15); border-radius: 16px; padding: clamp(28px, 5vw, 44px); text-align: center;">
-        <div class="op-badge" style="margin-bottom: 20px;">Intellectual Property</div>
-        <h2 style="font-size: clamp(20px, 4.5vw, 28px); font-weight: 700; color: var(--op-heading); line-height: 1.25; margin-bottom: 16px; letter-spacing: -0.02em;">Substantial Patentable Portfolio</h2>
-        <p style="font-size: clamp(14px, 3.2vw, 16px); line-height: 1.85; color: var(--op-body); max-width: 680px; margin: 0 auto;">We have identified a substantial portfolio of patentable claims across the core technology and are seeking a top-tier AI patent firm to evaluate the strongest claims and file provisional applications immediately. We are open to structuring compensation to include equity participation, given the scope and strategic value of the portfolio.</p>
-      </div>
-
-    </section>
-
-    <!-- Contact Form -->
-    <section class="op-section" style="padding-top: clamp(60px, 12vw, 140px); padding-bottom: clamp(60px, 10vw, 120px); margin-bottom: 0; border-top: 1px solid var(--op-border);">
-      <div style="--popup-accent: #1ab759; --popup-accent-rgb: 26, 183, 89; --popup-accent-dark: #0d7a3a; max-width: 480px; margin: 0 auto; background: rgba(12, 14, 18, 0.97); border: 1px solid rgba(26, 183, 89, 0.12); border-radius: 20px; padding: clamp(28px, 5vw, 44px) clamp(18px, 4vw, 40px) clamp(24px, 4vw, 36px); position: relative; box-shadow: 0 0 80px rgba(26, 183, 89, 0.05), 0 25px 60px rgba(0, 0, 0, 0.6); box-sizing: border-box;">
-        <div style="position: absolute; top: 0; left: 15%; right: 15%; height: 2px; background: linear-gradient(90deg, transparent, #1ab759, transparent); border-radius: 0 0 2px 2px;"></div>
-        <h3 class="apiant-popup-title" style="text-align: center;">Contact APIANT</h3>
-        <p class="apiant-popup-subtitle" style="text-align: center;">Whether you're exploring a partnership, investment opportunity, press inquiry, or want to see the platform in action, we'd like to hear from you.</p>
-        <form id="ai-advantage-form" class="apiant-popup-form" onsubmit="return submitAdvantageForm(event)">
-          <div class="apiant-popup-field-row">
-            <div class="apiant-popup-field">
-              <label for="aaf-name">Name</label>
-              <input type="text" id="aaf-name" name="name" placeholder="Your name" required>
-            </div>
-            <div class="apiant-popup-field">
-              <label for="aaf-company">Organization</label>
-              <input type="text" id="aaf-company" name="company" placeholder="Company or firm">
-            </div>
-          </div>
-          <div class="apiant-popup-field">
-            <label for="aaf-email">Email</label>
-            <input type="email" id="aaf-email" name="email" placeholder="you@company.com" required>
-          </div>
-          <div class="apiant-popup-field">
-            <label for="aaf-message">How can we help?</label>
-            <textarea id="aaf-message" name="message" placeholder="Partnership, investment, press, demo request, or anything else..." maxlength="2000"></textarea>
-          </div>
-          <div style="display: flex; justify-content: center; margin: 4px 0;">
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAACqP7kMK5m2aXb3g" data-theme="dark" data-callback="onTurnstileSuccess" id="aaf-turnstile"></div>
-          </div>
-          <button type="submit" class="apiant-popup-submit" id="aaf-submit-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send Message</button>
-        </form>
-        <div id="aaf-success" style="display:none; text-align:center; padding: 40px 20px;">
-          <div style="position: relative; display: inline-block; margin-bottom: 24px;">
-            <!-- Outer rotating ring -->
-            <div style="position: absolute; top: 50%; left: 50%; width: 140px; height: 140px; transform: translate(-50%, -50%); border-radius: 50%; border: 1px solid rgba(26,183,89,0.15); animation: successRingSpin 8s linear infinite;"></div>
-            <!-- Orbiting dot -->
-            <div style="position: absolute; top: 50%; left: 50%; width: 160px; height: 160px; transform: translate(-50%, -50%); animation: successRingSpin 6s linear infinite;">
-              <div style="position: absolute; top: 0; left: 50%; width: 6px; height: 6px; margin-left: -3px; background: #1ab759; border-radius: 50%; box-shadow: 0 0 8px rgba(26,183,89,0.6);"></div>
-            </div>
-            <!-- Pulsing glow -->
-            <div style="position: absolute; top: 50%; left: 50%; width: 120px; height: 120px; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(26,183,89,0.12) 0%, transparent 70%); border-radius: 50%; animation: successGlow 3s ease-in-out infinite;"></div>
-            <!-- Glass circle with icon -->
-            <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, rgba(26,183,89,0.08) 0%, rgba(26,183,89,0.02) 100%); border: 1px solid rgba(26,183,89,0.2); display: flex; align-items: center; justify-content: center; position: relative; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); animation: successIconFloat 4s ease-in-out infinite; perspective: 800px;">
-              <svg width="48" height="48" viewBox="0 0 207.94 212.06" fill="none" style="animation: successIcon3D 6s ease-in-out infinite; filter: drop-shadow(0 0 16px rgba(26,183,89,0.3));">
-                <defs>
-                  <linearGradient id="sg1" x1="80.66" y1="139.64" x2="126.98" y2="143.55" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#facd61"/><stop offset=".47" stop-color="#f8a434"/><stop offset="1" stop-color="#d96c27"/></linearGradient>
-                  <linearGradient id="sg2" x1="92.68" y1="144.28" x2="90.93" y2="161.24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#bd5a29"/><stop offset=".81" stop-color="#ee9223"/></linearGradient>
-                  <linearGradient id="sg3" x1="102.72" y1="121.57" x2="86.88" y2="141.39" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#faa841"/><stop offset=".46" stop-color="#fdda9f"/><stop offset="1" stop-color="#f9a23d"/></linearGradient>
-                  <linearGradient id="sg4" x1="104.4" y1="126.25" x2="125.39" y2="131.78" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d37228"/><stop offset=".86" stop-color="#f4a246"/></linearGradient>
-                  <linearGradient id="sg5" x1="109.79" y1="148.09" x2="114.99" y2="153.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#aa4126"/><stop offset="1" stop-color="#d46928"/></linearGradient>
-                </defs>
-                <path fill="#e6e7e8" d="M104.53,22.32h0c2.1,0,3.98,1.27,4.77,3.22l39.45,102.52,8.67,19.42,26.77,64.58h23.75L126.33,14.4c-1.79-4.29-4.83-7.94-8.73-10.48-11.09-7.26-25.97-4.15-33.22,6.95-.71,1.08-1.32,2.21-1.85,3.39L0,212.06h24.13l26.59-64.6L99.78,25.47c.8-1.91,2.67-3.16,4.75-3.16Z"/>
-                <path fill="url(#sg1)" d="M105.17,116.57l-.07,2.16c.1.96.13,1.93.2,2.9-.42-.12-.27.91-.27,1.17.05,3.67.31,8.06,2.26,11.22.82,1.33,1.87,2.48,3.13,3.4,3.92,2.86,10.13,3.01,14.85,3.06.54,0,1.09,0,1.63,0l-.1-.27c.91.48,1.6.83,1.07,2.03-3.66,2.32-8.24,3.36-12.05,5.49.14-.49,1.07-.64,1.43-.8,2.17-.97,4.36-1.96,6.46-2.86.58-.25,2.03-.66,2.46-.93.1-.06.15-.2.3-.23l-.1-.1c-.8.09-1.62.05-2.43.07.03-.2-.18-.13-.3-.13-3.55-.1-9.84.4-12.79,2.46-4.68,3.28-5.71,8.24-5.83,13.22-.04,1.66.05,3.31.13,4.96-.02,1.04-.08,2.1,0,3.13-.3.66-.52,1.3-1.5,1.13-.81-.14-.99-1.2-1.23-1.8.2,0,.17.16.2-.1.11-.82.07-2.41.07-3.3.11-.06.12-.19.13-.3.32-3.72-.42-9.99-2.13-12.92-.17-.29-1.59-2.2-1.76-2.23-.59.11.57,1.11.77,1.43.31.53.57,1.38.93,1.93l-.27-.8c.08-.02.23.21.27.27.5.77.78,1.97,1,2.86.06.26,0,.28,0,.3-.71-2.4-2.25-4.82-4.16-6.46-1.07-.92-3.19-2.17-4.53-2.53-.62-.17-1.22-.3-1.86-.2l.13-.2c-.71-.16-1.41-.21-2.13-.13l.13-.2c-.64-.16-1.31-.19-2-.27-.23-.02.08-.07,0-.13l-6.56-.07c-1.12-.67-1.12-1.73,0-2.4,1.1.02,2.23,0,3.33-.07.21.17.51.14.77.13,6.58-.2,13.78-1.22,16.68-8.03,1.28-3.01,1.85-12.3,1.33-15.55-.01-.09.05-.25-.07-.27.2-.42.29-.95.9-1.07.88-.17,1.25.33,1.57,1Z"/>
-                <path fill="url(#sg4)" d="M101.64,153c.74,3.14,1.04,6.21,1.07,9.46,0,.89.04,2.48-.07,3.3-.03.26,0,.11-.2.1-2.71-6.84-3.58-14.53-10.69-18.31-3.31-1.76-8.03-2.89-11.09-4.73l6.56.07c.08.06-.23.11,0,.13.69.07,1.36.1,2,.27l-.13.2c.72-.08,1.42-.03,2.13.13l-.13.2c.64-.1,1.24.03,1.86.2,1.34.36,3.46,1.61,4.53,2.53,1.91,1.64,3.45,4.06,4.16,6.46Z"/>
-                <path fill="url(#sg3)" d="M102.77,116.9c-.51,7.15.47,15.74-6.23,20.31-3.4,2.32-8.51,2.85-12.55,3.13-1.1.08-2.23.09-3.33.07,4-2.38,9.56-3.3,13.35-6.26,5.52-4.31,5.92-11.6,8.69-17.52.12.02.05.18.07.27Z"/>
-                <path fill="url(#sg2)" d="M105.17,116.57c2.38,5.12,3.06,11.8,7.06,16.08,3.77,4.03,9.84,5.07,14.58,7.56l.1.27c-.54,0-1.09,0-1.63,0,.03-.2-.18-.13-.3-.13-4.31-.15-10.28-.77-13.89-3.26-1.04-.72-1.99-1.71-2.73-2.73-2.61-3.6-2.77-8.4-3.06-12.72-.07-.96-.1-1.94-.2-2.9l.07-2.16Z"/>
-                <path fill="url(#sg5)" d="M115.82,147.74c-7.33,4.1-7.57,11.86-10.66,18.78-.08-1.03-.02-2.1,0-3.13.02-.95.03-1.91.07-2.86.2.03.13-.18.13-.3.3-8.8,2.71-14.82,11.95-16.62l5.23-.67c.47-.02.93-.06,1.4-.07.81-.01,1.63.03,2.43-.07l.1.1c-.15.03-.2.17-.3.23-.44.28-1.88.68-2.46.93-2.1.91-4.29,1.9-6.46,2.86-.36.16-1.29.31-1.43.8Z"/>
-                <path fill="#fce6b5" d="M83.99,140.34c4.05-.28,9.15-.81,12.55-3.13,6.7-4.57,5.72-13.16,6.23-20.31.51,3.25-.05,12.54-1.33,15.55-2.9,6.8-10.11,7.82-16.68,8.03-.25,0-.56.04-.77-.13Z"/>
-                <path fill="#f6a433" d="M123.95,142.88c-.47,0-.93.05-1.4.07-13.22.51-16.8,4.55-17.32,17.58-.04.95-.04,1.91-.07,2.86-.08-1.65-.17-3.31-.13-4.96.12-4.98,1.14-9.94,5.83-13.22,2.95-2.07,9.24-2.57,12.79-2.46.12,0,.33-.07.3.13Z"/>
-                <path fill="#f6a433" d="M105.3,121.63c.29,4.32.45,9.12,3.06,12.72-.2-.17-.4.21-.43.2-.21-.09-.31-.88-.63-.53-1.96-3.16-2.21-7.55-2.26-11.22,0-.26-.16-1.29.27-1.17Z"/>
-                <path fill="#fdcd6e" d="M111.1,137.08c3.61,2.49,9.57,3.12,13.89,3.26.12,0,.33-.07.3.13-4.72-.06-10.93-.21-14.85-3.06-.02-.44.29-.06.3-.07.12-.12-.14-.26.37-.27Z"/>
-                <path fill="#fdcd6e" d="M102.7,162.46c-.03-3.25-.33-6.31-1.07-9.46,0-.02.06-.04,0-.3-.22-.89-.5-2.09-1-2.86-.04-.06-.19-.29-.27-.27l.27.8c-.36-.55-.62-1.4-.93-1.93-.19-.32-1.35-1.32-.77-1.43.18.03,1.6,1.95,1.76,2.23,1.71,2.93,2.45,9.2,2.13,12.92,0,.11-.02.24-.13.3Z"/>
-                <path fill="#f6a433" d="M108.37,134.35c.74,1.02,1.69,2.01,2.73,2.73-.51,0-.24.14-.37.27-.01.01-.32-.37-.3.07-1.26-.92-2.31-2.07-3.13-3.4.33-.35.42.44.63.53.03.01.23-.37.43-.2Z"/>
-                <path fill="#d56d28" d="M122.55,142.94l-5.23.67c-9.24,1.79-11.66,7.81-11.95,16.62,0,.12.07.33-.13.3.52-13.04,4.09-17.07,17.32-17.58Z"/>
-              </svg>
-            </div>
-          </div>
-          <h3 class="apiant-popup-title" style="font-size: 20px; margin-bottom: 8px;">Message Received</h3>
-          <p class="apiant-popup-subtitle" style="margin-bottom: 0;">Thank you for reaching out. A member of the APIANT team will respond shortly.</p>
-        </div>
-      </div>
-    </section>
-
-  </div>
+  <!-- Protected content injected here after authentication -->
+  <div id="page-content" style="display: none;"></div>
 
   <div class="footer-section">
     <div class="footer-container">
@@ -1052,48 +868,83 @@
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=678c19c54e46b91197837d73" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="js/apiant.js" type="text/javascript"></script>
   <script>
-    var aafTurnstileToken = '';
-    function onTurnstileSuccess(token) {
-      aafTurnstileToken = token;
-      var btn = document.getElementById('aaf-submit-btn');
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.style.cursor = 'pointer';
+    var AUTH_ENDPOINT = 'https://kereljzjgeerrdnssttu.supabase.co/functions/v1/auth-page';
+    var PAGE_SLUG = 'apiant-ai-advantage';
+    var CACHE_KEY = 'pp_' + PAGE_SLUG;
+    var CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours
+
+    function injectContent(html) {
+      document.getElementById('auth-gate').style.display = 'none';
+      var container = document.getElementById('page-content');
+      container.innerHTML = html;
+      container.style.display = 'block';
+      // Execute any script tags in the injected content
+      var scripts = container.querySelectorAll('script');
+      scripts.forEach(function(oldScript) {
+        var newScript = document.createElement('script');
+        if (oldScript.src) {
+          newScript.src = oldScript.src;
+        } else {
+          newScript.textContent = oldScript.textContent;
+        }
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+      });
     }
 
-    function submitAdvantageForm(e) {
-      e.preventDefault();
-      if (!aafTurnstileToken) return false;
-
-      var btn = document.getElementById('aaf-submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-
-      var name = document.getElementById('aaf-name').value.trim();
-      var company = document.getElementById('aaf-company').value.trim();
-      var email = document.getElementById('aaf-email').value.trim();
-      var message = document.getElementById('aaf-message').value.trim();
-
-      $.ajax({
-        url: "https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26",
-        type: "POST",
-        data: {
-          PageTitle: "AI Advantage Page Inquiry",
-          Name: name,
-          WorkEmail: email,
-          Company: company,
-          IntegrationNeeds: message,
-          Source: "apiant-ai-advantage.html"
-        },
-        success: function() {
-          document.getElementById('ai-advantage-form').style.display = 'none';
-          document.getElementById('aaf-success').style.display = 'block';
-        },
-        error: function() {
-          document.getElementById('ai-advantage-form').style.display = 'none';
-          document.getElementById('aaf-success').style.display = 'block';
+    // Check sessionStorage cache on load
+    (function() {
+      try {
+        var cached = sessionStorage.getItem(CACHE_KEY);
+        if (cached) {
+          var data = JSON.parse(cached);
+          if (data.timestamp && (Date.now() - data.timestamp) < CACHE_TTL) {
+            injectContent(data.html);
+            return;
+          }
+          sessionStorage.removeItem(CACHE_KEY);
         }
+      } catch(e) {}
+      // Show login form (already visible by default)
+    })();
+
+    function handleAuth(e) {
+      e.preventDefault();
+      var btn = document.getElementById('auth-submit');
+      var errEl = document.getElementById('auth-error');
+      errEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Authenticating...';
+
+      var username = document.getElementById('auth-user').value.trim();
+      var password = document.getElementById('auth-pass').value.trim();
+
+      fetch(AUTH_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: username, password: password, page_slug: PAGE_SLUG })
+      })
+      .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
+      .then(function(result) {
+        if (!result.ok) {
+          errEl.textContent = result.data.error || 'Invalid credentials';
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Sign In';
+          return;
+        }
+        // Cache in sessionStorage
+        try {
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ html: result.data.html, timestamp: Date.now() }));
+        } catch(e) {}
+        injectContent(result.data.html);
+      })
+      .catch(function() {
+        errEl.textContent = 'Connection error. Please try again.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
       });
+
       return false;
     }
   </script>
