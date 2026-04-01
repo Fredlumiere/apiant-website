@@ -1464,36 +1464,29 @@
                                 window.location.reload();
                               }
                             });
-                            // Quantity field related checks
-                            const qtyInput = document.querySelector('#additional_mindbody_events');
+                            // Quantity field related checks for all add-on inputs
                             const addonCard = document.querySelector('.listed-addons');
-                            if (qtyInput && addonCard) {
-                              // Prevent submission message for quantity field
+                            document.querySelectorAll('.listed-addons .qty').forEach(qtyInput => {
                               qtyInput.addEventListener('keydown', e => {
-                                if (e.key === 'Enter') {
-                                  e.preventDefault();
-                                  return false;
-                                }
+                                if (e.key === 'Enter') { e.preventDefault(); return false; }
                               });
-                              // Set quantity field empty if the user types less than 1 (or an invalid number)
                               qtyInput.addEventListener('input', () => {
                                 let val = parseInt(qtyInput.value, 10);
-                                if (isNaN(val) || val < 1) {
-                                  qtyInput.value = '';
-                                }
-                              });
-                              // Add green outline to card when quantity field is filled in
-                              qtyInput.addEventListener('input', () => {
-                                const value = parseInt(qtyInput.value, 10);
-                                if (!isNaN(value) && value > 0) {
+                                if (isNaN(val) || val < 1) qtyInput.value = '';
+                                val = parseInt(qtyInput.value, 10);
+                                if (!isNaN(val) && val > 0) {
                                   qtyInput.classList.add('selected');
-                                  addonCard.classList.add('selected');
                                 } else {
                                   qtyInput.classList.remove('selected');
-                                  addonCard.classList.remove('selected');
                                 }
+                                // Highlight the card if any qty input has a value
+                                const anyFilled = Array.from(document.querySelectorAll('.listed-addons .qty')).some(
+                                  inp => { const v = parseInt(inp.value, 10); return !isNaN(v) && v > 0; }
+                                );
+                                if (addonCard) addonCard.classList.toggle('selected', anyFilled);
+                                updatePrice();
                               });
-                            }
+                            });
                             /* Event wiring */
                             document.body.addEventListener('change', updatePrice);
                             slider.addEventListener('input', updatePrice);

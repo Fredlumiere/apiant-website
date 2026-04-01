@@ -1264,6 +1264,203 @@
   <script type="text/javascript" id="hs-script-loader" async="" defer="" src="https://js.hs-scripts.com/5004658.js"></script>
   <!--  End of HubSpot Embed Code  -->
   <script src="https://apiant.com/js/apiant_dynamic.js" type="text/javascript"></script>
+  <script src="https://apiant.com/js/jquery.twbsPagination.min.js" type="text/javascript"></script>
+  <script>
+
+      if (qs("app") && qs("app").length > 0) {
+        window.location.href = "https://apiant.com/connections/" + qs("app").replace(" ", "-");
+      }
+      var pageSize = 100;
+      var pageNumber = 1;
+      var search = "";
+      var sort = "popularity";
+      var category = "";
+      var appStatus = "";
+      var premiumLevel = "";
+      if (qs("app_level") && qs("app_level").length > 0) {
+        $("#btnAppLevel").text(qs("app_level"));
+        if (qs("app_level") == "Request") {
+          premiumLevel = "-1";
+        } else if (qs("app_level") == "Basic") {
+          premiumLevel = "0";
+        } else if (qs("app_level") == "Professional") {
+          premiumLevel = "1";
+        } else if (qs("app_level") == "Business") {
+          premiumLevel = "2";
+        } else if (qs("app_level") == "Enterprise") {
+          premiumLevel = "3";
+        }
+      }
+      if (qs("app_status") && qs("app_status").length > 0) {
+        if (qs("app_status") == "implemented") {
+          $("#btnAppStatus").text("Implemented");
+          appStatus = "implemented";
+        } else if (qs("app_status") == "ondemand") {
+          $("#btnAppStatus").text("On demand");
+          appStatus = "on demand";
+        }
+      }
+      var defaultPaginationOpts = {
+        initiateStartPageClick: false,
+        visiblePages: 10,
+        onPageClick: function(event, page) {
+          pageNumber = page;
+          updateCatalog();
+        }
+      }
+      function qs(key) {
+        key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&");
+        var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+        return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+      }
+      $('#myModal').on('shown.bs.modal', function(e) {
+        if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 480) {
+          $('#myModal')[0].style.top = "75px";
+        }
+      });
+      $('#myModal').on('hidden.bs.modal', function(e) {
+        $('.modal-content').html("");
+      });
+      $(".signup").click(function() {
+        startLoginOrRegister(null, function(wasSuccess) {
+          updatePageState();
+        });
+      });
+      $("#btnClearFilters").click(function() {
+        appStatus = "";
+        premiumLevel = "";
+        $("#btnAppStatus").text("App status ");
+        var span = document.createElement('span');
+        span.className = 'caret';
+        $("#btnAppStatus")[0].appendChild(span);
+        $("#btnAppLevel").text("App level ");
+        var span = document.createElement('span');
+        span.className = 'caret';
+        $("#btnAppLevel")[0].appendChild(span);
+        pageNumber = 1;
+        updateCatalog();
+      });
+      function handleCategorySelection(item) {
+        category = $(item).text();
+        if (category == "All Categories") {
+          $("#btnCategory").text("Category ");
+          category = "";
+        } else {
+          $("#btnCategory").text(category + " ");
+        }
+        var span = document.createElement('span');
+        span.className = 'caret';
+        $("#btnCategory")[0].appendChild(span);
+        pageNumber = 1;
+        updateCatalog();
+      }
+      function handleSortSelection(item) {
+        sort = $(item).text().toLowerCase().substring(1);
+        $("#btnSortBy").text($(item).text().substring(1) + " ");
+        var span = document.createElement('span');
+        span.className = 'caret';
+        $("#btnSortBy")[0].appendChild(span);
+        pageNumber = 1;
+        updateCatalog();
+      }
+      function handleStatusSelection(item) {
+        appStatus = $(item).text().toLowerCase().substring(1);
+        $("#btnAppStatus").text($(item).text().substring(1) + " ");
+        var span = document.createElement('span');
+        span.className = 'caret';
+        $("#btnAppStatus")[0].appendChild(span);
+        pageNumber = 1;
+        updateCatalog();
+      }
+      function handlePremiumSelection(item) {
+        premiumLevel = -1;
+        if ($(item).text() == "Basic") {
+          premiumLevel = 0;
+        } else if ($(item).text() == "Professional") {
+          premiumLevel = 1;
+        } else if ($(item).text() == "Business") {
+          premiumLevel = 2;
+        } else if ($(item).text() == "Enterprise") {
+          premiumLevel = 3;
+        }
+        $("#btnAppLevel").text($(item).text() + " ");
+        var span = document.createElement('span');
+        span.className = 'caret';
+        $("#btnAppLevel")[0].appendChild(span);
+        pageNumber = 1;
+        updateCatalog();
+      }
+      $("#appsearchfield").keyup(function() {
+        search = $("#appsearchfield").val();
+        pageNumber = 1;
+        updateCatalog();
+      });
+      function updateCatalog() {
+        var divW = $(".catalogwrap").width();
+        var divH = $(".catalogwrap").height();
+        var cols = Math.floor(divW / (100 + 8));
+        var rows = Math.floor(divH / (100 + 8));
+        if (rows > 8) {
+          rows = 8;
+        }
+        pageSize = cols * rows;
+        if (appStatus.length == 0 && premiumLevel.length == 0) {
+          $("#btnClearFilters").css('visibility', "hidden");
+        } else {
+          $("#btnClearFilters").css('visibility', "visible");
+        }
+        var search = $("#appsearchfield").val();
+        var url = "https://apiant.com/jspAppCatalog.jsp?pageSize=" + pageSize;
+        url += "&pageNumber=" + pageNumber;
+        url += "&search=" + search;
+        url += "&category=" + category;
+        url += "&sort=" + sort;
+        url += "&appStatus=" + appStatus;
+        url += "&premiumLevel=" + premiumLevel;
+        $.ajax({
+          url: url,
+          success: function(result) {
+            $('#List').empty();
+            $('#List').append(result);
+            var totalApps = 0;
+            var pos = result.indexOf("totalApps=");
+            if (pos != -1) {
+              var pos = result.indexOf("\"", pos);
+              var pos2 = result.indexOf("\"", pos + 2);
+              totalApps = parseInt(result.substring(pos + 1, pos2));
+            }
+            var totalPages = Math.ceil(totalApps / pageSize);
+            if (totalPages == 0) totalPages = 1;
+            $('#pagination').twbsPagination('destroy');
+            $('#pagination').twbsPagination($.extend({}, defaultPaginationOpts, {
+              startPage: pageNumber,
+              totalPages: totalPages
+            }));
+            var totalAppsText = totalApps + "";
+            if (totalAppsText.length == 5) {
+              totalAppsText = totalAppsText.substring(0, 2) + "," + totalAppsText.substring(2);
+            } else if (totalAppsText.length == 4) {
+              totalAppsText = totalAppsText.substring(0, 1) + "," + totalAppsText.substring(1);
+            }
+            $('#appsearchfield').attr("placeholder", "Search " + totalAppsText + " apps...");
+            $('#list li').click(function(e) {
+              if ($(e.currentTarget).attr('app_details_link') != null &&
+                $(e.currentTarget).attr('app_details_link').length > 0) {
+                window.location.href = $(e.currentTarget).attr('app_details_link');
+              }
+            });
+          }
+        });
+      }
+      $.ajax({
+        url: "https://apiant.com/jspAppCategories.jsp",
+        success: function(result) {
+          $('#categorydropdown').append(result);
+        }
+      });
+      updateCatalog();
+
+  </script>
   <script>
     function openPopup(id) {
       var p = document.getElementById(id);
