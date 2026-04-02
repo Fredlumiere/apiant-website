@@ -1350,7 +1350,7 @@
   </div>
 
   <!-- S10: Testimonials -->
-  <div class="hp2-section" style="padding: 100px 0;">
+  <div style="padding: 100px 0; position: relative;">
     <div class="hp2-container">
       <div class="fade-in-on-scroll" style="text-align: center; margin-bottom: 48px;">
         <div class="hp2-label">TRUSTED BY BUILDERS</div>
@@ -1368,8 +1368,34 @@
 
       <!-- Testimonial grid -->
       <style>
-        .hp2-tgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .hp2-tscroll-wrap {
+          position: relative;
+          overflow: hidden;
+        }
+        .hp2-tscroll-wrap::before,
+        .hp2-tscroll-wrap::after {
+          content: '';
+          position: absolute;
+          top: 0; bottom: 0; width: 60px;
+          z-index: 2;
+          pointer-events: none;
+        }
+        .hp2-tscroll-wrap::before { left: 0; background: linear-gradient(90deg, #0c0c0c, transparent); }
+        .hp2-tscroll-wrap::after { right: 0; background: linear-gradient(270deg, #0c0c0c, transparent); }
+        .hp2-tgrid {
+          display: flex;
+          gap: 20px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          padding: 8px 24px 16px;
+        }
+        .hp2-tgrid::-webkit-scrollbar { display: none; }
         .hp2-tcard {
+          flex: 0 0 320px;
+          scroll-snap-align: start;
           background: rgba(255,255,255,0.02);
           border: 1px solid rgba(255,255,255,0.06);
           border-radius: 14px;
@@ -1411,10 +1437,10 @@
         }
         .hp2-tcard-name { color: rgba(255,255,255,0.8); font-size: 13px; font-weight: 600; font-family: var(--hp2-font); }
         .hp2-tcard-role { color: rgba(255,255,255,0.35); font-size: 12px; font-family: var(--hp2-font); }
-        @media (max-width: 768px) { .hp2-tgrid { grid-template-columns: 1fr; } }
-        @media (min-width: 769px) and (max-width: 991px) { .hp2-tgrid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .hp2-tcard { flex: 0 0 280px; } }
       </style>
-      <div class="hp2-tgrid fade-in-on-scroll">
+      <div class="hp2-tscroll-wrap fade-in-on-scroll">
+      <div class="hp2-tgrid">
         <div class="hp2-tcard">
           <p class="hp2-tcard-quote">"This is my bet on who wins the API economy. Incredibly flexible and easy to understand."</p>
           <div class="hp2-tcard-author"><div class="hp2-tcard-avatar">JE</div><div><div class="hp2-tcard-name">Jose E.</div><div class="hp2-tcard-role">CTO</div></div></div>
@@ -1451,6 +1477,7 @@
           <p class="hp2-tcard-quote">"Seamless implementation and expert support. Reliable and effective automation solutions."</p>
           <div class="hp2-tcard-author"><div class="hp2-tcard-avatar">JH</div><div><div class="hp2-tcard-name">Jake H.</div><div class="hp2-tcard-role">Project Manager</div></div></div>
         </div>
+      </div>
       </div>
     </div>
   </div>
