@@ -1200,90 +1200,7 @@
     .bnode-md { width: 9px; height: 9px; }
     .bnode-lg { width: 12px; height: 12px; }
   }
-
-  /* === IMPROVEMENT 1: Depth fog + vignette === */
-  .arch-cube-wrap::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, transparent 35%, #0c0c0c 80%);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  /* === IMPROVEMENT 2: Per-node micro-float === */
-  .bnode {
-    animation: bnodePulse 24s ease infinite, bnodeFloat 6s ease-in-out infinite;
-  }
-  @keyframes bnodeFloat {
-    0%, 100% { margin-top: 0; }
-    50% { margin-top: -2px; }
-  }
-
-  /* === IMPROVEMENT 3: Better wire data-flow gradient === */
-  .wire.bright {
-    background: linear-gradient(90deg, rgba(56,189,248,0.02) 0%, rgba(56,189,248,0.5) 40%, rgba(56,189,248,0.5) 60%, rgba(56,189,248,0.02) 100%) !important;
-    background-size: 300% 100% !important;
-    box-shadow: 0 0 8px rgba(56,189,248,0.2) !important;
-    animation: wireFlow 3s linear infinite, wireGlow 24s ease infinite !important;
-  }
-
-  /* === IMPROVEMENT 4: Ambient particles === */
-  .arch-particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-  .arch-particle {
-    position: absolute;
-    width: 2px; height: 2px;
-    border-radius: 50%;
-    background: rgba(26,183,89,0.15);
-    animation: particleDrift 12s ease-in-out infinite alternate;
-  }
-  @keyframes particleDrift {
-    0% { transform: translate(0, 0); opacity: 0.08; }
-    50% { transform: translate(15px, -10px); opacity: 0.2; }
-    100% { transform: translate(-8px, 12px); opacity: 0.08; }
-  }
-
-  /* === IMPROVEMENT 5: HUD scan-line === */
-  .arch-scanline {
-    position: absolute;
-    left: 10%; right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(26,183,89,0.3), transparent);
-    box-shadow: 0 0 8px rgba(26,183,89,0.1);
-    top: 50%;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 3;
-    animation: scanLine 24s ease infinite;
-  }
-  @keyframes scanLine {
-    0%,9% { opacity: 0; top: 30%; }
-    11% { opacity: 0.6; top: 30%; }
-    18% { opacity: 0; top: 70%; }
-    30%,32% { opacity: 0; top: 30%; }
-    34% { opacity: 0.6; top: 30%; }
-    41% { opacity: 0; top: 70%; }
-    51%,53% { opacity: 0; top: 30%; }
-    55% { opacity: 0.6; top: 30%; }
-    62% { opacity: 0; top: 70%; }
-    63%,100% { opacity: 0; }
-  }
 </style>
-
-<!-- Ambient particles -->
-<div class="arch-particles">
-  <div class="arch-particle" style="left:12%;top:18%;animation-delay:-2s;"></div>
-  <div class="arch-particle" style="left:78%;top:25%;animation-delay:-5s;"></div>
-  <div class="arch-particle" style="left:25%;top:72%;animation-delay:-8s;"></div>
-  <div class="arch-particle" style="left:85%;top:65%;animation-delay:-1s;"></div>
-  <div class="arch-particle" style="left:45%;top:15%;animation-delay:-10s;"></div>
-  <div class="arch-particle" style="left:60%;top:80%;animation-delay:-4s;"></div>
-  <div class="arch-particle" style="left:8%;top:50%;animation-delay:-7s;"></div>
-  <div class="arch-particle" style="left:92%;top:42%;animation-delay:-3s;"></div>
-</div>
-
-<!-- HUD scan-line -->
-<div class="arch-scanline"></div>
 
 <!-- 3D Wires -->
 <div class="arch-wires">
@@ -1332,44 +1249,44 @@
 <!-- 3D Bubble Nodes -->
 <div class="arch-scene">
   <!-- Front face (Z=130) -->
-  <div class="bnode bnode-lg bnode-hub" style="animation-delay:0s,0.0s;left:43px;top:43px;transform:translateZ(130px);"></div>
-  <div class="bnode bnode-md bnode-decision" style="animation-delay:0s,0.5s;left:164px;top:45px;transform:translateZ(130px);"></div>
-  <div class="bnode bnode-md bnode-t1" style="animation-delay:0s,1.0s;left:274px;top:44px;transform:translateZ(130px);"></div>
-  <div class="bnode bnode-md" style="animation-delay:0s,1.5s;left:44px;top:164px;transform:translateZ(130px);"></div>
-  <div class="bnode bnode-lg bnode-hub" style="animation-delay:0s,2.0s;left:162px;top:162px;transform:translateZ(130px);"></div>
-  <div class="bnode bnode-md bnode-decision" style="animation-delay:0s,2.5s;left:273px;top:164px;transform:translateZ(130px);"></div>
-  <div class="bnode bnode-sm" style="animation-delay:0s,3.0s;left:46px;top:286px;transform:translateZ(130px);"></div>
-  <div class="bnode bnode-md" style="animation-delay:0s,3.5s;left:164px;top:284px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:43px;top:43px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:164px;top:45px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md bnode-t1" style="left:274px;top:44px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md" style="left:44px;top:164px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:162px;top:162px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:273px;top:164px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-sm" style="left:46px;top:286px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md" style="left:164px;top:284px;transform:translateZ(130px);"></div>
 
   <!-- Back face (Z=-130) -->
-  <div class="bnode bnode-md" style="animation-delay:0s,4.0s;left:44px;top:44px;transform:translateZ(-130px);"></div>
-  <div class="bnode bnode-md bnode-t2" style="animation-delay:0s,4.5s;left:164px;top:44px;transform:translateZ(-130px);"></div>
-  <div class="bnode bnode-sm" style="animation-delay:0s,0.0s;left:275px;top:45px;transform:translateZ(-130px);"></div>
-  <div class="bnode bnode-md bnode-decision" style="animation-delay:0s,0.5s;left:44px;top:164px;transform:translateZ(-130px);"></div>
-  <div class="bnode bnode-md" style="animation-delay:0s,1.0s;left:164px;top:164px;transform:translateZ(-130px);"></div>
-  <div class="bnode bnode-lg bnode-hub" style="animation-delay:0s,1.5s;left:272px;top:162px;transform:translateZ(-130px);"></div>
-  <div class="bnode bnode-sm" style="animation-delay:0s,2.0s;left:46px;top:286px;transform:translateZ(-130px);"></div>
-  <div class="bnode bnode-md" style="animation-delay:0s,2.5s;left:164px;top:286px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md" style="left:44px;top:44px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md bnode-t2" style="left:164px;top:44px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-sm" style="left:275px;top:45px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:44px;top:164px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md" style="left:164px;top:164px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:272px;top:162px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-sm" style="left:46px;top:286px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md" style="left:164px;top:286px;transform:translateZ(-130px);"></div>
 
   <!-- Mid-depth (Z=0) -->
-  <div class="bnode bnode-md bnode-decision" style="animation-delay:0s,3.0s;left:86px;top:94px;transform:translateZ(0);"></div>
-  <div class="bnode bnode-lg bnode-hub" style="animation-delay:0s,3.5s;left:104px;top:74px;transform:translateZ(0);"></div>
-  <div class="bnode bnode-md" style="animation-delay:0s,4.0s;left:214px;top:74px;transform:translateZ(0);"></div>
-  <div class="bnode bnode-md bnode-t3" style="animation-delay:0s,4.5s;left:104px;top:222px;transform:translateZ(0);"></div>
-  <div class="bnode bnode-md" style="animation-delay:0s,0.0s;left:214px;top:222px;transform:translateZ(0);"></div>
-  <div class="bnode bnode-md bnode-decision" style="animation-delay:0s,0.5s;left:160px;top:148px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:86px;top:94px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:104px;top:74px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md" style="left:214px;top:74px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md bnode-t3" style="left:104px;top:222px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md" style="left:214px;top:222px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:160px;top:148px;transform:translateZ(0);"></div>
 
   <!-- Z=65 layer -->
-  <div class="bnode bnode-sm" style="animation-delay:0s,1.0s;left:110px;top:110px;transform:translateZ(65px);"></div>
-  <div class="bnode bnode-md bnode-decision" style="animation-delay:0s,1.5s;left:220px;top:110px;transform:translateZ(65px);"></div>
-  <div class="bnode bnode-sm" style="animation-delay:0s,2.0s;left:110px;top:230px;transform:translateZ(65px);"></div>
-  <div class="bnode bnode-md" style="animation-delay:0s,2.5s;left:220px;top:230px;transform:translateZ(65px);"></div>
+  <div class="bnode bnode-sm" style="left:110px;top:110px;transform:translateZ(65px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:220px;top:110px;transform:translateZ(65px);"></div>
+  <div class="bnode bnode-sm" style="left:110px;top:230px;transform:translateZ(65px);"></div>
+  <div class="bnode bnode-md" style="left:220px;top:230px;transform:translateZ(65px);"></div>
 
   <!-- Z=-65 layer -->
-  <div class="bnode bnode-sm" style="animation-delay:0s,3.0s;left:110px;top:110px;transform:translateZ(-65px);"></div>
-  <div class="bnode bnode-lg bnode-hub" style="animation-delay:0s,3.5s;left:220px;top:110px;transform:translateZ(-65px);"></div>
-  <div class="bnode bnode-sm" style="animation-delay:0s,4.0s;left:110px;top:230px;transform:translateZ(-65px);"></div>
-  <div class="bnode bnode-md bnode-decision" style="animation-delay:0s,4.5s;left:220px;top:230px;transform:translateZ(-65px);"></div>
+  <div class="bnode bnode-sm" style="left:110px;top:110px;transform:translateZ(-65px);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:220px;top:110px;transform:translateZ(-65px);"></div>
+  <div class="bnode bnode-sm" style="left:110px;top:230px;transform:translateZ(-65px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:220px;top:230px;transform:translateZ(-65px);"></div>
 
   <!-- Targeting rings + checkmarks ON the target nodes (inside 3D scene) -->
   <!-- Target 1: front face top-right -->
