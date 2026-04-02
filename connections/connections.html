@@ -259,6 +259,10 @@
       color: #60a5fa;
       background: rgba(96,165,250,0.12);
     }
+    .cn-card-app-icon {
+      width: 20px; height: 20px; border-radius: 4px;
+      object-fit: contain; flex-shrink: 0; margin-top: 2px; opacity: 0.85;
+    }
     .cn-card-body { flex: 1; min-width: 0; }
     .cn-card-name {
       font-family: var(--cn-font);
@@ -783,6 +787,10 @@
       });
     }
 
+    // Get app icon from hero
+    var appIconEl = document.querySelector('.cn-app-icon');
+    var appIconSrc = appIconEl ? appIconEl.src : '';
+
     parseEndpoints('cn-raw-triggers', 'trigger');
     parseEndpoints('cn-raw-actions', 'action');
 
@@ -799,8 +807,10 @@
 
       var badgeClass = item.type === 'trigger' ? 'trigger' : 'action';
       var badgeLabel = item.type === 'trigger' ? 'Trigger' : 'Action';
+      var iconHtml = appIconSrc ? '<img class="cn-card-app-icon" src="' + appIconSrc + '" alt="">' : '';
 
       card.innerHTML =
+        iconHtml +
         '<span class="cn-card-badge ' + badgeClass + '">' + badgeLabel + '</span>' +
         '<div class="cn-card-body">' +
           '<div class="cn-card-name">' + escapeHtml(item.name) + '</div>' +
