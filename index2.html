@@ -953,17 +953,22 @@
     width: 380px; height: 380px;
     position: absolute; left: 50%; top: 50%;
     transform-style: preserve-3d;
-    animation: meshOrbit 22s linear infinite, meshZoom 14s ease-in-out infinite;
+    animation: meshOrbit 30s linear infinite, meshZoom 24s ease-in-out infinite;
     margin-left: -190px; margin-top: -190px;
   }
   @keyframes meshOrbit {
     0% { transform: rotateX(-18deg) rotateY(0deg); }
     100% { transform: rotateX(-18deg) rotateY(360deg); }
   }
+  /* 3 zoom-in cycles: target1 @10%, target2 @30%, target3 @50% */
   @keyframes meshZoom {
-    0%,15% { scale: 1; }
-    35%,55% { scale: 1.6; }
-    75%,100% { scale: 1; }
+    0%,7% { scale: 1; }
+    12%,20% { scale: 1.7; }
+    24%,28% { scale: 1; }
+    33%,41% { scale: 1.7; }
+    45%,49% { scale: 1; }
+    54%,62% { scale: 1.7; }
+    68%,100% { scale: 1; }
   }
 
   /* 3D Bubble nodes */
@@ -973,7 +978,7 @@
     transform-style: preserve-3d;
     background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%);
     box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.1);
-    animation: bnodePulse 14s ease infinite;
+    animation: bnodePulse 24s ease infinite;
   }
   .bnode::after {
     content: '';
@@ -1002,38 +1007,38 @@
   }
 
   /* Target nodes */
-  .bnode-t1 { animation: btarget1 14s ease infinite; }
-  .bnode-t2 { animation: btarget2 14s ease infinite; }
-  .bnode-t3 { animation: btarget3 14s ease infinite; }
+  /* Target 1: detected @12%, fixed @20% */
+  .bnode-t1 { animation: btarget1 24s ease infinite; }
+  /* Target 2: detected @33%, fixed @41% */
+  .bnode-t2 { animation: btarget2 24s ease infinite; }
+  /* Target 3: detected @54%, fixed @62% */
+  .bnode-t3 { animation: btarget3 24s ease infinite; }
 
   @keyframes bnodePulse {
-    0%,10% { opacity: 0.6; }
-    15%,25% { opacity: 1; }
-    35%,55% { opacity: 0.3; }
-    70%,90% { opacity: 1; }
-    100% { opacity: 0.6; }
+    0%,7% { opacity: 0.7; }
+    10%,24% { opacity: 0.3; }
+    28%,45% { opacity: 0.3; }
+    49%,66% { opacity: 0.3; }
+    70%,100% { opacity: 1; }
   }
 
   @keyframes btarget1 {
-    0%,25% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    32%,40% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 20px rgba(239,68,68,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    48%,52% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
-    62%,88% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.4), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    0%,10% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    13%,16% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 25px rgba(239,68,68,0.6), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    18% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+    22%,100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
   }
   @keyframes btarget2 {
-    0%,30% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    37%,45% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 20px rgba(239,68,68,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    52%,56% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
-    65%,88% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.4), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    0%,31% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    34%,37% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 25px rgba(239,68,68,0.6), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    39% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+    43%,100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
   }
   @keyframes btarget3 {
-    0%,35% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    42%,50% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 20px rgba(239,68,68,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    56%,60% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
-    68%,88% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.4), inset 0 -2px 6px rgba(0,0,0,0.3); }
-    100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    0%,52% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    55%,58% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 25px rgba(239,68,68,0.6), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    60% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+    64%,100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
   }
 
   /* 3D connection wires */
@@ -1043,7 +1048,7 @@
     left: 50%; top: 50%;
     margin-left: -190px; margin-top: -190px;
     transform-style: preserve-3d;
-    animation: meshOrbit 22s linear infinite, meshZoom 14s ease-in-out infinite;
+    animation: meshOrbit 30s linear infinite, meshZoom 24s ease-in-out infinite;
     pointer-events: none;
   }
   .wire {
@@ -1058,7 +1063,7 @@
     background-size: 200% 100%;
     height: 1.5px;
     box-shadow: 0 0 6px rgba(26,183,89,0.2);
-    animation: wireFlow 3s linear infinite, wireGlow 14s ease infinite;
+    animation: wireFlow 3s linear infinite, wireGlow 24s ease infinite;
   }
   @keyframes wireFlow {
     0% { background-position: 200% 0; }
@@ -1080,15 +1085,24 @@
     border-radius: 50%;
     border: 2px solid rgba(26,183,89,0.35);
     transform: translate(-50%,-50%);
-    animation: scanGrow 14s ease infinite;
+    animation: scanGrow 24s ease infinite;
     pointer-events: none;
   }
+  /* 3 scan pulses: @10%, @31%, @52% */
   @keyframes scanGrow {
-    0%,20% { width: 0; height: 0; opacity: 0; }
-    25% { width: 50px; height: 50px; opacity: 0.8; }
-    35% { width: 300px; height: 300px; opacity: 0.5; }
-    45% { width: 550px; height: 550px; opacity: 0.15; }
-    50%,100% { width: 600px; height: 600px; opacity: 0; }
+    0%,8% { width: 0; height: 0; opacity: 0; }
+    10% { width: 40px; height: 40px; opacity: 0.8; }
+    14% { width: 200px; height: 200px; opacity: 0.4; }
+    18% { width: 400px; height: 400px; opacity: 0; }
+    29% { width: 0; height: 0; opacity: 0; }
+    31% { width: 40px; height: 40px; opacity: 0.8; }
+    35% { width: 200px; height: 200px; opacity: 0.4; }
+    39% { width: 400px; height: 400px; opacity: 0; }
+    50% { width: 0; height: 0; opacity: 0; }
+    52% { width: 40px; height: 40px; opacity: 0.8; }
+    56% { width: 200px; height: 200px; opacity: 0.4; }
+    60% { width: 400px; height: 400px; opacity: 0; }
+    62%,100% { opacity: 0; }
   }
 
   /* Fix flash */
@@ -1099,15 +1113,24 @@
     border-radius: 50%;
     background: radial-gradient(circle, rgba(26,183,89,0.25) 0%, transparent 70%);
     transform: translate(-50%,-50%);
-    animation: fixGlow 14s ease infinite;
+    animation: fixGlow 24s ease infinite;
     pointer-events: none;
   }
+  /* 3 fix flashes: @18%, @39%, @60% */
   @keyframes fixGlow {
-    0%,58% { width: 0; height: 0; opacity: 0; }
-    63% { width: 80px; height: 80px; opacity: 0.9; }
-    72% { width: 400px; height: 400px; opacity: 0.3; }
-    82% { width: 500px; height: 500px; opacity: 0; }
-    100% { opacity: 0; }
+    0%,16% { width: 0; height: 0; opacity: 0; }
+    18% { width: 60px; height: 60px; opacity: 0.9; }
+    22% { width: 300px; height: 300px; opacity: 0.2; }
+    25% { opacity: 0; }
+    37% { width: 0; height: 0; opacity: 0; }
+    39% { width: 60px; height: 60px; opacity: 0.9; }
+    43% { width: 300px; height: 300px; opacity: 0.2; }
+    46% { opacity: 0; }
+    58% { width: 0; height: 0; opacity: 0; }
+    60% { width: 60px; height: 60px; opacity: 0.9; }
+    64% { width: 300px; height: 300px; opacity: 0.2; }
+    67% { opacity: 0; }
+    68%,100% { opacity: 0; }
   }
 
   /* Responsive */
