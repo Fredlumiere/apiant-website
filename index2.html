@@ -100,6 +100,98 @@
       margin: 0 auto 40px;
       font-family: var(--hp2-font);
     }
+
+    /* Pipeline animation */
+    .hp2-pipeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 40px auto 40px;
+      max-width: 700px;
+      position: relative;
+    }
+    .hp2-pipe-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+      flex: 0 0 auto;
+    }
+    .hp2-pipe-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+    .hp2-pipe-circle svg {
+      width: 22px;
+      height: 22px;
+      stroke: rgba(255,255,255,0.3);
+      fill: none;
+      stroke-width: 1.5;
+      transition: stroke 0.5s ease;
+    }
+    .hp2-pipe-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      font-family: var(--hp2-font);
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.5s ease;
+    }
+    .hp2-pipe-line {
+      flex: 1;
+      height: 2px;
+      background: rgba(255,255,255,0.06);
+      position: relative;
+      min-width: 40px;
+    }
+    .hp2-pipe-line-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--hp2-green);
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+    .hp2-pipe-node.active .hp2-pipe-circle {
+      border-color: var(--hp2-green);
+      background: rgba(26,183,89,0.08);
+      box-shadow: 0 0 20px rgba(26,183,89,0.15);
+    }
+    .hp2-pipe-node.active .hp2-pipe-circle svg { stroke: var(--hp2-green); }
+    .hp2-pipe-node.active .hp2-pipe-label { color: var(--hp2-green); }
+    .hp2-pipe-node.done .hp2-pipe-circle {
+      border-color: rgba(26,183,89,0.4);
+      background: rgba(26,183,89,0.05);
+    }
+    .hp2-pipe-node.done .hp2-pipe-circle svg { stroke: rgba(26,183,89,0.5); }
+    .hp2-pipe-node.done .hp2-pipe-label { color: rgba(26,183,89,0.5); }
+    @media (max-width: 768px) {
+      .hp2-pipeline { flex-direction: column; max-width: 200px; }
+      .hp2-pipe-line { width: 2px; height: 24px; min-width: 2px; min-height: 24px; }
+      .hp2-pipe-line-fill { width: 100% !important; height: 0%; transition: height 0.6s ease; }
+      .hp2-pipe-node.active ~ .hp2-pipe-line .hp2-pipe-line-fill,
+      .hp2-pipe-node.done ~ .hp2-pipe-line .hp2-pipe-line-fill { height: 100%; }
+    }
+
+    /* Comparison table responsive */
+    @media (max-width: 768px) {
+      .hp2-compare-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
     .hp2-cta-row {
       display: flex;
       gap: 16px;
@@ -612,13 +704,39 @@
   <div class="hp2-hero">
     <div class="hp2-container">
       <div class="fade-in-on-scroll" style="margin-bottom: 24px;">
-        <span class="hp2-badge">ENTERPRISE INTEGRATION PLATFORM</span>
+        <span class="hp2-badge">PATENT PENDING TECHNOLOGY</span>
       </div>
       <div class="fade-in-on-scroll">
-        <h1>AI that operates a professional integration platform.</h1>
+        <h1>The First Integration Platform Operated by AI.</h1>
       </div>
       <div class="fade-in-on-scroll">
-        <p class="hp2-hero-sub">Not AI that attempts to build integrations from scratch. APIANT gives AI a purpose-built environment to construct connectors, build workflows, and maintain them in production across hundreds of customer accounts.</p>
+        <p class="hp2-hero-sub">APIANT's AI reads API documentation, builds connectors, tests them against live endpoints, and deploys production-ready integrations. Point it at any app with an API. Integration just became trivial.</p>
+      </div>
+      <div class="hp2-pipeline fade-in-on-scroll" id="hp2-pipeline">
+        <div class="hp2-pipe-node" data-step="0">
+          <div class="hp2-pipe-circle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <span class="hp2-pipe-label">Read API Docs</span>
+        </div>
+        <div class="hp2-pipe-line"><div class="hp2-pipe-line-fill"></div></div>
+        <div class="hp2-pipe-node" data-step="1">
+          <div class="hp2-pipe-circle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+          <span class="hp2-pipe-label">Configure Auth</span>
+        </div>
+        <div class="hp2-pipe-line"><div class="hp2-pipe-line-fill"></div></div>
+        <div class="hp2-pipe-node" data-step="2">
+          <div class="hp2-pipe-circle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <span class="hp2-pipe-label">Build Endpoints</span>
+        </div>
+        <div class="hp2-pipe-line"><div class="hp2-pipe-line-fill"></div></div>
+        <div class="hp2-pipe-node" data-step="3">
+          <div class="hp2-pipe-circle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <span class="hp2-pipe-label">Test Live</span>
+        </div>
+        <div class="hp2-pipe-line"><div class="hp2-pipe-line-fill"></div></div>
+        <div class="hp2-pipe-node" data-step="4">
+          <div class="hp2-pipe-circle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+          <span class="hp2-pipe-label">Deploy</span>
+        </div>
       </div>
       <div class="fade-in-on-scroll">
         <div class="hp2-cta-row">
@@ -768,6 +886,53 @@
         <h2>Integration is how AI moves from knowledge to action.</h2>
         <p>Large language models know things. But knowledge without the ability to act on it is just a chatbot. Integration is the bridge: the structured connections to real systems where real work happens. APIANT is the platform that makes those connections reliable, maintainable, and scalable.</p>
         <a href="platform/index.html" class="hp2-btn-primary">Explore the Platform</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE: Claude Code + APIANT vs. the Alternatives -->
+  <div class="hp2-section">
+    <div class="hp2-container">
+      <div style="text-align: center; margin-bottom: 40px;" class="fade-in-on-scroll">
+        <div class="hp2-label">WHY APIANT</div>
+        <h2 style="font-family: var(--hp2-font); font-size: 38px; font-weight: 700; color: #fff; line-height: 1.25; margin: 0 0 12px;">Claude Code + APIANT vs. the Alternatives</h2>
+        <p style="font-size: 17px; color: var(--hp2-muted); max-width: 620px; margin: 0 auto; font-family: var(--hp2-font);">AI can write integration code. But code without a platform is a maintenance nightmare. Here's why the combination matters.</p>
+      </div>
+      <div class="hp2-compare-grid fade-in-on-scroll" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto;">
+        <div style="background: rgba(255,80,80,0.04); border: 1px solid rgba(255,80,80,0.12); border-radius: 16px; padding: 28px 24px;">
+          <p style="color: rgba(255,80,80,0.6); font-size: 11px; font-weight: 700; letter-spacing: 1.2px; margin-bottom: 14px; font-family: var(--hp2-font);">AI ALONE (NO PLATFORM)</p>
+          <p style="color: rgba(255,255,255,0.8); font-size: 15px; font-weight: 600; margin-bottom: 14px; font-family: var(--hp2-font);">Writes code. You handle everything else.</p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(255,80,80,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>You host, monitor, and maintain every script</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(255,80,80,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>No auth management, rate limiting, or retry logic</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(255,80,80,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>No visual editor to inspect or modify flows</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(255,80,80,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>No white-label or multi-tenant support</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(255,80,80,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>Breaks silently when APIs change</li>
+          </ul>
+        </div>
+        <div style="background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.12); border-radius: 16px; padding: 28px 24px;">
+          <p style="color: rgba(245,158,11,0.6); font-size: 11px; font-weight: 700; letter-spacing: 1.2px; margin-bottom: 14px; font-family: var(--hp2-font);">OTHER PLATFORMS</p>
+          <p style="color: rgba(255,255,255,0.8); font-size: 15px; font-weight: 600; margin-bottom: 14px; font-family: var(--hp2-font);">Pre-built connectors. Shallow by design.</p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(245,158,11,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>Limited to field-level mapping, no business logic</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(245,158,11,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>AI "assists" but doesn't build autonomously</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(245,158,11,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>Shared infrastructure, not dedicated</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(245,158,11,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>Per-task pricing gets expensive at scale</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M4 4L12 12M12 4L4 12" stroke="rgba(245,158,11,0.5)" stroke-width="1.5" stroke-linecap="round"/></svg>No white-label; your customers see their brand</li>
+          </ul>
+        </div>
+        <div style="background: rgba(26,183,89,0.04); border: 1px solid rgba(26,183,89,0.2); border-radius: 16px; padding: 28px 24px; position: relative;">
+          <div style="position: absolute; top: -10px; right: 20px; background: var(--hp2-green); color: #000; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; padding: 4px 12px; border-radius: 100px;">PATENT PENDING</div>
+          <p style="color: rgba(26,183,89,0.7); font-size: 11px; font-weight: 700; letter-spacing: 1.2px; margin-bottom: 14px; font-family: var(--hp2-font);">CLAUDE CODE + APIANT</p>
+          <p style="color: rgba(255,255,255,0.8); font-size: 15px; font-weight: 600; margin-bottom: 14px; font-family: var(--hp2-font);">AI builds it. The platform runs it.</p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M3 8.5L6.5 12L13 4" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>AI reads API docs, builds and tests connectors autonomously</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M3 8.5L6.5 12L13 4" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Production-grade: auth, rate limiting, retries, monitoring</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M3 8.5L6.5 12L13 4" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Visual editors to view, modify, and deploy what AI built</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M3 8.5L6.5 12L13 4" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Your own dedicated server, white-labeled</li>
+            <li style="display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5; font-family: var(--hp2-font);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M3 8.5L6.5 12L13 4" stroke="#1ab759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Deep integrations with business logic, not just field mapping</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -1193,6 +1358,14 @@
     <div class="testimonial-fade"></div>
   </div>
 
+  <!-- Google Reviews Widget -->
+  <section style="padding: 40px 0 60px;">
+    <div class="container" style="text-align: center;">
+      <script src="https://static.elfsight.com/platform/platform.js" async></script>
+      <div class="elfsight-app-df2113cc-04c0-4393-8935-ee09ee377dc0" data-elfsight-app-lazy></div>
+    </div>
+  </section>
+
   <!-- S11: White Paper CTA + Footer -->
   <div class="section">
     <div class="footer-section">
@@ -1598,6 +1771,81 @@
     var origOpenPopup = openPopup;
     openPopup = function(id) { if (id === 'contact-popup') { cqClearScanTimeouts(); CQ_SUBMITTING = false; document.querySelectorAll('#contact-popup .apiant-popup-step').forEach(function(s) { s.classList.remove('active'); }); document.getElementById('cq-step-type').classList.add('active'); document.getElementById('cq-domain-input').style.display = ''; document.getElementById('cq-domain-scanning').style.display = 'none'; document.getElementById('cq-domain-confirm').style.display = 'none'; var ds = document.getElementById('cq-domain-status'); ds.style.display = 'none'; ds.style.background = ''; ds.style.border = ''; ds.style.color = ''; ds.textContent = ''; document.getElementById('cq-domain-back').style.display = ''; document.getElementById('cq-verify-btn').disabled = false; document.getElementById('cq-verify-btn').textContent = 'Continue'; document.getElementById('cq-verify-send').style.display = ''; document.getElementById('cq-verify-code').style.display = 'none'; var os = document.getElementById('cq-otp-status'); os.style.display = 'none'; os.textContent = ''; var sm = document.getElementById('cq-otp-sent-msg'); sm.textContent = 'Code sent!'; sm.style.color = 'rgba(255,255,255,0.5)'; document.querySelectorAll('#cq-verify-send .apiant-popup-qual-option').forEach(function(b) { b.style.pointerEvents = ''; b.style.opacity = ''; }); var vb = document.querySelector('#cq-verify-code .apiant-popup-submit'); if (vb) { vb.disabled = false; vb.textContent = 'Verify'; } document.getElementById('cq-call-available').style.display = 'none'; document.getElementById('cq-call-schedule').style.display = 'none'; document.getElementById('cq-calendly-embed').innerHTML = ''; document.getElementById('cq-success-title').textContent = 'We\'ll be in touch!'; document.getElementById('cq-success-msg').textContent = 'Expect to hear from us within one business day.'; document.getElementById('cq-domain').value = ''; document.getElementById('cq-otp-code').value = ''; document.getElementById('cq-phone').value = ''; var in2 = document.getElementById('cq-integration-need'); if (in2) in2.value = ''; var cf = document.getElementById('contact-form'); if (cf) { cf.reset(); var ie = cf.querySelector('.cq-inline-error'); if (ie) ie.style.display = 'none'; } if (typeof turnstile !== 'undefined') { try { turnstile.reset(); } catch(e) {} } CQ_SESSION_ID = ''; CQ_SELECTED_TYPE = ''; CQ_VERIFIED_DOMAIN = ''; CQ_FORM_DATA = {}; CQ_VERIFY_RESULT = null; } origOpenPopup(id); };
     $("#wp-form").submit(function() { $.ajax({ url: "https://apiant.com/webhook/a09f77e9c3464783852ca5c2a899ef1a_6bfabf2825da440585332741327d6f46", type: "POST", data: { "PageTitle": document.title, "WorkEmail": $("#wp-WorkEmail").val() }, success: function() { $("#wp-form").hide(); $("#wp-success").addClass("active"); } }); return false; });
+  </script>
+  <script>
+// Pipeline animation
+(function() {
+  var pipeline = document.getElementById('hp2-pipeline');
+  if (!pipeline) return;
+  var nodes = pipeline.querySelectorAll('.hp2-pipe-node');
+  var fills = pipeline.querySelectorAll('.hp2-pipe-line-fill');
+  var step = -1;
+  var total = nodes.length;
+
+  function advance() {
+    step++;
+    if (step >= total) {
+      // Reset after pause
+      setTimeout(function() {
+        nodes.forEach(function(n) { n.classList.remove('active', 'done'); });
+        fills.forEach(function(f) { f.style.width = '0%'; });
+        step = -1;
+        setTimeout(advance, 800);
+      }, 2000);
+      return;
+    }
+    // Mark previous as done
+    if (step > 0) {
+      nodes[step - 1].classList.remove('active');
+      nodes[step - 1].classList.add('done');
+    }
+    // Fill line before current node
+    if (step > 0 && fills[step - 1]) {
+      fills[step - 1].style.width = '100%';
+    }
+    // Activate current
+    nodes[step].classList.add('active');
+    setTimeout(advance, 1200);
+  }
+
+  // Start after page load
+  setTimeout(advance, 1000);
+})();
+  </script>
+  <script>
+// Stats count-up animation
+(function() {
+  var observed = false;
+  var observer = new IntersectionObserver(function(entries) {
+    if (observed) return;
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        observed = true;
+        observer.disconnect();
+        document.querySelectorAll('.hp-stats-grid > div > div:first-child').forEach(function(el, i) {
+          var text = el.textContent.trim();
+          var suffix = '';
+          var num = parseInt(text.replace(/[^0-9]/g, ''));
+          if (text.includes('+')) suffix = '+';
+          if (text.includes('/')) { el.style.opacity = '0'; setTimeout(function() { el.style.transition = 'opacity 0.6s'; el.style.opacity = '1'; }, i * 150); return; }
+          if (isNaN(num)) return;
+          el.textContent = '0' + suffix;
+          var duration = 1500;
+          var start = performance.now();
+          function step(now) {
+            var progress = Math.min((now - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 4);
+            el.textContent = Math.round(eased * num) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          setTimeout(function() { requestAnimationFrame(step); }, i * 150);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  var statsGrid = document.querySelector('.hp-stats-grid');
+  if (statsGrid) observer.observe(statsGrid);
+})();
   </script>
   <script src="js/reveal.js"></script>
   <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
