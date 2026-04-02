@@ -285,6 +285,13 @@
       background: rgba(96,165,250,0.12);
     }
     .cn-card-body { flex: 1; min-width: 0; }
+    .cn-card-app-icon {
+      width: 20px; height: 20px; border-radius: 4px;
+      object-fit: contain;
+      flex-shrink: 0;
+      margin-top: 2px;
+      opacity: 0.85;
+    }
     .cn-card-name {
       font-family: var(--cn-font);
       font-size: 15px; font-weight: 600;
@@ -807,6 +814,13 @@
       });
     }
 
+    // Get app icon URLs from the app tabs
+    var appIcons = {};
+    document.querySelectorAll('.cn-app-tab[data-app]').forEach(function(tab) {
+      var img = tab.querySelector('img');
+      if (img && img.src) appIcons[tab.getAttribute('data-app')] = img.src;
+    });
+
     parseEndpoints('cn-raw-app1-triggers', 'trigger', 'app1');
     parseEndpoints('cn-raw-app1-actions', 'action', 'app1');
     parseEndpoints('cn-raw-app2-triggers', 'trigger', 'app2');
@@ -824,8 +838,11 @@
 
       var badgeClass = item.type === 'trigger' ? 'trigger' : 'action';
       var badgeLabel = item.type === 'trigger' ? 'Trigger' : 'Action';
+      var iconSrc = appIcons[item.app] || '';
+      var iconHtml = iconSrc ? '<img class="cn-card-app-icon" src="' + iconSrc + '" alt="">' : '';
 
       card.innerHTML =
+        iconHtml +
         '<span class="cn-card-badge ' + badgeClass + '">' + badgeLabel + '</span>' +
         '<div class="cn-card-body">' +
           '<div class="cn-card-name">' + escapeHtml(item.name) + '</div>' +
