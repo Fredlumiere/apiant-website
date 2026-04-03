@@ -14,6 +14,7 @@ ROOT = Path(__file__).parent.parent
 
 PAGES = [
     'index.html',
+    'index2.html',
     'pricing.html',
     'ai.html',
     'apps.html',
