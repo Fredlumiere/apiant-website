@@ -115,8 +115,8 @@ SWITCHER_CSS = '''
 .lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
 .lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
 .lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
-.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2);color:rgba(0,0,0,0.6);}
-.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4);color:#000;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
 .white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
 .white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
 .white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
@@ -124,7 +124,7 @@ SWITCHER_CSS = '''
 @media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
 .listed-addons{width:auto!important;min-width:650px;max-width:100%;}
 .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
-.pricing-holder{flex-wrap:wrap;}
+.pricing-holder{flex-wrap:wrap;max-width:860px;margin-left:auto;margin-right:auto;}@media(max-width:991px){.pricing-holder{flex-direction:column;max-width:100%;}}
 '''
 
 
@@ -333,13 +333,31 @@ def add_language_switcher(soup, lang_code):
         style_tag.string = SWITCHER_CSS
         head.append(style_tag)
 
-    # Add switcher inline in the nav links area, after the last nav item
-    navlinks = soup.find(class_='navlinks-holder')
-    if navlinks:
-        code = LANGUAGES.get(lang_code, {}).get('native', 'EN') if lang_code != 'en' else 'EN'
-        html = SWITCHER_HTML.replace('{LANG_CODE}', code)
+    # Add switcher to the navigation
+    code = LANGUAGES.get(lang_code, {}).get('native', 'EN') if lang_code != 'en' else 'EN'
+    html = SWITCHER_HTML.replace('{LANG_CODE}', code)
+
+    # Detect white-mode (partner) pages: switcher goes outside nav, next to menu button
+    nav_menu = soup.find('nav', class_='white-mode')
+    if nav_menu:
+        # White-mode page: use dark colors for the button
+        html = html.replace('rgba(255,255,255,0.15)', 'rgba(0,0,0,0.2)')
+        html = html.replace('rgba(255,255,255,0.7)', 'rgba(0,0,0,0.6)')
         switcher = BeautifulSoup(html, 'html.parser')
-        navlinks.append(switcher)
+        # Place after nav-menu-holder, before menu-button
+        menu_btn = soup.find(class_='menu-button')
+        if menu_btn:
+            menu_btn.insert_before(switcher)
+        else:
+            nav_holder = soup.find(class_='nav-holder')
+            if nav_holder:
+                nav_holder.append(switcher)
+    else:
+        # Dark-mode page: place inside navlinks-holder
+        navlinks = soup.find(class_='navlinks-holder')
+        if navlinks:
+            switcher = BeautifulSoup(html, 'html.parser')
+            navlinks.append(switcher)
 
     # Add i18n.js script before </body>
     body = soup.find('body')
