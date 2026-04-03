@@ -57,15 +57,27 @@
   }
 
   function autoRedirect() {
-    if (getCurrentLang() !== 'en') return;
-    if (localStorage.getItem(STORAGE_KEY) === 'en') return;
+    if (getCurrentLang() !== 'en') {
+      // User is on a localized page, remember they chose that language
+      sessionStorage.setItem(REDIRECT_KEY, '1');
+      return;
+    }
+    if (localStorage.getItem(STORAGE_KEY)) return;
     if (window.location.search.indexOf('noredirect') !== -1) return;
     if (sessionStorage.getItem(REDIRECT_KEY)) return;
+    // Only redirect on the very first page of the session
+    if (document.referrer && new URL(document.referrer).hostname === window.location.hostname) {
+      // User navigated from another page on this site, do not redirect
+      sessionStorage.setItem(REDIRECT_KEY, '1');
+      return;
+    }
 
     var preferred = getPreferredLang();
     if (preferred !== 'en') {
       sessionStorage.setItem(REDIRECT_KEY, '1');
       window.location.replace(buildLocalizedUrl(preferred));
+    } else {
+      sessionStorage.setItem(REDIRECT_KEY, '1');
     }
   }
 
