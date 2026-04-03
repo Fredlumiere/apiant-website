@@ -55,7 +55,7 @@
 
     /* Hero */
     .hp2-hero {
-      padding: 72px 0 8px;
+      padding: 48px 0 8px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -1637,7 +1637,7 @@ if(sessionStorage.getItem('pw_ok')==='1'){document.getElementById('pw-gate').sty
 </div>
 <div class="hp2-pipeline-wrap fade-in-on-scroll" style="margin-top: 20px;">
 <!-- Claude Code orchestrator above pipeline -->
-<div style="display:flex;flex-direction:column;align-items:center;margin-bottom:20px;">
+<div style="display:flex;flex-direction:column;align-items:center;margin-bottom:0;">
 <!-- Side-by-side: Claude Code terminal + Automation Editor -->
 <div class="cc-duo" style="display:flex;gap:16px;width:100%;max-width:960px;align-items:stretch;text-align:left;">
 <!-- LEFT: Claude Code terminal -->
@@ -2004,29 +2004,14 @@ if(sessionStorage.getItem('pw_ok')==='1'){document.getElementById('pw-gate').sty
   }
 
   function startCycle() {
-    // Reset: remove classes, clone SVG to restart its animations
-    duo.classList.remove('fading');
+    // Reset terminal content and restart playing
     content.classList.remove('playing');
     content.scrollTop = 0;
     void content.offsetWidth; // force reflow
     content.classList.add('playing');
     startAutoScroll();
 
-    // Restart SVG animations by re-inserting
-    if (svg) {
-      var parent = svg.parentNode;
-      var clone = svg.cloneNode(true);
-      parent.replaceChild(clone, svg);
-      svg = clone;
-    }
-
-    // Schedule fade out
-    setTimeout(function() {
-      duo.classList.add('fading');
-      if (scrollTimer) clearInterval(scrollTimer);
-    }, CYCLE - FADE);
-
-    // Schedule next cycle
+    // Schedule next cycle (terminal content only, no fade out)
     setTimeout(startCycle, CYCLE);
   }
 
@@ -2036,7 +2021,7 @@ if(sessionStorage.getItem('pw_ok')==='1'){document.getElementById('pw-gate').sty
 </script>
 </div>
 <!-- Visual connector: emanation from bottom of Claude Code window -->
-<div class="cc-emanation" style="position:relative;width:100%;max-width:960px;margin:0 auto;height:48px;overflow:hidden;">
+<div class="cc-emanation" style="position:relative;width:100%;max-width:960px;margin:-1px auto 0;height:36px;overflow:hidden;">
 <!-- Glow gradient background -->
 <div style="position:absolute;top:0;left:0;width:50%;height:100%;background:linear-gradient(to bottom, rgba(26,183,89,0.12) 0%, rgba(26,183,89,0.03) 60%, transparent 100%);-webkit-mask-image:linear-gradient(to right, transparent 0%, black 10%, black 50%, transparent 100%);mask-image:linear-gradient(to right, transparent 0%, black 10%, black 50%, transparent 100%);"></div>
 <!-- Animated streaming particles -->
@@ -3492,15 +3477,8 @@ if(sessionStorage.getItem('pw_ok')==='1'){document.getElementById('pw-gate').sty
     if (step > 0 && fills[step - 1]) {
       fills[step - 1].style.width = '100%';
     }
-    // Activate current node and scroll horizontally within the pipeline wrapper only
+    // Activate current node (no scrolling)
     nodes[step].classList.add('active');
-    var wrap = pipeline.parentElement;
-    if (wrap && wrap.scrollWidth > wrap.clientWidth) {
-      var nodeLeft = nodes[step].offsetLeft;
-      var nodeWidth = nodes[step].offsetWidth;
-      var wrapWidth = wrap.clientWidth;
-      wrap.scrollTo({ left: nodeLeft - (wrapWidth / 2) + (nodeWidth / 2), behavior: 'smooth' });
-    }
     setTimeout(advance, 900);
   }
 
@@ -3545,5 +3523,6 @@ if(sessionStorage.getItem('pw_ok')==='1'){document.getElementById('pw-gate').sty
   </script>
 <script src="/js/reveal.js"></script>
 <script async="" src="https://elevenlabs.io/convai-widget/index.js" type="text/javascript"></script>
+
 <script src="/js/i18n.js"></script></body>
 </html>
