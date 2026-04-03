@@ -134,6 +134,32 @@ From the revision plan (these apply to all page copy):
 
 **Data Engine messaging:** Always say "unified data processing engine," "format-agnostic," "XPath (an open W3C standard)." Never expose internals like "VTD-XML," "non-extractive parser," "converts JSON to XML internally," or specific memory model details.
 
+## Localization (i18n)
+
+The site is localized into 20 languages (English + 19). Localized pages live in subdirectories (`/es/`, `/fr/`, `/de/`, etc.).
+
+**When the user asks to "update all languages" or "update translations", run:**
+
+```bash
+bash scripts/update_translations.sh
+```
+
+This single script: extracts strings, translates missing ones via DeepL + Google Translate APIs, and regenerates all 684 localized pages from the current English source. API keys are embedded in the script.
+
+**After editing any English page that has localized versions, always regenerate.** The localized pages are generated copies, not manually maintained. Any design or text change to an English page must be followed by regeneration, or the localized versions will be stale.
+
+Key files:
+- `scripts/update_translations.sh` - one-command update (extract + translate + regenerate)
+- `scripts/localize.py` - page generation engine
+- `scripts/translate_api.py` - DeepL + Google Translate API pipeline
+- `scripts/extract_strings.py` - string extraction from HTML
+- `i18n/shared_ui.json` - hand-curated nav/footer/form translations
+- `i18n/{lang}.json` - per-language translation dictionaries
+- `js/i18n.js` - browser language detection, auto-redirect, language switcher
+- `css/rtl.css` - RTL support for Arabic
+
+Languages: es, fr, zh, hi, ar, bn, pt, ru, ja, de, ko, it, nl, tr, pl, vi, th, id, sv
+
 ## Important Conventions
 
 - **Never use em dashes** (the `—` character) anywhere: not in code, copy, comments, or commit messages. Use commas, periods, colons, or parentheses instead.
