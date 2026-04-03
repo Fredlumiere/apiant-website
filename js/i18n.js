@@ -5,17 +5,18 @@
 (function() {
   'use strict';
 
-  var SUPPORTED = ['en','es','fr','zh','hi','ar','bn','pt','ru','ja','de','ko','it','nl','tr','pl','vi','th','id','sv'];
+  var SUPPORTED = ['en','es','fr','zh','hi','ar','he','bn','pt','ru','ja','de','ko','it','nl','tr','pl','vi','th','id','sv'];
   var NAMES = {
     en:'English', es:'Español', fr:'Français', zh:'\u4e2d\u6587',
     hi:'\u0939\u093f\u0928\u094d\u0926\u0940', ar:'\u0627\u0644\u0639\u0631\u0628\u064a\u0629',
+    he:'\u05e2\u05d1\u05e8\u05d9\u05ea',
     bn:'\u09ac\u09be\u0982\u09b2\u09be', pt:'Português', ru:'\u0420\u0443\u0441\u0441\u043a\u0438\u0439',
     ja:'\u65e5\u672c\u8a9e', de:'Deutsch', ko:'\ud55c\uad6d\uc5b4',
     it:'Italiano', nl:'Nederlands', tr:'Türkçe', pl:'Polski',
     vi:'Tiếng Việt', th:'\u0e44\u0e17\u0e22', id:'Bahasa Indonesia', sv:'Svenska'
   };
   var CODES = {
-    en:'EN', es:'ES', fr:'FR', zh:'ZH', hi:'HI', ar:'AR', bn:'BN',
+    en:'EN', es:'ES', fr:'FR', zh:'ZH', hi:'HI', ar:'AR', he:'HE', bn:'BN',
     pt:'PT', ru:'RU', ja:'JA', de:'DE', ko:'KO', it:'IT', nl:'NL',
     tr:'TR', pl:'PL', vi:'VI', th:'TH', id:'ID', sv:'SV'
   };
@@ -24,7 +25,7 @@
   var REDIRECT_KEY = 'apiant_redirected';
 
   function getCurrentLang() {
-    var m = window.location.pathname.match(/^\/(es|fr|zh|hi|ar|bn|pt|ru|ja|de|ko|it|nl|tr|pl|vi|th|id|sv)\//);
+    var m = window.location.pathname.match(/^\/(es|fr|zh|hi|ar|he|bn|pt|ru|ja|de|ko|it|nl|tr|pl|vi|th|id|sv)\//);
     return m ? m[1] : 'en';
   }
 

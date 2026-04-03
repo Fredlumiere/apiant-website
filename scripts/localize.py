@@ -28,6 +28,7 @@ LANGUAGES = {
     'zh': {'name': '\u4e2d\u6587', 'native': 'ZH', 'dir': 'ltr'},
     'hi': {'name': '\u0939\u093f\u0928\u094d\u0926\u0940', 'native': 'HI', 'dir': 'ltr'},
     'ar': {'name': '\u0627\u0644\u0639\u0631\u0628\u064a\u0629', 'native': 'AR', 'dir': 'rtl'},
+    'he': {'name': '\u05e2\u05d1\u05e8\u05d9\u05ea', 'native': 'HE', 'dir': 'rtl'},
     'bn': {'name': '\u09ac\u09be\u0982\u09b2\u09be', 'native': 'BN', 'dir': 'ltr'},
     'pt': {'name': 'Português', 'native': 'PT', 'dir': 'ltr'},
     'ru': {'name': '\u0420\u0443\u0441\u0441\u043a\u0438\u0439', 'native': 'RU', 'dir': 'ltr'},

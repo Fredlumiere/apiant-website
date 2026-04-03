@@ -40,6 +40,7 @@ LANGUAGES = {
     'zh': {'deepl': 'ZH', 'google': 'zh-CN', 'name': 'Chinese'},
     'hi': {'deepl': None, 'google': 'hi', 'name': 'Hindi'},
     'ar': {'deepl': 'AR', 'google': 'ar', 'name': 'Arabic'},
+    'he': {'deepl': None, 'google': 'he', 'name': 'Hebrew'},
     'bn': {'deepl': None, 'google': 'bn', 'name': 'Bengali'},
     'pt': {'deepl': 'PT-BR', 'google': 'pt', 'name': 'Portuguese'},
     'ru': {'deepl': 'RU', 'google': 'ru', 'name': 'Russian'},
