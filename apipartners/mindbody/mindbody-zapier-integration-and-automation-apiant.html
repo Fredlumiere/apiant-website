@@ -458,77 +458,79 @@
         background-repeat: no-repeat;
       }
 
-      /* Comparison grid */
-      .comparison-wrapper {
+      /* What You Get vs What You Build */
+      .split-comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
         margin: 40px auto 0;
-        overflow-x: auto;
-        text-align: center;
+        max-width: 900px;
       }
-      .cmp-grid {
-        display: inline-grid;
-        grid-template-columns: auto auto auto auto;
-        text-align: left;
+      .split-col {
         border: 1px solid #e5e7eb;
         border-radius: 12px;
         overflow: hidden;
-        font-size: 15px;
       }
-      .cmp-grid > div {
-        padding: 14px 24px;
-        border-bottom: 1px solid #e5e7eb;
-        white-space: nowrap;
-      }
-      .cmp-head {
+      .split-col-header {
+        padding: 18px 24px;
         font-weight: 700;
-        text-align: center;
-        background: #f9fafb;
+        font-size: 16px;
         border-bottom: 2px solid #d1d5db;
-        padding: 16px 24px;
-        color: var(--_white-mode---heading-color);
       }
-      .cmp-head:not(:first-child) {
-        border-left: 1px solid #e5e7eb;
-      }
-      .cmp-head.cmp-crm {
+      .split-col.col-handles .split-col-header {
         background: rgba(26, 183, 89, 0.10);
         color: #1ab759;
-        font-size: 16px;
       }
-      .cmp-feat {
-        font-weight: 500;
+      .split-col.col-builds .split-col-header {
+        background: #f9fafb;
         color: var(--_white-mode---heading-color);
       }
-      .cmp-val {
-        text-align: center;
-        border-left: 1px solid #e5e7eb;
+      .split-col-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .split-col-list li {
+        padding: 14px 24px;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 15px;
+        line-height: 1.5;
         color: var(--_white-mode---paragraph-color);
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
       }
-      .cmp-val.cmp-crm {
-        background: rgba(26, 183, 89, 0.06);
-      }
-      .cmp-good { color: #1ab759; font-weight: 700; }
-      .cmp-bad { color: #dc2626; }
-      .cmp-dim { color: #9ca3af; }
-      .cmp-grid > div:nth-last-child(-n+4) {
+      .split-col-list li:last-child {
         border-bottom: none;
+      }
+      .split-col.col-handles .split-col-list li {
+        background: rgba(26, 183, 89, 0.04);
+      }
+      .split-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        margin-top: 1px;
+      }
+      .split-icon.check {
+        color: #1ab759;
+      }
+      .split-icon.neutral {
+        color: #6b7280;
       }
 
       @media screen and (max-width: 600px) {
-        .cmp-grid {
-          grid-template-columns: minmax(90px, auto) repeat(3, 1fr);
-          font-size: 12px;
+        .split-comparison {
+          grid-template-columns: 1fr;
+          gap: 20px;
         }
-        .cmp-grid > div {
-          padding: 8px 6px;
-          white-space: normal;
-          word-break: break-word;
+        .split-col-list li {
+          padding: 10px 16px;
+          font-size: 14px;
         }
-        .cmp-head {
-          padding: 10px 6px;
-          font-size: 11px;
-        }
-        .cmp-head.cmp-crm {
-          font-size: 12px;
+        .split-col-header {
+          padding: 14px 16px;
+          font-size: 14px;
         }
       }
 
@@ -758,16 +760,11 @@
         .checklist-item {
           font-size: 14px;
         }
-        .comparison-wrapper {
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
+        .split-comparison {
+          gap: 16px;
         }
-        .cmp-grid {
-          font-size: 13px;
+        .split-col {
           border-radius: 8px;
-        }
-        .cmp-grid > div {
-          padding: 10px 12px;
         }
         .demo-section {
           padding: 50px 0 40px;
@@ -834,9 +831,9 @@
         .feature-row-text h3 {
           font-size: 18px;
         }
-        .cmp-grid > div {
-          padding: 8px 10px;
-          font-size: 12px;
+        .split-col-list li {
+          padding: 8px 12px;
+          font-size: 13px;
         }
         .demo-section iframe {
           height: 300px !important;
@@ -2195,52 +2192,34 @@
 <div class="features-wrapper">
 <div class="center-text">
 <div class="fade-in-on-scroll">
-<h2>Why AppConnect vs. Direct Zapier Integration?</h2>
+<h2>What AppConnect Handles vs. What You Build</h2>
 </div>
 <div class="fade-in-on-scroll">
 <div class="paragraph-holder">
-<p class="dark-paragraph">Integrations aren't side-projects - they're critical infrastructure. AppConnect is a turnkey, professionally-engineered solution built by experts with deep domain knowledge in Mindbody and Zapier.</p>
+<p class="dark-paragraph">AppConnect handles the complex Mindbody integration layer so you can focus on what you do with the data in Zapier. Here's how the work splits.</p>
 </div>
 </div>
 </div>
-<div class="comparison-wrapper">
-<div class="cmp-grid">
-<div class="cmp-head"></div>
-<div class="cmp-head cmp-crm">AppConnect</div>
-<div class="cmp-head">Make / Zapier</div>
-<div class="cmp-head">Custom Dev</div>
-<div class="cmp-feat">Setup time</div>
-<div class="cmp-val cmp-crm cmp-good">&lt; 30 min</div>
-<div class="cmp-val cmp-dim">Weeks</div>
-<div class="cmp-val cmp-dim">Months</div>
-<div class="cmp-feat">27 prebuilt connectors</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Built-in</div>
-<div class="cmp-val cmp-bad">✗ Manual</div>
-<div class="cmp-val cmp-dim">Custom build</div>
-<div class="cmp-feat">Enriched data payloads</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Automatic</div>
-<div class="cmp-val cmp-bad">✗ Basic</div>
-<div class="cmp-val cmp-dim">Custom build</div>
-<div class="cmp-feat">Real-time webhooks</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Instant</div>
-<div class="cmp-val cmp-bad">✗ Polling</div>
-<div class="cmp-val cmp-dim">Custom build</div>
-<div class="cmp-feat">Multi-location</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Native</div>
-<div class="cmp-val cmp-bad">✗ Complex</div>
-<div class="cmp-val cmp-dim">Custom build</div>
-<div class="cmp-feat">Maintenance</div>
-<div class="cmp-val cmp-crm cmp-good">Zero - we handle it</div>
-<div class="cmp-val cmp-bad">You fix it</div>
-<div class="cmp-val cmp-bad">You maintain it</div>
-<div class="cmp-feat">Support</div>
-<div class="cmp-val cmp-crm cmp-good">VIP specialist support</div>
-<div class="cmp-val cmp-dim">Community / generic</div>
-<div class="cmp-val cmp-dim">Depends on dev</div>
-<div class="cmp-feat">Starting cost</div>
-<div class="cmp-val cmp-crm cmp-good">$49/mo</div>
-<div class="cmp-val">$20–100+/mo</div>
-<div class="cmp-val">$5,000+</div>
+<div class="split-comparison">
+<div class="split-col col-handles">
+<div class="split-col-header">AppConnect Handles</div>
+<ul class="split-col-list">
+<li><svg class="split-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Mindbody OAuth + multi-location authentication</li>
+<li><svg class="split-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Rate-limited API polling across all locations</li>
+<li><svg class="split-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Event detection (check-ins, purchases, bookings, memberships)</li>
+<li><svg class="split-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Data normalization and structured formatting</li>
+<li><svg class="split-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Reliable webhook delivery with retry logic</li>
+<li><svg class="split-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Multi-site support with per-location routing</li>
+</ul>
+</div>
+<div class="split-col col-builds">
+<div class="split-col-header">You Build in Zapier</div>
+<ul class="split-col-list">
+<li><svg class="split-icon neutral" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/></svg>Receiving the webhook payload</li>
+<li><svg class="split-icon neutral" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/></svg>Routing data to your destination apps</li>
+<li><svg class="split-icon neutral" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/></svg>Custom filtering and logic</li>
+<li><svg class="split-icon neutral" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/></svg>Your own Zap maintenance and monitoring</li>
+</ul>
 </div>
 </div>
 </div>
