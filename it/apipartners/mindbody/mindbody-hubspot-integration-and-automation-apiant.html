@@ -52,6 +52,25 @@
       gtag('config', 'G-G902ZQ3PZZ');
     </script>
 <style>
+      .co-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+      }
+      .co-card.selected {
+        border-color: #1ab759 !important;
+        background: #f0faf4 !important;
+      }
+      .addon-container:has(.w--redirected-checked) {
+        background-color: #f0faf4 !important;
+      }
+      .listed-addons .addon-tick,
+      .listed-addons .addon-tick.list {
+        text-align: left !important;
+        align-items: flex-start !important;
+      }
+      .listed-addons .addon-description {
+        text-align: left !important;
+      }
       .listed-addons {
         /* NEW */
         transition: border-color .5s;
@@ -2336,12 +2355,12 @@
 <div class="center-text">
 <div class="heading-holder">
 <div class="fade-in-on-scroll">
-<h2>Prezzi flessibili in base al numero di clienti</h2>
+<h2>Flexible pricing that scales with your business</h2>
 </div>
 </div>
 <div class="paragraph-holder">
 <div class="fade-in-on-scroll">
-<p class="dark-paragraph">CRMConnect collega Mindbody e HubSpot, fornendo una piattaforma unificata per automatizzare la Sua crescita.</p>
+<p class="dark-paragraph">Start with a base plan and add only the features you need. Pricing adjusts based on your client count, locations, and selected capabilities.</p>
 </div>
 </div>
 </div>
@@ -2431,6 +2450,56 @@
                                 code: 'CRMCONNECT-MBO-ADD5-M',
                                 sel: '#additional_mindbody_locations_sales_pipeline,      input[name="additional_mindbody_locations_sales_pipeline"]',
                                 price: 25
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO1-M',
+                                sel: '#co_appointments',
+                                price: 99
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO2-M',
+                                sel: '#co_class_bookings',
+                                price: 99
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO3-M',
+                                sel: '#co_client_services',
+                                price: 99
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO4-M',
+                                sel: '#co_contracts',
+                                price: 99
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO5-M',
+                                sel: '#co_memberships',
+                                price: 99
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO-LOC1-M',
+                                sel: '#additional_loc_co_appointments',
+                                price: 25
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO-LOC2-M',
+                                sel: '#additional_loc_co_class_bookings',
+                                price: 25
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO-LOC3-M',
+                                sel: '#additional_loc_co_client_services',
+                                price: 25
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO-LOC4-M',
+                                sel: '#additional_loc_co_contracts',
+                                price: 25
+                              },
+                              {
+                                code: 'CRMCONNECT-MBO-CO-LOC5-M',
+                                sel: '#additional_loc_co_memberships',
+                                price: 25
                               }
                             ];
                             const tier = (p, locationCount = 0) => {
@@ -2455,7 +2524,7 @@
                               if (!el) return 0;
                               if (el.type === 'checkbox') {
                                 // If it's a checkbox associated with the additional locations
-                                if (i === 3 || i === 4) {
+                                if (i === 3 || i === 4 || i >= 10) {
                                   const add3El = $(addOns[2].sel);
                                   const add3Val = parseInt(add3El?.value || 0, 10);
                                   // Treat as disabled if quantity of locations is 0
@@ -2663,7 +2732,8 @@
                                 window.location.href = buildUrl();
                               }
                             });
-                            ['#additional_mindbody_locations_appointments_pipeline', '#additional_mindbody_locations_sales_pipeline'].forEach((sel, i) => {
+                            // CO card handler is in a separate <script> after the cards HTML
+                            ['#additional_mindbody_locations_appointments_pipeline', '#additional_mindbody_locations_sales_pipeline', '#additional_loc_co_appointments', '#additional_loc_co_class_bookings', '#additional_loc_co_client_services', '#additional_loc_co_contracts', '#additional_loc_co_memberships'].forEach((sel, i) => {
                               const el = document.querySelector(sel);
                               if (el) {
                                 el.addEventListener('click', (e) => {
@@ -2717,6 +2787,62 @@
 </div>
 </label></div>
 </div>
+<div style="margin-top:16px;">
+<p class="dark-paragraph" style="font-weight:600;font-size:14px;margin-bottom:8px;">HubSpot Custom Objects</p>
+<div class="co-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+<div class="co-card" style="display:flex;align-items:center;gap:6px;padding:6px 10px;border:2px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:border-color 0.3s,transform 0.15s,box-shadow 0.15s;box-shadow:0 2px 5px rgba(0,0,0,0.04);">
+<input data-price="99" id="co_appointments" name="co_appointments" style="position:absolute;opacity:0;pointer-events:none;" type="checkbox"/>
+<div class="addon-tick-holder" style="width:22px;height:22px;min-width:22px;"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<span style="font-size:13px;color:#333;flex:1;">Appointments</span>
+<span style="font-size:13px;font-weight:600;color:#111;">$99<span style="font-weight:400;color:#888;font-size:11px;">/mese</span></span>
+</div>
+<div class="co-card" style="display:flex;align-items:center;gap:6px;padding:6px 10px;border:2px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:border-color 0.3s,transform 0.15s,box-shadow 0.15s;box-shadow:0 2px 5px rgba(0,0,0,0.04);">
+<input data-price="99" id="co_class_bookings" name="co_class_bookings" style="position:absolute;opacity:0;pointer-events:none;" type="checkbox"/>
+<div class="addon-tick-holder" style="width:22px;height:22px;min-width:22px;"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<span style="font-size:13px;color:#333;flex:1;">Class Bookings</span>
+<span style="font-size:13px;font-weight:600;color:#111;">$99<span style="font-weight:400;color:#888;font-size:11px;">/mese</span></span>
+</div>
+<div class="co-card" style="display:flex;align-items:center;gap:6px;padding:6px 10px;border:2px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:border-color 0.3s,transform 0.15s,box-shadow 0.15s;box-shadow:0 2px 5px rgba(0,0,0,0.04);">
+<input data-price="99" id="co_client_services" name="co_client_services" style="position:absolute;opacity:0;pointer-events:none;" type="checkbox"/>
+<div class="addon-tick-holder" style="width:22px;height:22px;min-width:22px;"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<span style="font-size:13px;color:#333;flex:1;">Client Services</span>
+<span style="font-size:13px;font-weight:600;color:#111;">$99<span style="font-weight:400;color:#888;font-size:11px;">/mese</span></span>
+</div>
+<div class="co-card" style="display:flex;align-items:center;gap:6px;padding:6px 10px;border:2px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:border-color 0.3s,transform 0.15s,box-shadow 0.15s;box-shadow:0 2px 5px rgba(0,0,0,0.04);">
+<input data-price="99" id="co_contracts" name="co_contracts" style="position:absolute;opacity:0;pointer-events:none;" type="checkbox"/>
+<div class="addon-tick-holder" style="width:22px;height:22px;min-width:22px;"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<span style="font-size:13px;color:#333;flex:1;">Contracts</span>
+<span style="font-size:13px;font-weight:600;color:#111;">$99<span style="font-weight:400;color:#888;font-size:11px;">/mese</span></span>
+</div>
+<div class="co-card" style="display:flex;align-items:center;gap:6px;padding:6px 10px;border:2px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:border-color 0.3s,transform 0.15s,box-shadow 0.15s;box-shadow:0 2px 5px rgba(0,0,0,0.04);">
+<input data-price="99" id="co_memberships" name="co_memberships" style="position:absolute;opacity:0;pointer-events:none;" type="checkbox"/>
+<div class="addon-tick-holder" style="width:22px;height:22px;min-width:22px;"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<span style="font-size:13px;color:#333;flex:1;">Memberships</span>
+<span style="font-size:13px;font-weight:600;color:#111;">$99<span style="font-weight:400;color:#888;font-size:11px;">/mese</span></span>
+</div>
+</div>
+</div>
+<script>
+// CO card toggle — runs immediately after cards are in DOM
+document.querySelectorAll('.co-card').forEach(function(card) {
+  card.addEventListener('click', function(e) {
+    e.preventDefault();
+    var cb = card.querySelector('input[type="checkbox"]');
+    if (!cb) return;
+    cb.checked = !cb.checked;
+    if (cb.checked) { card.classList.add('selected'); }
+    else { card.classList.remove('selected'); }
+    var tick = card.querySelector('.addon-tick-holder');
+    if (tick) {
+      if (cb.checked) { tick.classList.add('checked-checkbox'); tick.classList.remove('unchecked-checkbox'); }
+      else { tick.classList.remove('checked-checkbox'); tick.classList.add('unchecked-checkbox'); }
+    }
+    // Trigger price update if available
+    if (typeof updatePrice === 'function') updatePrice();
+    else document.body.dispatchEvent(new Event('change', {bubbles:true}));
+  });
+});
+</script>
 <div class="listed-addons">
 <div class="addon-wrapper"><input autocomplete="off" class="qty w-node-bd105fe6-afaa-7070-2417-e22c21823d15-af85600b w-input" data-name="Additional Mindbody Locations 3" id="additional_mindbody_locations" maxlength="256" name="additional_mindbody_locations-3" placeholder="QTÀ" type="text"/>
 <div class="addon-description">
@@ -2737,6 +2863,41 @@
 <p class="dark-paragraph no-margins list">Sincronizzazione vendite e pipeline:</p>
 <div class="small-price">$25 / mese per sede</div>
 </div>
+</label><label class="w-checkbox checkbox-field list">
+<div class="w-checkbox-input w-checkbox-input--inputType-custom custom-checkbox horizontal"></div><input autocomplete="off" data-name="additional_loc_co_appointments" data-price="25" id="additional_loc_co_appointments" name="additional_loc_co_appointments" style="opacity:0;position:absolute;z-index:-1" type="checkbox"/><span class="hide w-form-label" for="additional_loc_co_appointments">Casella di controllo</span>
+<div class="addon-tick-holder"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<div class="addon-tick list">
+<p class="dark-paragraph no-margins list">Custom Object: Appointments</p>
+<div class="small-price">$25 / mese per sede</div>
+</div>
+</label><label class="w-checkbox checkbox-field list">
+<div class="w-checkbox-input w-checkbox-input--inputType-custom custom-checkbox horizontal"></div><input autocomplete="off" data-name="additional_loc_co_class_bookings" data-price="25" id="additional_loc_co_class_bookings" name="additional_loc_co_class_bookings" style="opacity:0;position:absolute;z-index:-1" type="checkbox"/><span class="hide w-form-label" for="additional_loc_co_class_bookings">Casella di controllo</span>
+<div class="addon-tick-holder"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<div class="addon-tick list">
+<p class="dark-paragraph no-margins list">Custom Object: Class Bookings</p>
+<div class="small-price">$25 / mese per sede</div>
+</div>
+</label><label class="w-checkbox checkbox-field list">
+<div class="w-checkbox-input w-checkbox-input--inputType-custom custom-checkbox horizontal"></div><input autocomplete="off" data-name="additional_loc_co_client_services" data-price="25" id="additional_loc_co_client_services" name="additional_loc_co_client_services" style="opacity:0;position:absolute;z-index:-1" type="checkbox"/><span class="hide w-form-label" for="additional_loc_co_client_services">Casella di controllo</span>
+<div class="addon-tick-holder"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<div class="addon-tick list">
+<p class="dark-paragraph no-margins list">Custom Object: Client Services</p>
+<div class="small-price">$25 / mese per sede</div>
+</div>
+</label><label class="w-checkbox checkbox-field list">
+<div class="w-checkbox-input w-checkbox-input--inputType-custom custom-checkbox horizontal"></div><input autocomplete="off" data-name="additional_loc_co_contracts" data-price="25" id="additional_loc_co_contracts" name="additional_loc_co_contracts" style="opacity:0;position:absolute;z-index:-1" type="checkbox"/><span class="hide w-form-label" for="additional_loc_co_contracts">Casella di controllo</span>
+<div class="addon-tick-holder"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<div class="addon-tick list">
+<p class="dark-paragraph no-margins list">Custom Object: Contracts</p>
+<div class="small-price">$25 / mese per sede</div>
+</div>
+</label><label class="w-checkbox checkbox-field list">
+<div class="w-checkbox-input w-checkbox-input--inputType-custom custom-checkbox horizontal"></div><input autocomplete="off" data-name="additional_loc_co_memberships" data-price="25" id="additional_loc_co_memberships" name="additional_loc_co_memberships" style="opacity:0;position:absolute;z-index:-1" type="checkbox"/><span class="hide w-form-label" for="additional_loc_co_memberships">Casella di controllo</span>
+<div class="addon-tick-holder"><img alt="" class="addon-check" loading="lazy" src="/images/Check.svg"/></div>
+<div class="addon-tick list">
+<p class="dark-paragraph no-margins list">Custom Object: Memberships</p>
+<div class="small-price">$25 / mese per sede</div>
+</div>
 </label>
 </div>
 </div>
@@ -2748,6 +2909,11 @@
 <p class="dark-paragraph">Richiede un abbonamento Mindbody a pagamento.</p>
 <div class="dual-cta" style="margin-bottom: 12px;">
 <a class="btn-primary popup-trigger" data-w-id="033a9fd7-457e-abff-e217-71d4c84b3b37" href="#">Prenoti una demo</a>
+</div>
+<div style="margin-top:16px;padding:14px 16px;background:#fafafa;border:1px solid #e8e8e8;border-radius:10px;text-align:center;">
+<p class="dark-paragraph" style="font-size:13px;font-weight:600;margin-bottom:2px;">Onboarding</p>
+<div style="font-size:22px;font-weight:700;color:#111;">$1,500</div>
+<p class="dark-paragraph" style="font-size:11px;color:#888;margin-top:2px;">One-time setup fee</p>
 </div>
 </div>
 </div>
