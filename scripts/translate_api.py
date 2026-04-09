@@ -266,14 +266,27 @@ def translate_language(lang, all_strings, provider, api_key, dry_run=False):
 def main():
     args = sys.argv[1:]
     dry_run = '--dry-run' in args
-    args = [a for a in args if not a.startswith('-')]
 
     # Determine provider
     provider = 'deepl'
-    if '--provider' in sys.argv:
-        idx = sys.argv.index('--provider')
-        if idx + 1 < len(sys.argv):
-            provider = sys.argv[idx + 1]
+    if '--provider' in args:
+        idx = args.index('--provider')
+        if idx + 1 < len(args):
+            provider = args[idx + 1]
+
+    # Remove flags and their values from args, leaving only language codes
+    clean_args = []
+    skip_next = False
+    for a in args:
+        if skip_next:
+            skip_next = False
+            continue
+        if a in ('--provider', '--dry-run'):
+            if a == '--provider':
+                skip_next = True
+            continue
+        clean_args.append(a)
+    args = clean_args
 
     # Get API key
     if provider == 'deepl':

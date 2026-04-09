@@ -1,0 +1,285 @@
+<!-- APIANT Architecture: 3D Rotating Mesh Cube with AI Node Scan -->
+<div class="arch-cube-wrap" style="width:100%;max-width:900px;margin:0 auto;height:420px;perspective:1000px;overflow:hidden;position:relative;">
+<style>
+  .arch-cube-scene {
+    width: 400px; height: 400px;
+    position: absolute; left: 50%; top: 50%;
+    transform-style: preserve-3d;
+    animation: cubeOrbit 24s linear infinite;
+    margin-left: -200px; margin-top: -200px;
+  }
+  @keyframes cubeOrbit {
+    0% { transform: rotateX(-20deg) rotateY(0deg); }
+    100% { transform: rotateX(-20deg) rotateY(360deg); }
+  }
+
+  /* Each node is a 3D-positioned dot */
+  .mesh-node {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(26,183,89,0.3);
+    box-shadow: 0 0 6px rgba(26,183,89,0.2);
+    transform-style: preserve-3d;
+    animation: meshPulse 12s ease infinite;
+  }
+  .mesh-node::after {
+    content: '';
+    position: absolute;
+    width: 4px; height: 4px;
+    top: 3px; left: 3px;
+    border-radius: 50%;
+    background: rgba(26,183,89,0.6);
+  }
+  /* Decision point nodes (diamond shape) */
+  .mesh-node.decision {
+    border-radius: 2px;
+    transform: rotate(45deg);
+    background: rgba(26,183,89,0.35);
+    box-shadow: 0 0 8px rgba(26,183,89,0.25);
+    width: 12px; height: 12px;
+  }
+  .mesh-node.decision::after {
+    width: 5px; height: 5px;
+    top: 3.5px; left: 3.5px;
+    border-radius: 1px;
+    background: rgba(26,183,89,0.7);
+  }
+  /* Larger hub nodes */
+  .mesh-node.hub {
+    width: 14px; height: 14px;
+    background: rgba(26,183,89,0.4);
+    box-shadow: 0 0 10px rgba(26,183,89,0.3);
+  }
+  .mesh-node.hub::after {
+    width: 6px; height: 6px;
+    top: 4px; left: 4px;
+    background: rgba(26,183,89,0.8);
+  }
+
+  /* Target nodes that get found */
+  .mesh-node.target { animation: targetPulse 12s ease infinite; }
+  .mesh-node.target-2 { animation: targetPulse2 12s ease infinite; }
+  .mesh-node.target-3 { animation: targetPulse3 12s ease infinite; }
+
+  @keyframes meshPulse {
+    0%,8% { opacity: 0.5; }
+    12%,22% { opacity: 1; }
+    28%,48% { opacity: 0.3; }
+    65%,88% { opacity: 1; }
+    95%,100% { opacity: 0.5; }
+  }
+  @keyframes targetPulse {
+    0%,22% { background: rgba(26,183,89,0.3); box-shadow: 0 0 6px rgba(26,183,89,0.2); }
+    28%,32% { background: rgba(239,68,68,0.5); box-shadow: 0 0 20px rgba(239,68,68,0.5); }
+    38%,48% { background: rgba(239,68,68,0.6); box-shadow: 0 0 25px rgba(239,68,68,0.6); }
+    54%,58% { background: rgba(255,255,255,0.8); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+    64%,88% { background: rgba(26,183,89,0.6); box-shadow: 0 0 15px rgba(26,183,89,0.5); }
+    95%,100% { background: rgba(26,183,89,0.3); box-shadow: 0 0 6px rgba(26,183,89,0.2); }
+  }
+  @keyframes targetPulse2 {
+    0%,26% { background: rgba(26,183,89,0.3); box-shadow: 0 0 6px rgba(26,183,89,0.2); }
+    32%,36% { background: rgba(239,68,68,0.5); box-shadow: 0 0 20px rgba(239,68,68,0.5); }
+    42%,50% { background: rgba(239,68,68,0.6); box-shadow: 0 0 25px rgba(239,68,68,0.6); }
+    56%,60% { background: rgba(255,255,255,0.8); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+    66%,88% { background: rgba(26,183,89,0.6); box-shadow: 0 0 15px rgba(26,183,89,0.5); }
+    95%,100% { background: rgba(26,183,89,0.3); box-shadow: 0 0 6px rgba(26,183,89,0.2); }
+  }
+  @keyframes targetPulse3 {
+    0%,30% { background: rgba(26,183,89,0.3); box-shadow: 0 0 6px rgba(26,183,89,0.2); }
+    36%,40% { background: rgba(239,68,68,0.5); box-shadow: 0 0 20px rgba(239,68,68,0.5); }
+    46%,54% { background: rgba(239,68,68,0.6); box-shadow: 0 0 25px rgba(239,68,68,0.6); }
+    60%,64% { background: rgba(255,255,255,0.8); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+    70%,88% { background: rgba(26,183,89,0.6); box-shadow: 0 0 15px rgba(26,183,89,0.5); }
+    95%,100% { background: rgba(26,183,89,0.3); box-shadow: 0 0 6px rgba(26,183,89,0.2); }
+  }
+
+  /* 3D connection lines using pseudo-elements on an SVG overlay */
+  .arch-cube-lines {
+    position: absolute;
+    width: 400px; height: 400px;
+    left: 50%; top: 50%;
+    margin-left: -200px; margin-top: -200px;
+    transform-style: preserve-3d;
+    animation: cubeOrbit 24s linear infinite;
+    pointer-events: none;
+  }
+  .cube-edge {
+    position: absolute;
+    background: rgba(26,183,89,0.08);
+    transform-origin: 0 0;
+    height: 1px;
+    transform-style: preserve-3d;
+  }
+  .cube-edge.glow {
+    background: rgba(26,183,89,0.2);
+    height: 1.5px;
+    box-shadow: 0 0 4px rgba(26,183,89,0.15);
+    animation: edgeGlow 12s ease infinite;
+  }
+  @keyframes edgeGlow {
+    0%,10% { opacity: 0.3; }
+    15%,22% { opacity: 1; }
+    28%,50% { opacity: 0.2; }
+    65%,85% { opacity: 1; }
+    95%,100% { opacity: 0.3; }
+  }
+
+  /* Scan effect: expanding sphere */
+  .scan-sphere {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(26,183,89,0.3);
+    transform: translate(-50%,-50%);
+    animation: scanExpand 12s ease infinite;
+    pointer-events: none;
+  }
+  .scan-sphere-2 {
+    animation: scanExpand2 12s ease infinite;
+    border-color: rgba(26,183,89,0.15);
+  }
+  @keyframes scanExpand {
+    0%,18% { width: 0; height: 0; opacity: 0; }
+    22% { width: 40px; height: 40px; opacity: 0.8; }
+    32% { width: 200px; height: 200px; opacity: 0.6; }
+    42% { width: 500px; height: 500px; opacity: 0.2; }
+    48%,100% { width: 600px; height: 600px; opacity: 0; }
+  }
+  @keyframes scanExpand2 {
+    0%,20% { width: 0; height: 0; opacity: 0; }
+    25% { width: 60px; height: 60px; opacity: 0.5; }
+    35% { width: 250px; height: 250px; opacity: 0.4; }
+    45% { width: 550px; height: 550px; opacity: 0.1; }
+    50%,100% { width: 650px; height: 650px; opacity: 0; }
+  }
+
+  /* Fix flash */
+  .fix-flash {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,183,89,0.3) 0%, transparent 70%);
+    transform: translate(-50%,-50%);
+    animation: fixFlash 12s ease infinite;
+    pointer-events: none;
+  }
+  @keyframes fixFlash {
+    0%,55% { width: 0; height: 0; opacity: 0; }
+    60% { width: 60px; height: 60px; opacity: 0.8; }
+    68% { width: 350px; height: 350px; opacity: 0.4; }
+    78% { width: 500px; height: 500px; opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .arch-cube-wrap { height: 320px !important; }
+    .arch-cube-scene, .arch-cube-lines { width: 280px; height: 280px; margin-left: -140px; margin-top: -140px; }
+    .mesh-node { width: 8px; height: 8px; }
+    .mesh-node::after { width: 3px; height: 3px; top: 2.5px; left: 2.5px; }
+    .mesh-node.decision { width: 10px; height: 10px; }
+    .mesh-node.hub { width: 11px; height: 11px; }
+  }
+  @media (max-width: 480px) {
+    .arch-cube-wrap { height: 260px !important; }
+    .arch-cube-scene, .arch-cube-lines { width: 220px; height: 220px; margin-left: -110px; margin-top: -110px; }
+    .mesh-node { width: 6px; height: 6px; }
+    .mesh-node::after { width: 2px; height: 2px; top: 2px; left: 2px; }
+  }
+</style>
+
+<!-- Connection lines (3D positioned divs) -->
+<div class="arch-cube-lines">
+  <!-- Front face edges -->
+  <div class="cube-edge glow" style="left:60px;top:60px;width:120px;transform:translateZ(120px);"></div>
+  <div class="cube-edge" style="left:200px;top:60px;width:100px;transform:translateZ(120px);"></div>
+  <div class="cube-edge glow" style="left:60px;top:60px;width:1px;height:100px;transform:translateZ(120px);" ></div>
+  <div class="cube-edge" style="left:60px;top:180px;width:120px;transform:translateZ(120px);"></div>
+  <div class="cube-edge" style="left:200px;top:180px;width:100px;transform:translateZ(120px);"></div>
+  <div class="cube-edge" style="left:180px;top:60px;width:1px;height:120px;transform:translateZ(120px);"></div>
+  <div class="cube-edge glow" style="left:300px;top:60px;width:1px;height:120px;transform:translateZ(120px);"></div>
+  <div class="cube-edge" style="left:60px;top:300px;width:120px;transform:translateZ(120px);"></div>
+  <div class="cube-edge" style="left:60px;top:180px;width:1px;height:120px;transform:translateZ(120px);"></div>
+  <div class="cube-edge" style="left:180px;top:180px;width:1px;height:120px;transform:translateZ(120px);"></div>
+  <!-- Back face edges -->
+  <div class="cube-edge" style="left:60px;top:60px;width:120px;transform:translateZ(-120px);"></div>
+  <div class="cube-edge" style="left:200px;top:60px;width:100px;transform:translateZ(-120px);"></div>
+  <div class="cube-edge" style="left:60px;top:60px;width:1px;height:100px;transform:translateZ(-120px);"></div>
+  <div class="cube-edge" style="left:60px;top:180px;width:120px;transform:translateZ(-120px);"></div>
+  <div class="cube-edge" style="left:300px;top:60px;width:1px;height:120px;transform:translateZ(-120px);"></div>
+  <div class="cube-edge" style="left:180px;top:60px;width:1px;height:120px;transform:translateZ(-120px);"></div>
+  <div class="cube-edge" style="left:60px;top:180px;width:1px;height:120px;transform:translateZ(-120px);"></div>
+  <div class="cube-edge" style="left:60px;top:300px;width:120px;transform:translateZ(-120px);"></div>
+  <!-- Depth connections (front to back) -->
+  <div class="cube-edge glow" style="left:60px;top:60px;width:240px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="cube-edge" style="left:180px;top:60px;width:240px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="cube-edge" style="left:300px;top:60px;width:240px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="cube-edge" style="left:60px;top:180px;width:240px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="cube-edge glow" style="left:180px;top:180px;width:240px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="cube-edge" style="left:300px;top:180px;width:240px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="cube-edge" style="left:60px;top:300px;width:240px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="cube-edge" style="left:180px;top:300px;width:240px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <!-- Diagonal cross-connects -->
+  <div class="cube-edge" style="left:60px;top:60px;width:170px;transform:translateZ(120px) rotate(35deg);transform-origin:0 0;opacity:0.5;"></div>
+  <div class="cube-edge" style="left:180px;top:60px;width:170px;transform:translateZ(-120px) rotate(35deg);transform-origin:0 0;opacity:0.5;"></div>
+  <div class="cube-edge" style="left:60px;top:180px;width:170px;transform:translateZ(60px) rotate(35deg);transform-origin:0 0;opacity:0.4;"></div>
+  <div class="cube-edge" style="left:180px;top:180px;width:170px;transform:translateZ(-60px) rotate(35deg);transform-origin:0 0;opacity:0.4;"></div>
+  <!-- Mid-depth plane -->
+  <div class="cube-edge" style="left:100px;top:120px;width:160px;transform:translateZ(0px);opacity:0.6;"></div>
+  <div class="cube-edge" style="left:140px;top:80px;width:1px;height:160px;transform:translateZ(0px);opacity:0.5;"></div>
+  <div class="cube-edge" style="left:240px;top:80px;width:1px;height:160px;transform:translateZ(0px);opacity:0.5;"></div>
+</div>
+
+<!-- 3D Nodes -->
+<div class="arch-cube-scene">
+  <!-- Front face nodes (Z=120) -->
+  <div class="mesh-node hub" style="left:54px;top:54px;transform:translateZ(120px);"></div>
+  <div class="mesh-node decision" style="left:174px;top:56px;transform:translateZ(120px);"></div>
+  <div class="mesh-node target" style="left:295px;top:55px;transform:translateZ(120px);"></div>
+  <div class="mesh-node" style="left:56px;top:175px;transform:translateZ(120px);"></div>
+  <div class="mesh-node hub" style="left:174px;top:175px;transform:translateZ(120px);"></div>
+  <div class="mesh-node decision" style="left:295px;top:174px;transform:translateZ(120px);"></div>
+  <div class="mesh-node" style="left:56px;top:295px;transform:translateZ(120px);"></div>
+  <div class="mesh-node" style="left:174px;top:295px;transform:translateZ(120px);"></div>
+
+  <!-- Back face nodes (Z=-120) -->
+  <div class="mesh-node" style="left:54px;top:54px;transform:translateZ(-120px);"></div>
+  <div class="mesh-node target-2" style="left:174px;top:56px;transform:translateZ(-120px);"></div>
+  <div class="mesh-node" style="left:295px;top:55px;transform:translateZ(-120px);"></div>
+  <div class="mesh-node decision" style="left:56px;top:175px;transform:translateZ(-120px);"></div>
+  <div class="mesh-node" style="left:174px;top:175px;transform:translateZ(-120px);"></div>
+  <div class="mesh-node hub" style="left:295px;top:174px;transform:translateZ(-120px);"></div>
+  <div class="mesh-node" style="left:56px;top:295px;transform:translateZ(-120px);"></div>
+  <div class="mesh-node" style="left:174px;top:295px;transform:translateZ(-120px);"></div>
+
+  <!-- Mid-depth nodes (Z=0) -->
+  <div class="mesh-node decision" style="left:95px;top:115px;transform:translateZ(0px);"></div>
+  <div class="mesh-node hub" style="left:135px;top:75px;transform:translateZ(0px);"></div>
+  <div class="mesh-node" style="left:235px;top:75px;transform:translateZ(0px);"></div>
+  <div class="mesh-node target-3" style="left:135px;top:235px;transform:translateZ(0px);"></div>
+  <div class="mesh-node" style="left:235px;top:235px;transform:translateZ(0px);"></div>
+  <div class="mesh-node decision" style="left:195px;top:155px;transform:translateZ(0px);"></div>
+
+  <!-- Intermediate depth nodes (Z=60, Z=-60) -->
+  <div class="mesh-node" style="left:120px;top:120px;transform:translateZ(60px);"></div>
+  <div class="mesh-node decision" style="left:240px;top:120px;transform:translateZ(60px);"></div>
+  <div class="mesh-node" style="left:120px;top:240px;transform:translateZ(60px);"></div>
+  <div class="mesh-node" style="left:240px;top:240px;transform:translateZ(60px);"></div>
+  <div class="mesh-node" style="left:120px;top:120px;transform:translateZ(-60px);"></div>
+  <div class="mesh-node hub" style="left:240px;top:120px;transform:translateZ(-60px);"></div>
+  <div class="mesh-node" style="left:120px;top:240px;transform:translateZ(-60px);"></div>
+  <div class="mesh-node decision" style="left:240px;top:240px;transform:translateZ(-60px);"></div>
+</g>
+</div>
+
+<!-- Scan sphere effect -->
+<div class="scan-sphere"></div>
+<div class="scan-sphere scan-sphere-2"></div>
+
+<!-- Fix flash -->
+<div class="fix-flash"></div>
+
+</div>

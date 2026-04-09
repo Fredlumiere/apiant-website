@@ -82,6 +82,10 @@ PAGES = [
     'apipartners/donorperfect/donorperfect-activecampaign-integration-and-automation-apiant.html',
     'apipartners/donorperfect/donorperfect-keap-integration-and-automation-apiant.html',
     'apipartners/donorperfect/donorperfect-mailchimp-integration-and-automation-apiant.html',
+    'privacy.html',
+    'cookie-policy.html',
+    'tos.html',
+    'dpa.html',
 ]
 
 LOCALIZED_SET = set(PAGES)
@@ -358,6 +362,17 @@ def add_language_switcher(soup, lang_code):
         if navlinks:
             switcher = BeautifulSoup(html, 'html.parser')
             navlinks.append(switcher)
+        else:
+            # Fallback for pages without navlinks-holder (e.g. legal pages):
+            # place before subscribed-visitor or append to nav-holder
+            switcher = BeautifulSoup(html, 'html.parser')
+            sub_visitor = soup.find(class_='subscribed-visitor')
+            if sub_visitor:
+                sub_visitor.insert_before(switcher)
+            else:
+                nav_holder = soup.find(class_='nav-holder')
+                if nav_holder:
+                    nav_holder.append(switcher)
 
     # Add i18n.js script before </body>
     body = soup.find('body')

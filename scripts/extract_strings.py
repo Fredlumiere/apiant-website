@@ -49,6 +49,10 @@ PAGES = [
     'apipartners/donorperfect/donorperfect-activecampaign-integration-and-automation-apiant.html',
     'apipartners/donorperfect/donorperfect-keap-integration-and-automation-apiant.html',
     'apipartners/donorperfect/donorperfect-mailchimp-integration-and-automation-apiant.html',
+    'privacy.html',
+    'cookie-policy.html',
+    'tos.html',
+    'dpa.html',
 ]
 
 SKIP_TAGS = {'script', 'style', 'code', 'pre', 'svg', 'math', 'noscript'}
@@ -147,6 +151,11 @@ def main():
     out_path = ROOT / 'i18n' / 'strings_master.json'
     with open(out_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
+
+    # Also write flat list for translate_api.py
+    translatable_path = ROOT / 'i18n' / 'translatable_strings.json'
+    with open(translatable_path, 'w', encoding='utf-8') as f:
+        json.dump(sorted_strings, f, ensure_ascii=False, indent=2)
 
     print(f'\nTotal unique strings: {len(sorted_strings)}', file=sys.stderr)
     print(f'Output: {out_path}', file=sys.stderr)

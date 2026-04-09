@@ -1,0 +1,270 @@
+<!-- APIANT Architecture: 3D Mesh with Bubble Nodes, Zoom-In Scan -->
+<div class="arch-cube-wrap" style="width:100%;max-width:900px;margin:0 auto;height:440px;perspective:1200px;overflow:hidden;position:relative;">
+<style>
+  .arch-scene {
+    width: 380px; height: 380px;
+    position: absolute; left: 50%; top: 50%;
+    transform-style: preserve-3d;
+    animation: meshOrbit 22s linear infinite, meshZoom 14s ease-in-out infinite;
+    margin-left: -190px; margin-top: -190px;
+  }
+  @keyframes meshOrbit {
+    0% { transform: rotateX(-18deg) rotateY(0deg); }
+    100% { transform: rotateX(-18deg) rotateY(360deg); }
+  }
+  @keyframes meshZoom {
+    0%,15% { scale: 1; }
+    35%,55% { scale: 1.6; }
+    75%,100% { scale: 1; }
+  }
+
+  /* 3D Bubble nodes */
+  .bnode {
+    position: absolute;
+    border-radius: 50%;
+    transform-style: preserve-3d;
+    background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%);
+    box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.1);
+    animation: bnodePulse 14s ease infinite;
+  }
+  .bnode::after {
+    content: '';
+    position: absolute;
+    width: 35%; height: 25%;
+    top: 18%; left: 22%;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    filter: blur(1px);
+  }
+
+  /* Node sizes */
+  .bnode-sm { width: 10px; height: 10px; }
+  .bnode-md { width: 14px; height: 14px; }
+  .bnode-lg { width: 18px; height: 18px; }
+
+  /* Decision point (has a ring) */
+  .bnode-decision {
+    box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.1), 0 0 0 2px rgba(26,183,89,0.15), 0 0 0 4px rgba(26,183,89,0.05);
+  }
+
+  /* Hub node (brighter) */
+  .bnode-hub {
+    background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.25) 50%, rgba(26,183,89,0.1) 80%);
+    box-shadow: 0 0 12px rgba(26,183,89,0.35), inset 0 -2px 6px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.15);
+  }
+
+  /* Target nodes */
+  .bnode-t1 { animation: btarget1 14s ease infinite; }
+  .bnode-t2 { animation: btarget2 14s ease infinite; }
+  .bnode-t3 { animation: btarget3 14s ease infinite; }
+
+  @keyframes bnodePulse {
+    0%,10% { opacity: 0.6; }
+    15%,25% { opacity: 1; }
+    35%,55% { opacity: 0.3; }
+    70%,90% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+
+  @keyframes btarget1 {
+    0%,25% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    32%,40% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 20px rgba(239,68,68,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    48%,52% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
+    62%,88% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.4), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+  }
+  @keyframes btarget2 {
+    0%,30% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    37%,45% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 20px rgba(239,68,68,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    52%,56% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
+    65%,88% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.4), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+  }
+  @keyframes btarget3 {
+    0%,35% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    42%,50% { background: radial-gradient(circle at 35% 30%, rgba(239,68,68,0.7), rgba(239,68,68,0.3) 50%, rgba(239,68,68,0.1) 80%); box-shadow: 0 0 20px rgba(239,68,68,0.5), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    56%,60% { background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.3) 50%); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
+    68%,88% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.7), rgba(26,183,89,0.3) 50%, rgba(26,183,89,0.1) 80%); box-shadow: 0 0 15px rgba(26,183,89,0.4), inset 0 -2px 6px rgba(0,0,0,0.3); }
+    100% { background: radial-gradient(circle at 35% 30%, rgba(26,183,89,0.5), rgba(26,183,89,0.15) 50%, rgba(26,183,89,0.05) 80%); box-shadow: 0 0 8px rgba(26,183,89,0.2), inset 0 -2px 6px rgba(0,0,0,0.3); }
+  }
+
+  /* 3D connection wires */
+  .arch-wires {
+    position: absolute;
+    width: 380px; height: 380px;
+    left: 50%; top: 50%;
+    margin-left: -190px; margin-top: -190px;
+    transform-style: preserve-3d;
+    animation: meshOrbit 22s linear infinite, meshZoom 14s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .wire {
+    position: absolute;
+    background: rgba(26,183,89,0.1);
+    height: 1px;
+    transform-origin: 0 0;
+    transform-style: preserve-3d;
+  }
+  .wire.bright {
+    background: rgba(26,183,89,0.25);
+    height: 1.5px;
+    box-shadow: 0 0 4px rgba(26,183,89,0.15);
+    animation: wireGlow 14s ease infinite;
+  }
+  @keyframes wireGlow {
+    0%,10% { opacity: 0.4; }
+    20%,30% { opacity: 1; }
+    40%,55% { opacity: 0.2; }
+    70%,88% { opacity: 1; }
+    100% { opacity: 0.4; }
+  }
+
+  /* Scan sphere */
+  .scan-sphere {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(26,183,89,0.35);
+    transform: translate(-50%,-50%);
+    animation: scanGrow 14s ease infinite;
+    pointer-events: none;
+  }
+  @keyframes scanGrow {
+    0%,20% { width: 0; height: 0; opacity: 0; }
+    25% { width: 50px; height: 50px; opacity: 0.8; }
+    35% { width: 300px; height: 300px; opacity: 0.5; }
+    45% { width: 550px; height: 550px; opacity: 0.15; }
+    50%,100% { width: 600px; height: 600px; opacity: 0; }
+  }
+
+  /* Fix flash */
+  .fix-flash {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,183,89,0.25) 0%, transparent 70%);
+    transform: translate(-50%,-50%);
+    animation: fixGlow 14s ease infinite;
+    pointer-events: none;
+  }
+  @keyframes fixGlow {
+    0%,58% { width: 0; height: 0; opacity: 0; }
+    63% { width: 80px; height: 80px; opacity: 0.9; }
+    72% { width: 400px; height: 400px; opacity: 0.3; }
+    82% { width: 500px; height: 500px; opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .arch-cube-wrap { height: 340px !important; }
+    .arch-scene, .arch-wires { width: 280px; height: 280px; margin-left: -140px; margin-top: -140px; }
+    .bnode-sm { width: 8px; height: 8px; }
+    .bnode-md { width: 11px; height: 11px; }
+    .bnode-lg { width: 14px; height: 14px; }
+  }
+  @media (max-width: 480px) {
+    .arch-cube-wrap { height: 280px !important; }
+    .arch-scene, .arch-wires { width: 220px; height: 220px; margin-left: -110px; margin-top: -110px; }
+    .bnode-sm { width: 6px; height: 6px; }
+    .bnode-md { width: 9px; height: 9px; }
+    .bnode-lg { width: 12px; height: 12px; }
+  }
+</style>
+
+<!-- 3D Wires -->
+<div class="arch-wires">
+  <!-- Front face (Z=130) -->
+  <div class="wire bright" style="left:50px;top:50px;width:120px;transform:translateZ(130px);"></div>
+  <div class="wire" style="left:180px;top:50px;width:100px;transform:translateZ(130px);"></div>
+  <div class="wire bright" style="left:50px;top:50px;width:1px;height:110px;transform:translateZ(130px);"></div>
+  <div class="wire" style="left:170px;top:50px;width:1px;height:110px;transform:translateZ(130px);"></div>
+  <div class="wire" style="left:280px;top:50px;width:1px;height:110px;transform:translateZ(130px);"></div>
+  <div class="wire" style="left:50px;top:170px;width:120px;transform:translateZ(130px);"></div>
+  <div class="wire bright" style="left:180px;top:170px;width:100px;transform:translateZ(130px);"></div>
+  <div class="wire" style="left:50px;top:170px;width:1px;height:110px;transform:translateZ(130px);"></div>
+  <div class="wire" style="left:170px;top:170px;width:1px;height:110px;transform:translateZ(130px);"></div>
+  <div class="wire" style="left:50px;top:290px;width:120px;transform:translateZ(130px);"></div>
+  <!-- Back face (Z=-130) -->
+  <div class="wire" style="left:50px;top:50px;width:120px;transform:translateZ(-130px);"></div>
+  <div class="wire" style="left:180px;top:50px;width:100px;transform:translateZ(-130px);"></div>
+  <div class="wire" style="left:50px;top:50px;width:1px;height:110px;transform:translateZ(-130px);"></div>
+  <div class="wire" style="left:170px;top:50px;width:1px;height:110px;transform:translateZ(-130px);"></div>
+  <div class="wire bright" style="left:280px;top:50px;width:1px;height:110px;transform:translateZ(-130px);"></div>
+  <div class="wire" style="left:50px;top:170px;width:120px;transform:translateZ(-130px);"></div>
+  <div class="wire" style="left:180px;top:170px;width:100px;transform:translateZ(-130px);"></div>
+  <div class="wire" style="left:50px;top:170px;width:1px;height:110px;transform:translateZ(-130px);"></div>
+  <div class="wire" style="left:50px;top:290px;width:120px;transform:translateZ(-130px);"></div>
+  <!-- Depth connections (Z-axis) -->
+  <div class="wire bright" style="left:50px;top:50px;width:260px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="wire" style="left:170px;top:50px;width:260px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="wire" style="left:280px;top:50px;width:260px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="wire" style="left:50px;top:170px;width:260px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="wire bright" style="left:170px;top:170px;width:260px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="wire" style="left:280px;top:170px;width:260px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="wire" style="left:50px;top:290px;width:260px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <div class="wire" style="left:170px;top:290px;width:260px;transform:rotateY(90deg);transform-origin:0 0;"></div>
+  <!-- Mid-plane (Z=0) -->
+  <div class="wire" style="left:80px;top:100px;width:180px;transform:translateZ(0);"></div>
+  <div class="wire" style="left:110px;top:80px;width:1px;height:180px;transform:translateZ(0);"></div>
+  <div class="wire" style="left:220px;top:80px;width:1px;height:180px;transform:translateZ(0);"></div>
+  <div class="wire" style="left:80px;top:220px;width:180px;transform:translateZ(0);"></div>
+  <!-- Diagonals -->
+  <div class="wire" style="left:50px;top:50px;width:170px;transform:translateZ(130px) rotate(35deg);transform-origin:0 0;opacity:0.6;"></div>
+  <div class="wire" style="left:170px;top:170px;width:160px;transform:translateZ(-130px) rotate(-30deg);transform-origin:0 0;opacity:0.5;"></div>
+  <div class="wire" style="left:50px;top:170px;width:175px;transform:translateZ(65px) rotate(35deg);transform-origin:0 0;opacity:0.5;"></div>
+  <div class="wire" style="left:170px;top:50px;width:165px;transform:translateZ(-65px) rotate(35deg);transform-origin:0 0;opacity:0.5;"></div>
+</div>
+
+<!-- 3D Bubble Nodes -->
+<div class="arch-scene">
+  <!-- Front face (Z=130) -->
+  <div class="bnode bnode-lg bnode-hub" style="left:43px;top:43px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:164px;top:45px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md bnode-t1" style="left:274px;top:44px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md" style="left:44px;top:164px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:162px;top:162px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:273px;top:164px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-sm" style="left:46px;top:286px;transform:translateZ(130px);"></div>
+  <div class="bnode bnode-md" style="left:164px;top:284px;transform:translateZ(130px);"></div>
+
+  <!-- Back face (Z=-130) -->
+  <div class="bnode bnode-md" style="left:44px;top:44px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md bnode-t2" style="left:164px;top:44px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-sm" style="left:275px;top:45px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:44px;top:164px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md" style="left:164px;top:164px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:272px;top:162px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-sm" style="left:46px;top:286px;transform:translateZ(-130px);"></div>
+  <div class="bnode bnode-md" style="left:164px;top:286px;transform:translateZ(-130px);"></div>
+
+  <!-- Mid-depth (Z=0) -->
+  <div class="bnode bnode-md bnode-decision" style="left:86px;top:94px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:104px;top:74px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md" style="left:214px;top:74px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md bnode-t3" style="left:104px;top:222px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md" style="left:214px;top:222px;transform:translateZ(0);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:160px;top:148px;transform:translateZ(0);"></div>
+
+  <!-- Z=65 layer -->
+  <div class="bnode bnode-sm" style="left:110px;top:110px;transform:translateZ(65px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:220px;top:110px;transform:translateZ(65px);"></div>
+  <div class="bnode bnode-sm" style="left:110px;top:230px;transform:translateZ(65px);"></div>
+  <div class="bnode bnode-md" style="left:220px;top:230px;transform:translateZ(65px);"></div>
+
+  <!-- Z=-65 layer -->
+  <div class="bnode bnode-sm" style="left:110px;top:110px;transform:translateZ(-65px);"></div>
+  <div class="bnode bnode-lg bnode-hub" style="left:220px;top:110px;transform:translateZ(-65px);"></div>
+  <div class="bnode bnode-sm" style="left:110px;top:230px;transform:translateZ(-65px);"></div>
+  <div class="bnode bnode-md bnode-decision" style="left:220px;top:230px;transform:translateZ(-65px);"></div>
+</div>
+
+<!-- Scan sphere -->
+<div class="scan-sphere"></div>
+
+<!-- Fix flash -->
+<div class="fix-flash"></div>
+
+</div>

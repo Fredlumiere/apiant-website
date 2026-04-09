@@ -1,0 +1,303 @@
+<!-- APIANT Architecture: 3D Node Network with AI Scan Animation -->
+<div style="width:100%;max-width:800px;margin:0 auto;perspective:800px;">
+<div style="transform:rotateX(12deg) rotateY(-4deg);transform-style:preserve-3d;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" style="width:100%;height:auto;max-height:420px;" aria-label="3D animated node network showing AI scanning and repairing a specific node">
+<defs>
+  <radialGradient id="scanPulse" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#1ab759" stop-opacity="0.15"/>
+    <stop offset="70%" stop-color="#1ab759" stop-opacity="0.04"/>
+    <stop offset="100%" stop-color="#1ab759" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="targetLock" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#ef4444" stop-opacity="0"/>
+    <stop offset="60%" stop-color="#ef4444" stop-opacity="0.08"/>
+    <stop offset="85%" stop-color="#ef4444" stop-opacity="0.15"/>
+    <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="gn"><feGaussianBlur stdDeviation="2"/></filter>
+  <filter id="gw"><feGaussianBlur stdDeviation="4"/></filter>
+</defs>
+<style>
+  .net-line { stroke: rgba(255,255,255,0.04); stroke-width: 0.7; fill: none; }
+  .net-line-glow { stroke: rgba(26,183,89,0); stroke-width: 1.2; fill: none; animation: lineGlow 10s ease infinite; }
+  /* Node layers - back (small/dim) to front (large/bright) */
+  .n-back { fill: rgba(26,183,89,0.08); stroke: rgba(26,183,89,0.12); stroke-width: 0.5; }
+  .n-mid { fill: rgba(26,183,89,0.12); stroke: rgba(26,183,89,0.2); stroke-width: 0.6; }
+  .n-front { fill: rgba(26,183,89,0.18); stroke: rgba(26,183,89,0.35); stroke-width: 0.8; }
+  .n-target { fill: rgba(26,183,89,0.18); stroke: rgba(26,183,89,0.35); stroke-width: 0.8; animation: targetNode 10s ease infinite; }
+
+  /* Scan ring that converges */
+  .scan-ring { fill: none; stroke: rgba(26,183,89,0.3); stroke-width: 1; stroke-dasharray: 4 3; animation: scanConverge 10s ease infinite; transform-origin: 420px 195px; }
+  .scan-ring2 { fill: none; stroke: rgba(26,183,89,0.15); stroke-width: 0.8; stroke-dasharray: 2 4; animation: scanConverge2 10s ease infinite; transform-origin: 420px 195px; }
+
+  /* Scan sweep lines */
+  .scan-h { stroke: rgba(26,183,89,0.12); stroke-width: 0.5; animation: scanH 10s ease infinite; }
+  .scan-v { stroke: rgba(26,183,89,0.12); stroke-width: 0.5; animation: scanV 10s ease infinite; }
+
+  /* Target crosshair */
+  .crosshair { stroke: #ef4444; stroke-width: 1; fill: none; opacity: 0; animation: crossShow 10s ease infinite; }
+  .crosshair-ring { fill: none; stroke: #ef4444; stroke-width: 1.5; stroke-dasharray: 3 2; opacity: 0; animation: crossRing 10s ease infinite; transform-origin: 420px 195px; }
+
+  /* Fix pulse */
+  .fix-pulse { fill: none; stroke: #1ab759; stroke-width: 2; opacity: 0; animation: fixPulse 10s ease infinite; transform-origin: 420px 195px; }
+
+  /* Checkmark */
+  .check { stroke: #1ab759; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; animation: checkDraw 10s ease infinite; }
+
+  /* All nodes dim during scan, brighten after fix */
+  .n-back, .n-mid, .n-front { animation: nodePulse 10s ease infinite; }
+
+  /* Scan pulse overlay */
+  .scan-overlay { opacity: 0; animation: scanOverlay 10s ease infinite; }
+
+  /* Target glow */
+  .target-glow { opacity: 0; animation: targetGlow 10s ease infinite; }
+
+  /* Line glow cascade */
+  @keyframes lineGlow {
+    0%,5% { stroke: rgba(26,183,89,0); }
+    8%,18% { stroke: rgba(26,183,89,0.15); }
+    22%,55% { stroke: rgba(26,183,89,0.03); }
+    75%,88% { stroke: rgba(26,183,89,0.2); }
+    95%,100% { stroke: rgba(26,183,89,0); }
+  }
+
+  @keyframes nodePulse {
+    0%,5% { opacity: 0.6; }
+    10%,18% { opacity: 1; }
+    22%,38% { opacity: 0.25; }
+    42%,55% { opacity: 0.2; }
+    70%,88% { opacity: 1; }
+    95%,100% { opacity: 0.6; }
+  }
+
+  @keyframes targetNode {
+    0%,18% { fill: rgba(26,183,89,0.18); stroke: rgba(26,183,89,0.35); }
+    25%,30% { fill: rgba(239,68,68,0.3); stroke: rgba(239,68,68,0.7); }
+    35%,50% { fill: rgba(239,68,68,0.4); stroke: rgba(239,68,68,0.8); }
+    58%,62% { fill: rgba(255,255,255,0.6); stroke: #fff; }
+    68%,88% { fill: rgba(26,183,89,0.35); stroke: rgba(26,183,89,0.8); }
+    95%,100% { fill: rgba(26,183,89,0.18); stroke: rgba(26,183,89,0.35); }
+  }
+
+  @keyframes scanConverge {
+    0%,18% { r: 0; opacity: 0; }
+    20% { r: 280; opacity: 0.6; }
+    28% { r: 180; opacity: 0.7; }
+    35% { r: 60; opacity: 0.9; }
+    40% { r: 20; opacity: 1; }
+    45% { r: 14; opacity: 0.5; }
+    50%,100% { r: 0; opacity: 0; }
+  }
+
+  @keyframes scanConverge2 {
+    0%,19% { r: 0; opacity: 0; }
+    21% { r: 320; opacity: 0.4; }
+    30% { r: 140; opacity: 0.5; }
+    38% { r: 40; opacity: 0.7; }
+    43% { r: 18; opacity: 0.3; }
+    48%,100% { r: 0; opacity: 0; }
+  }
+
+  @keyframes scanH {
+    0%,18% { opacity: 0; y1: 0; y2: 0; }
+    20% { opacity: 0.5; y1: 50; y2: 50; }
+    25% { opacity: 0.6; y1: 120; y2: 120; }
+    30% { opacity: 0.7; y1: 170; y2: 170; }
+    35% { opacity: 0.8; y1: 192; y2: 192; }
+    40%,42% { opacity: 1; y1: 195; y2: 195; }
+    48% { opacity: 0; }
+    50%,100% { opacity: 0; }
+  }
+
+  @keyframes scanV {
+    0%,18% { opacity: 0; x1: 0; x2: 0; }
+    20% { opacity: 0.5; x1: 100; x2: 100; }
+    26% { opacity: 0.6; x1: 250; x2: 250; }
+    32% { opacity: 0.7; x1: 360; x2: 360; }
+    38% { opacity: 0.8; x1: 410; x2: 410; }
+    40%,42% { opacity: 1; x1: 420; x2: 420; }
+    48% { opacity: 0; }
+    50%,100% { opacity: 0; }
+  }
+
+  @keyframes crossShow {
+    0%,38% { opacity: 0; }
+    42% { opacity: 0.9; }
+    58% { opacity: 0.9; }
+    62% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes crossRing {
+    0%,38% { opacity: 0; r: 30; }
+    40% { opacity: 0; r: 30; }
+    43% { opacity: 0.8; r: 22; }
+    50% { opacity: 0.9; r: 18; }
+    55% { opacity: 0.7; r: 16; }
+    60% { opacity: 0; r: 14; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes scanOverlay {
+    0%,18% { opacity: 0; }
+    22% { opacity: 0.7; }
+    38% { opacity: 0.5; }
+    45% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes targetGlow {
+    0%,38% { opacity: 0; }
+    42% { opacity: 0.8; }
+    55% { opacity: 0.6; }
+    62% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes fixPulse {
+    0%,58% { opacity: 0; r: 5; }
+    62% { opacity: 0.8; r: 8; }
+    66% { opacity: 0.6; r: 30; }
+    70% { opacity: 0.3; r: 60; }
+    75% { opacity: 0; r: 90; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes checkDraw {
+    0%,75% { stroke-dashoffset: 24; opacity: 0; }
+    78% { opacity: 1; stroke-dashoffset: 24; }
+    88% { stroke-dashoffset: 0; opacity: 1; }
+    94% { opacity: 1; }
+    98%,100% { opacity: 0; stroke-dashoffset: 0; }
+  }
+</style>
+
+<!-- Back layer connections (depth illusion) -->
+<g opacity="0.3">
+  <line class="net-line" x1="80" y1="60" x2="160" y2="90"/>
+  <line class="net-line" x1="160" y1="90" x2="120" y2="160"/>
+  <line class="net-line" x1="80" y1="60" x2="140" y2="40"/>
+  <line class="net-line" x1="140" y1="40" x2="220" y2="70"/>
+  <line class="net-line" x1="220" y1="70" x2="200" y2="140"/>
+  <line class="net-line" x1="200" y1="140" x2="120" y2="160"/>
+  <line class="net-line" x1="140" y1="40" x2="260" y2="50"/>
+  <line class="net-line" x1="260" y1="50" x2="320" y2="80"/>
+  <line class="net-line" x1="600" y1="80" x2="560" y2="140"/>
+  <line class="net-line" x1="620" y1="50" x2="600" y2="80"/>
+  <line class="net-line" x1="560" y1="140" x2="580" y2="200"/>
+  <line class="net-line" x1="80" y1="320" x2="140" y2="290"/>
+  <line class="net-line" x1="140" y1="290" x2="200" y2="310"/>
+  <line class="net-line" x1="580" y1="300" x2="620" y2="340"/>
+  <line class="net-line" x1="540" y1="280" x2="580" y2="300"/>
+</g>
+
+<!-- Mid layer connections -->
+<g opacity="0.5">
+  <line class="net-line" x1="200" y1="140" x2="300" y2="130"/>
+  <line class="net-line" x1="300" y1="130" x2="350" y2="160"/>
+  <line class="net-line" x1="350" y1="160" x2="420" y2="195"/>
+  <line class="net-line" x1="300" y1="130" x2="280" y2="200"/>
+  <line class="net-line" x1="280" y1="200" x2="350" y2="230"/>
+  <line class="net-line" x1="350" y1="230" x2="420" y2="195"/>
+  <line class="net-line" x1="420" y1="195" x2="500" y2="170"/>
+  <line class="net-line" x1="420" y1="195" x2="480" y2="230"/>
+  <line class="net-line" x1="500" y1="170" x2="560" y2="140"/>
+  <line class="net-line" x1="480" y1="230" x2="540" y2="280"/>
+  <line class="net-line" x1="350" y1="230" x2="300" y2="280"/>
+  <line class="net-line" x1="300" y1="280" x2="200" y2="310"/>
+  <line class="net-line" x1="300" y1="280" x2="380" y2="310"/>
+  <line class="net-line" x1="380" y1="310" x2="450" y2="340"/>
+  <line class="net-line" x1="540" y1="280" x2="450" y2="340"/>
+  <line class="net-line" x1="120" y1="160" x2="180" y2="240"/>
+  <line class="net-line" x1="180" y1="240" x2="280" y2="200"/>
+  <line class="net-line" x1="180" y1="240" x2="140" y2="290"/>
+</g>
+
+<!-- Glow lines (animate) -->
+<g filter="url(#gn)">
+  <line class="net-line-glow" x1="300" y1="130" x2="350" y2="160"/>
+  <line class="net-line-glow" x1="350" y1="160" x2="420" y2="195" style="animation-delay:-0.3s"/>
+  <line class="net-line-glow" x1="280" y1="200" x2="350" y2="230" style="animation-delay:-0.6s"/>
+  <line class="net-line-glow" x1="350" y1="230" x2="420" y2="195" style="animation-delay:-0.9s"/>
+  <line class="net-line-glow" x1="420" y1="195" x2="500" y2="170" style="animation-delay:-1.2s"/>
+  <line class="net-line-glow" x1="420" y1="195" x2="480" y2="230" style="animation-delay:-1.5s"/>
+</g>
+
+<!-- Back layer nodes (small, dim - depth) -->
+<g>
+  <circle class="n-back" cx="80" cy="60" r="3"/>
+  <circle class="n-back" cx="140" cy="40" r="2.5"/>
+  <circle class="n-back" cx="260" cy="50" r="3"/>
+  <circle class="n-back" cx="620" cy="50" r="2.5"/>
+  <circle class="n-back" cx="600" cy="80" r="3"/>
+  <circle class="n-back" cx="80" cy="320" r="2.5"/>
+  <circle class="n-back" cx="620" cy="340" r="2.5"/>
+</g>
+
+<!-- Mid layer nodes -->
+<g>
+  <circle class="n-mid" cx="160" cy="90" r="4"/>
+  <circle class="n-mid" cx="220" cy="70" r="3.5"/>
+  <circle class="n-mid" cx="320" cy="80" r="3.5"/>
+  <circle class="n-mid" cx="120" cy="160" r="4"/>
+  <circle class="n-mid" cx="200" cy="140" r="4.5"/>
+  <circle class="n-mid" cx="180" cy="240" r="4"/>
+  <circle class="n-mid" cx="140" cy="290" r="3.5"/>
+  <circle class="n-mid" cx="200" cy="310" r="3.5"/>
+  <circle class="n-mid" cx="560" cy="140" r="4"/>
+  <circle class="n-mid" cx="580" cy="200" r="3.5"/>
+  <circle class="n-mid" cx="580" cy="300" r="3.5"/>
+  <circle class="n-mid" cx="450" cy="340" r="4"/>
+</g>
+
+<!-- Front layer nodes (larger, brighter) -->
+<g>
+  <circle class="n-front" cx="300" cy="130" r="5.5"/>
+  <circle class="n-front" cx="350" cy="160" r="5"/>
+  <circle class="n-front" cx="280" cy="200" r="5"/>
+  <circle class="n-front" cx="350" cy="230" r="5.5"/>
+  <circle class="n-front" cx="500" cy="170" r="5"/>
+  <circle class="n-front" cx="480" cy="230" r="5"/>
+  <circle class="n-front" cx="300" cy="280" r="5"/>
+  <circle class="n-front" cx="380" cy="310" r="5"/>
+  <circle class="n-front" cx="540" cy="280" r="5"/>
+</g>
+
+<!-- TARGET NODE (the one AI finds) -->
+<circle class="n-target" cx="420" cy="195" r="6.5"/>
+
+<!-- Scan overlay pulse -->
+<circle class="scan-overlay" cx="420" cy="195" r="280" fill="url(#scanPulse)"/>
+
+<!-- Scan converging rings -->
+<circle class="scan-ring" cx="420" cy="195"/>
+<circle class="scan-ring2" cx="420" cy="195"/>
+
+<!-- Scan sweep lines (H and V converging) -->
+<line class="scan-h" x1="0" y1="195" x2="700" y2="195"/>
+<line class="scan-v" x1="420" y1="0" x2="420" y2="400"/>
+
+<!-- Target glow -->
+<circle class="target-glow" cx="420" cy="195" r="35" fill="url(#targetLock)"/>
+
+<!-- Crosshair on target -->
+<g class="crosshair">
+  <line x1="400" y1="195" x2="410" y2="195"/>
+  <line x1="430" y1="195" x2="440" y2="195"/>
+  <line x1="420" y1="175" x2="420" y2="185"/>
+  <line x1="420" y1="205" x2="420" y2="215"/>
+</g>
+<circle class="crosshair-ring" cx="420" cy="195"/>
+
+<!-- Fix pulse (expanding green ring) -->
+<circle class="fix-pulse" cx="420" cy="195"/>
+
+<!-- Success checkmark -->
+<g transform="translate(412,182)">
+  <polyline class="check" points="0,9 5,14 16,3"/>
+</g>
+
+</svg>
+</div>
+</div>
