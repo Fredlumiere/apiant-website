@@ -78,23 +78,19 @@
       margin-bottom: 24px;
       font-family: var(--hp2-font);
     }
-    /* Compact patent pill: fixed below the logo, shown once the hero badge scrolls out of view.
+    /* Compact patent pill: fixed below the logo, centered on the logo's x-axis.
        Matches the short "⚖ PATENT PENDING" pill used elsewhere on the page. */
     .patent-badge-compact {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 72px;
+      left: var(--logo-center, 80px);
       z-index: 45;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 72px 24px 0;
       pointer-events: none;
       opacity: 0;
-      transform: translateY(-4px);
-      transition: opacity .2s ease, transform .2s ease;
+      transform: translateX(-50%);
+      transition: opacity .25s ease;
     }
-    .patent-badge-compact.visible { opacity: 1; transform: translateY(0); }
+    .patent-badge-compact.visible { opacity: 1; }
     .patent-badge-compact .pill {
       display: inline-block;
       font-size: 10px;
@@ -109,6 +105,7 @@
       font-family: var(--hp2-font);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      white-space: nowrap;
     }
     @media(max-width:560px){ .patent-badge-compact { display: none; } }
     .hp2-hero h1 {
@@ -3728,16 +3725,25 @@
 <script src="/js/cookie-consent.js"></script>
 <script src="/js/i18n.js"></script>
 <script>
-// Compact patent pill: show once the hero badge has scrolled out of view
+// Compact patent pill: show once the hero badge has scrolled out of view.
+// Centers horizontally on the logo using a CSS custom property.
 (function(){
   var hero=document.querySelector('.hp2-hero .hp2-badge');
   var compact=document.querySelector('.patent-badge-compact');
+  var logo=document.querySelector('img.brand');
   if(!hero||!compact)return;
+  var alignToLogo=function(){
+    if(!logo)return;
+    var r=logo.getBoundingClientRect();
+    compact.style.setProperty('--logo-center', (r.left + r.width/2) + 'px');
+  };
   var update=function(){
     compact.classList.toggle('visible', hero.getBoundingClientRect().bottom < 60);
   };
+  alignToLogo();
   window.addEventListener('scroll',update,{passive:true});
-  window.addEventListener('resize',update);
+  window.addEventListener('resize',function(){alignToLogo();update();});
+  if(logo&&logo.complete===false){logo.addEventListener('load',alignToLogo);}
   update();
 })();
 </script>
