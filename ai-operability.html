@@ -191,6 +191,17 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 .patent-badge-compact .pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#d4af37;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.2);border-radius:100px;padding:3px 10px;font-family:var(--font);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);white-space:nowrap}
 @media(max-width:560px){.patent-badge-compact{display:none}}
 
+/* Section indicator: tracks the currently-visible inventory section (skills / MCP tools) */
+.section-indicator{position:fixed;top:72px;right:32px;z-index:45;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity .22s ease, transform .22s ease}
+.section-indicator.visible{opacity:1;transform:translateY(0)}
+.section-indicator .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--border);border-radius:100px;background:rgba(12,12,12,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap;letter-spacing:.3px}
+.section-indicator .pill b{color:var(--text);font-weight:700;font-size:13px}
+.section-indicator .dot{width:6px;height:6px;border-radius:50%;background:#1ab759;box-shadow:0 0 8px rgba(26,183,89,.6)}
+.section-indicator .count-swap{display:inline-flex;transition:opacity .15s ease}
+.section-indicator.swapping .count-swap{opacity:0}
+@media(max-width:991px){.section-indicator{right:20px;top:70px}.section-indicator .pill{padding:5px 12px;font-size:11px}.section-indicator .pill b{font-size:12px}}
+@media(max-width:640px){.section-indicator{display:none}}
+
 /* Language switcher dropdown */
 .lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
 .lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
@@ -354,6 +365,9 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 <!-- Compact patent-pending pill: appears below logo when hero badge scrolls out -->
 <div aria-hidden="true" class="patent-badge-compact"><span class="pill">⚖ PATENT PENDING</span></div>
 
+<!-- Section indicator: shows which inventory section (skills / tools) is currently in view -->
+<div aria-hidden="true" class="section-indicator"><span class="pill"><span class="dot"></span> <span class="count-swap"><b data-count="33">33</b> <span data-label>plugin skills</span></span></span></div>
+
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
@@ -494,7 +508,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 </section>
 
 <!-- INVENTORY BAR -->
-<section class="s" style="padding-top:0">
+<section class="s" id="inventory-skills" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-kicker">The complete inventory</div>
@@ -986,7 +1000,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 </section>
 
 <!-- MCP TOOLS -->
-<section class="s">
+<section class="s" id="inventory-tools">
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-kicker">MCP tools</div>
@@ -1342,6 +1356,54 @@ document.querySelectorAll('.card').forEach(c=>{
   window.addEventListener('scroll',update,{passive:true});
   window.addEventListener('resize',function(){alignToLogo();update();});
   if(logo&&logo.complete===false){logo.addEventListener('load',alignToLogo);}
+  update();
+})();
+
+// Section indicator: shows "33 plugin skills" while the Skills section is in view,
+// swaps to "100 MCP tools" while the MCP Tools section is in view.
+(function(){
+  var indicator=document.querySelector('.section-indicator');
+  var skillsSec=document.getElementById('inventory-skills');
+  var toolsSec=document.getElementById('inventory-tools');
+  if(!indicator||!skillsSec||!toolsSec)return;
+  var countEl=indicator.querySelector('b[data-count]');
+  var labelEl=indicator.querySelector('[data-label]');
+  var swapEl=indicator.querySelector('.count-swap');
+  var currentKey='';
+  var states={
+    skills:{count:'33',label:'plugin skills'},
+    tools: {count:'100',label:'MCP tools'}
+  };
+  var setState=function(key){
+    if(key===currentKey)return;
+    var s=states[key];
+    if(!s){indicator.classList.remove('visible');currentKey='';return;}
+    if(currentKey){
+      indicator.classList.add('swapping');
+      setTimeout(function(){
+        countEl.textContent=s.count;
+        countEl.setAttribute('data-count',s.count);
+        labelEl.textContent=s.label;
+        indicator.classList.remove('swapping');
+      },150);
+    }else{
+      countEl.textContent=s.count;
+      countEl.setAttribute('data-count',s.count);
+      labelEl.textContent=s.label;
+    }
+    indicator.classList.add('visible');
+    currentKey=key;
+  };
+  var update=function(){
+    var navH=80;
+    var t=toolsSec.getBoundingClientRect();
+    var s=skillsSec.getBoundingClientRect();
+    if(t.top<navH && t.bottom>navH){setState('tools');}
+    else if(s.top<navH && s.bottom>navH){setState('skills');}
+    else{setState(null);}
+  };
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
   update();
 })();
 </script>
