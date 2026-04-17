@@ -81,6 +81,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 16px;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .cta-link.cta-sm {
+    padding: 10px 18px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+  @media (max-width: 700px) {
+    .topbar .badge-pending { display: none; }
+    .cta-link.cta-sm { padding: 9px 14px; font-size: 10.5px; letter-spacing: 0.14em; }
+    .cta-link.cta-sm .arrow { display: none; }
   }
   .logo {
     display: inline-flex;
@@ -709,6 +725,69 @@
     .schedule-block { padding: 40px 24px; }
   }
 
+  /* ---------- CALENDLY MODAL ---------- */
+  .cal-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 8, 10, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: cal-fade 0.2s ease;
+  }
+  .cal-modal.open { display: flex; }
+  @keyframes cal-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .cal-modal-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    max-height: 960px;
+    background: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  }
+  .cal-modal iframe {
+    border: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .cal-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(10, 10, 11, 0.85);
+    color: #ffffff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background 0.15s ease;
+    font-family: var(--font-sans);
+  }
+  .cal-modal-close:hover { background: #0a0a0b; }
+
+  @media (max-width: 700px) {
+    .cal-modal { padding: 12px; }
+    .cal-modal-close { top: 20px; right: 20px; }
+  }
+
   /* ---------- PRINT ---------- */
   @media print {
     :root {
@@ -735,6 +814,14 @@
 </head>
 <body>
 
+<!-- CALENDLY MODAL -->
+<div class="cal-modal" id="calModal" role="dialog" aria-modal="true" aria-label="Schedule a call with Fred">
+  <div class="cal-modal-inner">
+    <button type="button" class="cal-modal-close" id="calModalClose" aria-label="Close">&times;</button>
+    <iframe id="calModalFrame" title="Calendly scheduling" src="about:blank" allow="fullscreen"></iframe>
+  </div>
+</div>
+
 <!-- PASSWORD GATE -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
   <div class="gate-card">
@@ -754,7 +841,10 @@
 <div class="topbar">
   <div class="wrap inner">
     <div class="logo"><img alt="APIANT" src="../images/APIANT-LOGO-V4-Dark-Mode.svg"/></div>
-    <div class="badge-pending">&#128274; Confidential</div>
+    <div class="topbar-right">
+      <div class="badge-pending">&#128274; Confidential</div>
+      <a class="cta-link cta-sm" href="https://calendly.com/flumiere/quick-call-with-fred" data-cal-open="1">Schedule a call with Fred <span class="arrow">&rarr;</span></a>
+    </div>
   </div>
 </div>
 
@@ -766,7 +856,7 @@
     <p class="sub reveal">A dedicated, white-labeled APIANT instance that ActiveCampaign owns and operates. Your team builds integrations directly in Claude Code plus APIANT. Pricing scales with active production capacity, not per seat or per task.</p>
 
     <div class="hero-cta reveal">
-      <a class="cta-link" href="https://calendly.com/flumiere/quick-call-with-fred" target="_blank" rel="noopener">Schedule a call with Fred <span class="arrow">&rarr;</span></a>
+      <a class="cta-link" href="https://calendly.com/flumiere/quick-call-with-fred" data-cal-open="1">Schedule a call with Fred <span class="arrow">&rarr;</span></a>
     </div>
 
   </div>
@@ -1095,44 +1185,6 @@
   </div>
 </section>
 
-<!-- LICENSE RESTRICTIONS -->
-<section class="block">
-  <div class="wrap">
-    <span class="label reveal">09 &middot; What You Cannot Do (License Restrictions)</span>
-    <h2 class="reveal">The standard restrictions, stated plainly.</h2>
-    <p class="intro reveal">Counsel will want these flagged up front. They are standard enterprise software restrictions and they protect both sides.</p>
-
-    <div class="framing-grid">
-      <div class="frame reveal">
-        <div class="num">01</div>
-        <h3>No reverse engineering or reselling.</h3>
-        <p>No decompiling, disassembling, reverse engineering, or reselling the APIANT platform to third parties.</p>
-      </div>
-      <div class="frame reveal">
-        <div class="num">02</div>
-        <h3>No competing product.</h3>
-        <p>The platform cannot be used to build a product or service that competes with APIANT.</p>
-      </div>
-      <div class="frame reveal">
-        <div class="num">03</div>
-        <h3>No exceeding capacity without upgrading.</h3>
-        <p>No exceeding the App Connection limit on a tier without purchasing additional capacity or moving to the next tier.</p>
-      </div>
-    </div>
-
-    <div class="terms-grid reveal" style="margin-top:24px">
-      <div class="term">
-        <div class="term-label">APIANT Ownership</div>
-        <p>APIANT retains all right, title, and interest in the platform, including any feedback or suggestions Licensee provides.</p>
-      </div>
-      <div class="term">
-        <div class="term-label">Licensee Ownership</div>
-        <p>Licensee retains ownership of its own integrations, configurations, and data processed through the platform.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer class="wrap">
   <div class="mark">APIANT &copy; 2026 &middot; Patent Pending</div>
@@ -1192,6 +1244,41 @@
         input.value = '';
         input.focus();
       }
+    });
+  })();
+
+  // ---------- CALENDLY MODAL ----------
+  (function initCalModal() {
+    const modal = document.getElementById('calModal');
+    const frame = document.getElementById('calModalFrame');
+    const closeBtn = document.getElementById('calModalClose');
+    const CAL_URL = 'https://calendly.com/flumiere/quick-call-with-fred'
+      + '?hide_gdpr_banner=1'
+      + '&embed_domain=apiant.com'
+      + '&embed_type=Inline';
+
+    function openModal() {
+      if (frame.src === 'about:blank') frame.src = CAL_URL;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-cal-open]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    });
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
     });
   })();
 
