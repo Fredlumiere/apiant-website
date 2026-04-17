@@ -6,6 +6,10 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
 <title>APIANT Dedicated Pricing for ActiveCampaign</title>
+<script>
+  // Hide body until auth resolves to avoid flash of protected content
+  document.documentElement.style.visibility = 'hidden';
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -536,6 +540,175 @@
     .aws-table .tier-col { width: auto; }
   }
 
+  /* ---------- PASSWORD GATE ---------- */
+  .gate {
+    position: fixed;
+    inset: 0;
+    background: #0a0a0b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 24px;
+  }
+  .gate-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 44px 40px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 2px;
+    text-align: left;
+  }
+  .gate-card .gate-logo {
+    display: block;
+    height: 22px;
+    margin-bottom: 36px;
+  }
+  .gate-card .gate-label {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .gate-card h2 {
+    font-family: var(--font-sans);
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+  .gate-card p {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+  .gate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .gate-form input {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--hairline);
+    border-radius: 2px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .gate-form input:focus {
+    border-color: var(--accent);
+  }
+  .gate-form button {
+    background: var(--accent);
+    color: #0a0a0b;
+    border: 0;
+    padding: 14px 16px;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  .gate-form button:hover { opacity: 0.85; }
+  .gate-error {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #e89282;
+    margin-top: 4px;
+    min-height: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---------- CTA BUTTON ---------- */
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #0a0a0b;
+    text-decoration: none;
+    padding: 16px 28px;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .cta-link:hover { opacity: 0.88; transform: translateY(-1px); }
+  .cta-link .arrow { font-family: var(--font-mono); font-weight: 500; }
+  .cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--text);
+    text-decoration: none;
+    padding: 14px 26px;
+    border: 1px solid var(--hairline);
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .cta-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-cta {
+    margin-top: 36px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .schedule-block {
+    padding: 64px 56px;
+    border: 1px solid var(--accent-border);
+    background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 70%);
+    border-radius: 2px;
+    text-align: center;
+  }
+  .schedule-block h2 {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(28px, 3.2vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .schedule-block p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 700px) {
+    .gate-card { padding: 32px 24px; }
+    .schedule-block { padding: 40px 24px; }
+  }
+
   /* ---------- PRINT ---------- */
   @media print {
     :root {
@@ -562,6 +735,21 @@
 </head>
 <body>
 
+<!-- PASSWORD GATE -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <img class="gate-logo" alt="APIANT" src="../images/APIANT-LOGO-V4-Dark-Mode.svg"/>
+    <div class="gate-label">Confidential Document</div>
+    <h2 id="gateTitle">Access required.</h2>
+    <p>This pricing proposal is shared under NDA with the ActiveCampaign senior team. Enter the access code provided by Fred to continue.</p>
+    <form class="gate-form" id="gateForm" autocomplete="off">
+      <input type="password" id="gatePassword" placeholder="Access code" aria-label="Access code" autofocus required>
+      <button type="submit">Unlock</button>
+      <div class="gate-error" id="gateError" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="wrap inner">
@@ -576,6 +764,10 @@
     <span class="label reveal">Pricing Proposal &middot; April 17, 2026</span>
     <h1 class="reveal">APIANT Dedicated Pricing for <span class="accent">ActiveCampaign.</span></h1>
     <p class="sub reveal">A dedicated, white-labeled APIANT instance that ActiveCampaign owns and operates. Your team builds integrations directly in Claude Code plus APIANT. Pricing scales with active production capacity, not per seat or per task.</p>
+
+    <div class="hero-cta reveal">
+      <a class="cta-link" href="https://calendly.com/flumiere/quick-call-with-fred" target="_blank" rel="noopener">Schedule a call with Fred <span class="arrow">&rarr;</span></a>
+    </div>
 
   </div>
 </section>
@@ -948,6 +1140,61 @@
 </footer>
 
 <script>
+  // ---------- PASSWORD GATE ----------
+  // SHA-256 hash of the access code. Change this hash to rotate the password.
+  // Current code: ACxAPIANT
+  const PASSWORD_HASH = '3707153f54a46eb0bc99165949c438a5eef764c957618077551bbec126ebd7a3';
+  const AUTH_KEY = 'apiant_ac_pricing_auth';
+
+  async function sha256Hex(text) {
+    const buf = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
+
+  function unlockPage() {
+    const gate = document.getElementById('gate');
+    if (gate) gate.remove();
+    document.documentElement.style.visibility = '';
+  }
+
+  (function initGate() {
+    try {
+      if (sessionStorage.getItem(AUTH_KEY) === '1') {
+        unlockPage();
+        return;
+      }
+    } catch (e) {}
+
+    // Reveal the gate itself (the rest of the body stays hidden via the <html> style)
+    document.documentElement.style.visibility = '';
+    const everythingButGate = document.querySelectorAll('body > *:not(.gate)');
+    everythingButGate.forEach(el => { el.style.visibility = 'hidden'; });
+
+    const form = document.getElementById('gateForm');
+    const input = document.getElementById('gatePassword');
+    const errorEl = document.getElementById('gateError');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.textContent = '';
+      const entered = input.value.trim();
+      if (!entered) return;
+      const hash = await sha256Hex(entered);
+      if (hash === PASSWORD_HASH) {
+        try { sessionStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
+        everythingButGate.forEach(el => { el.style.visibility = ''; });
+        unlockPage();
+      } else {
+        errorEl.textContent = 'Incorrect access code.';
+        input.value = '';
+        input.focus();
+      }
+    });
+  })();
+
   // Reveal animation on scroll
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
