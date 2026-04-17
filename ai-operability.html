@@ -176,10 +176,16 @@ footer a{color:var(--muted)}
 footer a:hover{color:var(--text)}
 footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 
-/* Patent pending badge: fixed below nav, aligned with the logo, always visible */
-.patent-badge{position:fixed;top:76px;left:32px;z-index:45;display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#d4af37;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);border-radius:100px;padding:5px 14px;font-family:var(--font);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);pointer-events:none}
-@media(max-width:991px){.patent-badge{top:70px;left:20px;font-size:10px;padding:4px 12px;letter-spacing:1.2px}}
-@media(max-width:560px){.patent-badge{display:none}}
+/* Patent pending badge: original hero placement (gold pill) */
+.patent-badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#d4af37;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);border-radius:100px;padding:6px 18px;margin-bottom:18px;font-family:var(--font)}
+@media(max-width:760px){.patent-badge{font-size:10px;padding:5px 14px;letter-spacing:1.2px}}
+
+/* Compact patent pill: fixed below the logo, shown only when hero badge scrolls out of view.
+   Matches the short "⚖ PATENT PENDING" pill used later on the page. */
+.patent-badge-compact{position:fixed;top:0;left:0;right:0;z-index:45;max-width:1240px;margin:0 auto;padding:72px 24px 0;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity .2s ease, transform .2s ease}
+.patent-badge-compact.visible{opacity:1;transform:translateY(0)}
+.patent-badge-compact .pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#d4af37;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.2);border-radius:100px;padding:3px 10px;font-family:var(--font);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+@media(max-width:560px){.patent-badge-compact{display:none}}
 
 /* Language switcher dropdown */
 .lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
@@ -340,6 +346,9 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 <div class="container-blur"></div>
 </div>
 </div>
+
+<!-- Compact patent-pending pill: appears below logo when hero badge scrolls out -->
+<div aria-hidden="true" class="patent-badge-compact"><span class="pill">⚖ PATENT PENDING</span></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1308,6 +1317,19 @@ document.querySelectorAll('.card').forEach(c=>{
     c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
   });
 });
+
+// Compact patent pill: show once the hero badge has scrolled out of view
+(function(){
+  var hero=document.querySelector('.patent-badge');
+  var compact=document.querySelector('.patent-badge-compact');
+  if(!hero||!compact)return;
+  var update=function(){
+    compact.classList.toggle('visible', hero.getBoundingClientRect().bottom < 60);
+  };
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+})();
 </script>
 
 <!-- CONTACT POPUP (ported from ai.html) -->

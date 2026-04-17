@@ -78,22 +78,39 @@
       margin-bottom: 24px;
       font-family: var(--hp2-font);
     }
-    /* Patent pending pill: fixed below nav, aligned with logo, always visible */
-    .hp2-badge-fixed {
-      position: fixed !important;
-      top: 76px;
-      left: 32px;
+    /* Compact patent pill: fixed below the logo, shown once the hero badge scrolls out of view.
+       Matches the short "⚖ PATENT PENDING" pill used elsewhere on the page. */
+    .patent-badge-compact {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 45;
-      margin-bottom: 0 !important;
-      font-size: 11px !important;
-      padding: 5px 14px !important;
-      letter-spacing: 1.4px !important;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 72px 24px 0;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .patent-badge-compact.visible { opacity: 1; transform: translateY(0); }
+    .patent-badge-compact .pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #d4af37;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-family: var(--hp2-font);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      pointer-events: none;
     }
-    @media(max-width:991px){.hp2-badge-fixed{top:70px;left:20px;font-size:10px!important;padding:4px 12px!important;letter-spacing:1.2px!important}}
-    @media(max-width:560px){.hp2-badge-fixed{display:none}}
+    @media(max-width:560px){ .patent-badge-compact { display: none; } }
     .hp2-hero h1 {
       font-family: var(--hp2-font);
       font-size: 56px;
@@ -1782,10 +1799,14 @@
 <div class="container-blur"></div>
 </div>
 </div>
+<!-- Compact patent-pending pill: appears below logo when hero badge scrolls out -->
+<div aria-hidden="true" class="patent-badge-compact"><span class="pill">⚖ PATENT PENDING</span></div>
 <!-- S1: HERO -->
 <div class="hp2-hero">
 <div class="hp2-container">
-<span class="hp2-badge hp2-badge-fixed" style="background: rgba(212,175,55,0.08); color: #d4af37; border-color: rgba(212,175,55,0.25);">⚖ PATENT PENDING TECHNOLOGY</span>
+<div class="fade-in-on-scroll" style="margin-bottom: 20px;">
+<span class="hp2-badge" style="background: rgba(212,175,55,0.08); color: #d4af37; border-color: rgba(212,175,55,0.25); font-size: 14px; padding: 8px 22px; letter-spacing: 1.5px;">⚖ PATENT PENDING TECHNOLOGY</span>
+</div>
 <div class="fade-in-on-scroll" style="max-width:960px;margin-left:auto;margin-right:auto;">
 <h1>Integration Infrastructure<br/><span style="color: var(--hp2-green);">for AI.</span></h1>
 </div>
@@ -3705,5 +3726,20 @@
 <script src="js/reveal.js"></script>
 <script async="" src="https://elevenlabs.io/convai-widget/index.js" type="text/javascript"></script>
 <script src="/js/cookie-consent.js"></script>
-<script src="/js/i18n.js"></script></body>
+<script src="/js/i18n.js"></script>
+<script>
+// Compact patent pill: show once the hero badge has scrolled out of view
+(function(){
+  var hero=document.querySelector('.hp2-hero .hp2-badge');
+  var compact=document.querySelector('.patent-badge-compact');
+  if(!hero||!compact)return;
+  var update=function(){
+    compact.classList.toggle('visible', hero.getBoundingClientRect().bottom < 60);
+  };
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+})();
+</script>
+</body>
 </html>
