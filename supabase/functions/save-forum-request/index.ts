@@ -27,11 +27,15 @@ async function notifyDiscord(params: {
     timestamp: new Date().toISOString(),
   };
 
-  await fetch(url, {
+  const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username: "APIANT Website", embeds: [embed] }),
   });
+  if (!res.ok) {
+    const txt = await res.text().catch(() => "");
+    console.error("discord_fanout_failed", res.status, txt.slice(0, 200));
+  }
 }
 
 serve(async (req: Request) => {
