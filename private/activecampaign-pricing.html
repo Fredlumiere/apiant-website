@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <style>
   :root {
     --bg: #0a0a0b;
@@ -93,10 +94,241 @@
     font-size: 11px;
     letter-spacing: 0.18em;
   }
+  .cta-ghost.cta-sm {
+    padding: 9px 16px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--hairline);
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .cta-ghost.cta-sm:hover { border-color: var(--accent); color: var(--accent); }
+  .cta-ghost.cta-sm:disabled { opacity: 0.5; cursor: wait; }
+  .cta-link.cta-sm .cta-short { display: none; }
   @media (max-width: 700px) {
     .topbar .badge-pending { display: none; }
+    .cta-ghost.cta-sm { display: none; }
     .cta-link.cta-sm { padding: 9px 14px; font-size: 10.5px; letter-spacing: 0.14em; }
     .cta-link.cta-sm .arrow { display: none; }
+    .cta-link.cta-sm .cta-full { display: none; }
+    .cta-link.cta-sm .cta-short { display: inline; }
+  }
+
+  /* ---------- PDF GENERATION MODE ---------- */
+  body.generating-pdf {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    overflow: visible;
+    padding-top: 0;
+  }
+  body.generating-pdf::before { display: none !important; }
+  body.generating-pdf .topbar,
+  body.generating-pdf .cal-modal,
+  body.generating-pdf .gate,
+  body.generating-pdf .hero-cta,
+  body.generating-pdf .aws-mobile-cards { display: none !important; }
+  body.generating-pdf .aws-table-wrap { display: block !important; }
+  body.generating-pdf .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Palette swap: dark -> light */
+  body.generating-pdf {
+    --bg: #ffffff;
+    --bg-elevated: #ffffff;
+    --bg-card: #ffffff;
+    --border: #d8d4cc;
+    --hairline: #e8e4dc;
+    --text: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-muted: #7a7a7a;
+    --accent: #9a6a28;
+    --accent-soft: #f7f0e4;
+    --accent-border: #d4a574;
+  }
+
+  body.generating-pdf .hero,
+  body.generating-pdf section.block,
+  body.generating-pdf footer {
+    background: #ffffff !important;
+    border-color: #d8d4cc !important;
+  }
+  body.generating-pdf .hero { padding: 40px 0 40px !important; }
+  body.generating-pdf section.block { padding: 40px 0 !important; }
+
+  /* Typography adjustments */
+  body.generating-pdf .hero h1 { color: #1a1a1a !important; }
+  body.generating-pdf .hero h1 .accent { color: #9a6a28 !important; }
+  body.generating-pdf .hero .sub { color: #3a3a3a !important; }
+  body.generating-pdf .label { color: #9a6a28 !important; }
+  body.generating-pdf .label-muted { color: #7a7a7a !important; }
+  body.generating-pdf section.block h2 { color: #1a1a1a !important; }
+  body.generating-pdf section.block .intro { color: #3a3a3a !important; }
+  body.generating-pdf p,
+  body.generating-pdf li,
+  body.generating-pdf td,
+  body.generating-pdf th { color: #3a3a3a !important; }
+  body.generating-pdf strong,
+  body.generating-pdf ul li strong { color: #1a1a1a !important; }
+
+  /* Card simplification: thin borders, no fills, no gradients */
+  body.generating-pdf .tier-card,
+  body.generating-pdf .term,
+  body.generating-pdf .frame,
+  body.generating-pdf .enablement,
+  body.generating-pdf .instance-why .why {
+    background: #ffffff !important;
+    border: 1px solid #d8d4cc !important;
+    box-shadow: none !important;
+  }
+  body.generating-pdf .tier-card.featured {
+    background: #fbf7f0 !important;
+    border: 1px solid #d4a574 !important;
+  }
+  body.generating-pdf .tier-card .tier-name,
+  body.generating-pdf .frame .num,
+  body.generating-pdf .term .term-label,
+  body.generating-pdf .enablement .head .t1,
+  body.generating-pdf .instance-why .why strong,
+  body.generating-pdf .aws-table .tier-col,
+  body.generating-pdf .tier-card .tier-period.annual {
+    color: #9a6a28 !important;
+  }
+  body.generating-pdf .tier-card.featured .tier-name { color: #9a6a28 !important; }
+  body.generating-pdf .tier-card .tier-rate {
+    background: #fbf7f0 !important;
+    border: 1px solid #e8dfce !important;
+    color: #3a3a3a !important;
+  }
+  body.generating-pdf .tier-card ul li { border-bottom-color: #e8e4dc !important; }
+
+  body.generating-pdf .enablement .head { border-right-color: #e8e4dc !important; }
+  body.generating-pdf .enablement .body p,
+  body.generating-pdf .enablement .head .t2 { color: #1a1a1a !important; }
+  body.generating-pdf .tier-card .tier-price { color: #1a1a1a !important; }
+  body.generating-pdf .tier-card .tier-period { color: #4a4a4a !important; }
+  body.generating-pdf .tier-card .tier-equiv { color: #7a7a7a !important; }
+
+  /* Table */
+  body.generating-pdf .aws-table {
+    background: #ffffff !important;
+    border: 1px solid #d8d4cc !important;
+  }
+  body.generating-pdf .aws-table thead th {
+    background: #f7f5f0 !important;
+    color: #3a3a3a !important;
+    border-bottom-color: #d8d4cc !important;
+  }
+  body.generating-pdf .aws-table td { border-bottom-color: #e8e4dc !important; }
+  body.generating-pdf .aws-table .spec,
+  body.generating-pdf .aws-table .spec .hint { color: #3a3a3a !important; }
+  body.generating-pdf .aws-table .cost { color: #1a1a1a !important; }
+
+  /* AWS note: minimal left-border callout */
+  body.generating-pdf .aws-note {
+    background: #fbf7f0 !important;
+    color: #3a3a3a !important;
+    border-left: 3px solid #9a6a28 !important;
+  }
+
+  /* Contract pullquote: remove gradient and giant § glyph */
+  body.generating-pdf .contract {
+    background: #fbf7f0 !important;
+    border: 1px solid #d4a574 !important;
+    padding: 36px 44px !important;
+  }
+  body.generating-pdf .contract::before { display: none !important; }
+  body.generating-pdf .contract blockquote { color: #1a1a1a !important; }
+
+  /* Footer */
+  body.generating-pdf footer { color: #4a4a4a !important; }
+  body.generating-pdf footer .mark { color: #7a7a7a !important; }
+
+  /* Stack multi-column grids vertically for cleaner pagination */
+  body.generating-pdf .tier-grid,
+  body.generating-pdf .terms-grid,
+  body.generating-pdf .framing-grid,
+  body.generating-pdf .instance-why {
+    display: block !important;
+  }
+  body.generating-pdf .tier-card,
+  body.generating-pdf .term,
+  body.generating-pdf .frame,
+  body.generating-pdf .instance-why .why {
+    margin-bottom: 12px !important;
+    width: 100% !important;
+  }
+  body.generating-pdf .tier-card ul li {
+    padding: 8px 0 !important;
+  }
+
+  /* Enablement: stack vertically */
+  body.generating-pdf .enablement {
+    display: block !important;
+    padding: 28px 32px !important;
+  }
+  body.generating-pdf .enablement .head {
+    border-right: none !important;
+    border-bottom: 1px solid #e8e4dc !important;
+    padding-right: 0 !important;
+    padding-bottom: 18px !important;
+    margin-bottom: 18px !important;
+    width: auto !important;
+  }
+
+  /* Tighter section padding for PDF */
+  body.generating-pdf .tier-grid { margin-bottom: 24px !important; }
+
+  /* AWS table: fit within A4 portrait */
+  body.generating-pdf .aws-table {
+    table-layout: fixed !important;
+    font-size: 11.5px !important;
+    width: 100% !important;
+  }
+  body.generating-pdf .aws-table th,
+  body.generating-pdf .aws-table td {
+    padding: 10px 10px !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  body.generating-pdf .aws-table thead th { font-size: 10.5px !important; letter-spacing: 0.1em !important; }
+  body.generating-pdf .aws-table .tier-col {
+    width: 14% !important;
+    font-size: 10.5px !important;
+    letter-spacing: 0.08em !important;
+    white-space: nowrap !important;
+  }
+  body.generating-pdf .aws-table .spec { font-size: 11.5px !important; }
+  body.generating-pdf .aws-table .spec .hint { font-size: 10.5px !important; }
+  body.generating-pdf .aws-table .cost { font-size: 12px !important; white-space: normal !important; }
+  body.generating-pdf .aws-table th:nth-child(2),
+  body.generating-pdf .aws-table td:nth-child(2),
+  body.generating-pdf .aws-table th:nth-child(4),
+  body.generating-pdf .aws-table td:nth-child(4) { width: 25.5% !important; }
+  body.generating-pdf .aws-table th:nth-child(3),
+  body.generating-pdf .aws-table td:nth-child(3),
+  body.generating-pdf .aws-table th:nth-child(5),
+  body.generating-pdf .aws-table td:nth-child(5) { width: 17.5% !important; }
+
+  /* Avoid breaking individual blocks across pages */
+  body.generating-pdf .tier-card,
+  body.generating-pdf .term,
+  body.generating-pdf .frame,
+  body.generating-pdf .enablement,
+  body.generating-pdf .contract,
+  body.generating-pdf .aws-note,
+  body.generating-pdf .aws-table,
+  body.generating-pdf section.block h2 + p.intro,
+  body.generating-pdf .instance-why .why {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
   .logo {
     display: inline-flex;
@@ -351,13 +583,21 @@
   }
 
   /* ---------- AWS TABLE ---------- */
+  .aws-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 32px;
+  }
   .aws-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 32px;
     border: 1px solid var(--border);
     background: var(--bg-card);
+    min-width: 720px;
   }
+
+  /* Hidden on desktop — the <table> version is the default layout. */
+  .aws-mobile-cards { display: none; }
   .aws-table th,
   .aws-table td {
     padding: 18px 22px;
@@ -554,6 +794,200 @@
     .contract blockquote { font-size: 17px; }
     .aws-table th, .aws-table td { padding: 14px 14px; font-size: 13px; }
     .aws-table .tier-col { width: auto; }
+    .hero-cta { margin-top: 28px; gap: 10px; }
+  }
+
+  /* Narrow tablets / large phones */
+  @media (max-width: 720px) {
+    .topbar { padding: 16px 0; }
+    .topbar .inner { gap: 12px; }
+    .logo img { height: 18px; }
+    .hero { padding: 56px 0 42px; }
+    .hero h1 { margin-bottom: 20px; }
+    .hero .sub { font-size: 17px; }
+    section.block { padding: 48px 0; }
+    section.block .intro { margin-bottom: 36px; font-size: 16px; }
+
+    /* AWS table: swap to card-per-tier layout on phones to kill horizontal scroll */
+    .aws-table-wrap { display: none; }
+    .aws-mobile-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .aws-mcard {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      border-radius: 3px;
+      padding: 20px 22px;
+    }
+    .aws-mcard-tier {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .aws-mcard-row + .aws-mcard-row {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--hairline);
+    }
+    .aws-mcard-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .aws-mcard-spec {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+    .aws-mcard-hint {
+      color: var(--text-muted);
+      font-size: 12.5px;
+    }
+    .aws-mcard-cost {
+      font-family: var(--font-mono);
+      font-size: 14.5px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .tier-card { padding: 26px 22px; }
+    .term { padding: 20px 20px; }
+    .frame { padding: 26px 22px; }
+    .enablement { padding: 28px 24px; }
+    .contract { padding: 28px 22px; }
+    .contract::before { font-size: 32px; right: 18px; top: 12px; }
+    .contract blockquote { font-size: 16px; }
+    .schedule-block { padding: 36px 20px; }
+
+    /* Hero CTA: full-width, stacked */
+    .hero-cta { flex-direction: column; align-items: stretch; }
+    .hero-cta .cta-link { justify-content: center; }
+  }
+
+  /* Phones */
+  @media (max-width: 480px) {
+    .wrap { padding: 0 18px; }
+    .aws-table-wrap {
+      margin-left: -18px;
+      margin-right: -18px;
+      padding: 0 18px 10px;
+    }
+    .hero h1 { font-size: 34px; line-height: 1.08; }
+    .hero .sub { font-size: 15.5px; }
+    section.block h2 { font-size: 26px; line-height: 1.15; }
+    .label { font-size: 11px; letter-spacing: 0.16em; }
+
+    .tier-card .tier-price { font-size: 26px; }
+    .tier-card { padding: 22px 18px; }
+    .term { padding: 18px 18px; }
+    .frame { padding: 22px 18px; }
+    .enablement { padding: 22px 18px; gap: 20px; }
+    .enablement .head .t2 { font-size: 18px; }
+    .contract { padding: 24px 18px; }
+    .contract blockquote { font-size: 15px; }
+
+    footer { padding: 32px 0 40px; flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    /* Bump topbar CTA to reach ~44px tap target */
+    .cta-link.cta-sm { padding: 12px 14px; }
+
+    /* Gate card: tighter padding on small phones */
+    .gate { padding: 16px; }
+    .gate-card { padding: 28px 22px; }
+    .gate-card .gate-logo { margin-bottom: 28px; }
+    .gate-card h2 { font-size: 22px; }
+
+    /* Hero CTA: slightly smaller padding so the label fits on one line at 320 */
+    .hero-cta .cta-link { padding: 15px 20px; font-size: 11.5px; letter-spacing: 0.16em; }
+  }
+
+  /* ---------- AWS TABLE: CARD LAYOUT ON PHONES ---------- */
+  @media (max-width: 600px) {
+    /* Re-scope the wrap so it no longer needs horizontal scroll */
+    .aws-table-wrap {
+      overflow-x: visible;
+      margin-left: 0;
+      margin-right: 0;
+      padding: 0;
+    }
+    .aws-table {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      background: transparent;
+    }
+    .aws-table thead {
+      /* Visually hidden but kept for screen readers */
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .aws-table tbody { display: block; }
+    .aws-table tbody tr {
+      display: block;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      border-radius: 2px;
+      padding: 20px 20px 8px;
+      margin-bottom: 16px;
+    }
+    .aws-table tbody tr:last-child { margin-bottom: 0; }
+    .aws-table td {
+      display: block;
+      width: auto !important;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--hairline);
+      font-size: 14px;
+    }
+    .aws-table td:last-child { border-bottom: 0; }
+    .aws-table td::before {
+      content: attr(data-label);
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    /* Tier row becomes the card header */
+    .aws-table td.tier-col {
+      padding-top: 0;
+      padding-bottom: 14px;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+    }
+    .aws-table td.tier-col::before { display: none; }
+    .aws-table td.cost {
+      white-space: normal;
+      font-size: 15px;
+    }
+    .aws-table td.spec .hint {
+      font-size: 12.5px;
+      margin-top: 6px;
+    }
   }
 
   /* ---------- PASSWORD GATE ---------- */
@@ -843,7 +1277,8 @@
     <div class="logo"><img alt="APIANT" src="../images/APIANT-LOGO-V4-Dark-Mode.svg"/></div>
     <div class="topbar-right">
       <div class="badge-pending">&#128274; Confidential</div>
-      <a class="cta-link cta-sm" href="https://calendly.com/flumiere/quick-call-with-fred" data-cal-open="1">Schedule a call with Fred <span class="arrow">&rarr;</span></a>
+      <button type="button" class="cta-ghost cta-sm" id="pdfDownload" title="Download proposal as PDF">Download PDF</button>
+      <a class="cta-link cta-sm" href="https://calendly.com/flumiere/quick-call-with-fred" data-cal-open="1"><span class="cta-full">Schedule a call with Fred</span><span class="cta-short">Talk to Fred</span> <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </div>
@@ -960,7 +1395,51 @@
     <h2 class="reveal">Pass-through at cost. You control the AWS relationship.</h2>
     <p class="intro reveal">Illustrative examples below use AWS us-east-1, Linux, on-demand EC2, and gp3 EBS. These are pass-through infrastructure costs, separate from the APIANT software license.</p>
 
-    <table class="aws-table reveal">
+    <!-- Mobile card layout: one card per tier, shown instead of the table on narrow viewports -->
+    <div class="aws-mobile-cards reveal">
+      <div class="aws-mcard">
+        <div class="aws-mcard-tier">Dedicated</div>
+        <div class="aws-mcard-row">
+          <div class="aws-mcard-label">Small footprint</div>
+          <div class="aws-mcard-spec">1 &times; m7i.xlarge + 200 GB gp3<br><span class="aws-mcard-hint">DEV + PROD on same Docker host</span></div>
+          <div class="aws-mcard-cost">$400 to $900 / mo</div>
+        </div>
+        <div class="aws-mcard-row">
+          <div class="aws-mcard-label">Higher headroom</div>
+          <div class="aws-mcard-spec">1 &times; m7i.2xlarge + 200 GB gp3<br><span class="aws-mcard-hint">DEV + PROD on same Docker host</span></div>
+          <div class="aws-mcard-cost">$700 to $1,400 / mo</div>
+        </div>
+      </div>
+      <div class="aws-mcard">
+        <div class="aws-mcard-tier">Enterprise</div>
+        <div class="aws-mcard-row">
+          <div class="aws-mcard-label">Small footprint</div>
+          <div class="aws-mcard-spec">DEV: m7i-flex.xlarge<br>PROD: m7i.2xlarge<br><span class="aws-mcard-hint">700 GB gp3 total</span></div>
+          <div class="aws-mcard-cost">$1,500 to $3,500 / mo</div>
+        </div>
+        <div class="aws-mcard-row">
+          <div class="aws-mcard-label">Higher headroom</div>
+          <div class="aws-mcard-spec">DEV: m7i-flex.2xlarge<br>PROD: m7i.4xlarge<br><span class="aws-mcard-hint">700 GB gp3 total</span></div>
+          <div class="aws-mcard-cost">$3,000 to $6,500 / mo</div>
+        </div>
+      </div>
+      <div class="aws-mcard">
+        <div class="aws-mcard-tier">Sovereign</div>
+        <div class="aws-mcard-row">
+          <div class="aws-mcard-label">Small footprint</div>
+          <div class="aws-mcard-spec">DEV: m7i.4xlarge<br>PROD: m7i.8xlarge<br><span class="aws-mcard-hint">2.5 TB gp3 total</span></div>
+          <div class="aws-mcard-cost">$6,000 to $12,000 / mo</div>
+        </div>
+        <div class="aws-mcard-row">
+          <div class="aws-mcard-label">Higher headroom</div>
+          <div class="aws-mcard-spec">DEV: m7i.8xlarge<br>PROD: m7i.16xlarge<br><span class="aws-mcard-hint">2.5 TB gp3 total</span></div>
+          <div class="aws-mcard-cost">$11,000 to $22,000 / mo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aws-table-wrap reveal">
+    <table class="aws-table">
       <thead>
         <tr>
           <th>Tier</th>
@@ -972,28 +1451,29 @@
       </thead>
       <tbody>
         <tr>
-          <td class="tier-col">Dedicated</td>
-          <td class="spec">1 &times; m7i.xlarge + 200 GB gp3<span class="hint">DEV + PROD on same Docker host</span></td>
-          <td class="cost">$400 to $900</td>
-          <td class="spec">1 &times; m7i.2xlarge + 200 GB gp3<span class="hint">DEV + PROD on same Docker host</span></td>
-          <td class="cost">$700 to $1,400</td>
+          <td class="tier-col" data-label="Tier">Dedicated</td>
+          <td class="spec" data-label="Small footprint">1 &times; m7i.xlarge + 200 GB gp3<span class="hint">DEV + PROD on same Docker host</span></td>
+          <td class="cost" data-label="Typical AWS / mo">$400 to $900</td>
+          <td class="spec" data-label="Higher-headroom footprint">1 &times; m7i.2xlarge + 200 GB gp3<span class="hint">DEV + PROD on same Docker host</span></td>
+          <td class="cost" data-label="Typical AWS / mo">$700 to $1,400</td>
         </tr>
         <tr>
-          <td class="tier-col">Enterprise</td>
-          <td class="spec">DEV: m7i-flex.xlarge<br>PROD: m7i.2xlarge<span class="hint">700 GB gp3 total</span></td>
-          <td class="cost">$1,500 to $3,500</td>
-          <td class="spec">DEV: m7i-flex.2xlarge<br>PROD: m7i.4xlarge<span class="hint">700 GB gp3 total</span></td>
-          <td class="cost">$3,000 to $6,500</td>
+          <td class="tier-col" data-label="Tier">Enterprise</td>
+          <td class="spec" data-label="Small footprint">DEV: m7i-flex.xlarge<br>PROD: m7i.2xlarge<span class="hint">700 GB gp3 total</span></td>
+          <td class="cost" data-label="Typical AWS / mo">$1,500 to $3,500</td>
+          <td class="spec" data-label="Higher-headroom footprint">DEV: m7i-flex.2xlarge<br>PROD: m7i.4xlarge<span class="hint">700 GB gp3 total</span></td>
+          <td class="cost" data-label="Typical AWS / mo">$3,000 to $6,500</td>
         </tr>
         <tr>
-          <td class="tier-col">Sovereign</td>
-          <td class="spec">DEV: m7i.4xlarge<br>PROD: m7i.8xlarge<span class="hint">2.5 TB gp3 total</span></td>
-          <td class="cost">$6,000 to $12,000</td>
-          <td class="spec">DEV: m7i.8xlarge<br>PROD: m7i.16xlarge<span class="hint">2.5 TB gp3 total</span></td>
-          <td class="cost">$11,000 to $22,000</td>
+          <td class="tier-col" data-label="Tier">Sovereign</td>
+          <td class="spec" data-label="Small footprint">DEV: m7i.4xlarge<br>PROD: m7i.8xlarge<span class="hint">2.5 TB gp3 total</span></td>
+          <td class="cost" data-label="Typical AWS / mo">$6,000 to $12,000</td>
+          <td class="spec" data-label="Higher-headroom footprint">DEV: m7i.8xlarge<br>PROD: m7i.16xlarge<span class="hint">2.5 TB gp3 total</span></td>
+          <td class="cost" data-label="Typical AWS / mo">$11,000 to $22,000</td>
         </tr>
       </tbody>
     </table>
+    </div>
 
     <div class="aws-note reveal">
       <strong style="color:var(--text);font-weight:500">Note on AWS costs.</strong> Ranges reflect light to heavy real-world workload on each footprint, not raw EC2 plus EBS. For an integration platform at steady state, the bill is driven primarily by data egress to third-party APIs and NAT gateway data processing, which together often exceed compute cost. Secondary drivers include EBS snapshots and AWS Backup, CloudWatch logs and metrics, public IPv4 charges, Route 53, Secrets Manager, and any managed services you add. Light workloads and quiet integration schedules trend to the low end of each range; high-volume bi-directional sync, large payloads, or chatty APIs trend to the high end or beyond. Region, reserved instance or Savings Plan commitments, and taxes also shift the final bill.
@@ -1244,6 +1724,49 @@
         input.value = '';
         input.focus();
       }
+    });
+  })();
+
+  // ---------- PDF DOWNLOAD ----------
+  (function initPdfDownload() {
+    const btn = document.getElementById('pdfDownload');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      if (typeof html2pdf === 'undefined') {
+        alert('PDF engine still loading. Please try again in a moment.');
+        return;
+      }
+      const originalText = btn.textContent;
+      btn.textContent = 'Generating...';
+      btn.disabled = true;
+      document.body.classList.add('generating-pdf');
+      // Let layout settle before capture
+      await new Promise(r => setTimeout(r, 120));
+      try {
+        await html2pdf().set({
+          margin: [10, 8, 12, 8],
+          filename: 'APIANT-ActiveCampaign-Pricing-Proposal.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            windowWidth: 1180,
+            letterRendering: true,
+          },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+          pagebreak: {
+            mode: ['css', 'legacy'],
+            avoid: ['.tier-card', '.frame', '.term', '.enablement', '.contract', '.aws-note', '.instance-why .why', '.schedule-block', 'h2', 'tr']
+          }
+        }).from(document.body).save();
+      } catch (err) {
+        console.error('PDF generation failed:', err);
+        alert('PDF generation failed. Please try again.');
+      }
+      document.body.classList.remove('generating-pdf');
+      btn.textContent = originalText;
+      btn.disabled = false;
     });
   })();
 
