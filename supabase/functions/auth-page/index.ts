@@ -4,7 +4,11 @@ import { timingSafeEqual } from "../_shared/auth.ts";
 import { verifyTurnstile } from "../_shared/turnstile.ts";
 import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
 
-const ALLOWED_SLUGS = ["apiant-ai-advantage", "market-opportunity"];
+const ALLOWED_SLUGS = ["apiant-ai-advantage", "market-opportunity", "activecampaign-pricing"];
+
+function slugEnvKey(slug: string): string {
+  return slug.replace(/[^a-zA-Z0-9]/g, "_").toUpperCase();
+}
 
 Deno.serve(async (req: Request) => {
   const cors = getCorsHeaders(req);
@@ -51,8 +55,14 @@ Deno.serve(async (req: Request) => {
     const rl = await checkRateLimit(req, { bucket: "auth-page", max: 10, windowSeconds: 600 });
     if (!rl.ok) return rateLimitResponse(cors, rl.retryAfterSec);
 
-    const validUser = Deno.env.get("PROTECTED_PAGE_USER") || "";
-    const validPass = Deno.env.get("PROTECTED_PAGE_PASS") || "";
+    // Per-slug credentials preferred, generic fallback for legacy pages.
+    const slugKey = slugEnvKey(page_slug);
+    const validUser =
+      Deno.env.get(`PROTECTED_PAGE_USER_${slugKey}`) ||
+      Deno.env.get("PROTECTED_PAGE_USER") || "";
+    const validPass =
+      Deno.env.get(`PROTECTED_PAGE_PASS_${slugKey}`) ||
+      Deno.env.get("PROTECTED_PAGE_PASS") || "";
 
     // Constant-time compare on both fields. Note: this also still leaks
     // existence of the username through whether the comparison uses the empty

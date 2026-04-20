@@ -789,6 +789,7 @@
         </div>
         <div id="auth-error" style="display: none; color: #ef4444; font-size: 13px; margin-bottom: 12px; text-align: center;"></div>
         <button type="submit" id="auth-submit" style="width: 100%; padding: 12px; background: var(--op-green); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; transition: opacity 0.2s;">Sign In</button>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACqP7kMK5m2aXb3g" data-size="flexible" data-appearance="interaction-only" data-theme="dark" style="position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;" aria-hidden="true"></div>
       </form>
     </div>
   </div>
@@ -902,7 +903,12 @@
       fetch(AUTH_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username, password: password, page_slug: PAGE_SLUG })
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          page_slug: PAGE_SLUG,
+          turnstile_token: (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})()
+        })
       })
       .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
       .then(function(result) {
