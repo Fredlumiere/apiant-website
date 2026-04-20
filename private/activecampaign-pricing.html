@@ -43,14 +43,10 @@
   <form class="auth-card" id="auth-form" autocomplete="off">
     <div class="auth-label">Confidential Document</div>
     <h1>ActiveCampaign Pricing Proposal</h1>
-    <p class="auth-intro">This document is shared under NDA with the ActiveCampaign senior team. Enter the credentials provided by Fred to continue.</p>
+    <p class="auth-intro">This pricing proposal is shared under NDA with the ActiveCampaign senior team. Enter the access code provided by Fred to continue.</p>
     <div class="auth-field">
-      <label for="auth-user">Username</label>
-      <input type="text" id="auth-user" name="username" required autocomplete="username">
-    </div>
-    <div class="auth-field">
-      <label for="auth-pass">Password</label>
-      <input type="password" id="auth-pass" name="password" required autocomplete="current-password">
+      <label for="auth-pass">Access code</label>
+      <input type="password" id="auth-pass" name="password" required autofocus>
     </div>
     <button type="submit" class="auth-submit" id="auth-submit">Unlock</button>
     <div class="auth-error" id="auth-error"></div>
@@ -107,7 +103,7 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: document.getElementById('auth-user').value.trim(),
+        username: 'ac',
         password: document.getElementById('auth-pass').value.trim(),
         page_slug: PAGE_SLUG,
         turnstile_token: (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){};return t;})()
@@ -116,7 +112,7 @@
     .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
     .then(function(result) {
       if (!result.ok) {
-        errEl.textContent = result.data.error || 'Invalid credentials';
+        errEl.textContent = result.data.error === 'Invalid credentials' ? 'Incorrect access code.' : (result.data.error || 'Incorrect access code.');
         errEl.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'Unlock';
