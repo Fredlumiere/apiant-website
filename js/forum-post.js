@@ -13,7 +13,7 @@
 
   /* -- helpers -------------------------------------------------- */
 
-  function submitForumRequest(text) {
+  function submitForumRequest(text, email) {
     var url = window.CQ_SUPABASE_URL;
     if (!url) return;
 
@@ -24,6 +24,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           integration_need: text,
+          email: email || '',
           source_page: src ? src.value : location.pathname,
           domain: window.CQ_VERIFIED_DOMAIN || '',
           company_type: window.CQ_COMPANY_TYPE || '',
@@ -39,8 +40,9 @@
     var step = document.getElementById('cq-step-forum');
     if (!step) return;
 
-    var ta  = document.getElementById('cq-integration-need');
-    var btn = step.querySelector('.apiant-popup-submit');
+    var ta    = document.getElementById('cq-integration-need');
+    var email = document.getElementById('cq-forum-email');
+    var btn   = step.querySelector('.apiant-popup-submit');
     if (!ta || !btn) return;
 
     // Restore draft
@@ -60,8 +62,10 @@
       var text = ta.value.trim();
       if (!text) { ta.focus(); return; }
 
+      var emailVal = email ? email.value.trim() : '';
+
       // 1. Persist to DB and fan out to Discord server-side
-      submitForumRequest(text);
+      submitForumRequest(text, emailVal);
 
       // 2. Open Discord invite link
       window.open(DISCORD, '_blank', 'noopener');
