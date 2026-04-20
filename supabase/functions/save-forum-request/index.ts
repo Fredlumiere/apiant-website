@@ -2,6 +2,36 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { getServiceClient } from "../_shared/supabase.ts";
 
+const MAX_LEN = 4000;
+
+async function notifyDiscord(params: {
+  integration_need: string;
+  source_page: string | null;
+  domain: string | null;
+  company_type: string | null;
+}): Promise<void> {
+  const url = Deno.env.get("DISCORD_FORUM_WEBHOOK_URL");
+  if (!url) return;
+
+  const embed = {
+    title: "New Connector Request",
+    description: params.integration_need,
+    color: 0x1ab759,
+    fields: [
+      { name: "Company Domain", value: params.domain || "unknown", inline: true },
+      { name: "Company Type", value: params.company_type || "unknown", inline: true },
+      { name: "Source Page", value: params.source_page || "unknown", inline: false },
+    ],
+    timestamp: new Date().toISOString(),
+  };
+
+  await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username: "APIANT Website", embeds: [embed] }),
+  });
+}
+
 serve(async (req: Request) => {
   const cors = getCorsHeaders(req);
 
@@ -10,10 +40,13 @@ serve(async (req: Request) => {
   }
 
   try {
-    const { integration_need, source_page, domain, company_type } =
-      await req.json();
+    const body = await req.json();
+    const integration_need = String(body.integration_need ?? "").trim().slice(0, MAX_LEN);
+    const source_page = body.source_page ? String(body.source_page).slice(0, 500) : null;
+    const domain = body.domain ? String(body.domain).slice(0, 253) : null;
+    const company_type = body.company_type ? String(body.company_type).slice(0, 64) : null;
 
-    if (!integration_need || integration_need.trim().length === 0) {
+    if (!integration_need) {
       return new Response(
         JSON.stringify({ error: "integration_need is required" }),
         { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
@@ -22,13 +55,19 @@ serve(async (req: Request) => {
 
     const sb = getServiceClient();
     const { error } = await sb.from("forum_requests").insert({
-      integration_need: integration_need.trim(),
-      source_page: source_page || null,
-      domain: domain || null,
-      company_type: company_type || null,
+      integration_need,
+      source_page,
+      domain,
+      company_type,
     });
 
     if (error) throw error;
+
+    // Fan out to Discord server-side so the webhook URL never reaches the client.
+    // Failure here must not break the user flow.
+    try {
+      await notifyDiscord({ integration_need, source_page, domain, company_type });
+    } catch (_) { /* silent */ }
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...cors, "Content-Type": "application/json" },
