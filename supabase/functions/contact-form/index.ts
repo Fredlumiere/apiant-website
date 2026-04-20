@@ -8,6 +8,14 @@
  */
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
+import { verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function cap(s: unknown, max: number): string {
+  return typeof s === "string" ? s.slice(0, max) : "";
+}
 
 serve(async (req) => {
   const corsHeaders = getCorsHeaders(req);
@@ -16,11 +24,26 @@ serve(async (req) => {
   }
 
   try {
-    const { name, email, company, message } = await req.json();
-
-    if (!name || !email) {
+    const body = await req.json();
+    const turnstile = await verifyTurnstile(body.turnstile_token, req);
+    if (!turnstile.ok) {
       return new Response(
-        JSON.stringify({ error: "Name and email are required" }),
+        JSON.stringify({ error: "Verification failed. Please retry." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const rl = await checkRateLimit(req, { bucket: "contact-form", max: 5, windowSeconds: 3600 });
+    if (!rl.ok) return rateLimitResponse(corsHeaders, rl.retryAfterSec);
+
+    const name = cap(body.name, 120).trim();
+    const email = cap(body.email, 254).trim();
+    const company = cap(body.company, 200).trim();
+    const message = cap(body.message, 4000).trim();
+
+    if (!name || !email || !EMAIL_RE.test(email)) {
+      return new Response(
+        JSON.stringify({ error: "Name and a valid email are required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -50,7 +73,8 @@ serve(async (req) => {
       body: JSON.stringify({
         from: "APIANT <verify@apiant.com>",
         to: ["fredl@apiant.com"],
-        reply_to: email,
+        // reply_to is set from unverified user input; only include it if it parses cleanly.
+        ...(EMAIL_RE.test(email) ? { reply_to: email } : {}),
         subject: `AI Advantage Inquiry from ${name}${company ? ` (${company})` : ""}`,
         html: htmlBody,
       }),

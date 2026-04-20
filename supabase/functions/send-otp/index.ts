@@ -9,6 +9,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { getServiceClient } from "../_shared/supabase.ts";
+import { verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID");
@@ -129,7 +131,19 @@ serve(async (req) => {
   }
 
   try {
-    const { contact, type, session_id } = await req.json();
+    const body = await req.json();
+    const turnstile = await verifyTurnstile(body.turnstile_token, req);
+    if (!turnstile.ok) {
+      return new Response(
+        JSON.stringify({ error: "Verification failed. Please retry." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const ipRl = await checkRateLimit(req, { bucket: "send-otp", max: 10, windowSeconds: 3600 });
+    if (!ipRl.ok) return rateLimitResponse(corsHeaders, ipRl.retryAfterSec);
+
+    const { contact, type, session_id } = body;
 
     if (!contact || !type || !session_id) {
       return new Response(

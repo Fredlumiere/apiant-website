@@ -1,6 +1,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { getServiceClient } from "../_shared/supabase.ts";
+import { verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
 
 const MAX_LEN = 4000;
 
@@ -41,6 +43,17 @@ serve(async (req: Request) => {
 
   try {
     const body = await req.json();
+    const turnstile = await verifyTurnstile(body.turnstile_token, req);
+    if (!turnstile.ok) {
+      return new Response(
+        JSON.stringify({ error: "Verification failed. Please retry." }),
+        { status: 403, headers: { ...cors, "Content-Type": "application/json" } },
+      );
+    }
+
+    const rl = await checkRateLimit(req, { bucket: "save-forum-request", max: 10, windowSeconds: 3600 });
+    if (!rl.ok) return rateLimitResponse(cors, rl.retryAfterSec);
+
     const integration_need = String(body.integration_need ?? "").trim().slice(0, MAX_LEN);
     const source_page = body.source_page ? String(body.source_page).slice(0, 500) : null;
     const domain = body.domain ? String(body.domain).slice(0, 253) : null;

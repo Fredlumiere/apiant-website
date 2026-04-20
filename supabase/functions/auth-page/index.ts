@@ -1,5 +1,8 @@
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { getServiceClient } from "../_shared/supabase.ts";
+import { timingSafeEqual } from "../_shared/auth.ts";
+import { verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
 
 const ALLOWED_SLUGS = ["apiant-ai-advantage", "market-opportunity"];
 
@@ -18,7 +21,8 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const { username, password, page_slug } = await req.json();
+    const body = await req.json();
+    const { username, password, page_slug, turnstile_token } = body;
 
     if (!username || !password || !page_slug) {
       return new Response(JSON.stringify({ error: "Missing fields" }), {
@@ -34,10 +38,29 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    const validUser = Deno.env.get("PROTECTED_PAGE_USER");
-    const validPass = Deno.env.get("PROTECTED_PAGE_PASS");
+    // Require Turnstile to make brute force cost real work per attempt.
+    const turnstile = await verifyTurnstile(turnstile_token, req);
+    if (!turnstile.ok) {
+      return new Response(JSON.stringify({ error: "Verification failed. Please retry." }), {
+        status: 403,
+        headers: { ...cors, "Content-Type": "application/json" },
+      });
+    }
 
-    if (username !== validUser || password !== validPass) {
+    // Per-IP rate limit: 10 attempts per 10 min across all protected pages.
+    const rl = await checkRateLimit(req, { bucket: "auth-page", max: 10, windowSeconds: 600 });
+    if (!rl.ok) return rateLimitResponse(cors, rl.retryAfterSec);
+
+    const validUser = Deno.env.get("PROTECTED_PAGE_USER") || "";
+    const validPass = Deno.env.get("PROTECTED_PAGE_PASS") || "";
+
+    // Constant-time compare on both fields. Note: this also still leaks
+    // existence of the username through whether the comparison uses the empty
+    // fallback. Since there's only one expected user, that's acceptable here.
+    const userOk = timingSafeEqual(String(username), validUser);
+    const passOk = timingSafeEqual(String(password), validPass);
+
+    if (!userOk || !passOk || !validUser || !validPass) {
       return new Response(JSON.stringify({ error: "Invalid credentials" }), {
         status: 401,
         headers: { ...cors, "Content-Type": "application/json" },

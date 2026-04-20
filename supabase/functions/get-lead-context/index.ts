@@ -10,11 +10,28 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { getServiceClient } from "../_shared/supabase.ts";
+import { timingSafeEqual } from "../_shared/auth.ts";
+
+function checkBearer(req: Request): boolean {
+  const expected = Deno.env.get("AGENT_BEARER_TOKEN");
+  if (!expected) return false; // refuse to serve if unconfigured
+  const header = req.headers.get("Authorization") || "";
+  const match = header.match(/^Bearer\s+(.+)$/i);
+  if (!match) return false;
+  return timingSafeEqual(match[1].trim(), expected);
+}
 
 serve(async (req) => {
   const corsHeaders = getCorsHeaders(req);
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  if (!checkBearer(req)) {
+    return new Response(
+      JSON.stringify({ error: "Unauthorized" }),
+      { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   }
 
   // Allow GET with query param or POST with body
@@ -32,7 +49,7 @@ serve(async (req) => {
     }
   }
 
-  if (!session_id || !session_id.startsWith("apt_")) {
+  if (!session_id || !/^apt_[A-Za-z0-9]{4,32}$/.test(session_id)) {
     return new Response(
       JSON.stringify({ error: "Invalid session ID" }),
       { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }

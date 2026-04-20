@@ -16,8 +16,28 @@
  */
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
+import { verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
 
 const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
+
+/** Hostnames that must never be scraped via our paid backend. */
+const BLOCKED_HOSTS = [
+  "localhost", "127.0.0.1", "0.0.0.0",
+  "apiant.com", "www.apiant.com",
+  "supabase.co", "supabase.net",
+];
+const BLOCKED_TLDS = [".local", ".internal", ".lan", ".test"];
+const IPV4_RE = /^\d{1,3}(\.\d{1,3}){3}$/;
+
+function isDisallowedHost(host: string): boolean {
+  if (!host) return true;
+  if (IPV4_RE.test(host)) return true;
+  if (BLOCKED_HOSTS.includes(host)) return true;
+  for (const tld of BLOCKED_TLDS) if (host.endsWith(tld)) return true;
+  for (const blocked of BLOCKED_HOSTS) if (host.endsWith("." + blocked)) return true;
+  return false;
+}
 
 const TYPE_LABELS: Record<string, string> = {
   saas: "SaaS Company (a company that sells software as a service)",
@@ -175,7 +195,19 @@ serve(async (req) => {
   }
 
   try {
-    const { domain, claimed_type } = await req.json();
+    const body = await req.json();
+    const { domain, claimed_type, turnstile_token } = body;
+
+    const turnstile = await verifyTurnstile(turnstile_token, req);
+    if (!turnstile.ok) {
+      return new Response(
+        JSON.stringify({ error: "Verification failed. Please retry." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const rl = await checkRateLimit(req, { bucket: "verify-company-type", max: 5, windowSeconds: 600 });
+    if (!rl.ok) return rateLimitResponse(corsHeaders, rl.retryAfterSec);
 
     if (!domain || typeof domain !== "string") {
       return new Response(
@@ -193,15 +225,25 @@ serve(async (req) => {
 
     // Clean domain
     const cleanDomain = domain
+      .slice(0, 253)
       .replace(/^https?:\/\//, "")
       .replace(/\/.*$/, "")
+      .replace(/[?#].*$/, "")
+      .replace(/:\d+$/, "")
       .replace(/^www\./, "")
       .toLowerCase()
       .trim();
 
-    if (!cleanDomain || !cleanDomain.includes(".")) {
+    if (!cleanDomain || !cleanDomain.includes(".") || cleanDomain.length > 253) {
       return new Response(
         JSON.stringify({ error: "Please enter a valid domain (e.g., acme.com)" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (isDisallowedHost(cleanDomain)) {
+      return new Response(
+        JSON.stringify({ error: "That domain cannot be verified here." }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }

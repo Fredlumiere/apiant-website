@@ -18,6 +18,9 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { getServiceClient } from "../_shared/supabase.ts";
+import { hashPasswordBcrypt, isBcryptHash, verifyPassword } from "../_shared/auth.ts";
+import { verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
 
 function isWithinBusinessHours(
   timezone: string,
@@ -60,7 +63,11 @@ function isWithinBusinessHours(
   }
 }
 
-async function verifyAdmin(supabase: ReturnType<typeof getServiceClient>, password: string, email?: string): Promise<boolean> {
+async function verifyAdmin(
+  supabase: ReturnType<typeof getServiceClient>,
+  password: string,
+  email?: string,
+): Promise<boolean> {
   const { data } = await supabase
     .from("admin_settings")
     .select("admin_password_hash, admin_email")
@@ -73,13 +80,24 @@ async function verifyAdmin(supabase: ReturnType<typeof getServiceClient>, passwo
     return false;
   }
 
-  const encoder = new TextEncoder();
-  const hashBuffer = await crypto.subtle.digest("SHA-256", encoder.encode(password));
-  const hashHex = Array.from(new Uint8Array(hashBuffer))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
+  const ok = await verifyPassword(password, data.admin_password_hash);
+  if (!ok) return false;
 
-  return hashHex === data.admin_password_hash;
+  // Transparent upgrade: if the stored hash is still legacy SHA-256, re-hash
+  // with bcrypt now that we've confirmed the plaintext.
+  if (!isBcryptHash(data.admin_password_hash)) {
+    try {
+      const newHash = await hashPasswordBcrypt(password);
+      await supabase
+        .from("admin_settings")
+        .update({ admin_password_hash: newHash })
+        .eq("id", 1);
+    } catch (e) {
+      console.error("bcrypt upgrade failed:", (e as Error).message);
+    }
+  }
+
+  return true;
 }
 
 serve(async (req) => {
@@ -97,7 +115,17 @@ serve(async (req) => {
       try { body = await req.json(); } catch { /* empty body is fine for availability check */ }
 
       if (body.action) {
-        // Admin actions require password
+        // Admin actions require Turnstile + rate limit + password.
+        const turnstile = await verifyTurnstile(body.turnstile_token as string | undefined, req);
+        if (!turnstile.ok) {
+          return new Response(
+            JSON.stringify({ error: "Verification failed. Please retry." }),
+            { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        const rl = await checkRateLimit(req, { bucket: "check-availability-admin", max: 20, windowSeconds: 600 });
+        if (!rl.ok) return rateLimitResponse(corsHeaders, rl.retryAfterSec);
+
         if (!body.password || !(await verifyAdmin(supabase, body.password as string, body.email as string | undefined))) {
           return new Response(
             JSON.stringify({ error: "Unauthorized" }),

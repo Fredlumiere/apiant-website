@@ -1,5 +1,14 @@
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { getServiceClient } from "../_shared/supabase.ts";
+import { hashPasswordBcrypt, isBcryptHash, verifyPassword } from "../_shared/auth.ts";
+import { verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
+
+/** Strip characters that the PostgREST .or()/.ilike() parser treats specially. */
+const SAFE_SEARCH_RE = /[^A-Za-z0-9._\-@\s]/g;
+function sanitizeSearch(v: unknown, maxLen = 100): string {
+  return typeof v === "string" ? v.replace(SAFE_SEARCH_RE, "").slice(0, maxLen) : "";
+}
 
 Deno.serve(async (req: Request) => {
   const cors = getCorsHeaders(req);
@@ -9,7 +18,7 @@ Deno.serve(async (req: Request) => {
 
   try {
     const body = await req.json();
-    const { password, action, page = 1, per_page = 50, filters } = body;
+    const { password, action, page = 1, per_page = 50, filters, turnstile_token } = body;
 
     if (!password) {
       return new Response(
@@ -18,9 +27,19 @@ Deno.serve(async (req: Request) => {
       );
     }
 
+    // Turnstile + IP rate limit defend the password check from brute force.
+    const turnstile = await verifyTurnstile(turnstile_token, req);
+    if (!turnstile.ok) {
+      return new Response(
+        JSON.stringify({ error: "Verification failed. Please retry." }),
+        { status: 403, headers: { ...cors, "Content-Type": "application/json" } }
+      );
+    }
+    const rl = await checkRateLimit(req, { bucket: "admin-data", max: 20, windowSeconds: 600 });
+    if (!rl.ok) return rateLimitResponse(cors, rl.retryAfterSec);
+
     const supabase = getServiceClient();
 
-    // Verify admin password
     const { data: settings, error: settingsErr } = await supabase
       .from("admin_settings")
       .select("admin_password_hash")
@@ -34,43 +53,58 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Simple password check (bcrypt compare would be ideal, using direct compare for now)
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-
-    if (hashHex !== settings.admin_password_hash) {
+    const ok = await verifyPassword(String(password), settings.admin_password_hash);
+    if (!ok) {
       return new Response(
         JSON.stringify({ error: "Invalid password" }),
         { status: 401, headers: { ...cors, "Content-Type": "application/json" } }
       );
     }
 
-    const offset = (page - 1) * per_page;
+    // Transparent upgrade: if the stored hash is still legacy SHA-256, re-hash
+    // with bcrypt now that we've confirmed the plaintext.
+    if (!isBcryptHash(settings.admin_password_hash)) {
+      try {
+        const newHash = await hashPasswordBcrypt(String(password));
+        await supabase
+          .from("admin_settings")
+          .update({ admin_password_hash: newHash })
+          .eq("id", 1);
+      } catch (e) {
+        console.error("bcrypt upgrade failed:", (e as Error).message);
+      }
+    }
+
+    const safePage = Math.max(1, Math.min(1000, Number(page) || 1));
+    const safePerPage = Math.max(1, Math.min(200, Number(per_page) || 50));
+    const offset = (safePage - 1) * safePerPage;
 
     if (action === "leads") {
       let query = supabase
         .from("qualified_leads")
         .select("*", { count: "exact" })
         .order("created_at", { ascending: false })
-        .range(offset, offset + per_page - 1);
+        .range(offset, offset + safePerPage - 1);
 
-      if (filters?.company_type) {
-        query = query.eq("company_type", filters.company_type);
+      if (filters?.company_type && typeof filters.company_type === "string") {
+        query = query.eq("company_type", filters.company_type.slice(0, 32));
       }
       if (filters?.search) {
-        query = query.or(
-          `domain.ilike.%${filters.search}%,work_email.ilike.%${filters.search}%,company_name.ilike.%${filters.search}%`
-        );
+        const s = sanitizeSearch(filters.search);
+        if (s) {
+          // Pass sanitized value into each ilike clause; PostgREST will quote it.
+          const pattern = `%${s}%`;
+          query = query.or(
+            `domain.ilike.${pattern},work_email.ilike.${pattern},company_name.ilike.${pattern}`
+          );
+        }
       }
 
       const { data: leads, count, error } = await query;
       if (error) throw error;
 
       return new Response(
-        JSON.stringify({ leads, total: count, page, per_page }),
+        JSON.stringify({ leads, total: count, page: safePage, per_page: safePerPage }),
         { status: 200, headers: { ...cors, "Content-Type": "application/json" } }
       );
     }
@@ -80,23 +114,25 @@ Deno.serve(async (req: Request) => {
         .from("interaction_logs")
         .select("*", { count: "exact" })
         .order("created_at", { ascending: false })
-        .range(offset, offset + per_page - 1);
+        .range(offset, offset + safePerPage - 1);
 
-      if (filters?.event_type) {
-        query = query.eq("event_type", filters.event_type);
+      if (filters?.event_type && typeof filters.event_type === "string") {
+        query = query.eq("event_type", filters.event_type.slice(0, 64));
       }
-      if (filters?.session_id) {
-        query = query.eq("session_id", filters.session_id);
+      if (filters?.session_id && typeof filters.session_id === "string") {
+        // Session IDs are opaque ASCII tokens; use eq and cap length.
+        query = query.eq("session_id", filters.session_id.slice(0, 64));
       }
       if (filters?.source_page) {
-        query = query.ilike("source_page", `%${filters.source_page}%`);
+        const s = sanitizeSearch(filters.source_page, 200);
+        if (s) query = query.ilike("source_page", `%${s}%`);
       }
 
       const { data: logs, count, error } = await query;
       if (error) throw error;
 
       return new Response(
-        JSON.stringify({ logs, total: count, page, per_page }),
+        JSON.stringify({ logs, total: count, page: safePage, per_page: safePerPage }),
         { status: 200, headers: { ...cors, "Content-Type": "application/json" } }
       );
     }
@@ -124,7 +160,6 @@ Deno.serve(async (req: Request) => {
             .gte("created_at", today),
         ]);
 
-      // Top source pages
       const { data: topPages } = await supabase
         .from("qualified_leads")
         .select("source_page")
@@ -141,7 +176,6 @@ Deno.serve(async (req: Request) => {
         .slice(0, 10)
         .map(([page, count]) => ({ page, count }));
 
-      // Company type breakdown
       const { data: typeBreakdown } = await supabase
         .from("qualified_leads")
         .select("company_type");
@@ -170,7 +204,7 @@ Deno.serve(async (req: Request) => {
       { status: 400, headers: { ...cors, "Content-Type": "application/json" } }
     );
   } catch (e) {
-    console.error("Error:", e);
+    console.error("admin-data error:", (e as Error).message);
     return new Response(
       JSON.stringify({ error: "Server error" }),
       { status: 500, headers: { ...cors, "Content-Type": "application/json" } }
