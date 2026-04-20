@@ -1138,7 +1138,7 @@
       }, 2000));
       return;
     }
-    fetch(CQ_SUPABASE_URL + '/functions/v1/verify-company-type', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ domain: domain, claimed_type: CQ_SELECTED_TYPE }) })
+    fetch(CQ_SUPABASE_URL + '/functions/v1/verify-company-type', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ domain: domain, claimed_type: CQ_SELECTED_TYPE, turnstile_token: (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})() }) })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       cqClearScanTimeouts(); scanBar.style.width = '100%';
@@ -1200,7 +1200,7 @@
     function reenableOtpButtons() { CQ_SUBMITTING = false; document.querySelectorAll('#cq-verify-send .apiant-popup-qual-option').forEach(function(btn) { btn.style.pointerEvents = ''; btn.style.opacity = ''; }); }
     CQ_FORM_DATA.Phone = contact; CQ_FORM_DATA.PhoneType = method;
     if (!CQ_SUPABASE_URL) { setTimeout(function() { reenableOtpButtons(); statusEl.style.display = 'none'; document.getElementById('cq-verify-send').style.display = 'none'; document.getElementById('cq-verify-code').style.display = ''; var sentMsg = document.getElementById('cq-otp-sent-msg'); sentMsg.textContent = 'Code sent to ' + contact + '! Enter it within 10 minutes.'; sentMsg.style.color = 'rgba(255,255,255,0.5)'; }, 500); return; }
-    fetch(CQ_SUPABASE_URL + '/functions/v1/send-otp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contact: contact, type: method, session_id: CQ_SESSION_ID }) })
+    fetch(CQ_SUPABASE_URL + '/functions/v1/send-otp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contact: contact, type: method, session_id: CQ_SESSION_ID, turnstile_token: (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})() }) })
     .then(function(r) { return r.json(); })
     .then(function(data) { reenableOtpButtons(); if (data.error) { statusEl.textContent = data.error; statusEl.style.color = '#fca5a5'; return; } statusEl.style.display = 'none'; document.getElementById('cq-verify-send').style.display = 'none'; document.getElementById('cq-verify-code').style.display = ''; var sentMsg = document.getElementById('cq-otp-sent-msg'); sentMsg.textContent = (data.message || 'Code sent!') + ' Enter it within 10 minutes.'; sentMsg.style.color = 'rgba(255,255,255,0.5)'; })
     .catch(function() { reenableOtpButtons(); statusEl.textContent = 'Failed to send code. Please try again.'; statusEl.style.color = '#fca5a5'; });
@@ -1228,6 +1228,7 @@
     var verifyResult = CQ_VERIFY_RESULT || {};
     var leadData = { company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN || '', company_description: verifyResult.description || '', detected_type: verifyResult.detected_type || '', email: CQ_FORM_DATA.WorkEmail, company_name: CQ_FORM_DATA.Company || '', integration_needs: CQ_FORM_DATA.IntegrationNeeds || '', source_page: document.title };
     if (!CQ_SUPABASE_URL) { CQ_SUBMITTING = false; cqGoTo('cq-step-success'); return; }
+    leadData.turnstile_token = (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})();
     fetch(CQ_SUPABASE_URL + '/functions/v1/submit-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) })
     .then(function(r) { return r.json(); })
     .then(function() { CQ_SUBMITTING = false; cqGoTo('cq-step-success'); })

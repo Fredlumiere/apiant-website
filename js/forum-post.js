@@ -26,7 +26,8 @@
           integration_need: text,
           source_page: src ? src.value : location.pathname,
           domain: window.CQ_VERIFIED_DOMAIN || '',
-          company_type: window.CQ_COMPANY_TYPE || ''
+          company_type: window.CQ_COMPANY_TYPE || '',
+          turnstile_token: (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})()
         })
       });
     } catch (_) { /* silent */ }

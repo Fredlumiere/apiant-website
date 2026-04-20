@@ -2865,7 +2865,7 @@
       fetch(CQ_SUPABASE_URL + '/functions/v1/verify-company-type', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ domain: domain, claimed_type: CQ_SELECTED_TYPE })
+        body: JSON.stringify({ domain: domain, claimed_type: CQ_SELECTED_TYPE, turnstile_token: (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})() })
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -3074,7 +3074,7 @@
       fetch(CQ_SUPABASE_URL + '/functions/v1/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contact: contact, type: method, session_id: CQ_SESSION_ID })
+        body: JSON.stringify({ contact: contact, type: method, session_id: CQ_SESSION_ID, turnstile_token: (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})() })
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -3189,6 +3189,7 @@
         return;
       }
 
+      leadData.turnstile_token = (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})();
       fetch(CQ_SUPABASE_URL + '/functions/v1/submit-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
