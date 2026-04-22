@@ -308,8 +308,8 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 .drawer-tools .tool-pills{display:flex;flex-wrap:wrap;gap:6px}
 .drawer-tools .tool-pill{font-family:var(--mono);font-size:11px;color:var(--green);background:rgba(26,183,89,.08);border:1px solid rgba(26,183,89,.25);padding:4px 9px;border-radius:6px;cursor:pointer;transition:all .15s}
 .drawer-tools .tool-pill:hover{background:rgba(26,183,89,.16);color:#fff}
-.drawer-tools .tool-pill.input{color:#5cc8ff;background:rgba(92,200,255,.06);border-color:rgba(92,200,255,.25);cursor:default}
-.drawer-tools .tool-pill.input:hover{background:rgba(92,200,255,.06)}
+.drawer-tools .tool-pill.input{color:rgba(255,255,255,.72);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.14);cursor:default}
+.drawer-tools .tool-pill.input:hover{background:rgba(255,255,255,.04)}
 .drawer-tools .tool-pill-static{font-family:var(--mono);font-size:11px;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--border);padding:4px 9px;border-radius:6px;cursor:default}
 .drawer-close:focus-visible,.drawer-copy:focus-visible,.drawer-nav button:focus-visible,.drawer-tools .tool-pill:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .drawer-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 22px;border-top:1px solid var(--border)}
@@ -2076,24 +2076,194 @@ document.querySelectorAll('.card').forEach(c=>{
     return Array.prototype.slice.call(document.querySelectorAll('.card[data-kind]:not(.search-hidden)'));
   };
 
-  var catLabel={setup:'Setup',build:'Build',edit:'Edit',test:'Test & deploy',triggers:'Triggers',actions:'Actions',connector:'Connector',sync:'Two-way sync',patterns:'Patterns',ops:'Ops & support',tools:'MCP tools'};
+  var catLabel={setup:'Setup',build:'Build',edit:'Edit',test:'Test & deploy',triggers:'Triggers',actions:'Actions',connector:'Connector',sync:'Two-way sync',patterns:'Patterns',ops:'Ops & support',tools:'MCP tools',automation_builder:'Automation builder',assembly:'Assembly',automation_exec:'Automation exec',patterns_tool:'Patterns',deploy:'Deploy',admin:'Admin',alerts:'Alerts'};
 
-  var renderCard=function(card,swap){
-    if(!card) return;
+  // Hand-curated depth for hero MCP sub-tools that don't have their own grid card.
+  // Any pill whose name matches a key here renders as an interactive button that
+  // opens the drawer inline. Pills without an entry fall back to static spans.
+  var TOOL_DETAILS={
+    'auto_build':{
+      name:'auto_build', toolset:'automation_builder', category:'automation_builder', mutation:'write',
+      title:'Build an automation draft',
+      desc:'Validates intent JSON, creates assembly instances, generates automation XML, stores a draft in keyvalue storage.',
+      when:'When Claude is building a new automation from a natural-language prompt.',
+      example:'> Build an automation that syncs new HubSpot contacts to Mindbody.\n\n● auto_build\n  validating intent... ok\n  resolving apps: hubspot, mindbody\n  generating automation XML...\n  draft stored -> uuid 7f3a...',
+      inputs:['intent_json','automation_uuid (optional)','form_uuid (optional)','thread_id (optional)'],
+      used_by:['/build-automation','/build-integration','/edit-automation']
+    },
+    'auto_commit':{
+      name:'auto_commit', toolset:'automation_builder', category:'automation_builder', mutation:'write',
+      title:'Commit a draft to the dashboard',
+      desc:'Saves a committed draft automation to the dashboard so it becomes editable and runnable.',
+      when:'After auto_build generates a draft and tests pass against it.',
+      example:'● auto_commit\n  automation_uuid: 7f3a...\n  name: HubSpot -> Mindbody sync\n  folder: /acme-fitness/sync\n✓ committed v1',
+      inputs:['automation_uuid','name','folder_uuid','description'],
+      used_by:['/build-automation','/build-integration']
+    },
+    'auto_edit_structure':{
+      name:'auto_edit_structure', toolset:'automation_builder', category:'automation_builder', mutation:'write',
+      title:'Edit automation steps',
+      desc:'Adds, removes, reorders, or modifies steps in an existing automation. Non-destructive, diff-aware.',
+      when:'When the user says "add a step" or "swap this app for that one".',
+      example:'> In our Shopify-to-Mailchimp flow, add a deduplication step before the email push.\n\n● auto_edit_structure\n  op: insert assembly-action-find at index 2\n  op: rewire mapping step 3\n✓ draft v4',
+      inputs:['automation_uuid','operations (array of add/remove/move/update)'],
+      used_by:['/edit-automation']
+    },
+    'asm_create_connector':{
+      name:'asm_create_connector', toolset:'assembly', category:'assembly', mutation:'write',
+      title:'Create an app connector',
+      desc:'Creates a new app connector with auth type (OAUTH_V2, API_KEY, or NONE). The first assembly for any new app integration.',
+      when:'When building an integration for an app APIANT does not yet support.',
+      example:'> Build a connector for the Acme CRM API, OAuth2.\n\n● asm_create_connector\n  app_name: Acme CRM\n  auth_type: OAUTH_V2\n  base_url: https://api.acmecrm.com\n✓ connector scaffolded',
+      inputs:['app_name','auth_type','base_url','test_endpoint'],
+      used_by:['/build-assembly','/register-oauth-app']
+    },
+    'asm_set_jsp_and_compile':{
+      name:'asm_set_jsp_and_compile', toolset:'assembly', category:'assembly', mutation:'write',
+      title:'Write and compile JSP',
+      desc:'Writes JSP code for an assembly action or trigger and compiles it against the APIANT runtime. Fails fast if the JSP has syntax errors.',
+      when:'Core assembly authoring step, called after an action or trigger skeleton is created.',
+      example:'● asm_set_jsp_and_compile\n  assembly_uuid: abc...\n  action_uuid: def...\n  compiling... ok (0 warnings)',
+      inputs:['assembly_uuid','action_uuid','jsp_code'],
+      used_by:['/build-assembly','/edit-assembly','assembly-action-add','assembly-action-update','assembly-action-find','assembly-action-get','assembly-action-list','assembly-action-delete']
+    },
+    'asm_execute':{
+      name:'asm_execute', toolset:'assembly', category:'assembly', mutation:'write',
+      title:'Execute an assembly action',
+      desc:'Executes an assembly via the appExec servlet and returns raw output. Runs real API calls against the target system.',
+      when:'After asm_set_jsp_and_compile succeeds, to verify the assembly works against the real API.',
+      example:'● asm_execute\n  draft_assembly_uuid: abc...\n  input_values: { email: "sample@acme.com" }\n  status: 200\n  output: { id: 42, tier: "gold" }',
+      inputs:['draft_assembly_uuid','input_values'],
+      used_by:['/build-assembly','/edit-assembly','/test-automation']
+    },
+    'exec_test_automation':{
+      name:'exec_test_automation', toolset:'automation_exec', category:'automation_exec', mutation:'write',
+      title:'Test an automation',
+      desc:'Runs a committed automation in test mode against up to three real records. Async; poll exec_get_history for completion.',
+      when:'When testing an automation before activation.',
+      example:'> Test the Mindbody to HubSpot sync.\n\n● exec_test_automation\n  automation_uuid: 7f3a...\n  queued 3 records\n  polling exec_get_history...\n✓ 3/3 pass',
+      inputs:['automation_uuid'],
+      used_by:['/test-automation','/test-integration','/build-automation']
+    },
+    'exec_replay_webhook':{
+      name:'exec_replay_webhook', toolset:'automation_exec', category:'automation_exec', mutation:'write',
+      title:'Replay a past webhook',
+      desc:'Re-runs a past webhook payload against its automation. Useful for diagnosing why a specific webhook did not process correctly.',
+      when:'Customer support flow, when a specific event failed in production.',
+      example:'> Replay webhook 7f83b2 against this automation.\n\n● exec_replay_webhook\n  webhook_id: 7f83b2\n  payload bytes: 1.2 KB\n  run_id: run_9912...\n✓ replay queued',
+      inputs:['automation_uuid','webhook_id'],
+      used_by:['/support','/test-automation']
+    },
+    'pattern_search':{
+      name:'pattern_search', toolset:'patterns', category:'patterns', mutation:'read',
+      title:'Search the pattern library',
+      desc:'Searches the reusable recipe library for field mappings, transforms, gotchas, and templates. Filter by bucket, apps, or keywords.',
+      when:'When Claude needs prior art before building. Loaded automatically by build skills.',
+      example:"● pattern_search\n  bucket: field-mappings\n  apps: [hubspot, mindbody]\n  -> 4 patterns, 2 gotchas",
+      inputs:['query (optional)','bucket (templates | field-mappings | transforms | gotchas | settings | expressions | operational | assembly-apis | assembly-modules | assembly-wiring | form-design | form-automation)','apps'],
+      used_by:['/build-automation','/build-assembly','/build-form','/build-integration','/support']
+    },
+    'catalog_search_apps':{
+      name:'catalog_search_apps', toolset:'automation_builder', category:'automation_builder', mutation:'read',
+      title:'Search the app catalog',
+      desc:'Fuzzy search the catalog of 1000+ integrated apps. Returns matching app UUIDs with descriptions.',
+      when:'At the start of any build skill, to resolve natural-language app names to UUIDs.',
+      example:'> Find the HubSpot connector.\n\n● catalog_search_apps\n  query: "hubspot"\n  -> hubspot_crm (uuid a31c...), hubspot_marketing (uuid 8f20...)',
+      inputs:['query'],
+      used_by:['/build-automation','/build-assembly','/build-integration','/support']
+    },
+    'deploy_publish_folder':{
+      name:'deploy_publish_folder', toolset:'deploy', category:'deploy', mutation:'write',
+      title:'Publish a folder to prod',
+      desc:'Publishes all automations in a folder from dev to prod. Two-step with explicit confirmation required. Affects the cluster.',
+      when:'When promoting a folder of template automations to the production environment.',
+      example:'> Publish the /acme-fitness/sync folder to prod.\n\n● deploy_publish_folder\n  folder: /acme-fitness/sync\n  targets: 3 tenants\n  confirmed: false -> returning plan\n  (user confirms)\n● deploy_publish_folder (confirmed:true)\n✓ 7 automations published',
+      inputs:['folder_name','destination_tenant_uuids','confirmed (must be true on second call)'],
+      used_by:['/deploy-automation']
+    },
+    'admin_sql_query':{
+      name:'admin_sql_query', toolset:'admin', category:'admin', mutation:'read',
+      title:'Read-only SQL query',
+      desc:'Read-only SQL query against the APIANT database. SELECT-only, 30-second timeout, 100-row cap. Root admin only.',
+      when:'When diagnosing customer issues or validating data-level hypotheses.',
+      example:'> How many automations failed on Mindbody rate limits in the last 24 hours?\n\n● admin_sql_query\n  SELECT count(*) FROM exec_history\n   WHERE error_code = 429\n     AND app = "mindbody"\n     AND ts > now() - interval 1 day\n  -> 1 row: 47',
+      inputs:['query','database (optional)'],
+      used_by:['/support','/monitor-account']
+    },
+    'alert_set_system_mappings':{
+      name:'alert_set_system_mappings', toolset:'alerts', category:'alerts', mutation:'write',
+      title:'Set tenant alert rules',
+      desc:'Replaces tenant-scoped alert mapping rules. Fans out a Hazelcast reload so changes take effect cluster-wide.',
+      when:'When tuning alert behavior after a noisy incident.',
+      example:'> Suppress "quota exceeded" alerts from the Mindbody sync for 24 hours.\n\n● alert_set_system_mappings\n  rule: suppress pattern="quota exceeded" scope="mindbody" ttl=24h\n  confirmed: true\n  reloading cluster... 12 nodes ok',
+      inputs:['xml (full alertMappings XML)','confirmed (bool)'],
+      used_by:['/alert-handling']
+    }
+  };
+
+  // Normalize a card DOM node into the same entry shape as TOOL_DETAILS.
+  var cardToEntry=function(card){
+    if(!card) return null;
+    var invokesRaw=card.dataset.kind==='tool' ? (card.dataset.usedBy||card.dataset.invokes||'') : (card.dataset.invokes||'');
+    return {
+      name:card.dataset.name||'',
+      title:card.dataset.title||'',
+      desc:card.dataset.desc||'',
+      category:card.dataset.category||'',
+      kind:card.dataset.kind||'',
+      when:card.dataset.when||'',
+      example:card.dataset.example||'',
+      mutation:card.dataset.mutation||'',
+      inputs:(card.dataset.inputs||'').split(',').map(function(s){return s.trim();}).filter(Boolean),
+      // "Used by" for tool cards; "Invokes" for skill cards. Label decided at render time by kind.
+      pills:invokesRaw.split(',').map(function(s){return s.trim();}).filter(Boolean),
+      _source:'card'
+    };
+  };
+
+  // Normalize a TOOL_DETAILS entry into the same shape. Always treated as a tool.
+  var detailToEntry=function(d){
+    if(!d) return null;
+    return {
+      name:d.name||'',
+      title:d.title||d.name||'',
+      desc:d.desc||'',
+      category:d.category||d.toolset||'tools',
+      kind:'tool',
+      when:d.when||'',
+      example:d.example||'',
+      mutation:d.mutation||'',
+      inputs:(d.inputs||[]).slice(),
+      pills:(d.used_by||[]).slice(),
+      _source:'detail'
+    };
+  };
+
+  // Look up a name in TOOL_DETAILS first, then fall back to a matching card on the page.
+  var entryByName=function(n){
+    if(!n) return null;
+    if(Object.prototype.hasOwnProperty.call(TOOL_DETAILS,n)){
+      return detailToEntry(TOOL_DETAILS[n]);
+    }
+    var target=document.querySelector('.card[data-name="'+n.replace(/"/g,'\\"')+'"]');
+    if(target) return cardToEntry(target);
+    return null;
+  };
+
+  var renderEntry=function(entry,swap){
+    if(!entry) return;
     var doRender=function(){
       var esc=function(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
-      var name=card.dataset.name||'';
-      var title=card.dataset.title||'';
-      var desc=card.dataset.desc||'';
-      var cat=card.dataset.category||'';
-      var kind=card.dataset.kind||'';
-      var when=card.dataset.when||'';
-      var example=card.dataset.example||'';
-      // For tools, prefer data-used-by (semantic label); fall back to data-invokes. For skills, use data-invokes.
-      var invokesRaw=card.dataset.kind==='tool' ? (card.dataset.usedBy||card.dataset.invokes||'') : (card.dataset.invokes||'');
-      var invokes=invokesRaw.split(',').map(function(s){return s.trim();}).filter(Boolean);
-      var inputs=(card.dataset.inputs||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
-      var mut=card.dataset.mutation||'';
+      var name=entry.name||'';
+      var title=entry.title||'';
+      var desc=entry.desc||'';
+      var cat=entry.category||'';
+      var kind=entry.kind||'';
+      var when=entry.when||'';
+      var example=entry.example||'';
+      var pills=entry.pills||[];
+      var inputs=entry.inputs||[];
+      var mut=entry.mutation||'';
 
       currentName=name;
       elTitle.textContent=name;
@@ -2123,21 +2293,21 @@ document.querySelectorAll('.card').forEach(c=>{
         elExSec.hidden=true;
       }
 
-      if(invokes.length){
+      if(pills.length){
         elToolsSec.hidden=false;
         elToolsLabel.textContent=kind==='tool'?'Used by':'Invokes';
         elTools.innerHTML='';
-        invokes.forEach(function(n){
-          // Only create an interactive pill if a matching card exists on the page.
-          // Otherwise render a static span so users don't click into a dead no-op. (P0-3)
-          var target=document.querySelector('.card[data-name="'+n.replace(/"/g,'\\"')+'"]');
-          if(target){
+        pills.forEach(function(n){
+          // Prefer TOOL_DETAILS dataset match, then a matching card on the page,
+          // else render a static span so users don't click into a dead no-op. (P0-3)
+          var next=entryByName(n);
+          if(next){
             var pill=document.createElement('button');
             pill.type='button';
             pill.className='tool-pill';
             pill.textContent=n;
             pill.addEventListener('click',function(){
-              renderCard(target,true);
+              renderEntry(next,true);
             });
             elTools.appendChild(pill);
           } else {
@@ -2177,6 +2347,11 @@ document.querySelectorAll('.card').forEach(c=>{
     } else {
       doRender();
     }
+  };
+
+  // Back-compat wrapper: existing call sites pass a card DOM node.
+  var renderCard=function(card,swap){
+    renderEntry(cardToEntry(card),swap);
   };
 
   // Focus management (P0-5)
@@ -2292,20 +2467,31 @@ document.querySelectorAll('.card').forEach(c=>{
     }
   });
 
-  prevBtn.addEventListener('click',function(){
+  var detailNames=Object.keys(TOOL_DETAILS);
+  // Navigate between visible cards. If the drawer is currently showing a
+  // TOOL_DETAILS entry (no card on the page with that name), cycle within
+  // the TOOL_DETAILS dataset instead.
+  var step=function(dir){
+    if(Object.prototype.hasOwnProperty.call(TOOL_DETAILS,currentName) &&
+       !document.querySelector('.card[data-name="'+currentName.replace(/"/g,'\\"')+'"]')){
+      if(!detailNames.length) return;
+      var i=detailNames.indexOf(currentName);
+      var n=dir>0
+        ? (i<0 || i>=detailNames.length-1 ? 0 : i+1)
+        : (i<=0 ? detailNames.length-1 : i-1);
+      renderEntry(detailToEntry(TOOL_DETAILS[detailNames[n]]),true);
+      return;
+    }
     var vis=getVisibleCards();
     if(!vis.length) return;
     var idx=vis.findIndex(function(c){return c.dataset.name===currentName;});
-    var nextIdx=idx<=0 ? vis.length-1 : idx-1;
+    var nextIdx=dir>0
+      ? (idx<0 || idx>=vis.length-1 ? 0 : idx+1)
+      : (idx<=0 ? vis.length-1 : idx-1);
     renderCard(vis[nextIdx],true);
-  });
-  nextBtn.addEventListener('click',function(){
-    var vis=getVisibleCards();
-    if(!vis.length) return;
-    var idx=vis.findIndex(function(c){return c.dataset.name===currentName;});
-    var nextIdx=idx<0 || idx>=vis.length-1 ? 0 : idx+1;
-    renderCard(vis[nextIdx],true);
-  });
+  };
+  prevBtn.addEventListener('click',function(){ step(-1); });
+  nextBtn.addEventListener('click',function(){ step(1); });
 
   var showToast=function(msg){
     if(!toast) return;
@@ -2331,13 +2517,27 @@ document.querySelectorAll('.card').forEach(c=>{
     }catch(e){ showToast('Copy failed'); }
   });
 
-  // Auto-open if ?item= in URL
+  // Auto-open if ?item= in URL. Check TOOL_DETAILS first, then grid cards.
   try{
     var params=new URLSearchParams(window.location.search);
     var item=params.get('item');
     if(item){
-      var target=document.querySelector('.card[data-name="'+item.replace(/"/g,'\\"')+'"]');
-      if(target) setTimeout(function(){ openDrawer(target); },100);
+      if(Object.prototype.hasOwnProperty.call(TOOL_DETAILS,item)){
+        setTimeout(function(){
+          previousFocus=document.activeElement;
+          renderEntry(detailToEntry(TOOL_DETAILS[item]),false);
+          backdrop.hidden=false; drawer.hidden=false;
+          requestAnimationFrame(function(){
+            backdrop.classList.add('visible');
+            drawer.classList.add('visible');
+            try{ closeBtn.focus(); }catch(e){}
+          });
+          document.body.style.overflow='hidden';
+        },100);
+      } else {
+        var target=document.querySelector('.card[data-name="'+item.replace(/"/g,'\\"')+'"]');
+        if(target) setTimeout(function(){ openDrawer(target); },100);
+      }
     }
   }catch(e){}
 })();
