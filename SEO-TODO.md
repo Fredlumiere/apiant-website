@@ -12,14 +12,13 @@ Last updated: 2026-04-22. Ranked by impact. Tick off as they ship.
 
 Nothing ships without these.
 
-- [ ] **P0.1 — Deploy commit `62851c49` to apiant.com production**
-      Everything in the SEO/GEO foundation work is on GitHub `main` but not live on apiant.com until the production host pulls. Until deployed: schema invisible, `llms.txt` 404, Consent Mode not active, robots.txt still pointing at the wrong sitemap.
-      **Verify after deploy:**
-      ```bash
-      curl -sI https://apiant.com/llms.txt                     # expect 200
-      curl -s https://apiant.com/robots.txt | grep Sitemap      # expect /sitemap/sitemap_index.xml
-      curl -sL https://apiant.com | grep -oE '"@type":\s*"[^"]+"'  # Organization, WebSite
-      curl -sL https://apiant.com | grep -c 'hreflang="x-default"' # expect 1, not 45
+- [x] **P0.1 — Deploy commit `62851c49` to apiant.com production — DONE**
+      apiant.com auto-deploys from GitHub main via Apache reverse proxy to Vercel (`apache-vercel-proxy.conf`). Verified live 2026-04-22:
+      ```
+      curl -sI https://apiant.com/llms.txt                     → 200 ✓
+      curl -s https://apiant.com/robots.txt | grep Sitemap      → /sitemap/sitemap_index.xml ✓
+      curl -sL https://apiant.com | grep '"@type"'              → Organization, WebSite ✓
+      curl -sL https://apiant.com | grep -c 'hreflang="x-default"' → 1 (was 45) ✓
       ```
 
 - [ ] **P0.2 — Set `VERCEL_TOKEN` on the audit repo**
@@ -51,15 +50,19 @@ Nothing ships without these.
       - Restore the 4-tier pricing page from git history (`git log --diff-filter=D -- pricing.html` to find the pre-redirect version)
       - Or remove the redirect, update paid-search copy to point at `/platform/`, and be OK with the SEO loss
 
-- [ ] **P1.3 — Add Apache 301 for `.html` vs extensionless**
-      Both `https://apiant.com/for-saas` and `https://apiant.com/for-saas.html` return 200 with identical content. Pick one as canonical (current canonicals say `.html`) and 301 the other form.
-      **Apache snippet:**
+- [ ] **P1.3 — Add AWS server-side 301 for `.html` vs extensionless** (DevOps ticket)
+      Both `https://apiant.com/for-saas` and `https://apiant.com/for-saas.html` return 200 with identical content. Pick one as canonical (current canonicals say `.html`) and 301 the other form. apiant.com is served from AWS (not Vercel), so this is a server config change, not an in-repo change.
+      **Apache snippet for the AWS box:**
       ```apache
       RewriteEngine On
-      RewriteCond %{THE_REQUEST} " /([^ ?]+)(?:\?|$)" [NC]
-      RewriteCond %{DOCUMENT_ROOT}/%1.html -f
-      RewriteRule ^([^/]+)/?$ /$1.html [R=301,L,NE]
+      # Redirect /foo to /foo.html when /foo.html exists (excluding real dirs and known prefixes)
+      RewriteCond %{REQUEST_URI} !^/(css|js|images|videos|fonts|connect|connections|apipartners|sitemap|editor|admin|api|private|protected-content|oauth|es|fr|de|zh|ja|ar|he|hi|bn|pt|ru|ko|it|nl|tr|pl|vi|th|id|sv)(/|$)
+      RewriteCond %{REQUEST_FILENAME} !-d
+      RewriteCond %{REQUEST_FILENAME} !-f
+      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.html -f
+      RewriteRule ^(.+?)/?$ /$1.html [R=301,L]
       ```
+      Test against /for-saas (should 301 to /for-saas.html), /css/normalize.css (should pass through), /apipartners/mindbody/... (should pass through as the .html already exists), /es/for-saas.html (should pass through).
 
 ---
 
