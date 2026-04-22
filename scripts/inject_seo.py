@@ -32,6 +32,10 @@ HEAD_CLOSE_RE = re.compile(r'</head>', re.I)
 TITLE_RE = re.compile(r'<title>([^<]+)</title>', re.I)
 META_DESC_RE = re.compile(r'<meta[^>]*name=["\']description["\'][^>]*content=["\']([^"\']+)["\']', re.I)
 SCHEMA_MARKER = '<!-- apiant-seo:schema -->'
+FAQ_SCHEMA_MARKER = '<!-- apiant-seo:faq -->'
+FAQ_SECTION_RE = re.compile(r'<section\b[^>]*class\s*=\s*["\'][^"\']*\bfaq\b[^"\']*["\'][^>]*>(.*?)</section>', re.I | re.S)
+FAQ_ITEM_RE = re.compile(r'<h3[^>]*>(.*?)</h3>\s*<p[^>]*>(.*?)</p>', re.I | re.S)
+TAG_RE = re.compile(r'<[^>]+>')
 
 APP_HUB_DESCRIPTIONS = {
     "mindbody": "Turnkey Mindbody integrations connecting your studio platform to CRMs, email marketing, commerce, and video conferencing.",
@@ -363,6 +367,78 @@ def ensure_schema(path: Path, content: str) -> tuple[str, bool]:
     return inject_before_head_close(content, block)
 
 
+def clean_html_text(html: str) -> str:
+    """Strip tags, collapse whitespace, and decode a handful of common entities."""
+    text = TAG_RE.sub('', html)
+    text = (text
+            .replace('&amp;', '&')
+            .replace('&lt;', '<')
+            .replace('&gt;', '>')
+            .replace('&quot;', '"')
+            .replace('&#39;', "'")
+            .replace('&rsquo;', "'")
+            .replace('&lsquo;', "'")
+            .replace('&ldquo;', '"')
+            .replace('&rdquo;', '"')
+            .replace('&nbsp;', ' ')
+            .replace('&ndash;', '-'))
+    return re.sub(r'\s+', ' ', text).strip()
+
+
+def extract_faq_items(content: str) -> list[tuple[str, str]]:
+    """Find the first <section class="faq">...</section> and extract (Q, A) pairs."""
+    m = FAQ_SECTION_RE.search(content)
+    if not m:
+        return []
+    body = m.group(1)
+    items = []
+    for im in FAQ_ITEM_RE.finditer(body):
+        q = clean_html_text(im.group(1))
+        a = clean_html_text(im.group(2))
+        if q and a and q.endswith('?'):
+            items.append((q, a))
+    return items
+
+
+def faq_schema(items: list[tuple[str, str]]) -> dict:
+    return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": q,
+                "acceptedAnswer": {"@type": "Answer", "text": a},
+            }
+            for q, a in items
+        ],
+    }
+
+
+def faq_schema_block(items: list[tuple[str, str]]) -> str:
+    body = json.dumps(faq_schema(items), indent=2, ensure_ascii=False)
+    return f'{FAQ_SCHEMA_MARKER}\n<script type="application/ld+json">\n{body}\n</script>'
+
+
+def ensure_faq_schema(content: str) -> tuple[str, bool]:
+    items = extract_faq_items(content)
+    if not items:
+        return content, False
+    if FAQ_SCHEMA_MARKER in content:
+        # Rebuild if the set of questions has changed so schema stays in sync with copy.
+        new_block = faq_schema_block(items)
+        pattern = re.compile(
+            re.escape(FAQ_SCHEMA_MARKER)
+            + r'\s*<script type="application/ld\+json">\s*\{.*?\}\s*</script>',
+            re.S,
+        )
+        updated, n = pattern.subn(new_block, content, count=1)
+        if n and updated != content:
+            return updated, True
+        return content, False
+    return inject_before_head_close(content, faq_schema_block(items))
+
+
 HREFLANG_RE = re.compile(r'<link\b[^>]*hreflang\s*=\s*["\']([^"\']+)["\'][^>]*>', re.I)
 
 
@@ -413,6 +489,9 @@ def process_file(path: Path) -> dict:
     content, changed = ensure_schema(path, content)
     if changed:
         ops.append("schema")
+    content, changed = ensure_faq_schema(content)
+    if changed:
+        ops.append("faq_schema")
     content, changed = dedupe_hreflang(content)
     if changed:
         ops.append("hreflang_dedup")
