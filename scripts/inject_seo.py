@@ -44,6 +44,9 @@ def find_meta_description(content: str) -> str | None:
     return None
 SCHEMA_MARKER = '<!-- apiant-seo:schema -->'
 FAQ_SCHEMA_MARKER = '<!-- apiant-seo:faq -->'
+OGURL_MARKER = '<!-- apiant-seo:ogurl -->'
+SOFTWAREAPP_MARKER = '<!-- apiant-seo:softwareapplication -->'
+OGURL_TAG_RE = re.compile(r'<meta[^>]+property=["\']og:url["\'][^>]*/?>', re.I)
 FAQ_SECTION_RE = re.compile(r'<section\b[^>]*class\s*=\s*["\'][^"\']*\bfaq\b[^"\']*["\'][^>]*>(.*?)</section>', re.I | re.S)
 FAQ_ITEM_RE = re.compile(r'<h3[^>]*>(.*?)</h3>\s*<p[^>]*>(.*?)</p>', re.I | re.S)
 TAG_RE = re.compile(r'<[^>]+>')
@@ -378,6 +381,94 @@ def breadcrumb_schema(path: Path) -> dict | None:
     }
 
 
+# Pages that receive a SoftwareApplication JSON-LD block. Keys are repo-relative POSIX.
+SOFTWAREAPP_PAGES: dict[str, dict] = {
+    "platform/index.html": {
+        "name": "APIANT iPaaS",
+        "applicationCategory": "BusinessApplication",
+        "description": "APIANT is a white-label integration platform (iPaaS) for SaaS companies, System Integrators, and enterprises. Dedicated servers, AI co-pilots, embeddable UIs, and a unified data processing engine.",
+        "featureList": [
+            "Dedicated infrastructure per customer, no shared multi-tenant servers",
+            "Fully white-label down to the embeddable end-user UI",
+            "Unified data processing engine for JSON, XML, CSV, EDI, HL7, binary",
+            "AI co-pilots for automation authoring and connector generation",
+            "Admin console for multi-tenant management and usage monitoring",
+            "Deployable in SaaS, customer cloud, or on-premise",
+        ],
+        "offersUrl": "https://apiant.com/platform/index.html",
+    },
+    "platform/assembly-editor.html": {
+        "name": "APIANT Assembly Editor",
+        "applicationCategory": "DeveloperApplication",
+        "description": "The Assembly Editor builds and edits API connectors. The AI Co-Pilot reads third-party API documentation and generates working connectors automatically, reducing new-integration build time from weeks to hours.",
+        "featureList": [
+            "AI Co-Pilot reads API docs and generates connectors",
+            "Visual authoring of triggers, actions, and mappings",
+            "XPath-based transformations across every supported data format",
+            "Version control and commit history per assembly",
+            "Reusable connector patterns",
+        ],
+        "offersUrl": "https://apiant.com/platform/assembly-editor.html",
+    },
+    "mcp-servers.html": {
+        "name": "APIANT MCP Server",
+        "applicationCategory": "DeveloperApplication",
+        "description": "APIANT MCP Servers expose the integration platform to Claude, ChatGPT, and other LLM agents over the Model Context Protocol, so agents can list, configure, and execute integrations as first-class tools.",
+        "featureList": [
+            "Model Context Protocol server for LLM agents",
+            "Agent-callable integration tools across 500+ connectors",
+            "Dev and prod environments with scoped tool access",
+            "Works with Claude Code, Claude Desktop, ChatGPT, and other MCP clients",
+            "OAuth-scoped tool authorization",
+        ],
+        "offersUrl": "https://apiant.com/mcp-servers.html",
+    },
+    "ai-operability.html": {
+        "name": "APIANT Claude Code Plugin",
+        "applicationCategory": "DeveloperApplication",
+        "description": "APIANT's Claude Code plugin exposes 35 skills and 125 MCP tools for building, editing, testing, and deploying integrations from the terminal. The first iPaaS operable end-to-end by Claude Code.",
+        "featureList": [
+            "Build new automations from natural-language prompts",
+            "Build and edit app assemblies (connectors, triggers, actions)",
+            "Test automations end-to-end with branch coverage",
+            "Deploy dev to prod across linked customer accounts",
+            "Diagnose customer issues via execution history and log search",
+            "Design and wire Human Interaction forms",
+            "Reusable pattern library (chat widgets, CSV mappings, fan-out/fan-in, human moderation, snoozes)",
+            "Two-way bidirectional sync with loop prevention",
+        ],
+        "offersUrl": "https://apiant.com/platform/index.html",
+    },
+}
+
+
+def software_application_schema(path: Path) -> dict | None:
+    rel = path.relative_to(ROOT).as_posix()
+    meta = SOFTWAREAPP_PAGES.get(rel)
+    if not meta:
+        return None
+    return {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": meta["name"],
+        "applicationCategory": meta["applicationCategory"],
+        "operatingSystem": "Cloud, macOS, Windows, Linux",
+        "description": meta["description"],
+        "featureList": meta["featureList"],
+        "offers": {
+            "@type": "Offer",
+            "url": meta["offersUrl"],
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "APIANT",
+            "url": "https://apiant.com",
+        },
+    }
+
+
 def tech_article_schema(path: Path, content: str) -> dict | None:
     rel = path.relative_to(ROOT).as_posix()
     meta = EEAT_PAGES.get(rel)
@@ -430,6 +521,10 @@ def schemas_for(path: Path, content: str) -> list[dict]:
         bs = breadcrumb_schema(path)
         if bs:
             schemas.append(bs)
+        # E-E-A-T + SoftwareApplication can coexist (mcp-servers.html, assembly-editor.html)
+        sa = software_application_schema(path)
+        if sa:
+            schemas.append(sa)
         return schemas
     # API App product pages: Product + Breadcrumb
     ps = product_schema(path, content)
@@ -438,6 +533,20 @@ def schemas_for(path: Path, content: str) -> list[dict]:
     bs = breadcrumb_schema(path)
     if bs:
         schemas.append(bs)
+    # SoftwareApplication for pages not otherwise covered (platform/index, ai-operability)
+    if not schemas:
+        sa = software_application_schema(path)
+        if sa:
+            schemas.append(sa)
+            bs = breadcrumb_schema(path)
+            if bs:
+                schemas.append(bs)
+    else:
+        # If the page also has a SoftwareApplication entry (e.g. platform/index.html
+        # hits breadcrumb only above, so "schemas" already holds the breadcrumb), append SA.
+        sa = software_application_schema(path)
+        if sa and not any(s.get("@type") == "SoftwareApplication" for s in schemas):
+            schemas.append(sa)
     return schemas
 
 
@@ -458,6 +567,7 @@ def ensure_author_meta(path: Path, content: str) -> tuple[str, bool]:
 
 def ensure_schema(path: Path, content: str) -> tuple[str, bool]:
     rel = path.relative_to(ROOT).as_posix()
+    changed_any = False
     # Fast path: nothing yet, write the full block.
     if not has_schema_block(content):
         schemas = schemas_for(path, content)
@@ -469,18 +579,37 @@ def ensure_schema(path: Path, content: str) -> tuple[str, bool]:
     # append only the TechArticle JSON-LD to the existing block.
     if rel in EEAT_PAGES and '"TechArticle"' not in content:
         ta = tech_article_schema(path, content)
-        if not ta:
-            return content, False
-        body = json.dumps(ta, indent=2, ensure_ascii=False)
-        snippet = f'<script type="application/ld+json">\n{body}\n</script>\n'
-        # Insert immediately before </head> so it sits next to the existing schema block.
-        return inject_before_head_close(content, snippet)
+        if ta:
+            body = json.dumps(ta, indent=2, ensure_ascii=False)
+            snippet = f'<script type="application/ld+json">\n{body}\n</script>\n'
+            content, ok = inject_before_head_close(content, snippet)
+            if ok:
+                changed_any = True
+    # SoftwareApplication: if the page is eligible and the schema isn't already in the file, add it.
+    if rel in SOFTWAREAPP_PAGES and '"SoftwareApplication"' not in content:
+        sa = software_application_schema(path)
+        if sa:
+            body = json.dumps(sa, indent=2, ensure_ascii=False)
+            snippet = f'{SOFTWAREAPP_MARKER}\n<script type="application/ld+json">\n{body}\n</script>\n'
+            content, ok = inject_before_head_close(content, snippet)
+            if ok:
+                changed_any = True
     # Homepage: refresh Organization schema if sameAs still lists removed profiles.
     if rel == "index.html" and (
         "linkedin.com/company/apiant" in content or "twitter.com/apiant" in content
     ):
-        return refresh_homepage_schema(content)
-    return content, False
+        content, ok = refresh_homepage_schema(content)
+        if ok:
+            changed_any = True
+    return content, changed_any
+
+
+def ensure_og_url(content: str, canonical_url: str) -> tuple[str, bool]:
+    """Inject <meta property="og:url" content="<canonical>"/> on any indexable page."""
+    if OGURL_TAG_RE.search(content):
+        return content, False
+    tag = f'{OGURL_MARKER}\n<meta content="{canonical_url}" property="og:url"/>'
+    return inject_before_head_close(content, tag)
 
 
 def refresh_homepage_schema(content: str) -> tuple[str, bool]:
@@ -618,6 +747,9 @@ def process_file(path: Path) -> dict:
     content, changed = ensure_canonical(content, url_for(path))
     if changed:
         ops.append("canonical")
+    content, changed = ensure_og_url(content, url_for(path))
+    if changed:
+        ops.append("og_url")
     content, changed = ensure_author_meta(path, content)
     if changed:
         ops.append("author_meta")

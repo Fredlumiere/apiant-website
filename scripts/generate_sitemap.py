@@ -46,7 +46,6 @@ EXCLUDE_FILES = {
     "ADOPTION-PLAN.html",
     "servlettemplateconnect.html",
     "servlettemplateconnections.html",
-    "ai-operability.html",
     "workshop-appointment-confirmation.html",
 }
 
