@@ -63,7 +63,11 @@ a{color:inherit;text-decoration:none}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--green);background:var(--green-dim);border:1px solid rgba(26,183,89,.22);border-radius:100px;padding:7px 16px;margin-bottom:28px}
 .eyebrow .pulse{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(26,183,89,.6);animation:pulse 1.8s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(26,183,89,.55)}70%{box-shadow:0 0 0 10px rgba(26,183,89,0)}100%{box-shadow:0 0 0 0 rgba(26,183,89,0)}}
-.hero h1{font-size:64px;font-weight:700;line-height:1.05;letter-spacing:-.02em;max-width:940px;margin:0 auto 26px}
+.hero h1{font-size:56px;font-weight:700;line-height:1.08;letter-spacing:-.02em;max-width:1180px;margin:0 auto 26px;text-wrap:balance}
+@media(max-width:1280px){.hero h1{font-size:50px;max-width:1060px}}
+@media(max-width:1080px){.hero h1{font-size:44px;max-width:940px}}
+@media(max-width:920px){.hero h1{font-size:38px;max-width:820px}}
+@media(max-width:820px){.hero h1{font-size:32px;max-width:680px}}
 .hero h1 .grad{background:linear-gradient(135deg,#1ab759 0%,#5cc8ff 65%,#c084fc 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.lead{font-size:20px;line-height:1.6;color:var(--muted);max-width:760px;margin:0 auto 40px}
 .hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;font-size:14px;color:var(--faint);margin-bottom:44px}
@@ -75,7 +79,8 @@ a{color:inherit;text-decoration:none}
 .hero-version span{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border:1px solid rgba(26,183,89,.25);border-radius:100px;background:rgba(26,183,89,.06)}
 .hero-version b{color:#1ab759;font-weight:700}
 .hero-version .ver-icon{width:13px;height:13px;color:#1ab759;flex-shrink:0}
-@media(max-width:760px){.hero{padding:64px 0 48px}.hero h1{font-size:40px}.hero p.lead{font-size:17px}}
+@media(max-width:760px){.hero{padding:64px 0 48px}.hero h1{font-size:32px;max-width:100%}.hero p.lead{font-size:17px}}
+@media(max-width:480px){.hero h1{font-size:28px}}
 
 /* Hero dataflow SVG */
 .dataflow{width:100%;max-width:1040px;margin:12px auto 0;display:block}
@@ -115,6 +120,13 @@ section.s + section.s{border-top:1px solid var(--border)}
 
 /* Grid */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;max-width:1240px;margin:0 auto 40px}
+/* Override legacy global .card { height: 600px } from css/apiant.css so inventory cards size to their content. */
+.grid > .card{height:auto;min-height:0;background-image:none;box-shadow:none}
+/* Tool cards have variable content density; let them size naturally instead of stretching. Skill grids keep stretch for aesthetic uniformity. */
+.grid[data-cat-key^="tools-"]{align-items:start}
+/* Category block collapse on zero visible cards */
+.cat.cat-empty, .grid.cat-empty{opacity:0;max-height:0;margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;overflow:hidden;pointer-events:none;transition:opacity .18s ease, max-height .28s ease, margin .2s ease, padding .2s ease}
+.cat, .grid{transition:opacity .18s ease}
 .card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;transition:transform .2s,background .2s,border-color .2s;overflow:hidden}
 .card::before{content:'';position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(26,183,89,.08),transparent 40%);opacity:0;transition:opacity .3s;pointer-events:none}
 .card:hover{transform:translateY(-2px);background:var(--card-hi);border-color:rgba(26,183,89,.28)}
@@ -737,29 +749,16 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <h2>35 skills across 10 workflows.</h2>
       <p>Every skill is a procedure a senior APIANT engineer follows, encoded and executable by Claude Code. Click any card for the full what/when/how.</p>
     </div>
-    <div class="bar">
-      <div class="chip"><b>1</b> setup</div>
-      <div class="chip"><b>4</b> build</div>
-      <div class="chip"><b>2</b> edit</div>
-      <div class="chip"><b>3</b> test &amp; deploy</div>
-      <div class="chip"><b>6</b> triggers</div>
-      <div class="chip"><b>6</b> actions</div>
-      <div class="chip"><b>3</b> connector</div>
-      <div class="chip"><b>1</b> sync</div>
-      <div class="chip"><b>6</b> patterns</div>
-      <div class="chip"><b>3</b> ops &amp; support</div>
-    </div>
-
     <!-- SETUP (new) -->
-    <div class="cat">
+    <div class="cat" data-cat-key="setup">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
       <div>
         <div class="cat-title">Setup</div>
         <div class="cat-desc">Verify the plugin, its MCP connections, and environment before anything else runs.</div>
       </div>
-      <div class="cat-count">1 skill</div>
+      <div class="cat-count" data-cat-count="setup" data-unit="skill"><span class="cc-num">1</span> skill</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="setup">
       <div class="card" data-kind="skill" data-category="setup" data-name="/apiant-setup" data-title="Set up the plugin" data-desc="Verify MCP connections, environment, and plugin version. Run on first install or when something breaks." data-tags="setup install diagnose mcp" data-when="When installing the plugin for the first time, after upgrades, or when a skill fails to load. Running this first eliminates environment issues before you debug real work." data-example="&gt; /apiant-setup&#10;&#10;● checking MCP servers... apiant-dev OK, apiant-prod OK, apiant-docs OK&#10;● checking env vars... APIANT_DEV_TOKEN set, ANTHROPIC_API_KEY set&#10;● plugin version v1.0.0 (latest)&#10;● 35 skills registered, 125 MCP tools available&#10;✓ ready to build" data-invokes="deploy_get_plugin_version,activate_toolset">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="20" class="soft"/>
@@ -775,15 +774,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- BUILD -->
-    <div class="cat">
+    <div class="cat" data-cat-key="build">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10"/><path d="M9 20v-6h6v6"/></svg></div>
       <div>
         <div class="cat-title">Build</div>
         <div class="cat-desc">Create new automations, assemblies, integrations, and forms from a natural-language prompt.</div>
       </div>
-      <div class="cat-count">4 skills</div>
+      <div class="cat-count" data-cat-count="build" data-unit="skill"><span class="cc-num">4</span> skills</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="build">
       <div class="card" data-kind="skill" data-category="build" data-name="/build-automation" data-title="Build a new automation" data-desc='"Connect X to Y." Claude picks triggers, actions, field mappings, and stands up the entire flow.' data-tags="build new automation create connect" data-when='When the user says "connect X to Y" or "build a flow that does Z." This is the primary entry point for any new integration. Claude picks a trigger skill, action skills, and patterns as needed.' data-example="&gt; Build a new automation that syncs new HubSpot contacts into Mindbody clients.&#10;&#10;● /build-automation&#10;  picking trigger... assembly-trigger-updated (HubSpot polling)&#10;  picking action... assembly-action-find (dedup) + assembly-action-add&#10;  building field map: email,firstName,lastName,phone,membership_tier&#10;✓ automation committed as draft v1" data-invokes="auto_build,auto_manage,auto_commit,auto_edit_mapping,auto_edit_structure,catalog_search_apps,pattern_search">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="16" width="14" height="14" rx="2"/>
@@ -835,15 +834,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- EDIT -->
-    <div class="cat">
+    <div class="cat" data-cat-key="edit">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></div>
       <div>
         <div class="cat-title">Edit</div>
         <div class="cat-desc">Modify live automations and assemblies safely: add steps, swap apps, change endpoints, rename settings.</div>
       </div>
-      <div class="cat-count">2 skills</div>
+      <div class="cat-count" data-cat-count="edit" data-unit="skill"><span class="cc-num">2</span> skills</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="edit">
       <div class="card" data-kind="skill" data-category="edit" data-name="/edit-automation" data-title="Edit an automation" data-desc="Add a step, fix the mapping, swap Mailchimp for Klaviyo, disable a branch. Surgical, non-destructive edits." data-tags="edit automation modify step mapping" data-when="When you need to modify an existing, committed automation: add a step, change a mapping, swap connectors, retitle, disable a branch. Changes land as a new draft version, never in place." data-example="&gt; In the daily sync, swap Mailchimp for Klaviyo and add a tag for churn risk.&#10;&#10;● /edit-automation&#10;  locating step 3... auto_get_step_details&#10;  replacing connector... auto_edit_structure&#10;  rewiring mapping... auto_edit_mapping&#10;  adding tag step...&#10;✓ draft v4 committed" data-invokes="auto_edit_structure,auto_edit_mapping,auto_edit_metadata,auto_edit_trigger,auto_apply_edits,auto_commit,auto_get_step_details">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="10" y="14" width="14" height="10" rx="2"/>
@@ -871,15 +870,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- TEST & DEPLOY -->
-    <div class="cat">
+    <div class="cat" data-cat-key="test">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
       <div>
         <div class="cat-title">Test &amp; deploy</div>
         <div class="cat-desc">End-to-end validation, branch coverage, failure diagnosis, and dev-to-prod publication.</div>
       </div>
-      <div class="cat-count">3 skills</div>
+      <div class="cat-count" data-cat-count="test" data-unit="skill"><span class="cc-num">3</span> skills</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="test">
       <div class="card" data-kind="skill" data-category="test" data-name="/test-automation" data-title="Test an automation" data-desc="Execute, inspect results, diagnose failures, apply fixes, retest, and run branch coverage automatically." data-tags="test automation execute debug diagnose" data-when="After any edit, or when a customer reports something wrong. Runs the automation end-to-end with realistic inputs, walks every branch, and surfaces the failing step with the exact HTTP request and response." data-example="&gt; Test the HubSpot -&gt; Mindbody sync with a realistic payload.&#10;&#10;● /test-automation&#10;  running... exec_test_automation&#10;  step 3 failed: 422 invalid membership_tier&#10;  fixing mapping... auto_edit_mapping&#10;  retry... ✓ pass. 4/4 branches covered." data-invokes="exec_test_automation,exec_get_data,exec_get_step_data,exec_get_branch_test_points,exec_mutate_data,exec_restart_from_step,exec_retry_failed">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="20" class="soft"/>
@@ -913,15 +912,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- TRIGGERS -->
-    <div class="cat">
+    <div class="cat" data-cat-key="triggers">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
       <div>
         <div class="cat-title">Assembly triggers</div>
         <div class="cat-desc">Every way APIANT can start a run: polling, webhooks (three flavors), and protocol threads.</div>
       </div>
-      <div class="cat-count">6 skills</div>
+      <div class="cat-count" data-cat-count="triggers" data-unit="skill"><span class="cc-num">6</span> skills</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="triggers">
       <div class="card" data-kind="skill" data-category="triggers" data-name="assembly-trigger-new" data-title="NEW_ITEM polling trigger" data-desc="Poll an endpoint on a schedule and fire when a new record appears. The workhorse trigger." data-tags="trigger polling new scheduled" data-when="When the source app does not offer webhooks, or its webhooks are unreliable. The workhorse trigger: poll every N minutes, compare a cursor field, fire on new records." data-example="&gt; Build a trigger that fires on new Mindbody clients, every 5 minutes.&#10;&#10;● assembly-trigger-new&#10;  polling URL: /public/v6/client/clients&#10;  cursor: last_modified_date&#10;  interval: 5m" data-invokes="asm_create_action_or_trigger,asm_set_output_fields,asm_test_api_endpoint">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="20" class="soft"/>
@@ -995,15 +994,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- ACTIONS -->
-    <div class="cat">
+    <div class="cat" data-cat-key="actions">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></div>
       <div>
         <div class="cat-title">Assembly actions</div>
         <div class="cat-desc">CRUD primitives: every API supports at least one of these. The atoms of every integration.</div>
       </div>
-      <div class="cat-count">6 skills</div>
+      <div class="cat-count" data-cat-count="actions" data-unit="skill"><span class="cc-num">6</span> skills</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="actions">
       <div class="card" data-kind="skill" data-category="actions" data-name="assembly-action-add" data-title="ADD" data-desc="Create a new record in the target app. Handles validation, required fields, and response parsing." data-tags="action add create insert" data-when="When you need to write a new record downstream: a new client, a new order, a new ticket. ADD owns validation, required-field checks, and parsing the response id back for later steps." data-example="&gt; Add a client to Mindbody when a HubSpot contact is created.&#10;&#10;● assembly-action-add&#10;  endpoint: POST /public/v6/client/addclient&#10;  required: FirstName, LastName, Email&#10;  returns: ClientId" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="20" class="soft"/>
@@ -1071,15 +1070,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- CONNECTOR (expanded to 3) -->
-    <div class="cat">
+    <div class="cat" data-cat-key="connector">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M9 17h6M9 13h6M7 7l5-4 5 4"/><rect height="10" rx="2" width="18" x="3" y="11"/></svg></div>
       <div>
         <div class="cat-title">Connector</div>
         <div class="cat-desc">The auth layer every assembly rests on, plus the tools to register and migrate.</div>
       </div>
-      <div class="cat-count">3 skills</div>
+      <div class="cat-count" data-cat-count="connector" data-unit="skill"><span class="cc-num">3</span> skills</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="connector">
       <div class="card" data-kind="skill" data-category="connector" data-name="assembly-connector" data-title="Connector assembly" data-desc="OAuth V2, API Key, or no-credential auth. Handles token refresh, scopes, and revocation." data-tags="connector auth oauth api-key credential" data-when="Every assembly starts with a connector. Pick OAuth V2 for user-delegated access, API Key for server-to-server, no-cred for open APIs. Token refresh and revocation are built in." data-example="&gt; Build an OAuth2 connector for HubSpot.&#10;&#10;● assembly-connector&#10;  flow: OAuth2 authorization_code&#10;  scopes: contacts, timeline&#10;  token refresh: automatic" data-invokes="asm_create_connector,asm_inject_settings,asm_get_connection_credentials,asm_set_connector_throttle">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="24" width="20" height="16" rx="3"/>
@@ -1119,15 +1118,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- TWO-WAY SYNC -->
-    <div class="cat">
+    <div class="cat" data-cat-key="sync">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
       <div>
         <div class="cat-title">Two-way sync</div>
         <div class="cat-desc">Paired triggers and actions that keep two systems in sync without fighting each other.</div>
       </div>
-      <div class="cat-count">1 skill</div>
+      <div class="cat-count" data-cat-count="sync" data-unit="skill"><span class="cc-num">1</span> skill</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="sync">
       <div class="card" data-kind="skill" data-category="sync" data-name="assembly-bidirectional-sync" data-title="Bidirectional sync" data-desc="Builds the matching trigger and action pair for a two-way sync. Handles loop prevention, last-write-wins, and conflict resolution out of the box." data-tags="sync two-way bidirectional loop conflict" data-when="Whenever the customer says both systems should stay in lockstep: CRM <-> booking, ERP <-> accounting, shop <-> ops. The skill creates both directions with correlated IDs, loop suppression, and conflict rules baked in." data-example="&gt; Build a two-way contact sync between HubSpot and Mindbody.&#10;&#10;● assembly-bidirectional-sync&#10;  direction A: HubSpot -&gt; Mindbody (trigger-updated + action-add/update)&#10;  direction B: Mindbody -&gt; HubSpot (trigger-new + action-add/update)&#10;  loop suppression: correlation id on last_modified_by&#10;  conflict: last-write-wins on timestamp" data-invokes="auto_build,auto_commit,pattern_search">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="14" width="18" height="36" rx="3"/>
@@ -1142,15 +1141,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- PATTERNS -->
-    <div class="cat">
+    <div class="cat" data-cat-key="patterns">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
       <div>
         <div class="cat-title">Patterns</div>
         <div class="cat-desc">Reusable flow templates for common automation shapes. Loaded on demand during /build-automation.</div>
       </div>
-      <div class="cat-count">6 skills</div>
+      <div class="cat-count" data-cat-count="patterns" data-unit="skill"><span class="cc-num">6</span> skills</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="patterns">
       <div class="card" data-kind="skill" data-category="patterns" data-name="pattern-chat-widget" data-title="Chat widget" data-desc="From simple chatbots to multi-goal conversation flows with memory and tool-calling automations." data-tags="pattern chat widget conversation ai llm" data-when="When the trigger is a conversation: support chat, lead qualification, booking assistant. Pattern handles memory, tool calls into other automations, and fallback-to-human." data-example="&gt; Add a lead-qualification chat widget to the site.&#10;&#10;● pattern-chat-widget&#10;  memory: conversation + CRM lookup&#10;  tools: check_availability, book_demo, escalate&#10;  fallback: human handoff after 3 clarifications" data-invokes="pattern_search,auto_build">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="14" width="36" height="28" rx="6"/>
@@ -1223,15 +1222,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- OPS & SUPPORT (convert-assembly moved out; alert-handling added) -->
-    <div class="cat">
+    <div class="cat" data-cat-key="ops">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
       <div>
         <div class="cat-title">Ops &amp; support</div>
         <div class="cat-desc">Keep production healthy: monitor accounts, diagnose failures, tune alert behavior.</div>
       </div>
-      <div class="cat-count">3 skills</div>
+      <div class="cat-count" data-cat-count="ops" data-unit="skill"><span class="cc-num">3</span> skills</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="ops">
       <div class="card" data-kind="skill" data-category="ops" data-name="/monitor-account" data-title="Monitor a customer account" data-desc="Watches prod automations for errors. Designed for /loop recurring runs. Alerts with full trace context." data-tags="ops monitor account alert loop error" data-when="Continuous background check on a prod tenant. Runs on /loop, inspects failures since last check, raises alerts with full stack + last good input. Designed for always-on SRE duty." data-example="&gt; Monitor acme-corp every 10 minutes, alert on new failures.&#10;&#10;● /monitor-account (loop 10m)&#10;  admin_switch_account acme-corp&#10;  admin_tenant_health ... 3 new failures&#10;  raising alert with trace" data-invokes="admin_switch_account,admin_tenant_health,admin_tenant_usage,exec_search_history,exec_get_history,admin_account_changelog">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <path d="M8 50 L16 38 L24 44 L32 24 L40 30 L48 16 L56 22" class="tk"/>
@@ -1283,15 +1282,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- CORE (always on) -->
-    <div class="cat">
+    <div class="cat" data-cat-key="tools-core">
       <div class="cat-ico" style="background:rgba(92,200,255,.1);border-color:rgba(92,200,255,.25)"><svg viewbox="0 0 24 24" style="stroke:#5cc8ff"><circle cx="12" cy="12" r="3"/><path d="M12 2 V 7 M12 17 V 22 M2 12 H 7 M17 12 H 22"/></svg></div>
       <div>
         <div class="cat-title">Core tools <span style="color:var(--faint);font-weight:400;font-size:12px;font-family:var(--mono);margin-left:6px">always loaded</span></div>
         <div class="cat-desc">The set Claude Code needs at session start to orient, pick a skill, and activate more tools as needed.</div>
       </div>
-      <div class="cat-count">7 tools</div>
+      <div class="cat-count" data-cat-count="tools-core" data-unit="tool"><span class="cc-num">7</span> tools</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="tools-core">
       <div class="card t-dev" data-kind="tool" data-category="tools" data-name="activate_toolset" data-title="Activate a toolset" data-desc="Load the specific toolset needed for the current skill. Keeps the context window lean." data-prod-desc="Inspect which toolsets prod exposes. Read-only surface; writes gate on explicit confirmation." data-tags="tools core activate toolset" data-mutation="read" data-when="Called at the start of a skill to pull in the specialized tools for the job. Without this, the full 125 would crowd the context every turn." data-example="activate_toolset({ toolset: 'automation_builder' })&#10;-&gt; 30 tools now available" data-invokes="">
         <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="36" rx="4"/><path d="M16 22 H48 M16 30 H40 M16 38 H48" class="soft"/><circle cx="52" cy="14" r="5" class="fill"/></svg></div>
@@ -1344,15 +1343,15 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- ON-DEMAND TOOLSETS -->
-    <div class="cat">
+    <div class="cat" data-cat-key="tools-toolsets">
       <div class="cat-ico" style="background:rgba(92,200,255,.07);border-color:rgba(92,200,255,.2)"><svg viewbox="0 0 24 24" style="stroke:#5cc8ff"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2" fill="#5cc8ff" stroke="none"/></svg></div>
       <div>
         <div class="cat-title">On-demand toolsets <span style="color:var(--faint);font-weight:400;font-size:12px;font-family:var(--mono);margin-left:6px">lazy-loaded</span></div>
         <div class="cat-desc">Nine named toolsets activated by the skill that needs them. Keeps the context window lean while the full capability stays one call away.</div>
       </div>
-      <div class="cat-count">118 tools</div>
+      <div class="cat-count" data-cat-count="tools-toolsets" data-unit="toolset"><span class="cc-num">9</span> toolsets &middot; 118 tools</div>
     </div>
-    <div class="grid">
+    <div class="grid" data-cat-key="tools-toolsets">
       <div class="card t-dev" data-kind="tool" data-category="tools" data-name="automation_builder" data-title="Build + edit" data-desc="30 tools. Search the catalog, compose triggers and actions, edit mappings, commit versions, save patterns. The full automation authoring surface." data-prod-desc="Read-only authoring surface in prod. Writes gate on explicit confirmation." data-tags="tools toolset build edit author" data-mutation="write" data-when="Activated by /build-automation and /edit-automation. Contains auto_build, auto_edit_* family, catalog_search, pattern_search/save." data-example="activate_toolset({ toolset: 'automation_builder' })&#10;-&gt; 30 tools: auto_build, auto_edit_structure, ..." data-invokes="">
         <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M14 50 L14 20 L24 20 L28 14 L50 14 L50 50 Z"/><circle cx="24" cy="34" r="3" class="fill"/><circle cx="36" cy="34" r="3" class="fill" style="--gc:#5cc8ff"/><path d="M24 34 L36 34" class="soft"/><path d="M30 42 L30 48" class="tk"/></svg></div>
@@ -1419,86 +1418,86 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
     </div>
 
     <!-- docs -->
-    <div class="cat">
+    <div class="cat" data-cat-key="tools-docs">
       <div class="cat-ico" style="background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.28)"><svg viewbox="0 0 24 24" style="stroke:#c084fc"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
       <div>
         <div class="cat-title">apiant-docs <span style="color:var(--faint);font-weight:400;font-size:12px;font-family:var(--mono);margin-left:6px">knowledge base</span></div>
         <div class="cat-desc">The docs workspace. Search, read, author, illustrate, and version the APIANT knowledge base.</div>
       </div>
-      <div class="cat-count">11 tools</div>
+      <div class="cat-count" data-cat-count="tools-docs" data-unit="tool"><span class="cc-num">11</span> tools</div>
     </div>
-    <div class="grid">
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_api_key" data-title="API key auth" data-desc="Programmatic access. Issue a docs API key for CI/CD or automated publishing." data-tags="tools docs api-key auth" data-mutation="write">
+    <div class="grid" data-cat-key="tools-docs">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_api_key" data-title="API key auth" data-desc="Programmatic access. Issue a docs API key for CI/CD or automated publishing." data-tags="tools docs api-key auth" data-mutation="write" data-when="When a CI pipeline or automation needs to publish docs without a human session. Issues a long-lived API key scoped to the docs workspace." data-example="docs_api_key({ action: 'create', name: 'ci-publisher', scopes: ['docs:write'] })&#10;-&gt; key_81f4...a02" data-used-by="/support, write-doc">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="12" y="18" width="40" height="28" rx="4" style="--gc:#c084fc"/><circle cx="22" cy="32" r="4" class="fill" style="--gc:#c084fc"/><path d="M28 30 L52 30 M28 36 L48 36" class="soft"/></svg></div>
         <div class="name">docs_api_key</div>
         <div class="title">API key auth</div>
         <p class="desc">Programmatic access. Issue a docs API key for CI/CD or automated publishing.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_chat" data-title="Chat with docs" data-desc="Retrieval-augmented Q&amp;A. Claude asks the docs corpus before writing code or answering." data-tags="tools docs chat rag qa" data-mutation="read">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_chat" data-title="Chat with docs" data-desc="Retrieval-augmented Q&amp;A. Claude asks the docs corpus before writing code or answering." data-tags="tools docs chat rag qa" data-mutation="read" data-when="When Claude needs authoritative answers grounded in APIANT docs before writing code or answering the user. Prefer this over memory for anything factual." data-example="docs_chat({ question: 'How does assembly-trigger-self-registering-webhook tear down on disable?' })&#10;-&gt; cited paragraphs + source page links" data-used-by="/build-automation, /build-assembly, /support, write-doc">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="8" y="14" width="36" height="28" rx="6" style="--gc:#c084fc"/><path d="M14 48 L18 42 L14 42 Z" class="fill" style="--gc:#c084fc"/><circle cx="18" cy="28" r="1.8" class="fill" style="--gc:#c084fc"/><circle cx="26" cy="28" r="1.8" class="fill" style="--gc:#c084fc"/><circle cx="34" cy="28" r="1.8" class="fill" style="--gc:#c084fc;animation:blink 1.5s infinite" class="anim"/></svg></div>
         <div class="name">docs_chat</div>
         <div class="title">Chat with docs</div>
         <p class="desc">Retrieval-augmented Q&amp;A. Claude asks the docs corpus before writing code or answering.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_create" data-title="Create a page" data-desc="Publish a new doc. Title, body, parent, tags, and status, in one call." data-tags="tools docs create publish page" data-mutation="write">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_create" data-title="Create a page" data-desc="Publish a new doc. Title, body, parent, tags, and status, in one call." data-tags="tools docs create publish page" data-mutation="write" data-when='When the user asks Claude to document a feature, workflow, or gotcha. Also after shipping an assembly so the integration gets a customer-facing page.' data-example="docs_create({ title: 'HubSpot to Mindbody sync', parent: '/integrations', body: '...', tags: ['hubspot','mindbody'], status: 'published' })" data-used-by="write-doc, /build-assembly">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="12" y="10" width="30" height="44" rx="3" style="--gc:#c084fc"/><path d="M18 20 H36 M18 28 H36 M18 36 H30" class="soft"/><circle cx="46" cy="50" r="7" class="fill" style="--gc:#1ab759"/><path d="M42 50 L46 54 L52 46" stroke="#0c0c0c" class="tk"/></svg></div>
         <div class="name">docs_create</div>
         <div class="title">Create a page</div>
         <p class="desc">Publish a new doc. Title, body, parent, tags, and status, in one call.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_list" data-title="List docs" data-desc="Browse the full table of contents. Filter by section, tag, or status." data-tags="tools docs list toc" data-mutation="read">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_list" data-title="List docs" data-desc="Browse the full table of contents. Filter by section, tag, or status." data-tags="tools docs list toc" data-mutation="read" data-when='When Claude needs to pick the right parent section before creating a doc, or to confirm nothing exists yet. The "does this page already live somewhere" primitive.' data-example="docs_list({ parent: '/integrations', status: 'published' })&#10;-&gt; 24 pages" data-used-by="write-doc, /build-automation">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="6" rx="2" class="fill" style="--gc:#c084fc"/><rect x="10" y="24" width="44" height="6" rx="2" class="soft fill"/><rect x="10" y="34" width="44" height="6" rx="2" class="soft fill"/><rect x="10" y="44" width="30" height="6" rx="2" class="soft fill"/></svg></div>
         <div class="name">docs_list</div>
         <div class="title">List docs</div>
         <p class="desc">Browse the full table of contents. Filter by section, tag, or status.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_login" data-title="Login" data-desc="Authenticate the docs session. Tokens cached for the session." data-tags="tools docs login auth" data-mutation="write">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_login" data-title="Login" data-desc="Authenticate the docs session. Tokens cached for the session." data-tags="tools docs login auth" data-mutation="write" data-when="First call of any docs-writing skill. Establishes the session token; subsequent calls reuse the cached credential until it expires." data-example="docs_login({ user: 'fred@apiant.com' })&#10;-&gt; session cached for 8h" data-used-by="write-doc, /support">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="14" y="16" width="36" height="32" rx="4" style="--gc:#c084fc"/><path d="M22 28 H42 M22 36 H36" class="soft"/><circle cx="52" cy="14" r="4" class="fill" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_login</div>
         <div class="title">Login</div>
         <p class="desc">Authenticate the docs session. Tokens cached for the session.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_read" data-title="Read a page" data-desc="Fetch the full contents of any doc. Markdown, images, and metadata included." data-tags="tools docs read page" data-mutation="read">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_read" data-title="Read a page" data-desc="Fetch the full contents of any doc. Markdown, images, and metadata included." data-tags="tools docs read page" data-mutation="read" data-when="When Claude needs the literal body of a page, not just a summary. Called before docs_update to diff intelligently or before answering a precise how-to question." data-example="docs_read({ path: '/integrations/hubspot-mindbody-sync' })&#10;-&gt; { title, markdown, images, revision: 7 }" data-used-by="write-doc, /support, /build-automation">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="14" y="10" width="36" height="44" rx="3" style="--gc:#c084fc"/><path d="M20 22 H44 M20 30 H44 M20 38 H40 M20 46 H30" class="soft"/></svg></div>
         <div class="name">docs_read</div>
         <div class="title">Read a page</div>
         <p class="desc">Fetch the full contents of any doc. Markdown, images, and metadata included.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_screenshot" data-title="Capture screenshot" data-desc="Take a live screenshot of the editor or platform UI and embed it into a doc." data-tags="tools docs screenshot capture" data-mutation="write">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_screenshot" data-title="Capture screenshot" data-desc="Take a live screenshot of the editor or platform UI and embed it into a doc." data-tags="tools docs screenshot capture" data-mutation="write" data-when="When a how-to doc needs to show the actual editor UI. Claude drives a headless browser, captures the panel, and embeds the image inline." data-example="docs_screenshot({ url: '/editor/asm_42/mapping', selector: '.mapping-panel', alt: 'HubSpot to Mindbody field mapping' })&#10;-&gt; inserts img + alt" data-used-by="write-doc">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="8" y="14" width="48" height="32" rx="3" style="--gc:#c084fc"/><path d="M14 20 L50 20 M14 40 L50 40" class="soft"/><circle cx="14" cy="14" r="1.5" class="fill" style="--gc:#c084fc"/><circle cx="20" cy="14" r="1.5" class="fill" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_screenshot</div>
         <div class="title">Capture screenshot</div>
         <p class="desc">Take a live screenshot of the editor or platform UI and embed it into a doc.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_search" data-title="Full-text search" data-desc="Semantic + keyword search across the entire docs corpus. Ranked results with context." data-tags="tools docs search query" data-mutation="read">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_search" data-title="Full-text search" data-desc="Semantic + keyword search across the entire docs corpus. Ranked results with context." data-tags="tools docs search query" data-mutation="read" data-when="When the user's question is open-ended and Claude needs to find the right page(s). Hybrid semantic + keyword ranking; returns snippets with source links." data-example="docs_search({ query: 'how to handle Mindbody 429 rate limits' })&#10;-&gt; 4 pages ranked by relevance" data-used-by="/support, /build-automation, write-doc">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="26" cy="26" r="14" style="--gc:#c084fc"/><path d="M36 36 L54 54" class="tk" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_search</div>
         <div class="title">Full-text search</div>
         <p class="desc">Semantic + keyword search across the entire docs corpus. Ranked results with context.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_update" data-title="Update a page" data-desc="Edit title, body, tags, or status. Revisions tracked automatically." data-tags="tools docs update edit page" data-mutation="write">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_update" data-title="Update a page" data-desc="Edit title, body, tags, or status. Revisions tracked automatically." data-tags="tools docs update edit page" data-mutation="write" data-when="When a shipped change makes an existing doc stale: API deprecation, new field, renamed step. Always call docs_read first so the edit is a real diff." data-example="docs_update({ path: '/integrations/mindbody', body: updatedMarkdown, tags: ['mindbody','v7'], status: 'published' })" data-used-by="write-doc, /edit-assembly">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="12" y="16" width="40" height="32" rx="3" style="--gc:#c084fc"/><path d="M20 28 H44 M20 36 H40" class="soft"/><path d="M42 14 L52 14 L52 24 M52 14 L40 26" class="tk" style="--gc:#1ab759"/></svg></div>
         <div class="name">docs_update</div>
         <div class="title">Update a page</div>
         <p class="desc">Edit title, body, tags, or status. Revisions tracked automatically.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_upload_image" data-title="Upload image" data-desc="Attach an illustration or diagram to any page. Auto-alt-text generated." data-tags="tools docs upload image illustration" data-mutation="write">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_upload_image" data-title="Upload image" data-desc="Attach an illustration or diagram to any page. Auto-alt-text generated." data-tags="tools docs upload image illustration" data-mutation="write" data-when="When a doc needs a diagram, architecture sketch, or external illustration that is not a UI screenshot. Auto-generates alt text from the caption." data-example="docs_upload_image({ path: '/integrations/hubspot-mindbody-sync', file: 'sync-arch.svg', caption: 'Two-way sync with loop suppression' })" data-used-by="write-doc">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="16" width="44" height="32" rx="3" style="--gc:#c084fc"/><circle cx="22" cy="28" r="3" class="fill" style="--gc:#f5b748"/><path d="M14 44 L26 32 L34 40 L42 30 L50 38" class="tk" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_upload_image</div>
         <div class="title">Upload image</div>
         <p class="desc">Attach an illustration or diagram to any page. Auto-alt-text generated.</p>
       </div>
-      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_version" data-title="Version history" data-desc="List revisions, diff between versions, roll back if needed." data-tags="tools docs version history revision" data-mutation="read">
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_version" data-title="Version history" data-desc="List revisions, diff between versions, roll back if needed." data-tags="tools docs version history revision" data-mutation="read" data-when="When a doc edit needs review, when a rollback is requested, or when Claude needs to reconstruct how guidance evolved over time." data-example="docs_version({ path: '/integrations/mindbody', action: 'diff', from: 6, to: 7 })&#10;-&gt; unified diff" data-used-by="write-doc, /support">
         <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="32" cy="32" r="22" style="--gc:#c084fc"/><circle cx="32" cy="32" r="2" class="fill" style="--gc:#c084fc"/><path d="M32 32 L32 16 M32 32 L46 32" class="tk" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_version</div>
@@ -1889,6 +1888,17 @@ document.querySelectorAll('.card').forEach(c=>{
     if(badge) badge.textContent=catCounts[cat]||0;
   });
 
+  // Per-category-block metadata (cat + matching grid + starting count)
+  var catBlocks=Array.prototype.slice.call(document.querySelectorAll('.cat[data-cat-key]')).map(function(catEl){
+    var key=catEl.dataset.catKey;
+    var gridEl=document.querySelector('.grid[data-cat-key="'+key+'"]');
+    var countEl=catEl.querySelector('[data-cat-count]');
+    var unit=countEl?(countEl.dataset.unit||'item'):'item';
+    var blockCards=gridEl?Array.prototype.slice.call(gridEl.querySelectorAll('.card[data-kind]')):[];
+    var originalHTML=countEl?countEl.innerHTML:'';
+    return {key:key,catEl:catEl,gridEl:gridEl,countEl:countEl,unit:unit,total:blockCards.length,cards:blockCards,originalHTML:originalHTML};
+  });
+
   // Visibility: show when hero bottom scrolls out. Toggle aria-hidden in lockstep (P0-4).
   var updateVis=function(){
     var r=hero.getBoundingClientRect();
@@ -1964,6 +1974,25 @@ document.querySelectorAll('.card').forEach(c=>{
         if(!q || haystack.indexOf(q)!==-1) wouldMatch++;
       });
       ch.dataset.zero = wouldMatch===0 && q ? 'true' : 'false';
+    });
+
+    // Per-block live counts + collapse empty blocks
+    var filtering = !!q || actives.length>0;
+    catBlocks.forEach(function(blk){
+      var visible=0;
+      blk.cards.forEach(function(c){ if(!c.classList.contains('search-hidden')) visible++; });
+      if(blk.countEl){
+        if(filtering){
+          // Show "X of Y units" while filtering
+          blk.countEl.innerHTML = '<span class="cc-num">'+visible+' of '+blk.total+'</span> '+blk.unit+'s';
+        } else {
+          // Restore the original label exactly (preserves "9 toolsets · 118 tools" etc.)
+          blk.countEl.innerHTML = blk.originalHTML;
+        }
+      }
+      var empty = filtering && visible===0;
+      if(blk.catEl) blk.catEl.classList.toggle('cat-empty', empty);
+      if(blk.gridEl) blk.gridEl.classList.toggle('cat-empty', empty);
     });
 
     // Zero state
@@ -2060,7 +2089,9 @@ document.querySelectorAll('.card').forEach(c=>{
       var kind=card.dataset.kind||'';
       var when=card.dataset.when||'';
       var example=card.dataset.example||'';
-      var invokes=(card.dataset.invokes||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
+      // For tools, prefer data-used-by (semantic label); fall back to data-invokes. For skills, use data-invokes.
+      var invokesRaw=card.dataset.kind==='tool' ? (card.dataset.usedBy||card.dataset.invokes||'') : (card.dataset.invokes||'');
+      var invokes=invokesRaw.split(',').map(function(s){return s.trim();}).filter(Boolean);
       var inputs=(card.dataset.inputs||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
       var mut=card.dataset.mutation||'';
 
