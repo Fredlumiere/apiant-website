@@ -50,6 +50,7 @@ PAGES = [
     'index2.html',
     'pricing.html',
     'ai.html',
+    'ai-operability.html',
     'apps.html',
     'chatbot.html',
     'formapps.html',
@@ -93,7 +94,22 @@ LOCALIZED_SET = set(PAGES)
 SKIP_TAGS = frozenset(['script', 'style', 'code', 'pre', 'svg', 'noscript', 'math'])
 
 # Tags whose text content should NOT be translated
-SKIP_TRANSLATE_CLASSES = frozenset(['w-embed'])
+SKIP_TRANSLATE_CLASSES = frozenset(['w-embed', 'notranslate'])
+
+
+def should_skip_translate(el):
+    """Return True if the element (or any ancestor) should not be translated.
+    Respects class="notranslate", class="w-embed", and translate="no" attribute.
+    """
+    node = el
+    while node is not None and hasattr(node, 'get'):
+        classes = node.get('class') or []
+        if any(c in SKIP_TRANSLATE_CLASSES for c in classes):
+            return True
+        if (node.get('translate') or '').lower() == 'no':
+            return True
+        node = node.parent
+    return False
 
 BASE_URL = 'https://apiant.com'
 
@@ -393,11 +409,9 @@ def translate_dom(element, translations):
     if isinstance(element, NavigableString):
         if element.parent and element.parent.name in SKIP_TAGS:
             return
-        # Skip elements with skip classes
-        if element.parent:
-            parent_classes = element.parent.get('class', [])
-            if any(c in SKIP_TRANSLATE_CLASSES for c in parent_classes):
-                return
+        # Skip if any ancestor has notranslate / w-embed class or translate="no"
+        if element.parent and should_skip_translate(element.parent):
+            return
         text = str(element)
         if text.strip():
             translated = translate_text(text, translations)
