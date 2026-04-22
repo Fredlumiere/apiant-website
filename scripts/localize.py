@@ -360,7 +360,27 @@ def add_language_switcher(soup, lang_code):
     for existing in soup.find_all(class_='lang-switcher'):
         existing.decompose()
     for existing in soup.find_all('style'):
-        if existing.string and '.lang-switcher' in (existing.string or ''):
+        css = existing.string or ''
+        if '.lang-switcher' not in css:
+            continue
+        # Strip only the lang-switcher rules (and their media queries) from this block,
+        # preserving any unrelated page-specific CSS that happens to share the block.
+        cleaned = re.sub(
+            r'(?:^|\n)[^\n]*\.lang-switcher[^{\n]*\{[^}]*\}',
+            '',
+            css,
+            flags=re.MULTILINE,
+        )
+        # Also handle switcher rules inside @media blocks: just remove the switcher bit.
+        cleaned = re.sub(
+            r'(@media[^{]*\{)([^}]*\.lang-switcher[^{]*\{[^}]*\})+([^}]*\})',
+            lambda m: m.group(1) + m.group(3),
+            cleaned,
+        )
+        cleaned = cleaned.strip()
+        if cleaned:
+            existing.string = cleaned
+        else:
             existing.decompose()
     for existing in soup.find_all('script', attrs={'src': True}):
         if 'i18n.js' in (existing.get('src') or ''):
