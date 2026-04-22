@@ -6,7 +6,7 @@ Landing-page commit covering the first end-to-end SEO/GEO setup per `/Users/fred
 
 | Area | Bug | Fix |
 |---|---|---|
-| Sitemap | `robots.txt` pointed at `/sitemap.xml` returning 404 | Generated real sitemap with 37 URLs + 20-locale hreflang alternates |
+| Sitemap | `robots.txt` pointed at `/sitemap.xml` (404). Real sitemap is server-generated at `/sitemap/sitemap_index.xml` (132k URLs across 4 shards) | Updated robots.txt to the correct URL; added Disallow rules for ~35 admin/test pages that sitemap0.xml leaks |
 | Canonical | 20 of 37 English pages had canonicals pointing at non-existent URLs (missing `-and-`, missing `.html`, mixed case) | Replaced with self-referential canonicals matching the actual file path |
 | Hreflang | 37 English pages had `x-default` and `en` hreflang tags duplicated 45× each | Removed duplicates, made `localize.py` idempotent |
 | Analytics | GA4 only loaded after banner accept — rejectors invisible | Consent Mode v2 with default-denied, `gtag.js` loads on every page |
