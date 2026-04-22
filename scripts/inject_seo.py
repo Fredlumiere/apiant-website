@@ -31,6 +31,17 @@ NOINDEX_META_REV_RE = re.compile(r'<meta\b[^>]*content\s*=\s*["\'][^"\']*noindex
 HEAD_CLOSE_RE = re.compile(r'</head>', re.I)
 TITLE_RE = re.compile(r'<title>([^<]+)</title>', re.I)
 META_DESC_RE = re.compile(r'<meta[^>]*name=["\']description["\'][^>]*content=["\']([^"\']+)["\']', re.I)
+META_DESC_REV_RE = re.compile(r'<meta[^>]*content=["\']([^"\']+)["\'][^>]*name=["\']description["\']', re.I)
+
+
+def find_meta_description(content: str) -> str | None:
+    m = META_DESC_RE.search(content)
+    if m:
+        return m.group(1)
+    m = META_DESC_REV_RE.search(content)
+    if m:
+        return m.group(1)
+    return None
 SCHEMA_MARKER = '<!-- apiant-seo:schema -->'
 
 APP_HUB_DESCRIPTIONS = {
@@ -38,6 +49,35 @@ APP_HUB_DESCRIPTIONS = {
     "cliniko": "Turnkey Cliniko integrations connecting your clinical practice platform to CRMs and sales pipelines.",
     "donorperfect": "Turnkey DonorPerfect integrations connecting your fundraising platform to CRMs, marketing automation, and email tools.",
 }
+
+# Pages that receive E-E-A-T signals: author meta, byline, TechArticle JSON-LD.
+# Keys are repo-relative POSIX paths. Values are (datePublished, headline override).
+EEAT_PAGES: dict[str, dict] = {
+    "ai.html": {
+        "datePublished": "2026-02-19",
+        "headline": "AI Capabilities: AI That Acts, Not Just Answers",
+    },
+    "chatbot.html": {
+        "datePublished": "2026-02-20",
+        "headline": "AI Chatbot Builder: Chatbots That Act on Real Data",
+    },
+    "mcp-servers.html": {
+        "datePublished": "2026-02-19",
+        "headline": "MCP Servers: Protocol-Level AI Connectivity",
+    },
+    "platform/automation-editor.html": {
+        "datePublished": "2026-02-19",
+        "headline": "Automation Editor: Visual, Powerful, Production-Grade",
+    },
+    "platform/assembly-editor.html": {
+        "datePublished": "2026-02-19",
+        "headline": "Assembly Editor and AI Co-Pilot: The AI That Reads API Docs",
+    },
+}
+
+DATE_MODIFIED = "2026-04-22"
+AUTHOR_META_TAG = '<meta content="APIANT Engineering Team" name="author"/>'
+AUTHOR_META_RE = re.compile(r'<meta[^>]+name=["\']author["\'][^>]*/?>', re.I)
 
 
 def is_english_page(path: Path) -> bool:
@@ -158,9 +198,10 @@ def org_schema() -> dict:
         "description": "APIANT is a white-label integration platform (iPaaS) for SaaS companies, System Integrators, and enterprises. Dedicated servers, AI co-pilots, embeddable UIs, and a unified data processing engine.",
         "foundingDate": "2014",
         "slogan": "The integration platform builders own.",
+        # sameAs: only verified, resolving profiles. linkedin.com/company/apiant
+        # returned 404 (WebFetch 2026-04-22). twitter.com/apiant belongs to an
+        # unrelated user ("apicellaantonio"). Both removed.
         "sameAs": [
-            "https://www.linkedin.com/company/apiant",
-            "https://twitter.com/apiant",
             "https://www.youtube.com/@apiant",
             "https://github.com/apiant",
         ],
@@ -230,10 +271,7 @@ def product_schema(path: Path, content: str) -> dict | None:
     platform = PLATFORM_LABELS[platform_key]
     integration = INTEGRATION_LABELS[integration_key]
     name = f"{platform} + {integration} Integration by APIANT"
-    desc = None
-    m = META_DESC_RE.search(content)
-    if m:
-        desc = m.group(1)
+    desc = find_meta_description(content)
     if not desc:
         desc = f"Bi-directional {platform} and {integration} integration built and maintained by APIANT. Real-time sync of contacts, activity, and custom fields."
     return {
@@ -336,12 +374,58 @@ def breadcrumb_schema(path: Path) -> dict | None:
     }
 
 
+def tech_article_schema(path: Path, content: str) -> dict | None:
+    rel = path.relative_to(ROOT).as_posix()
+    meta = EEAT_PAGES.get(rel)
+    if not meta:
+        return None
+    title_m = TITLE_RE.search(content)
+    title_text = title_m.group(1).strip() if title_m else meta.get("headline", "")
+    desc_val = find_meta_description(content)
+    desc = desc_val.strip() if desc_val else None
+    return {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": meta.get("headline", title_text),
+        "name": title_text,
+        "description": desc or meta.get("headline", title_text),
+        "author": {
+            "@type": "Organization",
+            "name": "APIANT Engineering Team",
+            "url": "https://apiant.com/",
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "APIANT",
+            "url": "https://apiant.com/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://apiant.com/images/apiant-logo.svg",
+            },
+        },
+        "datePublished": meta["datePublished"],
+        "dateModified": DATE_MODIFIED,
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": url_for(path),
+        },
+    }
+
+
 def schemas_for(path: Path, content: str) -> list[dict]:
     rel = path.relative_to(ROOT).as_posix()
     schemas: list[dict] = []
     if rel == "index.html":
         schemas.append(org_schema())
         schemas.append(website_schema())
+        return schemas
+    # E-E-A-T technical pages: TechArticle + Breadcrumb (if on platform)
+    ta = tech_article_schema(path, content)
+    if ta:
+        schemas.append(ta)
+        bs = breadcrumb_schema(path)
+        if bs:
+            schemas.append(bs)
         return schemas
     # API App product pages: Product + Breadcrumb
     ps = product_schema(path, content)
@@ -353,14 +437,62 @@ def schemas_for(path: Path, content: str) -> list[dict]:
     return schemas
 
 
+def ensure_author_meta(path: Path, content: str) -> tuple[str, bool]:
+    """Inject <meta name="author"> on E-E-A-T pages, right after the title tag."""
+    rel = path.relative_to(ROOT).as_posix()
+    if rel not in EEAT_PAGES:
+        return content, False
+    if AUTHOR_META_RE.search(content):
+        return content, False
+    # Insert immediately after the <title>...</title> line.
+    m = TITLE_RE.search(content)
+    if not m:
+        return inject_before_head_close(content, AUTHOR_META_TAG)
+    end = m.end()
+    return content[:end] + "\n" + AUTHOR_META_TAG + content[end:], True
+
+
 def ensure_schema(path: Path, content: str) -> tuple[str, bool]:
-    if has_schema_block(content):
+    rel = path.relative_to(ROOT).as_posix()
+    # Fast path: nothing yet, write the full block.
+    if not has_schema_block(content):
+        schemas = schemas_for(path, content)
+        if not schemas:
+            return content, False
+        block = schema_block(schemas)
+        return inject_before_head_close(content, block)
+    # Schema block exists. If this is an E-E-A-T page that still lacks TechArticle,
+    # append only the TechArticle JSON-LD to the existing block.
+    if rel in EEAT_PAGES and '"TechArticle"' not in content:
+        ta = tech_article_schema(path, content)
+        if not ta:
+            return content, False
+        body = json.dumps(ta, indent=2, ensure_ascii=False)
+        snippet = f'<script type="application/ld+json">\n{body}\n</script>\n'
+        # Insert immediately before </head> so it sits next to the existing schema block.
+        return inject_before_head_close(content, snippet)
+    # Homepage: refresh Organization schema if sameAs still lists removed profiles.
+    if rel == "index.html" and (
+        "linkedin.com/company/apiant" in content or "twitter.com/apiant" in content
+    ):
+        return refresh_homepage_schema(content)
+    return content, False
+
+
+def refresh_homepage_schema(content: str) -> tuple[str, bool]:
+    """Regenerate the Org+WebSite schema block in-place on the homepage."""
+    # Find the schema marker and everything up through the last closing </script>
+    # that belongs to the block (the block is <marker>\n<script>..</script>\n<script>..</script>).
+    m = re.search(
+        r"(<!-- apiant-seo:schema -->\s*(?:<script type=\"application/ld\+json\">.*?</script>\s*)+)",
+        content,
+        re.DOTALL,
+    )
+    if not m:
         return content, False
-    schemas = schemas_for(path, content)
-    if not schemas:
-        return content, False
-    block = schema_block(schemas)
-    return inject_before_head_close(content, block)
+    new_block = schema_block([org_schema(), website_schema()]) + "\n"
+    new_content = content[: m.start()] + new_block + content[m.end() :]
+    return new_content, True
 
 
 HREFLANG_RE = re.compile(r'<link\b[^>]*hreflang\s*=\s*["\']([^"\']+)["\'][^>]*>', re.I)
@@ -410,6 +542,9 @@ def process_file(path: Path) -> dict:
     content, changed = ensure_canonical(content, url_for(path))
     if changed:
         ops.append("canonical")
+    content, changed = ensure_author_meta(path, content)
+    if changed:
+        ops.append("author_meta")
     content, changed = ensure_schema(path, content)
     if changed:
         ops.append("schema")
