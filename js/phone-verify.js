@@ -78,19 +78,24 @@
   }
 
   // ===== IP GEOLOCATION =====
+  // Use api.country.is which serves proper CORS headers. ipapi.co previously
+  // used here does not allow apiant.com origins, which produced console errors
+  // on every page that loaded this script. Silent fallback to US on any error.
   function fetchGeo() {
-    fetch('https://ipapi.co/json/')
-      .then(function(r) { return r.json(); })
+    fetch('https://api.country.is/', { mode: 'cors' })
+      .then(function(r) { return r.ok ? r.json() : null; })
       .then(function(d) {
-        if (d && d.country_code) {
-          geo.country = d.country_code.toUpperCase();
-          geo.dialCode = d.country_calling_code || findCountry(geo.country)[2];
+        if (d && d.country) {
+          geo.country = d.country.toUpperCase();
+          var match = findCountry(geo.country);
+          geo.dialCode = match ? match[2] : '+1';
           geo.loaded = true;
           selectCountry(geo.country, true);
+        } else {
+          selectCountry('US', true);
         }
       })
       .catch(function() {
-        // Fallback: default to US
         selectCountry('US', true);
       });
   }

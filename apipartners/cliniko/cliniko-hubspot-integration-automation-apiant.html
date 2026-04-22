@@ -970,7 +970,7 @@
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="(max-width: 954px) 100vw, 954px" src="../../images/adhd_1.avif" srcset="../../images/adhd_1adhd.avif 500w, ../../images/adhd_1-p-800.png 800w, ../../images/adhd_1.avif 954w" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="160px" src="../../images/bodyandmind_1.avif" srcset="../../images/bodyandmind_1bodyandmind.avif 500w, ../../images/bodyandmind_1.avif 547w" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" src="../../images/cared.avif" decoding="async"/></div>
-<div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="200px" src="../../images/chocolate-box-films_1.avif" srcset="../../images/chocolate-box-films_1chocolate-box-films.avif 500w, ../../images/chocolate-box-films_1.avif 750w" decoding="async"/></div>
+<div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="200px" src="../../images/chocolate-box-films_1.avif" srcset="../../images/chocolate-box-films_1.avif 750w" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" src="../../images/DC-Logos-Final-new.avif" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="145px" src="../../images/dd-logo_1.avif" srcset="../../images/dd-logo_1dd-logo.avif 500w, ../../images/dd-logo_1.avif 519w" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="(max-width: 479px) 100vw, 394px" src="../../images/footer-logo_1.avif" srcset="../../images/footer-logo_1footer-logo.avif 500w, ../../images/footer-logo_1.avif 790w" decoding="async"/></div>
@@ -986,7 +986,7 @@
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="(max-width: 954px) 100vw, 954px" src="../../images/adhd_1.avif" srcset="../../images/adhd_1adhd.avif 500w, ../../images/adhd_1-p-800.png 800w, ../../images/adhd_1.avif 954w" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="160px" src="../../images/bodyandmind_1.avif" srcset="../../images/bodyandmind_1bodyandmind.avif 500w, ../../images/bodyandmind_1.avif 547w" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" src="../../images/cared.avif" decoding="async"/></div>
-<div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="200px" src="../../images/chocolate-box-films_1.avif" srcset="../../images/chocolate-box-films_1chocolate-box-films.avif 500w, ../../images/chocolate-box-films_1.avif 750w" decoding="async"/></div>
+<div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="200px" src="../../images/chocolate-box-films_1.avif" srcset="../../images/chocolate-box-films_1.avif 750w" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" src="../../images/DC-Logos-Final-new.avif" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="145px" src="../../images/dd-logo_1.avif" srcset="../../images/dd-logo_1dd-logo.avif 500w, ../../images/dd-logo_1.avif 519w" decoding="async"/></div>
 <div class="company-logo-wrapper"><img alt="" class="company-logo customer-logo" loading="lazy" sizes="(max-width: 479px) 100vw, 394px" src="../../images/footer-logo_1.avif" srcset="../../images/footer-logo_1footer-logo.avif 500w, ../../images/footer-logo_1.avif 790w" decoding="async"/></div>
@@ -1412,9 +1412,7 @@
                               } else requestAnimationFrame(wait);
                             };
                             wait();
-                          });
-                          window.addEventListener('pageshow', () => {
-                            resetAll();
+                            window.addEventListener('pageshow', () => { resetAll(); });
                           });
                         </script>
 </div>
@@ -1619,7 +1617,7 @@
 <div class="api-apps-holder">
 <div class="fade-in-on-scroll">
 <div class="api-app-title-holder">
-<a class="api-apps-header-link w-inline-block" href="../../apipartners/cliniko-turnkey-integration-solutions.html"><img alt="" class="api-app-icon" loading="lazy" sizes="100vw" src="../../images/cliniko-app_1.avif" srcset="../../images/cliniko-app_1cliniko-app.avif 500w, ../../images/cliniko-app_1cliniko-app.avif 800w, ../../images/cliniko-app_1.avif 991w" decoding="async"/>
+<a class="api-apps-header-link w-inline-block" href="../../apipartners/cliniko-turnkey-integration-solutions.html"><img alt="" class="api-app-icon" loading="lazy" sizes="100vw" src="../../images/cliniko-app_1.avif" srcset="../../images/cliniko-app_1.avif 991w" decoding="async"/>
 <h3 class="no-margins">Cliniko API Apps</h3>
 </a>
 </div>
@@ -3061,6 +3059,11 @@
       cqGoTo('cq-step-call');
     }
 
+    // Reset qualification flow when popup opens. Wrapped in
+    // DOMContentLoaded so `openPopup` (declared in a later <script>
+    // block) has been defined before we monkey-patch it.
+    document.addEventListener('DOMContentLoaded', function cqPatchOpenPopup() {
+      if (typeof openPopup !== 'function') return;
     // Reset qualification flow when popup opens
     var origOpenPopup = openPopup;
     openPopup = function(id) {
@@ -3128,6 +3131,7 @@
       }
       origOpenPopup(id);
     };
+    });
   </script>
 <script src="https://apiant.com/js/data.js"></script>
 <script>

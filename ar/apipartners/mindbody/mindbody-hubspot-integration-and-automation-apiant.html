@@ -2058,9 +2058,7 @@
                               } else requestAnimationFrame(wait);
                             };
                             wait();
-                          });
-                          window.addEventListener('pageshow', () => {
-                            resetAll();
+                            window.addEventListener('pageshow', () => { resetAll(); });
                           });
                         </script>
 </div>
@@ -2406,7 +2404,7 @@ document.querySelectorAll('.co-card').forEach(function(card) {
 <div class="api-apps-holder">
 <div class="fade-in-on-scroll">
 <div class="api-app-title-holder">
-<a class="api-apps-header-link w-inline-block" href="/ar/apipartners/mindbody-turnkey-integration-solutions.html"><img alt="" class="api-app-icon" decoding="async" loading="lazy" sizes="(max-width: 991px) 100vw, 992px" src="/images/app-icon_-1_1.avif" srcset="/images/app-icon_-1_1app-icon_-1.avif 500w, /images/app-icon_-1_1app-icon_-1.avif 800w, /images/app-icon_-1_1.avif 1024w"/>
+<a class="api-apps-header-link w-inline-block" href="/ar/apipartners/mindbody-turnkey-integration-solutions.html"><img alt="" class="api-app-icon" decoding="async" loading="lazy" sizes="(max-width: 991px) 100vw, 992px" src="/images/app-icon_-1_1.avif" srcset="/images/app-icon_-1_1.avif 1024w"/>
 <h3 class="no-margins">تطبيقات Mindbody API</h3>
 </a>
 </div>
@@ -3952,6 +3950,11 @@ document.querySelectorAll('.co-card').forEach(function(card) {
       cqGoTo('cq-step-call');
     }
 
+    // Reset qualification flow when popup opens. Wrapped in
+    // DOMContentLoaded so `openPopup` (declared in a later <script>
+    // block) has been defined before we monkey-patch it.
+    document.addEventListener('DOMContentLoaded', function cqPatchOpenPopup() {
+      if (typeof openPopup !== 'function') return;
     // Reset qualification flow when popup opens
     var origOpenPopup = openPopup;
     openPopup = function(id) {
@@ -4019,6 +4022,7 @@ document.querySelectorAll('.co-card').forEach(function(card) {
       }
       origOpenPopup(id);
     };
+    });
   </script>
 <script src="https://apiant.com/js/data.js"></script>
 <script>

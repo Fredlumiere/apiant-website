@@ -1718,9 +1718,7 @@
                               } else requestAnimationFrame(wait);
                             };
                             wait();
-                          });
-                          window.addEventListener('pageshow', () => {
-                            resetAll();
+                            window.addEventListener('pageshow', () => { resetAll(); });
                           });
                         </script>
 </div>
@@ -1906,7 +1904,7 @@
 <div class="api-apps-holder">
 <div class="fade-in-on-scroll">
 <div class="api-app-title-holder">
-<a class="api-apps-header-link w-inline-block" href="/ru/apipartners/donorperfect-turnkey-integration-solutions.html"><img alt="" class="api-app-icon" decoding="async" loading="lazy" sizes="(max-width: 991px) 100vw, 992px" src="/images/app-icon-02_1.avif" srcset="/images/app-icon-02_1app-icon-02.avif 500w, /images/app-icon-02_1app-icon-02.avif 800w, /images/app-icon-02_1.avif 992w"/>
+<a class="api-apps-header-link w-inline-block" href="/ru/apipartners/donorperfect-turnkey-integration-solutions.html"><img alt="" class="api-app-icon" decoding="async" loading="lazy" sizes="(max-width: 991px) 100vw, 992px" src="/images/app-icon-02_1.avif" srcset="/images/app-icon-02_1.avif 992w"/>
 <h3 class="no-margins">Приложения API</h3>
 </a>
 </div>
@@ -3361,6 +3359,11 @@
       cqGoTo('cq-step-call');
     }
 
+    // Reset qualification flow when popup opens. Wrapped in
+    // DOMContentLoaded so `openPopup` (declared in a later <script>
+    // block) has been defined before we monkey-patch it.
+    document.addEventListener('DOMContentLoaded', function cqPatchOpenPopup() {
+      if (typeof openPopup !== 'function') return;
     // Reset qualification flow when popup opens
     var origOpenPopup = openPopup;
     openPopup = function(id) {
@@ -3428,6 +3431,7 @@
       }
       origOpenPopup(id);
     };
+    });
   </script>
 <script src="https://apiant.com/js/data.js"></script>
 <script>
