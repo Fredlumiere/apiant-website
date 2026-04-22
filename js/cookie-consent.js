@@ -47,15 +47,27 @@
   function loadGA() {
     if (loaded.analytics) return;
     loaded.analytics = true;
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-G902ZQ3PZZ';
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { window.dataLayer.push(arguments); }
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', 'G-G902ZQ3PZZ');
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        analytics_storage: 'granted',
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+        functionality_storage: 'granted',
+        personalization_storage: 'granted'
+      });
+    }
+  }
+
+  function denyGA() {
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+    }
   }
 
   function loadSmartlook() {
@@ -103,6 +115,7 @@
       loadGA();
       loadSmartlook();
     } else {
+      denyGA();
       deleteCookies(ANALYTICS_COOKIES);
     }
 

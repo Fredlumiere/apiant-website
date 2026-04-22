@@ -291,10 +291,15 @@ def fix_urls(soup, lang, page_path):
 
 
 def add_hreflang_tags(soup, page_path):
-    """Add hreflang link tags to <head>."""
+    """Add hreflang link tags to <head>. Idempotent — removes any existing
+    hreflang link tags first so this can be re-run without duplicating."""
     head = soup.find('head')
     if not head:
         return
+
+    # Remove existing hreflang tags to keep this idempotent.
+    for existing in soup.find_all('link', attrs={'hreflang': True}):
+        existing.decompose()
 
     # x-default (English)
     tag = soup.new_tag('link', rel='alternate', hreflang='x-default')
@@ -485,9 +490,11 @@ def process_page(html_content, lang, translations, page_path):
     # Add language switcher and i18n.js
     add_language_switcher(soup, lang)
 
-    # Add canonical URL
+    # Set canonical URL (remove any inherited canonicals from the source first)
     head = soup.find('head')
     if head:
+        for existing in soup.find_all('link', rel='canonical'):
+            existing.decompose()
         canonical = soup.new_tag('link', rel='canonical')
         canonical['href'] = f'{BASE_URL}/{lang}/{page_path}'
         head.append(canonical)
