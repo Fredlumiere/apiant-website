@@ -17,6 +17,7 @@ PAGES = [
     'index2.html',
     'pricing.html',
     'ai.html',
+    'ai-operability.html',
     'apps.html',
     'chatbot.html',
     'formapps.html',
@@ -56,6 +57,20 @@ PAGES = [
 ]
 
 SKIP_TAGS = {'script', 'style', 'code', 'pre', 'svg', 'math', 'noscript'}
+SKIP_CLASSES = {'notranslate', 'w-embed'}
+
+
+def has_skip_ancestor(el):
+    """Return True if el or any ancestor has a skip class or translate='no'."""
+    node = el
+    while node is not None and hasattr(node, 'get'):
+        classes = node.get('class') or []
+        if any(c in SKIP_CLASSES for c in classes):
+            return True
+        if (node.get('translate') or '').lower() == 'no':
+            return True
+        node = node.parent
+    return False
 
 def extract_strings(html_content):
     """Extract all translatable text strings from HTML."""
@@ -102,6 +117,8 @@ def extract_strings(html_content):
             return
         if isinstance(element, NavigableString):
             if element.parent and element.parent.name in SKIP_TAGS:
+                return
+            if element.parent and has_skip_ancestor(element.parent):
                 return
             text = str(element).strip()
             # Skip empty, purely numeric, or very short strings
