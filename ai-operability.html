@@ -34,7 +34,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased}
 html{scroll-behavior:smooth}
-#inventory-skills,#inventory-tools{scroll-margin-top:80px}
+#inventory-skills,#inventory-tools{scroll-margin-top:180px}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1240px;margin:0 auto;padding:0 24px}
 /* Top bar */
@@ -200,14 +200,14 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 
 /* Section indicator: tracks the currently-visible inventory section (skills / MCP tools).
    Centers horizontally on the Start Building button via a CSS custom property set in JS. */
-.section-indicator{position:fixed;top:84px;left:var(--cta-center,auto);right:auto;z-index:45;pointer-events:none;opacity:0;transform:translateX(-50%) translateY(-4px);transition:opacity .22s ease, transform .22s ease}
+.section-indicator{position:fixed;top:170px;left:var(--cta-center,auto);right:auto;z-index:43;pointer-events:none;opacity:0;transform:translateX(-50%) translateY(-4px);transition:opacity .22s ease, transform .22s ease}
 .section-indicator.visible{opacity:1;transform:translateX(-50%) translateY(0)}
 .section-indicator .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--border);border-radius:100px;background:rgba(12,12,12,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap;letter-spacing:.3px}
 .section-indicator .pill b{color:var(--text);font-weight:700;font-size:13px}
 .section-indicator .dot{width:6px;height:6px;border-radius:50%;background:#1ab759;box-shadow:0 0 8px rgba(26,183,89,.6)}
 .section-indicator .count-swap{display:inline-flex;align-items:center;gap:6px;transition:opacity .15s ease}
 .section-indicator.swapping .count-swap{opacity:0}
-@media(max-width:991px){.section-indicator{top:80px}.section-indicator .pill{padding:5px 12px;font-size:11px}.section-indicator .pill b{font-size:12px}}
+@media(max-width:991px){.section-indicator{top:160px}.section-indicator .pill{padding:5px 12px;font-size:11px}.section-indicator .pill b{font-size:12px}}
 @media(max-width:640px){.section-indicator{display:none}}
 
 /* Language switcher dropdown */
@@ -223,6 +223,169 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 .lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
 .lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
 @media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+
+/* === Search sub-nav (Joy + Zoe) === */
+.search-nav{position:fixed;top:102px;left:0;right:0;z-index:44;background:rgba(12,12,12,.78);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--border);opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .22s ease, transform .22s ease}
+.search-nav.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.search-nav-inner{display:flex;align-items:center;gap:14px;padding:10px 24px;min-height:56px;flex-wrap:wrap}
+.search-wrap{position:relative;display:flex;align-items:center;flex:0 0 auto}
+.search-wrap .search-ico{position:absolute;left:10px;width:14px;height:14px;stroke:var(--faint);fill:none;stroke-width:1.8;pointer-events:none}
+.search-nav input#searchInput{width:420px;max-width:100%;height:36px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:12.5px;padding:0 46px 0 32px;transition:border-color .15s, background .15s, box-shadow .15s}
+.search-nav input#searchInput::placeholder{color:var(--faint)}
+.search-nav input#searchInput:focus{outline:none;border-color:rgba(26,183,89,.55);background:rgba(26,183,89,.04);box-shadow:0 0 0 3px rgba(26,183,89,.15)}
+.search-key{position:absolute;right:10px;font-family:var(--mono);font-size:10px;color:var(--faint);border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;padding:1px 5px;pointer-events:none;background:rgba(255,255,255,.03)}
+.chip-filters{display:flex;gap:6px;flex-wrap:wrap;flex:1 1 auto}
+.chip-filters .fchip{font-family:var(--mono);font-size:11px;letter-spacing:.3px;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:100px;background:transparent;cursor:pointer;transition:all .15s ease;user-select:none;display:inline-flex;align-items:center;gap:6px}
+.chip-filters .fchip:hover{border-color:rgba(255,255,255,.22);color:var(--text)}
+.chip-filters .fchip[data-active="true"]{background:rgba(26,183,89,.14);border-color:rgba(26,183,89,.45);color:#fff}
+.chip-filters .fchip .fc-badge{font-size:10px;color:var(--faint)}
+.chip-filters .fchip[data-active="true"] .fc-badge{color:#cfeedf}
+.chip-filters .fchip[data-zero="true"]{background:repeating-linear-gradient(45deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 4px,transparent 4px,transparent 8px);color:var(--faint);opacity:.6}
+.clear-filters{font-family:var(--mono);font-size:11px;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:6px;padding:6px 10px;cursor:pointer}
+.clear-filters:hover{color:var(--text);border-color:rgba(255,255,255,.25)}
+.clear-filters.hidden{display:none}
+@media(max-width:820px){
+  .search-nav-inner{padding:10px 16px;min-height:104px;align-items:stretch}
+  .search-wrap{width:100%}
+  .search-nav input#searchInput{width:100%}
+  .chip-filters{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+  .chip-filters::-webkit-scrollbar{display:none}
+  .chip-filters .fchip{flex:0 0 auto}
+}
+
+/* Search state on cards */
+.card{cursor:pointer}
+.card.search-hidden{display:none!important}
+.card.search-match{box-shadow:inset 0 0 0 1px rgba(26,183,89,.45), 0 0 20px rgba(26,183,89,.08)}
+.card mark{background:rgba(26,183,89,.22);color:#d8ffe9;padding:0 2px;border-radius:3px}
+.card:focus{outline:none}
+.card:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-color:rgba(26,183,89,.45)}
+.zero-state{display:none;max-width:680px;margin:24px auto;padding:32px 24px;border:1px dashed var(--border);border-radius:14px;text-align:center;background:var(--card)}
+.zero-state.visible{display:block}
+.zero-state h4{margin:0 0 8px;font-size:17px;color:var(--text)}
+.zero-state p{margin:0 0 16px;color:var(--muted);font-size:14px}
+.zero-state code{font-family:var(--mono);font-size:13px;color:var(--green);background:rgba(26,183,89,.08);padding:1px 6px;border-radius:4px}
+.zero-state .btn-clear-inline{font-family:var(--font);font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;border:1px solid var(--border);color:var(--text);background:transparent;cursor:pointer}
+.zero-state .btn-clear-inline:hover{background:rgba(255,255,255,.04)}
+
+/* === Drawer === */
+.drawer-backdrop{position:fixed;inset:0;background:rgba(8,8,10,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:90;opacity:0;transition:opacity .24s ease}
+.drawer-backdrop.visible{opacity:1}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:480px;max-width:100vw;background:#0e1113;border-left:1px solid var(--border);z-index:91;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);box-shadow:-24px 0 80px rgba(0,0,0,.45)}
+.drawer.visible{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;gap:10px;padding:18px 22px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.drawer-cat-chip{font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--green);background:var(--green-dim);border:1px solid rgba(26,183,89,.28);padding:4px 9px;border-radius:100px}
+.drawer-name{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--text);margin:0;flex:1 1 100%}
+.drawer-mutation{font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid transparent;display:none}
+.drawer-mutation.mutates{display:inline-block;color:#ff9ccb;background:rgba(255,120,180,.1);border-color:rgba(255,120,180,.35)}
+.drawer-mutation.readonly{display:inline-block;color:#5cc8ff;background:rgba(92,200,255,.08);border-color:rgba(92,200,255,.3)}
+.drawer-close{margin-left:auto;background:transparent;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:0 4px;line-height:1}
+.drawer-close:hover{color:var(--text)}
+.drawer-body{overflow-y:auto;flex:1;padding:22px 22px 88px;transition:opacity .2s ease}
+.drawer-body.swapping{opacity:0}
+.drawer-body section{margin:0 0 22px}
+.drawer-body h5{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--faint);margin:0 0 8px;font-weight:600}
+.drawer-desc p{font-size:14.5px;line-height:1.65;color:var(--text);margin:0}
+.drawer-when{background:rgba(92,200,255,.05);border:1px solid rgba(92,200,255,.18);border-radius:10px;padding:14px 16px}
+.drawer-when h5{color:#5cc8ff}
+.drawer-when p{font-size:13.5px;line-height:1.6;color:var(--muted);margin:0}
+.drawer-example pre{font-family:var(--mono);font-size:12.5px;line-height:1.65;color:rgba(255,255,255,.82);background:#0a0d10;border:1px solid var(--border);border-radius:8px;padding:14px;margin:0;overflow-x:auto;white-space:pre-wrap}
+.drawer-example pre .user{color:var(--violet)}
+.drawer-example pre .cc{color:var(--green)}
+.drawer-example pre .dim{color:var(--faint)}
+.drawer-tools .tool-pills{display:flex;flex-wrap:wrap;gap:6px}
+.drawer-tools .tool-pill{font-family:var(--mono);font-size:11px;color:var(--green);background:rgba(26,183,89,.08);border:1px solid rgba(26,183,89,.25);padding:4px 9px;border-radius:6px;cursor:pointer;transition:all .15s}
+.drawer-tools .tool-pill:hover{background:rgba(26,183,89,.16);color:#fff}
+.drawer-tools .tool-pill.input{color:#5cc8ff;background:rgba(92,200,255,.06);border-color:rgba(92,200,255,.25);cursor:default}
+.drawer-tools .tool-pill.input:hover{background:rgba(92,200,255,.06)}
+.drawer-tools .tool-pill-static{font-family:var(--mono);font-size:11px;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--border);padding:4px 9px;border-radius:6px;cursor:default}
+.drawer-close:focus-visible,.drawer-copy:focus-visible,.drawer-nav button:focus-visible,.drawer-tools .tool-pill:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.drawer-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 22px;border-top:1px solid var(--border)}
+.drawer-copy{font-family:var(--mono);font-size:12px;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:6px;padding:7px 12px;cursor:pointer}
+.drawer-copy:hover{color:var(--text);border-color:rgba(255,255,255,.22)}
+.drawer-nav{display:flex;gap:6px}
+.drawer-nav button{width:30px;height:30px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:14px}
+.drawer-nav button:hover{color:var(--text);border-color:rgba(255,255,255,.22)}
+.drawer-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:rgba(12,14,16,.95);border:1px solid rgba(26,183,89,.4);color:var(--text);font-family:var(--mono);font-size:12px;padding:10px 16px;border-radius:8px;z-index:100;opacity:0;pointer-events:none;transition:opacity .22s ease, transform .22s ease}
+.drawer-toast.visible{opacity:1;transform:translateX(-50%) translateY(0)}
+.drawer .placeholder{color:var(--faint);font-style:italic;font-size:13px}
+@media(max-width:760px){
+  .drawer{top:auto;width:100vw;height:88vh;border-left:none;border-top:1px solid var(--border);border-radius:16px 16px 0 0;transform:translateY(100%)}
+  .drawer.visible{transform:translateY(0)}
+  .drawer::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:36px;height:4px;border-radius:3px;background:rgba(255,255,255,.2)}
+  .drawer-head{padding-top:22px}
+}
+
+/* === Dev/Prod environment toggle on tool cards === */
+.env-toggle{position:absolute;top:12px;right:12px;display:inline-flex;border:1px solid var(--border);border-radius:100px;background:rgba(255,255,255,.02);padding:2px;font-family:var(--mono)}
+.env-toggle .env-seg{background:transparent;border:none;color:var(--faint);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;padding:6px 10px;border-radius:100px;cursor:pointer;font-family:var(--mono);line-height:1;min-height:24px;min-width:36px}
+.env-toggle .env-seg.active[data-env="dev"]{background:rgba(92,200,255,.14);color:#5cc8ff;box-shadow:0 0 0 1px rgba(92,200,255,.3)}
+.env-toggle .env-seg.active[data-env="prod"]{background:rgba(245,183,72,.14);color:#f5b748;box-shadow:0 0 0 1px rgba(245,183,72,.3)}
+.env-toggle .env-seg:focus{outline:none;color:var(--text)}
+.env-toggle .env-seg:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+@media (hover: none){.env-toggle .env-seg{min-height:32px;min-width:44px;font-size:10px;padding:8px 12px}}
+.card.env-prod{border-color:rgba(245,183,72,.28);background:rgba(245,183,72,.02)}
+.card.env-prod .name::after{content:'READ-ONLY';display:inline-block;margin-left:8px;font-family:var(--mono);font-size:9px;letter-spacing:1.2px;color:#f5b748;background:rgba(245,183,72,.08);border:1px solid rgba(245,183,72,.3);padding:2px 6px;border-radius:4px;vertical-align:middle}
+.env-explainer{max-width:1100px;margin:0 auto 24px;padding:14px 18px;background:var(--card);border:1px solid var(--border);border-radius:10px;font-size:13.5px;line-height:1.55;color:var(--muted)}
+.env-explainer b{color:var(--text);font-weight:600}
+
+/* === Flagship timeline / run log (Ava + Zoe) === */
+.run-log{max-width:1100px;margin:0 auto}
+.run-log .kicker-amber{color:var(--amber)}
+.run-prompt{max-width:820px;margin:0 auto 36px;font-family:var(--mono);font-size:14px;line-height:1.6;padding:18px 22px;background:#0a0d10;border:1px solid var(--border);border-radius:12px;color:rgba(255,255,255,.82)}
+.run-prompt .prefix{color:var(--violet);margin-right:6px}
+.run-prompt .type-caret{display:inline-block;width:8px;height:16px;background:var(--green);vertical-align:middle;margin-left:2px;animation:typeBlink 1.1s steps(2) infinite}
+@keyframes typeBlink{50%{opacity:0}}
+.timeline{position:relative;padding-left:72px;margin:0 auto 32px;max-width:820px}
+.timeline::before{content:'';position:absolute;left:30px;top:0;bottom:0;width:2px;background:linear-gradient(var(--green),var(--cyan),var(--violet));opacity:.55}
+.tl-phase{position:relative;margin-bottom:22px}
+.tl-phase-label{position:absolute;left:-72px;top:0;width:58px;font-family:var(--mono);font-size:10px;letter-spacing:1.2px;color:var(--faint);text-transform:uppercase}
+.tl-event{position:relative;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;transition:border-color .2s}
+.tl-event:hover{border-color:rgba(26,183,89,.3)}
+.tl-event::before{content:'';position:absolute;left:-48px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(26,183,89,.15), 0 0 12px rgba(26,183,89,.4)}
+.tl-event.phase-2::before{background:var(--cyan);box-shadow:0 0 0 4px rgba(92,200,255,.15), 0 0 12px rgba(92,200,255,.4)}
+.tl-event.phase-3::before{background:var(--violet);box-shadow:0 0 0 4px rgba(192,132,252,.15), 0 0 12px rgba(192,132,252,.4)}
+.tl-event.phase-4::before{background:var(--amber);box-shadow:0 0 0 4px rgba(245,183,72,.15), 0 0 12px rgba(245,183,72,.4)}
+.tl-event .t-time{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.4px;margin-bottom:4px}
+.tl-event .t-title{font-size:14.5px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+.tl-event .t-skill{font-family:var(--mono);font-size:12px;color:var(--green);margin-right:10px}
+.tl-event .t-desc{font-size:13px;line-height:1.55;color:var(--muted)}
+.tl-event details{margin-top:10px}
+.tl-event summary{font-family:var(--mono);font-size:11px;color:var(--faint);cursor:pointer;list-style:none}
+.tl-event summary::-webkit-details-marker{display:none}
+.tl-event summary::before{content:'▸ ';color:var(--faint)}
+.tl-event[open] summary::before, .tl-event details[open] summary::before{content:'▾ '}
+.tl-event pre{font-family:var(--mono);font-size:11.5px;line-height:1.6;color:rgba(255,255,255,.78);background:#0a0d10;border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin:8px 0 0;overflow-x:auto;white-space:pre-wrap}
+.tl-event pre .tc{color:var(--cyan)}
+.tl-event pre .ok{color:var(--green)}
+.tl-event pre .warn{color:var(--amber)}
+.tl-event pre .dim{color:var(--faint)}
+.tl-why{margin:8px 0 4px;padding:10px 14px;border-left:3px solid var(--cyan);background:rgba(92,200,255,.04);border-radius:0 8px 8px 0}
+.tl-why h6{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--cyan);margin:0 0 4px}
+.tl-why p{font-size:12.5px;line-height:1.55;color:var(--muted);margin:0}
+.run-artifact{max-width:820px;margin:0 auto 24px}
+.run-artifact svg{display:block;width:100%;height:auto;background:#0a0d10;border:1px solid var(--border);border-radius:12px;padding:16px}
+.run-totals{max-width:820px;margin:0 auto 20px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;padding:18px 22px;background:linear-gradient(135deg,rgba(26,183,89,.06),rgba(92,200,255,.04) 60%,rgba(192,132,252,.05));border:1px solid rgba(26,183,89,.25);border-radius:12px}
+.run-totals .tot{font-family:var(--mono);font-size:12px;letter-spacing:.5px;color:var(--muted)}
+.run-totals .tot b{color:var(--text);font-weight:700;font-size:15px;margin-right:4px}
+.run-totals .tot b.count-up{display:inline-block}
+.run-closing{max-width:820px;margin:0 auto;font-size:14px;line-height:1.65;color:var(--muted);font-style:italic;padding:14px 6px}
+@media(max-width:760px){
+  .timeline{padding-left:44px}
+  .timeline::before{left:16px}
+  .tl-phase-label{position:static;margin-bottom:8px;display:block;width:auto}
+  .tl-event::before{left:-34px;width:10px;height:10px}
+}
+
+/* Respect user motion preference (P1-2) */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:0.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
 </style>
 </head>
 <body>
@@ -374,19 +537,70 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 <div aria-hidden="true" class="patent-badge-compact"><span class="pill">⚖ PATENT PENDING</span></div>
 
 <!-- Section indicator: shows which inventory section (skills / tools) is currently in view -->
-<div aria-hidden="true" class="section-indicator"><span class="pill"><span class="dot"></span> <span class="count-swap"><b data-count="33">33</b> <span data-label>plugin skills</span></span></span></div>
+<div aria-hidden="true" class="section-indicator"><span class="pill"><span class="dot"></span> <span class="count-swap"><b data-count="35">35</b> <span data-label>plugin skills</span></span></span></div>
+
+<!-- Sticky search sub-nav (hidden until hero exits viewport) -->
+<div class="search-nav" id="searchNav" aria-hidden="true">
+  <div class="search-nav-inner">
+    <div class="search-wrap">
+      <svg class="search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="searchInput" type="text" placeholder="Search 160 skills and tools" aria-label="Search skills and tools" autocomplete="off" spellcheck="false"/>
+      <kbd class="search-key">/</kbd>
+    </div>
+    <div class="chip-filters" id="chipFilters" role="group" aria-label="Category filters">
+      <button type="button" class="fchip" aria-pressed="false" data-filter="setup">setup <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="build">build <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="edit">edit <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="test">test &amp; deploy <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="triggers">triggers <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="actions">actions <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="connector">connector <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="sync">sync <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="patterns">patterns <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="ops">ops <span class="fc-badge" data-count>0</span></button>
+      <button type="button" class="fchip" aria-pressed="false" data-filter="tools">tools <span class="fc-badge" data-count>0</span></button>
+    </div>
+    <button class="clear-filters hidden" id="clearFilters" type="button">Clear</button>
+  </div>
+</div>
+
+<!-- Drawer (hidden until a card is clicked) -->
+<div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <header class="drawer-head">
+    <span class="drawer-cat-chip" id="drawerCatChip">Category</span>
+    <span class="drawer-mutation" id="drawerMutation"></span>
+    <button class="drawer-close" id="drawerClose" aria-label="Close drawer" type="button">&times;</button>
+    <h3 id="drawerTitle" class="drawer-name">/skill-name</h3>
+  </header>
+  <div class="drawer-body" id="drawerBody">
+    <section class="drawer-desc" id="drawerDesc"></section>
+    <section class="drawer-when" id="drawerWhenSection" hidden><h5>When to use</h5><p id="drawerWhen"></p></section>
+    <section class="drawer-example" id="drawerExampleSection" hidden><h5>Example</h5><pre id="drawerExample"></pre></section>
+    <section class="drawer-tools" id="drawerToolsSection" hidden><h5 id="drawerToolsLabel">Invokes</h5><div class="tool-pills" id="drawerTools"></div></section>
+    <section class="drawer-tools" id="drawerInputsSection" hidden><h5>Inputs</h5><div class="tool-pills" id="drawerInputs"></div></section>
+  </div>
+  <footer class="drawer-foot">
+    <button class="drawer-copy" id="drawerCopy" type="button">Copy link</button>
+    <div class="drawer-nav">
+      <button class="drawer-prev" id="drawerPrev" aria-label="Previous" type="button">&larr;</button>
+      <button class="drawer-next" id="drawerNext" aria-label="Next" type="button">&rarr;</button>
+    </div>
+  </footer>
+</aside>
+<div class="drawer-toast" id="drawerToast" aria-live="polite"></div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
     <span class="patent-badge">⚖ PATENT PENDING TECHNOLOGY</span>
     <div class="eyebrow"><span class="pulse"></span> Operable by Claude Code &middot; Live inventory</div>
-    <h1>Every tool. Every skill.<br/><span class="grad">Claude Code drives the whole platform.</span></h1>
-    <p class="lead">Install the APIANT Claude Code Plugin and Claude Code gains the ability to build integrations, edit assemblies, run tests, deploy to production, write docs, and diagnose customer issues. Below is the complete inventory: 33 skills, 100 MCP tools, each one a real capability Claude can invoke on your behalf.</p>
+    <h1>One prompt. One integration.<br/><span class="grad">Claude Code drives the platform end-to-end.</span></h1>
+    <p class="lead">Install the APIANT Claude Code Plugin and Claude Code gains the ability to build integrations, edit assemblies, run tests, deploy to production, write docs, and diagnose customer issues. Below is the complete inventory: 35 skills, 125 MCP tools, each one a real capability Claude can invoke on your behalf.</p>
     <div class="hero-version"><span><svg class="ver-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> APIANT Claude Code Plugin <b>v1.0.0</b> &middot; build 23</span></div>
     <div class="hero-meta">
-      <a href="#inventory-skills" class="hm-link"><b>33</b> plugin skills</a>
-      <a href="#inventory-tools" class="hm-link"><b>100</b> MCP tools</a>
+      <a href="#inventory-skills" class="hm-link"><b>35</b> plugin skills</a>
+      <a href="#inventory-tools" class="hm-link"><b>125</b> MCP tools</a>
       <span><b>3</b> workspaces</span>
       <span><b>1</b> prompt → shipped integration</span>
     </div>
@@ -515,13 +729,13 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
   </div>
 </section>
 
-<!-- INVENTORY BAR -->
+<!-- INVENTORY BAR: SKILLS -->
 <section class="s" id="inventory-skills" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-kicker">The complete inventory</div>
-      <h2>33 skills across 9 workflows.</h2>
-      <p>Every skill is a procedure a senior APIANT engineer follows, encoded and executable by Claude Code.</p>
+      <h2>35 skills across 10 workflows.</h2>
+      <p>Every skill is a procedure a senior APIANT engineer follows, encoded and executable by Claude Code. Click any card for the full what/when/how.</p>
     </div>
     <div class="bar">
       <div class="chip"><b>1</b> setup</div>
@@ -530,10 +744,34 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="chip"><b>3</b> test &amp; deploy</div>
       <div class="chip"><b>6</b> triggers</div>
       <div class="chip"><b>6</b> actions</div>
-      <div class="chip"><b>1</b> connector</div>
+      <div class="chip"><b>3</b> connector</div>
       <div class="chip"><b>1</b> sync</div>
       <div class="chip"><b>6</b> patterns</div>
       <div class="chip"><b>3</b> ops &amp; support</div>
+    </div>
+
+    <!-- SETUP (new) -->
+    <div class="cat">
+      <div class="cat-ico"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <div>
+        <div class="cat-title">Setup</div>
+        <div class="cat-desc">Verify the plugin, its MCP connections, and environment before anything else runs.</div>
+      </div>
+      <div class="cat-count">1 skill</div>
+    </div>
+    <div class="grid">
+      <div class="card" data-kind="skill" data-category="setup" data-name="/apiant-setup" data-title="Set up the plugin" data-desc="Verify MCP connections, environment, and plugin version. Run on first install or when something breaks." data-tags="setup install diagnose mcp" data-when="When installing the plugin for the first time, after upgrades, or when a skill fails to load. Running this first eliminates environment issues before you debug real work." data-example="&gt; /apiant-setup&#10;&#10;● checking MCP servers... apiant-dev OK, apiant-prod OK, apiant-docs OK&#10;● checking env vars... APIANT_DEV_TOKEN set, ANTHROPIC_API_KEY set&#10;● plugin version v1.0.0 (latest)&#10;● 35 skills registered, 125 MCP tools available&#10;✓ ready to build" data-invokes="deploy_get_plugin_version,activate_toolset">
+        <div class="glyph"><svg class="g" viewbox="0 0 64 64">
+          <circle cx="32" cy="32" r="20" class="soft"/>
+          <g style="transform-origin:32px 32px;animation:orbit 12s linear infinite" class="anim">
+            <circle cx="32" cy="10" r="3" class="fill" style="--gc:#5cc8ff"/>
+          </g>
+          <path d="M22 32 L30 40 L44 24" class="tk" style="stroke-dasharray:30;stroke-dashoffset:30;animation:tick 2.8s ease-in-out infinite"/>
+        </svg></div>
+        <div class="name">/apiant-setup</div>
+        <div class="title">Set up the plugin</div>
+        <p class="desc">Verify MCP connections, environment, and plugin version. Run on first install or when something breaks.</p>
+      </div>
     </div>
 
     <!-- BUILD -->
@@ -546,7 +784,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="cat-count">4 skills</div>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="build" data-name="/build-automation" data-title="Build a new automation" data-desc='"Connect X to Y." Claude picks triggers, actions, field mappings, and stands up the entire flow.' data-tags="build new automation create connect" data-when='When the user says "connect X to Y" or "build a flow that does Z." This is the primary entry point for any new integration. Claude picks a trigger skill, action skills, and patterns as needed.' data-example="&gt; Build a new automation that syncs new HubSpot contacts into Mindbody clients.&#10;&#10;● /build-automation&#10;  picking trigger... assembly-trigger-updated (HubSpot polling)&#10;  picking action... assembly-action-find (dedup) + assembly-action-add&#10;  building field map: email,firstName,lastName,phone,membership_tier&#10;✓ automation committed as draft v1" data-invokes="auto_build,auto_manage,auto_commit,auto_edit_mapping,auto_edit_structure,catalog_search_apps,pattern_search">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="16" width="14" height="14" rx="2"/>
           <rect x="26" y="16" width="14" height="14" rx="2"/>
@@ -559,7 +797,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Build a new automation</div>
         <p class="desc">"Connect X to Y." Claude picks triggers, actions, field mappings, and stands up the entire flow.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="build" data-name="/build-assembly" data-title="Build an app assembly" data-desc="The integration plumbing: OAuth, API Key, or no-cred connectors, triggers, and actions (ADD/GET/LIST/UPDATE/DELETE/FIND)." data-tags="build assembly connector oauth api-key trigger action" data-when="When there is no catalog app yet for the system you want to integrate, or an existing assembly is missing an operation. This builds the low-level connector + operations that /build-automation later composes into a flow." data-example="&gt; Build an assembly for Acuity Scheduling with ADD, GET, LIST, UPDATE clients.&#10;&#10;● /build-assembly&#10;  connector: OAuth2 (PKCE)&#10;  creating ADD... asm_create_action_or_trigger&#10;  creating LIST... asm_create_action_or_trigger&#10;  testing endpoint... asm_test_api_endpoint ✓&#10;✓ assembly compiled" data-invokes="asm_create_connector,asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields,asm_set_jsp_and_compile,asm_test_api_endpoint,asm_inject_settings">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="14" y="10" width="36" height="10" rx="2"/>
           <rect x="8"  y="24" width="48" height="10" rx="2"/>
@@ -570,7 +808,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Build an app assembly</div>
         <p class="desc">The integration plumbing: OAuth, API Key, or no-cred connectors, triggers, and actions (ADD/GET/LIST/UPDATE/DELETE/FIND).</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="build" data-name="/build-integration" data-title="Build an integration suite" data-desc="Multi-automation deployments: two-way sync, data pipelines, coordinated workflows with shared state." data-tags="build integration suite multi sync pipeline" data-when="When a customer needs more than one automation working together, for example a two-way contact sync plus an invoice pipeline plus a daily reconciliation. Scopes the work, then delegates to /build-automation for each piece." data-example="&gt; Build a two-way contact sync and a daily appointment reconciler between HubSpot and Mindbody.&#10;&#10;● /build-integration&#10;  scoping... 3 automations + 1 shared pattern&#10;  ● /build-automation (HubSpot -&gt; Mindbody)&#10;  ● /build-automation (Mindbody -&gt; HubSpot)&#10;  ● /build-automation (daily reconciler)&#10;✓ suite committed" data-invokes="auto_build,auto_manage,auto_folder,pattern_search,pattern_save">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="16" cy="32" r="6"/><circle cx="48" cy="18" r="6"/><circle cx="48" cy="46" r="6"/>
           <path d="M22 32 L42 20 M22 32 L42 44" stroke-dasharray="3 3" class="anim" style="animation:dash 1.8s linear infinite"/>
@@ -582,7 +820,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Build an integration suite</div>
         <p class="desc">Multi-automation deployments: two-way sync, data pipelines, coordinated workflows with shared state.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="build" data-name="/build-form" data-title="Design a form" data-desc="Form schema for lead capture, onboarding, or config, wired straight into an APIANT automation." data-tags="build form formapp ui input" data-when="When the automation needs human input. Lead capture, customer onboarding, config collection, approval prompts. Claude designs the schema and wires it into an existing automation." data-example="&gt; Add a signup form that feeds new-client into the Mindbody onboarding automation.&#10;&#10;● /build-form&#10;  schema: name, email, phone, birthday, membership_tier&#10;  validation: email regex, phone E.164&#10;  wiring to automation step 1... auto_edit_trigger&#10;✓ form live" data-invokes="auto_get_form_design,auto_save_form_design,auto_get_form_element_catalog,auto_get_form_patterns,auto_refresh_form_fields,auto_validate_forms">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="10" y="10" width="44" height="44" rx="4"/>
           <rect x="16" y="18" width="32" height="5" rx="1" class="soft fill"/>
@@ -606,7 +844,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="cat-count">2 skills</div>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="edit" data-name="/edit-automation" data-title="Edit an automation" data-desc="Add a step, fix the mapping, swap Mailchimp for Klaviyo, disable a branch. Surgical, non-destructive edits." data-tags="edit automation modify step mapping" data-when="When you need to modify an existing, committed automation: add a step, change a mapping, swap connectors, retitle, disable a branch. Changes land as a new draft version, never in place." data-example="&gt; In the daily sync, swap Mailchimp for Klaviyo and add a tag for churn risk.&#10;&#10;● /edit-automation&#10;  locating step 3... auto_get_step_details&#10;  replacing connector... auto_edit_structure&#10;  rewiring mapping... auto_edit_mapping&#10;  adding tag step...&#10;✓ draft v4 committed" data-invokes="auto_edit_structure,auto_edit_mapping,auto_edit_metadata,auto_edit_trigger,auto_apply_edits,auto_commit,auto_get_step_details">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="10" y="14" width="14" height="10" rx="2"/>
           <rect x="10" y="30" width="14" height="10" rx="2"/>
@@ -619,7 +857,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Edit an automation</div>
         <p class="desc">Add a step, fix the mapping, swap Mailchimp for Klaviyo, disable a branch. Surgical, non-destructive edits.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="edit" data-name="/edit-assembly" data-title="Edit an assembly" data-desc="Fix JSP, update API calls, change endpoints, rename settings, edit dropdowns, with full diff awareness." data-tags="edit assembly jsp endpoint setting dropdown" data-when="When an API changes (new endpoint, renamed field, deprecated operation) and the assembly needs to catch up. Read the current logic, apply the diff, recompile, and validate." data-example="&gt; The Mindbody v6 -&gt; v7 migration just landed. Update the Clients LIST endpoint.&#10;&#10;● /edit-assembly&#10;  reading logic... asm_read_assembly_logic&#10;  updating URL + output mapping... asm_set_jsp_and_compile&#10;  test connection... asm_test_api_endpoint ✓" data-invokes="asm_read_assembly_logic,asm_set_jsp_and_compile,asm_inject_settings,asm_reset_settings,asm_set_output_fields,asm_cleanup,asm_find_referencers">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="10" width="48" height="14" rx="3"/>
           <rect x="8" y="28" width="48" height="14" rx="3"/>
@@ -642,7 +880,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="cat-count">3 skills</div>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="test" data-name="/test-automation" data-title="Test an automation" data-desc="Execute, inspect results, diagnose failures, apply fixes, retest, and run branch coverage automatically." data-tags="test automation execute debug diagnose" data-when="After any edit, or when a customer reports something wrong. Runs the automation end-to-end with realistic inputs, walks every branch, and surfaces the failing step with the exact HTTP request and response." data-example="&gt; Test the HubSpot -&gt; Mindbody sync with a realistic payload.&#10;&#10;● /test-automation&#10;  running... exec_test_automation&#10;  step 3 failed: 422 invalid membership_tier&#10;  fixing mapping... auto_edit_mapping&#10;  retry... ✓ pass. 4/4 branches covered." data-invokes="exec_test_automation,exec_get_data,exec_get_step_data,exec_get_branch_test_points,exec_mutate_data,exec_restart_from_step,exec_retry_failed">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="20" class="soft"/>
           <path d="M22 32 L30 40 L44 24" class="tk" style="stroke-dasharray:30;stroke-dashoffset:30;animation:tick 2.8s ease-in-out infinite" class="anim"/>
@@ -651,7 +889,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Test an automation</div>
         <p class="desc">Execute, inspect results, diagnose failures, apply fixes, retest, and run branch coverage automatically.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="test" data-name="/test-integration" data-title="Test the whole suite" data-desc="Validate data flow between automations, shared state, loop prevention, and cross-automation coordination." data-tags="test integration suite loop shared-state" data-when="For multi-automation suites where the automations interact. Especially critical for two-way syncs: Claude stages data, watches for echo loops, and verifies conflict resolution." data-example="&gt; Test the HubSpot &lt;-&gt; Mindbody suite: push from each side, check the other.&#10;&#10;● /test-integration&#10;  creating synthetic contact in HubSpot... appears in Mindbody ✓&#10;  editing in Mindbody... updates in HubSpot ✓&#10;  checking loop suppression... no echo ✓&#10;✓ 14/14 test cases pass" data-invokes="exec_test_automation,exec_test_subroutine,exec_get_assembly_log,exec_search_history">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="20" cy="22" r="6"/><circle cx="44" cy="22" r="6"/><circle cx="32" cy="46" r="6"/>
           <path d="M26 22 L38 22 M24 27 L29 41 M40 27 L35 41" stroke-dasharray="3 3" class="anim" style="animation:dash 2s linear infinite"/>
@@ -660,7 +898,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Test the whole suite</div>
         <p class="desc">Validate data flow between automations, shared state, loop prevention, and cross-automation coordination.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="test" data-name="/deploy-automation" data-title="Deploy dev to prod" data-desc="Publish template automations and push linked deployments to customer accounts in one coordinated step." data-tags="deploy publish prod release rollout" data-when="Once tests pass. Promotes a draft to the dev template, then optionally pushes the template to linked customer accounts in prod. A single coordinated step; if any account fails, the deploy reports clearly." data-example="&gt; Deploy the HubSpot -&gt; Mindbody sync to all three linked customer accounts.&#10;&#10;● /deploy-automation&#10;  publishing template... deploy_publish_assembly&#10;  pushing to acme-corp, zen-yoga, flow-studio...&#10;✓ 3/3 accounts updated" data-invokes="deploy_publish_assembly,deploy_publish_folder,deploy_to_accounts,deploy_list_linked_accounts,auto_set_active">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <path d="M32 52 L32 12" class="tk"/>
           <path d="M24 20 L32 12 L40 20" class="tk"/>
@@ -669,7 +907,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
           <circle cx="20" cy="52" r="1.5" class="soft fill"/><circle cx="44" cy="52" r="1.5" class="soft fill"/>
         </svg></div>
         <div class="name">/deploy-automation</div>
-        <div class="title">Deploy dev → prod</div>
+        <div class="title">Deploy dev to prod</div>
         <p class="desc">Publish template automations and push linked deployments to customer accounts in one coordinated step.</p>
       </div>
     </div>
@@ -684,7 +922,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="cat-count">6 skills</div>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="triggers" data-name="assembly-trigger-new" data-title="NEW_ITEM polling trigger" data-desc="Poll an endpoint on a schedule and fire when a new record appears. The workhorse trigger." data-tags="trigger polling new scheduled" data-when="When the source app does not offer webhooks, or its webhooks are unreliable. The workhorse trigger: poll every N minutes, compare a cursor field, fire on new records." data-example="&gt; Build a trigger that fires on new Mindbody clients, every 5 minutes.&#10;&#10;● assembly-trigger-new&#10;  polling URL: /public/v6/client/clients&#10;  cursor: last_modified_date&#10;  interval: 5m" data-invokes="asm_create_action_or_trigger,asm_set_output_fields,asm_test_api_endpoint">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="20" class="soft"/>
           <path d="M32 14 V32 L42 38" class="tk"/>
@@ -695,7 +933,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">NEW_ITEM polling trigger</div>
         <p class="desc">Poll an endpoint on a schedule and fire when a new record appears. The workhorse trigger.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="triggers" data-name="assembly-trigger-updated" data-title="NEW_OR_UPDATED polling" data-desc="Polls and fires when a record is created or modified. Tracks last-seen cursor automatically." data-tags="trigger polling updated cursor" data-when="When you care about edits, not just inserts. Same polling shape as NEW_ITEM but the cursor watches a last_modified timestamp so changes also fire." data-example="&gt; Fire whenever a HubSpot contact is created or edited.&#10;&#10;● assembly-trigger-updated&#10;  cursor: lastmodifieddate&#10;  interval: 2m" data-invokes="asm_create_action_or_trigger,asm_set_output_fields">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="20" class="soft"/>
           <path d="M32 14 V32 L42 38" class="tk"/>
@@ -707,7 +945,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">NEW_OR_UPDATED polling</div>
         <p class="desc">Polls and fires when a record is created or modified. Tracks last-seen cursor automatically.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="triggers" data-name="assembly-trigger-manual-webhook" data-title="Manual webhook" data-desc="You paste a URL into the source app. Incoming posts fire the automation." data-tags="trigger webhook manual push" data-when="When the source app has its own webhook UI and the customer is willing to paste a URL. Lowest lift, zero credential handling, works everywhere." data-example="&gt; Accept a webhook from our Typeform survey.&#10;&#10;● assembly-trigger-manual-webhook&#10;  endpoint generated&#10;  payload schema inferred from sample" data-invokes="asm_create_action_or_trigger,asm_set_webhook_field_xml,asm_add_webhook_support">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <path d="M8 44 C 20 44, 20 20, 32 20 C 44 20, 44 44, 56 44" class="tk"/>
           <circle cx="8" cy="44" r="3" class="fill"/>
@@ -719,7 +957,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Manual webhook</div>
         <p class="desc">You paste a URL into the source app. Incoming posts fire the automation.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="triggers" data-name="assembly-trigger-self-registering-webhook" data-title="Self-registering webhook" data-desc="APIANT creates and tears down the webhook automatically via the target app's API. Zero manual setup." data-tags="trigger webhook self-registering auto" data-when="When the target app exposes a webhook registration API. APIANT subscribes on activation, unsubscribes on teardown, zero manual work on the customer side." data-example="&gt; Subscribe to HubSpot contact.creation events automatically.&#10;&#10;● assembly-trigger-self-registering-webhook&#10;  registering subscription via /webhooks/v3/...&#10;✓ subscription id 847291" data-invokes="asm_create_action_or_trigger,asm_add_webhook_support,asm_set_webhook_field_xml">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="22" class="soft"/>
           <path d="M22 32 L30 40 L44 24" class="tk"/>
@@ -730,7 +968,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Self-registering webhook</div>
         <p class="desc">APIANT creates and tears down the webhook automatically via the target app's API. Zero manual setup.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="triggers" data-name="assembly-trigger-service-webhook" data-title="Service webhook" data-desc="Credential-based webhook URL with event filtering. Multiple event types route on a single endpoint." data-tags="trigger webhook service credential filter" data-when="When one endpoint needs to accept many event types and route them. The credential drives the URL, and an event discriminator picks the branch." data-example="&gt; Route order.created, order.updated, and order.refunded to the right branches.&#10;&#10;● assembly-trigger-service-webhook&#10;  URL: /webhook/shopify?key=...&#10;  events: order.created|updated|refunded&#10;  routing on $.event_type" data-invokes="asm_create_action_or_trigger,asm_set_webhook_field_xml,asm_add_webhook_support">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="10" y="14" width="44" height="36" rx="4"/>
           <path d="M10 24 L54 24"/>
@@ -742,7 +980,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Service webhook</div>
         <p class="desc">Credential-based webhook URL with event filtering. Multiple event types route on a single endpoint.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="triggers" data-name="assembly-trigger-protocol-thread" data-title="Protocol thread" data-desc="APIANT-to-APIANT internal protocol. Enables chained automations across accounts and environments." data-tags="trigger protocol thread internal chain" data-when="When one automation needs to hand off to another, possibly in a different tenant, without going back out to HTTP. Lower latency, typed payloads, survives network flakes." data-example="&gt; After the reconciler finishes, kick off the billing automation in the downstream tenant.&#10;&#10;● assembly-trigger-protocol-thread&#10;  channel: recon -&gt; billing&#10;  payload: reconciled_batch_id" data-invokes="asm_create_action_or_trigger">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <path d="M8 32 L56 32" class="tk"/>
           <path d="M16 22 L16 42 M26 22 L26 42 M36 22 L36 42 M46 22 L46 42" class="soft"/>
@@ -766,7 +1004,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="cat-count">6 skills</div>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="actions" data-name="assembly-action-add" data-title="ADD" data-desc="Create a new record in the target app. Handles validation, required fields, and response parsing." data-tags="action add create insert" data-when="When you need to write a new record downstream: a new client, a new order, a new ticket. ADD owns validation, required-field checks, and parsing the response id back for later steps." data-example="&gt; Add a client to Mindbody when a HubSpot contact is created.&#10;&#10;● assembly-action-add&#10;  endpoint: POST /public/v6/client/addclient&#10;  required: FirstName, LastName, Email&#10;  returns: ClientId" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="20" class="soft"/>
           <path d="M32 22 V42 M22 32 H42" class="tk" style="--gc:#1ab759"/>
@@ -775,7 +1013,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">ADD</div>
         <p class="desc">Create a new record in the target app. Handles validation, required fields, and response parsing.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="actions" data-name="assembly-action-delete" data-title="DELETE" data-desc="Remove a record by ID or criteria. Safe-mode defaults with rollback metadata preserved." data-tags="action delete remove destroy" data-when="Rare by design. When a cleanup or GDPR workflow needs hard deletes. Defaults to safe mode: preserves a deletion log so the op is reversible where the API supports it." data-example="&gt; On GDPR request, delete the Mindbody client matching the HubSpot email.&#10;&#10;● assembly-action-delete&#10;  endpoint: DELETE /public/v6/client/clients/{id}&#10;  rollback log: written" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="14" y="16" width="36" height="40" rx="3"/>
           <rect x="20" y="10" width="24" height="8" rx="2"/>
@@ -786,7 +1024,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">DELETE</div>
         <p class="desc">Remove a record by ID or criteria. Safe-mode defaults with rollback metadata preserved.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="actions" data-name="assembly-action-find" data-title="FIND" data-desc="Search by criteria, return matches. Used for dedup, upsert, and enrichment patterns." data-tags="action find search upsert dedup" data-when='Before an ADD, to upsert instead of duplicating. During enrichment, to look up a matching record. The "does this already exist" primitive.' data-example="&gt; Find the Mindbody client with email=X before inserting.&#10;&#10;● assembly-action-find&#10;  endpoint: GET /public/v6/client/clients?email=...&#10;  match: exact, first result" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="26" cy="26" r="14"/>
           <path d="M36 36 L52 52" class="tk"/>
@@ -796,7 +1034,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">FIND</div>
         <p class="desc">Search by criteria, return matches. Used for dedup, upsert, and enrichment patterns.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="actions" data-name="assembly-action-get" data-title="GET" data-desc="Retrieve one record by ID. The simplest read path. Often chained after FIND or NEW." data-tags="action get fetch read single" data-when="Simplest read. Usually downstream of a FIND (to hydrate the match) or of a NEW_ITEM trigger (to fetch full details when the trigger payload is lean)." data-example="&gt; Get the full client record by id.&#10;&#10;● assembly-action-get&#10;  endpoint: GET /public/v6/client/clients/{id}" data-invokes="asm_create_action_or_trigger,asm_set_output_fields">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="14" y="14" width="36" height="36" rx="4"/>
           <path d="M22 22 L42 22 M22 30 L42 30 M22 38 L34 38" class="soft"/>
@@ -807,7 +1045,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">GET</div>
         <p class="desc">Retrieve one record by ID. The simplest read path. Often chained after FIND or NEW.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="actions" data-name="assembly-action-list" data-title="LIST" data-desc="Page through results with cursor or offset handling. Rate-limit aware by default." data-tags="action list page paginate bulk" data-when="Bulk reads: initial backfills, reconciliation jobs, reporting. Handles pagination, rate-limit headers, retry on 429. Avoid in per-record triggers; prefer FIND." data-example="&gt; List all Mindbody clients modified in the last 24 hours.&#10;&#10;● assembly-action-list&#10;  endpoint: GET /public/v6/client/clients?lastmodified=...&#10;  pagination: offset, 100 per page&#10;  rate-limit: 2 req/s" data-invokes="asm_create_action_or_trigger,asm_set_output_fields,asm_set_action_throttle">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="10" y="14" width="44" height="6" rx="2" class="soft fill"/>
           <rect x="10" y="24" width="44" height="6" rx="2" class="soft fill"/>
@@ -819,7 +1057,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">LIST</div>
         <p class="desc">Page through results with cursor or offset handling. Rate-limit aware by default.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="actions" data-name="assembly-action-update" data-title="UPDATE" data-desc="Patch existing records. Partial updates supported. Only touches the fields you specify." data-tags="action update patch modify" data-when="Two-way syncs, edits, status changes. Uses PATCH where available, partial POST otherwise. Only writes the fields you pass, never the whole record." data-example="&gt; Update the Mindbody client tier when it changes in HubSpot.&#10;&#10;● assembly-action-update&#10;  endpoint: PATCH /public/v6/client/clients/{id}&#10;  fields: membership_tier" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="12" y="16" width="40" height="32" rx="3"/>
           <path d="M12 26 L52 26" class="soft"/>
@@ -832,17 +1070,17 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       </div>
     </div>
 
-    <!-- CONNECTOR -->
+    <!-- CONNECTOR (expanded to 3) -->
     <div class="cat">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><path d="M9 17h6M9 13h6M7 7l5-4 5 4"/><rect height="10" rx="2" width="18" x="3" y="11"/></svg></div>
       <div>
         <div class="cat-title">Connector</div>
-        <div class="cat-desc">The auth layer every assembly rests on.</div>
+        <div class="cat-desc">The auth layer every assembly rests on, plus the tools to register and migrate.</div>
       </div>
-      <div class="cat-count">1 skill</div>
+      <div class="cat-count">3 skills</div>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="connector" data-name="assembly-connector" data-title="Connector assembly" data-desc="OAuth V2, API Key, or no-credential auth. Handles token refresh, scopes, and revocation." data-tags="connector auth oauth api-key credential" data-when="Every assembly starts with a connector. Pick OAuth V2 for user-delegated access, API Key for server-to-server, no-cred for open APIs. Token refresh and revocation are built in." data-example="&gt; Build an OAuth2 connector for HubSpot.&#10;&#10;● assembly-connector&#10;  flow: OAuth2 authorization_code&#10;  scopes: contacts, timeline&#10;  token refresh: automatic" data-invokes="asm_create_connector,asm_inject_settings,asm_get_connection_credentials,asm_set_connector_throttle">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="24" width="20" height="16" rx="3"/>
           <rect x="36" y="24" width="20" height="16" rx="3"/>
@@ -853,6 +1091,30 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="name">assembly-connector</div>
         <div class="title">Connector assembly</div>
         <p class="desc">OAuth V2, API Key, or no-credential auth. Handles token refresh, scopes, and revocation.</p>
+      </div>
+      <div class="card" data-kind="skill" data-category="connector" data-name="/register-oauth-app" data-title="Register an OAuth app" data-desc="Drive a dev browser to register an OAuth app on a vendor portal, capture client_id and secret into the keyvault." data-tags="connector oauth register portal vendor" data-when="First time integrating a new OAuth vendor. Claude drives a headless browser through the vendor developer portal, creates the app, copies client_id and secret into the keyvault, and annotates the redirect URLs." data-example="&gt; Register an OAuth app for HubSpot dev, scopes contacts + timeline.&#10;&#10;● /register-oauth-app&#10;  portal: developers.hubspot.com&#10;  creating app... APIANT-DEV-HUBSPOT&#10;  client_id captured&#10;  client_secret -&gt; keyvault&#10;  redirect_uri configured" data-invokes="admin_save_keyvault_entry,admin_list_keyvault_entries">
+        <div class="glyph"><svg class="g" viewbox="0 0 64 64">
+          <rect x="10" y="14" width="44" height="36" rx="4"/>
+          <path d="M16 22 L48 22" class="soft"/>
+          <rect x="20" y="30" width="16" height="10" rx="2" class="fill" style="--gc:#5cc8ff"/>
+          <path d="M40 34 L48 34 M40 40 L44 40" class="soft"/>
+          <circle cx="52" cy="14" r="4" class="fill" style="--gc:#1ab759"/>
+          <path d="M50 14 L52 16 L54 13" stroke="#0c0c0c" class="tk"/>
+        </svg></div>
+        <div class="name">/register-oauth-app</div>
+        <div class="title">Register an OAuth app</div>
+        <p class="desc">Drive a dev browser to register an OAuth app on a vendor portal, capture client_id and secret into the keyvault.</p>
+      </div>
+      <div class="card" data-kind="skill" data-category="connector" data-name="/convert-assembly" data-title="Convert human to AI template" data-desc="Migrate legacy human-built assemblies to the AI-template pattern so Claude can safely edit them." data-tags="connector convert migrate legacy template" data-when="When a legacy assembly (hand-authored, not AI-template-shaped) needs to be edited by Claude. Converts the structure to the AI-template conventions so /edit-assembly becomes safe." data-example="&gt; Convert the Quickbooks 2019 assembly to the AI-template pattern.&#10;&#10;● /convert-assembly&#10;  reading structure... asm_read_assembly_logic&#10;  rewriting as template... asm_set_jsp_and_compile&#10;  verifying... asm_test_api_endpoint ✓" data-invokes="asm_read_assembly_logic,asm_set_jsp_and_compile,asm_cleanup,asm_find_referencers">
+        <div class="glyph"><svg class="g" viewbox="0 0 64 64">
+          <rect x="10" y="14" width="18" height="26" rx="2"/>
+          <rect x="36" y="14" width="18" height="26" rx="2" style="--gc:#5cc8ff"/>
+          <path d="M14 44 L14 50 L50 50 L50 44" class="tk"/>
+          <path d="M28 24 C 32 20, 32 30, 36 26" stroke-dasharray="2 2" class="anim" style="animation:dash 1.6s linear infinite"/>
+        </svg></div>
+        <div class="name">/convert-assembly</div>
+        <div class="title">Convert human to AI template</div>
+        <p class="desc">Migrate legacy human-built assemblies to the AI-template pattern so Claude can safely edit them.</p>
       </div>
     </div>
 
@@ -866,7 +1128,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="cat-count">1 skill</div>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="sync" data-name="assembly-bidirectional-sync" data-title="Bidirectional sync" data-desc="Builds the matching trigger and action pair for a two-way sync. Handles loop prevention, last-write-wins, and conflict resolution out of the box." data-tags="sync two-way bidirectional loop conflict" data-when="Whenever the customer says both systems should stay in lockstep: CRM <-> booking, ERP <-> accounting, shop <-> ops. The skill creates both directions with correlated IDs, loop suppression, and conflict rules baked in." data-example="&gt; Build a two-way contact sync between HubSpot and Mindbody.&#10;&#10;● assembly-bidirectional-sync&#10;  direction A: HubSpot -&gt; Mindbody (trigger-updated + action-add/update)&#10;  direction B: Mindbody -&gt; HubSpot (trigger-new + action-add/update)&#10;  loop suppression: correlation id on last_modified_by&#10;  conflict: last-write-wins on timestamp" data-invokes="auto_build,auto_commit,pattern_search">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="14" width="18" height="36" rx="3"/>
           <rect x="38" y="14" width="18" height="36" rx="3"/>
@@ -889,7 +1151,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="cat-count">6 skills</div>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="patterns" data-name="pattern-chat-widget" data-title="Chat widget" data-desc="From simple chatbots to multi-goal conversation flows with memory and tool-calling automations." data-tags="pattern chat widget conversation ai llm" data-when="When the trigger is a conversation: support chat, lead qualification, booking assistant. Pattern handles memory, tool calls into other automations, and fallback-to-human." data-example="&gt; Add a lead-qualification chat widget to the site.&#10;&#10;● pattern-chat-widget&#10;  memory: conversation + CRM lookup&#10;  tools: check_availability, book_demo, escalate&#10;  fallback: human handoff after 3 clarifications" data-invokes="pattern_search,auto_build">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="14" width="36" height="28" rx="6"/>
           <path d="M14 48 L18 42 L14 42 Z" class="fill"/>
@@ -900,7 +1162,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Chat widget</div>
         <p class="desc">From simple chatbots to multi-goal conversation flows with memory and tool-calling automations.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="patterns" data-name="pattern-csv-mapping" data-title="CSV field mapping" data-desc='Drop in a spreadsheet of "source field -> target field" and Claude wires the mappings verbatim.' data-tags="pattern csv mapping field import" data-when="Enterprise migrations. The customer hands over a spreadsheet of mappings. This pattern parses and wires them literally: no Claude improvisation, no surprise transforms." data-example="&gt; Apply these mappings from the CSV to the HubSpot -&gt; Mindbody sync.&#10;&#10;● pattern-csv-mapping&#10;  parsed 42 field pairs&#10;  applying to automation step 3..." data-invokes="auto_edit_mapping,pattern_search">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="10" width="22" height="44" rx="2"/>
           <rect x="34" y="10" width="22" height="44" rx="2"/>
@@ -910,9 +1172,9 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         </svg></div>
         <div class="name">pattern-csv-mapping</div>
         <div class="title">CSV field mapping</div>
-        <p class="desc">Drop in a spreadsheet of "source field → target field" and Claude wires the mappings verbatim.</p>
+        <p class="desc">Drop in a spreadsheet of "source field -> target field" and Claude wires the mappings verbatim.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="patterns" data-name="pattern-execute-automation" data-title="Execute Automation chaining" data-desc="Parent/child flows with query-string parameter passing and webhook payload forwarding." data-tags="pattern chain execute parent child" data-when="When the flow is too wide to live in one automation. Decompose into parent + children; parent triggers a child per record, passes parameters, then consolidates results." data-example="&gt; Process each tenant in parallel, one child per tenant.&#10;&#10;● pattern-execute-automation&#10;  parent: tenant iterator&#10;  child: tenant processor&#10;  parallelism: 10&#10;  wait mode: fire-and-forget" data-invokes="pattern_search,auto_build">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="8" y="8" width="20" height="14" rx="2"/>
           <rect x="36" y="24" width="20" height="14" rx="2"/>
@@ -924,7 +1186,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Execute Automation chaining</div>
         <p class="desc">Parent/child flows with query-string parameter passing and webhook payload forwarding.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="patterns" data-name="pattern-human-moderation" data-title="Human moderation" data-desc="Pause an automation until a person approves or denies via moderation queue link. Decision gates for AI flows." data-tags="pattern human moderation approval gate" data-when="Whenever an AI step writes to something consequential: sends outbound email, refunds money, deletes records. The pattern creates an approval URL, pauses, and resumes on decision." data-example="&gt; Require human approval before sending the refund confirmation.&#10;&#10;● pattern-human-moderation&#10;  pause at step 4&#10;  approval URL: /moderate/run_183947&#10;  timeout: 24h -&gt; auto-deny" data-invokes="pattern_search,auto_build">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <rect x="14" y="14" width="36" height="28" rx="4"/>
           <path d="M22 24 L42 24 M22 32 L34 32" class="soft"/>
@@ -935,7 +1197,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Human moderation</div>
         <p class="desc">Pause an automation until a person approves or denies via moderation queue link. Decision gates for AI flows.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="patterns" data-name="pattern-latches" data-title="Fan-out / fan-in latches" data-desc="Launch N child automations in parallel, wait for all to finish, proceed with aggregated results." data-tags="pattern fan-out fan-in parallel latch" data-when="Bulk work that benefits from parallelism: enrich 500 contacts across a dozen APIs, then aggregate. Latch tracks N subruns, waits for all, rolls up the batch." data-example="&gt; Enrich these 500 contacts in parallel, then load the results.&#10;&#10;● pattern-latches&#10;  fan-out: 500 children&#10;  fan-in: await all, collect outputs&#10;  progress: 500/500" data-invokes="pattern_search,auto_build">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="14" r="4" class="fill"/>
           <path d="M32 18 L20 34 M32 18 L44 34 M32 18 L32 34" class="tk"/>
@@ -947,7 +1209,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Fan-out / fan-in latches</div>
         <p class="desc">Launch N child automations in parallel, wait for all to finish, proceed with aggregated results.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="patterns" data-name="pattern-snooze" data-title="Snooze" data-desc="Pause an automation until a specific datetime. Useful for drip sequences and scheduled follow-ups." data-tags="pattern snooze delay schedule drip" data-when="Time-based delays inside a run: drip sequences, scheduled follow-ups, cool-down periods. The step writes a wake-up and releases the run at the target time." data-example="&gt; Wait 3 days, then send the follow-up email.&#10;&#10;● pattern-snooze&#10;  until: +3d&#10;  resume step: 5" data-invokes="pattern_search,auto_build">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="32" cy="32" r="22" class="soft"/>
           <path d="M32 16 V32 L44 40" class="tk"/>
@@ -960,28 +1222,17 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       </div>
     </div>
 
-    <!-- OPS & SUPPORT -->
+    <!-- OPS & SUPPORT (convert-assembly moved out; alert-handling added) -->
     <div class="cat">
       <div class="cat-ico"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
       <div>
         <div class="cat-title">Ops &amp; support</div>
-        <div class="cat-desc">Keep production healthy: monitor accounts, diagnose failures, migrate legacy assemblies.</div>
+        <div class="cat-desc">Keep production healthy: monitor accounts, diagnose failures, tune alert behavior.</div>
       </div>
       <div class="cat-count">3 skills</div>
     </div>
     <div class="grid">
-      <div class="card">
-        <div class="glyph"><svg class="g" viewbox="0 0 64 64">
-          <rect x="10" y="14" width="18" height="26" rx="2"/>
-          <rect x="36" y="14" width="18" height="26" rx="2" style="--gc:#5cc8ff"/>
-          <path d="M14 44 L14 50 L50 50 L50 44" class="tk"/>
-          <path d="M28 24 C 32 20, 32 30, 36 26" stroke-dasharray="2 2" class="anim" style="animation:dash 1.6s linear infinite"/>
-        </svg></div>
-        <div class="name">/convert-assembly</div>
-        <div class="title">Convert human → AI template</div>
-        <p class="desc">Migrate legacy human-built assemblies to the AI-template pattern so Claude can safely edit them.</p>
-      </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="ops" data-name="/monitor-account" data-title="Monitor a customer account" data-desc="Watches prod automations for errors. Designed for /loop recurring runs. Alerts with full trace context." data-tags="ops monitor account alert loop error" data-when="Continuous background check on a prod tenant. Runs on /loop, inspects failures since last check, raises alerts with full stack + last good input. Designed for always-on SRE duty." data-example="&gt; Monitor acme-corp every 10 minutes, alert on new failures.&#10;&#10;● /monitor-account (loop 10m)&#10;  admin_switch_account acme-corp&#10;  admin_tenant_health ... 3 new failures&#10;  raising alert with trace" data-invokes="admin_switch_account,admin_tenant_health,admin_tenant_usage,exec_search_history,exec_get_history,admin_account_changelog">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <path d="M8 50 L16 38 L24 44 L32 24 L40 30 L48 16 L56 22" class="tk"/>
           <circle cx="32" cy="24" r="3" class="fill"/>
@@ -992,7 +1243,7 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Monitor a customer account</div>
         <p class="desc">Watches prod automations for errors. Designed for /loop recurring runs. Alerts with full trace context.</p>
       </div>
-      <div class="card">
+      <div class="card" data-kind="skill" data-category="ops" data-name="/support" data-title="Diagnose a customer issue" data-desc='"Why did this not process?" Claude searches execution history, traces failures, extracts HTTP, proposes a fix.' data-tags="ops support diagnose debug history failure" data-when="Customer reports something went wrong. Claude pulls execution history, isolates the failing run, extracts the exact HTTP request/response, names the root cause, proposes a remediation." data-example="&gt; Alpine Clinic says nothing synced last night.&#10;&#10;● /support&#10;  admin_switch_account alpine-clinic&#10;  exec_search_history since=2026-04-21&#10;  47 failures at 02:14 UTC, cause: 429 from Cliniko&#10;  proposed fix: add exponential backoff to step 3" data-invokes="admin_switch_account,exec_search_history,exec_get_history,exec_get_assembly_log,exec_get_step_data,exec_retry_failed,auto_get_summary">
         <div class="glyph"><svg class="g" viewbox="0 0 64 64">
           <circle cx="26" cy="26" r="14"/>
           <circle cx="26" cy="26" r="6" class="soft fill"/>
@@ -1003,6 +1254,17 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
         <div class="title">Diagnose a customer issue</div>
         <p class="desc">"Why did this not process?" Claude searches execution history, traces failures, extracts HTTP, proposes a fix.</p>
       </div>
+      <div class="card" data-kind="skill" data-category="ops" data-name="/alert-handling" data-title="Tune alert behavior" data-desc="Control which errors retry, which 401s bypass auto-turnoff, alert text rewriting, dismissal lists." data-tags="ops alert retry suppress 401 dismiss" data-when="When noisy alerts or auto-turnoffs are getting in the way. Adjust retry policy, carve out 401 domains that should not auto-disable, rewrite alert copy for customer-facing reports, suppress known-good errors." data-example="&gt; Stop auto-disabling the Shopify connector on 401s from this sandbox.&#10;&#10;● /alert-handling&#10;  admin_ignore_401_domains += sandbox.shopify.com&#10;  alert_suppress: 'Stale sandbox token' pattern&#10;✓ noise down" data-invokes="alert_suppress,alert_unsuppress,alert_list_suppressed,alert_get_error_policy,alert_get_automation_mappings,alert_set_automation_mappings,admin_ignore_401_domains,admin_retryable_errors">
+        <div class="glyph"><svg class="g" viewbox="0 0 64 64">
+          <path d="M32 12 C 22 12, 18 20, 18 30 L 18 40 L 14 46 L 50 46 L 46 40 L 46 30 C 46 20, 42 12, 32 12 Z" class="tk"/>
+          <path d="M28 50 C 28 54, 36 54, 36 50" class="tk"/>
+          <g class="anim" style="animation:spark 1.6s ease-in-out infinite"><circle cx="46" cy="16" r="6" class="soft" style="--gc:#ff78b4"/></g>
+          <circle cx="46" cy="16" r="3" class="fill" style="--gc:#ff78b4"/>
+        </svg></div>
+        <div class="name">/alert-handling</div>
+        <div class="title">Tune alert behavior</div>
+        <p class="desc">Control which errors retry, which 401s bypass auto-turnoff, alert text rewriting, dismissal lists.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1012,57 +1274,68 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-kicker">MCP tools</div>
-      <h2>100 tools. 3 workspaces.</h2>
-      <p>Skills drive the workflow. MCP tools do the actual work against APIANT's dev, prod, and docs environments. Seven core tools load with every session. The other 82 load on demand, grouped into five workflow toolsets (build, test, admin, deploy, assembly), so the agent's context stays lean and the capability stays deep.</p>
+      <h2>125 tools. 9 toolsets. Activated on demand.</h2>
+      <p>Skills drive the workflow. MCP tools do the actual work against APIANT's dev, prod, and docs environments. Tools are grouped into toolsets. Only the core set is always loaded; the rest activate when a skill asks for them, so the agent's context stays lean and the capability stays deep.</p>
     </div>
 
-    <!-- apiantdev -->
+    <div class="env-explainer">
+      <b>Dev and prod share the same 125-tool surface.</b> Prod is read-only by default; writes gate on explicit confirmation. Toggle any card to see the prod variant.
+    </div>
+
+    <!-- CORE (always on) -->
     <div class="cat">
-      <div class="cat-ico" style="background:rgba(92,200,255,.1);border-color:rgba(92,200,255,.25)"><svg viewbox="0 0 24 24" style="stroke:#5cc8ff"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div class="cat-ico" style="background:rgba(92,200,255,.1);border-color:rgba(92,200,255,.25)"><svg viewbox="0 0 24 24" style="stroke:#5cc8ff"><circle cx="12" cy="12" r="3"/><path d="M12 2 V 7 M12 17 V 22 M2 12 H 7 M17 12 H 22"/></svg></div>
       <div>
-        <div class="cat-title">apiantdev <span style="color:var(--faint);font-weight:400;font-size:12px;font-family:var(--mono);margin-left:6px">build + test</span></div>
-        <div class="cat-desc">The dev workspace. Build, modify, and test before promoting to prod. Seven tools always on, 82 more activated on demand.</div>
+        <div class="cat-title">Core tools <span style="color:var(--faint);font-weight:400;font-size:12px;font-family:var(--mono);margin-left:6px">always loaded</span></div>
+        <div class="cat-desc">The set Claude Code needs at session start to orient, pick a skill, and activate more tools as needed.</div>
       </div>
-      <div class="cat-count">89 tools <span style="color:var(--faint);font-weight:400;font-size:11px;font-family:var(--mono);display:block;margin-top:2px">7 core + 82 on-demand</span></div>
+      <div class="cat-count">7 tools</div>
     </div>
     <div class="grid">
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="activate_toolset" data-title="Activate a toolset" data-desc="Load the specific toolset needed for the current skill. Keeps the context window lean." data-prod-desc="Inspect which toolsets prod exposes. Read-only surface; writes gate on explicit confirmation." data-tags="tools core activate toolset" data-mutation="read" data-when="Called at the start of a skill to pull in the specialized tools for the job. Without this, the full 125 would crowd the context every turn." data-example="activate_toolset({ toolset: 'automation_builder' })&#10;-&gt; 30 tools now available" data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="36" rx="4"/><path d="M16 22 H48 M16 30 H40 M16 38 H48" class="soft"/><circle cx="52" cy="14" r="5" class="fill"/></svg></div>
         <div class="name">activate_toolset</div>
         <div class="title">Activate a toolset</div>
         <p class="desc">Load the specific toolset needed for the current skill. Keeps the context window lean.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="asm_manage" data-title="Manage assemblies" data-desc="Load, list, create, update, rename, and delete assemblies. The low-level assembly API." data-prod-desc="Inspect prod assemblies only. Writes gate on explicit confirmation." data-tags="tools core assembly manage crud" data-mutation="write" data-when="The universal entry for assembly operations: list to browse, load to read, create/update/delete to modify. Most assembly work flows through this single dispatcher." data-example="asm_manage({ action: 'list', filter: { app: 'hubspot' } })&#10;-&gt; 8 assemblies" data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="36" rx="4"/><circle cx="22" cy="32" r="4" class="fill"/><circle cx="42" cy="32" r="4"/><path d="M26 32 L38 32" stroke-dasharray="2 2" class="anim" style="animation:dash 1.6s linear infinite"/></svg></div>
         <div class="name">asm_manage</div>
         <div class="title">Manage assemblies</div>
         <p class="desc">Load, list, create, update, rename, and delete assemblies. The low-level assembly API.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="auto_get_summary" data-title="Automation summary" data-desc="Structured overview of an automation: triggers, steps, mappings. Fast context for edits." data-prod-desc="Inspect prod automation structure. Read-only; writes gate on explicit confirmation." data-tags="tools core automation summary overview" data-mutation="read" data-when="First call before editing an existing automation. Gives Claude the shape (triggers, step tree, mappings) without pulling the full source, so subsequent edit calls land accurately." data-example="auto_get_summary({ automation_id: 'auto_42' })&#10;-&gt; 1 trigger + 4 steps + 12 mappings" data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M10 50 L54 50"/><rect x="14" y="36" width="8" height="14" class="fill"/><rect x="28" y="28" width="8" height="22" class="fill" style="--gc:#5cc8ff"/><rect x="42" y="18" width="8" height="32" class="fill" style="--gc:#1ab759"/></svg></div>
         <div class="name">auto_get_summary</div>
         <div class="title">Automation summary</div>
         <p class="desc">Structured overview of an automation: triggers, steps, mappings. Fast context for edits.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="auto_list" data-title="List automations" data-desc="Flat list of every automation in a scope. Filter by name, folder, or status." data-prod-desc="Read-only listing across prod tenants. Writes gate on explicit confirmation." data-tags="tools core automation list browse" data-mutation="read" data-when='When you need to find something by name or status ("all HubSpot automations that failed in the last hour"). Returns a flat list, does not fetch bodies.' data-example="auto_list({ status: 'failed', since: '2026-04-22' })&#10;-&gt; 3 automations" data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="6" rx="2" class="fill"/><rect x="10" y="24" width="44" height="6" rx="2" class="soft fill"/><rect x="10" y="34" width="44" height="6" rx="2" class="soft fill"/><rect x="10" y="44" width="30" height="6" rx="2" class="soft fill"/></svg></div>
         <div class="name">auto_list</div>
         <div class="title">List automations</div>
         <p class="desc">Flat list of every automation in a scope. Filter by name, folder, or status.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="auto_folder" data-title="List folders" data-desc="Navigate the folder tree. Find automations grouped by customer, product, or environment." data-prod-desc="Read-only folder browsing. Writes gate on explicit confirmation." data-tags="tools core folder navigate tree" data-mutation="read" data-when="When organizing or finding automations grouped by customer, vertical, or product. Pair with auto_list for a two-step browse." data-example="auto_folder({ action: 'list', parent: '/customers/acme-corp' })&#10;-&gt; 4 subfolders, 12 automations" data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M10 18 L22 18 L26 14 L54 14 L54 50 L10 50 Z"/><path d="M18 28 L46 28 M18 36 L46 36 M18 44 L38 44" class="soft"/></svg></div>
-        <div class="name">auto_list_folders</div>
+        <div class="name">auto_folder</div>
         <div class="title">List folders</div>
         <p class="desc">Navigate the folder tree. Find automations grouped by customer, product, or environment.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="auto_manage" data-title="Manage automations" data-desc="Create, rename, duplicate, move, enable, disable. Every CRUD operation for automations." data-prod-desc="Read-only metadata on prod automations. Writes gate on explicit confirmation." data-tags="tools core automation manage crud rename duplicate" data-mutation="write" data-when="The universal entry for automation CRUD. Create draft, rename, move across folders, enable/disable. Every skill that writes touches this." data-example="auto_manage({ action: 'rename', id: 'auto_42', name: 'HubSpot -&gt; Mindbody v2' })" data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="36" rx="4"/><circle cx="22" cy="32" r="3" class="fill"/><circle cx="32" cy="32" r="3" class="fill" style="--gc:#5cc8ff"/><circle cx="42" cy="32" r="3" class="fill" style="--gc:#c084fc"/><path d="M22 32 L32 32 L42 32" class="soft"/></svg></div>
         <div class="name">auto_manage</div>
         <div class="title">Manage automations</div>
         <p class="desc">Create, rename, duplicate, move, enable, disable. Every CRUD operation for automations.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="catalog_list_apps" data-title="List catalog apps" data-desc="The full catalog of available app integrations. Filter by category, vendor, or capability." data-prod-desc="Read-only catalog list. Writes gate on explicit confirmation." data-tags="tools core catalog app list" data-mutation="read" data-when='Before /build-automation, to confirm both sides of the integration exist. "Is there a Mindbody assembly? A Klaviyo one?" Filter by vertical or capability.' data-example="catalog_list_apps({ vertical: 'wellness' })&#10;-&gt; 14 apps" data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="14" height="14" rx="3"/><rect x="28" y="14" width="14" height="14" rx="3"/><rect x="46" y="14" width="12" height="14" rx="3" class="soft"/><rect x="10" y="32" width="14" height="14" rx="3" class="soft"/><rect x="28" y="32" width="14" height="14" rx="3"/><rect x="46" y="32" width="12" height="14" rx="3" class="soft"/></svg></div>
         <div class="name">catalog_list_apps</div>
         <div class="title">List catalog apps</div>
@@ -1070,87 +1343,78 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       </div>
     </div>
 
-    <!-- TOOLSETS (on-demand) -->
+    <!-- ON-DEMAND TOOLSETS -->
     <div class="cat">
       <div class="cat-ico" style="background:rgba(92,200,255,.07);border-color:rgba(92,200,255,.2)"><svg viewbox="0 0 24 24" style="stroke:#5cc8ff"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2" fill="#5cc8ff" stroke="none"/></svg></div>
       <div>
         <div class="cat-title">On-demand toolsets <span style="color:var(--faint);font-weight:400;font-size:12px;font-family:var(--mono);margin-left:6px">lazy-loaded</span></div>
-        <div class="cat-desc">Five named toolsets activated by the skill that needs them. Keeps the context window lean while the full capability stays one call away.</div>
+        <div class="cat-desc">Nine named toolsets activated by the skill that needs them. Keeps the context window lean while the full capability stays one call away.</div>
       </div>
-      <div class="cat-count">82 tools</div>
+      <div class="cat-count">118 tools</div>
     </div>
     <div class="grid">
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="automation_builder" data-title="Build + edit" data-desc="30 tools. Search the catalog, compose triggers and actions, edit mappings, commit versions, save patterns. The full automation authoring surface." data-prod-desc="Read-only authoring surface in prod. Writes gate on explicit confirmation." data-tags="tools toolset build edit author" data-mutation="write" data-when="Activated by /build-automation and /edit-automation. Contains auto_build, auto_edit_* family, catalog_search, pattern_search/save." data-example="activate_toolset({ toolset: 'automation_builder' })&#10;-&gt; 30 tools: auto_build, auto_edit_structure, ..." data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M14 50 L14 20 L24 20 L28 14 L50 14 L50 50 Z"/><circle cx="24" cy="34" r="3" class="fill"/><circle cx="36" cy="34" r="3" class="fill" style="--gc:#5cc8ff"/><path d="M24 34 L36 34" class="soft"/><path d="M30 42 L30 48" class="tk"/></svg></div>
         <div class="name">automation_builder</div>
         <div class="title">Build + edit</div>
-        <p class="desc">~30 tools. Search the catalog, compose triggers and actions, edit mappings, commit versions, save patterns. The full automation authoring surface.</p>
+        <p class="desc">30 tools. Search the catalog, compose triggers and actions, edit mappings, commit versions, save patterns. The full automation authoring surface.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="automation_exec" data-title="Runtime inspection" data-desc="17 tools. Run test executions, inspect every step's input and output, mutate data, replay webhooks, walk branch-coverage test points. Debugging with full ground truth." data-prod-desc="Read-only runtime inspection in prod. Writes gate on explicit confirmation." data-tags="tools toolset exec runtime inspect debug" data-mutation="write" data-when="Activated by /test-automation and /support. Contains exec_test_automation, exec_get_* family, exec_retry_failed, exec_replay_webhook." data-example="activate_toolset({ toolset: 'automation_exec' })&#10;-&gt; 17 tools: exec_test_automation, ..." data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="32" cy="32" r="22" class="soft"/><path d="M32 16 L32 32 L42 38" class="tk"/><circle cx="32" cy="32" r="3" class="fill" style="--gc:#5cc8ff"/><path d="M12 32 L18 32 M46 32 L52 32" class="soft"/></svg></div>
-        <div class="name">history</div>
+        <div class="name">automation_exec</div>
         <div class="title">Runtime inspection</div>
-        <p class="desc">11 tools. Run test executions, inspect every step's input and output, mutate data, replay webhooks, walk branch-coverage test points. Debugging with full ground truth.</p>
+        <p class="desc">17 tools. Run test executions, inspect every step's input and output, mutate data, replay webhooks, walk branch-coverage test points. Debugging with full ground truth.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="automation_manage" data-title="Automation lifecycle" data-desc="10 tools. List and organize committed automations, version them, compare versions, roll back. The git-like layer over automation drafts and releases." data-prod-desc="Read-only lifecycle view in prod. Writes gate on explicit confirmation." data-tags="tools toolset manage lifecycle version commit" data-mutation="write" data-when="Activated by /build-integration, /edit-automation, /test-automation, /support. Contains auto_list, auto_manage, auto_commit, auto_list_versions, auto_compare_versions, auto_folder." data-example="activate_toolset({ toolset: 'automation_manage' })&#10;-&gt; 10 tools: auto_commit, auto_compare_versions, ..." data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
+        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="10" rx="2"/><rect x="10" y="28" width="44" height="10" rx="2"/><rect x="10" y="42" width="30" height="10" rx="2" class="soft"/><circle cx="52" cy="14" r="2" class="fill"/><circle cx="52" cy="28" r="2" class="fill" style="--gc:#5cc8ff"/></svg></div>
+        <div class="name">automation_manage</div>
+        <div class="title">Automation lifecycle</div>
+        <p class="desc">10 tools. List and organize committed automations, version them, compare versions, roll back. The git-like layer over automation drafts and releases.</p>
+      </div>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="admin" data-title="Tenant ops" data-desc="25 tools. Switch between customer accounts, query usage and health across a tenant, read the keyvault, run ad-hoc SQL, tune retryable errors, manage lookups. The operator's toolbox." data-prod-desc="Read-only tenant ops in prod. Writes gate on explicit confirmation." data-tags="tools toolset admin tenant account ops" data-mutation="write" data-when="Activated by /support, /monitor-account, /alert-handling. Contains admin_switch_account, admin_list_tenants, admin_sql_query, admin_tenant_health, keyvault helpers." data-example="activate_toolset({ toolset: 'admin' })&#10;-&gt; 25 tools: admin_switch_account, admin_tenant_health, ..." data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="32" cy="22" r="8"/><path d="M16 52 C16 40 48 40 48 52 Z"/><circle cx="32" cy="22" r="3" class="fill" style="--gc:#5cc8ff"/><path d="M50 14 L56 14 L56 20 M50 20 L56 14" class="tk soft"/></svg></div>
         <div class="name">admin</div>
         <div class="title">Tenant ops</div>
-        <p class="desc">14 tools. Switch between customer accounts, query usage and health across a tenant, read the keyvault, run ad-hoc SQL. The operator's toolbox.</p>
+        <p class="desc">25 tools. Switch between customer accounts, query usage and health across a tenant, read the keyvault, run ad-hoc SQL, tune retryable errors, manage lookups. The operator's toolbox.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="admin_alerts" data-title="Alert governance" data-desc="5 tools. Tenant-wide alert rules, suppressed-alert lists, retry policy, 401 domain carve-outs. Requires Switch Account context." data-prod-desc="Read-only alert governance in prod. Writes gate on explicit confirmation." data-tags="tools toolset admin alerts governance suppress retry" data-mutation="write" data-when="Activated by /alert-handling. A narrower surface than admin, scoped specifically to alert policy: suppression lists, retryable errors, 401 domain ignore, alert mappings." data-example="activate_toolset({ toolset: 'admin_alerts' })&#10;-&gt; 5 tools: admin_list_suppressed_alerts, admin_retryable_errors, ..." data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
+        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M32 12 C 22 12, 18 20, 18 30 L 18 40 L 14 46 L 50 46 L 46 40 L 46 30 C 46 20, 42 12, 32 12 Z"/><path d="M26 40 L38 40" class="soft"/><circle cx="46" cy="18" r="4" class="fill" style="--gc:#f5b748"/></svg></div>
+        <div class="name">admin_alerts</div>
+        <div class="title">Alert governance</div>
+        <p class="desc">5 tools. Tenant-wide alert rules, suppressed-alert lists, retry policy, 401 domain carve-outs. Requires Switch Account context.</p>
+      </div>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="alerts" data-title="Alert mapping" data-desc="11 tools. Per-automation alert mapping rules, step-level alert triggers, mapping trace, suppression, system-level mappings." data-prod-desc="Read-only alert config in prod. Writes gate on explicit confirmation." data-tags="tools toolset alerts mapping suppress trace" data-mutation="write" data-when="Activated by /alert-handling when the fix is at the automation or step level rather than tenant-wide. Contains alert_get/set_automation_mappings, alert_get_mapping_trace, alert_suppress." data-example="activate_toolset({ toolset: 'alerts' })&#10;-&gt; 11 tools: alert_set_automation_mappings, alert_get_mapping_trace, ..." data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
+        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M12 40 L20 40 L24 26 L30 50 L36 16 L42 38 L52 38" class="tk"/><circle cx="30" cy="50" r="3" class="fill" style="--gc:#ff78b4"/><circle cx="36" cy="16" r="3" class="fill" style="--gc:#5cc8ff"/></svg></div>
+        <div class="name">alerts</div>
+        <div class="title">Alert mapping</div>
+        <p class="desc">11 tools. Per-automation alert mapping rules, step-level alert triggers, mapping trace, suppression, system-level mappings.</p>
+      </div>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="patterns" data-title="Pattern library" data-desc="3 tools. Search, save, and delete reusable pattern recipes: field mappings, transforms, gotchas, templates." data-prod-desc="Read-only pattern library in prod. Writes gate on explicit confirmation." data-tags="tools toolset patterns library recipe" data-mutation="write" data-when="Activated by /build-automation and the pattern-* skills. Contains pattern_search (find by shape), pattern_save (after a successful build), pattern_delete." data-example="activate_toolset({ toolset: 'patterns' })&#10;-&gt; 3 tools: pattern_search, pattern_save, pattern_delete" data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
+        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="12" width="16" height="16" rx="2"/><rect x="30" y="12" width="16" height="16" rx="2" class="soft"/><rect x="10" y="32" width="16" height="16" rx="2" class="soft"/><rect x="30" y="32" width="16" height="16" rx="2"/><circle cx="52" cy="12" r="3" class="fill" style="--gc:#5cc8ff"/></svg></div>
+        <div class="name">patterns</div>
+        <div class="title">Pattern library</div>
+        <p class="desc">3 tools. Search, save, and delete reusable pattern recipes: field mappings, transforms, gotchas, templates.</p>
+      </div>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="deploy" data-title="Dev to prod" data-desc="6 tools. Publish folders or individual assemblies from dev to prod. Roll changes out to linked customer accounts in a single coordinated step." data-prod-desc="Read-only deploy status in prod. Writes gate on explicit confirmation." data-tags="tools toolset deploy publish rollout release" data-mutation="write" data-when="Activated by /deploy-automation. Contains deploy_publish_assembly, deploy_publish_folder, deploy_to_accounts, deploy_list_linked_accounts, deploy_update_plugin, deploy_get_plugin_version." data-example="activate_toolset({ toolset: 'deploy' })&#10;-&gt; 6 tools: deploy_publish_assembly, deploy_to_accounts, ..." data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="18" width="18" height="28" rx="3"/><rect x="36" y="18" width="18" height="28" rx="3" class="soft"/><path d="M28 32 L36 32" class="tk"/><path d="M32 28 L38 32 L32 36" class="tk fill" style="--gc:#5cc8ff"/></svg></div>
         <div class="name">deploy</div>
         <div class="title">Dev to prod</div>
         <p class="desc">6 tools. Publish folders or individual assemblies from dev to prod. Roll changes out to linked customer accounts in a single coordinated step.</p>
       </div>
-      <div class="card t-dev"><span class="tag">dev</span>
+      <div class="card t-dev" data-kind="tool" data-category="tools" data-name="assembly" data-title="Connector + assembly build" data-desc="28 tools. Create connectors, inject settings, compile JSP, test API endpoints, wire dynamic field discovery, finalize assemblies. The low-level integration plumbing." data-prod-desc="Read-only connector + assembly introspection in prod. Writes gate on explicit confirmation." data-tags="tools toolset assembly connector jsp compile plumbing" data-mutation="write" data-when="Activated by /build-assembly and /edit-assembly. Contains asm_create_connector, asm_create_action_or_trigger, asm_set_jsp_and_compile, asm_test_api_endpoint, asm_inject_settings, and more." data-example="activate_toolset({ toolset: 'assembly' })&#10;-&gt; 28 tools: asm_create_connector, asm_set_jsp_and_compile, ..." data-invokes="">
+        <div class="env-toggle" role="group" aria-label="Environment"><button class="env-seg active" data-env="dev" type="button">dev</button><button class="env-seg" data-env="prod" type="button">prod</button></div>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M12 32 L24 20 L40 36 L52 24" class="tk"/><rect x="8" y="28" width="8" height="8" rx="2" class="fill"/><rect x="20" y="16" width="8" height="8" rx="2" class="fill" style="--gc:#5cc8ff"/><rect x="36" y="32" width="8" height="8" rx="2" class="fill"/><rect x="48" y="20" width="8" height="8" rx="2" class="fill" style="--gc:#c084fc"/></svg></div>
         <div class="name">assembly</div>
         <div class="title">Connector + assembly build</div>
-        <p class="desc">21 tools. Create connectors, inject settings, compile JSP, test API endpoints, wire dynamic field discovery, finalize assemblies. The low-level integration plumbing.</p>
-      </div>
-    </div>
-
-    <!-- apiantprod -->
-    <div class="cat">
-      <div class="cat-ico" style="background:rgba(245,183,72,.1);border-color:rgba(245,183,72,.28)"><svg viewbox="0 0 24 24" style="stroke:#f5b748"><path d="M12 2 L15 9 L22 9 L17 14 L19 21 L12 17 L5 21 L7 14 L2 9 L9 9 Z"/></svg></div>
-      <div>
-        <div class="cat-title">apiantprod <span style="color:var(--faint);font-weight:400;font-size:12px;font-family:var(--mono);margin-left:6px">read-only</span></div>
-        <div class="cat-desc">The production workspace. Mirrors the dev tool surface, scoped read-only by default so Claude can inspect and diagnose without side effects. Writes gate on explicit confirmation.</div>
-      </div>
-      <div class="cat-count">89 tools <span style="color:var(--faint);font-weight:400;font-size:11px;font-family:var(--mono);display:block;margin-top:2px">read-only by default</span></div>
-    </div>
-    <div class="grid">
-      <div class="card t-prod"><span class="tag">prod</span>
-        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="36" rx="4"/><path d="M16 22 H48 M16 30 H40 M16 38 H48" class="soft"/><circle cx="52" cy="14" r="5" class="fill" style="--gc:#f5b748"/></svg></div>
-        <div class="name">activate_toolset</div>
-        <div class="title">Activate a toolset</div>
-        <p class="desc">Same as dev but scoped to prod. Read paths only; writes require explicit confirmation.</p>
-      </div>
-      <div class="card t-prod"><span class="tag">prod</span>
-        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M10 50 L54 50"/><rect x="14" y="36" width="8" height="14" class="fill" style="--gc:#f5b748"/><rect x="28" y="28" width="8" height="22" class="fill" style="--gc:#f5b748"/><rect x="42" y="18" width="8" height="32" class="fill" style="--gc:#f5b748"/></svg></div>
-        <div class="name">auto_get_summary</div>
-        <div class="title">Automation summary</div>
-        <p class="desc">Inspect the exact structure of any production automation without touching it.</p>
-      </div>
-      <div class="card t-prod"><span class="tag">prod</span>
-        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="6" rx="2" class="fill" style="--gc:#f5b748"/><rect x="10" y="24" width="44" height="6" rx="2" class="soft fill"/><rect x="10" y="34" width="44" height="6" rx="2" class="soft fill"/><rect x="10" y="44" width="30" height="6" rx="2" class="soft fill"/></svg></div>
-        <div class="name">auto_list</div>
-        <div class="title">List automations</div>
-        <p class="desc">Every prod automation. Filter by customer account, status, or error state.</p>
-      </div>
-      <div class="card t-prod"><span class="tag">prod</span>
-        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M10 18 L22 18 L26 14 L54 14 L54 50 L10 50 Z" style="--gc:#f5b748"/><path d="M18 28 H46 M18 36 H46 M18 44 H38" class="soft"/></svg></div>
-        <div class="name">auto_list_folders</div>
-        <div class="title">List folders</div>
-        <p class="desc">Customer-scoped folder navigation. Find the right tenant quickly.</p>
-      </div>
-      <div class="card t-prod"><span class="tag">prod</span>
-        <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="14" height="14" rx="3" style="--gc:#f5b748"/><rect x="28" y="14" width="14" height="14" rx="3" style="--gc:#f5b748"/><rect x="46" y="14" width="12" height="14" rx="3" class="soft"/><rect x="10" y="32" width="14" height="14" rx="3" class="soft"/><rect x="28" y="32" width="14" height="14" rx="3" style="--gc:#f5b748"/><rect x="46" y="32" width="12" height="14" rx="3" class="soft"/></svg></div>
-        <div class="name">catalog_list_apps</div>
-        <div class="title">List catalog apps</div>
-        <p class="desc">What's available in production. Verify an integration exists before recommending it.</p>
+        <p class="desc">28 tools. Create connectors, inject settings, compile JSP, test API endpoints, wire dynamic field discovery, finalize assemblies. The low-level integration plumbing.</p>
       </div>
     </div>
 
@@ -1164,114 +1428,286 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
       <div class="cat-count">11 tools</div>
     </div>
     <div class="grid">
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_api_key" data-title="API key auth" data-desc="Programmatic access. Issue a docs API key for CI/CD or automated publishing." data-tags="tools docs api-key auth" data-mutation="write">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="12" y="18" width="40" height="28" rx="4" style="--gc:#c084fc"/><circle cx="22" cy="32" r="4" class="fill" style="--gc:#c084fc"/><path d="M28 30 L52 30 M28 36 L48 36" class="soft"/></svg></div>
         <div class="name">docs_api_key</div>
         <div class="title">API key auth</div>
         <p class="desc">Programmatic access. Issue a docs API key for CI/CD or automated publishing.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_chat" data-title="Chat with docs" data-desc="Retrieval-augmented Q&amp;A. Claude asks the docs corpus before writing code or answering." data-tags="tools docs chat rag qa" data-mutation="read">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="8" y="14" width="36" height="28" rx="6" style="--gc:#c084fc"/><path d="M14 48 L18 42 L14 42 Z" class="fill" style="--gc:#c084fc"/><circle cx="18" cy="28" r="1.8" class="fill" style="--gc:#c084fc"/><circle cx="26" cy="28" r="1.8" class="fill" style="--gc:#c084fc"/><circle cx="34" cy="28" r="1.8" class="fill" style="--gc:#c084fc;animation:blink 1.5s infinite" class="anim"/></svg></div>
         <div class="name">docs_chat</div>
         <div class="title">Chat with docs</div>
         <p class="desc">Retrieval-augmented Q&amp;A. Claude asks the docs corpus before writing code or answering.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_create" data-title="Create a page" data-desc="Publish a new doc. Title, body, parent, tags, and status, in one call." data-tags="tools docs create publish page" data-mutation="write">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="12" y="10" width="30" height="44" rx="3" style="--gc:#c084fc"/><path d="M18 20 H36 M18 28 H36 M18 36 H30" class="soft"/><circle cx="46" cy="50" r="7" class="fill" style="--gc:#1ab759"/><path d="M42 50 L46 54 L52 46" stroke="#0c0c0c" class="tk"/></svg></div>
         <div class="name">docs_create</div>
         <div class="title">Create a page</div>
         <p class="desc">Publish a new doc. Title, body, parent, tags, and status, in one call.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_list" data-title="List docs" data-desc="Browse the full table of contents. Filter by section, tag, or status." data-tags="tools docs list toc" data-mutation="read">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="14" width="44" height="6" rx="2" class="fill" style="--gc:#c084fc"/><rect x="10" y="24" width="44" height="6" rx="2" class="soft fill"/><rect x="10" y="34" width="44" height="6" rx="2" class="soft fill"/><rect x="10" y="44" width="30" height="6" rx="2" class="soft fill"/></svg></div>
         <div class="name">docs_list</div>
         <div class="title">List docs</div>
         <p class="desc">Browse the full table of contents. Filter by section, tag, or status.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_login" data-title="Login" data-desc="Authenticate the docs session. Tokens cached for the session." data-tags="tools docs login auth" data-mutation="write">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="14" y="16" width="36" height="32" rx="4" style="--gc:#c084fc"/><path d="M22 28 H42 M22 36 H36" class="soft"/><circle cx="52" cy="14" r="4" class="fill" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_login</div>
         <div class="title">Login</div>
         <p class="desc">Authenticate the docs session. Tokens cached for the session.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_read" data-title="Read a page" data-desc="Fetch the full contents of any doc. Markdown, images, and metadata included." data-tags="tools docs read page" data-mutation="read">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="14" y="10" width="36" height="44" rx="3" style="--gc:#c084fc"/><path d="M20 22 H44 M20 30 H44 M20 38 H40 M20 46 H30" class="soft"/></svg></div>
         <div class="name">docs_read</div>
         <div class="title">Read a page</div>
         <p class="desc">Fetch the full contents of any doc. Markdown, images, and metadata included.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_screenshot" data-title="Capture screenshot" data-desc="Take a live screenshot of the editor or platform UI and embed it into a doc." data-tags="tools docs screenshot capture" data-mutation="write">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="8" y="14" width="48" height="32" rx="3" style="--gc:#c084fc"/><path d="M14 20 L50 20 M14 40 L50 40" class="soft"/><circle cx="14" cy="14" r="1.5" class="fill" style="--gc:#c084fc"/><circle cx="20" cy="14" r="1.5" class="fill" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_screenshot</div>
         <div class="title">Capture screenshot</div>
         <p class="desc">Take a live screenshot of the editor or platform UI and embed it into a doc.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_search" data-title="Full-text search" data-desc="Semantic + keyword search across the entire docs corpus. Ranked results with context." data-tags="tools docs search query" data-mutation="read">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="26" cy="26" r="14" style="--gc:#c084fc"/><path d="M36 36 L54 54" class="tk" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_search</div>
         <div class="title">Full-text search</div>
         <p class="desc">Semantic + keyword search across the entire docs corpus. Ranked results with context.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_update" data-title="Update a page" data-desc="Edit title, body, tags, or status. Revisions tracked automatically." data-tags="tools docs update edit page" data-mutation="write">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="12" y="16" width="40" height="32" rx="3" style="--gc:#c084fc"/><path d="M20 28 H44 M20 36 H40" class="soft"/><path d="M42 14 L52 14 L52 24 M52 14 L40 26" class="tk" style="--gc:#1ab759"/></svg></div>
         <div class="name">docs_update</div>
         <div class="title">Update a page</div>
         <p class="desc">Edit title, body, tags, or status. Revisions tracked automatically.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_upload_image" data-title="Upload image" data-desc="Attach an illustration or diagram to any page. Auto-alt-text generated." data-tags="tools docs upload image illustration" data-mutation="write">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect x="10" y="16" width="44" height="32" rx="3" style="--gc:#c084fc"/><circle cx="22" cy="28" r="3" class="fill" style="--gc:#f5b748"/><path d="M14 44 L26 32 L34 40 L42 30 L50 38" class="tk" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_upload_image</div>
         <div class="title">Upload image</div>
         <p class="desc">Attach an illustration or diagram to any page. Auto-alt-text generated.</p>
       </div>
-      <div class="card t-docs"><span class="tag">docs</span>
+      <div class="card t-docs" data-kind="tool" data-category="tools" data-name="docs_version" data-title="Version history" data-desc="List revisions, diff between versions, roll back if needed." data-tags="tools docs version history revision" data-mutation="read">
+        <span class="tag">docs</span>
         <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="32" cy="32" r="22" style="--gc:#c084fc"/><circle cx="32" cy="32" r="2" class="fill" style="--gc:#c084fc"/><path d="M32 32 L32 16 M32 32 L46 32" class="tk" style="--gc:#c084fc"/></svg></div>
         <div class="name">docs_version</div>
         <div class="title">Version history</div>
         <p class="desc">List revisions, diff between versions, roll back if needed.</p>
       </div>
     </div>
+
+    <div class="zero-state" id="zeroState">
+      <h4>Nothing matches <code id="zeroQuery">''</code></h4>
+      <p>Try a shorter query, remove a filter, or clear the search.</p>
+      <button class="btn-clear-inline" id="zeroClear" type="button">Clear search</button>
+    </div>
   </div>
 </section>
 
-<!-- EXAMPLES -->
+<!-- FLAGSHIP RUN LOG (Ava + Zoe) -->
 <section class="s">
-  <div class="wrap">
+  <div class="wrap run-log">
     <div class="sec-head">
-      <div class="sec-kicker">What a session actually looks like</div>
-      <h2>One prompt. Many skills. Shipped.</h2>
-      <p>Claude composes skills in sequence without a human in the loop. Here are two real shapes.</p>
+      <div class="sec-kicker kicker-amber">Run log</div>
+      <h2>Six minutes, one prompt, one production integration.</h2>
+      <p>A SaaS team runs a boutique fitness CRM on HubSpot. Two thousand paying customers want their HubSpot contacts to sync two-way with Mindbody clients. Classic white-label integration. Historically: four to six weeks of engineering.</p>
     </div>
-    <div class="example">
-      <div class="ex">
-        <h3>Build + ship a new integration</h3>
-        <div class="time">~6 minutes · 5 skills · 14 tool calls</div>
-<pre><span class="user">❯ Build a HubSpot to Mindbody integration that syncs contacts.</span>
 
-<span class="cc">● /build-integration</span>
-  <span class="dim">→ scoping two-way sync</span>
-<span class="cc">● /build-assembly</span> (HubSpot, Mindbody connectors)
-<span class="cc">● /build-automation</span> (HubSpot→Mindbody)
-<span class="cc">● /build-automation</span> (Mindbody→HubSpot)
-<span class="cc">● /test-integration</span>
-  <span class="dim">✓ 14/14 test cases pass</span>
-<span class="cc">● /deploy-automation</span>
-  <span class="dim">✓ published to prod · linked to customer
-  account acme-corp</span></pre>
+    <div class="run-prompt"><span class="prefix">&gt;</span><span id="runTypewriter">Build a two-way contact sync between HubSpot and Mindbody. Handle the membership tier enum mismatch, survive Mindbody's flaky polling, and respect HubSpot's rate limits.</span><span class="type-caret"></span></div>
+
+    <div class="timeline">
+      <!-- PHASE 1: SCOPE -->
+      <div class="tl-phase">
+        <div class="tl-phase-label">00:00 · Scope</div>
+        <div class="tl-event">
+          <div class="t-time">T+00:03</div>
+          <div class="t-title"><span class="t-skill">/build-integration</span>Claude scopes the suite: two automations, one shared pattern.</div>
+          <div class="t-desc">Reads the prompt, recognizes a bidirectional sync, allocates a folder for the customer, and plans the two child automations.</div>
+          <details><summary>tool calls</summary>
+<pre><span class="tc">catalog_list_apps</span>({ vertical: 'wellness' }) <span class="dim">-&gt; hubspot, mindbody</span>
+<span class="tc">auto_folder</span>({ action: 'create', path: '/customers/boutique-fit' }) <span class="ok">-&gt; ok</span>
+<span class="tc">pattern_search</span>({ shape: 'bidirectional-sync' }) <span class="dim">-&gt; 2 matches</span></pre>
+          </details>
+        </div>
       </div>
+
+      <!-- PHASE 2: BUILD DIRECTION A -->
+      <div class="tl-phase">
+        <div class="tl-phase-label">00:40 · Build A</div>
+        <div class="tl-event phase-2">
+          <div class="t-time">T+00:41</div>
+          <div class="t-title"><span class="t-skill">/build-automation</span>Direction A: HubSpot to Mindbody.</div>
+          <div class="t-desc">Trigger: assembly-trigger-updated on HubSpot contacts. Action: assembly-action-find then ADD/UPDATE on Mindbody.</div>
+          <details><summary>tool calls</summary>
+<pre><span class="tc">auto_build</span>({ trigger: 'assembly-trigger-updated', source: 'hubspot.contact' })
+<span class="tc">auto_edit_structure</span>({ add_step: 'assembly-action-find', app: 'mindbody.client' })
+<span class="tc">auto_edit_structure</span>({ add_step: 'assembly-action-add-or-update' })
+<span class="tc">auto_edit_mapping</span>({ fields: [email, firstName, lastName, phone, membership_tier] })</pre>
+          </details>
+          <div class="tl-why">
+            <h6>Why · membership_tier enum normalization</h6>
+            <p>HubSpot stores tier as a free-text dropdown. Mindbody expects one of four enum values. Claude detects the mismatch, adds a lookup-table transform, and saves it as a pattern so the reverse direction reuses it.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 3: BUILD DIRECTION B -->
+      <div class="tl-phase">
+        <div class="tl-phase-label">02:10 · Build B</div>
+        <div class="tl-event phase-3">
+          <div class="t-time">T+02:12</div>
+          <div class="t-title"><span class="t-skill">/build-automation</span>Direction B: Mindbody to HubSpot.</div>
+          <div class="t-desc">Trigger: assembly-trigger-new polling (Mindbody's webhooks are notoriously unreliable). Action: find-then-upsert on HubSpot with the shared enum pattern applied in reverse.</div>
+          <details><summary>tool calls</summary>
+<pre><span class="tc">auto_build</span>({ trigger: 'assembly-trigger-new', source: 'mindbody.client', interval: '5m' })
+<span class="tc">pattern_search</span>({ name: 'membership_tier_enum' }) <span class="dim">-&gt; reusing from A</span>
+<span class="tc">auto_edit_mapping</span>({ reverse: true, pattern: 'membership_tier_enum' })</pre>
+          </details>
+          <div class="tl-why">
+            <h6>Why · polling, not webhooks</h6>
+            <p>Mindbody webhooks silently drop events during high-volume periods. Claude defaulted to polling with a 5-minute cursor, and noted this as a known-gotcha in the pattern library so future Mindbody integrations get the same treatment.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 4: RATE LIMITER -->
+      <div class="tl-phase">
+        <div class="tl-phase-label">03:20 · Harden</div>
+        <div class="tl-event phase-3">
+          <div class="t-time">T+03:24</div>
+          <div class="t-title"><span class="t-skill">/edit-assembly</span>Rate limiter inserted on the HubSpot action.</div>
+          <div class="t-desc">HubSpot caps at 100 requests per 10 seconds per app. Claude inserts a sliding-window limiter at the assembly level, not the automation, so every automation that touches HubSpot inherits it.</div>
+          <details><summary>tool calls</summary>
+<pre><span class="tc">asm_set_action_throttle</span>({ assembly: 'hubspot.contact.update', rate: 100, window: '10s' })
+<span class="tc">asm_set_connector_throttle</span>({ connector: 'hubspot.v3', burst: 20 })</pre>
+          </details>
+          <div class="tl-why">
+            <h6>Why · throttle at the assembly layer</h6>
+            <p>Throttling per automation would let any other HubSpot flow exhaust the budget. Throttling at the assembly (connector + action) applies the limit across every automation in the tenant, which is the only correct level for a shared API.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 5: TEST -->
+      <div class="tl-phase">
+        <div class="tl-phase-label">04:05 · Test</div>
+        <div class="tl-event phase-4">
+          <div class="t-time">T+04:08</div>
+          <div class="t-title"><span class="t-skill">/test-integration</span>End-to-end: push from each side, verify, check for echo loops.</div>
+          <div class="t-desc">Creates a synthetic contact in HubSpot, watches it appear in Mindbody, edits in Mindbody, watches the update flow back. Confirms no echo loop.</div>
+          <details><summary>tool calls</summary>
+<pre><span class="tc">exec_test_automation</span>({ direction: 'A', input: &lt;synthetic&gt; }) <span class="ok">-&gt; ok (1.2s)</span>
+<span class="tc">exec_test_automation</span>({ direction: 'B', input: &lt;synthetic&gt; }) <span class="ok">-&gt; ok (1.8s)</span>
+<span class="tc">exec_get_assembly_log</span>({ check: 'echo_loop' }) <span class="ok">-&gt; suppressed</span>
+<span class="dim">14/14 test cases pass</span></pre>
+          </details>
+        </div>
+      </div>
+
+      <!-- PHASE 6: DEPLOY -->
+      <div class="tl-phase">
+        <div class="tl-phase-label">05:40 · Deploy</div>
+        <div class="tl-event phase-4">
+          <div class="t-time">T+05:44</div>
+          <div class="t-title"><span class="t-skill">/deploy-automation</span>Published to prod. Two thousand customer accounts linked.</div>
+          <div class="t-desc">Publishes the template to prod, then fans out to every linked customer account in one coordinated step.</div>
+          <details><summary>tool calls</summary>
+<pre><span class="tc">deploy_publish_assembly</span>({ folder: '/customers/boutique-fit' }) <span class="ok">-&gt; v1.0.0</span>
+<span class="tc">deploy_list_linked_accounts</span>({ template: 'hubspot-mindbody-sync' }) <span class="dim">-&gt; 2000 accounts</span>
+<span class="tc">deploy_to_accounts</span>({ batch_size: 50 }) <span class="ok">-&gt; 2000/2000 ok</span></pre>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artifact miniature -->
+    <div class="run-artifact">
+      <svg viewbox="0 0 820 180" xmlns="http://www.w3.org/2000/svg" aria-label="Integration artifact diagram">
+        <defs>
+          <linearGradient id="runWireG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#f5b748"/><stop offset=".5" stop-color="#1ab759"/><stop offset="1" stop-color="#5cc8ff"/>
+          </linearGradient>
+        </defs>
+        <!-- Mindbody -->
+        <g transform="translate(40,50)">
+          <rect x="0" y="0" width="180" height="80" rx="12" fill="#12171c" stroke="rgba(255,255,255,.08)"/>
+          <text x="18" y="26" font-size="11" fill="rgba(255,255,255,.5)" font-family="JetBrains Mono,monospace">SOURCE</text>
+          <text x="18" y="52" font-size="15" fill="#f7f8f8" font-weight="600" font-family="Inter,sans-serif">Mindbody</text>
+          <text x="18" y="70" font-size="11" fill="rgba(255,255,255,.5)" font-family="JetBrains Mono,monospace">clients</text>
+        </g>
+        <!-- Mapping -->
+        <g transform="translate(320,50)">
+          <rect x="0" y="0" width="180" height="80" rx="12" fill="#12171c" stroke="rgba(26,183,89,.4)"/>
+          <text x="18" y="26" font-size="11" fill="rgba(26,183,89,.85)" font-family="JetBrains Mono,monospace">APIANT</text>
+          <text x="18" y="52" font-size="15" fill="#f7f8f8" font-weight="600" font-family="Inter,sans-serif">Bidirectional sync</text>
+          <text x="18" y="70" font-size="11" fill="rgba(255,255,255,.5)" font-family="JetBrains Mono,monospace">enum normalizer</text>
+        </g>
+        <!-- HubSpot -->
+        <g transform="translate(600,50)">
+          <rect x="0" y="0" width="180" height="80" rx="12" fill="#12171c" stroke="rgba(255,255,255,.08)"/>
+          <text x="18" y="26" font-size="11" fill="rgba(255,255,255,.5)" font-family="JetBrains Mono,monospace">TARGET</text>
+          <text x="18" y="52" font-size="15" fill="#f7f8f8" font-weight="600" font-family="Inter,sans-serif">HubSpot</text>
+          <text x="18" y="70" font-size="11" fill="rgba(255,255,255,.5)" font-family="JetBrains Mono,monospace">contacts</text>
+        </g>
+        <!-- Wires -->
+        <path d="M 220 85 L 320 85" stroke="url(#runWireG)" stroke-width="2" stroke-dasharray="6 4" fill="none"><animate attributeName="stroke-dashoffset" from="0" to="-40" dur="1.6s" repeatCount="indefinite"/></path>
+        <path d="M 500 85 L 600 85" stroke="url(#runWireG)" stroke-width="2" stroke-dasharray="6 4" fill="none"><animate attributeName="stroke-dashoffset" from="0" to="-40" dur="1.6s" repeatCount="indefinite"/></path>
+        <path d="M 600 100 L 500 100" stroke="#5cc8ff" stroke-width="1.4" stroke-dasharray="4 4" opacity=".5" fill="none"><animate attributeName="stroke-dashoffset" from="0" to="40" dur="2s" repeatCount="indefinite"/></path>
+        <path d="M 320 100 L 220 100" stroke="#5cc8ff" stroke-width="1.4" stroke-dasharray="4 4" opacity=".5" fill="none"><animate attributeName="stroke-dashoffset" from="0" to="40" dur="2s" repeatCount="indefinite"/></path>
+        <!-- Traveling packet -->
+        <circle r="4" fill="#1ab759" filter="drop-shadow(0 0 6px rgba(26,183,89,.9))">
+          <animateMotion dur="3.2s" repeatCount="indefinite" path="M 220 85 L 500 85 L 600 85"/>
+        </circle>
+      </svg>
+    </div>
+
+    <!-- Totals -->
+    <div class="run-totals" id="runTotals">
+      <div class="tot"><b class="count-up" data-target="6">0</b>MIN</div>
+      <div class="tot"><b class="count-up" data-target="5">0</b>SKILLS</div>
+      <div class="tot"><b class="count-up" data-target="14">0</b>TOOL CALLS</div>
+      <div class="tot"><b class="count-up" data-target="0">0</b>HUMAN EDITS</div>
+    </div>
+
+    <p class="run-closing">What the builder did not do: write a single line of JSP. Hand-map a single field. Open the Mindbody developer docs. File a ticket about the tier enum. Wait four to six weeks.</p>
+
+    <!-- Secondary example, condensed -->
+    <div class="example" style="margin-top:48px">
       <div class="ex">
         <h4>Diagnose a production failure</h4>
-        <div class="time">~2 minutes · 2 skills · 6 tool calls</div>
-<pre><span class="user">❯ Customer Alpine Clinic says nothing synced last night.</span>
+        <div class="time">2 minutes &middot; 2 skills &middot; 6 tool calls</div>
+<pre><span class="user">&gt; Customer Alpine Clinic says nothing synced last night.</span>
 
 <span class="cc">● /support</span>
-  <span class="dim">searching execution history…</span>
+  <span class="dim">searching execution history</span>
   <span class="dim">found 47 failures at 02:14 UTC</span>
   <span class="dim">root cause: Cliniko API returned 429
   (rate limit) during bulk backfill</span>
 <span class="cc">● /edit-automation</span>
-  <span class="dim">→ adding exponential backoff to step 3</span>
-  <span class="dim">✓ re-tested. replayed failed runs.</span></pre>
+  <span class="dim">-&gt; adding exponential backoff to step 3</span>
+  <span class="dim">retested. replayed failed runs.</span></pre>
+      </div>
+      <div class="ex">
+        <h4>Alert hygiene tuneup</h4>
+        <div class="time">90 seconds &middot; 1 skill &middot; 4 tool calls</div>
+<pre><span class="user">&gt; Stop auto-disabling Shopify on 401s from the sandbox tenant.</span>
+
+<span class="cc">● /alert-handling</span>
+  <span class="dim">admin_ignore_401_domains += sandbox.shopify.com</span>
+  <span class="dim">alert_suppress: 'Stale sandbox token' pattern</span>
+  <span class="dim">verified against last 24h history</span>
+  <span class="dim">noise dropped from 140 to 3 alerts/day</span></pre>
       </div>
     </div>
   </div>
@@ -1367,8 +1803,8 @@ document.querySelectorAll('.card').forEach(c=>{
   update();
 })();
 
-// Section indicator: shows "33 plugin skills" while the Skills section is in view,
-// swaps to "100 MCP tools" while the MCP Tools section is in view.
+// Section indicator: shows "35 plugin skills" while the Skills section is in view,
+// swaps to "125 MCP tools" while the MCP Tools section is in view.
 // Centers horizontally under the "Start Building" button via a CSS custom property.
 (function(){
   var indicator=document.querySelector('.section-indicator');
@@ -1387,8 +1823,8 @@ document.querySelectorAll('.card').forEach(c=>{
     indicator.style.setProperty('--cta-center',(r.left+r.width/2)+'px');
   };
   var states={
-    skills:{count:'33',label:'plugin skills'},
-    tools: {count:'100',label:'MCP tools'}
+    skills:{count:'35',label:'plugin skills'},
+    tools: {count:'125',label:'MCP tools'}
   };
   var setState=function(key){
     if(key===currentKey)return;
@@ -1412,7 +1848,7 @@ document.querySelectorAll('.card').forEach(c=>{
   };
   var update=function(){
     alignToCta();
-    var navH=80;
+    var navH=180; // matches search-nav bottom (~160) + breathing room
     var t=toolsSec.getBoundingClientRect();
     var s=skillsSec.getBoundingClientRect();
     if(t.top<navH && t.bottom>navH){setState('tools');}
@@ -1425,6 +1861,525 @@ document.querySelectorAll('.card').forEach(c=>{
   window.addEventListener('load',alignToCta);
   if(document.fonts&&document.fonts.ready){document.fonts.ready.then(alignToCta);}
   update();
+})();
+
+// === Search sub-nav: scroll-reveal, keystroke filter, chip filters, zero state ===
+(function(){
+  var searchNav=document.getElementById('searchNav');
+  var hero=document.querySelector('.hero');
+  var input=document.getElementById('searchInput');
+  var chips=Array.prototype.slice.call(document.querySelectorAll('#chipFilters .fchip'));
+  var clearBtn=document.getElementById('clearFilters');
+  var zeroState=document.getElementById('zeroState');
+  var zeroQuery=document.getElementById('zeroQuery');
+  var zeroClear=document.getElementById('zeroClear');
+  if(!searchNav||!hero||!input) return;
+
+  var cards=Array.prototype.slice.call(document.querySelectorAll('.card[data-kind]'));
+
+  // Populate chip counts from data-category
+  var catCounts={};
+  cards.forEach(function(c){
+    var cat=c.dataset.category||'';
+    catCounts[cat]=(catCounts[cat]||0)+1;
+  });
+  chips.forEach(function(ch){
+    var cat=ch.dataset.filter;
+    var badge=ch.querySelector('[data-count]');
+    if(badge) badge.textContent=catCounts[cat]||0;
+  });
+
+  // Visibility: show when hero bottom scrolls out. Toggle aria-hidden in lockstep (P0-4).
+  var updateVis=function(){
+    var r=hero.getBoundingClientRect();
+    var visible=r.bottom<0;
+    searchNav.classList.toggle('visible',visible);
+    searchNav.setAttribute('aria-hidden',visible?'false':'true');
+  };
+  window.addEventListener('scroll',updateVis,{passive:true});
+  updateVis();
+
+  // Highlight helper
+  var escapeRE=function(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');};
+  var escapeHTML=function(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+  var applyHighlight=function(el,original,re){
+    if(!el) return;
+    if(!re){ el.innerHTML=escapeHTML(original); return; }
+    el.innerHTML=escapeHTML(original).replace(re,function(m){return '<mark>'+m+'</mark>';});
+  };
+
+  // Cache original text
+  cards.forEach(function(c){
+    var nameEl=c.querySelector('.name');
+    var titleEl=c.querySelector('.title');
+    var descEl=c.querySelector('.desc');
+    if(nameEl&&!nameEl.dataset.orig) nameEl.dataset.orig=nameEl.textContent;
+    if(titleEl&&!titleEl.dataset.orig) titleEl.dataset.orig=titleEl.textContent;
+    if(descEl&&!descEl.dataset.orig) descEl.dataset.orig=descEl.textContent;
+  });
+
+  var activeChips=function(){ return chips.filter(function(ch){return ch.dataset.active==='true';}); };
+
+  var run=function(){
+    var q=input.value.trim().toLowerCase();
+    var actives=activeChips();
+    var activeCats=actives.map(function(c){return c.dataset.filter;});
+    var re=q?new RegExp(escapeRE(q),'gi'):null;
+    var matchCount=0;
+    var perCatMatches={};
+
+    cards.forEach(function(c){
+      var haystack=((c.dataset.name||'')+' '+(c.dataset.title||'')+' '+(c.dataset.desc||'')+' '+(c.dataset.tags||'')+' '+(c.dataset.category||'')).toLowerCase();
+      var textMatch=!q || haystack.indexOf(q)!==-1;
+      var cat=c.dataset.category||'';
+      var chipMatch=activeCats.length===0 || activeCats.indexOf(cat)!==-1;
+      var show=textMatch && chipMatch;
+      if(show){
+        c.classList.remove('search-hidden');
+        if(q){ c.classList.add('search-match'); } else { c.classList.remove('search-match'); }
+        matchCount++;
+        perCatMatches[cat]=(perCatMatches[cat]||0)+1;
+        var nameEl=c.querySelector('.name');
+        var titleEl=c.querySelector('.title');
+        var descEl=c.querySelector('.desc');
+        if(nameEl) applyHighlight(nameEl,nameEl.dataset.orig,re);
+        if(titleEl) applyHighlight(titleEl,titleEl.dataset.orig,re);
+        if(descEl) applyHighlight(descEl,descEl.dataset.orig,re);
+      }else{
+        c.classList.add('search-hidden');
+        c.classList.remove('search-match');
+        var nEl=c.querySelector('.name'); if(nEl&&nEl.dataset.orig) nEl.innerHTML=escapeHTML(nEl.dataset.orig);
+        var tEl=c.querySelector('.title'); if(tEl&&tEl.dataset.orig) tEl.innerHTML=escapeHTML(tEl.dataset.orig);
+        var dEl=c.querySelector('.desc'); if(dEl&&dEl.dataset.orig) dEl.innerHTML=escapeHTML(dEl.dataset.orig);
+      }
+    });
+
+    // Chip zero-state hatching: only for chips not currently active that would yield zero results
+    chips.forEach(function(ch){
+      var cat=ch.dataset.filter;
+      var wouldMatch=0;
+      cards.forEach(function(c){
+        if((c.dataset.category||'')!==cat) return;
+        var haystack=((c.dataset.name||'')+' '+(c.dataset.title||'')+' '+(c.dataset.desc||'')+' '+(c.dataset.tags||'')).toLowerCase();
+        if(!q || haystack.indexOf(q)!==-1) wouldMatch++;
+      });
+      ch.dataset.zero = wouldMatch===0 && q ? 'true' : 'false';
+    });
+
+    // Zero state
+    if(matchCount===0 && (q||actives.length)){
+      zeroState.classList.add('visible');
+      if(zeroQuery) zeroQuery.textContent=q? "'"+q+"'" : '(filters only)';
+    } else {
+      zeroState.classList.remove('visible');
+    }
+
+    // Clear button visibility
+    if(q || actives.length){ clearBtn.classList.remove('hidden'); }
+    else { clearBtn.classList.add('hidden'); }
+  };
+
+  input.addEventListener('input',run);
+  chips.forEach(function(ch){
+    ch.addEventListener('click',function(){
+      var next = ch.dataset.active==='true' ? 'false' : 'true';
+      ch.dataset.active = next;
+      ch.setAttribute('aria-pressed', next);
+      run();
+    });
+  });
+  var clearAll=function(){
+    input.value='';
+    chips.forEach(function(ch){ ch.dataset.active='false'; ch.setAttribute('aria-pressed','false'); });
+    run();
+    input.focus();
+  };
+  clearBtn.addEventListener('click',clearAll);
+  if(zeroClear) zeroClear.addEventListener('click',clearAll);
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown',function(e){
+    if(e.key==='/' && document.activeElement.tagName!=='INPUT' && document.activeElement.tagName!=='TEXTAREA'){
+      e.preventDefault();
+      input.focus();
+      input.select();
+    }
+    if(e.key==='Escape' && document.activeElement===input){
+      input.value='';
+      run();
+      input.blur();
+    }
+  });
+
+  // Run once on load in case of returning filters
+  run();
+})();
+
+// === Drawer: opens on any card click, keyboard nav, deep-link ===
+(function(){
+  var drawer=document.getElementById('drawer');
+  var backdrop=document.getElementById('drawerBackdrop');
+  var closeBtn=document.getElementById('drawerClose');
+  var toast=document.getElementById('drawerToast');
+  if(!drawer||!backdrop) return;
+
+  var elTitle=document.getElementById('drawerTitle');
+  var elCat=document.getElementById('drawerCatChip');
+  var elMut=document.getElementById('drawerMutation');
+  var elDesc=document.getElementById('drawerDesc');
+  var elBody=document.getElementById('drawerBody');
+  var elWhenSec=document.getElementById('drawerWhenSection');
+  var elWhen=document.getElementById('drawerWhen');
+  var elExSec=document.getElementById('drawerExampleSection');
+  var elEx=document.getElementById('drawerExample');
+  var elToolsSec=document.getElementById('drawerToolsSection');
+  var elToolsLabel=document.getElementById('drawerToolsLabel');
+  var elTools=document.getElementById('drawerTools');
+  var elInputsSec=document.getElementById('drawerInputsSection');
+  var elInputs=document.getElementById('drawerInputs');
+  var copyBtn=document.getElementById('drawerCopy');
+  var prevBtn=document.getElementById('drawerPrev');
+  var nextBtn=document.getElementById('drawerNext');
+
+  var currentName='';
+
+  var getVisibleCards=function(){
+    return Array.prototype.slice.call(document.querySelectorAll('.card[data-kind]:not(.search-hidden)'));
+  };
+
+  var catLabel={setup:'Setup',build:'Build',edit:'Edit',test:'Test & deploy',triggers:'Triggers',actions:'Actions',connector:'Connector',sync:'Two-way sync',patterns:'Patterns',ops:'Ops & support',tools:'MCP tools'};
+
+  var renderCard=function(card,swap){
+    if(!card) return;
+    var doRender=function(){
+      var esc=function(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+      var name=card.dataset.name||'';
+      var title=card.dataset.title||'';
+      var desc=card.dataset.desc||'';
+      var cat=card.dataset.category||'';
+      var kind=card.dataset.kind||'';
+      var when=card.dataset.when||'';
+      var example=card.dataset.example||'';
+      var invokes=(card.dataset.invokes||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
+      var inputs=(card.dataset.inputs||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
+      var mut=card.dataset.mutation||'';
+
+      currentName=name;
+      elTitle.textContent=name;
+      elCat.textContent=catLabel[cat]||cat||'';
+
+      if(kind==='tool'){
+        if(mut==='write'||mut==='destructive'){ elMut.className='drawer-mutation mutates'; elMut.textContent='MUTATES'; }
+        else if(mut==='read'){ elMut.className='drawer-mutation readonly'; elMut.textContent='READ-ONLY'; }
+        else { elMut.className='drawer-mutation'; elMut.textContent=''; }
+      } else {
+        elMut.className='drawer-mutation'; elMut.textContent='';
+      }
+
+      elDesc.innerHTML='<p><b>'+esc(title)+'.</b> '+esc(desc)+'</p>';
+
+      if(when){ elWhenSec.hidden=false; elWhen.textContent=when; }
+      else { elWhenSec.hidden=true; }
+
+      if(example){
+        elExSec.hidden=false;
+        var html=esc(example)
+          .replace(/^&gt;(.*)$/gm,'<span class="user">&gt;$1</span>')
+          .replace(/^● (.*)$/gm,'<span class="cc">● $1</span>')
+          .replace(/-&gt;/g,'<span class="dim">-&gt;</span>');
+        elEx.innerHTML=html;
+      } else {
+        elExSec.hidden=true;
+      }
+
+      if(invokes.length){
+        elToolsSec.hidden=false;
+        elToolsLabel.textContent=kind==='tool'?'Used by':'Invokes';
+        elTools.innerHTML='';
+        invokes.forEach(function(n){
+          // Only create an interactive pill if a matching card exists on the page.
+          // Otherwise render a static span so users don't click into a dead no-op. (P0-3)
+          var target=document.querySelector('.card[data-name="'+n.replace(/"/g,'\\"')+'"]');
+          if(target){
+            var pill=document.createElement('button');
+            pill.type='button';
+            pill.className='tool-pill';
+            pill.textContent=n;
+            pill.addEventListener('click',function(){
+              renderCard(target,true);
+            });
+            elTools.appendChild(pill);
+          } else {
+            var span=document.createElement('span');
+            span.className='tool-pill tool-pill-static';
+            span.textContent=n;
+            elTools.appendChild(span);
+          }
+        });
+      } else {
+        elToolsSec.hidden=true;
+      }
+
+      if(inputs.length){
+        elInputsSec.hidden=false;
+        elInputs.innerHTML='';
+        inputs.forEach(function(n){
+          var pill=document.createElement('span');
+          pill.className='tool-pill input';
+          pill.textContent=n;
+          elInputs.appendChild(pill);
+        });
+      } else {
+        elInputsSec.hidden=true;
+      }
+
+      // Update URL (deep link)
+      try{
+        var url=new URL(window.location.href);
+        url.searchParams.set('item',name);
+        history.replaceState(null,'',url.toString());
+      }catch(e){}
+    };
+    if(swap){
+      elBody.classList.add('swapping');
+      setTimeout(function(){ doRender(); elBody.classList.remove('swapping'); },200);
+    } else {
+      doRender();
+    }
+  };
+
+  // Focus management (P0-5)
+  var previousFocus=null;
+  var FOCUSABLE_SEL='a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  var getFocusable=function(){
+    return Array.prototype.filter.call(
+      drawer.querySelectorAll(FOCUSABLE_SEL),
+      function(el){ return !el.hidden && el.offsetParent!==null; }
+    );
+  };
+
+  var openDrawer=function(card){
+    if(!card) return;
+    previousFocus=document.activeElement;
+    renderCard(card,false);
+    backdrop.hidden=false;
+    drawer.hidden=false;
+    requestAnimationFrame(function(){
+      backdrop.classList.add('visible');
+      drawer.classList.add('visible');
+      // Move focus into drawer once visible
+      try{ closeBtn.focus(); }catch(e){}
+    });
+    document.body.style.overflow='hidden';
+  };
+
+  var closeDrawer=function(){
+    backdrop.classList.remove('visible');
+    drawer.classList.remove('visible');
+    setTimeout(function(){
+      backdrop.hidden=true;
+      drawer.hidden=true;
+    },280);
+    document.body.style.overflow='';
+    try{
+      var url=new URL(window.location.href);
+      url.searchParams.delete('item');
+      history.replaceState(null,'',url.toString());
+    }catch(e){}
+    // Restore focus to the element that opened the drawer (P0-5)
+    if(previousFocus && typeof previousFocus.focus==='function'){
+      try{ previousFocus.focus(); }catch(e){}
+    }
+    previousFocus=null;
+  };
+
+  // Wire up all card clicks + keyboard (P0-2)
+  document.querySelectorAll('.card[data-kind]').forEach(function(card){
+    card.setAttribute('tabindex','0');
+    card.setAttribute('role','button');
+    if(!card.getAttribute('aria-label')){
+      var t=card.dataset.title||card.dataset.name||'';
+      if(t) card.setAttribute('aria-label','Open details for '+t);
+    }
+    card.addEventListener('click',function(e){
+      // Don't hijack env-toggle clicks or drawer internal pill clicks
+      if(e.target.closest('.env-toggle')) return;
+      openDrawer(card);
+    });
+    card.addEventListener('keydown',function(e){
+      if(e.target!==card) return; // don't intercept keys on inner controls
+      if(e.key==='Enter' || e.key===' '){
+        e.preventDefault();
+        openDrawer(card);
+      }
+    });
+  });
+
+  // Stop propagation on env-seg so Enter/Space focused on it doesn't also open the drawer
+  document.querySelectorAll('.env-toggle .env-seg').forEach(function(seg){
+    seg.addEventListener('keydown',function(e){
+      if(e.key==='Enter' || e.key===' '){
+        e.stopPropagation();
+      }
+    });
+  });
+
+  closeBtn.addEventListener('click',closeDrawer);
+  backdrop.addEventListener('click',closeDrawer);
+
+  // Mobile drag handle: close on pointerdown on the top ~28px of the drawer (handle area) when in sheet mode. (P1-11)
+  drawer.addEventListener('pointerdown',function(e){
+    if(window.innerWidth>760) return;
+    var rect=drawer.getBoundingClientRect();
+    if(e.clientY-rect.top<=28){
+      closeDrawer();
+    }
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(drawer.hidden) return;
+    if(e.key==='Escape'){ closeDrawer(); return; }
+    if(e.key===']' || (e.key==='ArrowRight' && e.ctrlKey)){ nextBtn.click(); return; }
+    if(e.key==='[' || (e.key==='ArrowLeft' && e.ctrlKey)){ prevBtn.click(); return; }
+    // Focus trap (P0-5)
+    if(e.key==='Tab'){
+      var focusables=getFocusable();
+      if(!focusables.length) return;
+      var first=focusables[0];
+      var last=focusables[focusables.length-1];
+      if(e.shiftKey){
+        if(document.activeElement===first || !drawer.contains(document.activeElement)){
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if(document.activeElement===last){
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  });
+
+  prevBtn.addEventListener('click',function(){
+    var vis=getVisibleCards();
+    if(!vis.length) return;
+    var idx=vis.findIndex(function(c){return c.dataset.name===currentName;});
+    var nextIdx=idx<=0 ? vis.length-1 : idx-1;
+    renderCard(vis[nextIdx],true);
+  });
+  nextBtn.addEventListener('click',function(){
+    var vis=getVisibleCards();
+    if(!vis.length) return;
+    var idx=vis.findIndex(function(c){return c.dataset.name===currentName;});
+    var nextIdx=idx<0 || idx>=vis.length-1 ? 0 : idx+1;
+    renderCard(vis[nextIdx],true);
+  });
+
+  var showToast=function(msg){
+    if(!toast) return;
+    toast.textContent=msg;
+    toast.classList.add('visible');
+    setTimeout(function(){ toast.classList.remove('visible'); },1600);
+  };
+
+  copyBtn.addEventListener('click',function(){
+    try{
+      var url=new URL(window.location.href);
+      url.searchParams.set('item',currentName);
+      var s=url.toString();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(s).then(function(){ showToast('Link copied'); });
+      } else {
+        var ta=document.createElement('textarea');
+        ta.value=s; document.body.appendChild(ta); ta.select();
+        try{document.execCommand('copy');}catch(e){}
+        document.body.removeChild(ta);
+        showToast('Link copied');
+      }
+    }catch(e){ showToast('Copy failed'); }
+  });
+
+  // Auto-open if ?item= in URL
+  try{
+    var params=new URLSearchParams(window.location.search);
+    var item=params.get('item');
+    if(item){
+      var target=document.querySelector('.card[data-name="'+item.replace(/"/g,'\\"')+'"]');
+      if(target) setTimeout(function(){ openDrawer(target); },100);
+    }
+  }catch(e){}
+})();
+
+// === Dev/Prod env toggle on tool cards ===
+(function(){
+  document.querySelectorAll('.card .env-toggle').forEach(function(toggle){
+    var card=toggle.closest('.card');
+    if(!card) return;
+    var devDesc=card.dataset.desc||'';
+    var prodDesc=card.dataset.prodDesc||(devDesc+' Read-only surface; writes gate on explicit confirmation.');
+    var descEl=card.querySelector('.desc');
+    if(descEl && !descEl.dataset.origDesc) descEl.dataset.origDesc=devDesc;
+
+    var segs=toggle.querySelectorAll('.env-seg');
+    segs.forEach(function(seg){
+      seg.addEventListener('click',function(e){
+        e.stopPropagation();
+        segs.forEach(function(s){ s.classList.remove('active'); });
+        seg.classList.add('active');
+        var env=seg.dataset.env;
+        if(env==='prod'){
+          card.classList.add('env-prod');
+          card.classList.remove('t-dev');
+          card.classList.add('t-prod');
+          if(descEl) descEl.textContent=prodDesc;
+        } else {
+          card.classList.remove('env-prod');
+          card.classList.add('t-dev');
+          card.classList.remove('t-prod');
+          if(descEl) descEl.textContent=devDesc;
+        }
+      });
+      // Arrow-key support when focused
+      seg.addEventListener('keydown',function(e){
+        if(e.key==='ArrowLeft' || e.key==='ArrowRight'){
+          e.preventDefault();
+          var other=Array.prototype.find.call(segs,function(s){return s!==seg;});
+          if(other){ other.focus(); other.click(); }
+        }
+      });
+    });
+  });
+})();
+
+// === Run totals count-up ===
+(function(){
+  var totalsRow=document.getElementById('runTotals');
+  if(!totalsRow) return;
+  var animated=false;
+  var animate=function(){
+    if(animated) return;
+    animated=true;
+    totalsRow.querySelectorAll('.count-up').forEach(function(el){
+      var target=parseInt(el.dataset.target||'0',10);
+      if(target===0){ el.textContent='0'; return; }
+      var duration=900, steps=24, step=target/steps, current=0, i=0;
+      var t=setInterval(function(){
+        i++;
+        current=Math.min(target,Math.round(step*i));
+        el.textContent=current;
+        if(i>=steps){ el.textContent=target; clearInterval(t); }
+      },duration/steps);
+    });
+  };
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ animate(); io.disconnect(); } });
+    },{threshold:0.3});
+    io.observe(totalsRow);
+  } else {
+    animate();
+  }
 })();
 </script>
 
