@@ -602,6 +602,71 @@
 
 <link href="/css/cookie-consent.css" rel="stylesheet" type="text/css"/>
 
+<!-- apiant-seo:faq -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does \"platform-native AI\" actually mean, vs. a chatbot bolted onto an API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most AI integration tools are wrappers: an LLM on top of a fixed set of API calls. APIANT's AI operates inside the full integration platform. The Co-Pilot writes connectors. Agents call 500+ prebuilt integrations, trigger automations, and execute multi-step workflows with full access to your business logic. It is AI as an operator of the platform, not a conversational layer in front of it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which LLM powers the Co-Pilot and agents, and can we bring our own model?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "APIANT is model-agnostic. The Co-Pilot and agents run on current frontier models by default, and MCP Servers expose your integrations as tools any compatible LLM can call (including models you host yourself). If compliance requires a specific model or deployment region, we work through that during onboarding."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does the Co-Pilot actually do on its own, and what still needs human review?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Co-Pilot reads the API docs, determines authentication, generates ingredients (individual operations), tests them against live endpoints, and self-corrects when something fails. A workflow architect still reviews the ingredients before wiring them into customer-facing automations, the same way you would review any new connector. The Co-Pilot removes the grunt work of reading docs and writing boilerplate, not the judgment of deciding what to deploy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How are AI agents prevented from taking destructive actions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Agents operate with explicit goals and a scoped set of tools; they cannot call anything you have not exposed to them. You define guardrails at the automation layer (approval steps, conditional branches, rate caps, audit logging). Every agent action runs through the same execution engine as human-triggered automations, so everything is logged with full request and response bodies. You get the autonomy without the blast radius."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the AI ever send our customer data to third-party LLM providers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only when you configure it to, and only the fields explicitly passed to the model. For the Co-Pilot's connector-building work, the input is API documentation and your own test data. For agents and chatbots, you control which fields are included in the model context. Enterprise deployments typically route model calls through your own cloud account or a private endpoint; we scope the data flow during procurement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is MCP, and why should we care?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MCP (Model Context Protocol) is an open standard that lets AI models discover tools, understand their schemas, and invoke them through a consistent interface. APIANT's MCP servers expose your 500+ integrations as native tools that any MCP-compatible model can call. No custom function-calling glue, no bespoke wrappers. It is protocol-level interoperability between AI and your integration layer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can we use APIANT's AI features without rebuilding our existing integrations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Agents, the chatbot layer, and MCP servers all work on top of your existing automations and connectors. Build the integration once in the Automation Editor, then let agents call it or expose it via MCP. The AI is an access layer, not a replacement for the integration work you have already done."
+      }
+    }
+  ]
+}
+</script>
 
 <link href="https://apiant.com/ai.html" hreflang="x-default" rel="alternate"/>
 <link href="https://apiant.com/ai.html" hreflang="en" rel="alternate"/>
@@ -948,6 +1013,56 @@
 <div class="ai-btn-group">
 <a class="ai-btn-primary popup-trigger" href="#">একটি ডেমো সময়সূচী করুন</a>
 <a class="ai-btn-secondary" href="/bn/formapps.html">ফর্মঅ্যাপস অন্বেষণ করুন</a>
+</div>
+</div>
+</section>
+<!-- ===== 7. FAQ ===== -->
+<style>
+    .ai-faq { padding: 96px 24px; max-width: 880px; margin: 0 auto; }
+    .ai-faq h2 { font-size: 42px; font-weight: 700; color: #ffffff; line-height: 1.2; margin-bottom: 40px; text-align: center; letter-spacing: -0.01em; font-family: 'Inter','DM Sans',sans-serif; }
+    .ai-faq-list { display: flex; flex-direction: column; gap: 16px; }
+    .ai-faq .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 24px 28px; transition: border-color 0.3s, background 0.3s; }
+    .ai-faq .faq-item:hover { border-color: rgba(6,182,212,0.35); background: rgba(6,182,212,0.04); }
+    .ai-faq .faq-item h3 { font-size: 18px; font-weight: 600; color: #ffffff; margin: 0 0 10px 0; line-height: 1.35; font-family: 'DM Sans', sans-serif; }
+    .ai-faq .faq-item p { font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.65); margin: 0; font-family: 'Inter', sans-serif; }
+    @media (max-width: 768px) {
+      .ai-faq { padding: 60px 20px; }
+      .ai-faq h2 { font-size: 30px; margin-bottom: 28px; }
+      .ai-faq .faq-item { padding: 20px 22px; }
+      .ai-faq .faq-item h3 { font-size: 17px; }
+      .ai-faq .faq-item p { font-size: 15px; }
+    }
+  </style>
+<section class="faq ai-faq">
+<h2 class="reveal">সচরাচর জিজ্ঞাসিত প্রশ্নাবলী</h2>
+<div class="ai-faq-list">
+<div class="faq-item">
+<h3>What does "platform-native AI" actually mean, vs. a chatbot bolted onto an API?</h3>
+<p>Most AI integration tools are wrappers: an LLM on top of a fixed set of API calls. APIANT's AI operates inside the full integration platform. The Co-Pilot writes connectors. Agents call 500+ prebuilt integrations, trigger automations, and execute multi-step workflows with full access to your business logic. It is AI as an operator of the platform, not a conversational layer in front of it.</p>
+</div>
+<div class="faq-item">
+<h3>Which LLM powers the Co-Pilot and agents, and can we bring our own model?</h3>
+<p>APIANT is model-agnostic. The Co-Pilot and agents run on current frontier models by default, and MCP Servers expose your integrations as tools any compatible LLM can call (including models you host yourself). If compliance requires a specific model or deployment region, we work through that during onboarding.</p>
+</div>
+<div class="faq-item">
+<h3>How much does the Co-Pilot actually do on its own, and what still needs human review?</h3>
+<p>The Co-Pilot reads the API docs, determines authentication, generates ingredients (individual operations), tests them against live endpoints, and self-corrects when something fails. A workflow architect still reviews the ingredients before wiring them into customer-facing automations, the same way you would review any new connector. The Co-Pilot removes the grunt work of reading docs and writing boilerplate, not the judgment of deciding what to deploy.</p>
+</div>
+<div class="faq-item">
+<h3>How are AI agents prevented from taking destructive actions?</h3>
+<p>Agents operate with explicit goals and a scoped set of tools; they cannot call anything you have not exposed to them. You define guardrails at the automation layer (approval steps, conditional branches, rate caps, audit logging). Every agent action runs through the same execution engine as human-triggered automations, so everything is logged with full request and response bodies. You get the autonomy without the blast radius.</p>
+</div>
+<div class="faq-item">
+<h3>Does the AI ever send our customer data to third-party LLM providers?</h3>
+<p>Only when you configure it to, and only the fields explicitly passed to the model. For the Co-Pilot's connector-building work, the input is API documentation and your own test data. For agents and chatbots, you control which fields are included in the model context. Enterprise deployments typically route model calls through your own cloud account or a private endpoint; we scope the data flow during procurement.</p>
+</div>
+<div class="faq-item">
+<h3>What is MCP, and why should we care?</h3>
+<p>MCP (Model Context Protocol) is an open standard that lets AI models discover tools, understand their schemas, and invoke them through a consistent interface. APIANT's MCP servers expose your 500+ integrations as native tools that any MCP-compatible model can call. No custom function-calling glue, no bespoke wrappers. It is protocol-level interoperability between AI and your integration layer.</p>
+</div>
+<div class="faq-item">
+<h3>Can we use APIANT's AI features without rebuilding our existing integrations?</h3>
+<p>Yes. Agents, the chatbot layer, and MCP servers all work on top of your existing automations and connectors. Build the integration once in the Automation Editor, then let agents call it or expose it via MCP. The AI is an access layer, not a replacement for the integration work you have already done.</p>
 </div>
 </div>
 </section>
