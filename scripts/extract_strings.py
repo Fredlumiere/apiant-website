@@ -59,6 +59,19 @@ PAGES = [
 SKIP_TAGS = {'script', 'style', 'code', 'pre', 'svg', 'math', 'noscript'}
 SKIP_CLASSES = {'notranslate', 'w-embed'}
 
+# Content-bearing data-* attributes that hold human prose (e.g. drawer depth
+# content on ai-operability.html cards). Values here are translated like any
+# other string. Identifier-bearing attrs (data-invokes, data-used-by,
+# data-category, data-name, data-kind, data-tags, etc.) are deliberately
+# excluded to preserve tool/skill names as stable keys.
+TRANSLATABLE_ATTRS = {
+    'data-when',
+    'data-example',
+    'data-prod-desc',
+    'data-desc',
+    'data-title',
+}
+
 
 def has_skip_ancestor(el):
     """Return True if el or any ancestor has a skip class or translate='no'."""
@@ -110,6 +123,18 @@ def extract_strings(html_content):
         val = btn.get('value', '').strip()
         if val:
             strings.add(val)
+
+    # Extract content-bearing data-* attribute values
+    for attr in TRANSLATABLE_ATTRS:
+        for el in soup.find_all(attrs={attr: True}):
+            if has_skip_ancestor(el):
+                continue
+            val = el.get(attr, '')
+            if not isinstance(val, str):
+                continue
+            val = val.strip()
+            if val and len(val) > 1:
+                strings.add(val)
 
     # Walk DOM for text nodes
     def walk(element):

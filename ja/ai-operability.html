@@ -439,13 +439,13 @@
 <div class="cat-count" data-cat-count="setup" data-unit="skill"><span class="cc-num">1</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="setup">
-<div class="card" data-category="setup" data-desc="Verify MCP connections, environment, and plugin version. Run on first install or when something breaks." data-example="&gt; /apiant-setup
+<div class="card" data-category="setup" data-desc="MCPの接続、環境、およびプラグインのバージョンを確認します。初回インストール時、または何らかの不具合が発生した場合に実行してください。" data-example="&gt; /apiant-setup
 
-● checking MCP servers... apiant-dev OK, apiant-prod OK, apiant-docs OK
-● checking env vars... APIANT_DEV_TOKEN set, ANTHROPIC_API_KEY set
-● plugin version v1.0.0 (latest)
-● 35 skills registered, 125 MCP tools available
-✓ ready to build" data-invokes="deploy_get_plugin_version,activate_toolset" data-kind="skill" data-name="/apiant-setup" data-tags="setup install diagnose mcp" data-title="Set up the plugin" data-when="When installing the plugin for the first time, after upgrades, or when a skill fails to load. Running this first eliminates environment issues before you debug real work.">
+● MCPサーバーを確認中... apiant-dev OK、apiant-prod OK、apiant-docs OK
+● 環境変数を確認中... APIANT_DEV_TOKEN が設定されました、ANTHROPIC_API_KEY が設定されました
+● プラグインバージョン v1.0.0 (最新)
+● 登録済みスキル数: 35、利用可能なMCPツール数: 125
+✓ ビルド準備完了" data-invokes="deploy_get_plugin_version,activate_toolset" data-kind="skill" data-name="/apiant-setup" data-tags="setup install diagnose mcp" data-title="プラグインを設定する" data-when="プラグインを初めてインストールしたとき、アップグレード後、またはスキルの読み込みに失敗したときに、最初にこの手順を実行してください。これにより、実際のデバッグを行う前に環境の問題を排除できます。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle class="soft" cx="32" cy="32" r="20"></circle>
 <g class="anim" style="transform-origin:32px 32px;animation:orbit 12s linear infinite">
@@ -468,13 +468,16 @@
 <div class="cat-count" data-cat-count="build" data-unit="skill"><span class="cc-num">4</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="build">
-<div class="card" data-category="build" data-desc='"Connect X to Y." Claude picks triggers, actions, field mappings, and stands up the entire flow.' data-example="&gt; Build a new automation that syncs new HubSpot contacts into Mindbody clients.
+<div class="card" data-category="build" data-desc="「XとYを繋げろ。」クロードはトリガー、アクション、フィールドマッピングを選択し、全体のフローを構築する。" data-example="&gt; HubSpotの新規連絡先をMindbodyクライアントに同期する新しい自動化を作成します。
 
 ● /build-automation
-  picking trigger... assembly-trigger-updated (HubSpot polling)
-  picking action... assembly-action-find (dedup) + assembly-action-add
-  building field map: email,firstName,lastName,phone,membership_tier
-✓ automation committed as draft v1" data-invokes="auto_build,auto_manage,auto_commit,auto_edit_mapping,auto_edit_structure,catalog_search_apps,pattern_search" data-kind="skill" data-name="/build-automation" data-tags="build new automation create connect" data-title="Build a new automation" data-when='When the user says "connect X to Y" or "build a flow that does Z." This is the primary entry point for any new integration. Claude picks a trigger skill, action skills, and patterns as needed.'>
+
+トリガーを選択中... assembly-trigger-updated (HubSpotポーリング)
+
+アクションを選択中... assembly-action-find (重複排除) + assembly-action-add
+
+フィールドマップを作成中: email、firstName、lastName、phone、membership_tier
+✓ 自動化はドラフトv1としてコミットされました" data-invokes="auto_build,auto_manage,auto_commit,auto_edit_mapping,auto_edit_structure,catalog_search_apps,pattern_search" data-kind="skill" data-name="/build-automation" data-tags="build new automation create connect" data-title="新しい自動化を構築する" data-when="ユーザーが「XをYに接続する」または「Zを実行するフローを構築する」と指示した場合、これが新しい統合の主要な入り口となります。クロードは必要に応じて、トリガースキル、アクションスキル、およびパターンを選択します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="14" rx="2" width="14" x="8" y="16"></rect>
 <rect height="14" rx="2" width="14" x="26" y="16"></rect>
@@ -487,14 +490,17 @@
 <div class="title">新しい自動化を構築する</div>
 <p class="desc">「XとYを繋げろ。」クロードはトリガー、アクション、フィールドマッピングを選択し、全体のフローを構築する。</p>
 </div>
-<div class="card" data-category="build" data-desc="The integration plumbing: OAuth, API Key, or no-cred connectors, triggers, and actions (ADD/GET/LIST/UPDATE/DELETE/FIND)." data-example="&gt; Build an assembly for Acuity Scheduling with ADD, GET, LIST, UPDATE clients.
+<div class="card" data-category="build" data-desc="統合の基盤となる要素：OAuth、APIキー、または認証情報不要のコネクタ、トリガー、およびアクション（追加/取得/一覧表示/更新/削除/検索）。" data-example="Acuity Scheduling用のアセンブリを、ADD、GET、LIST、UPDATEクライアントとともにビルドします。
 
 ● /build-assembly
-  connector: OAuth2 (PKCE)
-  creating ADD... asm_create_action_or_trigger
-  creating LIST... asm_create_action_or_trigger
-  testing endpoint... asm_test_api_endpoint ✓
-✓ assembly compiled" data-invokes="asm_create_connector,asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields,asm_set_jsp_and_compile,asm_test_api_endpoint,asm_inject_settings" data-kind="skill" data-name="/build-assembly" data-tags="build assembly connector oauth api-key trigger action" data-title="Build an app assembly" data-when="When there is no catalog app yet for the system you want to integrate, or an existing assembly is missing an operation. This builds the low-level connector + operations that /build-automation later composes into a flow.">
+
+コネクタ: OAuth2 (PKCE)
+
+ADDを作成中... asm_create_action_or_trigger
+
+LISTを作成中... asm_create_action_or_trigger
+
+エンドポイントをテスト中... asm_test_api_endpoint ✓ ✓ アセンブリがコンパイルされました" data-invokes="asm_create_connector,asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields,asm_set_jsp_and_compile,asm_test_api_endpoint,asm_inject_settings" data-kind="skill" data-name="/build-assembly" data-tags="build assembly connector oauth api-key trigger action" data-title="アプリアセンブリを構築する" data-when="統合したいシステムに対応するカタログアプリがまだ存在しない場合、または既存のアセンブリに操作が不足している場合。これは、後で /build-automation がフローに構成する低レベルコネクタと操作を構築します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="10" rx="2" width="36" x="14" y="10"></rect>
 <rect height="10" rx="2" width="48" x="8" y="24"></rect>
@@ -505,14 +511,17 @@
 <div class="title">アプリアセンブリを構築する</div>
 <p class="desc">統合の基盤となる要素：OAuth、APIキー、または認証情報不要のコネクタ、トリガー、およびアクション（追加/取得/一覧表示/更新/削除/検索）。</p>
 </div>
-<div class="card" data-category="build" data-desc="Multi-automation deployments: two-way sync, data pipelines, coordinated workflows with shared state." data-example="&gt; Build a two-way contact sync and a daily appointment reconciler between HubSpot and Mindbody.
+<div class="card" data-category="build" data-desc="マルチオートメーション展開：双方向同期、データパイプライン、共有状態による協調ワークフロー。" data-example="HubSpotとMindbody間で双方向の連絡先同期と日々の予約調整機能を構築します。
 
 ● /build-integration
-  scoping... 3 automations + 1 shared pattern
-  ● /build-automation (HubSpot -&gt; Mindbody)
-  ● /build-automation (Mindbody -&gt; HubSpot)
-  ● /build-automation (daily reconciler)
-✓ suite committed" data-invokes="auto_build,auto_manage,auto_folder,pattern_search,pattern_save" data-kind="skill" data-name="/build-integration" data-tags="build integration suite multi sync pipeline" data-title="Build an integration suite" data-when="When a customer needs more than one automation working together, for example a two-way contact sync plus an invoice pipeline plus a daily reconciliation. Scopes the work, then delegates to /build-automation for each piece.">
+
+スコープ設定中... 自動化3件 + 共有パターン1件
+
+● /build-automation (HubSpot → Mindbody)
+
+● /build-automation (Mindbody → HubSpot)
+● /build-automation (日々の調整機能)
+✓ スイートがコミットされました" data-invokes="auto_build,auto_manage,auto_folder,pattern_search,pattern_save" data-kind="skill" data-name="/build-integration" data-tags="build integration suite multi sync pipeline" data-title="統合スイートを構築する" data-when="顧客が複数の自動化ツールを連携させて使用する必要がある場合、例えば双方向の連絡先同期、請求書パイプライン、日次照合などです。作業範囲を明確にした後、各要素ごとに /build-automation に作業を委任します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle cx="16" cy="32" r="6"></circle><circle cx="48" cy="18" r="6"></circle><circle cx="48" cy="46" r="6"></circle>
 <path class="anim" d="M22 32 L42 20 M22 32 L42 44" stroke-dasharray="3 3" style="animation:dash 1.8s linear infinite"></path>
@@ -524,13 +533,14 @@
 <div class="title">統合スイートを構築する</div>
 <p class="desc">マルチオートメーション展開：双方向同期、データパイプライン、共有状態による協調ワークフロー。</p>
 </div>
-<div class="card" data-category="build" data-desc="Form schema for lead capture, onboarding, or config, wired straight into an APIANT automation." data-example="&gt; Add a signup form that feeds new-client into the Mindbody onboarding automation.
+<div class="card" data-category="build" data-desc="リード獲得、オンボーディング、または設定のためのフォームスキーマを、APIANTの自動化機能に直接組み込む。" data-example="Mindbodyのオンボーディング自動化に新規顧客情報を送信するサインアップフォームを追加します。
 
 ● /build-form
-  schema: name, email, phone, birthday, membership_tier
-  validation: email regex, phone E.164
-  wiring to automation step 1... auto_edit_trigger
-✓ form live" data-invokes="auto_get_form_design,auto_save_form_design,auto_get_form_element_catalog,auto_get_form_patterns,auto_refresh_form_fields,auto_validate_forms" data-kind="skill" data-name="/build-form" data-tags="build form formapp ui input" data-title="Design a form" data-when="When the automation needs human input. Lead capture, customer onboarding, config collection, approval prompts. Claude designs the schema and wires it into an existing automation.">
+
+スキーマ: 名前、メールアドレス、電話番号、誕生日、メンバーシップティア
+検証: メールアドレスの正規表現、電話番号のE.164形式
+自動化への接続手順1... auto_edit_trigger
+✓ フォーム公開" data-invokes="auto_get_form_design,auto_save_form_design,auto_get_form_element_catalog,auto_get_form_patterns,auto_refresh_form_fields,auto_validate_forms" data-kind="skill" data-name="/build-form" data-tags="build form formapp ui input" data-title="フォームをデザインする" data-when="自動化処理に人間の介入が必要な場合。リード獲得、顧客オンボーディング、設定収集、承認プロンプトなど。クロードはスキーマを設計し、既存の自動化処理に組み込みます。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="44" rx="4" width="44" x="10" y="10"></rect>
 <rect class="soft fill" height="5" rx="1" width="32" x="16" y="18"></rect>
@@ -553,14 +563,18 @@
 <div class="cat-count" data-cat-count="edit" data-unit="skill"><span class="cc-num">2</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="edit">
-<div class="card" data-category="edit" data-desc="Add a step, fix the mapping, swap Mailchimp for Klaviyo, disable a branch. Surgical, non-destructive edits." data-example="&gt; In the daily sync, swap Mailchimp for Klaviyo and add a tag for churn risk.
+<div class="card" data-category="edit" data-desc="ステップの追加、マッピングの修正、MailchimpからKlaviyoへの切り替え、ブランチの無効化。外科手術のような、非破壊的な編集。" data-example="日々の同期処理で、MailchimpをKlaviyoに置き換え、解約リスクのタグを追加します。
 
 ● /edit-automation
-  locating step 3... auto_get_step_details
-  replacing connector... auto_edit_structure
-  rewiring mapping... auto_edit_mapping
-  adding tag step...
-✓ draft v4 committed" data-invokes="auto_edit_structure,auto_edit_mapping,auto_edit_metadata,auto_edit_trigger,auto_apply_edits,auto_commit,auto_get_step_details" data-kind="skill" data-name="/edit-automation" data-tags="edit automation modify step mapping" data-title="Edit an automation" data-when="When you need to modify an existing, committed automation: add a step, change a mapping, swap connectors, retitle, disable a branch. Changes land as a new draft version, never in place.">
+
+ステップ3を検索中... auto_get_step_details
+
+コネクタを置換中... auto_edit_structure
+
+マッピングを再設定中... auto_edit_mapping
+
+タグステップを追加中...
+✓ ドラフトv4をコミットしました" data-invokes="auto_edit_structure,auto_edit_mapping,auto_edit_metadata,auto_edit_trigger,auto_apply_edits,auto_commit,auto_get_step_details" data-kind="skill" data-name="/edit-automation" data-tags="edit automation modify step mapping" data-title="自動化を編集する" data-when="既存のコミット済み自動化を変更する必要がある場合：ステップの追加、マッピングの変更、コネクタの交換、タイトルの変更、ブランチの無効化など。変更は新しいドラフトバージョンとしてマージされ、実装されることはありません。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="10" rx="2" width="14" x="10" y="14"></rect>
 <rect height="10" rx="2" width="14" x="10" y="30"></rect>
@@ -573,12 +587,15 @@
 <div class="title">自動化を編集する</div>
 <p class="desc">ステップの追加、マッピングの修正、MailchimpからKlaviyoへの切り替え、ブランチの無効化。外科手術のような、非破壊的な編集。</p>
 </div>
-<div class="card" data-category="edit" data-desc="Fix JSP, update API calls, change endpoints, rename settings, edit dropdowns, with full diff awareness." data-example="&gt; The Mindbody v6 -&gt; v7 migration just landed. Update the Clients LIST endpoint.
+<div class="card" data-category="edit" data-desc="JSPの修正、API呼び出しの更新、エンドポイントの変更、設定名の変更、ドロップダウンの編集を、完全な差分認識機能付きで実行します。" data-example="Mindbody v6からv7への移行が完了しました。クライアントリストエンドポイントを更新してください。
 
 ● /edit-assembly
-  reading logic... asm_read_assembly_logic
-  updating URL + output mapping... asm_set_jsp_and_compile
-  test connection... asm_test_api_endpoint ✓" data-invokes="asm_read_assembly_logic,asm_set_jsp_and_compile,asm_inject_settings,asm_reset_settings,asm_set_output_fields,asm_cleanup,asm_find_referencers" data-kind="skill" data-name="/edit-assembly" data-tags="edit assembly jsp endpoint setting dropdown" data-title="Edit an assembly" data-when="When an API changes (new endpoint, renamed field, deprecated operation) and the assembly needs to catch up. Read the current logic, apply the diff, recompile, and validate.">
+
+ロジックを読み込み中... asm_read_assembly_logic
+
+URLと出力マッピングを更新中... asm_set_jsp_and_compile
+
+接続テスト中... asm_test_api_endpoint ✓" data-invokes="asm_read_assembly_logic,asm_set_jsp_and_compile,asm_inject_settings,asm_reset_settings,asm_set_output_fields,asm_cleanup,asm_find_referencers" data-kind="skill" data-name="/edit-assembly" data-tags="edit assembly jsp endpoint setting dropdown" data-title="アセンブリを編集する" data-when="APIが変更された場合（新しいエンドポイント、フィールド名の変更、非推奨の操作など）、アセンブリもそれに合わせて更新する必要があります。現在のロジックを読み込み、差分を適用し、再コンパイルして検証します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="14" rx="3" width="48" x="8" y="10"></rect>
 <rect height="14" rx="3" width="48" x="8" y="28"></rect>
@@ -600,13 +617,17 @@
 <div class="cat-count" data-cat-count="test" data-unit="skill"><span class="cc-num">3</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="test">
-<div class="card" data-category="test" data-desc="Execute, inspect results, diagnose failures, apply fixes, retest, and run branch coverage automatically." data-example="&gt; Test the HubSpot -&gt; Mindbody sync with a realistic payload.
+<div class="card" data-category="test" data-desc="実行、結果の検査、障害の診断、修正の適用、再テスト、およびブランチカバレッジの実行を自動的に行います。" data-example="HubSpotとMindbodyの同期を、現実的なペイロードでテストします。
 
 ● /test-automation
-  running... exec_test_automation
-  step 3 failed: 422 invalid membership_tier
-  fixing mapping... auto_edit_mapping
-  retry... ✓ pass. 4/4 branches covered." data-invokes="exec_test_automation,exec_get_data,exec_get_step_data,exec_get_branch_test_points,exec_mutate_data,exec_restart_from_step,exec_retry_failed" data-kind="skill" data-name="/test-automation" data-tags="test automation execute debug diagnose" data-title="Test an automation" data-when="After any edit, or when a customer reports something wrong. Runs the automation end-to-end with realistic inputs, walks every branch, and surfaces the failing step with the exact HTTP request and response.">
+
+実行中... exec_test_automation
+
+ステップ3が失敗しました: 422 無効なmembership_tier
+
+マッピングを修正中... auto_edit_mapping
+
+再試行中... ✓ 合格。4/4ブランチをカバーしました。" data-invokes="exec_test_automation,exec_get_data,exec_get_step_data,exec_get_branch_test_points,exec_mutate_data,exec_restart_from_step,exec_retry_failed" data-kind="skill" data-name="/test-automation" data-tags="test automation execute debug diagnose" data-title="テストと自動化" data-when="編集後、または顧客から不具合の報告があった場合に実行されます。現実的な入力データを使用して自動化処理をエンドツーエンドで実行し、すべての分岐を順に処理して、失敗したステップを正確なHTTPリクエストとレスポンスとともに表示します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle class="soft" cx="32" cy="32" r="20"></circle>
 <path class="anim" d="M22 32 L30 40 L44 24" style="stroke-dasharray:30;stroke-dashoffset:30;animation:tick 2.8s ease-in-out infinite"></path>
@@ -615,13 +636,16 @@
 <div class="title">テストと自動化</div>
 <p class="desc">実行、結果の検査、障害の診断、修正の適用、再テスト、およびブランチカバレッジの実行を自動的に行います。</p>
 </div>
-<div class="card" data-category="test" data-desc="Validate data flow between automations, shared state, loop prevention, and cross-automation coordination." data-example="&gt; Test the HubSpot &lt;-&gt; Mindbody suite: push from each side, check the other.
+<div class="card" data-category="test" data-desc="自動化間のデータフロー、共有状態、ループ防止、および自動化間の連携を検証します。" data-example="&gt; HubSpotとMindbodyの連携テスト：各側からデータを送信し、相互に動作を確認します。
 
 ● /test-integration
-  creating synthetic contact in HubSpot... appears in Mindbody ✓
-  editing in Mindbody... updates in HubSpot ✓
-  checking loop suppression... no echo ✓
-✓ 14/14 test cases pass" data-invokes="exec_test_automation,exec_test_subroutine,exec_get_assembly_log,exec_search_history" data-kind="skill" data-name="/test-integration" data-tags="test integration suite loop shared-state" data-title="Test the whole suite" data-when="For multi-automation suites where the automations interact. Especially critical for two-way syncs: Claude stages data, watches for echo loops, and verifies conflict resolution.">
+
+HubSpotで架空の連絡先を作成…Mindbodyに反映される ✓
+
+Mindbodyで編集…HubSpotに更新される ✓
+
+ループ抑制を確認…エコーなし ✓
+✓ 14/14のテストケースすべて合格" data-invokes="exec_test_automation,exec_test_subroutine,exec_get_assembly_log,exec_search_history" data-kind="skill" data-name="/test-integration" data-tags="test integration suite loop shared-state" data-title="スイート全体をテストする" data-when="複数の自動化プロセスが相互に作用する環境向け。特に双方向同期において重要：Claudeはデータの準備、エコーループの監視、競合解決の検証を行います。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle cx="20" cy="22" r="6"></circle><circle cx="44" cy="22" r="6"></circle><circle cx="32" cy="46" r="6"></circle>
 <path class="anim" d="M26 22 L38 22 M24 27 L29 41 M40 27 L35 41" stroke-dasharray="3 3" style="animation:dash 2s linear infinite"></path>
@@ -630,12 +654,13 @@
 <div class="title">スイート全体をテストする</div>
 <p class="desc">自動化間のデータフロー、共有状態、ループ防止、および自動化間の連携を検証します。</p>
 </div>
-<div class="card" data-category="test" data-desc="Publish template automations and push linked deployments to customer accounts in one coordinated step." data-example="&gt; Deploy the HubSpot -&gt; Mindbody sync to all three linked customer accounts.
+<div class="card" data-category="test" data-desc="テンプレートの自動化を公開し、リンクされたデプロイメントを顧客アカウントにプッシュする。これを1つの連携した手順で行う。" data-example="HubSpotとMindbodyの同期を、リンクされている3つの顧客アカウントすべてに展開します。
 
 ● /deploy-automation
-  publishing template... deploy_publish_assembly
-  pushing to acme-corp, zen-yoga, flow-studio...
-✓ 3/3 accounts updated" data-invokes="deploy_publish_assembly,deploy_publish_folder,deploy_to_accounts,deploy_list_linked_accounts,auto_set_active" data-kind="skill" data-name="/deploy-automation" data-tags="deploy publish prod release rollout" data-title="Deploy dev to prod" data-when="Once tests pass. Promotes a draft to the dev template, then optionally pushes the template to linked customer accounts in prod. A single coordinated step; if any account fails, the deploy reports clearly.">
+
+テンプレートを公開中... deploy_publish_assembly
+acme-corp、zen-yoga、flow-studioにプッシュ中...
+✓ 3/3のアカウントが更新されました" data-invokes="deploy_publish_assembly,deploy_publish_folder,deploy_to_accounts,deploy_list_linked_accounts,auto_set_active" data-kind="skill" data-name="/deploy-automation" data-tags="deploy publish prod release rollout" data-title="開発環境を本番環境にデプロイする" data-when="テストに合格すると、ドラフトを開発用テンプレートに昇格させ、必要に応じて本番環境のリンクされた顧客アカウントにテンプレートをプッシュします。これは単一の連携ステップで実行され、いずれかのアカウントで失敗した場合は、デプロイレポートが明確に表示されます。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <path class="tk" d="M32 52 L32 12"></path>
 <path class="tk" d="M24 20 L32 12 L40 20"></path>
@@ -658,12 +683,14 @@
 <div class="cat-count" data-cat-count="triggers" data-unit="skill"><span class="cc-num">6</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="triggers">
-<div class="card" data-category="triggers" data-desc="Poll an endpoint on a schedule and fire when a new record appears. The workhorse trigger." data-example="&gt; Build a trigger that fires on new Mindbody clients, every 5 minutes.
+<div class="card" data-category="triggers" data-desc="定期的にエンドポイントをポーリングし、新しいレコードが現れたときにトリガーを実行します。最も汎用性の高いトリガーです。" data-example="Mindbodyの新規クライアントが登録された際に、5分ごとにトリガーが作動するように設定してください。
 
 ● assembly-trigger-new
-  polling URL: /public/v6/client/clients
-  cursor: last_modified_date
-  interval: 5m" data-invokes="asm_create_action_or_trigger,asm_set_output_fields,asm_test_api_endpoint" data-kind="skill" data-name="assembly-trigger-new" data-tags="trigger polling new scheduled" data-title="NEW_ITEM polling trigger" data-when="When the source app does not offer webhooks, or its webhooks are unreliable. The workhorse trigger: poll every N minutes, compare a cursor field, fire on new records.">
+
+ポーリングURL: /public/v6/client/clients
+
+カーソル: last_modified_date
+間隔: 5分" data-invokes="asm_create_action_or_trigger,asm_set_output_fields,asm_test_api_endpoint" data-kind="skill" data-name="assembly-trigger-new" data-tags="trigger polling new scheduled" data-title="NEW_ITEM ポーリングトリガー" data-when="ソースアプリがウェブフックを提供していない場合、またはウェブフックが信頼できない場合。基本的なトリガーは、N分ごとにポーリングし、カーソルフィールドを比較して、新しいレコードが発生したときにトリガーを実行することです。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle class="soft" cx="32" cy="32" r="20"></circle>
 <path class="tk" d="M32 14 V32 L42 38"></path>
@@ -674,11 +701,12 @@
 <div class="title">NEW_ITEM ポーリングトリガー</div>
 <p class="desc">定期的にエンドポイントをポーリングし、新しいレコードが現れたときにトリガーを実行します。最も汎用性の高いトリガーです。</p>
 </div>
-<div class="card" data-category="triggers" data-desc="Polls and fires when a record is created or modified. Tracks last-seen cursor automatically." data-example="&gt; Fire whenever a HubSpot contact is created or edited.
+<div class="card" data-category="triggers" data-desc="レコードが作成または変更されたときにポーリングしてイベントを発生させます。最後に表示されたカーソルを自動的に追跡します。" data-example="HubSpotの連絡先が作成または編集されたときにトリガーされます。
 
 ● assembly-trigger-updated
-  cursor: lastmodifieddate
-  interval: 2m" data-invokes="asm_create_action_or_trigger,asm_set_output_fields" data-kind="skill" data-name="assembly-trigger-updated" data-tags="trigger polling updated cursor" data-title="NEW_OR_UPDATED polling" data-when="When you care about edits, not just inserts. Same polling shape as NEW_ITEM but the cursor watches a last_modified timestamp so changes also fire.">
+
+カーソル: lastmodifieddate
+間隔: 2分" data-invokes="asm_create_action_or_trigger,asm_set_output_fields" data-kind="skill" data-name="assembly-trigger-updated" data-tags="trigger polling updated cursor" data-title="新規または更新された投票" data-when="挿入だけでなく編集も考慮する場合。NEW_ITEM と同じポーリング形式ですが、カーソルが last_modified タイムスタンプを監視するため、変更もトリガーされます。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle class="soft" cx="32" cy="32" r="20"></circle>
 <path class="tk" d="M32 14 V32 L42 38"></path>
@@ -690,11 +718,12 @@
 <div class="title">新規または更新された投票</div>
 <p class="desc">レコードが作成または変更されたときにポーリングしてイベントを発生させます。最後に表示されたカーソルを自動的に追跡します。</p>
 </div>
-<div class="card" data-category="triggers" data-desc="You paste a URL into the source app. Incoming posts fire the automation." data-example="&gt; Accept a webhook from our Typeform survey.
+<div class="card" data-category="triggers" data-desc="ソースアプリにURLを貼り付けます。受信した投稿によって自動化処理が実行されます。" data-example="TypeformアンケートからのWebhookを承認します。
 
 ● assembly-trigger-manual-webhook
-  endpoint generated
-  payload schema inferred from sample" data-invokes="asm_create_action_or_trigger,asm_set_webhook_field_xml,asm_add_webhook_support" data-kind="skill" data-name="assembly-trigger-manual-webhook" data-tags="trigger webhook manual push" data-title="Manual webhook" data-when="When the source app has its own webhook UI and the customer is willing to paste a URL. Lowest lift, zero credential handling, works everywhere.">
+
+エンドポイント生成
+サンプルから推論されたペイロードスキーマ" data-invokes="asm_create_action_or_trigger,asm_set_webhook_field_xml,asm_add_webhook_support" data-kind="skill" data-name="assembly-trigger-manual-webhook" data-tags="trigger webhook manual push" data-title="手動ウェブフック" data-when="ソースアプリに独自のWebhook UIがあり、顧客がURLを貼り付けるだけで済む場合。最小限の手間で、認証情報の処理も不要、あらゆる環境で動作します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <path class="tk" d="M8 44 C 20 44, 20 20, 32 20 C 44 20, 44 44, 56 44"></path>
 <circle class="fill" cx="8" cy="44" r="3"></circle>
@@ -706,11 +735,12 @@
 <div class="title">手動ウェブフック</div>
 <p class="desc">ソースアプリにURLを貼り付けます。受信した投稿によって自動化処理が実行されます。</p>
 </div>
-<div class="card" data-category="triggers" data-desc="APIANT creates and tears down the webhook automatically via the target app's API. Zero manual setup." data-example="&gt; Subscribe to HubSpot contact.creation events automatically.
+<div class="card" data-category="triggers" data-desc="APIANTは、対象アプリのAPIを介してWebhookを自動的に作成および削除します。手動設定は一切不要です。" data-example="HubSpotのcontact.creationイベントを自動的に購読します。
 
 ● assembly-trigger-self-registering-webhook
-  registering subscription via /webhooks/v3/...
-✓ subscription id 847291" data-invokes="asm_create_action_or_trigger,asm_add_webhook_support,asm_set_webhook_field_xml" data-kind="skill" data-name="assembly-trigger-self-registering-webhook" data-tags="trigger webhook self-registering auto" data-title="Self-registering webhook" data-when="When the target app exposes a webhook registration API. APIANT subscribes on activation, unsubscribes on teardown, zero manual work on the customer side.">
+
+/webhooks/v3/...経由で購読を登録しています
+✓ 購読ID 847291" data-invokes="asm_create_action_or_trigger,asm_add_webhook_support,asm_set_webhook_field_xml" data-kind="skill" data-name="assembly-trigger-self-registering-webhook" data-tags="trigger webhook self-registering auto" data-title="自己登録ウェブフック" data-when="対象アプリがWebhook登録APIを公開すると、APIANTは有効化時に購読し、停止時に購読を解除します。顧客側での手動作業は一切不要です。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle class="soft" cx="32" cy="32" r="22"></circle>
 <path class="tk" d="M22 32 L30 40 L44 24"></path>
@@ -721,12 +751,15 @@
 <div class="title">自己登録ウェブフック</div>
 <p class="desc">APIANTは、対象アプリのAPIを介してWebhookを自動的に作成および削除します。手動設定は一切不要です。</p>
 </div>
-<div class="card" data-category="triggers" data-desc="Credential-based webhook URL with event filtering. Multiple event types route on a single endpoint." data-example="&gt; Route order.created, order.updated, and order.refunded to the right branches.
+<div class="card" data-category="triggers" data-desc="認証情報に基づくWebhook URLとイベントフィルタリング機能。複数のイベントタイプを単一のエンドポイントでルーティングできます。" data-example="注文作成、注文更新、注文返金イベントを適切なブランチにルーティングします。
 
 ● assembly-trigger-service-webhook
-  URL: /webhook/shopify?key=...
-  events: order.created|updated|refunded
-  routing on $.event_type" data-invokes="asm_create_action_or_trigger,asm_set_webhook_field_xml,asm_add_webhook_support" data-kind="skill" data-name="assembly-trigger-service-webhook" data-tags="trigger webhook service credential filter" data-title="Service webhook" data-when="When one endpoint needs to accept many event types and route them. The credential drives the URL, and an event discriminator picks the branch.">
+
+URL: /webhook/shopify?key=...
+
+イベント: order.created|updated|refunded
+
+$.event_type に基づくルーティング" data-invokes="asm_create_action_or_trigger,asm_set_webhook_field_xml,asm_add_webhook_support" data-kind="skill" data-name="assembly-trigger-service-webhook" data-tags="trigger webhook service credential filter" data-title="サービスウェブフック" data-when="1つのエンドポイントが複数のイベントタイプを受け入れ、それらをルーティングする必要がある場合、認証情報によってURLが生成され、イベント識別子によって分岐が選択されます。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="36" rx="4" width="44" x="10" y="14"></rect>
 <path d="M10 24 L54 24"></path>
@@ -738,11 +771,13 @@
 <div class="title">サービスウェブフック</div>
 <p class="desc">認証情報に基づくWebhook URLとイベントフィルタリング機能。複数のイベントタイプを単一のエンドポイントでルーティングできます。</p>
 </div>
-<div class="card" data-category="triggers" data-desc="APIANT-to-APIANT internal protocol. Enables chained automations across accounts and environments." data-example="&gt; After the reconciler finishes, kick off the billing automation in the downstream tenant.
+<div class="card" data-category="triggers" data-desc="APIANT間内部プロトコル。アカウントや環境をまたいだ自動化の連鎖を可能にします。" data-example="調整処理が完了したら、ダウンストリームテナントで課金自動化を開始します。
 
 ● assembly-trigger-protocol-thread
-  channel: recon -&gt; billing
-  payload: reconciled_batch_id" data-invokes="asm_create_action_or_trigger" data-kind="skill" data-name="assembly-trigger-protocol-thread" data-tags="trigger protocol thread internal chain" data-title="Protocol thread" data-when="When one automation needs to hand off to another, possibly in a different tenant, without going back out to HTTP. Lower latency, typed payloads, survives network flakes.">
+
+チャネル: recon -&gt; billing
+
+ペイロード: reconciled_batch_id" data-invokes="asm_create_action_or_trigger" data-kind="skill" data-name="assembly-trigger-protocol-thread" data-tags="trigger protocol thread internal chain" data-title="プロトコルスレッド" data-when="ある自動化処理を別の自動化処理（場合によっては別のテナントにある処理）に引き継ぐ必要がある場合、HTTP を経由せずに済みます。低遅延、型付きペイロード、ネットワークの不安定性にも対応します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <path class="tk" d="M8 32 L56 32"></path>
 <path class="soft" d="M16 22 L16 42 M26 22 L26 42 M36 22 L36 42 M46 22 L46 42"></path>
@@ -765,25 +800,30 @@
 <div class="cat-count" data-cat-count="actions" data-unit="skill"><span class="cc-num">6</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="actions">
-<div class="card" data-category="actions" data-desc="Create a new record in the target app. Handles validation, required fields, and response parsing." data-example="&gt; Add a client to Mindbody when a HubSpot contact is created.
+<div class="card" data-category="actions" data-desc="対象アプリに新しいレコードを作成します。検証、必須項目、およびレスポンスの解析を処理します。" data-example="HubSpotの連絡先が作成された際に、Mindbodyにクライアントを追加します。
 
 ● assembly-action-add
-  endpoint: POST /public/v6/client/addclient
-  required: FirstName, LastName, Email
-  returns: ClientId" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields" data-kind="skill" data-name="assembly-action-add" data-tags="action add create insert" data-title="ADD" data-when="When you need to write a new record downstream: a new client, a new order, a new ticket. ADD owns validation, required-field checks, and parsing the response id back for later steps.">
+
+エンドポイント: POST /public/v6/client/addclient
+
+必須: FirstName、LastName、Email
+
+戻り値: ClientId" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields" data-kind="skill" data-name="assembly-action-add" data-tags="action add create insert" data-title="追加" data-when="新規顧客、新規注文、新規チケットなど、下流工程に新しいレコードを書き込む必要がある場合、ADD は検証、必須フィールドのチェック、および後続のステップで使用するためのレスポンス ID の解析を担当します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle class="soft" cx="32" cy="32" r="20"></circle>
 <path class="tk" d="M32 22 V42 M22 32 H42" style="--gc:#1ab759"></path>
 </svg></div>
 <div class="name notranslate">assembly-action-add</div>
-<div class="title">ADD</div>
+<div class="title">追加</div>
 <p class="desc">対象アプリに新しいレコードを作成します。検証、必須項目、およびレスポンスの解析を処理します。</p>
 </div>
-<div class="card" data-category="actions" data-desc="Remove a record by ID or criteria. Safe-mode defaults with rollback metadata preserved." data-example="&gt; On GDPR request, delete the Mindbody client matching the HubSpot email.
+<div class="card" data-category="actions" data-desc="IDまたは条件に基づいてレコードを削除します。セーフモードでは、ロールバックメタデータが保持されます。" data-example="GDPRに基づく要請に基づき、HubSpotのメールアドレスに一致するMindbodyクライアントを削除します。
 
 ● assembly-action-delete
-  endpoint: DELETE /public/v6/client/clients/{id}
-  rollback log: written" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields" data-kind="skill" data-name="assembly-action-delete" data-tags="action delete remove destroy" data-title="DELETE" data-when="Rare by design. When a cleanup or GDPR workflow needs hard deletes. Defaults to safe mode: preserves a deletion log so the op is reversible where the API supports it.">
+
+エンドポイント: DELETE /public/v6/client/clients/{id}
+
+ロールバックログ: written" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields" data-kind="skill" data-name="assembly-action-delete" data-tags="action delete remove destroy" data-title="消去" data-when="意図的にまれに使用されます。クリーンアップやGDPRワークフローでハード削除が必要な場合に使用します。デフォルトはセーフモードです。削除ログが保持されるため、APIがサポートしている場合は操作を元に戻すことができます。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="40" rx="3" width="36" x="14" y="16"></rect>
 <rect height="8" rx="2" width="24" x="20" y="10"></rect>
@@ -791,27 +831,30 @@
 <path class="anim" d="M14 52 L50 20" stroke-dasharray="2 3" style="animation:dash 1.6s linear infinite;--gc:#ff78b4"></path>
 </svg></div>
 <div class="name notranslate">assembly-action-delete</div>
-<div class="title">DELETE</div>
+<div class="title">消去</div>
 <p class="desc">IDまたは条件に基づいてレコードを削除します。セーフモードでは、ロールバックメタデータが保持されます。</p>
 </div>
-<div class="card" data-category="actions" data-desc="Search by criteria, return matches. Used for dedup, upsert, and enrichment patterns." data-example="&gt; Find the Mindbody client with email=X before inserting.
+<div class="card" data-category="actions" data-desc="条件を指定して検索し、一致する結果を返します。重複排除、アップサート、およびエンリッチメントパターンに使用されます。" data-example="挿入前に、メールアドレスがXのMindbodyクライアントを検索します。
 
 ● assembly-action-find
-  endpoint: GET /public/v6/client/clients?email=...
-  match: exact, first result" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields" data-kind="skill" data-name="assembly-action-find" data-tags="action find search upsert dedup" data-title="FIND" data-when='Before an ADD, to upsert instead of duplicating. During enrichment, to look up a matching record. The "does this already exist" primitive.'>
+
+エンドポイント: GET /public/v6/client/clients?email=...
+
+一致: 完全一致、最初の結果" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields,asm_set_output_fields" data-kind="skill" data-name="assembly-action-find" data-tags="action find search upsert dedup" data-title="探す" data-when="ADD の前に、重複ではなくアップサートを行う。エンリッチメント中に、一致するレコードを検索する。「既に存在するか」を確認するプリミティブ。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle cx="26" cy="26" r="14"></circle>
 <path class="tk" d="M36 36 L52 52"></path>
 <g class="anim" style="animation:spark 1.8s ease-in-out infinite"><circle class="fill" cx="26" cy="26" r="3"></circle></g>
 </svg></div>
 <div class="name notranslate">assembly-action-find</div>
-<div class="title">FIND</div>
+<div class="title">探す</div>
 <p class="desc">条件を指定して検索し、一致する結果を返します。重複排除、アップサート、およびエンリッチメントパターンに使用されます。</p>
 </div>
-<div class="card" data-category="actions" data-desc="Retrieve one record by ID. The simplest read path. Often chained after FIND or NEW." data-example="&gt; Get the full client record by id.
+<div class="card" data-category="actions" data-desc="IDを指定してレコードを1件取得します。最もシンプルな読み取り方法です。FINDまたはNEWの後によく使用されます。" data-example="IDを指定してクライアントレコード全体を取得します。
 
 ● assembly-action-get
-  endpoint: GET /public/v6/client/clients/{id}" data-invokes="asm_create_action_or_trigger,asm_set_output_fields" data-kind="skill" data-name="assembly-action-get" data-tags="action get fetch read single" data-title="GET" data-when="Simplest read. Usually downstream of a FIND (to hydrate the match) or of a NEW_ITEM trigger (to fetch full details when the trigger payload is lean).">
+
+エンドポイント: GET /public/v6/client/clients/{id}" data-invokes="asm_create_action_or_trigger,asm_set_output_fields" data-kind="skill" data-name="assembly-action-get" data-tags="action get fetch read single" data-title="得る" data-when="最もシンプルな読み取り方法。通常はFIND（一致した項目をハイドレートするため）またはNEW_ITEMトリガー（トリガーペイロードが小さい場合に詳細情報を取得するため）の下流に配置されます。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="36" rx="4" width="36" x="14" y="14"></rect>
 <path class="soft" d="M22 22 L42 22 M22 30 L42 30 M22 38 L34 38"></path>
@@ -819,15 +862,18 @@
 <path class="tk" d="M46 50 L50 54 L56 46" stroke="#0c0c0c"></path>
 </svg></div>
 <div class="name notranslate">assembly-action-get</div>
-<div class="title">GET</div>
+<div class="title">得る</div>
 <p class="desc">IDを指定してレコードを1件取得します。最もシンプルな読み取り方法です。FINDまたはNEWの後によく使用されます。</p>
 </div>
-<div class="card" data-category="actions" data-desc="Page through results with cursor or offset handling. Rate-limit aware by default." data-example="&gt; List all Mindbody clients modified in the last 24 hours.
+<div class="card" data-category="actions" data-desc="カーソルまたはオフセット処理を使用して結果をページ送りできます。デフォルトでレート制限に対応しています。" data-example="過去24時間以内に変更されたすべてのMindbodyクライアントを一覧表示します。
 
 ● assembly-action-list
-  endpoint: GET /public/v6/client/clients?lastmodified=...
-  pagination: offset, 100 per page
-  rate-limit: 2 req/s" data-invokes="asm_create_action_or_trigger,asm_set_output_fields,asm_set_action_throttle" data-kind="skill" data-name="assembly-action-list" data-tags="action list page paginate bulk" data-title="LIST" data-when="Bulk reads: initial backfills, reconciliation jobs, reporting. Handles pagination, rate-limit headers, retry on 429. Avoid in per-record triggers; prefer FIND.">
+
+エンドポイント: GET /public/v6/client/clients?lastmodified=...
+
+ページネーション: offset、1ページあたり100件
+
+レート制限: 2リクエスト/秒" data-invokes="asm_create_action_or_trigger,asm_set_output_fields,asm_set_action_throttle" data-kind="skill" data-name="assembly-action-list" data-tags="action list page paginate bulk" data-title="リスト" data-when="一括読み取り：初期バックフィル、調整ジョブ、レポート作成。ページネーション、レート制限ヘッダー、429エラー時の再試行に対応。レコードごとのトリガーでは使用を避け、FIND検索を推奨。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect class="soft fill" height="6" rx="2" width="44" x="10" y="14"></rect>
 <rect class="soft fill" height="6" rx="2" width="44" x="10" y="24"></rect>
@@ -836,14 +882,16 @@
 <g class="anim" style="animation:travelV 2s ease-in-out infinite"><rect class="fill" fill="url(#gr1)" height="6" rx="2" width="44" x="10" y="30"></rect></g>
 </svg></div>
 <div class="name notranslate">assembly-action-list</div>
-<div class="title">LIST</div>
+<div class="title">リスト</div>
 <p class="desc">カーソルまたはオフセット処理を使用して結果をページ送りできます。デフォルトでレート制限に対応しています。</p>
 </div>
-<div class="card" data-category="actions" data-desc="Patch existing records. Partial updates supported. Only touches the fields you specify." data-example="&gt; Update the Mindbody client tier when it changes in HubSpot.
+<div class="card" data-category="actions" data-desc="既存のレコードを修正します。部分的な更新にも対応しています。指定したフィールドのみを変更します。" data-example="HubSpotでMindbodyクライアントティアが変更された際に、そのティアを更新します。
 
 ● assembly-action-update
-  endpoint: PATCH /public/v6/client/clients/{id}
-  fields: membership_tier" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields" data-kind="skill" data-name="assembly-action-update" data-tags="action update patch modify" data-title="UPDATE" data-when="Two-way syncs, edits, status changes. Uses PATCH where available, partial POST otherwise. Only writes the fields you pass, never the whole record.">
+
+エンドポイント: PATCH /public/v6/client/clients/{id}
+
+フィールド: membership_tier" data-invokes="asm_create_action_or_trigger,asm_create_action_input_fields" data-kind="skill" data-name="assembly-action-update" data-tags="action update patch modify" data-title="アップデート" data-when="双方向同期、編集、ステータス変更に対応。可能な場合はPATCH、それ以外の場合は部分的なPOSTを使用します。指定されたフィールドのみを書き込み、レコード全体を書き込むことはありません。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="32" rx="3" width="40" x="12" y="16"></rect>
 <path class="soft" d="M12 26 L52 26"></path>
@@ -851,7 +899,7 @@
 <circle class="fill" cx="20" cy="38" r="1.7"></circle><circle class="fill" cx="28" cy="32" r="1.7"></circle><circle class="fill" cx="36" cy="36" r="1.7"></circle><circle class="fill" cx="44" cy="30" r="1.7"></circle>
 </svg></div>
 <div class="name notranslate">assembly-action-update</div>
-<div class="title">UPDATE</div>
+<div class="title">アップデート</div>
 <p class="desc">既存のレコードを修正します。部分的な更新にも対応しています。指定したフィールドのみを変更します。</p>
 </div>
 </div>
@@ -865,12 +913,15 @@
 <div class="cat-count" data-cat-count="connector" data-unit="skill"><span class="cc-num">3</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="connector">
-<div class="card" data-category="connector" data-desc="OAuth V2, API Key, or no-credential auth. Handles token refresh, scopes, and revocation." data-example="&gt; Build an OAuth2 connector for HubSpot.
+<div class="card" data-category="connector" data-desc="OAuth V2、APIキー、または認証情報不要の認証に対応。トークンの更新、スコープ、および失効を処理します。" data-example="HubSpot用のOAuth2コネクタを作成します。
 
 ● assembly-connector
-  flow: OAuth2 authorization_code
-  scopes: contacts, timeline
-  token refresh: automatic" data-invokes="asm_create_connector,asm_inject_settings,asm_get_connection_credentials,asm_set_connector_throttle" data-kind="skill" data-name="assembly-connector" data-tags="connector auth oauth api-key credential" data-title="Connector assembly" data-when="Every assembly starts with a connector. Pick OAuth V2 for user-delegated access, API Key for server-to-server, no-cred for open APIs. Token refresh and revocation are built in.">
+
+flow: OAuth2 authorization_code
+
+scopes: contacts, timeline
+
+token refresh: automatic" data-invokes="asm_create_connector,asm_inject_settings,asm_get_connection_credentials,asm_set_connector_throttle" data-kind="skill" data-name="assembly-connector" data-tags="connector auth oauth api-key credential" data-title="コネクタアセンブリ" data-when="すべてのアセンブリはコネクタから始まります。ユーザー委任アクセスにはOAuth V2、サーバー間通信にはAPIキー、オープンAPIには認証情報不要のオプションを選択してください。トークンの更新と失効は標準機能として組み込まれています。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="16" rx="3" width="20" x="8" y="24"></rect>
 <rect height="16" rx="3" width="20" x="36" y="24"></rect>
@@ -882,14 +933,19 @@
 <div class="title">コネクタアセンブリ</div>
 <p class="desc">OAuth V2、APIキー、または認証情報不要の認証に対応。トークンの更新、スコープ、および失効を処理します。</p>
 </div>
-<div class="card" data-category="connector" data-desc="Drive a dev browser to register an OAuth app on a vendor portal, capture client_id and secret into the keyvault." data-example="&gt; Register an OAuth app for HubSpot dev, scopes contacts + timeline.
+<div class="card" data-category="connector" data-desc="開発者用ブラウザを使用してベンダーポータルでOAuthアプリを登録し、client_idとsecretをキーボールトに保存します。" data-example="HubSpot開発者向けOAuthアプリを登録します。スコープは連絡先とタイムラインです。
 
 ● /register-oauth-app
-  portal: developers.hubspot.com
-  creating app... APIANT-DEV-HUBSPOT
-  client_id captured
-  client_secret -&gt; keyvault
-  redirect_uri configured" data-invokes="admin_save_keyvault_entry,admin_list_keyvault_entries" data-kind="skill" data-name="/register-oauth-app" data-tags="connector oauth register portal vendor" data-title="Register an OAuth app" data-when="First time integrating a new OAuth vendor. Claude drives a headless browser through the vendor developer portal, creates the app, copies client_id and secret into the keyvault, and annotates the redirect URLs.">
+
+ポータル：developers.hubspot.com
+
+アプリを作成中... APIANT-DEV-HUBSPOT
+
+client_idを取得
+
+client_secret -&gt; keyvault
+
+redirect_uriを設定済み" data-invokes="admin_save_keyvault_entry,admin_list_keyvault_entries" data-kind="skill" data-name="/register-oauth-app" data-tags="connector oauth register portal vendor" data-title="OAuthアプリを登録する" data-when="初めて新しいOAuthベンダーを統合する。クロードはヘッドレスブラウザを使ってベンダーの開発者ポータルにアクセスし、アプリを作成し、client_idとsecretをキーボールトにコピーし、リダイレクトURLに注釈を付ける。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="36" rx="4" width="44" x="10" y="14"></rect>
 <path class="soft" d="M16 22 L48 22"></path>
@@ -902,12 +958,15 @@
 <div class="title">OAuthアプリを登録する</div>
 <p class="desc">開発者用ブラウザを使用してベンダーポータルでOAuthアプリを登録し、client_idとsecretをキーボールトに保存します。</p>
 </div>
-<div class="card" data-category="connector" data-desc="Migrate legacy human-built assemblies to the AI-template pattern so Claude can safely edit them." data-example="&gt; Convert the Quickbooks 2019 assembly to the AI-template pattern.
+<div class="card" data-category="connector" data-desc="従来人間が作成したアセンブリをAIテンプレートパターンに移行し、Claudeが安全に編集できるようにする。" data-example="QuickBooks 2019 アセンブリを AI テンプレートパターンに変換します。
 
 ● /convert-assembly
-  reading structure... asm_read_assembly_logic
-  rewriting as template... asm_set_jsp_and_compile
-  verifying... asm_test_api_endpoint ✓" data-invokes="asm_read_assembly_logic,asm_set_jsp_and_compile,asm_cleanup,asm_find_referencers" data-kind="skill" data-name="/convert-assembly" data-tags="connector convert migrate legacy template" data-title="Convert human to AI template" data-when="When a legacy assembly (hand-authored, not AI-template-shaped) needs to be edited by Claude. Converts the structure to the AI-template conventions so /edit-assembly becomes safe.">
+
+構造を読み込んでいます... asm_read_assembly_logic
+
+テンプレートとして書き換えています... asm_set_jsp_and_compile
+
+検証しています... asm_test_api_endpoint ✓" data-invokes="asm_read_assembly_logic,asm_set_jsp_and_compile,asm_cleanup,asm_find_referencers" data-kind="skill" data-name="/convert-assembly" data-tags="connector convert migrate legacy template" data-title="人間をAIに変換するテンプレート" data-when="レガシーアセンブリ（AIテンプレート形式ではなく、手書きで作成されたもの）をClaudeが編集する必要がある場合。構造をAIテンプレートの規則に変換することで、/edit-assemblyコマンドが安全に実行できるようになります。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="26" rx="2" width="18" x="10" y="14"></rect>
 <rect height="26" rx="2" style="--gc:#5cc8ff" width="18" x="36" y="14"></rect>
@@ -929,13 +988,17 @@
 <div class="cat-count" data-cat-count="sync" data-unit="skill"><span class="cc-num">1</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="sync">
-<div class="card" data-category="sync" data-desc="Builds the matching trigger and action pair for a two-way sync. Handles loop prevention, last-write-wins, and conflict resolution out of the box." data-example="&gt; Build a two-way contact sync between HubSpot and Mindbody.
+<div class="card" data-category="sync" data-desc="双方向同期のためのトリガーとアクションのペアを構築します。ループ防止、最終書き込み優先、競合解決を標準でサポートします。" data-example="HubSpotとMindbody間で双方向の連絡先同期を構築します。
 
 ● assembly-bidirectional-sync
-  direction A: HubSpot -&gt; Mindbody (trigger-updated + action-add/update)
-  direction B: Mindbody -&gt; HubSpot (trigger-new + action-add/update)
-  loop suppression: correlation id on last_modified_by
-  conflict: last-write-wins on timestamp" data-invokes="auto_build,auto_commit,pattern_search" data-kind="skill" data-name="assembly-bidirectional-sync" data-tags="sync two-way bidirectional loop conflict" data-title="Bidirectional sync" data-when="Whenever the customer says both systems should stay in lockstep: CRM &lt;-&gt; booking, ERP &lt;-&gt; accounting, shop &lt;-&gt; ops. The skill creates both directions with correlated IDs, loop suppression, and conflict rules baked in.">
+
+方向A：HubSpot → Mindbody（トリガー：更新＋アクション：追加／更新）
+
+方向B：Mindbody → HubSpot（トリガー：新規＋アクション：追加／更新）
+
+ループ抑制：last_modified_byに基づく相関ID
+
+競合：タイムスタンプに基づく最終書き込み優先" data-invokes="auto_build,auto_commit,pattern_search" data-kind="skill" data-name="assembly-bidirectional-sync" data-tags="sync two-way bidirectional loop conflict" data-title="双方向同期" data-when="顧客がCRMと予約、ERPと会計、ショップとオペレーションなど、両方のシステムを常に同期させる必要があると指定した場合、このスキルは相関ID、ループ抑制、競合ルールを組み込んだ双方向のデータ連携を実現します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="36" rx="3" width="18" x="8" y="14"></rect>
 <rect height="36" rx="3" width="18" x="38" y="14"></rect>
@@ -957,12 +1020,14 @@
 <div class="cat-count" data-cat-count="patterns" data-unit="skill"><span class="cc-num">6</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="patterns">
-<div class="card" data-category="patterns" data-desc="From simple chatbots to multi-goal conversation flows with memory and tool-calling automations." data-example="&gt; Add a lead-qualification chat widget to the site.
+<div class="card" data-category="patterns" data-desc="シンプルなチャットボットから、メモリ機能やツール呼び出しの自動化機能を備えた、複数の目的を持つ会話フローまで。" data-example="サイトにリード資格確認チャットウィジェットを追加します。
 
 ● pattern-chat-widget
-  memory: conversation + CRM lookup
-  tools: check_availability, book_demo, escalate
-  fallback: human handoff after 3 clarifications" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-chat-widget" data-tags="pattern chat widget conversation ai llm" data-title="Chat widget" data-when="When the trigger is a conversation: support chat, lead qualification, booking assistant. Pattern handles memory, tool calls into other automations, and fallback-to-human.">
+
+メモリ: 会話 + CRM検索
+
+ツール: 空き状況確認、デモ予約、エスカレーション
+フォールバック: 3回の確認後、担当者へ引き継ぎ" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-chat-widget" data-tags="pattern chat widget conversation ai llm" data-title="チャットウィジェット" data-when="トリガーが会話の場合：サポートチャット、リードの適格性確認、予約アシスタント。パターンはメモリ、ツールによる他の自動化への呼び出し、および人間による対応へのフォールバックを処理します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="28" rx="6" width="36" x="8" y="14"></rect>
 <path class="fill" d="M14 48 L18 42 L14 42 Z"></path>
@@ -973,11 +1038,13 @@
 <div class="title">チャットウィジェット</div>
 <p class="desc">シンプルなチャットボットから、メモリ機能やツール呼び出しの自動化機能を備えた、複数の目的を持つ会話フローまで。</p>
 </div>
-<div class="card" data-category="patterns" data-desc='Drop in a spreadsheet of "source field -&gt; target field" and Claude wires the mappings verbatim.' data-example="&gt; Apply these mappings from the CSV to the HubSpot -&gt; Mindbody sync.
+<div class="card" data-category="patterns" data-desc="「ソースフィールド→ターゲットフィールド」というスプレッドシートをドロップインするだけで、クロードはマッピングをそのまま配線します。" data-example="&gt; これらのCSVファイルからのマッピングをHubSpotとMindbodyの同期に適用します。
 
 ● pattern-csv-mapping
-  parsed 42 field pairs
-  applying to automation step 3..." data-invokes="auto_edit_mapping,pattern_search" data-kind="skill" data-name="pattern-csv-mapping" data-tags="pattern csv mapping field import" data-title="CSV field mapping" data-when="Enterprise migrations. The customer hands over a spreadsheet of mappings. This pattern parses and wires them literally: no Claude improvisation, no surprise transforms.">
+
+42個のフィールドペアを解析しました
+
+自動化ステップ3に適用中..." data-invokes="auto_edit_mapping,pattern_search" data-kind="skill" data-name="pattern-csv-mapping" data-tags="pattern csv mapping field import" data-title="CSVフィールドマッピング" data-when="エンタープライズ規模の移行。顧客はマッピングのスプレッドシートを渡します。このパターンはそれを文字通り解析して接続します。クロードの即興的な対応も、予期せぬ変換もありません。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="44" rx="2" width="22" x="8" y="10"></rect>
 <rect height="44" rx="2" width="22" x="34" y="10"></rect>
@@ -989,13 +1056,17 @@
 <div class="title">CSVフィールドマッピング</div>
 <p class="desc">「ソースフィールド→ターゲットフィールド」というスプレッドシートをドロップインするだけで、クロードはマッピングをそのまま配線します。</p>
 </div>
-<div class="card" data-category="patterns" data-desc="Parent/child flows with query-string parameter passing and webhook payload forwarding." data-example="&gt; Process each tenant in parallel, one child per tenant.
+<div class="card" data-category="patterns" data-desc="クエリ文字列パラメータの受け渡しとWebhookペイロードの転送を伴う親子フロー。" data-example="各テナントを並列処理し、テナントごとに1つの子プロセスを実行します。
 
-● pattern-execute-automation
-  parent: tenant iterator
-  child: tenant processor
-  parallelism: 10
-  wait mode: fire-and-forget" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-execute-automation" data-tags="pattern chain execute parent child" data-title="Execute Automation chaining" data-when="When the flow is too wide to live in one automation. Decompose into parent + children; parent triggers a child per record, passes parameters, then consolidates results.">
+● パターン実行自動化
+
+親: テナントイテレータ
+
+子: テナントプロセッサ
+
+並列度: 10
+
+待機モード: ファイアアンドフォーゲット" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-execute-automation" data-tags="pattern chain execute parent child" data-title="自動化チェーンの実行" data-when="処理フローが広すぎて1つの自動化プロセスに収まらない場合。親プロセスと子プロセスに分解します。親プロセスはレコードごとに子プロセスをトリガーし、パラメータを渡してから結果を統合します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="14" rx="2" width="20" x="8" y="8"></rect>
 <rect height="14" rx="2" width="20" x="36" y="24"></rect>
@@ -1007,12 +1078,14 @@
 <div class="title">自動化チェーンの実行</div>
 <p class="desc">クエリ文字列パラメータの受け渡しとWebhookペイロードの転送を伴う親子フロー。</p>
 </div>
-<div class="card" data-category="patterns" data-desc="Pause an automation until a person approves or denies via moderation queue link. Decision gates for AI flows." data-example="&gt; Require human approval before sending the refund confirmation.
+<div class="card" data-category="patterns" data-desc="承認または拒否が承認キューリンク経由で行われるまで、自動化処理を一時停止します。AIフローのための意思決定ゲートです。" data-example="返金確認を送信する前に、人間の承認を必須とする。
 
-● pattern-human-moderation
-  pause at step 4
-  approval URL: /moderate/run_183947
-  timeout: 24h -&gt; auto-deny" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-human-moderation" data-tags="pattern human moderation approval gate" data-title="Human moderation" data-when="Whenever an AI step writes to something consequential: sends outbound email, refunds money, deletes records. The pattern creates an approval URL, pauses, and resumes on decision.">
+● パターン：人間による承認
+
+ステップ4で一時停止
+
+承認URL：/moderate/run_183947
+タイムアウト：24時間 → 自動拒否" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-human-moderation" data-tags="pattern human moderation approval gate" data-title="人間の節度" data-when="AIのステップが何らかの重要な処理（送信メールの送信、返金、レコードの削除など）を実行するたびに、このパターンは承認用URLを作成し、一時停止して、決定が下された後に処理を再開します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <rect height="28" rx="4" width="36" x="14" y="14"></rect>
 <path class="soft" d="M22 24 L42 24 M22 32 L34 32"></path>
@@ -1023,12 +1096,15 @@
 <div class="title">人間の節度</div>
 <p class="desc">承認または拒否が承認キューリンク経由で行われるまで、自動化処理を一時停止します。AIフローのための意思決定ゲートです。</p>
 </div>
-<div class="card" data-category="patterns" data-desc="Launch N child automations in parallel, wait for all to finish, proceed with aggregated results." data-example="&gt; Enrich these 500 contacts in parallel, then load the results.
+<div class="card" data-category="patterns" data-desc="N個の子自動化プロセスを並行して起動し、すべてが完了するまで待機し、集計結果に基づいて処理を進めます。" data-example="これらの500個のコンタクトを並列処理し、結果をロードします。
 
-● pattern-latches
-  fan-out: 500 children
-  fan-in: await all, collect outputs
-  progress: 500/500" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-latches" data-tags="pattern fan-out fan-in parallel latch" data-title="Fan-out / fan-in latches" data-when="Bulk work that benefits from parallelism: enrich 500 contacts across a dozen APIs, then aggregate. Latch tracks N subruns, waits for all, rolls up the batch.">
+● パターンラッチ
+
+ファンアウト: 500個の子ノード
+
+ファンイン: 全て待機、出力の収集
+
+進行状況: 500/500" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-latches" data-tags="pattern fan-out fan-in parallel latch" data-title="ファンアウト／ファンインラッチ" data-when="並列処理が有効な大量処理：12個のAPIにわたって500件の連絡先をエンリッチし、その後集約する。LatchはN個のサブ実行を追跡し、すべてが完了するのを待ってから、バッチをまとめる。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle class="fill" cx="32" cy="14" r="4"></circle>
 <path class="tk" d="M32 18 L20 34 M32 18 L44 34 M32 18 L32 34"></path>
@@ -1040,11 +1116,11 @@
 <div class="title">ファンアウト／ファンインラッチ</div>
 <p class="desc">N個の子自動化プロセスを並行して起動し、すべてが完了するまで待機し、集計結果に基づいて処理を進めます。</p>
 </div>
-<div class="card" data-category="patterns" data-desc="Pause an automation until a specific datetime. Useful for drip sequences and scheduled follow-ups." data-example="&gt; Wait 3 days, then send the follow-up email.
+<div class="card" data-category="patterns" data-desc="特定の日時まで自動化処理を一時停止します。段階的な配信や定期的なフォローアップに便利です。" data-example="3日間待ってから、フォローアップメールを送信してください。
 
-● pattern-snooze
-  until: +3d
-  resume step: 5" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-snooze" data-tags="pattern snooze delay schedule drip" data-title="Snooze" data-when="Time-based delays inside a run: drip sequences, scheduled follow-ups, cool-down periods. The step writes a wake-up and releases the run at the target time.">
+● パターンスヌーズ
+開始: +3d
+再開: ステップ5" data-invokes="pattern_search,auto_build" data-kind="skill" data-name="pattern-snooze" data-tags="pattern snooze delay schedule drip" data-title="スヌーズ" data-when="実行内の時間ベースの遅延：ドリップシーケンス、スケジュールされたフォローアップ、クールダウン期間。このステップはウェイクアップを書き込み、目標時刻に実行を解放します。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle class="soft" cx="32" cy="32" r="22"></circle>
 <path class="tk" d="M32 16 V32 L44 40"></path>
@@ -1066,12 +1142,15 @@
 <div class="cat-count" data-cat-count="ops" data-unit="skill"><span class="cc-num">3</span> スキル</div>
 </div>
 <div class="grid" data-cat-key="ops">
-<div class="card" data-category="ops" data-desc="Watches prod automations for errors. Designed for /loop recurring runs. Alerts with full trace context." data-example="&gt; Monitor acme-corp every 10 minutes, alert on new failures.
+<div class="card" data-category="ops" data-desc="自動化処理におけるエラーを監視します。/loop ループによる繰り返し実行向けに設計されています。完全なトレースコンテキストを含むアラートを発信します。" data-example="acme-corp を 10 分ごとに監視し、新たな障害が発生した場合はアラートを発信します。
 
-● /monitor-account (loop 10m)
-  admin_switch_account acme-corp
-  admin_tenant_health ... 3 new failures
-  raising alert with trace" data-invokes="admin_switch_account,admin_tenant_health,admin_tenant_usage,exec_search_history,exec_get_history,admin_account_changelog" data-kind="skill" data-name="/monitor-account" data-tags="ops monitor account alert loop error" data-title="Monitor a customer account" data-when="Continuous background check on a prod tenant. Runs on /loop, inspects failures since last check, raises alerts with full stack + last good input. Designed for always-on SRE duty.">
+● /monitor-account (10 分ループ)
+
+admin_switch_account acme-corp
+
+admin_tenant_health ... 3 件の新たな障害
+
+トレース情報とともにアラートを発信します" data-invokes="admin_switch_account,admin_tenant_health,admin_tenant_usage,exec_search_history,exec_get_history,admin_account_changelog" data-kind="skill" data-name="/monitor-account" data-tags="ops monitor account alert loop error" data-title="顧客アカウントを監視する" data-when="本番環境テナントに対する継続的なバックグラウンドチェック。/loop で実行され、前回のチェック以降の障害を検査し、フルスタックと最後に正常に動作した入力を含むアラートを生成します。常時稼働の SRE 業務向けに設計されています。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <path class="tk" d="M8 50 L16 38 L24 44 L32 24 L40 30 L48 16 L56 22"></path>
 <circle class="fill" cx="32" cy="24" r="3"></circle>
@@ -1082,13 +1161,17 @@
 <div class="title">顧客アカウントを監視する</div>
 <p class="desc">自動化処理におけるエラーを監視します。/loop ループによる繰り返し実行向けに設計されています。完全なトレースコンテキストを含むアラートを発信します。</p>
 </div>
-<div class="card" data-category="ops" data-desc='"Why did this not process?" Claude searches execution history, traces failures, extracts HTTP, proposes a fix.' data-example="&gt; Alpine Clinic says nothing synced last night.
+<div class="card" data-category="ops" data-desc="「なぜ処理されなかったのか？」クロードは実行履歴を検索し、失敗箇所を追跡し、HTTPを抽出し、修正案を提案する。" data-example="Alpine Clinicによると、昨夜は何も同期されなかったとのことです。
 
 ● /support
-  admin_switch_account alpine-clinic
-  exec_search_history since=2026-04-21
-  47 failures at 02:14 UTC, cause: 429 from Cliniko
-  proposed fix: add exponential backoff to step 3" data-invokes="admin_switch_account,exec_search_history,exec_get_history,exec_get_assembly_log,exec_get_step_data,exec_retry_failed,auto_get_summary" data-kind="skill" data-name="/support" data-tags="ops support diagnose debug history failure" data-title="Diagnose a customer issue" data-when="Customer reports something went wrong. Claude pulls execution history, isolates the failing run, extracts the exact HTTP request/response, names the root cause, proposes a remediation.">
+
+admin_switch_account alpine-clinic
+
+exec_search_history since=2026-04-21
+
+UTC 02:14に47件の失敗、原因：Clinikoからのエラーコード429
+
+提案された修正：ステップ3に指数バックオフを追加する" data-invokes="admin_switch_account,exec_search_history,exec_get_history,exec_get_assembly_log,exec_get_step_data,exec_retry_failed,auto_get_summary" data-kind="skill" data-name="/support" data-tags="ops support diagnose debug history failure" data-title="顧客の問題を診断する" data-when="顧客から何らかの問題が発生したとの報告があった。クロードは実行履歴を取得し、失敗した実行を特定し、正確なHTTPリクエスト/レスポンスを抽出し、根本原因を特定し、修復策を提案した。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <circle cx="26" cy="26" r="14"></circle>
 <circle class="soft fill" cx="26" cy="26" r="6"></circle>
@@ -1099,12 +1182,14 @@
 <div class="title">顧客の問題を診断する</div>
 <p class="desc">「なぜ処理されなかったのか？」クロードは実行履歴を検索し、失敗箇所を追跡し、HTTPを抽出し、修正案を提案する。</p>
 </div>
-<div class="card" data-category="ops" data-desc="Control which errors retry, which 401s bypass auto-turnoff, alert text rewriting, dismissal lists." data-example="&gt; Stop auto-disabling the Shopify connector on 401s from this sandbox.
+<div class="card" data-category="ops" data-desc="どのエラーを再試行するか、どの401エラーを自動オフにするか、アラートテキストの書き換え、除外リストなどを制御します。" data-example="このサンドボックスからの401エラー発生時にShopifyコネクタを自動的に無効化しないようにします。
 
 ● /alert-handling
-  admin_ignore_401_domains += sandbox.shopify.com
-  alert_suppress: 'Stale sandbox token' pattern
-✓ noise down" data-invokes="alert_suppress,alert_unsuppress,alert_list_suppressed,alert_get_error_policy,alert_get_automation_mappings,alert_set_automation_mappings,admin_ignore_401_domains,admin_retryable_errors" data-kind="skill" data-name="/alert-handling" data-tags="ops alert retry suppress 401 dismiss" data-title="Tune alert behavior" data-when="When noisy alerts or auto-turnoffs are getting in the way. Adjust retry policy, carve out 401 domains that should not auto-disable, rewrite alert copy for customer-facing reports, suppress known-good errors.">
+
+admin_ignore_401_domains += sandbox.shopify.com
+
+alert_suppress: 'Stale sandbox token' pattern
+✓ ノイズダウン" data-invokes="alert_suppress,alert_unsuppress,alert_list_suppressed,alert_get_error_policy,alert_get_automation_mappings,alert_set_automation_mappings,admin_ignore_401_domains,admin_retryable_errors" data-kind="skill" data-name="/alert-handling" data-tags="ops alert retry suppress 401 dismiss" data-title="アラート動作を調整" data-when="アラートが頻繁に鳴ったり、自動無効化が邪魔になったりする場合は、再試行ポリシーを調整し、自動無効化すべきでない401ドメインを除外し、顧客向けレポートのアラート文を書き換え、既知の正常なエラーを抑制してください。">
 <div class="glyph"><svg class="g" viewbox="0 0 64 64">
 <path class="tk" d="M32 12 C 22 12, 18 20, 18 30 L 18 40 L 14 46 L 50 46 L 46 40 L 46 30 C 46 20, 42 12, 32 12 Z"></path>
 <path class="tk" d="M28 50 C 28 54, 36 54, 36 50"></path>
@@ -1139,55 +1224,55 @@
 <div class="cat-count" data-cat-count="tools-core" data-unit="tool"><span class="cc-num">7</span> ツール</div>
 </div>
 <div class="grid" data-cat-key="tools-core">
-<div class="card t-dev" data-category="tools" data-desc="Load the specific toolset needed for the current skill. Keeps the context window lean." data-example="activate_toolset({ toolset: 'automation_builder' })
--&gt; 30 tools now available" data-invokes="" data-kind="tool" data-mutation="read" data-name="activate_toolset" data-prod-desc="Inspect which toolsets prod exposes. Read-only surface; writes gate on explicit confirmation." data-tags="tools core activate toolset" data-title="Activate a toolset" data-when="Called at the start of a skill to pull in the specialized tools for the job. Without this, the full 125 would crowd the context every turn.">
+<div class="card t-dev" data-category="tools" data-desc="現在のスキルに必要な特定のツールセットを読み込みます。コンテキストウィンドウを軽量に保ちます。" data-example="activate_toolset({ toolset: 'automation_builder' })
+-&gt; 現在30個のツールが利用可能です" data-invokes="" data-kind="tool" data-mutation="read" data-name="activate_toolset" data-prod-desc="prodが公開するツールセットを調べます。読み取り専用インターフェース。明示的な確認があった場合にのみ書き込みゲートが開きます。" data-tags="tools core activate toolset" data-title="ツールセットをアクティブ化する" data-when="スキル発動時に呼び出され、その作業に必要な専用ツールを取り込む。これがないと、毎ターン125個ものツールが画面上に溢れかえってしまうだろう。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="36" rx="4" width="44" x="10" y="14"></rect><path class="soft" d="M16 22 H48 M16 30 H40 M16 38 H48"></path><circle class="fill" cx="52" cy="14" r="5"></circle></svg></div>
 <div class="name notranslate">activate_toolset</div>
 <div class="title">ツールセットをアクティブ化する</div>
 <p class="desc">現在のスキルに必要な特定のツールセットを読み込みます。コンテキストウィンドウを軽量に保ちます。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="Load, list, create, update, rename, and delete assemblies. The low-level assembly API." data-example="asm_manage({ action: 'list', filter: { app: 'hubspot' } })
--&gt; 8 assemblies" data-invokes="" data-kind="tool" data-mutation="write" data-name="asm_manage" data-prod-desc="Inspect prod assemblies only. Writes gate on explicit confirmation." data-tags="tools core assembly manage crud" data-title="Manage assemblies" data-when="The universal entry for assembly operations: list to browse, load to read, create/update/delete to modify. Most assembly work flows through this single dispatcher.">
+<div class="card t-dev" data-category="tools" data-desc="アセンブリの読み込み、一覧表示、作成、更新、名前変更、削除を行うための低レベルアセンブリAPI。" data-example="asm_manage({ action: 'list', filter: { app: 'hubspot' } })
+-&gt; 8個のアセンブリ" data-invokes="" data-kind="tool" data-mutation="write" data-name="asm_manage" data-prod-desc="製品アセンブリのみを検査します。明示的な確認があった場合にのみゲートを書き込みます。" data-tags="tools core assembly manage crud" data-title="アセンブリを管理する" data-when="アセンブリ操作のための共通エントリ：リストで閲覧、ロードで読み込み、作成/更新/削除で変更。ほとんどのアセンブリ作業はこの単一のディスパッチャを経由します。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="36" rx="4" width="44" x="10" y="14"></rect><circle class="fill" cx="22" cy="32" r="4"></circle><circle cx="42" cy="32" r="4"></circle><path class="anim" d="M26 32 L38 32" stroke-dasharray="2 2" style="animation:dash 1.6s linear infinite"></path></svg></div>
 <div class="name notranslate">asm_manage</div>
 <div class="title">アセンブリを管理する</div>
 <p class="desc">アセンブリの読み込み、一覧表示、作成、更新、名前変更、削除を行うための低レベルアセンブリAPI。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="Structured overview of an automation: triggers, steps, mappings. Fast context for edits." data-example="auto_get_summary({ automation_id: 'auto_42' })
--&gt; 1 trigger + 4 steps + 12 mappings" data-invokes="" data-kind="tool" data-mutation="read" data-name="auto_get_summary" data-prod-desc="Inspect prod automation structure. Read-only; writes gate on explicit confirmation." data-tags="tools core automation summary overview" data-title="Automation summary" data-when="First call before editing an existing automation. Gives Claude the shape (triggers, step tree, mappings) without pulling the full source, so subsequent edit calls land accurately.">
+<div class="card t-dev" data-category="tools" data-desc="自動化の概要を構造的に表示：トリガー、ステップ、マッピング。編集のための迅速なコンテキスト。" data-example="auto_get_summary({ automation_id: 'auto_42' })
+-&gt; トリガー 1 個 + ステップ 4 個 + マッピング 12 個" data-invokes="" data-kind="tool" data-mutation="read" data-name="auto_get_summary" data-prod-desc="本番環境の自動化構造を検査します。読み取り専用。明示的な確認があった場合にのみ書き込みゲートが開きます。" data-tags="tools core automation summary overview" data-title="自動化の概要" data-when="既存のオートメーションを編集する前に最初に呼び出すものです。ソースコード全体を取得することなく、クロードにシェイプ（トリガー、ステップツリー、マッピング）を提供するため、後続の編集呼び出しが正確に実行されます。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M10 50 L54 50"></path><rect class="fill" height="14" width="8" x="14" y="36"></rect><rect class="fill" height="22" style="--gc:#5cc8ff" width="8" x="28" y="28"></rect><rect class="fill" height="32" style="--gc:#1ab759" width="8" x="42" y="18"></rect></svg></div>
 <div class="name notranslate">auto_get_summary</div>
 <div class="title">自動化の概要</div>
 <p class="desc">自動化の概要を構造的に表示：トリガー、ステップ、マッピング。編集のための迅速なコンテキスト。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="Flat list of every automation in a scope. Filter by name, folder, or status." data-example="auto_list({ status: 'failed', since: '2026-04-22' })
--&gt; 3 automations" data-invokes="" data-kind="tool" data-mutation="read" data-name="auto_list" data-prod-desc="Read-only listing across prod tenants. Writes gate on explicit confirmation." data-tags="tools core automation list browse" data-title="List automations" data-when='When you need to find something by name or status ("all HubSpot automations that failed in the last hour"). Returns a flat list, does not fetch bodies.'>
+<div class="card t-dev" data-category="tools" data-desc="スコープ内のすべての自動化機能を一覧表示します。名前、フォルダ、またはステータスでフィルタリングできます。" data-example="auto_list({ status: 'failed', since: '2026-04-22' })
+-&gt; 自動化3件" data-invokes="" data-kind="tool" data-mutation="read" data-name="auto_list" data-prod-desc="本番環境テナント全体で読み取り専用のリスト表示を行います。明示的な確認があった場合にのみゲートへの書き込みが行われます。" data-tags="tools core automation list browse" data-title="リスト自動化" data-when="名前やステータスで何かを検索する必要がある場合（「過去 1 時間に失敗したすべての HubSpot 自動化」など）。フラットなリストを返し、本文は取得しません。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect class="fill" height="6" rx="2" width="44" x="10" y="14"></rect><rect class="soft fill" height="6" rx="2" width="44" x="10" y="24"></rect><rect class="soft fill" height="6" rx="2" width="44" x="10" y="34"></rect><rect class="soft fill" height="6" rx="2" width="30" x="10" y="44"></rect></svg></div>
 <div class="name notranslate">auto_list</div>
 <div class="title">リスト自動化</div>
 <p class="desc">スコープ内のすべての自動化機能を一覧表示します。名前、フォルダ、またはステータスでフィルタリングできます。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="Navigate the folder tree. Find automations grouped by customer, product, or environment." data-example="auto_folder({ action: 'list', parent: '/customers/acme-corp' })
--&gt; 4 subfolders, 12 automations" data-invokes="" data-kind="tool" data-mutation="read" data-name="auto_folder" data-prod-desc="Read-only folder browsing. Writes gate on explicit confirmation." data-tags="tools core folder navigate tree" data-title="List folders" data-when="When organizing or finding automations grouped by customer, vertical, or product. Pair with auto_list for a two-step browse.">
+<div class="card t-dev" data-category="tools" data-desc="フォルダツリーをナビゲートします。顧客、製品、または環境ごとにグループ化された自動化機能を見つけてください。" data-example="auto_folder({ action: 'list', parent: '/customers/acme-corp' })
+-&gt; サブフォルダ4つ、自動化12件" data-invokes="" data-kind="tool" data-mutation="read" data-name="auto_folder" data-prod-desc="読み取り専用のフォルダ閲覧。明示的な確認があった場合にのみ書き込みゲートが作動します。" data-tags="tools core folder navigate tree" data-title="フォルダ一覧" data-when="顧客、業種、製品ごとにグループ化された自動化設定を整理または検索する場合に便利です。auto_listと組み合わせることで、2ステップで簡単に閲覧できます。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M10 18 L22 18 L26 14 L54 14 L54 50 L10 50 Z"></path><path class="soft" d="M18 28 L46 28 M18 36 L46 36 M18 44 L38 44"></path></svg></div>
 <div class="name notranslate">auto_folder</div>
 <div class="title">フォルダ一覧</div>
 <p class="desc">フォルダツリーをナビゲートします。顧客、製品、または環境ごとにグループ化された自動化機能を見つけてください。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="Create, rename, duplicate, move, enable, disable. Every CRUD operation for automations." data-example="auto_manage({ action: 'rename', id: 'auto_42', name: 'HubSpot -&gt; Mindbody v2' })" data-invokes="" data-kind="tool" data-mutation="write" data-name="auto_manage" data-prod-desc="Read-only metadata on prod automations. Writes gate on explicit confirmation." data-tags="tools core automation manage crud rename duplicate" data-title="Manage automations" data-when="The universal entry for automation CRUD. Create draft, rename, move across folders, enable/disable. Every skill that writes touches this.">
+<div class="card t-dev" data-category="tools" data-desc="作成、名前変更、複製、移動、有効化、無効化。自動化のためのあらゆるCRUD操作。" data-example="auto_manage({ action: 'rename', id: 'auto_42', name: 'HubSpot -&gt; Mindbody v2' })" data-invokes="" data-kind="tool" data-mutation="write" data-name="auto_manage" data-prod-desc="本番環境の自動化処理に関する読み取り専用メタデータ。明示的な確認があった場合にのみ書き込みゲートが作動します。" data-tags="tools core automation manage crud rename duplicate" data-title="自動化を管理する" data-when="自動化におけるCRUD操作の共通エントリ。下書きの作成、名前の変更、フォルダ間の移動、有効化/無効化。文章を書くあらゆるスキルにおいて、この操作は不可欠です。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="36" rx="4" width="44" x="10" y="14"></rect><circle class="fill" cx="22" cy="32" r="3"></circle><circle class="fill" cx="32" cy="32" r="3" style="--gc:#5cc8ff"></circle><circle class="fill" cx="42" cy="32" r="3" style="--gc:#c084fc"></circle><path class="soft" d="M22 32 L32 32 L42 32"></path></svg></div>
 <div class="name notranslate">auto_manage</div>
 <div class="title">自動化を管理する</div>
 <p class="desc">作成、名前変更、複製、移動、有効化、無効化。自動化のためのあらゆるCRUD操作。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="The full catalog of available app integrations. Filter by category, vendor, or capability." data-example="catalog_list_apps({ vertical: 'wellness' })
--&gt; 14 apps" data-invokes="" data-kind="tool" data-mutation="read" data-name="catalog_list_apps" data-prod-desc="Read-only catalog list. Writes gate on explicit confirmation." data-tags="tools core catalog app list" data-title="List catalog apps" data-when='Before /build-automation, to confirm both sides of the integration exist. "Is there a Mindbody assembly? A Klaviyo one?" Filter by vertical or capability.'>
+<div class="card t-dev" data-category="tools" data-desc="利用可能なアプリ連携機能の全カタログ。カテゴリ、ベンダー、機能で絞り込み検索できます。" data-example="catalog_list_apps({ vertical: 'wellness' })
+-&gt; 14個のアプリ" data-invokes="" data-kind="tool" data-mutation="read" data-name="catalog_list_apps" data-prod-desc="読み取り専用のカタログリスト。明示的な確認があった場合にゲートに書き込みます。" data-tags="tools core catalog app list" data-title="リストカタログアプリ" data-when="/build-automation の前に、統合の両側が存在することを確認します。「Mindbody アセンブリはありますか？Klaviyo アセンブリはありますか？」業種または機能でフィルタリングします。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="14" rx="3" width="14" x="10" y="14"></rect><rect height="14" rx="3" width="14" x="28" y="14"></rect><rect class="soft" height="14" rx="3" width="12" x="46" y="14"></rect><rect class="soft" height="14" rx="3" width="14" x="10" y="32"></rect><rect height="14" rx="3" width="14" x="28" y="32"></rect><rect class="soft" height="14" rx="3" width="12" x="46" y="32"></rect></svg></div>
 <div class="name notranslate">catalog_list_apps</div>
@@ -1205,72 +1290,72 @@
 <div class="cat-count" data-cat-count="tools-toolsets" data-unit="toolset"><span class="cc-num">9</span> ツールセット · 118個のツール</div>
 </div>
 <div class="grid" data-cat-key="tools-toolsets">
-<div class="card t-dev" data-category="tools" data-desc="30 tools. Search the catalog, compose triggers and actions, edit mappings, commit versions, save patterns. The full automation authoring surface." data-example="activate_toolset({ toolset: 'automation_builder' })
--&gt; 30 tools: auto_build, auto_edit_structure, ..." data-invokes="" data-kind="tool" data-mutation="write" data-name="automation_builder" data-prod-desc="Read-only authoring surface in prod. Writes gate on explicit confirmation." data-tags="tools toolset build edit author" data-title="Build + edit" data-when="Activated by /build-automation and /edit-automation. Contains auto_build, auto_edit_* family, catalog_search, pattern_search/save.">
+<div class="card t-dev" data-category="tools" data-desc="30種類のツール。カタログの検索、トリガーとアクションの作成、マッピングの編集、バージョンのコミット、パターンの保存。自動化オーサリングのためのフル機能インターフェース。" data-example="activate_toolset({ toolset: 'automation_builder' })
+-&gt; 30個のツール: auto_build、auto_edit_structure、..." data-invokes="" data-kind="tool" data-mutation="write" data-name="automation_builder" data-prod-desc="本番環境では読み取り専用のオーサリングインターフェースが利用可能。明示的な確認があった場合にのみ書き込みゲートが作動する。" data-tags="tools toolset build edit author" data-title="作成＋編集" data-when="/build-automation および /edit-automation によって有効化されます。auto_build、auto_edit_* ファミリー、catalog_search、pattern_search/save が含まれます。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M14 50 L14 20 L24 20 L28 14 L50 14 L50 50 Z"></path><circle class="fill" cx="24" cy="34" r="3"></circle><circle class="fill" cx="36" cy="34" r="3" style="--gc:#5cc8ff"></circle><path class="soft" d="M24 34 L36 34"></path><path class="tk" d="M30 42 L30 48"></path></svg></div>
 <div class="name notranslate">automation_builder</div>
 <div class="title">作成＋編集</div>
 <p class="desc">30種類のツール。カタログの検索、トリガーとアクションの作成、マッピングの編集、バージョンのコミット、パターンの保存。自動化オーサリングのためのフル機能インターフェース。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="17 tools. Run test executions, inspect every step's input and output, mutate data, replay webhooks, walk branch-coverage test points. Debugging with full ground truth." data-example="activate_toolset({ toolset: 'automation_exec' })
--&gt; 17 tools: exec_test_automation, ..." data-invokes="" data-kind="tool" data-mutation="write" data-name="automation_exec" data-prod-desc="Read-only runtime inspection in prod. Writes gate on explicit confirmation." data-tags="tools toolset exec runtime inspect debug" data-title="Runtime inspection" data-when="Activated by /test-automation and /support. Contains exec_test_automation, exec_get_* family, exec_retry_failed, exec_replay_webhook.">
+<div class="card t-dev" data-category="tools" data-desc="17種類のツール。テスト実行、各ステップの入力と出力の検査、データの変更、Webhookのリプレイ、ブランチカバレッジテストポイントの走査など。完全なグラウンドトゥルースに基づいたデバッグ。" data-example="activate_toolset({ toolset: 'automation_exec' })
+-&gt; 17個のツール: exec_test_automation、..." data-invokes="" data-kind="tool" data-mutation="write" data-name="automation_exec" data-prod-desc="本番環境では読み取り専用のランタイム検査を実施します。明示的な確認があった場合にのみ書き込みゲートを実行します。" data-tags="tools toolset exec runtime inspect debug" data-title="実行時検査" data-when="/test-automation および /support によって有効化されます。exec_test_automation、exec_get_* ファミリー、exec_retry_failed、exec_replay_webhook が含まれます。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle class="soft" cx="32" cy="32" r="22"></circle><path class="tk" d="M32 16 L32 32 L42 38"></path><circle class="fill" cx="32" cy="32" r="3" style="--gc:#5cc8ff"></circle><path class="soft" d="M12 32 L18 32 M46 32 L52 32"></path></svg></div>
 <div class="name notranslate">automation_exec</div>
 <div class="title">実行時検査</div>
 <p class="desc">17種類のツール。テスト実行、各ステップの入力と出力の検査、データの変更、Webhookのリプレイ、ブランチカバレッジテストポイントの走査など。完全なグラウンドトゥルースに基づいたデバッグ。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="10 tools. List and organize committed automations, version them, compare versions, roll back. The git-like layer over automation drafts and releases." data-example="activate_toolset({ toolset: 'automation_manage' })
--&gt; 10 tools: auto_commit, auto_compare_versions, ..." data-invokes="" data-kind="tool" data-mutation="write" data-name="automation_manage" data-prod-desc="Read-only lifecycle view in prod. Writes gate on explicit confirmation." data-tags="tools toolset manage lifecycle version commit" data-title="Automation lifecycle" data-when="Activated by /build-integration, /edit-automation, /test-automation, /support. Contains auto_list, auto_manage, auto_commit, auto_list_versions, auto_compare_versions, auto_folder.">
+<div class="card t-dev" data-category="tools" data-desc="10個のツール。コミットされた自動化の一覧表示と整理、バージョン管理、バージョン比較、ロールバック機能。自動化のドラフトとリリースを管理するGitライクなレイヤー。" data-example="activate_toolset({ toolset: 'automation_manage' })
+-&gt; 10個のツール: auto_commit、auto_compare_versions、..." data-invokes="" data-kind="tool" data-mutation="write" data-name="automation_manage" data-prod-desc="本番環境では読み取り専用のライフサイクルビューです。明示的な確認があった場合にのみゲートに書き込みます。" data-tags="tools toolset manage lifecycle version commit" data-title="自動化ライフサイクル" data-when="/build-integration、/edit-automation、/test-automation、/support によって有効化されます。auto_list、auto_manage、auto_commit、auto_list_versions、auto_compare_versions、auto_folder が含まれています。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="10" rx="2" width="44" x="10" y="14"></rect><rect height="10" rx="2" width="44" x="10" y="28"></rect><rect class="soft" height="10" rx="2" width="30" x="10" y="42"></rect><circle class="fill" cx="52" cy="14" r="2"></circle><circle class="fill" cx="52" cy="28" r="2" style="--gc:#5cc8ff"></circle></svg></div>
 <div class="name notranslate">automation_manage</div>
 <div class="title">自動化ライフサイクル</div>
 <p class="desc">10個のツール。コミットされた自動化の一覧表示と整理、バージョン管理、バージョン比較、ロールバック機能。自動化のドラフトとリリースを管理するGitライクなレイヤー。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="25 tools. Switch between customer accounts, query usage and health across a tenant, read the keyvault, run ad-hoc SQL, tune retryable errors, manage lookups. The operator's toolbox." data-example="activate_toolset({ toolset: 'admin' })
--&gt; 25 tools: admin_switch_account, admin_tenant_health, ..." data-invokes="" data-kind="tool" data-mutation="write" data-name="admin" data-prod-desc="Read-only tenant ops in prod. Writes gate on explicit confirmation." data-tags="tools toolset admin tenant account ops" data-title="Tenant ops" data-when="Activated by /support, /monitor-account, /alert-handling. Contains admin_switch_account, admin_list_tenants, admin_sql_query, admin_tenant_health, keyvault helpers.">
+<div class="card t-dev" data-category="tools" data-desc="25種類のツール。顧客アカウントの切り替え、テナント全体の使用状況と健全性の照会、キーボールトの読み取り、アドホックSQLの実行、再試行可能なエラーの調整、ルックアップの管理など、オペレーターのためのツールボックスです。" data-example="activate_toolset({ toolset: 'admin' })
+-&gt; 25個のツール: admin_switch_account、admin_tenant_health、..." data-invokes="" data-kind="tool" data-mutation="write" data-name="admin" data-prod-desc="本番環境では読み取り専用のテナント操作となります。明示的な確認があった場合にのみゲートへの書き込みが行われます。" data-tags="tools toolset admin tenant account ops" data-title="テナント運営" data-when="/support、/monitor-account、/alert-handling によって有効化されます。admin_switch_account、admin_list_tenants、admin_sql_query、admin_tenant_health、keyvault ヘルパーが含まれています。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="32" cy="22" r="8"></circle><path d="M16 52 C16 40 48 40 48 52 Z"></path><circle class="fill" cx="32" cy="22" r="3" style="--gc:#5cc8ff"></circle><path class="tk soft" d="M50 14 L56 14 L56 20 M50 20 L56 14"></path></svg></div>
 <div class="name notranslate">admin</div>
 <div class="title">テナント運営</div>
 <p class="desc">25種類のツール。顧客アカウントの切り替え、テナント全体の使用状況と健全性の照会、キーボールトの読み取り、アドホックSQLの実行、再試行可能なエラーの調整、ルックアップの管理など、オペレーターのためのツールボックスです。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="5 tools. Tenant-wide alert rules, suppressed-alert lists, retry policy, 401 domain carve-outs. Requires Switch Account context." data-example="activate_toolset({ toolset: 'admin_alerts' })
--&gt; 5 tools: admin_list_suppressed_alerts, admin_retryable_errors, ..." data-invokes="" data-kind="tool" data-mutation="write" data-name="admin_alerts" data-prod-desc="Read-only alert governance in prod. Writes gate on explicit confirmation." data-tags="tools toolset admin alerts governance suppress retry" data-title="Alert governance" data-when="Activated by /alert-handling. A narrower surface than admin, scoped specifically to alert policy: suppression lists, retryable errors, 401 domain ignore, alert mappings.">
+<div class="card t-dev" data-category="tools" data-desc="5つのツール。テナント全体の警告ルール、抑制対象警告リスト、再試行ポリシー、401ドメイン除外。アカウント切り替えコンテキストが必要です。" data-example="activate_toolset({ toolset: 'admin_alerts' })
+-&gt; 5 つのツール: admin_list_suppressed_alerts、admin_retryable_errors、..." data-invokes="" data-kind="tool" data-mutation="write" data-name="admin_alerts" data-prod-desc="本番環境における読み取り専用のアラート管理。明示的な確認があった場合にのみ書き込みゲートが作動します。" data-tags="tools toolset admin alerts governance suppress retry" data-title="アラートガバナンス" data-when="/alert-handling で有効化されます。admin よりも範囲が狭く、アラート ポリシーに特化しています。具体的には、抑制リスト、再試行可能なエラー、401 ドメインの無視、アラート マッピングなどが含まれます。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path d="M32 12 C 22 12, 18 20, 18 30 L 18 40 L 14 46 L 50 46 L 46 40 L 46 30 C 46 20, 42 12, 32 12 Z"></path><path class="soft" d="M26 40 L38 40"></path><circle class="fill" cx="46" cy="18" r="4" style="--gc:#f5b748"></circle></svg></div>
 <div class="name notranslate">admin_alerts</div>
 <div class="title">アラートガバナンス</div>
 <p class="desc">5つのツール。テナント全体の警告ルール、抑制対象警告リスト、再試行ポリシー、401ドメイン除外。アカウント切り替えコンテキストが必要です。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="11 tools. Per-automation alert mapping rules, step-level alert triggers, mapping trace, suppression, system-level mappings." data-example="activate_toolset({ toolset: 'alerts' })
--&gt; 11 tools: alert_set_automation_mappings, alert_get_mapping_trace, ..." data-invokes="" data-kind="tool" data-mutation="write" data-name="alerts" data-prod-desc="Read-only alert config in prod. Writes gate on explicit confirmation." data-tags="tools toolset alerts mapping suppress trace" data-title="Alert mapping" data-when="Activated by /alert-handling when the fix is at the automation or step level rather than tenant-wide. Contains alert_get/set_automation_mappings, alert_get_mapping_trace, alert_suppress.">
+<div class="card t-dev" data-category="tools" data-desc="11種類のツール。自動化ごとのアラートマッピングルール、ステップレベルのアラートトリガー、マッピングトレース、抑制、システムレベルのマッピング。" data-example="activate_toolset({ toolset: 'alerts' })
+-&gt; 11個のツール: alert_set_automation_mappings、alert_get_mapping_trace、..." data-invokes="" data-kind="tool" data-mutation="write" data-name="alerts" data-prod-desc="本番環境では読み取り専用のアラート設定です。明示的な確認があった場合にのみゲートに書き込みます。" data-tags="tools toolset alerts mapping suppress trace" data-title="アラートマッピング" data-when="修正がテナント全体ではなく、自動化レベルまたはステップレベルで行われる場合に、/alert-handling によって有効化されます。alert_get/set_automation_mappings、alert_get_mapping_trace、alert_suppress が含まれます。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path class="tk" d="M12 40 L20 40 L24 26 L30 50 L36 16 L42 38 L52 38"></path><circle class="fill" cx="30" cy="50" r="3" style="--gc:#ff78b4"></circle><circle class="fill" cx="36" cy="16" r="3" style="--gc:#5cc8ff"></circle></svg></div>
 <div class="name notranslate">alerts</div>
 <div class="title">アラートマッピング</div>
 <p class="desc">11種類のツール。自動化ごとのアラートマッピングルール、ステップレベルのアラートトリガー、マッピングトレース、抑制、システムレベルのマッピング。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="3 tools. Search, save, and delete reusable pattern recipes: field mappings, transforms, gotchas, templates." data-example="activate_toolset({ toolset: 'patterns' })
--&gt; 3 tools: pattern_search, pattern_save, pattern_delete" data-invokes="" data-kind="tool" data-mutation="write" data-name="patterns" data-prod-desc="Read-only pattern library in prod. Writes gate on explicit confirmation." data-tags="tools toolset patterns library recipe" data-title="Pattern library" data-when="Activated by /build-automation and the pattern-* skills. Contains pattern_search (find by shape), pattern_save (after a successful build), pattern_delete.">
+<div class="card t-dev" data-category="tools" data-desc="3つのツール。再利用可能なパターンレシピ（フィールドマッピング、変換、注意点、テンプレート）を検索、保存、削除します。" data-example="activate_toolset({ toolset: 'patterns' })
+-&gt; 3つのツール: pattern_search、pattern_save、pattern_delete" data-invokes="" data-kind="tool" data-mutation="write" data-name="patterns" data-prod-desc="本番環境では読み取り専用のパターンライブラリです。明示的な確認があった場合にのみゲートを書き込みます。" data-tags="tools toolset patterns library recipe" data-title="パターンライブラリ" data-when="/build-automation および pattern-* スキルによって有効化されます。pattern_search (形状による検索)、pattern_save (ビルド成功後)、pattern_delete が含まれます。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="16" rx="2" width="16" x="10" y="12"></rect><rect class="soft" height="16" rx="2" width="16" x="30" y="12"></rect><rect class="soft" height="16" rx="2" width="16" x="10" y="32"></rect><rect height="16" rx="2" width="16" x="30" y="32"></rect><circle class="fill" cx="52" cy="12" r="3" style="--gc:#5cc8ff"></circle></svg></div>
 <div class="name notranslate">patterns</div>
 <div class="title">パターンライブラリ</div>
 <p class="desc">3つのツール。再利用可能なパターンレシピ（フィールドマッピング、変換、注意点、テンプレート）を検索、保存、削除します。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="6 tools. Publish folders or individual assemblies from dev to prod. Roll changes out to linked customer accounts in a single coordinated step." data-example="activate_toolset({ toolset: 'deploy' })
--&gt; 6 tools: deploy_publish_assembly, deploy_to_accounts, ..." data-invokes="" data-kind="tool" data-mutation="write" data-name="deploy" data-prod-desc="Read-only deploy status in prod. Writes gate on explicit confirmation." data-tags="tools toolset deploy publish rollout release" data-title="Dev to prod" data-when="Activated by /deploy-automation. Contains deploy_publish_assembly, deploy_publish_folder, deploy_to_accounts, deploy_list_linked_accounts, deploy_update_plugin, deploy_get_plugin_version.">
+<div class="card t-dev" data-category="tools" data-desc="6つのツール。開発環境から本番環境へ、フォルダまたは個々のアセンブリを公開します。リンクされた顧客アカウントへの変更を、単一の連携した手順で展開します。" data-example="activate_toolset({ toolset: 'deploy' })
+-&gt; 6 つのツール: deploy_publish_assembly、deploy_to_accounts、..." data-invokes="" data-kind="tool" data-mutation="write" data-name="deploy" data-prod-desc="本番環境における読み取り専用のデプロイステータス。明示的な確認があった場合にのみゲートを書き込みます。" data-tags="tools toolset deploy publish rollout release" data-title="開発環境から本番環境へ" data-when="/deploy-automation によって有効化されます。deploy_publish_assembly、deploy_publish_folder、deploy_to_accounts、deploy_list_linked_accounts、deploy_update_plugin、deploy_get_plugin_version が含まれます。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="28" rx="3" width="18" x="10" y="18"></rect><rect class="soft" height="28" rx="3" width="18" x="36" y="18"></rect><path class="tk" d="M28 32 L36 32"></path><path class="tk fill" d="M32 28 L38 32 L32 36" style="--gc:#5cc8ff"></path></svg></div>
 <div class="name notranslate">deploy</div>
 <div class="title">開発環境から本番環境へ</div>
 <p class="desc">6つのツール。開発環境から本番環境へ、フォルダまたは個々のアセンブリを公開します。リンクされた顧客アカウントへの変更を、単一の連携した手順で展開します。</p>
 </div>
-<div class="card t-dev" data-category="tools" data-desc="28 tools. Create connectors, inject settings, compile JSP, test API endpoints, wire dynamic field discovery, finalize assemblies. The low-level integration plumbing." data-example="activate_toolset({ toolset: 'assembly' })
--&gt; 28 tools: asm_create_connector, asm_set_jsp_and_compile, ..." data-invokes="" data-kind="tool" data-mutation="write" data-name="assembly" data-prod-desc="Read-only connector + assembly introspection in prod. Writes gate on explicit confirmation." data-tags="tools toolset assembly connector jsp compile plumbing" data-title="Connector + assembly build" data-when="Activated by /build-assembly and /edit-assembly. Contains asm_create_connector, asm_create_action_or_trigger, asm_set_jsp_and_compile, asm_test_api_endpoint, asm_inject_settings, and more.">
+<div class="card t-dev" data-category="tools" data-desc="28種類のツール。コネクタの作成、設定の挿入、JSPのコンパイル、APIエンドポイントのテスト、動的フィールド検出の配線、アセンブリの最終化。低レベルの統合基盤。" data-example="activate_toolset({ toolset: 'assembly' })
+-&gt; 28個のツール: asm_create_connector、asm_set_jsp_and_compile、..." data-invokes="" data-kind="tool" data-mutation="write" data-name="assembly" data-prod-desc="読み取り専用コネクタとアセンブリの内省機能が本番環境で動作します。明示的な確認に基づいてゲートを書き込みます。" data-tags="tools toolset assembly connector jsp compile plumbing" data-title="コネクタ＋アセンブリ構築" data-when="/build-assembly および /edit-assembly によって有効化されます。asm_create_connector、asm_create_action_or_trigger、asm_set_jsp_and_compile、asm_test_api_endpoint、asm_inject_settings などが含まれています。">
 <div aria-label="Environment" class="env-toggle" role="group"><button class="env-seg active" data-env="dev" type="button">開発者</button><button class="env-seg" data-env="prod" type="button">製品</button></div>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><path class="tk" d="M12 32 L24 20 L40 36 L52 24"></path><rect class="fill" height="8" rx="2" width="8" x="8" y="28"></rect><rect class="fill" height="8" rx="2" style="--gc:#5cc8ff" width="8" x="20" y="16"></rect><rect class="fill" height="8" rx="2" width="8" x="36" y="32"></rect><rect class="fill" height="8" rx="2" style="--gc:#c084fc" width="8" x="48" y="20"></rect></svg></div>
 <div class="name notranslate">assembly</div>
@@ -1288,85 +1373,85 @@
 <div class="cat-count" data-cat-count="tools-docs" data-unit="tool"><span class="cc-num">11</span> ツール</div>
 </div>
 <div class="grid" data-cat-key="tools-docs">
-<div class="card t-docs" data-category="tools" data-desc="Programmatic access. Issue a docs API key for CI/CD or automated publishing." data-example="docs_api_key({ action: 'create', name: 'ci-publisher', scopes: ['docs:write'] })
--&gt; key_81f4...a02" data-kind="tool" data-mutation="write" data-name="docs_api_key" data-tags="tools docs api-key auth" data-title="API key auth" data-used-by="/support, write-doc" data-when="When a CI pipeline or automation needs to publish docs without a human session. Issues a long-lived API key scoped to the docs workspace.">
+<div class="card t-docs" data-category="tools" data-desc="プログラムによるアクセス。CI/CDまたは自動公開のために、ドキュメントAPIキーを発行します。" data-example="docs_api_key({ action: 'create', name: 'ci-publisher', scopes: ['docs:write'] })
+-&gt; key_81f4...a02" data-kind="tool" data-mutation="write" data-name="docs_api_key" data-tags="tools docs api-key auth" data-title="APIキー認証" data-used-by="/support, write-doc" data-when="CIパイプラインや自動化プロセスにおいて、人間の介入なしにドキュメントを公開する必要がある場合に使用します。ドキュメントワークスペースにスコープされた、有効期限の長いAPIキーを発行します。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="28" rx="4" style="--gc:#c084fc" width="40" x="12" y="18"></rect><circle class="fill" cx="22" cy="32" r="4" style="--gc:#c084fc"></circle><path class="soft" d="M28 30 L52 30 M28 36 L48 36"></path></svg></div>
 <div class="name notranslate">docs_api_key</div>
 <div class="title">APIキー認証</div>
 <p class="desc">プログラムによるアクセス。CI/CDまたは自動公開のために、ドキュメントAPIキーを発行します。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Retrieval-augmented Q&amp;A. Claude asks the docs corpus before writing code or answering." data-example="docs_chat({ question: 'How does assembly-trigger-self-registering-webhook tear down on disable?' })
--&gt; cited paragraphs + source page links" data-kind="tool" data-mutation="read" data-name="docs_chat" data-tags="tools docs chat rag qa" data-title="Chat with docs" data-used-by="/build-automation, /build-assembly, /support, write-doc" data-when="When Claude needs authoritative answers grounded in APIANT docs before writing code or answering the user. Prefer this over memory for anything factual.">
+<div class="card t-docs" data-category="tools" data-desc="検索機能を活用した質疑応答。クロードはコードを書いたり回答したりする前に、ドキュメントのコーパスに質問する。" data-example="docs_chat({ question: 'assembly-trigger-self-registering-webhook は無効化時にどのように停止しますか？' })
+-&gt; 引用された段落 + ソースページへのリンク" data-kind="tool" data-mutation="read" data-name="docs_chat" data-tags="tools docs chat rag qa" data-title="医師とチャット" data-used-by="/build-automation, /build-assembly, /support, write-doc" data-when="クロードがコードを書いたりユーザーに回答したりする前に、APIANTドキュメントに基づいた信頼できる回答が必要な場合。事実関係については、記憶よりもこちらを優先する。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="28" rx="6" style="--gc:#c084fc" width="36" x="8" y="14"></rect><path class="fill" d="M14 48 L18 42 L14 42 Z" style="--gc:#c084fc"></path><circle class="fill" cx="18" cy="28" r="1.8" style="--gc:#c084fc"></circle><circle class="fill" cx="26" cy="28" r="1.8" style="--gc:#c084fc"></circle><circle class="anim" cx="34" cy="28" r="1.8" style="--gc:#c084fc;animation:blink 1.5s infinite"></circle></svg></div>
 <div class="name notranslate">docs_chat</div>
 <div class="title">医師とチャット</div>
 <p class="desc">検索機能を活用した質疑応答。クロードはコードを書いたり回答したりする前に、ドキュメントのコーパスに質問する。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Publish a new doc. Title, body, parent, tags, and status, in one call." data-example="docs_create({ title: 'HubSpot to Mindbody sync', parent: '/integrations', body: '...', tags: ['hubspot','mindbody'], status: 'published' })" data-kind="tool" data-mutation="write" data-name="docs_create" data-tags="tools docs create publish page" data-title="Create a page" data-used-by="write-doc, /build-assembly" data-when="When the user asks Claude to document a feature, workflow, or gotcha. Also after shipping an assembly so the integration gets a customer-facing page.">
+<div class="card t-docs" data-category="tools" data-desc="新しいドキュメントを公開します。タイトル、本文、親ドキュメント、タグ、ステータスを一度に設定できます。" data-example="docs_create({ title: 'HubSpotとMindbodyの同期', parent: '/integrations', body: '...', tags: ['hubspot','mindbody'], status: 'published' })" data-kind="tool" data-mutation="write" data-name="docs_create" data-tags="tools docs create publish page" data-title="ページを作成する" data-used-by="write-doc, /build-assembly" data-when="ユーザーがクロードに機能、ワークフロー、または注意点に関するドキュメント作成を依頼した場合。また、アセンブリを出荷した後、統合によって顧客向けページが作成されるようにする場合。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="44" rx="3" style="--gc:#c084fc" width="30" x="12" y="10"></rect><path class="soft" d="M18 20 H36 M18 28 H36 M18 36 H30"></path><circle class="fill" cx="46" cy="50" r="7" style="--gc:#1ab759"></circle><path class="tk" d="M42 50 L46 54 L52 46" stroke="#0c0c0c"></path></svg></div>
 <div class="name notranslate">docs_create</div>
 <div class="title">ページを作成する</div>
 <p class="desc">新しいドキュメントを公開します。タイトル、本文、親ドキュメント、タグ、ステータスを一度に設定できます。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Browse the full table of contents. Filter by section, tag, or status." data-example="docs_list({ parent: '/integrations', status: 'published' })
--&gt; 24 pages" data-kind="tool" data-mutation="read" data-name="docs_list" data-tags="tools docs list toc" data-title="List docs" data-used-by="write-doc, /build-automation" data-when='When Claude needs to pick the right parent section before creating a doc, or to confirm nothing exists yet. The "does this page already live somewhere" primitive.'>
+<div class="card t-docs" data-category="tools" data-desc="目次全体を閲覧する。セクション、タグ、またはステータスで絞り込む。" data-example="docs_list({ parent: '/integrations', status: 'published' })
+-&gt; 24ページ" data-kind="tool" data-mutation="read" data-name="docs_list" data-tags="tools docs list toc" data-title="ドキュメント一覧" data-used-by="write-doc, /build-automation" data-when="クロードがドキュメントを作成する前に適切な親セクションを選択する必要がある場合、またはまだ何も存在しないことを確認する必要がある場合に使用します。「このページは既にどこかに存在しているか」を確認する基本的な機能です。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect class="fill" height="6" rx="2" style="--gc:#c084fc" width="44" x="10" y="14"></rect><rect class="soft fill" height="6" rx="2" width="44" x="10" y="24"></rect><rect class="soft fill" height="6" rx="2" width="44" x="10" y="34"></rect><rect class="soft fill" height="6" rx="2" width="30" x="10" y="44"></rect></svg></div>
 <div class="name notranslate">docs_list</div>
 <div class="title">ドキュメント一覧</div>
 <p class="desc">目次全体を閲覧する。セクション、タグ、またはステータスで絞り込む。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Authenticate the docs session. Tokens cached for the session." data-example="docs_login({ user: 'fred@apiant.com' })
--&gt; session cached for 8h" data-kind="tool" data-mutation="write" data-name="docs_login" data-tags="tools docs login auth" data-title="Login" data-used-by="write-doc, /support" data-when="First call of any docs-writing skill. Establishes the session token; subsequent calls reuse the cached credential until it expires.">
+<div class="card t-docs" data-category="tools" data-desc="ドキュメントセッションを認証します。セッション用にトークンがキャッシュされます。" data-example="docs_login({ user: 'fred@apiant.com' })
+-&gt; セッションは8時間キャッシュされました" data-kind="tool" data-mutation="write" data-name="docs_login" data-tags="tools docs login auth" data-title="ログイン" data-used-by="write-doc, /support" data-when="ドキュメント作成スキルを初めて呼び出すと、セッショントークンが確立されます。以降の呼び出しでは、有効期限が切れるまでキャッシュされた認証情報が再利用されます。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="32" rx="4" style="--gc:#c084fc" width="36" x="14" y="16"></rect><path class="soft" d="M22 28 H42 M22 36 H36"></path><circle class="fill" cx="52" cy="14" r="4" style="--gc:#c084fc"></circle></svg></div>
 <div class="name notranslate">docs_login</div>
 <div class="title">ログイン</div>
 <p class="desc">ドキュメントセッションを認証します。セッション用にトークンがキャッシュされます。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Fetch the full contents of any doc. Markdown, images, and metadata included." data-example="docs_read({ path: '/integrations/hubspot-mindbody-sync' })
--&gt; { title, markdown, images, revision: 7 }" data-kind="tool" data-mutation="read" data-name="docs_read" data-tags="tools docs read page" data-title="Read a page" data-used-by="write-doc, /support, /build-automation" data-when="When Claude needs the literal body of a page, not just a summary. Called before docs_update to diff intelligently or before answering a precise how-to question.">
+<div class="card t-docs" data-category="tools" data-desc="あらゆるドキュメントの全コンテンツを取得します。マークダウン、画像、メタデータも含まれます。" data-example="docs_read({ path: '/integrations/hubspot-mindbody-sync' })
+-&gt; { title, markdown, images, revision: 7 }" data-kind="tool" data-mutation="read" data-name="docs_read" data-tags="tools docs read page" data-title="ページを読む" data-used-by="write-doc, /support, /build-automation" data-when="クロードがページ本文（要約だけでなく）を必要とする場合。docs_update の前に呼び出され、インテリジェントな差分比較を行うか、具体的な操作方法に関する質問に答える前に呼び出されます。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="44" rx="3" style="--gc:#c084fc" width="36" x="14" y="10"></rect><path class="soft" d="M20 22 H44 M20 30 H44 M20 38 H40 M20 46 H30"></path></svg></div>
 <div class="name notranslate">docs_read</div>
 <div class="title">ページを読む</div>
 <p class="desc">あらゆるドキュメントの全コンテンツを取得します。マークダウン、画像、メタデータも含まれます。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Take a live screenshot of the editor or platform UI and embed it into a doc." data-example="docs_screenshot({ url: '/editor/asm_42/mapping', selector: '.mapping-panel', alt: 'HubSpot to Mindbody field mapping' })
--&gt; inserts img + alt" data-kind="tool" data-mutation="write" data-name="docs_screenshot" data-tags="tools docs screenshot capture" data-title="Capture screenshot" data-used-by="write-doc" data-when="When a how-to doc needs to show the actual editor UI. Claude drives a headless browser, captures the panel, and embeds the image inline.">
+<div class="card t-docs" data-category="tools" data-desc="エディタまたはプラットフォームのユーザーインターフェースのライブスクリーンショットを撮影し、それをドキュメントに埋め込みます。" data-example="docs_screenshot({ url: '/editor/asm_42/mapping', selector: '.mapping-panel', alt: 'HubSpotからMindbodyへのフィールドマッピング' })
+-&gt; 画像とalt属性を挿入" data-kind="tool" data-mutation="write" data-name="docs_screenshot" data-tags="tools docs screenshot capture" data-title="スクリーンショットをキャプチャする" data-used-by="write-doc" data-when="ハウツーガイドで実際のエディタのユーザーインターフェースを表示する必要がある場合、Claudeはヘッドレスブラウザを起動し、パネルをキャプチャして画像をインラインで埋め込みます。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="32" rx="3" style="--gc:#c084fc" width="48" x="8" y="14"></rect><path class="soft" d="M14 20 L50 20 M14 40 L50 40"></path><circle class="fill" cx="14" cy="14" r="1.5" style="--gc:#c084fc"></circle><circle class="fill" cx="20" cy="14" r="1.5" style="--gc:#c084fc"></circle></svg></div>
 <div class="name notranslate">docs_screenshot</div>
 <div class="title">スクリーンショットをキャプチャする</div>
 <p class="desc">エディタまたはプラットフォームのユーザーインターフェースのライブスクリーンショットを撮影し、それをドキュメントに埋め込みます。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Semantic + keyword search across the entire docs corpus. Ranked results with context." data-example="docs_search({ query: 'how to handle Mindbody 429 rate limits' })
--&gt; 4 pages ranked by relevance" data-kind="tool" data-mutation="read" data-name="docs_search" data-tags="tools docs search query" data-title="Full-text search" data-used-by="/support, /build-automation, write-doc" data-when="When the user's question is open-ended and Claude needs to find the right page(s). Hybrid semantic + keyword ranking; returns snippets with source links.">
+<div class="card t-docs" data-category="tools" data-desc="文書全体を対象とした意味検索とキーワード検索。文脈を考慮したランキング結果。" data-example="docs_search({ query: 'Mindbody 429レート制限の対処方法' })
+-&gt; 関連性の高い順に4ページを表示" data-kind="tool" data-mutation="read" data-name="docs_search" data-tags="tools docs search query" data-title="全文検索" data-used-by="/support, /build-automation, write-doc" data-when="ユーザーの質問が漠然としていて、クロードが適切なページを見つける必要がある場合。意味論とキーワードランキングを組み合わせたハイブリッド方式で、ソースリンク付きのスニペットを返します。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="26" cy="26" r="14" style="--gc:#c084fc"></circle><path class="tk" d="M36 36 L54 54" style="--gc:#c084fc"></path></svg></div>
 <div class="name notranslate">docs_search</div>
 <div class="title">全文検索</div>
 <p class="desc">文書全体を対象とした意味検索とキーワード検索。文脈を考慮したランキング結果。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Edit title, body, tags, or status. Revisions tracked automatically." data-example="docs_update({ path: '/integrations/mindbody', body: updatedMarkdown, tags: ['mindbody','v7'], status: 'published' })" data-kind="tool" data-mutation="write" data-name="docs_update" data-tags="tools docs update edit page" data-title="Update a page" data-used-by="write-doc, /edit-assembly" data-when="When a shipped change makes an existing doc stale: API deprecation, new field, renamed step. Always call docs_read first so the edit is a real diff.">
+<div class="card t-docs" data-category="tools" data-desc="タイトル、本文、タグ、ステータスを編集できます。変更履歴は自動的に記録されます。" data-example="docs_update({ path: '/integrations/mindbody', body: updatedMarkdown, tags: ['mindbody','v7'], status: 'published' })" data-kind="tool" data-mutation="write" data-name="docs_update" data-tags="tools docs update edit page" data-title="ページを更新する" data-used-by="write-doc, /edit-assembly" data-when="変更内容がリリースされて既存のドキュメントが古くなった場合（APIの非推奨化、新しいフィールドの追加、ステップ名の変更など）、必ず最初にdocs_readを呼び出して、編集が実際の差分となるようにしてください。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="32" rx="3" style="--gc:#c084fc" width="40" x="12" y="16"></rect><path class="soft" d="M20 28 H44 M20 36 H40"></path><path class="tk" d="M42 14 L52 14 L52 24 M52 14 L40 26" style="--gc:#1ab759"></path></svg></div>
 <div class="name notranslate">docs_update</div>
 <div class="title">ページを更新する</div>
 <p class="desc">タイトル、本文、タグ、ステータスを編集できます。変更履歴は自動的に記録されます。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="Attach an illustration or diagram to any page. Auto-alt-text generated." data-example="docs_upload_image({ path: '/integrations/hubspot-mindbody-sync', file: 'sync-arch.svg', caption: 'Two-way sync with loop suppression' })" data-kind="tool" data-mutation="write" data-name="docs_upload_image" data-tags="tools docs upload image illustration" data-title="Upload image" data-used-by="write-doc" data-when="When a doc needs a diagram, architecture sketch, or external illustration that is not a UI screenshot. Auto-generates alt text from the caption.">
+<div class="card t-docs" data-category="tools" data-desc="任意のページにイラストや図を添付できます。代替テキストは自動的に生成されます。" data-example="docs_upload_image({ path: '/integrations/hubspot-mindbody-sync', file: 'sync-arch.svg', caption: 'ループ抑制機能付き双方向同期' })" data-kind="tool" data-mutation="write" data-name="docs_upload_image" data-tags="tools docs upload image illustration" data-title="画像をアップロード" data-used-by="write-doc" data-when="ドキュメントに、UIスクリーンショットではない図、アーキテクチャスケッチ、または外部イラストが必要な場合に使用します。キャプションから代替テキストを自動生成します。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><rect height="32" rx="3" style="--gc:#c084fc" width="44" x="10" y="16"></rect><circle class="fill" cx="22" cy="28" r="3" style="--gc:#f5b748"></circle><path class="tk" d="M14 44 L26 32 L34 40 L42 30 L50 38" style="--gc:#c084fc"></path></svg></div>
 <div class="name notranslate">docs_upload_image</div>
 <div class="title">画像をアップロード</div>
 <p class="desc">任意のページにイラストや図を添付できます。代替テキストは自動的に生成されます。</p>
 </div>
-<div class="card t-docs" data-category="tools" data-desc="List revisions, diff between versions, roll back if needed." data-example="docs_version({ path: '/integrations/mindbody', action: 'diff', from: 6, to: 7 })
--&gt; unified diff" data-kind="tool" data-mutation="read" data-name="docs_version" data-tags="tools docs version history revision" data-title="Version history" data-used-by="write-doc, /support" data-when="When a doc edit needs review, when a rollback is requested, or when Claude needs to reconstruct how guidance evolved over time.">
+<div class="card t-docs" data-category="tools" data-desc="改訂履歴の一覧表示、バージョン間の差分表示、必要に応じてロールバック機能を提供します。" data-example="docs_version({ path: '/integrations/mindbody', action: 'diff', from: 6, to: 7 })
+-&gt; 統合差分" data-kind="tool" data-mutation="read" data-name="docs_version" data-tags="tools docs version history revision" data-title="バージョン履歴" data-used-by="write-doc, /support" data-when="文書の編集内容を確認する必要がある場合、ロールバックが要求された場合、またはクロードがガイダンスが時間の経過とともにどのように変化したかを再構築する必要がある場合。">
 <span class="tag">ドキュメント</span>
 <div class="glyph"><svg class="g" viewbox="0 0 64 64"><circle cx="32" cy="32" r="22" style="--gc:#c084fc"></circle><circle class="fill" cx="32" cy="32" r="2" style="--gc:#c084fc"></circle><path class="tk" d="M32 32 L32 16 M32 32 L46 32" style="--gc:#c084fc"></path></svg></div>
 <div class="name notranslate">docs_version</div>

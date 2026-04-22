@@ -22,6 +22,21 @@ from bs4 import BeautifulSoup, NavigableString, Comment, Doctype
 ROOT = Path(__file__).parent.parent
 I18N_DIR = ROOT / 'i18n'
 
+# Mirror the translatable-attribute set from extract_strings.py so the two
+# halves of the pipeline stay in sync. Import is guarded so this script can
+# still run if extract_strings is ever moved or refactored.
+try:
+    sys.path.insert(0, str(Path(__file__).parent))
+    from extract_strings import TRANSLATABLE_ATTRS  # type: ignore
+except Exception:
+    TRANSLATABLE_ATTRS = {
+        'data-when',
+        'data-example',
+        'data-prod-desc',
+        'data-desc',
+        'data-title',
+    }
+
 LANGUAGES = {
     'es': {'name': 'Español', 'native': 'ES', 'dir': 'ltr'},
     'fr': {'name': 'Français', 'native': 'FR', 'dir': 'ltr'},
@@ -465,6 +480,20 @@ def translate_meta(soup, translations):
                 btn['value'] = translated
 
 
+def translate_data_attrs(soup, translations):
+    """Translate content-bearing data-* attributes (drawer depth content, etc.)."""
+    for attr in TRANSLATABLE_ATTRS:
+        for el in soup.find_all(attrs={attr: True}):
+            if should_skip_translate(el):
+                continue
+            val = el.get(attr)
+            if not isinstance(val, str) or not val.strip():
+                continue
+            translated = translate_text(val, translations)
+            if translated != val:
+                el[attr] = translated
+
+
 def process_page(html_content, lang, translations, page_path):
     """Process a single page: translate, fix URLs, add hreflang, add switcher."""
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -495,6 +524,9 @@ def process_page(html_content, lang, translations, page_path):
 
     # Translate meta tags, title, alt, placeholders
     translate_meta(soup, translations)
+
+    # Translate content-bearing data-* attributes (drawer depth content)
+    translate_data_attrs(soup, translations)
 
     # Translate DOM text nodes
     body = soup.find('body')
