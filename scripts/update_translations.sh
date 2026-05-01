@@ -8,23 +8,22 @@
 # 3. Regenerates all 19 language versions from the current English source
 # 4. Updates English pages with hreflang tags and language switcher
 #
-# API key must be set in ~/.apiant_keys (not committed to git):
-#   export GOOGLE_TRANSLATE_API_KEY="your-key"
+# API key sources (in order):
+#   1. GOOGLE_TRANSLATE_API_KEY env var (CI / GitHub Actions)
+#   2. ~/.apiant_keys file (local dev): export GOOGLE_TRANSLATE_API_KEY="your-key"
 
 set -e
 
-# Load API key from local file
-if [ -f "$HOME/.apiant_keys" ]; then
+# Load from ~/.apiant_keys only if env var isn't already set (so CI can override)
+if [ -z "$GOOGLE_TRANSLATE_API_KEY" ] && [ -f "$HOME/.apiant_keys" ]; then
   source "$HOME/.apiant_keys"
-else
-  echo "ERROR: ~/.apiant_keys not found."
-  echo "Create it with:"
-  echo '  export GOOGLE_TRANSLATE_API_KEY="your-key"'
-  exit 1
 fi
 
 if [ -z "$GOOGLE_TRANSLATE_API_KEY" ]; then
-  echo "ERROR: GOOGLE_TRANSLATE_API_KEY must be set in ~/.apiant_keys"
+  echo "ERROR: GOOGLE_TRANSLATE_API_KEY is not set."
+  echo "Local dev: create ~/.apiant_keys with"
+  echo '  export GOOGLE_TRANSLATE_API_KEY="your-key"'
+  echo "CI: set GOOGLE_TRANSLATE_API_KEY in repo secrets."
   exit 1
 fi
 
