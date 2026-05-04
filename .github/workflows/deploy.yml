@@ -41,6 +41,10 @@ jobs:
           else
             git add -A
             git commit -m "Auto-regenerate localized pages [skip ci]"
+            # Rebase onto any human pushes that landed during translation,
+            # then push. Closes the race where translation runs minutes-long
+            # and a human push lands first.
+            git pull --rebase origin main
             git push
           fi
 
