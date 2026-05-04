@@ -128,6 +128,20 @@ def should_skip_translate(el):
 
 BASE_URL = 'https://apiant.com'
 
+
+def strip_html_ext(url):
+    """Convert a URL ending in .html to the extensionless form.
+
+    Any URL ending in /index.html becomes trailing-slash form (matching the
+    canonical homepage convention https://apiant.com/), so /es/index.html
+    becomes /es/, /platform/index.html becomes /platform/, etc.
+    """
+    if url.endswith('/index.html'):
+        return url[:-len('index.html')]
+    if url.endswith('.html'):
+        return url[:-len('.html')]
+    return url
+
 # Language switcher HTML template - placed inline in nav between links and CTA
 SWITCHER_HTML = '''<div class="lang-switcher" style="position:relative;display:flex;align-items:center;margin-left:4px;">
 <button class="lang-switcher-btn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;">
@@ -322,7 +336,7 @@ def fix_urls(soup, lang, page_path):
 
 
 def add_hreflang_tags(soup, page_path):
-    """Add hreflang link tags to <head>. Idempotent — removes any existing
+    """Add hreflang link tags to <head>. Idempotent. Removes any existing
     hreflang link tags first so this can be re-run without duplicating."""
     head = soup.find('head')
     if not head:
@@ -334,20 +348,20 @@ def add_hreflang_tags(soup, page_path):
 
     # x-default (English)
     tag = soup.new_tag('link', rel='alternate', hreflang='x-default')
-    tag['href'] = f'{BASE_URL}/{page_path}'
+    tag['href'] = strip_html_ext(f'{BASE_URL}/{page_path}')
     head.append('\n')
     head.append(tag)
 
     # English
     tag = soup.new_tag('link', rel='alternate', hreflang='en')
-    tag['href'] = f'{BASE_URL}/{page_path}'
+    tag['href'] = strip_html_ext(f'{BASE_URL}/{page_path}')
     head.append('\n')
     head.append(tag)
 
     # All other languages
     for lc in LANGUAGES:
         tag = soup.new_tag('link', rel='alternate', hreflang=lc)
-        tag['href'] = f'{BASE_URL}/{lc}/{page_path}'
+        tag['href'] = strip_html_ext(f'{BASE_URL}/{lc}/{page_path}')
         head.append('\n')
         head.append(tag)
 
@@ -562,7 +576,7 @@ def process_page(html_content, lang, translations, page_path):
         for existing in soup.find_all('link', rel='canonical'):
             existing.decompose()
         canonical = soup.new_tag('link', rel='canonical')
-        canonical['href'] = f'{BASE_URL}/{lang}/{page_path}'
+        canonical['href'] = strip_html_ext(f'{BASE_URL}/{lang}/{page_path}')
         head.append(canonical)
 
     return str(soup)

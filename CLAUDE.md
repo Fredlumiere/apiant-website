@@ -145,14 +145,23 @@ The site is localized into 20 languages (English + 19). Localized pages live in 
 bash scripts/update_translations.sh
 ```
 
-This single script: extracts strings, translates missing ones via DeepL + Google Translate APIs, and regenerates all 684 localized pages from the current English source. API keys are embedded in the script.
+This single script: extracts strings, translates missing ones via the Google Translate API, and regenerates all 684 localized pages from the current English source.
+
+**API key required.** The script sources `~/.apiant_keys` (not committed) and expects `GOOGLE_TRANSLATE_API_KEY` to be exported there:
+
+```bash
+# ~/.apiant_keys
+export GOOGLE_TRANSLATE_API_KEY="your-key"
+```
+
+`scripts/translate_api.py` also supports DeepL (`DEEPL_API_KEY`, better quality for European languages) when invoked directly, but the `update_translations.sh` wrapper calls it with `--provider google`.
 
 **After editing any English page that has localized versions, always regenerate.** The localized pages are generated copies, not manually maintained. Any design or text change to an English page must be followed by regeneration, or the localized versions will be stale.
 
 Key files:
 - `scripts/update_translations.sh` - one-command update (extract + translate + regenerate)
 - `scripts/localize.py` - page generation engine
-- `scripts/translate_api.py` - DeepL + Google Translate API pipeline
+- `scripts/translate_api.py` - Google Translate (default) / DeepL API pipeline
 - `scripts/extract_strings.py` - string extraction from HTML
 - `i18n/shared_ui.json` - hand-curated nav/footer/form translations
 - `i18n/{lang}.json` - per-language translation dictionaries

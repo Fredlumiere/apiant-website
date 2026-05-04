@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Inject SEO + GEO foundation into every English HTML page in the repo.
 
-Idempotent — safe to run repeatedly. For each indexable English page:
+Idempotent, safe to run repeatedly. For each indexable English page:
   1. Add <script src="/js/gtag-consent.js"></script> just before the
      cookie-consent.js tag (loads gtag with Consent Mode v2 default-denied
      before the banner initializes).
@@ -101,7 +101,7 @@ def is_english_page(path: Path) -> bool:
     # Skip locale dirs
     if len(first) == 2 and first.isalpha() and first.islower() and first != "js":
         return False
-    # Skip servlet templates — they have {TEMPLATE_*} placeholders the server
+    # Skip servlet templates. They have {TEMPLATE_*} placeholders the server
     # replaces at serve time. A static canonical or schema would be wrong.
     name = rel.name
     if name in {"servlettemplateconnect.html", "servlettemplateconnections.html"}:
@@ -119,6 +119,8 @@ def url_for(path: Path) -> str:
         return f"{BASE_URL}/"
     if rel.endswith("/index.html"):
         return f"{BASE_URL}/{rel[: -len('index.html')]}"
+    if rel.endswith(".html"):
+        return f"{BASE_URL}/{rel[: -len('.html')]}"
     return f"{BASE_URL}/{rel}"
 
 
@@ -336,7 +338,7 @@ def breadcrumb_schema(path: Path) -> dict | None:
                     "@type": "ListItem",
                     "position": 3,
                     "name": f"{PLATFORM_LABELS[platform_key]} Integrations",
-                    "item": f"{BASE_URL}/apipartners/{platform_key}-turnkey-integration-solutions.html",
+                    "item": f"{BASE_URL}/apipartners/{platform_key}-turnkey-integration-solutions",
                 }
             )
             parsed = parse_product_page(path)
