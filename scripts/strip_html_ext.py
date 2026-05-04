@@ -84,9 +84,14 @@ def fix_file(path, apply):
         path.write_text(new_content, encoding='utf-8')
     return urls[0]
 
+SCAN_DIRS = ['apipartners', 'platform', 'connect', 'connections']
+
 def collect_files():
     files = sorted(ROOT.glob('*.html'))
-    files.extend(sorted((ROOT / 'apipartners').rglob('*.html')))
+    for d in SCAN_DIRS:
+        sub = ROOT / d
+        if sub.exists():
+            files.extend(sorted(sub.rglob('*.html')))
     for d in LANG_DIRS:
         sub = ROOT / d
         if sub.exists():
