@@ -139,15 +139,17 @@ From the revision plan (these apply to all page copy):
 
 The site is localized into 20 languages (English + 19). Localized pages live in subdirectories (`/es/`, `/fr/`, `/de/`, etc.).
 
-**When the user asks to "update all languages" or "update translations", run:**
+**Translations run in CI on every push to `main`.** `.github/workflows/deploy.yml` runs `scripts/update_translations.sh` against the new English source, auto-commits the regenerated locale files with `[skip ci]` to avoid recursion, then rsyncs to apiant.com. `GOOGLE_TRANSLATE_API_KEY` lives in GitHub Actions secrets; collaborators do not need a local key.
+
+**Default workflow:** edit English HTML, commit, push. CI handles translation regen + deploy.
+
+**Local manual run** (only needed when iterating on translation logic itself, or testing a translation change before pushing):
 
 ```bash
 bash scripts/update_translations.sh
 ```
 
-This single script: extracts strings, translates missing ones via the Google Translate API, and regenerates all 684 localized pages from the current English source.
-
-**API key required.** The script sources `~/.apiant_keys` (not committed) and expects `GOOGLE_TRANSLATE_API_KEY` to be exported there:
+The script prefers an existing `GOOGLE_TRANSLATE_API_KEY` env var and falls back to sourcing `~/.apiant_keys`:
 
 ```bash
 # ~/.apiant_keys
@@ -155,8 +157,6 @@ export GOOGLE_TRANSLATE_API_KEY="your-key"
 ```
 
 `scripts/translate_api.py` also supports DeepL (`DEEPL_API_KEY`, better quality for European languages) when invoked directly, but the `update_translations.sh` wrapper calls it with `--provider google`.
-
-**After editing any English page that has localized versions, always regenerate.** The localized pages are generated copies, not manually maintained. Any design or text change to an English page must be followed by regeneration, or the localized versions will be stale.
 
 Key files:
 - `scripts/update_translations.sh` - one-command update (extract + translate + regenerate)
