@@ -1,0 +1,560 @@
+#!/usr/bin/env python3
+"""build_blog.py — render blog posts from Supabase to static HTML.
+
+Triggered by GitHub Actions on `repository_dispatch` type `blog_publish`,
+which the Supabase publish trigger fires when a post transitions to status
+'publishing'. Can also be run locally:
+
+  SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... \
+    python3 scripts/build_blog.py --post-id <uuid>
+
+  python3 scripts/build_blog.py --all       # rebuild every live post + hub
+
+Flow:
+  1. Fetch the target post (or all live posts) via Supabase REST.
+  2. Render body markdown to HTML (Python-Markdown + pymdownx extensions).
+  3. Extract a TOC from H2/H3 in the rendered HTML.
+  4. Render the post template and write /blog/posts/<slug>/index.html.
+  5. Always rebuild the hub (/blog/index.html) and category landing pages
+     from the full set of live posts.
+  6. Write /blog/feed.xml (RSS 2.0, 50 most recent).
+  7. POST /functions/v1/blog-mark-live to flip the post's status to 'live'
+     or 'failed' (the GitHub Action commits + deploys the resulting files).
+"""
+from __future__ import annotations
+
+import argparse
+import html
+import json
+import os
+import re
+import sys
+import textwrap
+import traceback
+from datetime import datetime, timezone
+from pathlib import Path
+
+import markdown as md
+import requests
+
+ROOT = Path(__file__).resolve().parent.parent
+BLOG_DIR = ROOT / "blog"
+POSTS_DIR = BLOG_DIR / "posts"
+CATEGORY_DIR = BLOG_DIR / "category"
+TEMPLATES_DIR = BLOG_DIR / "_templates"
+BASE_URL = "https://apiant.com"
+SITE_NAME = "APIANT Blog"
+
+WORDS_PER_MINUTE = 220
+
+# ---------- Supabase REST helpers ----------
+
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
+SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+
+
+def sb_headers() -> dict:
+    if not SUPABASE_URL or not SERVICE_KEY:
+        raise SystemExit(
+            "SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY env vars required"
+        )
+    return {
+        "apikey": SERVICE_KEY,
+        "Authorization": f"Bearer {SERVICE_KEY}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+
+
+def sb_get(path: str, params: dict | None = None) -> list:
+    url = f"{SUPABASE_URL}/rest/v1{path}"
+    r = requests.get(url, headers=sb_headers(), params=params or {}, timeout=30)
+    r.raise_for_status()
+    return r.json()
+
+
+POST_SELECT = (
+    "id,slug,title,subtitle,excerpt,body_md,hero_image_url,hero_image_alt,"
+    "seo_title,seo_description,canonical_url,og_image_url,status,"
+    "published_at,scheduled_for,created_at,updated_at,"
+    "category:blog_categories(id,slug,name,description),"
+    "author:blog_authors(id,slug,display_name,role_title,avatar_url,bio),"
+    "tags:blog_post_tags(blog_tags(id,slug,name))"
+)
+
+
+def fetch_post(post_id: str) -> dict | None:
+    rows = sb_get("/blog_posts", {"id": f"eq.{post_id}", "select": POST_SELECT})
+    return rows[0] if rows else None
+
+
+def fetch_live_posts() -> list[dict]:
+    return sb_get(
+        "/blog_posts",
+        {
+            "status": "eq.live",
+            "select": POST_SELECT,
+            "order": "published_at.desc.nullslast",
+        },
+    )
+
+
+def fetch_categories() -> list[dict]:
+    return sb_get(
+        "/blog_categories",
+        {"select": "id,slug,name,description,sort_order", "order": "sort_order.asc"},
+    )
+
+
+def mark_live(post_id: str, status: str, msg: str | None = None) -> None:
+    """Best-effort. Failure here doesn't roll back HTML writes."""
+    url = f"{SUPABASE_URL}/functions/v1/blog-mark-live"
+    try:
+        r = requests.post(
+            url,
+            headers={
+                "Authorization": f"Bearer {SERVICE_KEY}",
+                "Content-Type": "application/json",
+            },
+            data=json.dumps({"id": post_id, "status": status, "msg": msg}),
+            timeout=15,
+        )
+        if not r.ok:
+            print(f"WARN blog-mark-live non-2xx ({r.status_code}): {r.text[:300]}")
+    except Exception as e:
+        print(f"WARN blog-mark-live exception: {e}")
+
+
+# ---------- Template helpers ----------
+
+def load_template(name: str) -> str:
+    return (TEMPLATES_DIR / name).read_text(encoding="utf-8")
+
+
+def sub(template: str, vars: dict) -> str:
+    out = template
+    for k, v in vars.items():
+        out = out.replace("{{" + k + "}}", v)
+    # Strip any remaining placeholders so we don't leak {{X}} into HTML.
+    out = re.sub(r"\{\{[A-Z_]+\}\}", "", out)
+    return out
+
+
+def normalize(s: str | None) -> str:
+    return (s or "").strip()
+
+
+def js(value):
+    """JSON-encode a value for safe inline use in <script>."""
+    return json.dumps(value if value is not None else "")
+
+
+def slugify_anchor(text: str) -> str:
+    s = re.sub(r"[^\w\s-]", "", text.lower()).strip()
+    return re.sub(r"[-\s]+", "-", s) or "section"
+
+
+# ---------- Markdown + TOC ----------
+
+def render_markdown(body_md: str) -> tuple[str, list[tuple[int, str, str]]]:
+    """Render markdown to HTML and return (html, toc_entries).
+
+    toc_entries: list of (level, anchor_id, text) for H2 (level=2) and H3 (level=3).
+    """
+    extensions = [
+        "markdown.extensions.fenced_code",
+        "markdown.extensions.tables",
+        "markdown.extensions.smarty",
+        "markdown.extensions.attr_list",
+        "markdown.extensions.toc",
+        "pymdownx.superfences",
+    ]
+    extension_configs = {
+        "markdown.extensions.toc": {
+            "slugify": lambda value, sep: slugify_anchor(value),
+            "toc_depth": "2-3",
+        },
+    }
+    rendered = md.markdown(body_md or "", extensions=extensions, extension_configs=extension_configs)
+
+    toc: list[tuple[int, str, str]] = []
+    for m in re.finditer(r'<h([23])\s+id="([^"]+)"[^>]*>(.*?)</h\1>', rendered, flags=re.DOTALL):
+        level = int(m.group(1))
+        anchor = m.group(2)
+        text = re.sub(r"<[^>]+>", "", m.group(3)).strip()
+        toc.append((level, anchor, text))
+    return rendered, toc
+
+
+def estimate_read_minutes(body_md: str) -> int:
+    words = len(re.findall(r"\b\w+\b", body_md or ""))
+    return max(1, round(words / WORDS_PER_MINUTE))
+
+
+# ---------- HTML blocks ----------
+
+def head_for_post(post: dict) -> str:
+    head_tmpl = load_template("_head.html")
+    title = normalize(post["title"])
+    excerpt = normalize(post.get("excerpt")) or f"{title} — APIANT Blog"
+    seo_title = normalize(post.get("seo_title")) or f"{title} | APIANT Blog"
+    canonical = normalize(post.get("canonical_url")) or f"{BASE_URL}/blog/posts/{post['slug']}/"
+    og_image = normalize(post.get("og_image_url")) or normalize(post.get("hero_image_url")) or f"{BASE_URL}/images/Apiant-iso1-02.png"
+    return sub(head_tmpl, {
+        "TITLE_TAG": html.escape(seo_title),
+        "META_DESCRIPTION": html.escape(excerpt),
+        "OG_TITLE": html.escape(title),
+        "OG_IMAGE_URL": html.escape(og_image),
+        "OG_TYPE": "article",
+        "CANONICAL_URL": html.escape(canonical),
+        "EXTRA_HEAD": "",
+    })
+
+
+def head_for_hub(title: str, description: str, url: str) -> str:
+    head_tmpl = load_template("_head.html")
+    return sub(head_tmpl, {
+        "TITLE_TAG": html.escape(title),
+        "META_DESCRIPTION": html.escape(description),
+        "OG_TITLE": html.escape(title),
+        "OG_IMAGE_URL": f"{BASE_URL}/images/Apiant-iso1-02.png",
+        "OG_TYPE": "website",
+        "CANONICAL_URL": html.escape(url),
+        "EXTRA_HEAD": "",
+    })
+
+
+def render_post_card(post: dict) -> str:
+    cat = post.get("category") or {}
+    hero = post.get("hero_image_url") or ""
+    hero_html = (
+        f'<div class="blog-card-image"><img alt="{html.escape(post.get("hero_image_alt") or post["title"])}" loading="lazy" src="{html.escape(hero)}"/></div>'
+        if hero else
+        '<div class="blog-card-image"></div>'
+    )
+    excerpt = html.escape(normalize(post.get("excerpt")) or "")
+    published = format_date(post.get("published_at") or post.get("updated_at"))
+    author = (post.get("author") or {}).get("display_name", "")
+    return (
+        f'<a class="blog-card" href="/blog/posts/{html.escape(post["slug"])}/">'
+        f'{hero_html}'
+        f'<div class="blog-card-body">'
+        f'<div class="blog-category-chip">{html.escape(cat.get("name", ""))}</div>'
+        f'<h3 class="blog-card-title">{html.escape(post["title"])}</h3>'
+        f'<p class="blog-card-excerpt">{excerpt}</p>'
+        f'<div class="blog-card-meta">'
+        f'<span>{html.escape(author)}</span>'
+        f'<span>{html.escape(published)}</span>'
+        f'</div></div></a>'
+    )
+
+
+def render_category_pills(categories: list[dict], active_slug: str | None) -> str:
+    pills = [(
+        f'<a class="blog-pill{" active" if active_slug is None else ""}" href="/blog/">All</a>'
+    )]
+    for c in categories:
+        active = " active" if c["slug"] == active_slug else ""
+        pills.append(
+            f'<a class="blog-pill{active}" href="/blog/category/{html.escape(c["slug"])}">'
+            f'{html.escape(c["name"])}</a>'
+        )
+    return "\n".join(pills)
+
+
+def render_featured(post: dict) -> str:
+    cat = post.get("category") or {}
+    hero = post.get("hero_image_url") or ""
+    hero_html = (
+        f'<div class="blog-featured-image"><img alt="{html.escape(post.get("hero_image_alt") or post["title"])}" src="{html.escape(hero)}"/></div>'
+        if hero else
+        '<div class="blog-featured-image"></div>'
+    )
+    return (
+        '<section class="blog-featured">'
+        f'{hero_html}'
+        '<div class="blog-featured-body">'
+        f'<div class="blog-category-chip">{html.escape(cat.get("name", ""))}</div>'
+        f'<h2 class="blog-featured-title"><a href="/blog/posts/{html.escape(post["slug"])}/">{html.escape(post["title"])}</a></h2>'
+        f'<p class="blog-featured-excerpt">{html.escape(normalize(post.get("excerpt")) or "")}</p>'
+        '</div></section>'
+    )
+
+
+def render_toc(toc: list[tuple[int, str, str]]) -> str:
+    if not toc:
+        return ""
+    items = []
+    for level, anchor, text in toc:
+        items.append(
+            f'<li class="lvl-{level}"><a href="#{html.escape(anchor)}">{html.escape(text)}</a></li>'
+        )
+    return (
+        '<aside class="blog-toc">'
+        '<div class="blog-toc-heading">In this article</div>'
+        '<ul class="blog-toc-list">' + "".join(items) + '</ul>'
+        '</aside>'
+    )
+
+
+def render_tags(tags: list[dict]) -> str:
+    if not tags:
+        return ""
+    chips = "".join(
+        f'<a class="blog-tag" href="/blog/?tag={html.escape(t["slug"])}">#{html.escape(t["name"])}</a>'
+        for t in tags
+    )
+    return f'<div class="blog-post-tags">{chips}</div>'
+
+
+def render_related(posts: list[dict]) -> str:
+    if not posts:
+        return ""
+    cards = "".join(render_post_card(p) for p in posts)
+    return (
+        '<section class="blog-related">'
+        '<h2 class="blog-related-heading">Keep reading</h2>'
+        f'<div class="blog-grid">{cards}</div>'
+        '</section>'
+    )
+
+
+def render_hero_image(post: dict) -> str:
+    hero = normalize(post.get("hero_image_url"))
+    if not hero:
+        return ""
+    alt = html.escape(post.get("hero_image_alt") or post["title"])
+    return (
+        f'<div class="blog-post-hero-image"><img alt="{alt}" src="{html.escape(hero)}"/></div>'
+    )
+
+
+def format_date(value) -> str:
+    if not value:
+        return ""
+    try:
+        dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except Exception:
+        return ""
+    return dt.strftime("%b %-d, %Y") if sys.platform != "win32" else dt.strftime("%b %#d, %Y")
+
+
+# ---------- Renderers per page type ----------
+
+def write_post_page(post: dict, related: list[dict]) -> Path:
+    body_html, toc = render_markdown(post["body_md"])
+    cat = post.get("category") or {}
+    author = post.get("author") or {}
+    tags = [t["blog_tags"] for t in (post.get("tags") or []) if t.get("blog_tags")]
+    canonical = normalize(post.get("canonical_url")) or f"{BASE_URL}/blog/posts/{post['slug']}/"
+    category_url = f"{BASE_URL}/blog/category/{cat.get('slug', '')}"
+    published_iso = post.get("published_at") or post.get("created_at") or ""
+    updated_iso = post.get("updated_at") or published_iso
+    hero_image_for_jsonld = normalize(post.get("hero_image_url")) or normalize(post.get("og_image_url"))
+
+    template = load_template("post.html")
+    rendered = sub(template, {
+        "HEAD": head_for_post(post),
+        "NAV": load_template("_nav.html"),
+        "FOOTER": load_template("_footer.html"),
+        "TITLE": html.escape(post["title"]),
+        "SUBTITLE_BLOCK": (
+            f'<p class="blog-post-subtitle">{html.escape(post["subtitle"])}</p>'
+            if normalize(post.get("subtitle")) else ""
+        ),
+        "CATEGORY_SLUG": html.escape(cat.get("slug", "")),
+        "CATEGORY_NAME": html.escape(cat.get("name", "")),
+        "AUTHOR_NAME": html.escape(author.get("display_name", "")),
+        "AUTHOR_SLUG": html.escape(author.get("slug", "")),
+        "PUBLISHED_DISPLAY": format_date(published_iso),
+        "READ_TIME": str(estimate_read_minutes(post["body_md"])),
+        "HERO_IMAGE_BLOCK": render_hero_image(post),
+        "BODY_HTML": body_html,
+        "TOC_BLOCK": render_toc(toc),
+        "TAGS_BLOCK": render_tags(tags),
+        "RELATED_BLOCK": render_related(related),
+        # JSON-LD fields (json-encoded)
+        "JSON_TITLE": js(post["title"]),
+        "JSON_DESCRIPTION": js(post.get("excerpt") or ""),
+        "JSON_HERO_IMAGE": js(hero_image_for_jsonld or f"{BASE_URL}/images/Apiant-iso1-02.png"),
+        "JSON_PUBLISHED_AT": js(published_iso),
+        "JSON_UPDATED_AT": js(updated_iso),
+        "JSON_AUTHOR_NAME": js(author.get("display_name", "")),
+        "JSON_AUTHOR_URL": js(f"{BASE_URL}/blog/?author={author.get('slug', '')}"),
+        "JSON_CANONICAL": js(canonical),
+        "JSON_CATEGORY_NAME": js(cat.get("name", "")),
+        "JSON_CATEGORY_URL": js(category_url),
+    })
+
+    out_dir = POSTS_DIR / post["slug"]
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "index.html"
+    out_path.write_text(rendered, encoding="utf-8")
+    return out_path
+
+
+def write_hub(posts: list[dict], categories: list[dict]) -> Path:
+    template = load_template("index.html")
+    cards = "".join(render_post_card(p) for p in posts[1:]) if posts else ""
+    featured = render_featured(posts[0]) if posts else ""
+
+    rendered = sub(template, {
+        "HEAD": head_for_hub(
+            "APIANT Blog — Builder notes from the integration trenches",
+            "Use cases, customer stories, and platform deep dives from the APIANT integration platform.",
+            f"{BASE_URL}/blog/",
+        ),
+        "NAV": load_template("_nav.html"),
+        "FOOTER": load_template("_footer.html"),
+        "HERO_TITLE": "Builder notes from the integration trenches.",
+        "HERO_SUB": "Real integration problems solved with the APIANT platform — and the AI Co-Pilot that built it.",
+        "CATEGORY_PILLS": render_category_pills(categories, None),
+        "FEATURED_BLOCK": featured,
+        "POST_CARDS": cards,
+        "PAGINATION_BLOCK": "",  # Pagination kicks in at 10+ posts; v1 ships flat.
+    })
+
+    out_path = BLOG_DIR / "index.html"
+    out_path.write_text(rendered, encoding="utf-8")
+    return out_path
+
+
+def write_category(category: dict, posts: list[dict], all_categories: list[dict]) -> Path:
+    template = load_template("category.html")
+    cards = "".join(render_post_card(p) for p in posts)
+    cat_url = f"{BASE_URL}/blog/category/{category['slug']}"
+
+    rendered = sub(template, {
+        "HEAD": head_for_hub(
+            f'{category["name"]} — APIANT Blog',
+            normalize(category.get("description")) or f'Posts in {category["name"]}.',
+            cat_url,
+        ),
+        "NAV": load_template("_nav.html"),
+        "FOOTER": load_template("_footer.html"),
+        "CATEGORY_NAME": html.escape(category["name"]),
+        "CATEGORY_NAME_UPPER": html.escape(category["name"].upper()),
+        "CATEGORY_DESCRIPTION": html.escape(normalize(category.get("description")) or ""),
+        "CATEGORY_PILLS": render_category_pills(all_categories, category["slug"]),
+        "POST_CARDS": cards if cards else '<div class="blog-empty"><h2>No posts yet</h2><p>Check back soon.</p></div>',
+        "PAGINATION_BLOCK": "",
+        "JSON_CATEGORY_NAME": js(category["name"]),
+        "JSON_CATEGORY_DESCRIPTION": js(category.get("description") or ""),
+        "JSON_CATEGORY_URL": js(cat_url),
+    })
+
+    out_dir = CATEGORY_DIR / category["slug"]
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "index.html"
+    out_path.write_text(rendered, encoding="utf-8")
+    return out_path
+
+
+def write_rss(posts: list[dict]) -> Path:
+    now = datetime.now(timezone.utc).strftime("%a, %d %b %Y %H:%M:%S +0000")
+    items = []
+    for p in posts[:50]:
+        pub = ""
+        if p.get("published_at"):
+            try:
+                pub = datetime.fromisoformat(p["published_at"].replace("Z", "+00:00")).strftime("%a, %d %b %Y %H:%M:%S +0000")
+            except Exception:
+                pub = ""
+        link = f"{BASE_URL}/blog/posts/{p['slug']}/"
+        title = html.escape(p["title"])
+        desc = html.escape(normalize(p.get("excerpt")) or "")
+        items.append(
+            f"<item><title>{title}</title><link>{link}</link>"
+            f"<guid isPermaLink=\"true\">{link}</guid>"
+            f"<pubDate>{pub}</pubDate>"
+            f"<description>{desc}</description></item>"
+        )
+    rss = textwrap.dedent(f"""<?xml version="1.0" encoding="UTF-8"?>
+        <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+        <channel>
+        <title>{SITE_NAME}</title>
+        <link>{BASE_URL}/blog/</link>
+        <atom:link href="{BASE_URL}/blog/feed.xml" rel="self" type="application/rss+xml"/>
+        <description>Use cases, customer stories, and platform deep dives from APIANT.</description>
+        <language>en</language>
+        <lastBuildDate>{now}</lastBuildDate>
+        {''.join(items)}
+        </channel>
+        </rss>
+    """).strip()
+    out_path = BLOG_DIR / "feed.xml"
+    out_path.write_text(rss, encoding="utf-8")
+    return out_path
+
+
+# ---------- Orchestration ----------
+
+def pick_related(post: dict, all_live: list[dict], limit: int = 3) -> list[dict]:
+    """Pick related posts: same category first, then most recent."""
+    cat_id = (post.get("category") or {}).get("id")
+    same_cat = [p for p in all_live if p["id"] != post["id"] and (p.get("category") or {}).get("id") == cat_id]
+    others = [p for p in all_live if p["id"] != post["id"] and p not in same_cat]
+    return (same_cat + others)[:limit]
+
+
+def rebuild_all_hubs() -> None:
+    categories = fetch_categories()
+    live = fetch_live_posts()
+    write_hub(live, categories)
+    for c in categories:
+        in_cat = [p for p in live if (p.get("category") or {}).get("id") == c["id"]]
+        write_category(c, in_cat, categories)
+    write_rss(live)
+
+
+def build_one(post_id: str) -> None:
+    post = fetch_post(post_id)
+    if not post:
+        print(f"ERROR post {post_id} not found")
+        sys.exit(1)
+    try:
+        # Re-fetch all live posts to pick related and to rebuild hubs in one go.
+        all_live = fetch_live_posts()
+        # Make sure the post we're publishing is in the related-source if it's now live.
+        related = pick_related(post, all_live)
+        path = write_post_page(post, related)
+        # The post itself isn't 'live' yet until we mark it; mark first so the
+        # next hub rebuild includes it.
+        mark_live(post_id, "live")
+        rebuild_all_hubs()
+        print(f"OK wrote {path.relative_to(ROOT)}")
+    except Exception as e:
+        traceback.print_exc()
+        mark_live(post_id, "failed", str(e)[:500])
+        sys.exit(1)
+
+
+def build_all() -> None:
+    rebuild_all_hubs()
+    live = fetch_live_posts()
+    for p in live:
+        related = pick_related(p, live)
+        write_post_page(p, related)
+    print(f"OK rebuilt {len(live)} posts + hub + categories + RSS")
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    g = ap.add_mutually_exclusive_group(required=True)
+    g.add_argument("--post-id", help="single post UUID to publish")
+    g.add_argument("--all", action="store_true", help="rebuild every live post + hub + categories + RSS")
+    args = ap.parse_args()
+
+    BLOG_DIR.mkdir(parents=True, exist_ok=True)
+    POSTS_DIR.mkdir(parents=True, exist_ok=True)
+    CATEGORY_DIR.mkdir(parents=True, exist_ok=True)
+
+    if args.post_id:
+        build_one(args.post_id)
+    else:
+        build_all()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
