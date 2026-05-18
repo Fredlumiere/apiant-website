@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="noindex,nofollow" name="robots"/>
+<title>Blog CMS — APIANT</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+
+<!-- EasyMDE -->
+<link href="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.css" rel="stylesheet"/>
+
+<style>
+:root {
+  --bg: #0c0c0c;
+  --accent: #1ab759;
+  --accent-soft: rgba(26,183,89,0.15);
+  --accent-hover: rgba(26,183,89,0.4);
+  --heading: #f7f8f8;
+  --body: rgba(247,248,248,0.82);
+  --body-soft: rgba(247,248,248,0.5);
+  --card-bg: rgba(255,255,255,0.03);
+  --card-border: rgba(255,255,255,0.07);
+  --input-bg: rgba(255,255,255,0.04);
+  --error: #ff5252;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--body);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+[x-cloak] { display: none !important; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--heading); }
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+input[type=text], input[type=email], input[type=password], input[type=url],
+input[type=datetime-local], textarea, select {
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--heading);
+  width: 100%;
+  outline: none;
+  transition: border-color 180ms ease;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+}
+.label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--body-soft);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ----- Buttons ----- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: transparent;
+  color: var(--body);
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+  text-decoration: none;
+}
+.btn:hover { border-color: var(--accent-hover); color: var(--heading); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+.btn-primary:hover { background: #16a04d; border-color: #16a04d; color: var(--bg); }
+
+.btn-ghost { border-color: transparent; }
+.btn-ghost:hover { border-color: var(--card-border); }
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.03);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--body-soft);
+  margin-left: 8px;
+}
+
+/* ----- Topbar ----- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 24px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--card-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+}
+.topbar-left { display: flex; align-items: center; gap: 12px; }
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--heading);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.brand-mark img { height: 22px; }
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+
+/* ----- Login card ----- */
+.login-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+.login-card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), rgba(26,183,89,0));
+}
+.login-card h1 {
+  margin: 0 0 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--heading);
+}
+.login-card .sub {
+  margin: 0 0 32px;
+  color: var(--body-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.login-card .field { margin-bottom: 16px; }
+.login-card .submit { width: 100%; padding: 12px; justify-content: center; }
+.login-card .error { color: var(--error); font-size: 13px; margin-top: 8px; }
+.login-card .ok { color: var(--accent); font-size: 14px; margin-top: 16px; }
+
+/* ----- List screen ----- */
+.list-shell { padding: 32px 32px 80px; max-width: 1280px; margin: 0 auto; }
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.list-header h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+}
+
+.list-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.filter-pill {
+  padding: 8px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--body);
+  transition: border-color 180ms ease;
+}
+.filter-pill.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+.filter-pill:hover { border-color: var(--accent-hover); }
+
+.list-search {
+  margin-left: auto;
+  width: 280px;
+  max-width: 100%;
+}
+
+.list-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.list-table th, .list-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 14px;
+}
+.list-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--body-soft);
+  font-weight: 500;
+  background: rgba(255,255,255,0.02);
+}
+.list-table tbody tr { cursor: pointer; transition: background 180ms ease; }
+.list-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+.list-table .row-title {
+  color: var(--heading);
+  font-weight: 500;
+  font-size: 15px;
+  display: block;
+  margin-bottom: 4px;
+}
+.list-table .row-slug {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--body-soft);
+}
+.list-table .meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--body-soft); }
+
+/* ----- Status badge ----- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: inherit;
+}
+.badge-draft {
+  border-color: rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(247,248,248,0.65);
+}
+.badge-saved { border-color: rgba(255,255,255,0.25); color: rgba(247,248,248,0.7); }
+.badge-publishing {
+  border-color: rgba(26,183,89,0.4);
+  background: rgba(26,183,89,0.08);
+  color: var(--accent);
+}
+.badge-publishing::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.badge-live { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+.badge-failed { background: rgba(255,82,82,0.1); color: var(--error); border-color: rgba(255,82,82,0.4); }
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ----- Editor screen ----- */
+.editor-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 24px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--card-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.crumb { color: var(--body-soft); font-size: 13px; }
+.crumb a { color: var(--body); }
+.editor-topbar .actions { display: flex; align-items: center; gap: 8px; }
+
+.editor-shell {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 0;
+  min-height: calc(100vh - 56px);
+}
+@media (max-width: 900px) {
+  .editor-shell { grid-template-columns: 1fr; }
+  .editor-drawer { display: none; }
+}
+
+.editor-canvas {
+  padding: 48px 64px 96px;
+  overflow-x: hidden;
+}
+.editor-title {
+  background: transparent;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+  width: 100%;
+  margin-bottom: 16px;
+  outline: none;
+  padding: 0;
+}
+.editor-title::placeholder { color: rgba(247,248,248,0.2); }
+
+.slug-row {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--body-soft);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.slug-row .prefix { color: var(--body-soft); }
+.slug-row .slug-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed transparent;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  padding: 2px 4px;
+  width: 280px;
+}
+.slug-row .slug-input:focus, .slug-row .slug-input:hover {
+  border-bottom-color: var(--accent-hover);
+}
+
+.editor-drawer {
+  border-left: 1px solid var(--card-border);
+  background: rgba(255,255,255,0.015);
+  padding: 32px 24px;
+  overflow-y: auto;
+  max-height: calc(100vh - 56px);
+  position: sticky;
+  top: 56px;
+}
+.drawer-section { margin-bottom: 24px; }
+
+.hero-drop {
+  position: relative;
+  aspect-ratio: 16/9;
+  border: 1px dashed var(--card-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 13px;
+  color: var(--body-soft);
+  background: var(--input-bg);
+  cursor: pointer;
+  overflow: hidden;
+}
+.hero-drop:hover { border-color: var(--accent-hover); }
+.hero-drop img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-drop .overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  background: rgba(0,0,0,0.55);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.hero-drop:hover .overlay { opacity: 1; }
+.hero-input { display: none; }
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.tag-chip.selected { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+.seo-preview-card {
+  background: #fff;
+  color: #202124;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+  font-family: arial, sans-serif;
+}
+.seo-preview-title { color: #1a0dab; font-size: 16px; line-height: 1.3; margin-bottom: 4px; }
+.seo-preview-url { color: #006621; font-size: 12px; margin-bottom: 4px; }
+.seo-preview-desc { color: #4d5156; font-size: 13px; line-height: 1.4; }
+
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.92);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 13px;
+  color: var(--heading);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  z-index: 100;
+}
+.toast.error { border-color: rgba(255,82,82,0.5); color: var(--error); }
+.toast.ok { border-color: var(--accent-hover); color: var(--accent); }
+
+.upload-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-hover);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+}
+
+/* EasyMDE overrides to match dark theme */
+.EasyMDEContainer .CodeMirror,
+.EasyMDEContainer .editor-preview {
+  background: transparent;
+  color: var(--heading);
+  border-color: var(--card-border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+}
+.EasyMDEContainer .CodeMirror-cursor { border-left-color: var(--accent); }
+.editor-toolbar { background: rgba(255,255,255,0.02); border-color: var(--card-border); }
+.editor-toolbar a { color: var(--body) !important; }
+.editor-toolbar a.active, .editor-toolbar a:hover { background: var(--card-bg) !important; border-color: var(--card-border) !important; }
+.editor-statusbar { color: var(--body-soft); }
+</style>
+</head>
+
+<body x-data="cms" x-init="boot()" x-cloak>
+
+<!-- ===== LOGIN ===== -->
+<template x-if="!session">
+<div class="login-shell">
+  <div class="login-card">
+    <h1>Blog CMS</h1>
+    <p class="sub">Magic-link sign-in. We'll email you a one-time link. Restricted to <code>@apiant.com</code>.</p>
+    <div x-show="!magicSent">
+      <div class="field">
+        <label class="label" for="email">Email</label>
+        <input id="email" type="email" placeholder="you@apiant.com" x-model="emailInput" @keydown.enter="sendMagicLink()"/>
+      </div>
+      <button class="btn btn-primary submit" :disabled="sending" @click="sendMagicLink()">
+        <span x-text="sending ? 'Sending…' : 'Send magic link'"></span>
+      </button>
+      <div class="error" x-text="loginError" x-show="loginError"></div>
+    </div>
+    <div x-show="magicSent" class="ok">
+      Check <span x-text="emailInput"></span>. The link expires in 60 minutes.
+      <button class="btn btn-ghost" style="margin-top:16px;" @click="magicSent=false">Use a different email</button>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- ===== AUTHENTICATED APP ===== -->
+<template x-if="session">
+
+<!-- LIST VIEW -->
+<div x-show="view === 'list'">
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="/admin/blog/" class="brand-mark">
+        <img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg"/>
+        Blog · CMS
+      </a>
+    </div>
+    <div class="topbar-right">
+      <a href="/blog/" target="_blank" class="btn btn-ghost">View live blog</a>
+      <button class="btn btn-ghost" @click="signOut()" x-text="(editor?.email || 'sign out')"></button>
+    </div>
+  </header>
+
+  <div class="list-shell">
+    <div class="list-header">
+      <h1>Posts</h1>
+      <button class="btn btn-primary" @click="newPost()">+ New post <span class="kbd">N</span></button>
+    </div>
+
+    <div class="list-filters">
+      <template x-for="f in filters" :key="f.value">
+        <button class="filter-pill" :class="{active: statusFilter === f.value}" @click="statusFilter = f.value; loadPosts()" x-text="f.label + ' ' + (counts[f.value] ?? '')"></button>
+      </template>
+      <div class="list-search">
+        <input type="text" placeholder="Search title, slug, author…" x-model="search"/>
+      </div>
+    </div>
+
+    <table class="list-table" x-show="filteredPosts.length > 0">
+      <thead>
+        <tr>
+          <th style="width:46%;">Title</th>
+          <th style="width:14%;">Status</th>
+          <th style="width:14%;">Category</th>
+          <th style="width:12%;">Author</th>
+          <th style="width:14%;">Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="p in filteredPosts" :key="p.id">
+          <tr @click="openPost(p.id)">
+            <td>
+              <span class="row-title" x-text="p.title || '(untitled)'"></span>
+              <span class="row-slug" x-text="p.slug"></span>
+            </td>
+            <td><span class="badge" :class="'badge-' + p.status" x-text="badgeLabel(p)"></span></td>
+            <td class="meta" x-text="(p.category && p.category.name) || ''"></td>
+            <td class="meta" x-text="(p.author && p.author.display_name) || ''"></td>
+            <td class="meta" x-text="relativeTime(p.updated_at)"></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+    <div x-show="filteredPosts.length === 0 && !loading" style="text-align:center;padding:96px 0;color:var(--body-soft);">
+      <h2 style="font-family:'DM Sans',sans-serif;color:var(--heading);margin-bottom:8px;">No posts yet</h2>
+      <p>Write the first one. It deploys in under five minutes.</p>
+      <button class="btn btn-primary" style="margin-top:16px;" @click="newPost()">Write first post</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDITOR VIEW -->
+<div x-show="view === 'edit'">
+  <header class="editor-topbar">
+    <div class="crumb">
+      <a href="#" @click.prevent="goList()">← Posts</a>
+      <span style="margin:0 8px;color:var(--body-soft);">/</span>
+      <span x-text="post.title || '(untitled)'"></span>
+    </div>
+    <div class="actions">
+      <span class="badge" :class="'badge-' + post.status" x-text="badgeLabel(post)" x-show="post.id"></span>
+      <button class="btn btn-ghost" @click="save()" :disabled="saving">
+        <span x-text="saving ? 'Saving…' : 'Save'"></span>
+        <span class="kbd">⌘S</span>
+      </button>
+      <button class="btn btn-primary" @click="publish()" :disabled="!post.id || publishing">
+        <span x-text="publishing ? 'Publishing…' : 'Publish'"></span>
+        <span class="kbd">⌘⇧↵</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="editor-shell">
+    <main class="editor-canvas">
+      <input class="editor-title" placeholder="Untitled post" x-model="post.title" @input="autoSlug()" maxlength="300"/>
+      <div class="slug-row">
+        <span class="prefix">apiant.com/blog/posts/</span>
+        <input class="slug-input" type="text" x-model="post.slug" placeholder="post-slug" pattern="[a-z0-9-]+" maxlength="200"/>
+        <span class="prefix">/</span>
+      </div>
+
+      <textarea id="editor-body" x-ref="bodyArea"></textarea>
+    </main>
+
+    <aside class="editor-drawer">
+      <div class="drawer-section">
+        <label class="label">Hero Image</label>
+        <div class="hero-drop" @click="$refs.heroFile.click()">
+          <template x-if="post.hero_image_url">
+            <img :src="post.hero_image_url" :alt="post.hero_image_alt || post.title"/>
+          </template>
+          <template x-if="!post.hero_image_url">
+            <div>Drop or click to upload<br/><span style="font-size:11px;color:var(--body-soft)">PNG / JPG / SVG · max 10MB</span></div>
+          </template>
+          <div class="overlay">Replace</div>
+        </div>
+        <input class="hero-input" type="file" accept="image/*" x-ref="heroFile" @change="uploadHero($event)"/>
+        <input type="text" x-model="post.hero_image_alt" placeholder="Alt text" style="margin-top:8px;"/>
+      </div>
+
+      <div class="drawer-section">
+        <label class="label">Excerpt <span style="float:right;" x-text="(post.excerpt || '').length + ' / 240'"></span></label>
+        <textarea rows="3" maxlength="240" x-model="post.excerpt" placeholder="One-sentence summary for cards and SEO."></textarea>
+      </div>
+
+      <div class="drawer-section">
+        <label class="label">Category</label>
+        <select x-model="post.category_id">
+          <option value="">— Select —</option>
+          <template x-for="c in categories" :key="c.id">
+            <option :value="c.id" x-text="c.name"></option>
+          </template>
+        </select>
+      </div>
+
+      <div class="drawer-section">
+        <label class="label">Tags</label>
+        <div>
+          <template x-for="t in tags" :key="t.id">
+            <span class="tag-chip" :class="{selected: tagIds.includes(t.id)}" @click="toggleTag(t.id)" x-text="'#' + t.slug"></span>
+          </template>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <label class="label">Scheduled For</label>
+        <input type="datetime-local" x-model="post.scheduled_for"/>
+        <small style="display:block;margin-top:6px;color:var(--body-soft);font-size:12px;">Leave blank to publish immediately.</small>
+      </div>
+
+      <div class="drawer-section">
+        <label class="label">SEO Preview</label>
+        <div class="seo-preview-card">
+          <div class="seo-preview-title" x-text="post.seo_title || post.title || 'Untitled'"></div>
+          <div class="seo-preview-url" x-text="'apiant.com › blog › posts › ' + (post.slug || 'slug')"></div>
+          <div class="seo-preview-desc" x-text="post.seo_description || post.excerpt || ''"></div>
+        </div>
+      </div>
+
+      <details class="drawer-section">
+        <summary style="cursor:pointer;color:var(--body-soft);font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">SEO Overrides</summary>
+        <div style="margin-top:12px;">
+          <label class="label">SEO Title</label>
+          <input type="text" x-model="post.seo_title" maxlength="300"/>
+        </div>
+        <div style="margin-top:12px;">
+          <label class="label">SEO Description</label>
+          <textarea rows="2" maxlength="600" x-model="post.seo_description"></textarea>
+        </div>
+        <div style="margin-top:12px;">
+          <label class="label">Canonical URL</label>
+          <input type="url" x-model="post.canonical_url"/>
+        </div>
+        <div style="margin-top:12px;">
+          <label class="label">OG Image URL</label>
+          <input type="url" x-model="post.og_image_url"/>
+        </div>
+      </details>
+    </aside>
+  </div>
+</div>
+
+</template>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" :class="toastClass" x-show="toastMsg" x-text="toastMsg" x-transition></div>
+
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js"></script>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+// Same project that powers lead qualification and the other admin tooling.
+const SUPABASE_URL = "https://kereljzjgeerrdnssttu.supabase.co";
+// Anon key is public-safe (RLS gates access). Paste it here once;
+// see supabase/BLOG_CMS_SETUP.md step 9.
+const SUPABASE_ANON_KEY = window.__SUPABASE_ANON_KEY__ || "PASTE_ANON_KEY_HERE";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true },
+});
+
+const FUNCTIONS_BASE = SUPABASE_URL + "/functions/v1";
+
+function authHeaders(session) {
+  return {
+    "Authorization": `Bearer ${session.access_token}`,
+    "Content-Type": "application/json",
+  };
+}
+
+document.addEventListener("alpine:init", () => {
+  Alpine.data("cms", () => ({
+    // ----- state -----
+    session: null,
+    editor: null,
+    view: "list",         // 'list' | 'edit'
+    loading: false,
+
+    // login
+    emailInput: "",
+    sending: false,
+    magicSent: false,
+    loginError: "",
+
+    // list
+    posts: [],
+    counts: {},
+    statusFilter: "all",
+    search: "",
+    filters: [
+      { value: "all",        label: "All" },
+      { value: "draft",      label: "Draft" },
+      { value: "saved",      label: "Saved" },
+      { value: "publishing", label: "Publishing" },
+      { value: "live",       label: "Live" },
+      { value: "failed",     label: "Failed" },
+    ],
+
+    // editor
+    post: this && this.emptyPost ? this.emptyPost() : {},
+    tagIds: [],
+    saving: false,
+    publishing: false,
+    mde: null,
+    categories: [],
+    tags: [],
+
+    // toast
+    toastMsg: "",
+    toastClass: "",
+
+    emptyPost() {
+      return {
+        id: null, slug: "", title: "", subtitle: "", excerpt: "", body_md: "",
+        hero_image_url: "", hero_image_alt: "",
+        category_id: "", seo_title: "", seo_description: "",
+        canonical_url: "", og_image_url: "",
+        scheduled_for: "", status: "draft",
+      };
+    },
+
+    async boot() {
+      this.post = this.emptyPost();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) await this.onSignedIn(session);
+      supabase.auth.onAuthStateChange(async (_event, sess) => {
+        if (sess) await this.onSignedIn(sess);
+        else { this.session = null; this.editor = null; }
+      });
+      // Keyboard shortcuts
+      window.addEventListener("keydown", (e) => this.onKey(e));
+    },
+
+    async onSignedIn(session) {
+      this.session = session;
+      // Sanity-check the user has an editor row, refresh metadata.
+      this.editor = { email: session.user.email };
+      await this.loadStaticData();
+      // Route from hash: #edit/<id> or default to list.
+      const hash = location.hash || "";
+      if (hash.startsWith("#edit/")) await this.openPost(hash.slice("#edit/".length));
+      else { this.view = "list"; await this.loadPosts(); }
+    },
+
+    async sendMagicLink() {
+      this.loginError = "";
+      const email = (this.emailInput || "").trim().toLowerCase();
+      if (!email.endsWith("@apiant.com")) {
+        this.loginError = "Use an @apiant.com email.";
+        return;
+      }
+      this.sending = true;
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin + "/admin/blog/" },
+      });
+      this.sending = false;
+      if (error) this.loginError = error.message;
+      else this.magicSent = true;
+    },
+
+    async signOut() {
+      await supabase.auth.signOut();
+      this.session = null;
+      this.editor = null;
+      this.view = "list";
+    },
+
+    // ----- list -----
+    async loadStaticData() {
+      // Load categories + tags once (public via RLS).
+      const [{ data: cats }, { data: tgs }] = await Promise.all([
+        supabase.from("blog_categories").select("id,slug,name,description").order("sort_order"),
+        supabase.from("blog_tags").select("id,slug,name").order("name"),
+      ]);
+      this.categories = cats || [];
+      this.tags = tgs || [];
+    },
+
+    async loadPosts() {
+      this.loading = true;
+      const status = this.statusFilter === "all" ? "all" : this.statusFilter;
+      const resp = await fetch(`${FUNCTIONS_BASE}/blog-list-posts`, {
+        method: "POST",
+        headers: authHeaders(this.session),
+        body: JSON.stringify({ status, limit: 200 }),
+      });
+      const json = await resp.json();
+      this.posts = json.posts || [];
+      // Compute counts by status across the full result set (best-effort —
+      // status filter is server-side so for accurate per-status counts we'd
+      // need separate queries; v1 just shows the count of currently-loaded
+      // rows for the active filter and leaves others blank).
+      this.counts = { [status]: this.posts.length };
+      this.loading = false;
+    },
+
+    get filteredPosts() {
+      const q = (this.search || "").toLowerCase().trim();
+      if (!q) return this.posts;
+      return this.posts.filter(p =>
+        (p.title || "").toLowerCase().includes(q) ||
+        (p.slug || "").toLowerCase().includes(q) ||
+        ((p.author && p.author.display_name) || "").toLowerCase().includes(q)
+      );
+    },
+
+    badgeLabel(p) {
+      switch (p.status) {
+        case "draft":      return "Draft";
+        case "saved":      return "Saved";
+        case "publishing": return "Publishing…";
+        case "live":       return "✓ Live";
+        case "failed":     return "Failed";
+        default:           return p.status || "";
+      }
+    },
+
+    relativeTime(iso) {
+      if (!iso) return "";
+      const d = new Date(iso);
+      const diff = (Date.now() - d.getTime()) / 1000;
+      if (diff < 60)   return Math.floor(diff) + "s ago";
+      if (diff < 3600) return Math.floor(diff / 60) + "m ago";
+      if (diff < 86400) return Math.floor(diff / 3600) + "h ago";
+      return Math.floor(diff / 86400) + "d ago";
+    },
+
+    // ----- editor -----
+    newPost() {
+      this.post = this.emptyPost();
+      this.tagIds = [];
+      this.view = "edit";
+      location.hash = "#edit/new";
+      this.$nextTick(() => this.initMde(""));
+    },
+
+    async openPost(id) {
+      if (id === "new") { this.newPost(); return; }
+      const resp = await fetch(`${FUNCTIONS_BASE}/blog-get-post`, {
+        method: "POST",
+        headers: authHeaders(this.session),
+        body: JSON.stringify({ id }),
+      });
+      const json = await resp.json();
+      if (!resp.ok || !json.post) { this.toast(json.error || "Failed to load post", "error"); return; }
+      const p = json.post;
+      this.post = {
+        ...this.emptyPost(),
+        ...p,
+        category_id: p.category ? p.category.id : "",
+        scheduled_for: p.scheduled_for ? p.scheduled_for.slice(0, 16) : "",
+      };
+      this.tagIds = (p.tags || []).map(t => t.id);
+      this.view = "edit";
+      location.hash = "#edit/" + p.id;
+      this.$nextTick(() => this.initMde(p.body_md || ""));
+      this.subscribeRealtime(p.id);
+    },
+
+    goList() {
+      if (this.mde) { this.mde.toTextArea(); this.mde = null; }
+      this.view = "list";
+      location.hash = "";
+      this.loadPosts();
+    },
+
+    initMde(initial) {
+      if (this.mde) { this.mde.toTextArea(); this.mde = null; }
+      const ta = this.$refs.bodyArea;
+      if (!ta) return;
+      this.mde = new EasyMDE({
+        element: ta,
+        initialValue: initial || "",
+        spellChecker: false,
+        autoDownloadFontAwesome: true,
+        autosave: { enabled: false },
+        status: ["lines", "words"],
+        toolbar: [
+          "bold", "italic", "heading", "|",
+          "quote", "unordered-list", "ordered-list", "|",
+          "link", "image", "code", "|",
+          "preview", "side-by-side", "fullscreen", "|",
+          "guide",
+        ],
+        renderingConfig: { codeSyntaxHighlighting: false },
+        previewClass: ["editor-preview", "blog-article"],
+      });
+      this.mde.codemirror.on("change", () => {
+        this.post.body_md = this.mde.value();
+      });
+      // Paste-to-upload
+      this.mde.codemirror.on("paste", (cm, e) => this.handlePaste(cm, e));
+    },
+
+    toggleTag(id) {
+      const i = this.tagIds.indexOf(id);
+      if (i >= 0) this.tagIds.splice(i, 1);
+      else this.tagIds.push(id);
+    },
+
+    autoSlug() {
+      // Only auto-update the slug while we don't have an id (new post)
+      if (this.post.id) return;
+      const t = (this.post.title || "").toLowerCase();
+      this.post.slug = t.replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-").slice(0, 80);
+    },
+
+    async save() {
+      this.saving = true;
+      const payload = {
+        id: this.post.id || undefined,
+        slug: this.post.slug,
+        title: this.post.title,
+        subtitle: this.post.subtitle,
+        excerpt: this.post.excerpt,
+        body_md: this.post.body_md,
+        hero_image_url: this.post.hero_image_url,
+        hero_image_alt: this.post.hero_image_alt,
+        category_id: this.post.category_id || null,
+        tag_ids: this.tagIds,
+        seo_title: this.post.seo_title,
+        seo_description: this.post.seo_description,
+        canonical_url: this.post.canonical_url,
+        og_image_url: this.post.og_image_url,
+        scheduled_for: this.post.scheduled_for || null,
+      };
+      const resp = await fetch(`${FUNCTIONS_BASE}/blog-save-post`, {
+        method: "POST",
+        headers: authHeaders(this.session),
+        body: JSON.stringify(payload),
+      });
+      const json = await resp.json();
+      this.saving = false;
+      if (!resp.ok) { this.toast(json.error || "Save failed", "error"); return; }
+      if (!this.post.id) {
+        this.post.id = json.id;
+        location.hash = "#edit/" + json.id;
+        this.subscribeRealtime(json.id);
+      }
+      this.post.status = json.status;
+      this.toast("Saved", "ok");
+    },
+
+    async publish() {
+      if (!this.post.id) await this.save();
+      if (!this.post.id) return;
+      this.publishing = true;
+      const resp = await fetch(`${FUNCTIONS_BASE}/blog-publish-post`, {
+        method: "POST",
+        headers: authHeaders(this.session),
+        body: JSON.stringify({ id: this.post.id }),
+      });
+      const json = await resp.json();
+      this.publishing = false;
+      if (!resp.ok) { this.toast(json.error || "Publish failed", "error"); return; }
+      this.post.status = "publishing";
+      this.toast("Publishing… this typically takes 3-5 minutes.", "ok");
+    },
+
+    subscribeRealtime(postId) {
+      if (this._channel) supabase.removeChannel(this._channel);
+      this._channel = supabase
+        .channel(`blog_posts:${postId}`)
+        .on("postgres_changes", {
+          event: "UPDATE",
+          schema: "public",
+          table: "blog_posts",
+          filter: `id=eq.${postId}`,
+        }, (payload) => {
+          const next = payload.new;
+          if (next.status !== this.post.status) {
+            this.post.status = next.status;
+            if (next.status === "live") this.toast("✓ Live", "ok");
+            if (next.status === "failed") this.toast(next.publish_status_msg || "Build failed", "error");
+          }
+        })
+        .subscribe();
+    },
+
+    async uploadHero(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      if (!this.post.id) { await this.save(); if (!this.post.id) return; }
+      await this.uploadFile(file, "hero");
+    },
+
+    async handlePaste(cm, e) {
+      const items = (e.clipboardData || window.clipboardData)?.items || [];
+      for (const it of items) {
+        if (it.kind === "file" && it.type.startsWith("image/")) {
+          e.preventDefault();
+          const file = it.getAsFile();
+          if (!this.post.id) { await this.save(); if (!this.post.id) return; }
+          const placeholder = `![uploading…](`;
+          const doc = cm.getDoc();
+          const cursor = doc.getCursor();
+          doc.replaceRange(placeholder + ")", cursor);
+          const url = await this.uploadFile(file, "inline");
+          const after = doc.getCursor();
+          // Replace placeholder line: brute-force, scan for our marker.
+          const fullText = this.mde.value();
+          const updated = fullText.replace(placeholder + ")", `![${file.name}](${url})`);
+          this.mde.value(updated);
+          break;
+        }
+      }
+    },
+
+    async uploadFile(file, purpose) {
+      // Get a signed upload URL.
+      const resp = await fetch(`${FUNCTIONS_BASE}/blog-upload-media`, {
+        method: "POST",
+        headers: authHeaders(this.session),
+        body: JSON.stringify({
+          filename: file.name,
+          content_type: file.type,
+          post_id: this.post.id,
+          purpose,
+        }),
+      });
+      const json = await resp.json();
+      if (!resp.ok) { this.toast(json.error || "Upload init failed", "error"); return; }
+      // PUT bytes directly to storage.
+      const put = await fetch(json.upload_url, {
+        method: "PUT",
+        headers: { "Content-Type": file.type, "x-upsert": "true" },
+        body: file,
+      });
+      if (!put.ok) {
+        this.toast("Upload failed: " + put.status, "error");
+        return;
+      }
+      if (purpose === "hero") {
+        this.post.hero_image_url = json.public_url;
+        if (!this.post.hero_image_alt) this.post.hero_image_alt = file.name.replace(/\.[^.]+$/, "");
+      }
+      this.toast("Uploaded", "ok");
+      return json.public_url;
+    },
+
+    toast(msg, kind) {
+      this.toastMsg = msg;
+      this.toastClass = kind === "error" ? "error" : (kind === "ok" ? "ok" : "");
+      clearTimeout(this._toastTimer);
+      this._toastTimer = setTimeout(() => { this.toastMsg = ""; }, 3200);
+    },
+
+    onKey(e) {
+      const meta = e.metaKey || e.ctrlKey;
+      if (this.view === "list" && !this.session) return;
+      if (this.view === "list" && e.key === "n" && !meta && document.activeElement?.tagName !== "INPUT") {
+        e.preventDefault();
+        this.newPost();
+      } else if (this.view === "edit" && meta && e.key === "s") {
+        e.preventDefault();
+        this.save();
+      } else if (this.view === "edit" && meta && e.shiftKey && e.key === "Enter") {
+        e.preventDefault();
+        this.publish();
+      } else if (e.key === "Escape" && this.view === "edit") {
+        this.goList();
+      }
+    },
+  }));
+});
+</script>
+
+<!--
+  The anon key is loaded from an inline script tag injected at deploy
+  time (matches the pattern used by other admin pages). For local dev,
+  set window.__SUPABASE_ANON_KEY__ in a small inline script.
+-->
+<script>
+  // Pull anon key from the meta tag set on the other admin pages, if present.
+  // Otherwise the CMS will show a banner saying it can't connect.
+  window.__SUPABASE_ANON_KEY__ = window.__SUPABASE_ANON_KEY__ || "";
+</script>
+</body>
+</html>

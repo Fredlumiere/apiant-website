@@ -79,7 +79,18 @@ SET role = 'admin',
 WHERE auth_user_id = (SELECT id FROM auth.users WHERE email = 'fred@apiant.com');
 ```
 
-## 8. Verify the publish trigger works
+## 8. Paste the anon key into the admin SPA
+
+The admin UI at `/admin/blog/index.html` needs the Supabase **anon key** to
+run magic-link sign-in and the Realtime subscription. Anon keys are
+designed to be public; RLS policies are what gate access.
+
+Studio → Settings → API → copy the `anon` key (NOT the `service_role` key).
+
+Then in `admin/blog/index.html`, replace `PASTE_ANON_KEY_HERE` with the
+value. One line, one place.
+
+## 9. Verify the publish trigger works
 
 ```sql
 -- Insert a dummy post in 'publishing' state to fire the trigger
