@@ -849,9 +849,6 @@
       #Demo,
       .hero-paragraph { display: none !important; }
       /* === END DEMO CTAs HIDDEN === */
-      /* === WHITE PAPER CTA HIDDEN (remove to re-enable) === */
-      .card-holder-cta { display: none !important; }
-      /* === END WHITE PAPER CTA HIDDEN === */
       /* === FOOTER LIGHT-MODE OVERRIDES === */
       .footer-container { border-top: 1px solid rgba(0, 0, 0, 0.08); margin-top: 0; padding-top: 48px; }
       .footer-brand p, .footer-paragraph-holder p { color: #666; font-size: 13px; }
@@ -2142,31 +2139,6 @@
 </div>
 <div class="section">
 <div class="footer-section">
-<div class="container">
-<div>
-<a class="card-holder-cta w-inline-block" href="#">
-<div class="card api">
-<div class="card-content-api">
-<h2 class="title">"심층 통합의 격차"</h2>
-<div class="paragraph-holder">
-<p>오픈 API와 비즈니스 요구 사항 간의 격차 해소</p>
-</div>
-<div class="button dark-mode" data-w-id="781be88c-c2c2-c3fa-abf7-826247b08a81">
-<div>백서 다운로드</div>
-</div>
-</div>
-<div class="card-blur-effect cta">
-<div class="blured-box left"></div>
-<div class="blured-box top"></div>
-<div class="blured-box bot"></div>
-<div class="blured-box right"></div>
-<div class="orange-blur _02 api"></div>
-<div class="orange-blur _01 cta"></div>
-</div>
-</div>
-</a>
-</div>
-</div>
 <div class="footer-container">
 <div class="container">
 <div class="footer-wrapper">
@@ -2624,32 +2596,6 @@
 </div>
 <div class="apiant-popup-backdrop" onclick="closePopup('contact-popup')"></div>
 </div>
-<!-- ===== POPUP: WHITE PAPER ===== -->
-<div class="apiant-popup" id="wp-popup">
-<div class="apiant-popup-card">
-<div aria-label="Close dialog" class="apiant-popup-close" onclick="closePopup('wp-popup')">
-<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
-</div>
-<h3 class="apiant-popup-title">백서 다운로드</h3>
-<p class="apiant-popup-subtitle">"심층 통합의 격차: 오픈 API와 비즈니스 요구 사이의 격차 해소"</p>
-<form class="apiant-popup-form" id="wp-form" method="get">
-<div class="apiant-popup-field">
-<label for="wp-WorkEmail">업무 이메일</label>
-<input id="wp-WorkEmail" maxlength="256" name="Work-Email" placeholder="you@company.com" required="" type="email"/>
-</div>
-<button class="apiant-popup-submit" type="submit">지금 다운로드</button>
-<p class="apiant-popup-privacy">개인정보는 중요합니다. 이메일은 자료 발송에만 사용됩니다.</p>
-</form>
-<div class="apiant-popup-success" id="wp-success">
-<div class="apiant-popup-success-icon">
-<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
-</div>
-<h4>받은 편지함 확인</h4>
-<p>다운로드 링크가 발송 중입니다.</p>
-</div>
-</div>
-<div class="apiant-popup-backdrop" onclick="closePopup('wp-popup')"></div>
-</div>
 <!-- ===== POPUP: CONTACT US FORM ===== -->
 <div class="apiant-popup" id="contact-us-popup">
 <div class="apiant-popup-card">
@@ -2711,29 +2657,7 @@
 <script src="/js/apiant.js" type="text/javascript"></script>
 <script src="/js/clickable-cards.js"></script>
 <script src="https://apiant.com/js/apiant_dynamic.js" type="text/javascript"></script>
-<script>
-    // White paper form submit
-    $("[id='wp-form']").submit(function() {
-      var data = {
-        "PageTitle": document.title,
-        "FirstName": $("[id='wp-FirstName']").val(),
-        "LastName": $("[id='wp-LastName']").val(),
-        "WorkEmail": $("[id='wp-WorkEmail']").val(),
-        "Mobile": $("[id='wp-Mobile']").val()
-      };
-      $.ajax({
-        url: "https://apiant.com/webhook/a09f77e9c3464783852ca5c2a899ef1a_6bfabf2825da440585332741327d6f46",
-        type: "POST",
-        data: data,
-        success: function(result) {
-          $("#wp-form").hide();
-          $("#wp-form-success").show();
-        }
-      });
-      return false;
-    });
-
-    // Contact Us form submission (FAQ section)
+<script>// Contact Us form submission (FAQ section)
     var cuRecaptchaWidgetId = null;
     window.openContactUsPopup = function() {
       openPopup('contact-us-popup');
@@ -3622,15 +3546,7 @@ document.addEventListener("DOMContentLoaded", function() {
     el.addEventListener('click', function() {
       if (popupHolder) popupHolder.style.display = 'none';
     });
-  });
-  // White paper popup
-  document.querySelectorAll('.card-holder-cta').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      openPopup('wp-popup');
-    });
-  });
-  // Close on Escape
+  });// Close on Escape
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       document.querySelectorAll('.apiant-popup.active').forEach(function(p) { closePopup(p.id); });
