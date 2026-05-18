@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{HEAD}}
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{JSON_TITLE}},
+  "description": {{JSON_DESCRIPTION}},
+  "image": {{JSON_HERO_IMAGE}},
+  "datePublished": {{JSON_PUBLISHED_AT}},
+  "dateModified": {{JSON_UPDATED_AT}},
+  "author": {
+    "@type": "Person",
+    "name": {{JSON_AUTHOR_NAME}},
+    "url": {{JSON_AUTHOR_URL}}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{JSON_CANONICAL}}
+  },
+  "articleSection": {{JSON_CATEGORY_NAME}}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": {{JSON_CATEGORY_NAME}}, "item": {{JSON_CATEGORY_URL}} },
+    { "@type": "ListItem", "position": 4, "name": {{JSON_TITLE}}, "item": {{JSON_CANONICAL}} }
+  ]
+}
+</script>
+</head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+{{NAV}}
+
+<article>
+  <div class="blog-container">
+    <header class="blog-post-hero">
+      <div class="blog-category-chip">
+        <a href="/blog/category/{{CATEGORY_SLUG}}" style="color:inherit;text-decoration:none;">{{CATEGORY_NAME}}</a>
+      </div>
+      <h1 class="blog-post-h1">{{TITLE}}</h1>
+      {{SUBTITLE_BLOCK}}
+      <div class="blog-post-meta">
+        <span><a href="/blog/?author={{AUTHOR_SLUG}}">{{AUTHOR_NAME}}</a></span>
+        <span>{{PUBLISHED_DISPLAY}}</span>
+        <span>{{READ_TIME}} min read</span>
+      </div>
+    </header>
+
+    {{HERO_IMAGE_BLOCK}}
+
+    <div class="blog-article-layout">
+      <div class="blog-article" id="blog-article">
+        {{BODY_HTML}}
+
+        {{TAGS_BLOCK}}
+      </div>
+      {{TOC_BLOCK}}
+    </div>
+
+    {{RELATED_BLOCK}}
+  </div>
+</article>
+
+{{FOOTER}}
+
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+</body>
+</html>
