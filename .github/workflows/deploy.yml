@@ -28,9 +28,12 @@ jobs:
         run: pip install -r scripts/requirements.txt
 
       - name: Regenerate localized pages
-        if: ${{ !contains(github.event.head_commit.message, '[skip translations]') }}
         env:
           GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+        # Always run. The previous [skip translations] gate was fragile
+        # (any commit body that even mentioned the marker would skip it).
+        # Translation is ~3 min and idempotent, so the cost of always-run
+        # is much smaller than the cost of a silently-skipped translation.
         run: bash scripts/update_translations.sh
 
       - name: Commit locale changes back to main
