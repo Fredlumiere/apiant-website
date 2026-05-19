@@ -56,6 +56,27 @@ PAGES = [
     'dpa.html',
 ]
 
+
+def _discover_blog_pages():
+    """Mirror the auto-discovery in localize.py so blog strings get
+    extracted and translated alongside everything else."""
+    from pathlib import Path
+    blog_root = Path(__file__).resolve().parent.parent / 'blog'
+    if not blog_root.exists():
+        return []
+    out = []
+    repo_root = blog_root.parent
+    for p in blog_root.rglob('index.html'):
+        rel = p.relative_to(repo_root).as_posix()
+        if '_templates' in rel.split('/'):
+            continue
+        out.append(rel)
+    return sorted(out)
+
+
+PAGES.extend(_discover_blog_pages())
+
+
 SKIP_TAGS = {'script', 'style', 'code', 'pre', 'svg', 'math', 'noscript'}
 SKIP_CLASSES = {'notranslate', 'w-embed'}
 

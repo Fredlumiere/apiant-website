@@ -329,7 +329,7 @@ def fix_urls(soup, lang, page_path):
     # Fix internal page links
     for a_tag in soup.find_all('a'):
         href = a_tag.get('href')
-        if not href or not is_relative(href):
+        if not href:
             continue
 
         # Split hash
@@ -339,6 +339,22 @@ def fix_urls(soup, lang, page_path):
         else:
             page_part = href
             hash_suffix = ''
+
+        # Absolute root paths (e.g. /blog/, /blog/posts/foo, /blog/category/X)
+        # — rewrite to /{lang}/... if there's a localized copy on disk. Only
+        # touches paths under /blog/ for now since that's the new extensionless
+        # surface; other absolute paths on the site stay as-is.
+        if page_part.startswith('/') and not page_part.startswith('//'):
+            if page_part.startswith('/blog/') or page_part == '/blog':
+                # Skip if already locale-prefixed (someone hand-coded /fr/blog/...)
+                segs = page_part.lstrip('/').split('/', 1)
+                if segs and segs[0] in LANGUAGES:
+                    continue
+                a_tag['href'] = '/' + lang + page_part + hash_suffix
+            continue
+
+        if not is_relative(href):
+            continue
 
         if page_part.endswith('.html'):
             resolved = resolve_url(page_part, page_dir)
