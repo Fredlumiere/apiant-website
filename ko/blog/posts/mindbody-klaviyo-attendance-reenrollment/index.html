@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>출석 및 취소 동기화: Klaviyo에서 수영 강습 재등록을 안전하게 처리하는 방법 | APIANT 블로그</title>
+<meta content="CRMConnect의 수업 동기화 및 출석 추적 기능을 활용하여 Klaviyo 워크플로우를 통해 학부모에게 수업 취소를 알리고 시즌 마감일 전에 재등록을 유도하세요." name="description"/>
+
+<!-- Open Graph -->
+<meta content="출석 및 취소 동기화: Klaviyo에서 수영 강습 재등록을 안전하게 관리하는 방법" property="og:title"/>
+<meta content="CRMConnect의 수업 동기화 및 출석 추적 기능을 활용하여 Klaviyo 워크플로우를 통해 학부모에게 수업 취소를 알리고 시즌 마감일 전에 재등록을 유도하세요." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-attendance-reenrollment/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-klaviyo-attendance-reenrollment/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="출석 및 취소 동기화: Klaviyo에서 수영 강습 재등록을 안전하게 관리하는 방법" property="twitter:title"/>
+<meta content="CRMConnect의 수업 동기화 및 출석 추적 기능을 활용하여 Klaviyo 워크플로우를 통해 학부모에게 수업 취소를 알리고 시즌 마감일 전에 재등록을 유도하세요." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-attendance-reenrollment/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Attendance and Cancellation Sync: Saving Swim School Re-Enrollment in Klaviyo",
+  "description": "Use CRMConnect's class sync and attendance tracking to drive Klaviyo flows that warn parents about cancellations and prompt re-enrollment before the seasonal cutoff.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-attendance-reenrollment/hero.png",
+  "datePublished": "2025-11-04T15:51:19+00:00",
+  "dateModified": "2026-05-19T17:42:41.462182+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-klaviyo-attendance-reenrollment/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Attendance and Cancellation Sync: Saving Swim School Re-Enrollment in Klaviyo", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-attendance-reenrollment/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-klaviyo-attendance-reenrollment/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ko/blog/posts/mindbody-klaviyo-attendance-reenrollment/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ko/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">커넥터</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">구축 시작</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ko/blog/category/api-apps" style="color:inherit;text-decoration:none;">API 앱</a>
+</div>
+<h1 class="blog-post-h1">출석 및 취소 동기화: Klaviyo에서 수영 강습 재등록을 안전하게 관리하는 방법</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ko/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025년 11월 4일</span>
+<span>5분 읽기</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ko/blog/?tag=fitness-wellness">#피트니스 &amp; 웰빙</a><a class="blog-tag" href="/ko/blog/?tag=mindbody">#심신</a><a class="blog-tag" href="/ko/blog/?tag=klaviyo">#클라비요</a><a class="blog-tag" href="/ko/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="출석 및 취소 동기화: Klaviyo에서 수영 강습 재등록을 안전하게 관리하는 방법" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-attendance-reenrollment/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="why-seasonal-programs-bleed-at-re-enrollment">계절별 프로그램의 재등록률이 높은 이유는 무엇일까요?</h2>
+<p>수영 교실, 어린이 무술 학원, 음악 학원 등 계절별로 운영되는 모든 프로그램은 비슷한 구조를 가지고 있습니다. 8주에서 12주 과정으로 진행되며, 마지막 학기에는 재등록 마감일이 엄격하게 정해져 있습니다. 게다가 부모는 다른 네 가지 활동과 아르바이트까지 병행하며 바쁜 나날을 보내고 있습니다. 만약 마감일 2주 전까지 부모의 연락을 받지 못하면, 자리는 대기자 명단에 있는 가족에게 넘어가고 아이는 다음 학기에 참여할 수 없게 됩니다.</p>
+<p>가상 시나리오: 타이드풀 수영 아카데미(예시)는 620명의 아이들이 다니는 수영 학원으로, 하나의 실내 수영장에서 계절별 수업을 운영합니다. 재등록 절차 자체는 문제가 없습니다. 문제는 상위 단계에서 발생합니다. 수업 참여를 중단하는 부모(연속 2회 취소, 휴가, 병가 등)는 어디에도 표시되지 않습니다. 클라비요는 등록 시작 일주일 전에 모든 부모에게 동일한 일반적인 재등록 안내 메일을 보냅니다. 결국 수업 참여를 중단할 위험이 가장 높은 아이들에게는 맞춤형 지원이 제공되지 않습니다.</p>
+<h2 id="what-mindbody-tells-you-vs-what-klaviyo-can-act-on">마인드바디가 알려주는 것 vs. 클라비요가 실제로 취할 수 있는 조치</h2>
+<p>Mindbody는 여기서 중요한 모든 정보를 알고 있습니다. 모든 수업에는 출석 명단이 있고, 모든 취소에는 시간이 기록되어 있으며, 모든 등록에는 시작일과 종료일이 있습니다. 문제는 이 모든 정보가 Klaviyo에 전달되지 않는다는 것입니다. 프런트 데스크 직원은 금요일에 "수업 3회 이상 결석" 보고서를 작성하여 월요일에 마케팅 담당자에게 전달하고, 마케팅 담당자는 수요일까지 해당 학생들을 위한 일회성 Klaviyo 세그먼트를 생성합니다. 하지만 그때쯤이면 이미 취소 가능 기간이 종료된 후입니다.</p>
+<p>시중에서 구할 수 있는 출석 기록 통합 도구(Zapier, Make)는 단일 출석 이벤트는 처리할 수 있지만, 데이터 양이 많아지면 제대로 작동하지 못합니다(주 14회 수업을 진행하는 수영 학원의 경우 회차당 수천 건의 출석 기록이 생성됨). 또한 맞춤형 논리 계층 없이는 결석과 정당한 사유로 인한 결석을 구분할 수 없습니다.</p>
+<h2 id="the-apiant-approach">APIANT 접근법</h2>
+<p>CRMConnect Mindbody와 Klaviyo는 출석 및 취소를 최고 수준의 동기화 이벤트로 처리합니다. API 앱의 세 가지 구성 요소가 이 작업을 수행합니다.</p>
+<ul>
+<li><strong>수업 동기화 및 출석 추적</strong> Klaviyo에 예정된 예약, 참석 여부 및 취소 사항을 최신 상태로 유지합니다.</li>
+<li><strong>실시간 고객 프로필 동기화</strong> 학부모 연락처 기록을 자녀의 등록 상태와 프로필 속성으로 연동하여 관리합니다.</li>
+<li><strong>방문 추적</strong> 최근 방문 기록을 매일 대조하여 수업 결석 오류가 잘못된 음성으로 인해 발생하지 않도록 합니다.</li>
+</ul>
+<p>학부모의 이메일 주소는 Klaviyo 시스템에서 고유한 인증 키 역할을 합니다. 이메일 주소가 없는 아이들(이 나이대의 아이들은 거의 대부분 그렇습니다)은 부모 프로필에 연결되므로, 시스템은 실제로 수업을 예약하는 사람을 대상으로 작동합니다.</p>
+<p><img alt="출석 및 취소 동기화: Klaviyo에서 수영 강습 재등록을 관리하는 방법 — 그림 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-attendance-reenrollment/inline-1.png"/></p>
+<h2 id="designing-the-cancellation-recovery-flow">취소-복구 흐름 설계</h2>
+<p>처음에 필요한 흐름은 짧고 절벽이 아닌 흔들림을 향해 있어야 합니다.</p>
+<ol>
+<li><strong>방아쇠:</strong> Mindbody 취소 이벤트는 24시간 이내에 예정된 수업에 한해 적용됩니다.</li>
+<li><strong>4시간 기다리세요.</strong> 아픈 부모를 갑자기 찾아가는 것을 피한다.</li>
+<li><strong>이메일 1: 다음 주에 귀하의 자리를 확보해 두었습니다.</strong> 클라비요 프로필에서 날짜와 시간이 미리 입력된 아이의 다음 수업 일정을 다시 한번 확인합니다.</li>
+<li><strong>분기 <code>mindbody_cancellations_last_30d</code>:</strong></li>
+<li>2 미만이면 흐름을 종료합니다.</li>
+<li>2개 이상이면 계속 진행하세요.</li>
+<li><strong>두 번째 이메일(이틀 후): 자녀의 코치로부터 온 메시지입니다.</strong> 메이크업 수업 슬롯을 제공합니다. 이는 폭발로는 불가능한, 목표로 삼은 저장 시도입니다.</li>
+</ol>
+<p>분기점이 바로 이 기능을 유용하게 만드는 요소입니다. 한 번의 취소는 단순한 노이즈일 뿐입니다. 하지만 한 달에 세 번째 취소가 발생하면 중요한 신호이며, 저장 시도 시 이를 반영해야 합니다.</p>
+<h2 id="designing-the-re-enrollment-window-flow">재등록 기간 흐름 설계</h2>
+<p>두 번째 절차는 회차당 한 번 실행되며, 자녀가 경계선상에 있는 부모를 대상으로만 진행됩니다.</p>
+<ol>
+<li><strong>방아쇠:</strong> 날짜 기준으로, 재등록 시작 14일 전입니다.</li>
+<li><strong>청중:</strong> 프로필 <code>mindbody_active_enrollment</code> 사실입니다.</li>
+<li><strong>분기 <code>mindbody_attendance_rate_session</code>:</strong></li>
+<li>80% 이상: 일반적인 "자리 확보" 이메일 발송.</li>
+<li>50~80%: "수업에 결석한 학생들이 있는 것을 확인했습니다."라는 내용의 이메일과 코치의 메모, 그리고 진행 상황 설문조사를 보냅니다.</li>
+<li>50% 미만: 이메일은 건너뛰고, 감독에게 직접 전화하도록 안내합니다. (클라비요 프로필은 프런트 데스크 대시보드에 태그되어 있습니다.)</li>
+<li><strong>7일 동안 기다린 후 재가입한 프로필을 차단하세요.</strong></li>
+<li><strong>마감 48시간 전 마지막 알림입니다</strong> 아직 갱신되지 않은 부문에 대해서입니다.</li>
+</ol>
+<p>"이메일 건너뛰고 코치에게 연결"하는 단계는 대부분의 자동화 시스템에서 생략되는 부분입니다. 출석률이 가장 낮은 가정에는 추가 이메일이 필요하지 않고, 담당자와의 직접적인 소통이 필요합니다. Klaviyo는 직접 전화를 걸 필요 없이, 담당자만 알려주면 됩니다.</p>
+<pre class="highlight"><code class="language-text">Klaviyo profile attributes for swim school re-enrollment:
+- mindbody_active_enrollment: true|false
+- mindbody_cancellations_last_30d: int
+- mindbody_attendance_rate_session: 0-100
+- mindbody_next_class_at: ISO timestamp
+- mindbody_kid_name: string (custom attribute on parent profile)</code></pre>
+<p><img alt="출석 및 취소 동기화: Klaviyo에서 수영 강습 재등록을 관리하는 방법 — 그림 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-attendance-reenrollment/inline-2.png"/></p>
+<h2 id="representative-re-enrollment-lift-at-620-kids">620 Kids에서 재등록률 증가를 기록했습니다.</h2>
+<p>이 이미지는 예시용 합성 이미지이며 실제 고객의 모습이 아닙니다.</p>
+<ul>
+<li>학생 유입 이전 재등록률 기준치는 대략 65~70%였습니다.</li>
+<li>출석률별 세분화된 재등록률: 75~82% 범위로 상승했으며, 이는 주로 이전에 일반적인 홍보를 받았던 출석률 50~80% 구간에서 나타난 결과입니다.</li>
+<li>상담 데스크에서 고객 목록 작성에 소요되는 시간은 세션당 약 6~8시간이며, 이 시간은 모두 회수되었습니다.</li>
+<li>"우리 아이가 지난주에 결석했는데, 누가 후속 조치를 취했나요?"라는 학부모 불만이 급격히 줄었습니다. 누군가 조치를 취했기 때문입니다.</li>
+</ul>
+<p>실제 성과 향상은 기본 능력치, 가격, 그리고 헤드 코치가 직접 수동으로 연락하는지 여부에 달려 있습니다. 통합 기능은 단지 적절한 목록을 제공할 뿐입니다.</p>
+<h2 id="builder-takeaway">건설업체 테이크아웃</h2>
+<ul>
+<li>취소 및 출석은 보고서 내보내기가 아닌 Klaviyo 이벤트로 처리하십시오. 지연 시간 차이는 게임 전체에 영향을 미칩니다.</li>
+<li>단순히 "등록 여부"만이 아니라 출석률을 기준으로 그룹을 나누세요. 세 가지 그룹(건전한 그룹, 불안정한 그룹, 이탈한 그룹)에는 각각 다른 접근 방식이 필요합니다.</li>
+<li>참석률이 가장 낮은 그룹에만 사람이 직접 연락하도록 하고, 나머지는 Klaviyo가 처리하도록 하세요. 도구는 누구에게 연락해야 하는지 알려줘야지, 통화 순서가 전화를 대체할 수 있는 것처럼 가장해서는 안 됩니다.</li>
+</ul>
+<h2 id="try-it-in-your-school">학교에서 시도해 보세요</h2>
+<p>CRMConnect Mindbody와 Klaviyo의 연동 기능을 직접 보고 싶으신가요? <a href="/apipartners/mindbody/mindbody-klaviyo-integration-and-automation-apiant">API 앱 페이지를 보세요</a>.</p>
+<p>사전 제작된 커넥터 전체 카탈로그를 다음에서 살펴보세요. <a href="/apps">/앱</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-seasonal-programs-bleed-at-re-enrollment">계절별 프로그램의 재등록률이 높은 이유는 무엇일까요?</a></li><li class="lvl-2"><a href="#what-mindbody-tells-you-vs-what-klaviyo-can-act-on">마인드바디가 알려주는 것 vs. 클라비요가 실제로 취할 수 있는 조치</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT 접근법</a></li><li class="lvl-2"><a href="#designing-the-cancellation-recovery-flow">취소-복구 흐름 설계</a></li><li class="lvl-2"><a href="#designing-the-re-enrollment-window-flow">재등록 기간 흐름 설계</a></li><li class="lvl-2"><a href="#representative-re-enrollment-lift-at-620-kids">620 Kids에서 재등록률 증가를 기록했습니다.</a></li><li class="lvl-2"><a href="#builder-takeaway">건설업체 테이크아웃</a></li><li class="lvl-2"><a href="#try-it-in-your-school">학교에서 시도해 보세요</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요</h3><p class="blog-card-excerpt">CRMConnect의 등록, 코스 예약 및 약속 동기화 기능을 활용하여 HighLevel이 모든 Mindbody 프로그램 유형에 대한 통합 캘린더 보기를 제공하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고</h3><p class="blog-card-excerpt">CRMConnect의 예약 동기화 기능이 Klaviyo 내에서 사이트별 예약 상태를 어떻게 보여주는지, 그리고 이를 통해 중앙 마케팅 부서에서 위치별 워크플로 및 보고서를 어떻게 실행할 수 있는지에 대한 내용입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 평생 가치, 평균 기부액, 캠페인 성과가 HubSpot에 동기화되면 월간 이사회 보고서 작성이 4일씩 걸리는 작업에서 저장 가능한 대시보드 형태로 간소화됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026 Apiant, Inc. 모든 권리 보유.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ko/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">은둔</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">자귀</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

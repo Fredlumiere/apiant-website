@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Cliniko와 HubSpot을 활용한 다학제 진료소의 의료진 및 위치 보고 | APIANT 블로그</title>
+<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, '누가 시술했는지'를 파악하기 위해 별도의 데이터 내보내기가 필요하지 않습니다. HubSpot에서 Cliniko 데이터와 동기화하여 보고 기능을 구축할 수 있습니다." name="description"/>
+
+<!-- Open Graph -->
+<meta content="클리니코(Cliniko)와 허브스팟(HubSpot)을 활용한 다학제 진료소의 의료진 및 위치 보고" property="og:title"/>
+<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, '누가 시술했는지'를 파악하기 위해 별도의 데이터 내보내기가 필요하지 않습니다. HubSpot에서 Cliniko 데이터와 동기화하여 보고 기능을 구축할 수 있습니다." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="클리니코(Cliniko)와 허브스팟(HubSpot)을 활용한 다학제 진료소의 의료진 및 위치 보고" property="twitter:title"/>
+<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, '누가 시술했는지'를 파악하기 위해 별도의 데이터 내보내기가 필요하지 않습니다. HubSpot에서 Cliniko 데이터와 동기화하여 보고 기능을 구축할 수 있습니다." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Practitioner and Location Reporting for a Multi-Disciplinary Clinic With Cliniko + HubSpot",
+  "description": "Once you cross a dozen practitioners across multiple disciplines, the answer to 'who is performing' should not require a custom export. Here is the reporting layer to build in HubSpot on top of synced Cliniko data.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/hero.png",
+  "datePublished": "2024-10-07T16:35:19+00:00",
+  "dateModified": "2026-05-19T17:42:55.150291+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Practitioner and Location Reporting for a Multi-Disciplinary Clinic With Cliniko + HubSpot", "item": "https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ko/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ko/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">커넥터</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">구축 시작</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ko/blog/category/api-apps" style="color:inherit;text-decoration:none;">API 앱</a>
+</div>
+<h1 class="blog-post-h1">클리니코(Cliniko)와 허브스팟(HubSpot)을 활용한 다학제 진료소의 의료진 및 위치 보고</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ko/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024년 10월 7일</span>
+<span>4분 읽기</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ko/blog/?tag=healthcare">#의료</a><a class="blog-tag" href="/ko/blog/?tag=cliniko">#클리니코</a><a class="blog-tag" href="/ko/blog/?tag=hubspot">#허브스팟</a><a class="blog-tag" href="/ko/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ko/blog/?tag=for-enterprise">#기업용</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="클리니코(Cliniko)와 허브스팟(HubSpot)을 활용한 다학제 진료소의 의료진 및 위치 보고" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>한 병원에 여러 진료과에 걸쳐 12명이 넘는 의료진이 근무하게 되면, "누가 진료를 담당했는지"에 대한 답을 클리니코(Cliniko)에서 내보낸 데이터만으로는 확인할 수 없게 됩니다. 병원 관리자는 매주, 최고운영책임자(COO)는 매달, 그리고 이사회는 분기마다 같은 질문을 던지는데, 매번 맞춤형 데이터 내보내기를 통해 답을 얻어야 하는 것은 비효율적입니다.</p>
+<p>예를 들어 설명하자면, 가상의 Harbourview Allied Health Collective는 물리치료, 작업치료, 영양학, 운동생리학 분야의 전문가 22명이 근무하는 4개 지점을 운영하는 의료기관입니다. 이 기관의 관리자는 간단한 분야 간 질문에도 답할 수 없습니다. 물리치료사가 영양학으로 의뢰하는 환자는 한 달에 몇 명이나 될까요? 재예약률이 가장 높은 전문가는 누구일까요? 어느 지점의 예약률이 네트워크 평균을 떨어뜨리고 있을까요? 각 질문에 답하려면 새로운 CSV 파일, 새로운 피벗 테이블, 그리고 수동으로 환자 ID를 추가하는 작업이 필요합니다.</p>
+<p><img alt="Cliniko와 HubSpot을 활용한 다학제 진료소의 의료진 및 위치 보고 — 그림 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/inline-1.png"/></p>
+<h2 id="the-cross-discipline-questions-you-actually-need-answered">여러분이 실제로 답을 얻고 싶어하는 학제 간 질문들</h2>
+<p>22명의 의료진으로 구성된 클리닉은 단일 진료소가 아니라 소규모 네트워크로 운영됩니다. 경영진은 다음과 같은 질문에 대한 답을 찾아야 합니다.</p>
+<ul>
+<li>어떤 의료진이 최대 수용 능력에 도달했고, 어떤 의료진은 활용률이 60% 미만입니까?</li>
+<li>어떤 진료과 조합이 내부 의뢰를 가장 많이 발생시키나요? (물리치료사에서 영양사로, 작업치료사에서 운동생리학자로)</li>
+<li>어느 지역의 신규 환자당 평생 가치가 가장 높으며, 그 차이는 무엇으로 설명할 수 있을까요?</li>
+<li>어떤 의료 전문가가 초기 평가를 바탕으로 치료 계획을 가장 효율적으로 수립합니까?</li>
+</ul>
+<p>이러한 데이터는 평면적인 Cliniko 내보내기 방식으로는 제대로 저장되지 않습니다. 의료진, 사업장 위치, 예약, 환자, 진료 기록 등이 모두 일급 객체로 취급되어 자유롭게 피벗할 수 있는 관계형 모델이 필요합니다.</p>
+<h2 id="why-off-the-shelf-tools-fail">기성품 도구가 실패하는 이유</h2>
+<p>클리니코의 기본 보고 기능은 기본적인 정보(의사별 수익, 일일 예약 건수)는 제공하지만, 여러 진료 분야 간 보고에 필요한 데이터 통합 기능은 지원하지 않습니다. 클리니코에서 일방적으로 데이터를 내보내고 그 위에 BI 도구를 적용하면 데이터가 최신 상태를 유지하지 못하고, 환자 간 의뢰 관계를 파악하기 어려우며, 분석가가 직접 관리해야 하는 번거로움이 발생합니다. 스프레드시트를 붙여넣는 방식은 의사가 6명 정도일 때는 괜찮지만, 22명에 달하면 사실상 불가능합니다.</p>
+<h2 id="the-apiant-approach">APIANT 접근법</h2>
+<p>CRMConnect Cliniko와 HubSpot을 연동하면 Cliniko의 예약, 환자 프로필, 청구서, 의료진, 사업체(위치) 및 사례 정보가 올바른 관계를 유지하면서 HubSpot의 네이티브 객체로 표시됩니다. 예약 파이프라인에는 모든 거래에 의료진과 사업체 위치 정보가 이미 포함되어 있으므로 HubSpot 보고서 및 대시보드는 추가 엔지니어링 작업 없이 두 가지 차원 중 하나로 구분할 수 있습니다. 양방향 환자 동기화를 통해 환자가 여러 진료과의 의료진을 만나더라도 진료 의뢰 관계가 유지됩니다.</p>
+<h2 id="concrete-steps">콘크리트 계단</h2>
+<ol>
+<li>예약, 환자, 청구서, 의료진 및 사업체 정보 동기화가 모두 켜져 있는지 확인하십시오. 일반적으로 처음 세 가지는 기본 설정이지만, 의료진과 사업체를 독립적인 개체로 설정해야 병원 간 보고 기능을 사용할 수 있습니다.</li>
+<li>의료진 성과 보고서를 작성하세요. 의료진별로 그룹화하고, 예약 완료 건수(지난 30일), 예약 불이행률(DNA 비율), 재예약률(예약 완료 후 28일 이내 재예약률), 평균 예약 금액 등의 열을 추가하세요.</li>
+<li>지점별 성과 보고서를 작성하세요. 사업장 위치별로 그룹화하고, 캘린더 활용률(예약 도착 건수 대비 의료진 가용 시간), 신규 환자 확보(해당 기간 내 첫 진료 예약 건수), 그리고 해당 지점의 환자 집단 전체의 평균 평생 가치를 나타내는 열을 추가하세요.</li>
+<li>내부 의뢰 보고서를 작성하세요. HubSpot 거래 연관 기능을 활용하여 여러 진료과에 걸쳐 진료 예약을 한 환자를 식별합니다. 의뢰 진료과와 목적지 진료과별로 그룹화하세요. 이 보고서를 통해 귀사의 다학제 모델이 실제로 다학제 모델인지, 아니면 단순히 한 장소에 모여 있는 개별 진료진인지 파악할 수 있습니다.</li>
+<li>위치별로 접근 권한을 분할하세요. HubSpot 팀을 Cliniko 사업장 위치에 맞춰 구성하면 각 클리닉 관리자가 자신의 연락처와 거래만 볼 수 있습니다. 모든 거래에 포함된 위치 필드를 통해 이러한 접근 권한 설정이 가능해집니다.</li>
+</ol>
+<p><img alt="Cliniko와 HubSpot을 활용한 다학제 진료소의 의료진 및 위치 보고 — 그림 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/inline-2.png"/></p>
+<h2 id="outcome">결과</h2>
+<p>하버뷰와 같은 프로필을 가진 클리닉은 일반적으로 첫 달 안에 두세 명의 의료진이 95%의 활용률을 보이는 반면 다른 두 명은 55% 미만이라는 사실, 한 지점이 전체 물리치료사-영양사 내부 의뢰의 80%를 차지하는 반면 나머지 세 곳은 거의 전무하다는 사실, 그리고 고객 생애 가치가 가장 높은 지점이 마케팅 비용을 가장 많이 지출한 곳이 아니라는 사실을 발견하게 됩니다. 이러한 모든 사항은 의사 결정으로 이어집니다. 보고서는 실시간으로 업데이트되고, 운영 책임자는 더 이상 "스프레드시트"를 요구하지 않으며, 분기별 이사회 보고는 이틀이 아닌 20분 만에 완료됩니다.</p>
+<h2 id="what-you-should-not-do-with-practitioner-reporting">의료 전문가 보고와 관련하여 해서는 안 되는 일</h2>
+<p>실무자 수준의 지표는 관리 도구이지 공개적인 성과표가 아닙니다. 두 가지 주의 사항을 언급할 필요가 있습니다.</p>
+<ul>
+<li>진료 예약 건수를 기준으로 병원 슬랙 채널에 순위표를 게시하지 마십시오. 진료 분야마다 진료 시간과 사례의 복잡성이 다릅니다. 75분짜리 골반 물리치료 평가가 20분짜리 후속 교정 치료와 동일한 것은 아닙니다.</li>
+<li>HubSpot 대시보드에 임상 메타데이터(진료 기록, 진단, 치료 세부 정보)를 표시하지 마십시오. 진료 정보 동기화는 세션 제한 및 마일스톤과 같은 운영 관련 구조적 데이터만 표시합니다. 임상 기록은 Cliniko에 유지됩니다.</li>
+</ul>
+<h2 id="builder-takeaway">건설업자 테이크아웃</h2>
+<ul>
+<li>이 통합을 통해 실무자(Practitioner)와 비즈니스(Business)를 실제 HubSpot 차원으로 사용할 수 있습니다. 진료 예약 메모에서 추출한 텍스트 필드가 아닌 이러한 차원을 기준으로 보고서를 작성하세요.</li>
+<li>내부 의뢰 보고서는 다학제 진료 클리닉이 구축할 수 있는 가장 가치 있는 요소입니다. 왜냐하면 이 보고서를 통해 진료 모델이 효과적인지 여부를 알 수 있기 때문입니다. 하지만 대부분의 클리닉은 이 보고서를 작성하지 않습니다.</li>
+<li>HubSpot 팀과 비즈니스(위치) 필드를 활용하여 권한을 적용하세요. COO 수준의 종합 보고와 위치 수준의 범위 지정 보고 모두 동일한 데이터를 기반으로 합니다.</li>
+</ul>
+<p>CRMConnect Cliniko와 HubSpot의 연동 기능을 직접 확인하고 싶으신가요? <a href="/apipartners/cliniko/cliniko-hubspot-integration-automation-apiant">API 앱 페이지를 보세요</a>또는 전체 내용을 살펴보세요. <a href="/apps.html">API 앱 카탈로그</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-cross-discipline-questions-you-actually-need-answered">여러분이 실제로 답을 얻고 싶어하는 학제 간 질문들</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">기성품 도구가 실패하는 이유</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT 접근법</a></li><li class="lvl-2"><a href="#concrete-steps">콘크리트 계단</a></li><li class="lvl-2"><a href="#outcome">결과</a></li><li class="lvl-2"><a href="#what-you-should-not-do-with-practitioner-reporting">의료 전문가 보고와 관련하여 해서는 안 되는 일</a></li><li class="lvl-2"><a href="#builder-takeaway">건설업자 테이크아웃</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요</h3><p class="blog-card-excerpt">CRMConnect의 등록, 코스 예약 및 약속 동기화 기능을 활용하여 HighLevel이 모든 Mindbody 프로그램 유형에 대한 통합 캘린더 보기를 제공하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고</h3><p class="blog-card-excerpt">CRMConnect의 예약 동기화 기능이 Klaviyo 내에서 사이트별 예약 상태를 어떻게 보여주는지, 그리고 이를 통해 중앙 마케팅 부서에서 위치별 워크플로 및 보고서를 어떻게 실행할 수 있는지에 대한 내용입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 평생 가치, 평균 기부액, 캠페인 성과가 HubSpot에 동기화되면 월간 이사회 보고서 작성이 4일씩 걸리는 작업에서 저장 가능한 대시보드 형태로 간소화됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026 Apiant, Inc. 모든 권리 보유.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ko/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">은둔</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">자귀</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

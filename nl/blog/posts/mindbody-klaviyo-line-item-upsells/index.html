@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Synchronisatie van aankoopdetails van Mindbody naar Klaviyo voor duurdere upsells | APIANT Blog</title>
+<meta content="De manier waarop de aankoop- en verkoopregels van CRMConnect worden gesynchroniseerd, toont de inhoud van Mindbody-pakketten binnen Klaviyo, waardoor gerichte upsells, cross-sells en loyaliteitsautomatiseringen mogelijk worden." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Synchronisatie van aankoopgegevens van Mindbody naar Klaviyo voor duurdere upsells." property="og:title"/>
+<meta content="De manier waarop de aankoop- en verkoopregels van CRMConnect worden gesynchroniseerd, toont de inhoud van Mindbody-pakketten binnen Klaviyo, waardoor gerichte upsells, cross-sells en loyaliteitsautomatiseringen mogelijk worden." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Synchronisatie van aankoopgegevens van Mindbody naar Klaviyo voor duurdere upsells." property="twitter:title"/>
+<meta content="De manier waarop de aankoop- en verkoopregels van CRMConnect worden gesynchroniseerd, toont de inhoud van Mindbody-pakketten binnen Klaviyo, waardoor gerichte upsells, cross-sells en loyaliteitsautomatiseringen mogelijk worden." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Line-Item Purchase Sync From Mindbody to Klaviyo for High-Ticket Upsells",
+  "description": "How CRMConnect's purchase and sales line items sync exposes Mindbody package contents inside Klaviyo, unlocking targeted upsells, cross-sells, and loyalty automations.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/hero.png",
+  "datePublished": "2024-11-20T10:42:28+00:00",
+  "dateModified": "2026-05-19T17:42:41.833891+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Line-Item Purchase Sync From Mindbody to Klaviyo for High-Ticket Upsells", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/nl/blog/posts/mindbody-klaviyo-line-item-upsells/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/nl/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Connectoren</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Begin met bouwen</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/nl/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-apps</a>
+</div>
+<h1 class="blog-post-h1">Synchronisatie van aankoopgegevens van Mindbody naar Klaviyo voor duurdere upsells.</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/nl/blog/?author=fred">Fred Lumiere</a></span>
+<span>20 november 2024</span>
+<span>Leestijd: 5 minuten</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/nl/blog/?tag=fitness-wellness">#Fitness &amp; Wellness</a><a class="blog-tag" href="/nl/blog/?tag=mindbody">#Geestlichaam</a><a class="blog-tag" href="/nl/blog/?tag=klaviyo">#Klaviyo</a><a class="blog-tag" href="/nl/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/nl/blog/?tag=data-engine">#Data-engine</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Synchronisatie van aankoopgegevens van Mindbody naar Klaviyo voor duurdere upsells." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="why-a-single-sale-field-kills-upsell-logic">Waarom één enkel verkoopveld de logica van upselling om zeep helpt</h2>
+<p>Luxe wellnesspakketten zijn geen standaardproduct. Een twaalfweeks retraitepakket van $ 6.200 omvat doorgaans een basisverblijf, een maaltijdplan, een dagelijks lesbudget, een pakket met privésessies en een optionele extra (klankbad, massagetegoed, een individuele sessie met een coach). Elke regel op die factuur biedt een mogelijkheid tot upselling, cross-selling en verlenging.</p>
+<p>Het probleem begint wanneer je CRM alleen het totaalbedrag van de bestelling ziet. Hypothetisch voorbeeld: Silver Fern Wellness Retreat (ter illustratie) verkoopt pakketten van $4.000 tot $8.000 in doorlopende groepen van twaalf weken. Klaviyo, dat nog niet is aangepast, kan zien dat een klant afgelopen dinsdag $5.800 heeft betaald. Klaviyo kan echter niet zien dat het pakket drie massagecredits en geen privécoachingsessies bevatte. Het vervolgproces na de aankoop activeert daarom ofwel generieke upsells (waardoor de helft van de kopers die al hebben gekocht wat wordt aangeboden, zich beledigd voelt), ofwel helemaal geen upsells.</p>
+<h2 id="what-off-the-shelf-tools-miss">Wat standaardgereedschappen missen</h2>
+<p>De payload van Mindbody voor een verkoop bevat regelitems, maar de meeste generieke tools die gegevens samenvoegen, reduceren de verkoop tot één enkele regel voordat deze Klaviyo bereikt. De reden hiervoor is meestal datamodellering: de "Bestelling geplaatst"-gebeurtenis van Klaviyo verwacht een array met artikelen, en het correct integreren van de geneste verkooppayload van Mindbody in die array (met de juiste SKU's, prijzen en categorietags) is het soort werk dat in een "snelle Zap" wordt overgeslagen. Het resultaat is een bestelling op één regel in Klaviyo, zonder regelitems, zonder inzicht in add-ons en zonder berekeningen voor upsells.</p>
+<h2 id="the-apiant-approach">De APIANT-aanpak</h2>
+<p>CRMConnect Mindbody naar Klaviyo omvat <strong>Inkoop- en verkoopregels synchroniseren</strong> als een eersteklas functionaliteit. Verkoopgegevens stromen vanuit Mindbody naar Klaviyo met elk afzonderlijk item intact, zodat het Klaviyo-profiel en de gebeurtenispayload de structuur intact houden voor segmentatie en workflowlogica.</p>
+<p>De geïntegreerde dataverwerkingsengine in APIANT is formaat-onafhankelijk. De Mindbody-verkoopgegevens worden via XPath (een open W3C-standaard) in het gebeurtenisschema van Klaviyo gemapt zonder verlies van geneste structuren. Elk regelitem heeft zijn eigen SKU, prijs, categorie en aantal. Dat is het onderdeel dat upsell-logica mogelijk maakt.</p>
+<p>Drie functies van de API-app zijn hier doorslaggevend:</p>
+<ul>
+<li><strong>Inkoop- en verkoopregels synchroniseren</strong> voor de gestructureerde itemlijst.</li>
+<li><strong>Realtime synchronisatie van klantprofielen</strong> Het kopersprofiel is dus actueel en segmenteerbaar.</li>
+<li><strong>Bezoek Tracking</strong> De nazorg na de aankoop kan dus afhangen van de vraag of de klant het gekochte product daadwerkelijk is gaan gebruiken.</li>
+</ul>
+<p><img alt="Synchronisatie van aankoopgegevens van Mindbody naar Klaviyo voor duurdere upsells — Afbeelding 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/inline-1.png"/></p>
+<h2 id="what-line-item-sync-looks-like-in-klaviyo">Hoe ziet regelitemsynchronisatie eruit in Klaviyo?</h2>
+<p>Een retraitearrangement dat in Klaviyo wordt geboekt, is een gestructureerd evenement. De structuur is ongeveer als volgt:</p>
+<pre class="highlight"><code class="language-json">{
+  "event": "Placed Order",
+  "customer_properties": {
+    "$email": "client@example.com",
+    "mindbody_client_id": "MB-44918"
+  },
+  "properties": {
+    "OrderId": "MB-INV-71204",
+    "Total": 5800.00,
+    "Currency": "USD",
+    "Items": [
+      { "SKU": "RETREAT-12W-DLX", "Name": "12-Week Deluxe Package", "Price": 4200, "Category": "Retreat Base" },
+      { "SKU": "MEAL-VEG-12W", "Name": "Vegetarian Meal Plan", "Price": 800, "Category": "Meal Plan" },
+      { "SKU": "MASSAGE-CR-3", "Name": "Massage Credits x3", "Price": 450, "Category": "Add-On" },
+      { "SKU": "SOUND-BATH-1", "Name": "Sound Bath Session", "Price": 350, "Category": "Add-On" }
+    ]
+  }
+}</code></pre>
+<p>Klaviyo kan nu segmenteren op basis van '12 weken pakket gekocht zonder privécoaching', 'maaltijdplan gekocht maar geen extra's' of 'meer dan $5.000 uitgegeven maar geen massagetegoed gebruikt'.</p>
+<h2 id="designing-add-on-upsells-for-high-ticket-packages">Het ontwerpen van aanvullende producten en diensten voor duurdere pakketten.</h2>
+<p>Het upsell-proces heeft drie triggers, die elk gekoppeld zijn aan wat er <strong>ontbrekend</strong> uit de posten:</p>
+<ol>
+<li><strong>Geen privécoaching aangeschaft.</strong> Stuur drie dagen na aanvang van de retraite een e-mail met een aanbod voor een kennismakingsgesprek met een senior coach tegen een gereduceerd tarief. Sluit e-mails uit van accounts die al een coaching-SKU bevatten.</li>
+<li><strong>Maaltijdplan aangeschaft, geen extra's.</strong> Stuur na zeven dagen een e-mail met de vraag "Wist je dat?" over de tegoedbonnen voor klankbaden en massages, inclusief een voordelige bundelprijs.</li>
+<li><strong>Aanvullende lessen aangeschaft, maar geen les geboekt in de komende 14 dagen.</strong> Activeer een e-mail om de betrokkenheid te herstellen met een zorgvuldig samengesteld schema.</li>
+</ol>
+<p>Elke vestiging leest de gegevens die al in het profiel staan. Niemand wordt iets extra's aangesmeerd wat ze al hebben gekocht. Dat alleen al is voldoende om te voorkomen dat klanten met een hoge besteding hun abonnement opzeggen.</p>
+<h2 id="layering-loyalty-rewards-on-repeat-purchases">Het combineren van loyaliteitsbeloningen met herhaalaankopen</h2>
+<p>De tweede workflow draait op dezelfde gegevens, maar over een langere periode. Gebruik de regelitems om de levensduurwaarde per categorie te berekenen:</p>
+<ul>
+<li>Bij een totale massagebesteding van meer dan $1.500: toegang tot een "founders"-categorie met voorrang bij het boeken van afspraken.</li>
+<li>Twee volledige retraites in twaalf maanden: het maaltijdplan voor de derde retraite is gratis.</li>
+<li>Eén retraite plus vier extra's: activeer een verwijzingsverzoek met een gepersonaliseerde code.</li>
+</ul>
+<p>De wiskundige berekeningen worden in Klaviyo uitgevoerd met behulp van de <code>Items</code> array bij elke "Bestelling geplaatst"-gebeurtenis. De integratie zorgt er alleen voor dat de array accuraat blijft.</p>
+<p><img alt="Synchronisatie van aankoopdetails van Mindbody naar Klaviyo voor duurdere upsells — Figuur 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/inline-2.png"/></p>
+<h2 id="representative-aov-lift-at-4k-8k-packages">Representatieve AOV-liftpakketten van $4.000 tot $8.000.</h2>
+<p>Illustratieve composities, geen echte klant:</p>
+<ul>
+<li>Het standaard acceptatiepercentage van add-ons (standaard e-mails na aankoop): ongeveer 8 tot 12 procent.</li>
+<li>Het percentage extra aankopen met op de artikelregel afgestemde upsells stijgt naar 20 tot 28 procent, voornamelijk omdat het juiste aanbod de juiste koper bereikt.</li>
+<li>Gemiddelde operationele waarde per retraite-deelname: een stijging van 6 tot 11 procent ten opzichte van representatieve cohorten.</li>
+<li>Het percentage afmeldingen na aankoop is lager, omdat de filterlogica voorkomt dat we je iets proberen te verkopen wat je al hebt gekocht.</li>
+</ul>
+<p>Dit zijn mechanische processen, geen magie. De specificaties maken nauwkeurige targeting mogelijk. Nauwkeurige targeting zorgt voor de lift.</p>
+<h2 id="builder-takeaway">Bouwer Takeaway</h2>
+<ul>
+<li>Sta erop dat de gegevens per artikel gesynchroniseerd worden tussen Mindbody en Klaviyo. Het gecombineerde totaalbedrag van de bestelling is bij hoge prijzen een doodlopende weg voor marketingdoeleinden.</li>
+<li>Bouw je upsell-logica op wat er is <strong>afwezig</strong> uit de array met items. Daar bevindt zich de volgende, koopbare stap.</li>
+<li>Gebruik de totale bestedingen per categorie (massage, coaching, maaltijden) voor het bepalen van de loyaliteitsniveaus. De totale omzet is een te simplistische maatstaf voor een bedrijf dat georganiseerde retraites aanbiedt.</li>
+</ul>
+<h2 id="try-it-in-your-retreat">Probeer het eens in uw retraiteoord.</h2>
+<p>Wil je CRMConnect Mindbody met Klaviyo in actie zien? <a href="/apipartners/mindbody/mindbody-klaviyo-integration-and-automation-apiant">Bekijk de API-apppagina</a>.</p>
+<p>Bekijk de volledige catalogus met voorgeassembleerde connectoren op <a href="/apps">/apps</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">In dit artikel</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-a-single-sale-field-kills-upsell-logic">Waarom één enkel verkoopveld de logica van upselling om zeep helpt</a></li><li class="lvl-2"><a href="#what-off-the-shelf-tools-miss">Wat standaardgereedschappen missen</a></li><li class="lvl-2"><a href="#the-apiant-approach">De APIANT-aanpak</a></li><li class="lvl-2"><a href="#what-line-item-sync-looks-like-in-klaviyo">Hoe ziet regelitemsynchronisatie eruit in Klaviyo?</a></li><li class="lvl-2"><a href="#designing-add-on-upsells-for-high-ticket-packages">Het ontwerpen van aanvullende producten en diensten voor duurdere pakketten.</a></li><li class="lvl-2"><a href="#layering-loyalty-rewards-on-repeat-purchases">Het combineren van loyaliteitsbeloningen met herhaalaankopen</a></li><li class="lvl-2"><a href="#representative-aov-lift-at-4k-8k-packages">Representatieve AOV-liftpakketten van $4.000 tot $8.000.</a></li><li class="lvl-2"><a href="#builder-takeaway">Bouwer Takeaway</a></li><li class="lvl-2"><a href="#try-it-in-your-retreat">Probeer het eens in uw retraiteoord.</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Lees verder</h2><div class="blog-grid"><a class="blog-card" href="/nl/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau.</h3><p class="blog-card-excerpt">Gebruik de synchronisatiefuncties voor inschrijvingen, cursusboekingen en afspraken van CRMConnect om HighLevel één overzicht van alle Mindbody-programma's te bieden.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 mei 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen.</h3><p class="blog-card-excerpt">Hoe de afsprakensynchronisatie van CRMConnect de afspraakstatus op locatieniveau in Klaviyo weergeeft, zodat de centrale marketingafdeling per locatie workflows en rapporten kan genereren.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot.</h3><p class="blog-card-excerpt">Bestuursleden willen trendlijnen. Medewerkers willen hun avonden terug. Doordat de levenslange waarde van donateurs, de gemiddelde gift en de campagneprestaties gesynchroniseerd zijn in HubSpot, is het maandelijkse bestuursrapport geen project van vier dagen meer, maar een opgeslagen dashboardweergave.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Alle rechten voorbehouden.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/nl/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacy</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Voorwaarden</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

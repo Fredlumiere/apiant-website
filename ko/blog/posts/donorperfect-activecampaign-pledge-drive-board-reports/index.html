@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>이사회 및 후원 심사 담당자를 위한 실시간 모금 캠페인 대시보드: DonorPerfect 데이터를 ActiveCampaign 보고서로 연동 | APIANT 블로그</title>
+<meta content="모금 캠페인이 진행되는 동안, 운영진은 주간 단위가 아닌 시간 단위의 정기 후원자 현황이 필요합니다. DonorPerfect의 기부 데이터를 ActiveCampaign에 동기화하고 공유 대시보드로 제공하면, 일일 데이터 내보내기를 캠페인 기간 동안 실제로 활용할 수 있는 자료로 바꿀 수 있습니다." name="description"/>
+
+<!-- Open Graph -->
+<meta content="이사회 및 후원 심사 담당자를 위한 실시간 모금 캠페인 대시보드: DonorPerfect 데이터를 ActiveCampaign 보고서로 연동" property="og:title"/>
+<meta content="모금 캠페인이 진행되는 동안, 운영진은 주간 단위가 아닌 시간 단위의 정기 후원자 현황이 필요합니다. DonorPerfect의 기부 데이터를 ActiveCampaign에 동기화하고 공유 대시보드로 제공하면, 일일 데이터 내보내기를 캠페인 기간 동안 실제로 활용할 수 있는 자료로 바꿀 수 있습니다." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-pledge-drive-board-reports/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="이사회 및 후원 심사 담당자를 위한 실시간 모금 캠페인 대시보드: DonorPerfect 데이터를 ActiveCampaign 보고서로 연동" property="twitter:title"/>
+<meta content="모금 캠페인이 진행되는 동안, 운영진은 주간 단위가 아닌 시간 단위의 정기 후원자 현황이 필요합니다. DonorPerfect의 기부 데이터를 ActiveCampaign에 동기화하고 공유 대시보드로 제공하면, 일일 데이터 내보내기를 캠페인 기간 동안 실제로 활용할 수 있는 자료로 바꿀 수 있습니다." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-pledge-drive-board-reports/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Live pledge-drive dashboards for board and underwriting: DonorPerfect data piped into ActiveCampaign reports",
+  "description": "When a pledge drive is running, leadership needs hourly sustainer numbers, not weekly. Syncing DonorPerfect gift data into ActiveCampaign and surfacing it as a shared dashboard turns daily exports into something you actually use during the drive.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-pledge-drive-board-reports/hero.png",
+  "datePublished": "2026-02-03T17:55:07+00:00",
+  "dateModified": "2026-05-19T17:43:02.403567+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Live pledge-drive dashboards for board and underwriting: DonorPerfect data piped into ActiveCampaign reports", "item": "https://apiant.com/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ko/blog/posts/donorperfect-activecampaign-pledge-drive-board-reports/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ko/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">커넥터</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">구축 시작</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ko/blog/category/api-apps" style="color:inherit;text-decoration:none;">API 앱</a>
+</div>
+<h1 class="blog-post-h1">이사회 및 후원 심사 담당자를 위한 실시간 모금 캠페인 대시보드: DonorPerfect 데이터를 ActiveCampaign 보고서로 연동</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ko/blog/?author=fred">Fred Lumiere</a></span>
+<span>2026년 2월 3일</span>
+<span>읽는 데 6분 소요</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ko/blog/?tag=nonprofit">#비영리단체</a><a class="blog-tag" href="/ko/blog/?tag=donorperfect">#기증자완벽함</a><a class="blog-tag" href="/ko/blog/?tag=activecampaign">#액티브캠페인</a><a class="blog-tag" href="/ko/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="이사회 및 후원 심사 담당자를 위한 실시간 모금 캠페인 대시보드: DonorPerfect 데이터를 ActiveCampaign 보고서로 연동" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-pledge-drive-board-reports/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>공영 라디오 기금 모금은 72시간 안에 압축된 리더십 시험대입니다. 연간 두 번의 기부 약정 행사가 방송국의 정기 후원자 증가에 가장 큰 영향을 미칩니다. 이사회 재무 담당자는 약정 기간 동안 시간별 모금액을 원하고, 후원 심사팀은 어떤 방송 홍보 전략이 효과적인지 알고 싶어 합니다. 그리고 총괄 매니저는 약정 기간을 하루 연장할지 여부를 결정해야 합니다.</p>
+<p>데이터가 없으면 그런 결정들은 직감과 어제의 총액에 의존해서 내려집니다. DonorPerfect 기부 보고서는 많아야 하루에 한 번만 실행됩니다. 이사회 재무 담당자는 오후 4시에 업데이트를 요청하지만 다음 날 오후 5시에야 받습니다. 그때쯤이면 모금 활동은 이미 데이터가 의미를 갖는 시점을 지나쳐 버립니다.</p>
+<p><img alt="이사회 및 후원 심사 담당자를 위한 실시간 모금 캠페인 대시보드: DonorPerfect 데이터를 ActiveCampaign 보고서로 연동 — 그림 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-pledge-drive-board-reports/inline-1.png"/></p>
+<h1 id="pledge-drives-are-the-worst-stress-test-of-a-nonprofit-data-stack-volume-spikes-latency-intolerance-and-stakeholder-demands-all-hit-at-once">모금 캠페인은 비영리 단체의 데이터 스택에 최악의 스트레스 테스트입니다. 모금액 급증, 지연 시간 허용 불가, 이해관계자들의 요구 사항이 모두 한꺼번에 닥치기 때문입니다.</h1>
+<p>DonorPerfect의 기본 보고서는 강력하지만 실시간 대시보드가 아닌 예약 실행용으로 설계되었습니다. 모금 활동 중에 15분마다 보고서를 실행하는 것은 기술적으로 가능하지만 운영상 매우 부담스럽습니다.</p>
+<p>6시간마다 일괄 동기화를 수행하는 일반적인 iPaaS 커넥터는 72시간 운전 중에는 쓸모가 없습니다. 일괄 동기화가 완료될 때쯤이면 운전 시간의 절반이 지나가 버리기 때문입니다.</p>
+<p>DonorPerfect를 기반으로 맞춤 제작된 대시보드는 해당 대시보드를 만든 분석가만 볼 수 있습니다. 분석가가 스튜디오에서 드라이브를 관리하는 동안에는 이사회 재무 담당자가 대시보드를 볼 수 없습니다.</p>
+<p>ActiveCampaign은 대시보드와 세분화 기능을 갖추고 있지만 실시간 통합 없이는 DonorPerfect 기부 내역을 확인할 수 없습니다.</p>
+<h2 id="the-apiant-approach">APIANT 접근법</h2>
+<p>DonorPerfect 및 ActiveCampaign용 CRMConnect는 실시간으로 동기화되며, 이는 모금 활동 중에 가장 중요한 모드입니다. 대시보드의 주요 기능은 다음과 같습니다.</p>
+<ul>
+<li><strong>실시간 기증자 동기화</strong> DonorPerfect 기록을 확인하는 즉시 ActiveCampaign에 새로운 정기 후원 가입, 정기 업그레이드 및 일회성 기부 내역을 몇 초 만에 입력합니다.</li>
+<li><strong>간편한 기부 추적</strong> 각 기부를 금액, 기부 유형(정기, 일회성, 약정) 및 캠페인 코드가 첨부된 ActiveCampaign 거래로 기록합니다.</li>
+<li><strong>플래그-태그 동기화</strong> DonorPerfect 플래그를 ActiveCampaign 태그로 사용하므로 신규 정기 후원자는 감사 메시지 발송 대상에 즉시 포함됩니다.</li>
+<li><strong>코드싱크</strong> 두 시스템 모두에서 드라이브 데이 코드를 일관되게 유지합니다.</li>
+<li><strong>양방향 동기화</strong> 기부 캠페인이 종료된 후, 지속 기부자 LTV 계산 결과를 DonorPerfect 사용자 지정 필드에 다시 반영합니다.</li>
+</ul>
+<h2 id="building-the-live-pledge-drive-dashboard">모금 캠페인 실시간 대시보드 구축</h2>
+<p>예시 시나리오: WPRN 공영 라디오는 NPR 회원 방송국으로 18,500명의 후원 회원을 보유하고 있으며, 연 2회 방송을 통해 기부금 모금 행사를 진행합니다(가상의 예시이며 실제 조직은 아닙니다).</p>
+<p><strong>1단계. 모든 선물에 기부 캠페인 식별자를 부착하세요.</strong> DonorPerfect의 온라인 및 전화 기부 양식을 구성하여 기부 기간 동안 모든 기부에 대해 사용자 지정 필드에 기부 일자 코드를 자동으로 입력하도록 설정하세요. CodeSync는 이 코드를 ActiveCampaign의 거래 속성으로 자동으로 반영합니다.</p>
+<p><strong>2단계. 이사회용 대시보드를 구축합니다.</strong> 네 개의 숫자가 전체 보드 상황을 보여줍니다.</p>
+<ul>
+<li><strong>시간당 선물 증정, 계속 이어집니다.</strong> 지난 24시간 동안의 시간당 기부 건수를 이전 모금 기간의 같은 기간과 비교하여 나타낸 선 그래프입니다. 이 그래프는 다른 어떤 단일 지표보다도 모금 진행 속도를 잘 보여줍니다.</li>
+<li><strong>오늘 새로운 후원자가 추가되었습니다.</strong> DonorPerfect에 새로운 정기 기부가 등록될 때마다 거의 실시간으로 증가하는 카운터입니다.</li>
+<li><strong>월평균 신규 후원자 수.</strong> 오늘 새로 추가된 후원금은 이번 모금 캠페인의 누적 금액 및 지난 캠페인의 최종 금액과 평균을 냈습니다.</li>
+<li><strong>목표 대비 총 매출.</strong> 모금 현황을 보여주는 온도계. 이사회 재무 담당자가 자정에 총지배인에게 문자로 알려주는 단 하나의 수치.</li>
+</ul>
+<p><strong>3단계. 보험 인수자 관점을 구축합니다.</strong> 다양한 보기 방식을 지원하는 별도의 대시보드:</p>
+<ul>
+<li><strong>방송 홍보를 통한 전환.</strong> 각 방송 홍보 영상에 고유한 캠페인 코드(형식: ...)를 태그하세요. <code>2026SPRING_PITCH_DAY1_HOUR3</code>각 프레젠테이션별 기부 건수와 총 수익을 추적합니다. 오전 팀은 오전에 이루어진 성과를 바탕으로 오후 프레젠테이션을 조정할 수 있습니다.</li>
+<li><strong>세그먼트 변환.</strong> 신규 기부자, 기존 정기 기부자, 기존 정기 기부 등급 상향 조정자. 어떤 홍보 전략은 신규 기부 희망자에게 효과적이고, 어떤 전략은 기존 정기 기부자에게 효과적입니다. 세분화를 통해 어떤 전략이 누구에게 효과적인지 파악할 수 있습니다.</li>
+<li><strong>채널 분할.</strong> 온라인, 전화, 모바일 등 다양한 매체를 비교해 볼 때, 온라인 판매 실적이 일반적인 판매 주기보다 저조하다면, 보험 인수팀은 양식에 문제가 있는지 또는 오디오 프로모션이 부실한지 점검할 수 있습니다.</li>
+</ul>
+<p><strong>4단계. 감사 메시지를 즉시 표시합니다.</strong> DonorPerfect에서 새로운 정기 후원자가 등록하는 순간, 해당 기부는 ActiveCampaign에 거래로 동기화됩니다. 거래 생성 이벤트에 맞춰 정기 후원자 환영 시리즈를 시작하세요.</p>
+<ul>
+<li>5분 이내: 후원 금액, 일정, 그리고 총괄 매니저의 스테이션별 환영 메시지가 담긴 감사 이메일을 받으실 수 있습니다.</li>
+<li>2일차: "후원자 가족이 되신 것을 환영합니다"라는 메시지와 함께 회원 혜택(이벤트 초대, 사전 티켓 예매, 회원 뉴스레터 구독)을 안내해 드립니다.</li>
+<li>7일차: 최근 한 주 동안 방송국의 취재 현장 뒷이야기.</li>
+</ul>
+<p><strong>5단계. 기부 후 처리: LTV를 DonorPerfect에 다시 기록합니다.</strong> 모금 캠페인이 종료되면 ActiveCampaign에서 코호트별 12개월 지속 기부자 LTV를 계산하고 해당 값을 DonorPerfect의 사용자 지정 필드에 입력합니다. 그러면 개발 책임자는 ActiveCampaign을 열지 않고도 DonorPerfect에서 캠페인 성과를 확인할 수 있습니다.</p>
+<p><img alt="이사회 및 후원 심사 담당자를 위한 실시간 모금 캠페인 대시보드: DonorPerfect 데이터를 ActiveCampaign 보고서로 연동 — 그림 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-pledge-drive-board-reports/inline-2.png"/></p>
+<h2 id="avoiding-dashboard-fatigue">대시보드 피로감 방지</h2>
+<p>드라이브 대시보드에 20개 이상의 지표를 넣고 싶은 유혹이 들겠지만, 그러지 마세요. 위에 언급된 네 가지 수치(시간당 기부 건수, 신규 정기 기부자 수, 월평균 기부액, 목표 대비 매출)만으로도 드라이브 운영 관련 의사 결정의 90%를 좌우합니다. 지표를 더 추가하면 집중력이 분산되고, 긴박한 상황에서 대시보드를 읽기가 더욱 어려워집니다.</p>
+<p>보다 심층적인 분석은 보험 인수팀 대시보드에서 진행하며, 보험 인수팀은 전술적 조정을 위해 이를 다른 주기(2~3시간마다)로 검토합니다.</p>
+<p>드라이브가 끝나면, 피치별, 시간별, 세그먼트별, 채널별 전환율 등 모든 것을 포함하는 사후 분석 대시보드를 만드세요. 전략적 교훈은 바로 여기에 있습니다. 드라이브 중에는 네 가지 수치만 있으면 충분합니다.</p>
+<h2 id="handling-the-edge-cases">예외적인 경우 처리</h2>
+<p><strong>정기적인 업그레이드와 새로운 유지 보수 방식 비교.</strong> 월 기부액을 10달러에서 25달러로 늘리는 기부자는 신규 정기 기부자가 아니라 기존 기부액을 상향 조정한 기부자입니다. 신규 정기 기부자 집계가 잘못되지 않도록 별도로 표시해 주세요.</p>
+<p><strong>정기 후원 취소.</strong> 모금 기간 중 기부를 취소하는 기부자가 있습니다. 순 신규 정기 기부자 수(추가 기부자 수에서 취소 기부자 수를 뺀 값)와 총 신규 정기 기부자 수를 모두 보여주세요. 이사회 재무 담당자는 두 수치 모두 필요로 합니다.</p>
+<p><strong>휴대폰 선물은 일괄 처리됩니다.</strong> 전화 기부는 종종 별도의 일괄 처리 시스템을 거쳐 DonorPerfect에 지연되어 입력됩니다. 대시보드에 지연 표시기를 추가하여 팀에서 전화번호 입력이 최대 1시간 정도 지연될 수 있음을 알 수 있도록 하세요.</p>
+<p><strong>강하게 튀는 것.</strong> 모금 캠페인을 진행하는 동안 수많은 새로운 이메일 주소를 수집하게 되는데, 그중 상당수는 오타일 가능성이 높습니다. ActiveCampaign은 반송 메일을 자동으로 표시합니다. 반송된 이메일 주소는 DonorPerfect에 다시 보내어 캠페인 후속 조치 과정에서 잘못된 주소로 우편물을 낭비하지 않도록 하십시오.</p>
+<p><strong>의사소통 선호도.</strong> 그들을 존중해야 합니다. 가입 시 이메일 수신을 거부한 신규 후원자에게는 환영 메시지 시리즈를 보내서는 안 됩니다. DonorPerfect의 커뮤니케이션 환경설정 필드는 ActiveCampaign의 수신 거부 설정에도 동일한 동기화 과정에서 반영되어야 합니다.</p>
+<h2 id="what-it-looks-like-in-production">실제 생산 과정에서의 모습은 다음과 같습니다.</h2>
+<p>WPRN과 같은 규모의 방송국(후원자 18,500명, 예산 690만 달러)을 예로 들면, 모금 활동 기간 동안 어제의 기부금 보고서에서 실시간 대시보드로 전환하면 일반적으로 모금 활동당 두 가지 운영 결정(활동 기간 연장, 방송 홍보 전략 재조정)이 바뀌어 모금 활동 수익이 5%에서 10% 증가합니다. 40만 달러 모금 활동을 기준으로 하면, 1년에 두 번, 모금 활동당 2만 달러에서 4만 달러의 추가 수익이 발생하며, 이는 전적으로 더 나은 결정을 더 빠르게 내리는 데 기인합니다.</p>
+<p>측정하기는 더 어렵지만, 가장 큰 이점은 조직에 대한 신뢰입니다. 이사회 재무 담당자는 더 이상 "무슨 일이 일어나고 있는가"를 묻는 대신 "다음에는 무엇을 해야 하는가"를 묻기 시작합니다. 이러한 대화는 데이터가 두 사람 모두의 앞에 동시에 놓여 있을 때만 가능합니다.</p>
+<h2 id="builder-takeaway">건설업자 테이크아웃</h2>
+<ul>
+<li>운전 중에는 네 개의 숫자로 계기판 정보를 확인할 수 있습니다. 다섯 번째와 여섯 번째 항목을 추가하면, 정보를 빠르게 읽어야 하는 상황에서 계기판을 읽기가 더 어려워집니다.</li>
+<li>모든 기부금에 해당 기부금을 유도한 캠페인 코드를 태그하세요. 캠페인 수준의 기여도 분석은 보험 인수팀이 캠페인 진행 중에 조정해야 하는 데이터입니다.</li>
+<li>후원 고객 환영 메시지는 캠페인 종료 시점이 아닌 즉시 발송하세요. 감사 인사를 받기 위해 3일을 기다리는 신규 후원 고객은 이탈 위험이 더 높습니다.</li>
+</ul>
+<p>CRMConnect DonorPerfect -&gt; ActiveCampaign이 어떻게 작동하는지 보고 싶으신가요? <a href="/apipartners/donorperfect/donorperfect-activecampaign-integration-and-automation-apiant">API 앱 페이지를 보세요</a>APIANT에서 제공하는 모든 사전 제작된 커넥터의 전체 카탈로그를 보려면 다음 링크를 방문하세요. <a href="/apps">/앱</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-apiant-approach">APIANT 접근법</a></li><li class="lvl-2"><a href="#building-the-live-pledge-drive-dashboard">모금 캠페인 실시간 대시보드 구축</a></li><li class="lvl-2"><a href="#avoiding-dashboard-fatigue">대시보드 피로감 방지</a></li><li class="lvl-2"><a href="#handling-the-edge-cases">예외적인 경우 처리</a></li><li class="lvl-2"><a href="#what-it-looks-like-in-production">실제 생산 과정에서의 모습은 다음과 같습니다.</a></li><li class="lvl-2"><a href="#builder-takeaway">건설업자 테이크아웃</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요</h3><p class="blog-card-excerpt">CRMConnect의 등록, 코스 예약 및 약속 동기화 기능을 활용하여 HighLevel이 모든 Mindbody 프로그램 유형에 대한 통합 캘린더 보기를 제공하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고</h3><p class="blog-card-excerpt">CRMConnect의 예약 동기화 기능이 Klaviyo 내에서 사이트별 예약 상태를 어떻게 보여주는지, 그리고 이를 통해 중앙 마케팅 부서에서 위치별 워크플로 및 보고서를 어떻게 실행할 수 있는지에 대한 내용입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 평생 가치, 평균 기부액, 캠페인 성과가 HubSpot에 동기화되면 월간 이사회 보고서 작성이 4일씩 걸리는 작업에서 저장 가능한 대시보드 형태로 간소화됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026 Apiant, Inc. 모든 권리 보유.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ko/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">은둔</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">자귀</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

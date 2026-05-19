@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="pt">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Integrando contratos Mindbody e status de pagamento automático ao Zoho CRM em tempo real | Blog da APIANT</title>
+<meta content="Use a sincronização de contratos MB do CRMConnect para inserir detalhes de contratos em tempo real e o status de pagamento automático no Zoho CRM, para que os pagamentos com falha se tornem fluxos de trabalho no mesmo dia." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Integrando contratos Mindbody e status de pagamento automático ao Zoho CRM em tempo real." property="og:title"/>
+<meta content="Use a sincronização de contratos MB do CRMConnect para inserir detalhes de contratos em tempo real e o status de pagamento automático no Zoho CRM, para que os pagamentos com falha se tornem fluxos de trabalho no mesmo dia." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Integrando contratos Mindbody e status de pagamento automático ao Zoho CRM em tempo real." property="twitter:title"/>
+<meta content="Use a sincronização de contratos MB do CRMConnect para inserir detalhes de contratos em tempo real e o status de pagamento automático no Zoho CRM, para que os pagamentos com falha se tornem fluxos de trabalho no mesmo dia." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Putting Mindbody Contracts and Auto-Pay Status Inside Zoho CRM in Real Time",
+  "description": "Use CRMConnect's MB Contracts sync to put live contract details and auto-pay status inside Zoho CRM, so failed payments become same-day workflows.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.png",
+  "datePublished": "2024-09-11T11:34:38+00:00",
+  "dateModified": "2026-05-19T17:42:45.569595+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Putting Mindbody Contracts and Auto-Pay Status Inside Zoho CRM in Real Time", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/pt/blog/posts/mindbody-zoho-crm-contracts-autopay/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/pt/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plataforma</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Conectores</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Comece a construir</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/pt/blog/category/api-apps" style="color:inherit;text-decoration:none;">Aplicativos de API</a>
+</div>
+<h1 class="blog-post-h1">Integrando contratos Mindbody e status de pagamento automático ao Zoho CRM em tempo real.</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/pt/blog/?author=fred">Fred Lumiere</a></span>
+<span>11 de setembro de 2024</span>
+<span>5 minutos de leitura</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/pt/blog/?tag=fitness-wellness">#Fitness e Bem-estar</a><a class="blog-tag" href="/pt/blog/?tag=mindbody">#MenteCorpo</a><a class="blog-tag" href="/pt/blog/?tag=zoho-crm">#Zoho CRM</a><a class="blog-tag" href="/pt/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/pt/blog/?tag=data-engine">#Mecanismo de Dados</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Integrando contratos Mindbody e status de pagamento automático ao Zoho CRM em tempo real." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="why-end-of-month-contract-reports-are-useless">Por que os relatórios de contratos de fim de mês são inúteis</h2>
+<p>As assinaturas com contrato representam uma receita previsível até que um pagamento automático falhe. O período de falha é curto: de 24 a 72 horas entre a cobrança falha e o membro, discretamente, procurar outra academia. A maioria das academias gera um relatório de status do contrato no primeiro dia de cada mês, o que significa que um pagamento falhado no dia 3 fica sem registro por 27 dias. Quando o relatório é gerado, o membro já cancelou o serviço.</p>
+<p>Hipótese: O Mirror Lake Pilates (ilusório) é um estúdio com uma única localização e 360 clientes com contrato. A equipe de vendas usa o Zoho CRM para tudo, exceto os detalhes do contrato, que ficam em PDFs do Mindbody. A conciliação de fim de mês consome meio dia. Falhas no pagamento automático são detectadas no 28º dia, recuperadas em cerca de 30% dos casos, e o restante cancela o contrato.</p>
+<h2 id="why-off-the-shelf-tools-fail-here">Por que as ferramentas prontas para uso falham aqui</h2>
+<p>Os contratos do Mindbody são objetos aninhados com múltiplas mudanças de estado. A maioria das ferramentas genéricas de integração extrai o contrato na criação e nunca o atualiza. O status de pagamento automático, as tentativas de repetição, as alterações agendadas e os registros de cancelamento residem em objetos filhos que exigem chamadas de API específicas para serem atualizados.</p>
+<p>Uma solução eficaz precisa:</p>
+<ul>
+<li>Trate os contratos como objetos independentes com estado ativo.</li>
+<li>Transmita cada alteração de estado do pagamento automático como um evento quase em tempo real.</li>
+<li>Recalcular o “estado atual” diariamente como medida de segurança.</li>
+</ul>
+<p>As configurações personalizadas fazem isso, mas o limite de taxa que leva em conta a reconciliação diária em 360 contratos é o tipo de coisa que para de funcionar depois de dois meses.</p>
+<h2 id="the-apiant-approach">A abordagem APIANT</h2>
+<p>A integração CRMConnect do Mindbody com o Zoho CRM inclui um recurso dedicado. <strong>Contratos MB</strong> objeto personalizado ao lado <strong>Associações MB</strong>Da página do aplicativo API: "Sincronize continuamente os detalhes do contrato do cliente e os status de pagamento automático diretamente no Zoho CRM."</p>
+<p>As características que demonstram isso:</p>
+<ul>
+<li><strong>Sincronização de associação e contrato</strong> Com contratos MB como um objeto personalizado dedicado.</li>
+<li><strong>Sincronização de dados em tempo real</strong> Assim, as alterações de status do pagamento automático são refletidas no Zoho CRM em segundos.</li>
+<li><strong>Compras e Pagamentos Abrangentes</strong> capturar para que os eventos de pagamento subjacentes também possam ser consultados.</li>
+<li><strong>Mapeamento de Objetos Personalizados</strong> Assim, os contratos são registros de primeira classe em fluxos de trabalho e relatórios.</li>
+</ul>
+<p>O mecanismo unificado de processamento de dados lida com a carga útil do contrato aninhado e mapeia cada estado filho de forma clara no esquema de objetos do Zoho.</p>
+<p><img alt="Integrando contratos Mindbody e status de pagamento automático no Zoho CRM em tempo real — Figura 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/inline-1.png"/></p>
+<h2 id="what-mb-contracts-pushes-to-zoho-crm">O que a MB Contracts propõe para o Zoho CRM</h2>
+<p>O objeto personalizado MB Contracts contém todos os campos necessários para fluxos de trabalho em tempo real:</p>
+<pre class="highlight"><code class="language-text">Zoho CRM custom object: MB Contracts
+- contract_id
+- contact_id (links to Zoho CRM contact)
+- contract_name                e.g. "12-Month Unlimited Reformer"
+- start_date / end_date
+- status                       active|pending_cancel|expired|terminated
+- autopay_status               current|retrying|failed|suspended
+- autopay_method               card|ach
+- autopay_next_charge_date
+- autopay_next_charge_amount
+- autopay_last_attempt_at
+- autopay_last_attempt_result  success|declined|insufficient_funds|...
+- autopay_retry_count
+- monthly_amount
+- balance_remaining</code></pre>
+<p>O <code>autopay_status</code> O campo é o gatilho para tudo o que importa. O status muda para <code>failed</code> or <code>retrying</code>, o fluxo de trabalho é acionado, a recuperação é iniciada.</p>
+<h2 id="designing-the-failed-payment-recovery-workflow">Desenvolvendo o fluxo de trabalho de recuperação de pagamentos não efetuados</h2>
+<p>O fluxo de trabalho do Zoho CRM no objeto Contratos MB:</p>
+<ol>
+<li><strong>Acionar:</strong> <code>autopay_status</code> mudanças de <code>current</code> to <code>failed</code> or <code>retrying</code>.</li>
+<li><strong>Na mesma hora:</strong> Enviar SMS automaticamente para o cliente: "Olá, nosso sistema sinalizou que seu pagamento não foi processado. Atualize aqui: [update_card_link]. Responda AJUDA se precisar de ajuda."</li>
+<li><strong>+4 horas:</strong> Se o status ainda for "falha" e o cliente não tiver atualizado o cartão, crie uma tarefa de alta prioridade para o especialista em cadastro com o contexto completo (último pagamento bem-sucedido, número de tentativas, valor).</li>
+<li><strong>+24 horas:</strong> E-mail automático do dono do estúdio: "Quer que eu te ligue rapidinho?"</li>
+<li><strong>+48 horas:</strong> Tarefa de contato com o proprietário criada, com vencimento no mesmo dia.</li>
+<li><strong>Ramo de recuperação:</strong> Quando <code>autopay_status</code> volta para <code>current</code>, suprima as tarefas restantes e envie um SMS de confirmação.</li>
+<li><strong>Ramo de escalonamento:</strong> Após 5 dias sem resolução, o status do lead muda para "Membro em Risco" e a conversa presencial de retenção é agendada.</li>
+</ol>
+<p>O envio de SMS no mesmo dia recupera a maior parte do volume de transações. Os cartões recusados geralmente são cartões expirados ou casos de saldo insuficiente que o cliente desconhecia. Detectar a falha em poucas horas, e não em semanas, é o fator mais importante para a taxa de recuperação.</p>
+<h2 id="renewal-dates-as-pipeline-forecasting">Datas de renovação como previsão de projetos em andamento</h2>
+<p>O <code>end_date</code> O campo no objeto Contratos MB permite que a equipe de vendas preveja a receita de renovação com semanas de antecedência:</p>
+<ul>
+<li>Pipeline para os próximos 90 dias: soma de <code>monthly_amount</code> para contratos com <code>end_date</code> nos próximos 90 dias, ponderados pela taxa histórica de renovação.</li>
+<li>Fila de chamadas de renovação: contratos com <code>end_date - now() &lt;= 45 days</code> e <code>status = active</code>, classificados por valor de vida útil do cliente.</li>
+<li>Divisão entre renovação automática e renovação manual: filtre pelo indicador de renovação na conta de membro subjacente e planeje a equipe para a renovação manual.</li>
+</ul>
+<p>A previsão só é útil porque os dados são atualizados em tempo real. Os relatórios de fim de mês apresentam uma margem de erro de 5 a 15% nas previsões porque os dados de entrada estão desatualizados.</p>
+<pre class="highlight"><code class="language-text">Sample forecast query (Zoho CRM Reports):
+  Select contact_id, monthly_amount, end_date
+  From MB_Contracts
+  Where end_date Between today() And today() + 90 days
+    And status = 'active'
+  Order By client_ltv DESC</code></pre>
+<p><img alt="Integrando contratos Mindbody e status de pagamento automático no Zoho CRM em tempo real — Figura 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/inline-2.png"/></p>
+<h2 id="representative-recovery-rate-at-360-clients">Taxa de recuperação representativa em 360 clientes</h2>
+<p>Imagens ilustrativas, não um cliente real:</p>
+<ul>
+<li>Taxa de recuperação de falhas de pagamento automático (recuperação no final do mês): aproximadamente 25 a 35%.</li>
+<li>Taxa de recuperação com SMS no mesmo dia + e-mail do proprietário em 24 horas: aumento para a faixa de 60 a 75%.</li>
+<li>A receita economizada por trimestre devido à detecção precoce de falhas representa uma parcela significativa da base de contratos, dependendo do tamanho médio do contrato.</li>
+<li>Horas mensais do proprietário dedicadas à conciliação de contratos: reduzidas de aproximadamente 4 para menos de 1, com o tempo restante gasto com os membros que realmente estão em risco.</li>
+</ul>
+<p>O mecanismo consiste em detecção rápida e uma sequência à qual o membro possa efetivamente responder. A integração fornece a detecção. A sequência precisa ser honesta ao solicitar a atualização.</p>
+<h2 id="builder-takeaway">Para levar para o construtor</h2>
+<ul>
+<li>Trate contratos e associações como objetos personalizados separados. Um cliente pode ter uma associação e três contratos (ou vice-versa). Um registro por conceito mantém as consultas organizadas.</li>
+<li>Construa a recuperação de pagamentos não efetuados em <code>autopay_status</code> Alterar eventos, não em um relatório agendado. A latência é o fator crucial.</li>
+<li>Usar <code>end_date</code> como sua previsão de renovação de contratos. É o número de receita prospectiva mais confiável que um estúdio possui.</li>
+</ul>
+<h2 id="try-it-in-your-studio">Experimente no seu estúdio.</h2>
+<p>Quer ver o CRMConnect Mindbody para Zoho CRM em ação? <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">Veja a página do aplicativo da API</a>.</p>
+<p>Consulte o catálogo completo de conectores pré-fabricados em <a href="/apps">/aplicativos</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">Neste artigo</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-end-of-month-contract-reports-are-useless">Por que os relatórios de contratos de fim de mês são inúteis</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">Por que as ferramentas prontas para uso falham aqui</a></li><li class="lvl-2"><a href="#the-apiant-approach">A abordagem APIANT</a></li><li class="lvl-2"><a href="#what-mb-contracts-pushes-to-zoho-crm">O que a MB Contracts propõe para o Zoho CRM</a></li><li class="lvl-2"><a href="#designing-the-failed-payment-recovery-workflow">Desenvolvendo o fluxo de trabalho de recuperação de pagamentos não efetuados</a></li><li class="lvl-2"><a href="#renewal-dates-as-pipeline-forecasting">Datas de renovação como previsão de projetos em andamento</a></li><li class="lvl-2"><a href="#representative-recovery-rate-at-360-clients">Taxa de recuperação representativa em 360 clientes</a></li><li class="lvl-2"><a href="#builder-takeaway">Para levar para o construtor</a></li><li class="lvl-2"><a href="#try-it-in-your-studio">Experimente no seu estúdio.</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Continue lendo</h2><div class="blog-grid"><a class="blog-card" href="/pt/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Unificando matrículas, cursos e agendamentos de mente e corpo no HighLevel" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Unificando matrículas, cursos e agendamentos de mente e corpo no HighLevel</h3><p class="blog-card-excerpt">Utilize a sincronização de inscrições, reservas de cursos e agendamentos do CRMConnect para fornecer à HighLevel uma visão unificada do calendário para todos os tipos de programas do Mindbody.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 de maio de 2026</span></div></div></a><a class="blog-card" href="/pt/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Relatórios de agendamento em vários locais no Klaviyo para uma rede de força com 6 locais." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Relatórios de agendamento em vários locais no Klaviyo para uma rede de força com 6 locais.</h3><p class="blog-card-excerpt">Como a sincronização de agendamentos do CRMConnect exibe o status dos agendamentos em nível de site dentro do Klaviyo, permitindo que o marketing central execute fluxos e relatórios por local.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 de abril de 2026</span></div></div></a><a class="blog-card" href="/pt/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Acabando com a necessidade de reformular mensalmente as apresentações para o conselho: painéis de controle de arrecadação de fundos em tempo real do DonorPerfect no HubSpot." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Acabando com a necessidade de reformular mensalmente as apresentações para o conselho: painéis de controle de arrecadação de fundos em tempo real do DonorPerfect no HubSpot.</h3><p class="blog-card-excerpt">Os conselhos administrativos querem linhas de tendência. Os funcionários querem suas noites de volta. Com o valor vitalício do doador, a doação média e o desempenho da campanha sincronizados no HubSpot, o relatório mensal para o conselho deixa de ser um projeto de quatro dias e se torna uma visualização de painel salva.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 de abril de 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Todos os direitos reservados.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/pt/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plataforma</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacidade</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Termos</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>4개 지점을 운영하는 부티크 짐 네트워크의 Keap 지점별 보고서 작성 방법 | APIANT 블로그</title>
+<meta content="CRMConnect의 양방향 프로필 동기화와 예약 동기화 기능을 통해 3인 마케팅 팀이 스프레드시트 없이 Mindbody 사이트별로 분류된 Keap 보고서를 얻는 방법." name="description"/>
+
+<!-- Open Graph -->
+<meta content="4개 지점으로 구성된 부티크 짐 네트워크의 Keap 지점별 보고서 작성" property="og:title"/>
+<meta content="CRMConnect의 양방향 프로필 동기화와 예약 동기화 기능을 통해 3인 마케팅 팀이 스프레드시트 없이 Mindbody 사이트별로 분류된 Keap 보고서를 얻는 방법." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-multi-location-reporting/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-keap-multi-location-reporting/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="4개 지점으로 구성된 부티크 짐 네트워크의 Keap 지점별 보고서 작성" property="twitter:title"/>
+<meta content="CRMConnect의 양방향 프로필 동기화와 예약 동기화 기능을 통해 3인 마케팅 팀이 스프레드시트 없이 Mindbody 사이트별로 분류된 Keap 보고서를 얻는 방법." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-multi-location-reporting/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Per-Location Reporting in Keap for a 4-Site Boutique Gym Network",
+  "description": "How CRMConnect's two-way profile sync plus appointment sync gives a 3-person marketing team Keap reports broken down by Mindbody site, without spreadsheets.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-multi-location-reporting/hero.png",
+  "datePublished": "2024-12-18T09:33:47+00:00",
+  "dateModified": "2026-05-19T17:42:40.660486+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-keap-multi-location-reporting/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Per-Location Reporting in Keap for a 4-Site Boutique Gym Network", "item": "https://apiant.com/blog/posts/mindbody-keap-multi-location-reporting/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-keap-multi-location-reporting/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ko/blog/posts/mindbody-keap-multi-location-reporting/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ko/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">커넥터</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">구축 시작</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ko/blog/category/api-apps" style="color:inherit;text-decoration:none;">API 앱</a>
+</div>
+<h1 class="blog-post-h1">4개 지점으로 구성된 부티크 짐 네트워크의 Keap 지점별 보고서 작성</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ko/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024년 12월 18일</span>
+<span>읽는 데 6분 소요</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ko/blog/?tag=fitness-wellness">#피트니스 &amp; 웰빙</a><a class="blog-tag" href="/ko/blog/?tag=mindbody">#심신</a><a class="blog-tag" href="/ko/blog/?tag=keap">#유지하세요</a><a class="blog-tag" href="/ko/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ko/blog/?tag=for-enterprise">#기업용</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="4개 지점으로 구성된 부티크 짐 네트워크의 Keap 지점별 보고서 작성" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-multi-location-reporting/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h1 id="a-3-person-marketing-team-at-a-4-location-boutique-gym-is-in-practice-a-15-person-team-after-you-account-for-ad-management-content-production-and-weekly-meetings-the-remaining-time-is-supposed-to-handle-per-location-reporting-for-four-different-general-managers-each-of-whom-wants-to-know-how-their-site-is-performing-this-week-and-how-it-compares-to-last-month">4개 지점을 운영하는 부티크 짐의 3인 마케팅팀은 광고 관리, 콘텐츠 제작, 주간 회의 등을 제외하면 사실상 1.5인 팀이나 다름없습니다. 남은 시간은 각 지점의 총괄 매니저 4명에게 보고해야 하는데, 각 매니저는 자신의 지점 웹사이트가 이번 주에 어떤 성과를 냈는지, 그리고 지난달과 비교했을 때 어떤지 알고 싶어 합니다.</h1>
+<p>Keap에 위치별 데이터가 제대로 입력되어 있지 않으면 보고 작업은 다음과 같이 진행됩니다. Mindbody CSV 파일 4개(사이트당 1개), Keap 보고서 4개 열기, Google Sheets에서 교차 참조, 미니 대시보드 4개 구축, 이메일 4개 발송, 그리고 다음 주에 반복. 이 모든 과정에 마케터 한 명이 주당 4~6시간을 소모합니다. 1년이면 순수 보고 작업에만 200~300시간을 허비하게 되지만, 그 과정에서 창출되는 창의적인 결과물은 전혀 없습니다.</p>
+<p>가상 사례: 엠버 애슬레틱(Ember Athletic, 예시)은 총 회원 수 2,100명에 중앙 마케팅팀 3명으로 구성된 부티크 짐 네트워크입니다. 마케팅팀은 극심한 피로에 시달리고 있었고, 지점장들은 자신들의 지점 데이터 관리가 뒷전으로 밀리듯 느껴진다고 불평했습니다. 사장은 "BI 담당자가 필요하다"는 말을 계속 들었지만, 9만 달러라는 거액의 연봉 때문에 채용을 꺼리고 있었습니다.</p>
+<p>정답은 BI 전문가가 아닙니다. 정답은 사이트 수준 데이터를 Keap에 제대로 통합하여 보고서 작성이 수동 내보내기가 아닌 저장된 검색으로 처리되도록 하는 것입니다.</p>
+<h2 id="tagging-contacts-by-mindbody-site-in-keap">Keap의 Mindbody 사이트에서 연락처 태그 지정</h2>
+<p>CRMConnect Mindbody와 Keap 지원 <strong>여러 Mindbody 지점을 하나의 Keap 계정에 동기화합니다.</strong>앱 페이지의 FAQ에는 다음과 같이 명확하게 나와 있습니다. "여러 위치를 하나의 Keap 계정에 동기화할 수 있나요? 네, 하나의 Keap 계정에서 여러 Mindbody 위치를 간편하게 관리할 수 있습니다."</p>
+<p>사이트 아이덴티티는 다음과 같은 요소들의 조합으로 Keap에 반영됩니다.</p>
+<ul>
+<li>A <code>primary_location</code> 각 연락처(홈 사이트)의 필드</li>
+<li>A <code>locations_visited</code> 사용자가 방문했거나 구매한 모든 사이트를 나열하는 다중 값 필드</li>
+<li>사이트별 태그(<code>site-ember-downtown</code>, <code>site-ember-eastside</code>, <code>site-ember-north</code>, <code>site-ember-westgate</code>)</li>
+<li>사이트 컨텍스트를 포함하는 모든 표준 Mindbody 필드(마지막 방문, 마지막 구매 등)</li>
+</ul>
+<p>구매한 서비스에 태그를 지정하는 기능은 구매처 정보도 태그에 포함시키므로, 이스트사이드에서 구매한 수업 패키지에는 구매처 정보가 적용됩니다. <code>purchased-10pack-eastside</code> 다운타운에서 구매한 동일한 패키지에 태그가 적용됩니다. <code>purchased-10pack-downtown</code>이는 연락처 중복 없이 Keap에서 위치별 보고서를 작성하는 데 필요한 기반입니다.</p>
+<p>다운타운 지점에 가입하여 3개월 후 이스트사이드 지점을 방문하기 시작한 한 회원의 Keap 연락처 정보는 다음과 같습니다.</p>
+<pre class="highlight"><code class="language-json">{
+  "email": "member@example.com",
+  "firstname": "Andre",
+  "primary_location": "Ember Downtown",
+  "locations_visited": ["Ember Downtown", "Ember Eastside"],
+  "tags": [
+    "site-ember-downtown",
+    "site-ember-eastside",
+    "purchased-unlimited-downtown",
+    "year-1-member"
+  ],
+  "last_visit_location": "Ember Eastside",
+  "last_visit_date": "2026-05-15",
+  "last_visit_service": "Strength Class",
+  "last_visit_staff": "Yusra",
+  "membership_status": "Active"
+}</code></pre>
+<p><img alt="4개 지점으로 구성된 부티크 짐 네트워크의 Keap 지점별 보고 — 그림 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-multi-location-reporting/inline-1.png"/></p>
+<h2 id="building-per-location-pipelines-without-duplicating-records">레코드 중복 없이 위치별 파이프라인 구축</h2>
+<p>각 지점마다 별도의 Keap 계정을 만들고 싶은 유혹이 들겠지만, 절대 그렇게 하지 마세요. 그렇게 하면 지점 간 회원 현황을 한눈에 볼 수 있는 기능(Keap의 몇 안 되는 장점 중 하나)을 사용할 수 없게 되고, 라이선스 비용을 4배나 더 지불해야 하며, 지점 간 회원 정보를 수동으로 조정해야 합니다.</p>
+<p>올바른 패턴은 위치 태그가 지정된 저장된 검색과 위치별 캠페인 시퀀스가 포함된 하나의 Keap 계정입니다.</p>
+<p><strong>위치별 탈퇴 회원 보기:</strong> 필터 <code>tags contains site-ember-eastside AND last_visit_date crossed 14 days AND membership_status = Active</code>이 목록은 이스트사이드 GM의 만료된 회원 목록이며, 해당 GM 회원만 볼 수 있습니다. 각 GM은 자신만의 북마크 URL을 갖습니다.</p>
+<p><strong>지역별 신규 회원 환영:</strong> 동일한 캠페인 시퀀스의 네 가지 버전이 있으며, 각 버전은 사이트 태그별로 접근이 제한됩니다. 다운타운 환영 메시지는 다운타운 지역 특화 강사와 수업 시간을 안내하고, 이스트사이드 환영 메시지는 이스트사이드 지역 정보를 안내합니다. 자동화 프레임워크는 동일하지만, 위치 정보를 활용한 콘텐츠가 제공됩니다.</p>
+<p><strong>위치별 고객 유지 보고서:</strong> 저장된 검색을 다음으로 그룹화하여 보관하세요. <code>primary_location</code>멤버십 상태 기준에 따라 필터링됩니다. 마케팅 팀에서 한 번 구축하면 자동으로 업데이트됩니다.</p>
+<p>여러 지역에 걸친 전략적 캠페인의 경우, <code>locations_visited</code> 다중 값 필드가 조인 요소입니다. 다운타운 중심 회원 중 이스트사이드 지점을 방문한 적이 없는 회원에게만 발송되는 "새로운 이스트사이드 지점을 방문해 보세요" 캠페인은 하나의 필터로 정의됩니다. <code>primary_location = Ember Downtown AND locations_visited does not contain Ember Eastside</code>.</p>
+<h2 id="catching-site-level-underperformance-early">사이트 수준의 성과 부진을 조기에 파악하기</h2>
+<p>여러 지점을 운영하는 모든 사업자가 가장 궁금해하는 질문은 바로 이것입니다. "특정 지점에서 다른 지점보다 회원 이탈 속도가 더 빠른가?" 지점별 태깅 기능이 없다면 이 질문에 대한 답을 얻는 데 일주일이나 걸리고, 결국 너무 늦게 알게 되는 경우가 많습니다.</p>
+<p>Keap에 저장된 검색을 사이트 태그 외부에 입력하면 약 90초 만에 원하는 결과를 얻을 수 있습니다. 예를 들어, 연락처 수를 조회할 수 있습니다. <code>tags contains site-ember-westgate AND last_visit_date crossed 21 days AND membership_status = Active</code>총합으로 나누기 <code>site-ember-westgate</code> 활성 회원 수와 사이트별 변동률을 확인하세요. 네 사이트를 비교해 보세요. 웨스트게이트의 월간 변동률이 12%인데 나머지 세 사이트의 변동률이 6~7%라면, 3개월 후가 아니라 지금 당장 조사해야 할 문제입니다.</p>
+<p>양방향 클라이언트 프로필 동기화(Keap에서 변경된 사항은 15분마다 Mindbody에 반영됨) 덕분에 마케팅 팀은 Mindbody에 영향을 주지 않고 사이트 태그 오류를 수정할 수 있습니다. 예를 들어 회원의 기본 위치가 잘못 설정된 경우, Keap에서 수정하면 다음 동기화 시 Mindbody에 반영됩니다.</p>
+<p><img alt="4개 지점으로 구성된 부티크 짐 네트워크의 Keap 지점별 보고 — 그림 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-multi-location-reporting/inline-2.png"/></p>
+<h2 id="representative-time-saved-at-2100-members">2,100명의 회원을 대상으로 한 대표 시간 절약 효과</h2>
+<p>이 정도 규모의 네트워크에서 대표적인 배포 사례를 살펴보면, 마케터 한 명당 지점별 보고 업무량이 주당 4~6시간에서 30분 미만으로 줄어듭니다(주로 저장된 검색 내용을 검토하고 총괄 관리자(GM) 의견을 작성하는 데 소요됨). Ember의 3인 마케팅 팀의 경우, 주당 약 12~16시간, 연간 약 600~800시간을 절약할 수 있으며, 이는 정규직 인력의 약 3분의 1에 해당하는 시간입니다.</p>
+<p>질적인 성과가 더욱 중요해집니다. 데이터가 자동으로 제때 이메일로 전송되므로 총괄 관리자들은 더 이상 뒷전으로 밀려나는 느낌을 받지 않습니다. 마케팅 부서는 더 이상 현장 차원의 논의를 가로막는 병목 현상이 되지 않습니다. 주간 경영진 회의의 대화 주제는 "마케팅 부서에서 아직 보고서를 보내지 않았어"에서 "웨스트게이트의 이탈률이 증가했으니 논의해 보자"로 바뀝니다.</p>
+<p>특히 Ember의 경우, 마케팅 팀은 보고 관련 업무 부담이 줄어든 덕분에 매달 두 건의 새로운 광고 소재 테스트를 진행할 수 있었는데, 이는 지난 6개월 동안 밀려 있던 두 건의 테스트였습니다. 이러한 테스트를 통해 얻은 수익으로 1분기 통합 비용을 충당할 수 있었습니다.</p>
+<p>이 수치는 예시일 뿐이며, 각 지점별 보고 업무량은 총괄 관리자가 요청한 보고서를 실제로 얼마나 자주 사용하는지에 따라 크게 달라집니다.</p>
+<h2 id="builder-takeaway">건설업체 테이크아웃</h2>
+<ul>
+<li><strong>복사할 내용:</strong> 하나의 Keap 계정으로 위치 정보를 태그하는 방식을 따르세요. 법적인 명확한 이유(데이터 공유 조항이 없는 진정한 독립 프랜차이즈 소유권 등)가 없는 한 여러 개의 Keap 계정으로 분할하지 마십시오.</li>
+<li><strong>주목해야 할 점:</strong> Mindbody 사이트 이름이 일관되고 명확해야만 사이트 태깅이 제대로 작동합니다. 서비스 시작 전에 Mindbody 사이트 이름을 검토하세요. "Downtown", "Ember Downtown", "downtown-1"은 Mindbody에서 서로 다른 세 가지 사이트 식별자이며, Keap에서도 동일한 의미를 가진 세 가지 다른 태그가 생성됩니다. 또한, Mindbody와 Keap 간의 예약 및 판매 동기화는 단방향이며, 고객 프로필만 양방향으로 동기화됩니다(Mindbody에서 Keap으로 즉시 동기화, Keap에서 Mindbody로 15분마다 동기화).</li>
+<li><strong>이 패턴이 맞지 않을 때:</strong> 각 지점마다 제공하는 서비스나 가격이 근본적으로 다른 네트워크(예: 동일한 모회사 산하에 메디컬 스파도 소유한 피트니스 스튜디오 체인)에서는 캠페인 로직이 지점 간에 호환되지 않으므로 별도의 Keap 인스턴스를 사용하는 것이 좋습니다.</li>
+</ul>
+<p>CRMConnect Mindbody to Keap이 실제로 어떻게 작동하는지 보고 싶으신가요? <a href="/apipartners/mindbody/mindbody-keap-integration-and-automation-apiant">API 앱 페이지를 보세요</a>.</p>
+<p>턴키 통합 솔루션 전체 카탈로그를 다음에서 확인하세요. <a href="/apps">/앱</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#tagging-contacts-by-mindbody-site-in-keap">Keap의 Mindbody 사이트에서 연락처 태그 지정</a></li><li class="lvl-2"><a href="#building-per-location-pipelines-without-duplicating-records">레코드 중복 없이 위치별 파이프라인 구축</a></li><li class="lvl-2"><a href="#catching-site-level-underperformance-early">사이트 수준의 성과 부진을 조기에 파악하기</a></li><li class="lvl-2"><a href="#representative-time-saved-at-2100-members">2,100명의 회원을 대상으로 한 대표 시간 절약 효과</a></li><li class="lvl-2"><a href="#builder-takeaway">건설업체 테이크아웃</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요</h3><p class="blog-card-excerpt">CRMConnect의 등록, 코스 예약 및 약속 동기화 기능을 활용하여 HighLevel이 모든 Mindbody 프로그램 유형에 대한 통합 캘린더 보기를 제공하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고</h3><p class="blog-card-excerpt">CRMConnect의 예약 동기화 기능이 Klaviyo 내에서 사이트별 예약 상태를 어떻게 보여주는지, 그리고 이를 통해 중앙 마케팅 부서에서 위치별 워크플로 및 보고서를 어떻게 실행할 수 있는지에 대한 내용입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 평생 가치, 평균 기부액, 캠페인 성과가 HubSpot에 동기화되면 월간 이사회 보고서 작성이 4일씩 걸리는 작업에서 저장 가능한 대시보드 형태로 간소화됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026 Apiant, Inc. 모든 권리 보유.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ko/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">은둔</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">자귀</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

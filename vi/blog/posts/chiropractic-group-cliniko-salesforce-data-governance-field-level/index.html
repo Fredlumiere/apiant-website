@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Quản trị dữ liệu cấp trường cho một nhóm phòng khám chỉnh hình cột sống: Đồng bộ hóa Cliniko với Salesforce | Blog của APIANT</title>
+<meta content='Một nhóm bác sĩ chỉnh hình cột sống với các kế hoạch chăm sóc nhiều lần không thể áp dụng cách tiếp cận "đồng bộ hóa mọi thứ rồi giải quyết sau". Việc kiểm soát ở cấp độ trường giữa Cliniko và Salesforce là thiết lập duy nhất vượt qua được cuộc kiểm tra tuân thủ.' name="description"/>
+
+<!-- Open Graph -->
+<meta content="Quản trị dữ liệu cấp trường cho một nhóm phòng khám chỉnh hình cột sống: Đồng bộ hóa Cliniko với Salesforce" property="og:title"/>
+<meta content='Một nhóm bác sĩ chỉnh hình cột sống với các kế hoạch chăm sóc nhiều lần không thể áp dụng cách tiếp cận "đồng bộ hóa mọi thứ rồi giải quyết sau". Việc kiểm soát ở cấp độ trường giữa Cliniko và Salesforce là thiết lập duy nhất vượt qua được cuộc kiểm tra tuân thủ.' property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Quản trị dữ liệu cấp trường cho một nhóm phòng khám chỉnh hình cột sống: Đồng bộ hóa Cliniko với Salesforce" property="twitter:title"/>
+<meta content='Một nhóm bác sĩ chỉnh hình cột sống với các kế hoạch chăm sóc nhiều lần không thể áp dụng cách tiếp cận "đồng bộ hóa mọi thứ rồi giải quyết sau". Việc kiểm soát ở cấp độ trường giữa Cliniko và Salesforce là thiết lập duy nhất vượt qua được cuộc kiểm tra tuân thủ.' property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Field-Level Data Governance for a Chiropractic Group Syncing Cliniko Into Salesforce",
+  "description": "A chiropractic group with multi-visit care plans cannot afford a 'sync everything and figure it out later' approach. Field-level control between Cliniko and Salesforce is the only setup that survives a compliance review.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.png",
+  "datePublished": "2025-07-17T13:18:32+00:00",
+  "dateModified": "2026-05-19T17:42:59.097184+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Field-Level Data Governance for a Chiropractic Group Syncing Cliniko Into Salesforce", "item": "https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/vi/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/vi/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Nền tảng</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Đầu nối</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Bắt đầu xây dựng</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/vi/blog/category/api-apps" style="color:inherit;text-decoration:none;">Ứng dụng API</a>
+</div>
+<h1 class="blog-post-h1">Quản trị dữ liệu cấp trường cho một nhóm phòng khám chỉnh hình cột sống: Đồng bộ hóa Cliniko với Salesforce</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/vi/blog/?author=fred">Fred Lumiere</a></span>
+<span>Ngày 17 tháng 7 năm 2025</span>
+<span>Thời gian đọc: 5 phút</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/vi/blog/?tag=healthcare">#Chăm sóc sức khỏe</a><a class="blog-tag" href="/vi/blog/?tag=cliniko">#Cliniko</a><a class="blog-tag" href="/vi/blog/?tag=salesforce">#Salesforce</a><a class="blog-tag" href="/vi/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Quản trị dữ liệu cấp trường cho một nhóm phòng khám chỉnh hình cột sống: Đồng bộ hóa Cliniko với Salesforce" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>Việc xuất dữ liệu CSV một lần từ Cliniko sang Salesforce là giải pháp tồi tệ nhất. Nó chỉ đủ "trực tiếp" để tạo cảm giác như một sự tích hợp, nhưng lại quá lỗi thời để có thể chứa dữ liệu sai. Nó lại chứa quá nhiều dữ liệu bị mất mát đến mức không ai hoàn toàn tin tưởng. Và nó hoàn toàn không cung cấp bất kỳ dấu vết kiểm toán nào mà một cán bộ tuân thủ cần để phê duyệt việc xử lý dữ liệu của phòng khám.</p>
+<p>Lấy một ví dụ minh họa: Summit Spine and Joint Chiropractic, một nhóm giả định với 3 phòng khám, 9 bác sĩ chỉnh hình và doanh thu hàng năm khoảng 1,4 triệu đô la. Phòng khám này bán các gói chăm sóc nhiều lần khám. Nhân viên phụ trách tuân thủ muốn kiểm soát chặt chẽ các trường thông tin bệnh nhân nào được chuyển vào Salesforce, ai trong bộ phận bán hàng và tiếp thị có thể xem chúng, và một nhật ký kiểm toán rõ ràng. Thiết lập hiện tại là xuất dữ liệu CSV định kỳ mà không ai hoàn toàn tin tưởng. Nhóm tiếp thị yêu cầu dữ liệu trực tiếp. Nhân viên phụ trách tuân thủ yêu cầu quản trị. Cả hai đều đúng.</p>
+<p><img alt="Quản trị dữ liệu cấp trường cho một nhóm phòng khám chỉnh hình cột sống khi đồng bộ hóa Cliniko với Salesforce — Hình 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/inline-1.png"/></p>
+<h2 id="why-the-one-time-csv-is-the-worst-of-all-worlds-for-compliance">Vì sao việc sử dụng CSV một lần lại là giải pháp tồi tệ nhất cho việc tuân thủ quy định.</h2>
+<p>Ba lý do:</p>
+<ul>
+<li>Không có phạm vi cấp trường. Việc xuất CSV thường chỉ bao gồm "tất cả các trường thông tin bệnh nhân hoặc không có trường thông tin bệnh nhân nào", điều này trái ngược với nguyên tắc quyền hạn tối thiểu.</li>
+<li>Không có nhật ký kiểm toán. Sau khi tệp CSV được tải lên, không có nhật ký nào ghi lại những bản ghi nào đã được nhập, khi nào hoặc do ai thực hiện. Việc kiểm tra tuân thủ không có gì để xem xét.</li>
+<li>Dữ liệu được thiết kế để lỗi thời. Việc xuất dữ liệu hàng tháng hoặc hàng quý có nghĩa là Salesforce phản ánh dữ liệu lịch sử. Các cập nhật và xóa dữ liệu ở phía Cliniko (thu hồi sự đồng ý, hợp nhất các bản sao, sửa lỗi bản ghi) không được đồng bộ.</li>
+</ul>
+<p>Trực giác của nhân viên phụ trách tuân thủ rằng có điều gì đó không ổn với thiết lập này là hoàn toàn chính xác. Giải pháp đúng là quản lý ở cấp trường, hai chiều và có ghi nhật ký.</p>
+<h2 id="the-apiant-approach">Phương pháp APIANT</h2>
+<p>CRMConnect Cliniko với Salesforce hỗ trợ cấu hình đồng bộ hóa cấp trường: mọi trường dữ liệu của Cliniko được chuyển sang Salesforce đều được chọn tham gia một cách rõ ràng, chứ không phải chọn không tham gia. Đồng bộ hóa bệnh nhân hai chiều có nghĩa là các cập nhật ở cả hai phía đều được lan truyền, và các thay đổi về sự đồng ý hoặc chỉnh sửa được thực hiện trong vòng vài phút thay vì vài quý. Nhật ký đồng bộ hóa được lưu trữ và có thể truy vấn, cung cấp cho người phụ trách tuân thủ quy định dấu vết kiểm toán mà phương pháp CSV không thể cung cấp.</p>
+<h2 id="concrete-steps">Bậc thang bê tông</h2>
+<ol>
+<li>Hãy lập sơ đồ trường trước khi cấu hình bất cứ điều gì. Liệt kê tất cả các trường của Cliniko sẽ được đồng bộ hóa với Salesforce. Gắn thẻ cho mỗi trường là an toàn cho bộ phận marketing, an toàn cho bộ phận vận hành hoặc chỉ dành cho bác sĩ. Các trường chỉ dành cho bác sĩ sẽ không được cấu hình. Cán bộ tuân thủ sẽ ký vào sơ đồ.</li>
+<li>Chỉ cho phép đồng bộ hóa thông tin bệnh nhân hai chiều đối với các trường thông tin nhân khẩu học an toàn cho mục đích tiếp thị và vận hành. Ví dụ thuộc phạm vi: tên, email, số điện thoại, địa chỉ gửi thư, tùy chọn liên lạc tiếp thị, địa điểm kinh doanh. Ví dụ không thuộc phạm vi: bất kỳ trường thông tin lâm sàng dạng văn bản tự do nào, bất kỳ trường chẩn đoán nào, bất kỳ trường kế hoạch điều trị nào.</li>
+<li>Cho phép hiển thị Thông tin Ca bệnh dưới dạng đối tượng Salesforce, với phạm vi cấp trường. Phạm vi áp dụng cho Salesforce: trạng thái ca bệnh, giới hạn phiên điều trị, số phiên đã hoàn thành, số tiền tối đa có thể lập hóa đơn, tiến độ theo mốc thời gian. Phạm vi áp dụng: mô tả lâm sàng, ghi chú ca bệnh, các trường văn bản tự do mô tả tình trạng bệnh nhân hoặc phản ứng với điều trị.</li>
+<li>Đồng bộ hóa hồ sơ và bộ quyền của Salesforce với bản đồ đồng bộ. Các vai trò liên quan đến lâm sàng sẽ thấy các trường an toàn cho hoạt động. Các vai trò liên quan đến thanh toán sẽ thấy các trường hóa đơn và thanh toán. Các vai trò liên quan đến tiếp thị chỉ thấy các trường an toàn cho tiếp thị. Quyền truy cập chéo vai trò được chỉ định rõ ràng, không phải mặc định.</li>
+<li>Thiết lập tùy chọn tiếp thị và sự đồng ý theo một chiều từ Cliniko đến Salesforce. Trường đồng ý trong Cliniko là nguồn thông tin chính xác. Nếu bệnh nhân thu hồi sự đồng ý trong Cliniko, thay đổi đó sẽ được cập nhật ngay lập tức lên Salesforce. Các thay đổi về sự đồng ý được khởi xướng trong Salesforce sẽ không được cập nhật ngược lại trừ khi có quy trình được kiểm soát và ghi lại.</li>
+<li>Cấu hình thời gian lưu giữ nhật ký đồng bộ. Xác nhận những gì được ghi lại (bản ghi được tạo, bản ghi được cập nhật, các trường được sửa đổi, nguồn thay đổi), xác nhận thời gian lưu giữ đáp ứng yêu cầu tuân thủ của tổ chức và xác nhận rằng người phụ trách tuân thủ biết cách truy vấn thông tin đó.</li>
+<li>Lên lịch cho cuộc họp đánh giá quản trị hàng quý. Hai mươi phút mỗi quý, với sự tham gia của cán bộ tuân thủ, người phụ trách tích hợp và giám đốc lâm sàng. Chương trình nghị sự được nêu bên dưới.</li>
+</ol>
+<p><img alt="Quản trị dữ liệu cấp trường cho một nhóm phòng khám chỉnh hình cột sống khi đồng bộ hóa Cliniko với Salesforce — Hình 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/inline-2.png"/></p>
+<h2 id="quarterly-governance-review">Đánh giá quản trị hàng quý</h2>
+<p>Chương trình nghị sự ngắn gọn và nhất quán:</p>
+<ul>
+<li>Xác nhận bản đồ hiện trường không bị thay đổi mà không có sự phê duyệt. Ghi chú lại bất kỳ bổ sung nào.</li>
+<li>Xác nhận các thay đổi về hồ sơ Salesforce và bộ quyền kể từ quý trước. Xác định bất kỳ vai trò hoặc quyền truy cập mới nào liên quan đến dữ liệu được đồng bộ hóa.</li>
+<li>Xem lại nhật ký đồng bộ hóa trong quý. Kiểm tra ngẫu nhiên một mẫu nhỏ các bản ghi để tìm bất kỳ nội dung lâm sàng nào không được phép vượt qua ranh giới.</li>
+<li>Xem xét lại số lượng người đồng ý nhận thông tin tiếp thị. Xác nhận Cliniko và Salesforce thống nhất về số lượng người đăng ký nhận thông tin. Điều tra bất kỳ sự khác biệt nào.</li>
+<li>Ghi lại kết quả đánh giá vào hồ sơ tuân thủ của phòng khám.</li>
+</ul>
+<p>Hai mươi phút mỗi quý. Phương pháp CSV không cung cấp phút nào để xem xét vì không có gì để xem xét. Nhật ký kiểm toán của quá trình tích hợp mới giúp cho việc xem xét trở nên khả thi.</p>
+<h2 id="outcome">Kết quả</h2>
+<p>Một nhóm phòng khám chỉnh hình cột sống có hồ sơ tương tự như Summit, nếu áp dụng mô hình này, sẽ chuyển từ tình trạng “nhóm tiếp thị và nhân viên tuân thủ bất đồng về việc tích hợp có an toàn hay không” sang “cả hai nhóm đều có một kế hoạch quản trị bằng văn bản, có chữ ký và được xem xét hàng quý”. Về mặt hoạt động, nhóm tiếp thị nhận được dữ liệu trực tiếp mà họ muốn (tiến độ kế hoạch chăm sóc nhiều lần, tín hiệu bệnh nhân bỏ điều trị, giá trị trọn đời) mà không cần các hồ sơ có thể làm lộ thông tin của phòng khám. Nhân viên tuân thủ có được nhật ký kiểm toán mà họ cần. Giám đốc tài chính không còn bị hỏi về độ chính xác của báo cáo nữa.</p>
+<h2 id="salesforce-profiles-and-permission-sets-aligned-to-what-cliniko-exposes">Hồ sơ và bộ quyền hạn của Salesforce, được điều chỉnh phù hợp với những gì Cliniko cung cấp.</h2>
+<p>Một lỗi thường gặp: các nhóm tiếp thị cuối cùng lại có quyền truy cập Salesforce cho phép họ xem các trường dữ liệu mà quá trình tích hợp đã đồng bộ hóa để sử dụng cho mục đích vận hành (trạng thái trường hợp, giới hạn phiên) vì không ai thiết lập phạm vi quyền hạn khi thiết lập ban đầu. Cách khắc phục chỉ cần thực hiện một lần nhưng phải diễn ra ngay từ ngày đầu tiên. Tách riêng các bộ quyền hạn cho nhóm lâm sàng, nhóm thanh toán và nhóm tiếp thị. Ánh xạ mỗi bộ quyền hạn đến tập hợp con các trường dữ liệu đã được đồng bộ hóa mà họ cần. Mặc định từ chối mọi thứ khác.</p>
+<h2 id="builder-takeaway">Đồ dùng cho thợ xây</h2>
+<ul>
+<li>Bản đồ hiện trường là một tài liệu bằng văn bản, có chữ ký. Nó cũng là sản phẩm bàn giao biến quá trình tích hợp từ "hãy tin tôi" thành "đây là chính sách". Hãy xây dựng nó trước khi bật bất cứ thứ gì.</li>
+<li>Việc đồng bộ hóa hai chiều là bắt buộc để tuân thủ quy định. Ngay khi bệnh nhân thu hồi sự đồng ý trong Cliniko, thay đổi đó phải được cập nhật lên Salesforce trong vòng vài phút, chứ không phải vài quý.</li>
+<li>Nhật ký kiểm toán là yếu tố quyết định giữa việc đạt yêu cầu và không đạt yêu cầu trong quá trình kiểm tra tuân thủ. Việc tích hợp hệ thống cung cấp chức năng này. Hãy đảm bảo rằng người phụ trách tuân thủ biết cách sử dụng nó.</li>
+</ul>
+<p>Bạn muốn xem CRMConnect Cliniko kết nối với Salesforce hoạt động như thế nào? <a href="/apipartners/cliniko/cliniko-salesforce-integration-and-automation-apiant">Xem trang Ứng dụng API</a>Hoặc xem toàn bộ <a href="/apps.html">Danh mục ứng dụng API</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">Trong bài viết này</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-the-one-time-csv-is-the-worst-of-all-worlds-for-compliance">Vì sao việc sử dụng CSV một lần lại là giải pháp tồi tệ nhất cho việc tuân thủ quy định.</a></li><li class="lvl-2"><a href="#the-apiant-approach">Phương pháp APIANT</a></li><li class="lvl-2"><a href="#concrete-steps">Bậc thang bê tông</a></li><li class="lvl-2"><a href="#quarterly-governance-review">Đánh giá quản trị hàng quý</a></li><li class="lvl-2"><a href="#outcome">Kết quả</a></li><li class="lvl-2"><a href="#salesforce-profiles-and-permission-sets-aligned-to-what-cliniko-exposes">Hồ sơ và bộ quyền hạn của Salesforce, được điều chỉnh phù hợp với những gì Cliniko cung cấp.</a></li><li class="lvl-2"><a href="#builder-takeaway">Đồ dùng cho thợ xây</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Tiếp tục đọc</h2><div class="blog-grid"><a class="blog-card" href="/vi/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Thống nhất việc đăng ký, các khóa học và lịch hẹn trong chương trình HighLevel" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Ứng dụng API</div><h3 class="blog-card-title">Thống nhất việc đăng ký, các khóa học và lịch hẹn trong chương trình HighLevel</h3><p class="blog-card-excerpt">Sử dụng tính năng đồng bộ hóa đăng ký, đặt khóa học và lịch hẹn của CRMConnect để cung cấp cho HighLevel một giao diện lịch thống nhất cho tất cả các loại chương trình của Mindbody.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Ngày 18 tháng 5 năm 2026</span></div></div></a><a class="blog-card" href="/vi/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Báo cáo cuộc hẹn đa địa điểm trong Klaviyo cho mạng lưới sức mạnh gồm 6 địa điểm." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Ứng dụng API</div><h3 class="blog-card-title">Báo cáo cuộc hẹn đa địa điểm trong Klaviyo cho mạng lưới sức mạnh gồm 6 địa điểm.</h3><p class="blog-card-excerpt">Cách tính năng đồng bộ lịch hẹn của CRMConnect hiển thị trạng thái lịch hẹn cấp địa điểm bên trong Klaviyo, cho phép bộ phận marketing trung tâm chạy các quy trình và báo cáo theo từng địa điểm.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Ngày 21 tháng 4 năm 2026</span></div></div></a><a class="blog-card" href="/vi/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Loại bỏ việc phải xây dựng lại báo cáo gây quỹ hàng tháng: bảng điều khiển gây quỹ thời gian thực từ DonorPerfect trong HubSpot" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Ứng dụng API</div><h3 class="blog-card-title">Loại bỏ việc phải xây dựng lại báo cáo gây quỹ hàng tháng: bảng điều khiển gây quỹ thời gian thực từ DonorPerfect trong HubSpot</h3><p class="blog-card-excerpt">Ban quản trị muốn có các đường xu hướng. Nhân viên muốn có lại thời gian buổi tối của mình. Với giá trị trọn đời của nhà tài trợ, khoản đóng góp trung bình và hiệu suất chiến dịch được đồng bộ hóa vào HubSpot, báo cáo hàng tháng cho ban quản trị không còn là dự án kéo dài bốn ngày mà trở thành một bảng điều khiển được lưu lại.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Ngày 20 tháng 4 năm 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Bảo lưu mọi quyền.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/vi/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Nền tảng</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Sự riêng tư</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Điều khoản</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

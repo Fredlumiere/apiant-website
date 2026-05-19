@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>資金調達広告費のループを閉じる：DonorPerfectのキャンペーンアトリビューションをHubSpotの取引に反映させる | APIANTブログ</title>
+<meta content="寄付をきっかけとなった広告と結びつけることができない場合、更新のたびに推測に頼ることになります。Gifts Pipelineアドオンは、DonorPerfectからの寄付をキャンペーンコード付きのHubSpot取引に変換するため、アトリビューション分析が四半期ごとのスプレッドシート作業ではなくなります。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="資金調達広告費のループを閉じる：DonorPerfectのキャンペーンアトリビューションをHubSpotの取引に反映させる" property="og:title"/>
+<meta content="寄付をきっかけとなった広告と結びつけることができない場合、更新のたびに推測に頼ることになります。Gifts Pipelineアドオンは、DonorPerfectからの寄付をキャンペーンコード付きのHubSpot取引に変換するため、アトリビューション分析が四半期ごとのスプレッドシート作業ではなくなります。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-campaign-attribution-ad-roi/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="資金調達広告費のループを閉じる：DonorPerfectのキャンペーンアトリビューションをHubSpotの取引に反映させる" property="twitter:title"/>
+<meta content="寄付をきっかけとなった広告と結びつけることができない場合、更新のたびに推測に頼ることになります。Gifts Pipelineアドオンは、DonorPerfectからの寄付をキャンペーンコード付きのHubSpot取引に変換するため、アトリビューション分析が四半期ごとのスプレッドシート作業ではなくなります。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-campaign-attribution-ad-roi/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Closing the loop on fundraising ad spend: campaign attribution from DonorPerfect into HubSpot deals",
+  "description": "If you cannot tie a gift back to the ad that prompted it, you are guessing on every renewal. The Gifts Pipeline add-on turns DonorPerfect donations into HubSpot deals with campaign codes attached, so attribution stops being a quarterly spreadsheet exercise.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-campaign-attribution-ad-roi/hero.png",
+  "datePublished": "2025-09-08T17:07:38+00:00",
+  "dateModified": "2026-05-19T17:43:00.171966+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Closing the loop on fundraising ad spend: campaign attribution from DonorPerfect into HubSpot deals", "item": "https://apiant.com/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/donorperfect-hubspot-campaign-attribution-ad-roi/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">資金調達広告費のループを閉じる：DonorPerfectのキャンペーンアトリビューションをHubSpotの取引に反映させる</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025年9月8日</span>
+<span>6分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=nonprofit">#非営利団体</a><a class="blog-tag" href="/ja/blog/?tag=donorperfect">#ドナーパーフェクト</a><a class="blog-tag" href="/ja/blog/?tag=hubspot">#ハブスポット</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="資金調達広告費のループを閉じる：DonorPerfectのキャンペーンアトリビューションをHubSpotの取引に反映させる" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-campaign-attribution-ad-roi/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>ほとんどの非営利団体のマーケティング担当者は、Metaのクリック単価を1セント単位まで正確に答えることができます。しかし、寄付者一人当たりのMetaのコストを尋ねると、答えは曖昧になります。特定のGoogle検索キャンペーンを通じて獲得した寄付者とダイレクトメールを通じて獲得した寄付者の生涯価値を尋ねると、肩をすくめて次の理事会までにまとめると約束するだけです。</p>
+<p>データは確かに存在する。ただ、互いに連携しない3つの場所に分散して存在しているだけだ。UTMパラメータは広告プラットフォームに、フォーム送信データはDonorPerfectに、メールエンゲージメントデータはHubSpotにそれぞれ保存されている。それらを統合する作業は、四半期に一度、誰も信用していないスプレッドシート上で行われる。</p>
+<p><img alt="資金調達広告費のループを閉じる：DonorPerfectからHubSpotの取引へのキャンペーンアトリビューション — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-campaign-attribution-ad-roi/inline-1.png"/></p>
+<h1 id="nonprofit-marketers-have-tried-this-every-way-each-fails-for-a-specific-reason">非営利団体のマーケティング担当者はあらゆる方法を試みてきたが、それぞれに明確な理由があって失敗に終わっている。</h1>
+<p>DonorPerfectのネイティブレポートでは、どのキャンペーンコードまたは勧誘コードが寄付につながったかが分かりますが、それは寄付が正しくタグ付けされている場合に限ります。オンライン寄付フォームは送信時にUTMパラメータを削除するため、メタ広告から始まった250ドルの寄付は、一般的なオンライン寄付としてコード化されてしまいます。</p>
+<p>Google AnalyticsとMeta Ads Managerは目標達成状況とコンバージョンをレポートしますが、実際の寄付金額を確認することはできません。25ドルの寄付も2,500ドルの寄付も、目標レポート上では同じように見えます。</p>
+<p>汎用的なiPaaSコネクタは、連絡先情報は同期するものの、ギフト情報は同期しないか、キャンペーンコードが添付されていない定額のギフト情報のみを同期します。結果として、誰かがギフトを贈ったことは分かりますが、その理由が分からないという状況になります。</p>
+<p>自分で作成したスプレッドシートは、2月に40件の贈り物を照合する場合には有効だが、11月に4000件になると機能しなくなる。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>DonorPerfectとHubSpot向けのCRMConnectは、寄付者情報だけでなく、寄付に関する完全な記録を保持するように設計されています。オプションのGifts Pipelineアドオンと組み合わせることで、DonorPerfectで寄せられたすべての寄付が、キャンペーンのメタデータがすべて添付されたHubSpotの取引として記録されます。</p>
+<p>帰属分析を実際に機能させるための要素：</p>
+<ul>
+<li><strong>ギフトパイプライン（オプションの追加機能）</strong> DonorPerfectは、各寄付を金額、寄付日、寄付の種類、キャンペーン、勧誘、再勧誘、およびアピールコードを含むHubSpotの取引として記録します。</li>
+<li><strong>キャンペーンパフォーマンス追跡</strong> DonorPerfectのキャンペーンおよび勧誘コードをHubSpotの取引プロパティに自動的に取り込むようにします。</li>
+<li><strong>ドロップダウン用CodeSync</strong> DonorPerfectのキャンペーンコードをHubSpotのドロップダウンリストに自動的に反映します。DonorPerfectで新しいアピールを追加すると、HubSpotの取引プロパティが更新され、既存のダッシュボードは引き続き機能します。</li>
+<li><strong>カスタムフィールド同期</strong> 寄付フォームで取得したUTMパラメータをHubSpotの取引プロパティに引き継ぐことで、寄付元と寄付媒体が寄付情報とともに保持されます。</li>
+<li><strong>広告ROIレポーティング</strong> （HubSpot Marketing Hub Enterpriseと接続された広告アカウントが必要です）広告費と報告された収益の間のループを閉じます。</li>
+</ul>
+<h2 id="closing-the-attribution-loop-in-five-steps">帰属ループを閉じるための5つのステップ</h2>
+<p>具体例：レイクサイド交響楽協会は、年間14件の有料デジタルキャンペーンを実施する中規模の地域交響楽団です（架空の例であり、実在する組織ではありません）。</p>
+<p><strong>ステップ1：寄付フォームでUTMパラメータを取得します。</strong> DonorPerfectの寄付フォームを設定して、 <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>、および <code>utm_term</code> 寄付記録のDonorPerfectカスタムフィールドに反映させます。ほとんどのオンライン寄付システムでは、クエリ文字列を読み取る小さなJavaScriptコードによって入力される非表示フォームフィールドを使用することで、これを実現できます。DonorPerfect側で手動で設定する必要があるのは、この手順のみです。</p>
+<p><strong>ステップ2：UTMフィールドをHubSpotの取引プロパティにマッピングします。</strong> CRMConnectのフィールドマッピングで、各UTMカスタムフィールドを対応するHubSpotの取引プロパティにポイントします。取引プロパティ（元のソース、元のメディア、元のキャンペーン、元のコンテンツ、元の用語）が存在しない場合は作成します。これらのプロパティは取引に保持し、連絡先には保持しないでください。1人の寄付者が異なるキャンペーンから複数回寄付する可能性があり、各寄付を実際のソースに紐付ける必要があるためです。</p>
+<p><strong>ステップ3．寄付のライフサイクルを反映したHubSpotの取引パイプラインを構築する。</strong> シンフォニーの取引パイプラインは通常、問い合わせ、寄付の約束、初回支払い受領、全額支払い、失効といった段階で構成されています。CRMConnectは、DonorPerfectの寄付タイプ（寄付の約束、寄付金支払い、一時金）に基づいて、適切な段階を自動的に設定できます。複数年にわたる寄付の約束の場合、各支払いが個別の取引となるため、現金ベースのレポート作成も正確です。</p>
+<p><strong>ステップ4．クローズドループダッシュボードを構築する。</strong> HubSpotの3つのレポートがほとんどの作業を担います。</p>
+<ul>
+<li>過去90日間の収益（販売元別）：販売元別に集計された取引金額の棒グラフ。マーケティングハブの広告連携機能で取得した広告費と照合できます。</li>
+<li>キャンペーン別獲得寄付者あたりのコスト：各キャンペーンについて、総広告費を、そのキャンペーンに起因する最初の取引を行ったユニークコンタクトの数で割った値。</li>
+<li>獲得元別の12ヶ月間の寄付者LTV：各広告チャネルに一致する元の獲得元を持つコンタクトについて、過去12ヶ月間のすべての取引を合計したものです。この数値が、実際に予算決定の基準となります。</li>
+</ul>
+<p><strong>ステップ5．四半期の中間時点のデータを使用する。</strong> 交響楽団は年間14回のキャンペーンを実施するため、8週間の業績不振はキャンペーンサイクルの半分に相当します。HubSpotから毎週自動送信されるメールを作成し、実施中のすべてのキャンペーン、その支出額、収益、および獲得した寄付者1人あたりのコストを一覧表示します。マーケティングディレクターには、四半期ごとの役員会資料ではなく、このレポートに基づいて予算を再配分する権限を与えます。</p>
+<h2 id="edge-cases-that-quietly-break-attribution">ひっそりと帰属関係を破綻させるエッジケース</h2>
+<p><strong>会計年度をまたぐ誓約。</strong> 寄付者が5月に5,000ドルを寄付すると約束し、5月に1,000ドル、10月に2,000ドル、2月に2,000ドルを支払いました。この寄付約束を単一の取引として扱うと、5月のキャンペーンレポートには回収していない5,000ドルの収益が表示されます。CRMConnectを設定して、支払いごとに取引を作成し、合計金額に対して別の寄付約束取引を別々のパイプラインで作成してください。ほとんどのアトリビューションダッシュボードでは、支払いパイプラインを使用する必要があります。</p>
+<p><strong>ソフトクレジット。</strong> ある財団が2万5000ドルを寄付したが、この提案は関係構築の面で功績のある理事によって主導された。ソフトクレジットは、関係性に基づく帰属としてタグ付けされた別の取引タイプとして同期されるべきだが、現金ベースのROIダッシュボードからは除外されるべきである。</p>
+<p><strong>マルチタッチアトリビューション。</strong> 寄付者が6月にMeta広告を見て、8月に3つのメールキャンペーンを開封し、10月にGoogle検索広告をクリックし、11月に寄付を行ったとします。UTMパラメータは最後の接触しか捉えません。検討期間が長い場合、UTMアトリビューションに加えて、Marketing Hub Enterpriseに既に搭載されているHubSpotのファーストタッチおよびマルチタッチ収益アトリビューションレポートを活用することをお勧めします。</p>
+<p><strong>お揃いのギフト。</strong> 個人からの500ドルの寄付に対し、2か月後にその個人が勤務する企業から500ドルのマッチングギフトが贈られる場合、キャンペーンのROIが実際の収益への影響を過小評価しないよう、マッチングギフトにも元の寄付と同じ「元の情報源」をタグ付けしてください。</p>
+<h2 id="what-it-looks-like-in-production">実際の生産現場ではどのような様子か</h2>
+<p>レイクサイド交響楽団のような規模の組織（予算680万ドル、有料キャンペーン14件）を例にとると、適切に構築されたアトリビューションスタックでは、通常、2～3件のキャンペーンが収益の60～70%を占めている一方、これまでずっと行ってきたキャンペーンはごくわずかなROIしか生み出していないことが明らかになります。収益性の高いキャンペーンに予算を再配分することで、通常、追加予算なしで、2回のキャンペーンサイクル以内に獲得寄付者による総収益を25～40%増加させることができます。</p>
+<p>これは表向きの数字だが、より静かな成果は、マーケティングディレクターが雰囲気だけでキャンペーンの決定を正当化するのではなく、成約によって正当化し始めることだ。</p>
+<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
+<ul>
+<li>寄付フォームでUTMパラメータを取得し、DonorPerfectのカスタムフィールドに入力します。これが、残りのシステムが正しく動作するために必要な唯一の手動設定です。</li>
+<li>取引内容に基づいて属性を付与し、連絡先に基づいて属性を付与するべきではありません。異なる2つのキャンペーンから2回寄付を行った寄付者は、1つの属性イベントではなく、2つの属性イベントとしてカウントされます。</li>
+<li>誓約金ごとに1つの取引を作成するのではなく、誓約金の支払いごとに1つの取引を作成してください。現金ベースのダッシュボードは、実際に入金された現金と一致させる必要があります。</li>
+</ul>
+<p>CRMConnect DonorPerfectからHubSpotへの連携を実際に見てみたいですか？ <a href="/apipartners/donorperfect/donorperfect-hubspot-integration-and-automation-apiant">APIアプリのページを見る</a>既製APIANTコネクタの全カタログについては、こちらをご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#closing-the-attribution-loop-in-five-steps">帰属ループを閉じるための5つのステップ</a></li><li class="lvl-2"><a href="#edge-cases-that-quietly-break-attribution">ひっそりと帰属関係を破綻させるエッジケース</a></li><li class="lvl-2"><a href="#what-it-looks-like-in-production">実際の生産現場ではどのような様子か</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

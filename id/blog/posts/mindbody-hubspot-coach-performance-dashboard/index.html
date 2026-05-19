@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Membangun Dasbor Kinerja Pelatih di HubSpot dari Data Kelas Mindbody | Blog APIANT</title>
+<meta content="Gunakan alur janji temu, alur penjualan, dan pelacakan kunjungan terakhir CRMConnect untuk membuat laporan HubSpot yang menunjukkan kehadiran, pendapatan, dan retensi berdasarkan pelatih dan kelas." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Membangun Dasbor Kinerja Pelatih di HubSpot Berdasarkan Data Kelas Mindbody" property="og:title"/>
+<meta content="Gunakan alur janji temu, alur penjualan, dan pelacakan kunjungan terakhir CRMConnect untuk membuat laporan HubSpot yang menunjukkan kehadiran, pendapatan, dan retensi berdasarkan pelatih dan kelas." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-hubspot-coach-performance-dashboard/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Membangun Dasbor Kinerja Pelatih di HubSpot Berdasarkan Data Kelas Mindbody" property="twitter:title"/>
+<meta content="Gunakan alur janji temu, alur penjualan, dan pelacakan kunjungan terakhir CRMConnect untuk membuat laporan HubSpot yang menunjukkan kehadiran, pendapatan, dan retensi berdasarkan pelatih dan kelas." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Building a Coach Performance Dashboard in HubSpot From Mindbody Class Data",
+  "description": "Use CRMConnect's appointment pipeline, sales pipeline, and last-visit tracking to build HubSpot reports that show attendance, revenue, and retention by coach and by class.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/hero.png",
+  "datePublished": "2025-01-15T13:06:46+00:00",
+  "dateModified": "2026-05-19T17:42:36.591111+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-hubspot-coach-performance-dashboard/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Building a Coach Performance Dashboard in HubSpot From Mindbody Class Data", "item": "https://apiant.com/blog/posts/mindbody-hubspot-coach-performance-dashboard/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-hubspot-coach-performance-dashboard/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/id/blog/posts/mindbody-hubspot-coach-performance-dashboard/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/id/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Konektor</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Mulai Membangun</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/id/blog/category/api-apps" style="color:inherit;text-decoration:none;">Aplikasi API</a>
+</div>
+<h1 class="blog-post-h1">Membangun Dasbor Kinerja Pelatih di HubSpot Berdasarkan Data Kelas Mindbody</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/id/blog/?author=fred">Fred Lumiere</a></span>
+<span>15 Januari 2025</span>
+<span>Waktu baca 5 menit</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/id/blog/?tag=fitness-wellness">#Kebugaran &amp; Kesehatan</a><a class="blog-tag" href="/id/blog/?tag=mindbody">#PikiranTubuh</a><a class="blog-tag" href="/id/blog/?tag=hubspot">#HubSpot</a><a class="blog-tag" href="/id/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/id/blog/?tag=ai-copilot">#AI Co-Pilot</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Membangun Dasbor Kinerja Pelatih di HubSpot Berdasarkan Data Kelas Mindbody" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h1 id="ask-a-crossfit-head-coach-which-of-their-staff-has-the-best-retention-rate-they-will-give-you-a-confident-answer-ask-them-to-back-it-up-with-numbers-and-the-answer-becomes-well-you-know-you-can-just-feel-it">Tanyakan kepada kepala pelatih CrossFit, anggota staf mana yang memiliki tingkat retensi terbaik. Mereka akan memberikan jawaban yang percaya diri. Namun, mintalah mereka untuk membuktikannya dengan angka, dan jawabannya akan berubah menjadi "ya, Anda tahu, Anda bisa merasakannya."</h1>
+<p>Laporan Mindbody dirancang untuk akuntansi, bukan pelatihan. Anda dapat menarik data kehadiran kelas. Anda dapat menarik laporan penjualan. Anda dapat menarik daftar peserta yang tidak hadir. Tidak satu pun dari data tersebut yang terintegrasi. Tidak ada seorang pun di sistem yang memiliki waktu, atau kemampuan SQL, untuk menggabungkannya setiap minggu. Akibatnya, percakapan tentang kinerja tetap bersifat impresionistik, anggota yang berhenti berlangganan baru diperhatikan tiga minggu kemudian, dan pelatih dengan pendapatan per jam tertinggi biasanya bukanlah orang yang mendapatkan pujian.</p>
+<p>Contoh hipotetis: Anvil Strength CrossFit (sebagai ilustrasi), sebuah pusat kebugaran CrossFit dengan satu lokasi, 320 anggota, dan 7 sesi kelas per hari, selalu menghadapi masalah ini setiap kali melakukan evaluasi triwulanan. Pemilik ingin membayar pelatih bonus variabel kecil yang terkait dengan retensi dan tingkat kehadiran kelas. Namun, ia tidak bisa melakukannya karena tidak dapat mengukur keduanya dengan pasti.</p>
+<p>Postingan ini akan menjelaskan bagaimana CRMConnect Mindbody terhubung dengan pipeline dan properti bawaan HubSpot untuk menjadi sumber data bagi dashboard performa pelatih yang dapat dibuat dalam waktu sekitar satu sore.</p>
+<h2 id="pipelines-you-get-for-free-with-crmconnect">Saluran Data yang Anda Dapatkan Secara Gratis dengan CRMConnect</h2>
+<p>CRMConnect menyediakan dua pipeline transaksi HubSpot yang sudah terisi dan terus diperbarui.</p>
+<p><strong>Alur Penjadwalan Janji Temu Mindbody.</strong> Dari halaman aplikasi: “CRMConnect membuat dan memelihara Pipeline Janji Temu Mindbody khusus di HubSpot, secara otomatis merepresentasikan setiap janji temu sebagai kesepakatan. Setiap kesepakatan berisi informasi terperinci, termasuk pembelian terkait, perubahan jadwal, status janji temu, dan jumlah sesi yang tersisa.” Diperbarui setiap 15 menit.</p>
+<p><strong>Saluran Penjualan Mindbody.</strong> Mencatat setiap pembelian klien sebagai sebuah transaksi, dengan atribusi kepada staf, lokasi, dan layanan. Direkonsiliasi setiap hari.</p>
+<p>Dikombinasikan dengan lebih dari 120 properti HubSpot khusus yang dikelola CRMConnect pada setiap kontak, Anda sekarang memiliki:</p>
+<ul>
+<li>Per kontak: <code>last_visit_date</code>, <code>last_visit_staff</code>, <code>total_visits</code>, <code>next_scheduled_appointment</code>, <code>remaining_sessions</code>, <code>membership_status</code></li>
+<li>Kesepakatan per janji temu: staf (pelatih), layanan (kelas), lokasi, status, asosiasi pembelian</li>
+<li>Kesepakatan per penjualan: jumlah, barang, staf, lokasi, tanggal</li>
+</ul>
+<p>Itu sudah cukup untuk membuat laporan tingkat pelatih. Anda tidak memerlukan gudang data, dbt, atau lisensi BI.</p>
+<p><img alt="Membangun Dasbor Kinerja Pelatih di HubSpot dari Data Kelas Mindbody — Gambar 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/inline-1.png"/></p>
+<h2 id="designing-the-coach-performance-dashboard">Mendesain Dasbor Kinerja Pelatih</h2>
+<p>Di dalam HubSpot Reports (diperlukan Pro Hub, Sales Hub Professional atau versi yang lebih tinggi untuk pelaporan kustom penuh), buat empat laporan dan sematkan ke satu dasbor bernama “Coach Performance.”</p>
+<p><strong>Laporan 1: Kelas yang dibimbing, 30 hari terakhir.</strong> Laporan transaksi yang difilter ke Mindbody Appointment Pipeline, dikelompokkan berdasarkan staf, jumlah transaksi dengan status = Selesai. Disusun berdasarkan jenis kelas.</p>
+<p><strong>Laporan 2: Pendapatan yang diatribusikan, 30 hari terakhir.</strong> Laporan transaksi pada saluran penjualan Mindbody, dikelompokkan berdasarkan staf, jumlah total. Ini adalah pendapatan pembelian yang terkait dengan interaksi dengan anggota staf tersebut, bukan pendapatan kotor studio.</p>
+<p><strong>Laporan 3: Tingkat pengisian kelas berdasarkan pelatih.</strong> Laporan kesepakatan mengenai Alur Penunjukan, dikelompokkan berdasarkan staf dan kelas, jumlah yang Selesai dibandingkan dengan total yang dijadwalkan. Diurutkan menurun.</p>
+<p><strong>Laporan 4: Jumlah anggota yang berhenti berlangganan per pelatih.</strong> Laporan kontak difilter ke <code>last_visit_date is more than 14 days ago AND last_visit_staff is known</code>, dikelompokkan berdasarkan <code>last_visit_staff</code>Ini adalah laporan yang kurang dikenal. Laporan ini menunjukkan kepada Anda, per pelatih, berapa banyak anggota "mereka" yang berisiko saat ini.</p>
+<p>Untuk tinjauan triwulanan Anvil, pemiliknya menambahkan yang kelima: <strong>Retensi kelompok berdasarkan orientasi pelatih.</strong> Saring kontak ke <code>total_visits &gt;= 1 AND created_date between Q1 dates</code>, dikelompokkan berdasarkan <code>first_visit_staff</code> (Properti yang Anda isi saat pendaftaran melalui alur kerja). Bandingkan persentase yang masih aktif 90 hari kemudian. Ini adalah cara terdekat yang bisa Anda dapatkan untuk mendapatkan atribusi retensi yang sebenarnya tanpa menghabiskan waktu berbulan-bulan.</p>
+<h2 id="catching-lapsed-members-before-coaches-notice">Menangkap Anggota yang Tidak Aktif Sebelum Pelatih Menyadari</h2>
+<p>Laporan anggota yang berhenti berlangganan adalah bagian yang benar-benar digunakan oleh para pelatih setiap hari. Buat alur kerja HubSpot yang mendaftarkan kontak ke dalam laporan tersebut. <code>last_visit_date crossed 14 days AND membership_status = Active</code>dan meneruskan tugas ke kontak tersebut. <code>last_visit_staff</code> dengan skrip satu baris: “Saya lihat [nama depan] belum masuk selama dua minggu. Ada pesan singkat darimu?”</p>
+<p>Ini berhasil karena sinkronisasi kunjungan terakhir CRMConnect sangat lengkap: “CRMConnect terus memperbarui HubSpot dengan detail kunjungan terbaru setiap klien, termasuk tanggal, jenis (janji temu, kelas, atau kedatangan), layanan yang diberikan, anggota staf, dan nama acara.” Pelatih mengetahui dengan tepat kelas mana yang terakhir diikuti anggota dan dapat merujuknya dalam pesan teks mereka.</p>
+<p><img alt="Membangun Dasbor Kinerja Pelatih di HubSpot dari Data Kelas Mindbody — Gambar 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/inline-2.png"/></p>
+<p>Untuk atribusi pada tingkat penunjukan, catatan kesepakatan penunjukan di HubSpot kira-kira terlihat seperti ini:</p>
+<pre class="highlight"><code class="language-json">{
+  "deal_pipeline": "Mindbody Appointment Pipeline",
+  "deal_stage": "Completed",
+  "service": "CrossFit 6:00am",
+  "staff": "Marco",
+  "location": "Anvil HQ",
+  "remaining_sessions": 14,
+  "associated_contact": "athlete@example.com",
+  "scheduled_date": "2026-05-17T06:00:00",
+  "purchase_associated": "10-Class Pack"
+}</code></pre>
+<h2 id="representative-insights-from-the-first-quarter">Gambaran Umum dari Kuartal Pertama</h2>
+<p>Dalam penerapan representatif pada skala sebesar ini, seperempat pertama dasbor pelatih biasanya menampilkan tiga pola. Pertama, pelatih dengan karisma yang paling tinggi jarang memiliki tingkat retensi tertinggi; retensi berkorelasi lebih kuat dengan pelatih yang mengirim pesan teks kepada anggota yang berhenti mengikuti kelas. Kedua, kelas pukul 6 pagi secara konsisten memiliki tingkat pengisian terendah dan tingkat retensi tertinggi, yang tampaknya berlawanan dengan intuisi sampai Anda menyadari bahwa peserta kelas pukul 6 pagi sangat berkomitmen. Ketiga, pesan teks kepada anggota yang berhenti mengikuti kelas dari pelatih yang mengajar kelas terakhir mereka menghasilkan kunjungan kembali sekitar 30 hingga 40 persen, dibandingkan dengan kurang dari 10 persen untuk email keterlibatan kembali yang bersifat umum.</p>
+<p>Dengan skala Anvil (320 anggota, 320 potensi pembatalan langganan bulanan), memulihkan bahkan 15 persen dari calon pelanggan yang akan berhenti berlangganan setiap bulan berarti sekitar 5 hingga 8 anggota yang dipertahankan, atau sekitar $700 hingga $1.100 dalam penghematan pendapatan bulanan berulang (MRR). Dalam setahun, jumlah tersebut dapat menutupi biaya integrasi secara keseluruhan berkali-kali lipat.</p>
+<p>Angka-angka ini bersifat ilustratif; tingkat konversi pesan teks yang terputus sangat bergantung pada budaya pelatih dan seberapa personal pesan teks tersebut sebenarnya.</p>
+<h2 id="builder-takeaway">Kesimpulan untuk Pembangun</h2>
+<ul>
+<li><strong>Apa yang perlu disalin:</strong> Struktur dasbor empat laporan. Jangan terlalu rumit. Berdasarkan pengalaman saya, pelatih akan berhenti melihat dasbor dengan lebih dari 5 widget.</li>
+<li><strong>Hal yang perlu diperhatikan:</strong> Saluran Penjualan Mindbody direkonsiliasi setiap hari, bukan secara real-time, sehingga angka pendapatan akan tertinggal satu hari. Saluran Janji Temu diperbarui setiap 15 menit, yang baik untuk semua hal kecuali kasus penggunaan langsung "apakah kelas malam ini sudah penuh". Selain itu, mengaitkan pendapatan dengan seorang pelatih pada dasarnya tidak pasti; penjualan di meja resepsionis setelah kelas mungkin atau mungkin bukan "kredit" pelatih yang mengajar.</li>
+<li><strong>Jika pola ini tidak sesuai:</strong> Bisnis berbasis janji temu (terapi pribadi satu lawan satu, klinik kecantikan) mendapatkan atribusi yang lebih bersih karena setiap janji temu hanya memiliki satu penyedia layanan. Bisnis kelas kelompok dengan pelatih yang berganti-ganti cenderung lebih banyak mengandung informasi yang tidak akurat dan membutuhkan definisi yang jelas tentang "pelatih yang terakreditasi" sebelum Anda membuat dasbornya.</li>
+</ul>
+<p>Ingin melihat CRMConnect Mindbody ke HubSpot beraksi? <a href="/apipartners/mindbody/mindbody-hubspot-integration-and-automation-apiant">Lihat halaman Aplikasi API</a>.</p>
+<p>Telusuri katalog lengkap integrasi siap pakai di <a href="/apps">/aplikasi</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">Dalam artikel ini</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#pipelines-you-get-for-free-with-crmconnect">Saluran Data yang Anda Dapatkan Secara Gratis dengan CRMConnect</a></li><li class="lvl-2"><a href="#designing-the-coach-performance-dashboard">Mendesain Dasbor Kinerja Pelatih</a></li><li class="lvl-2"><a href="#catching-lapsed-members-before-coaches-notice">Menangkap Anggota yang Tidak Aktif Sebelum Pelatih Menyadari</a></li><li class="lvl-2"><a href="#representative-insights-from-the-first-quarter">Gambaran Umum dari Kuartal Pertama</a></li><li class="lvl-2"><a href="#builder-takeaway">Kesimpulan untuk Pembangun</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Lanjutkan membaca</h2><div class="blog-grid"><a class="blog-card" href="/id/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Menyatukan Pendaftaran, Kursus, dan Janji Temu Mindbody di HighLevel" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplikasi API</div><h3 class="blog-card-title">Menyatukan Pendaftaran, Kursus, dan Janji Temu Mindbody di HighLevel</h3><p class="blog-card-excerpt">Gunakan fitur pendaftaran, pemesanan kursus, dan sinkronisasi janji temu CRMConnect untuk memberikan tampilan kalender tunggal kepada HighLevel di semua jenis program Mindbody.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 Mei 2026</span></div></div></a><a class="blog-card" href="/id/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Pelaporan Janji Temu Multi-Lokasi di Klaviyo untuk Jaringan dengan Kekuatan 6 Lokasi" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplikasi API</div><h3 class="blog-card-title">Pelaporan Janji Temu Multi-Lokasi di Klaviyo untuk Jaringan dengan Kekuatan 6 Lokasi</h3><p class="blog-card-excerpt">Bagaimana sinkronisasi janji temu CRMConnect menampilkan status janji temu tingkat lokasi di dalam Klaviyo sehingga tim pemasaran pusat dapat menjalankan alur dan laporan per lokasi.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 April 2026</span></div></div></a><a class="blog-card" href="/id/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Mengakhiri pembuatan ulang presentasi bulanan: dasbor penggalangan dana secara real-time dari DonorPerfect di HubSpot" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplikasi API</div><h3 class="blog-card-title">Mengakhiri pembuatan ulang presentasi bulanan: dasbor penggalangan dana secara real-time dari DonorPerfect di HubSpot</h3><p class="blog-card-excerpt">Dewan pengurus menginginkan grafik tren. Staf menginginkan waktu malam mereka kembali. Dengan nilai seumur hidup donor, rata-rata donasi, dan kinerja kampanye yang disinkronkan ke HubSpot, laporan bulanan dewan pengurus tidak lagi menjadi proyek empat hari, melainkan menjadi tampilan dasbor yang tersimpan.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 April 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Semua Hak Dilindungi Undang-Undang.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/id/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Pribadi</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Ketentuan</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

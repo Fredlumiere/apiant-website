@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Een workflow voor het reactiveren van donateurs die al een tijdje niet meer doneren voor daklozenopvang: van DonorPerfect naar ActiveCampaign in realtime | APIANT Blog</title>
+<meta content="Het reactiveren van een inactieve donateur kost een fractie van de kosten van het werven van een nieuwe. Dankzij de integratie van de laatste donatiedatum en donatiegeschiedenis van DonorPerfect in ActiveCampaign kan een bureau een gestructureerde reactiveringscampagne opzetten in plaats van een eenmalige, jaarlijkse e-mail met excuses." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Een workflow voor het reactiveren van voormalige donateurs voor daklozenopvang: van DonorPerfect naar ActiveCampaign in realtime." property="og:title"/>
+<meta content="Het reactiveren van een inactieve donateur kost een fractie van de kosten van het werven van een nieuwe. Dankzij de integratie van de laatste donatiedatum en donatiegeschiedenis van DonorPerfect in ActiveCampaign kan een bureau een gestructureerde reactiveringscampagne opzetten in plaats van een eenmalige, jaarlijkse e-mail met excuses." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Een workflow voor het reactiveren van voormalige donateurs voor daklozenopvang: van DonorPerfect naar ActiveCampaign in realtime." property="twitter:title"/>
+<meta content="Het reactiveren van een inactieve donateur kost een fractie van de kosten van het werven van een nieuwe. Dankzij de integratie van de laatste donatiedatum en donatiegeschiedenis van DonorPerfect in ActiveCampaign kan een bureau een gestructureerde reactiveringscampagne opzetten in plaats van een eenmalige, jaarlijkse e-mail met excuses." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "A lapsed-donor reactivation workflow for homeless services: DonorPerfect to ActiveCampaign in real time",
+  "description": "Reactivating a lapsed donor costs a fraction of acquiring a new one. With DonorPerfect Last Gift dates and giving history flowing into ActiveCampaign, an agency can run a structured reactivation push instead of a once-a-year apology email.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/hero.png",
+  "datePublished": "2024-08-02T11:22:44+00:00",
+  "dateModified": "2026-05-19T17:43:01.6629+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "A lapsed-donor reactivation workflow for homeless services: DonorPerfect to ActiveCampaign in real time", "item": "https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/nl/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/nl/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Connectoren</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Begin met bouwen</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/nl/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-apps</a>
+</div>
+<h1 class="blog-post-h1">Een workflow voor het reactiveren van voormalige donateurs voor daklozenopvang: van DonorPerfect naar ActiveCampaign in realtime.</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/nl/blog/?author=fred">Fred Lumiere</a></span>
+<span>2 augustus 2024</span>
+<span>Leestijd: 6 minuten</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/nl/blog/?tag=nonprofit">#Non-profit</a><a class="blog-tag" href="/nl/blog/?tag=donorperfect">#DonorPerfect</a><a class="blog-tag" href="/nl/blog/?tag=activecampaign">#ActieveCampagne</a><a class="blog-tag" href="/nl/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/nl/blog/?tag=bi-directional-sync">#Bidirectionele synchronisatie</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Een workflow voor het reactiveren van voormalige donateurs voor daklozenopvang: van DonorPerfect naar ActiveCampaign in realtime." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>Het werven van een nieuwe donateur kost vijf tot tien keer zoveel als het reactiveren van een donateur die al een tijdje niet meer doneert. Dat staat in elk handboek over fondsenwerving. De meeste organisaties doen alsof dat niet zo is.</p>
+<p>De reden is operationeel, niet filosofisch. Om donateurs opnieuw te activeren, moet je weten welke donateurs niet meer doneren (en hoe lang al), ze op het juiste moment in de juiste cyclus betrekken en de cyclus stoppen zodra er een donatie binnenkomt. Geen van deze stappen werkt soepel wanneer DonorPerfect de donatiegegevens beheert en ActiveCampaign de e-mailengine, en er geen realtime verbinding tussen beide is.</p>
+<p>De meeste organisaties versturen daarom jaarlijks één oproep met de boodschap "we missen je", die naar iedereen wordt gestuurd die de afgelopen twee jaar niet heeft gedoneerd. Slechts een klein deel van deze oproepen wordt teruggevonden en dit geldt als onderdeel van het programma voor donateurs die al een tijdje niet meer doneren. Ondertussen ontvangen de donateurs die 13 maanden geleden zijn gestopt (de groep die het makkelijkst terug te winnen is) dezelfde standaardboodschap als de donateurs die 36 maanden geleden zijn gestopt. Beide groepen presteren onder de maat.</p>
+<p><img alt="Een workflow voor het reactiveren van voormalige donateurs voor daklozenopvang: van DonorPerfect naar ActiveCampaign in realtime — Figuur 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/inline-1.png"/></p>
+<h1 id="lapsed-donor-work-is-structurally-a-real-time-problem-the-recoverability-of-a-lapsed-donor-decays-sharply-with-time-a-donor-at-13-months-is-several-times-more-recoverable-than-the-same-donor-at-24-months-by-36-months-most-are-gone">Het opsporen van donoren die al een tijdje niet meer actief zijn, is structureel gezien een realtime probleem. De kans om een donor te vinden die al een tijdje niet meer actief is, neemt sterk af met de tijd. Een donor die al 13 maanden niet meer actief is, heeft een veel grotere kans om gevonden te worden dan dezelfde donor na 24 maanden. Na 36 maanden zijn de meeste donoren niet meer beschikbaar.</h1>
+<p>De native DonorPerfect-rapporten met verlopen donaties tonen wel de juiste lijst, maar kunnen geen e-mailcampagne uitvoeren. De native ActiveCampaign kan de donatiedata van DonorPerfect niet zien zonder integratie.</p>
+<p>Generieke iPaaS-connectoren synchroniseren nieuwe giften, maar negeren het uitblijven van verwachte giften. Triggers voor het stoppen met doneren vereisen de vraag "deze persoon gaf vroeger regelmatig en heeft de afgelopen 13 maanden niet meer gedoneerd", wat lastiger is dan "deze persoon heeft net gedoneerd".</p>
+<p>Handmatig uploaden van CSV-bestanden werkt prima voor een jaarlijkse mailing, maar niet voor een doorlopend programma waarbij dagelijks nieuwe contacten de vervaldrempel overschrijden.</p>
+<h2 id="the-apiant-approach">De APIANT-aanpak</h2>
+<p>CRMConnect voor DonorPerfect en ActiveCampaign is gebouwd rond realtime, bidirectionele synchronisatie van de velden die de herstelbaarheid mogelijk maken:</p>
+<ul>
+<li><strong>Laatste cadeaudatum</strong> ActiveCampaign wordt automatisch bijgewerkt zodra DonorPerfect een donatie registreert.</li>
+<li><strong>Totale geschenken</strong> En <strong>Grootste geschenk</strong> Synchroniseer als aangepaste velden, zodat u kunt vertakken op basis van historische waarden.</li>
+<li><strong>Vlaggen als tags synchroniseren</strong> ActiveCampaign integreert DonorPerfect Flags, zodat contactpersonen met vlaggen voor grote donateurs of bestuursleden worden uitgesloten van automatische heractivering.</li>
+<li><strong>Bidirectionele synchronisatie</strong> Schrijft de reactiveringsstatus terug naar DonorPerfect, zodat het ontwikkelteam de voortgang van het traject kan zien in het systeem waarin ze werken.</li>
+<li><strong>Geschenken pijplijn</strong> Nieuwe donaties worden als ActiveCampaign-deals geregistreerd, waardoor de reactiveringscyclus wordt gesloten zodra een donatie binnenkomt.</li>
+<li><strong>CodeSync</strong> Zorgt ervoor dat de codes voor campagnes en werving consistent blijven, zodat de heractiveringsrapporten accuraat blijven gedurende de verschillende beroepsprocedures.</li>
+</ul>
+<h2 id="three-reactivation-sequences-by-lapse-window">Drie reactiveringssequenties per tijdsinterval</h2>
+<p>Illustratief scenario: Harbor Light Outreach, een stedelijke organisatie voor daklozenzorg met 2.900 actieve donateurs en een budget van $9,5 miljoen (hypothetisch voorbeeld, geen echte organisatie).</p>
+<p><strong>Periode 1: 13 tot 17 maanden verstreken (recent verstreken).</strong> Deze donateurs zijn waarschijnlijk per ongeluk gestopt met doneren. Een kaart is verlopen, een wijziging in het e-mailadres heeft de verlengingsreeks onderbroken, of de eindejaarsoproep viel in een drukke week. De juiste aanpak is warm en kort:</p>
+<ul>
+<li>Dag 0: een persoonlijk bericht van een programmadirecteur, waarin de impact van de eerdere giften van de donateur wordt beschreven, zonder verdere toelichting.</li>
+<li>Dag 7: een bijgewerkt verhaal uit hetzelfde programma, met een voorzichtige oproep tot verlenging.</li>
+<li>Dag 14: een uitnodiging voor een terugkerende gift, gepresenteerd als iets dat makkelijker is dan eraan denken om jaarlijks een gift te doen.</li>
+<li>Dag 30: als er geen cadeau is, markeer het dan. <code>Lapsed 18 Months</code> en stop de reeks.</li>
+</ul>
+<p><strong>Periode 2: 18 tot 23 maanden verstreken.</strong> De herstelbaarheid neemt af, maar blijft relevant. De frequentie verschuift naar één hoogwaardig stuk content en een duidelijkere vraag:</p>
+<ul>
+<li>Dag 0: een e-mail met een jaaroverzicht, waarin het belangrijkste programma van het agentschap van het afgelopen jaar centraal staat.</li>
+<li>Dag 14: een verzoek om verlenging, eventueel met een bijpassende gift indien beschikbaar.</li>
+<li>Dag 30: een laatste poging met een kleinere gift als suggestie (25 tot 50 dollar, ongeacht het bedrag dat de gever in het verleden heeft gedoneerd).</li>
+<li>Dag 45: stop de reeks.</li>
+</ul>
+<p><strong>Venster 3: Meer dan 24 maanden verstreken.</strong> Beschouw dit als een aparte acquisitie- en reactiveringsactie, niet als een heractiveringsactie. Verstuur één jaarlijkse heractiveringsmail en neem deze op in de volgende direct mail-campagne. Voer geen multi-touch-campagne uit; de openings- en betrokkenheidspercentages zullen de kosten voor de bezorging niet rechtvaardigen.</p>
+<p><strong>Onderdrukkingsregels gelden voor alle drie de vensters.</strong> Gebruik vlaggen als labels om contacten uit te sluiten die zijn gemarkeerd als belangrijke donateur, bestuurslid, medewerker, overleden of niet benaderen. Belangrijke donateurs die niet meer doneren, verdienen een persoonlijk telefoontje van de directeur, geen geautomatiseerd antwoord. Stel de uitsluiting in als een filter op lijstniveau, zodat deze automatisch op alle drie de vensters wordt toegepast.</p>
+<h2 id="closing-the-loop">De cirkel rondmaken</h2>
+<p>De belangrijkste stap bij het heractiveren is het stoppen van de sequentie op het moment dat er een cadeau arriveert. Twee onderdelen:</p>
+<ul>
+<li><strong>Vertrek met een nieuw cadeau.</strong> Configureer elke sequentie zodanig dat deze onmiddellijk stopt wanneer <code>Last Gift Date is less than 1 day ago</code>Dit voorkomt dat een donateur die op dag 3 zijn donatie heractiveert, de e-mail van dag 7 ontvangt en het gevoel krijgt dat het agentschap niet goed heeft opgelet.</li>
+<li><strong>Schrijf de reactiveringsstatus terug naar DonorPerfect.</strong> Wanneer een reeks succesvol is afgerond (cadeau geregistreerd), schrijf dan <code>Reactivated 2026</code> naar een aangepast veld van DonorPerfect. Wanneer een reeks niet succesvol wordt voltooid, schrijf dan de vervalfase (<code>Lapsed 18 Months</code>, <code>Lapsed 24 Months</code>Het ontwikkelteam moet de voortgang van het traject in DonorPerfect kunnen zien zonder ActiveCampaign te hoeven openen.</li>
+</ul>
+<p><img alt="Een workflow voor het reactiveren van voormalige donateurs voor daklozenopvang: van DonorPerfect naar ActiveCampaign in realtime — Figuur 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/inline-2.png"/></p>
+<h2 id="what-to-measure">Wat te meten</h2>
+<p>De standaard reactiveringscriteria:</p>
+<ul>
+<li><strong>Reactiveringspercentage per tijdsvenster.</strong> Bij een recente stopzetting van de rookpauze (13-17 maanden) ligt het percentage doorgaans tussen de 8% en 15%. Bij een middenfase van de stopzetting (18-23 maanden) ligt het percentage meestal tussen de 3% en 6%. Bij een diepe stopzetting (24 maanden of langer) ligt het percentage onder de 2%.</li>
+<li><strong>Het percentage tweede giften onder mensen die hun lichaam opnieuw hebben geactiveerd.</strong> De werkelijke waarde van heractivering zit hem in de donor die eenmaal doneert en vervolgens opnieuw doneert. Volg de donaties van heractiveerde donoren over een periode van twaalf maanden.</li>
+<li><strong>Restwaarde na 12 maanden.</strong> Donateurs die na een eerdere donatie binnen twaalf maanden twee keer doneren, zijn vaak waardevoller dan nieuwe donateurs, omdat de relatiegeschiedenis het risico op afhaken verkleint.</li>
+<li><strong>Kosten per heractivering.</strong> Tel de bestede personeelstijd, advertentie-uitgaven en platformkosten voor heractivering bij elkaar op en deel dit door het aantal geregistreerde heractivaties. Vergelijk dit met de kosten per nieuwe donateur. Heractivering zou met een ruime marge de beste resultaten moeten opleveren.</li>
+</ul>
+<h2 id="edge-cases-worth-handling">Uitzonderlijke gevallen die de moeite waard zijn om af te handelen</h2>
+<p><strong>Donoren die om een bepaalde reden zijn gestopt met doneren.</strong> Sommige donateurs haken af omdat ze de goede zaak niet meer steunen, verhuizen of een andere verandering in hun leven doormaken. Respecteer het uitschrijfverzoek en het verzoek om niet meer gecontacteerd te worden onmiddellijk. Benader deze donateurs niet opnieuw in een toekomstige heractiveringscampagne.</p>
+<p><strong>Eerbetoon en herdenkingsgeschenken.</strong> Een donateur die eenmalig een gift als eerbetoon heeft gedaan, is niet per se een voormalige donateur. Het ging om een eenmalige relatie met de geëerde persoon, niet met de organisatie. Sluit donateurs die slechts eenmalig een gift als eerbetoon hebben gedaan uit van de standaardprocedure voor het opnieuw activeren van donaties.</p>
+<p><strong>Terugkerende donateurs die zijn afgehaakt.</strong> Een donateur wiens terugkerende donatieschema is verlopen (probleem met kaartupdate) heeft de herstelprocedure voor donateurs nodig, niet de procedure voor donateurs die hun donatieschema hebben laten verlopen. Zorg ervoor dat uw reactiveringslijst geen contactpersonen bevat die momenteel actief bezig zijn met het herstel van hun donatieschema.</p>
+<p><strong>Harde stuiters.</strong> ActiveCampaign markeert het adres als 'bounced'. Stuur dit terug naar DonorPerfect, zodat het direct-mailteam het postadres kan controleren of de mailing kan blokkeren.</p>
+<h2 id="what-it-looks-like-in-production">Hoe het er in de productie uitziet</h2>
+<p>Voor een organisatie van de omvang van Harbor Light (2.900 actieve donateurs, budget van $ 9,5 miljoen) levert een goed opgezet heractivatieprogramma doorgaans 5% tot 8% extra donateurs op die recent gestopt zijn met doneren, bovenop de jaarlijkse basisinzamelingsactie. Daarnaast is er een kleinere extra opbrengst in de groep donateurs die halverwege hun donatieperiode zijn gestopt. Bij een basis van 800 recent gestopte donateurs betekent dit 40 tot 65 extra heractivaties per jaar, die elk in het eerste jaar een opbrengst van ongeveer $ 80 tot $ 150 opleveren. Tel daar de retentiebonus op die heractiveerde donateurs gedurende meerdere jaren opleveren, en het programma verdient zichzelf in de eerste cyclus terug.</p>
+<h2 id="builder-takeaway">Bouwer afhaalmaaltijd</h2>
+<ul>
+<li>Drie vensters, drie frequenties. Eén generieke "we missen je"-mail behandelt elke voormalige donateur hetzelfde en presteert ondermaats in elke groep.</li>
+<li>Het stopzetten van een donatie na een nieuwe gift is niet onderhandelbaar. Een donateur die op dag 3 zijn donatie heractiveert, mag de e-mail van dag 7 niet ontvangen.</li>
+<li>Schrijf de reactiveringsstatus terug naar DonorPerfect. Het ontwikkelteam moet de voortgang van het traject kunnen zien in het systeem waarmee ze werken, anders is het programma onzichtbaar voor hen en verliezen ze interne ondersteuning.</li>
+</ul>
+<p>Wil je CRMConnect DonorPerfect -&gt; ActiveCampaign in actie zien? <a href="/apipartners/donorperfect/donorperfect-activecampaign-integration-and-automation-apiant">Bekijk de API-apppagina</a>Voor de volledige catalogus van voorgeassembleerde APIANT-connectoren kunt u terecht op <a href="/apps">/apps</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">In dit artikel</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-apiant-approach">De APIANT-aanpak</a></li><li class="lvl-2"><a href="#three-reactivation-sequences-by-lapse-window">Drie reactiveringssequenties per tijdsinterval</a></li><li class="lvl-2"><a href="#closing-the-loop">De cirkel rondmaken</a></li><li class="lvl-2"><a href="#what-to-measure">Wat te meten</a></li><li class="lvl-2"><a href="#edge-cases-worth-handling">Uitzonderlijke gevallen die de moeite waard zijn om af te handelen</a></li><li class="lvl-2"><a href="#what-it-looks-like-in-production">Hoe het er in de productie uitziet</a></li><li class="lvl-2"><a href="#builder-takeaway">Bouwer afhaalmaaltijd</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Lees verder</h2><div class="blog-grid"><a class="blog-card" href="/nl/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau.</h3><p class="blog-card-excerpt">Gebruik de synchronisatiefuncties voor inschrijvingen, cursusboekingen en afspraken van CRMConnect om HighLevel één overzicht van alle Mindbody-programma's te bieden.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 mei 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen.</h3><p class="blog-card-excerpt">Hoe de afsprakensynchronisatie van CRMConnect de afspraakstatus op locatieniveau in Klaviyo weergeeft, zodat de centrale marketingafdeling per locatie workflows en rapporten kan genereren.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot.</h3><p class="blog-card-excerpt">Bestuursleden willen trendlijnen. Medewerkers willen hun avonden terug. Doordat de levenslange waarde van donateurs, de gemiddelde gift en de campagneprestaties gesynchroniseerd zijn in HubSpot, is het maandelijkse bestuursrapport geen project van vier dagen meer, maar een opgeslagen dashboardweergave.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Alle rechten voorbehouden.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/nl/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacy</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Voorwaarden</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

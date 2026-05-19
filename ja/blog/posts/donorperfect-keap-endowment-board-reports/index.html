@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>四半期ごとの基金報告書を午後だけで作成：DonorPerfectの指定とKeapのエンゲージメントデータを連携させる | APIANTブログ</title>
+<meta content="寄付金による奨学金に関する報告に四半期ごとに2日も費やすべきではありません。DonorPerfectからKeapのダッシュボードに基金の指定、制限、寄付履歴を同期することで、準備作業は数時間に短縮されます。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="四半期ごとの基金報告書を午後だけで作成：DonorPerfectの指定とKeapのエンゲージメントデータを連携させる" property="og:title"/>
+<meta content="寄付金による奨学金に関する報告に四半期ごとに2日も費やすべきではありません。DonorPerfectからKeapのダッシュボードに基金の指定、制限、寄付履歴を同期することで、準備作業は数時間に短縮されます。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-endowment-board-reports/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-keap-endowment-board-reports/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="四半期ごとの基金報告書を午後だけで作成：DonorPerfectの指定とKeapのエンゲージメントデータを連携させる" property="twitter:title"/>
+<meta content="寄付金による奨学金に関する報告に四半期ごとに2日も費やすべきではありません。DonorPerfectからKeapのダッシュボードに基金の指定、制限、寄付履歴を同期することで、準備作業は数時間に短縮されます。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-endowment-board-reports/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Quarterly endowment reports in one afternoon: connecting DonorPerfect designations to Keap engagement data",
+  "description": "Endowed scholarship reporting should not eat two days a quarter. Syncing fund designations, restrictions, and giving history from DonorPerfect into Keap dashboards collapses the prep work into hours.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-endowment-board-reports/hero.png",
+  "datePublished": "2024-10-14T16:22:38+00:00",
+  "dateModified": "2026-05-19T17:43:04.211986+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-keap-endowment-board-reports/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Quarterly endowment reports in one afternoon: connecting DonorPerfect designations to Keap engagement data", "item": "https://apiant.com/blog/posts/donorperfect-keap-endowment-board-reports/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-keap-endowment-board-reports/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/donorperfect-keap-endowment-board-reports/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">四半期ごとの基金報告書を午後だけで作成：DonorPerfectの指定とKeapのエンゲージメントデータを連携させる</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024年10月14日</span>
+<span>6分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=nonprofit">#非営利団体</a><a class="blog-tag" href="/ja/blog/?tag=donorperfect">#ドナーパーフェクト</a><a class="blog-tag" href="/ja/blog/?tag=keap">#キープ</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="四半期ごとの基金報告書を午後だけで作成：DonorPerfectの指定とKeapのエンゲージメントデータを連携させる" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-endowment-board-reports/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>奨学金基金の報告は、奨学金募金活動の中で最も手間のかかる作業であり、そのほとんどが知的作業ではない。開発担当者は四半期ごとに丸2日間を費やし、DonorPerfectの寄付指定を基金ごとに抽出し、Keapからエクスポートされたエンゲージメントデータと手作業で結合し、奨学金ごとのシートをフォーマットし、PDFファイルを委員長にメールで送信する。そして、13週間後に同じ作業を繰り返すのだ。</p>
+<p>理事会は、作業が大変であることを望んでいるわけではない。必要なのは、数字が正確であることだ。作業が大変な理由は、DonorPerfectは人々がどの基金にいくら寄付したかを把握しているのに対し、Keapは人々が何を読み、何を開き、何に参加したかを把握しているからだ。四半期ごとにこれら2つのデータを手作業で統合することが、最大のボトルネックとなっている。</p>
+<p><img alt="四半期ごとの基金報告書を午後だけで作成：DonorPerfectの指定とKeapのエンゲージメントデータを連携させる — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-endowment-board-reports/inline-1.png"/></p>
+<h2 id="why-off-the-shelf-tools-fail">市販のツールが失敗する理由</h2>
+<p>ほとんどの連携機能は寄付者記録を同期するだけで、それ以上の処理は行いません。寄付の指定、制限コード、または基金識別子をKeapの構造化フィールドとして保持しないためです。その結果、Keapはジョン・スミスが春のニュースレターを開封したことは認識しますが、ジョンの5万ドルの寄付金が工学奨学金に充てられていることは認識しません。寄付者に関する情報は2つの側面が分断されたままとなり、四半期報告書の作成は依然として手作業で行われることになります。</p>
+<p>汎用ツールは、制限条項を省略する傾向があります。寄付金による奨学金には、すべての報告書に記載しなければならない法的制限条項があります。これを省略することは、単なるデータの問題ではなく、コンプライアンス上の問題となります。管理報告書において制限条項が誤って記載されていたことが監査で判明した場合、予算だけでなく、キャリアにも影響を及ぼす深刻な問題となります。</p>
+<p>3つ目の課題は、情報の鮮度です。基金委員会は四半期末近くに開催されることが多く、その時期には直近2週間の活動（大口寄付者からの寄付、追悼寄付の約束、理事長による視察訪問など）が最も重要になります。毎晩のバッチ同期は月次報告には適していますが、四半期末の準備には役に立ちません。15分以内のリアルタイム同期こそが、先週のスナップショットではなく、実際の現在の状況をレポートに反映させるために必要なのです。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>DonorPerfectとKeap向けのCRMConnectは、ファンドのメタデータをKeapの第一級フィールドとして転送します。基金レポート作成において重要な要素は以下のとおりです。</p>
+<ul>
+<li><strong>カスタムフィールドの同期</strong> DonorPerfectの <code>General Ledger Code</code>, <code>Restriction Code</code>, <code>Gift Purpose</code>、および <code>Fund Designation</code> [連絡先を保持] および [ギフト] フィールドとして。</li>
+<li><strong>CodeSync</strong> 基金のドロップダウンリストを反映しているため、すべての寄付奨学金は自由形式の文字列ではなく、構造化されたKeap値になります。</li>
+<li><strong>詳細な寄付情報同期</strong> Keapは、寄付金額、寄付先、寄付履歴を、寄付者ごと、基金ごとに取得します。</li>
+<li><strong>リアルタイムデータ同期</strong> Keapは常に最新の状態に保たれているため、四半期報告書を作成する際に、最終日のDonorPerfectによるエクスポートは不要です。</li>
+</ul>
+<h2 id="concrete-steps">具体的なステップ</h2>
+<p>架空の大学付属奨学金基金であるサミット・スカラーズ・ファンド（38の寄付奨学金と5,200人の卒業生寄付者を持つ）を例にとると、四半期ごとの報告書の流れは次のようになります。</p>
+<ol>
+<li><strong>ファンドの分類体系を反映させる。</strong> CodeSync では、DonorPerfect をマップします。 <code>Fund Designation</code> そして <code>Restriction Code</code> Keapのカスタムドロップダウンメニューを使用します。38の寄付奨学金は、38の選択可能な値になります。</li>
+<li><strong>ファンドレベルのフィールドを同期します。</strong> 同期を有効にする <code>Gift Designation</code>, <code>Restriction Code</code>, <code>Gift Purpose</code>すべての寄付記録に、寄付金額と寄付日を記載する。</li>
+<li><strong>奨学金ごとのKeapビューを構築します。</strong> ファンドごとに保存されたKeapビューが1つあり、フィルターは <code>Gift Designation = &lt;fund&gt;</code>寄付者名、当該基金への生涯寄付額、最終寄付日、最終開設日、最終イベント参加日を表示します。</li>
+<li><strong>レイヤー間の連携。</strong> Keapのネイティブなエンゲージメントデータ（メールの開封、クリックアクティビティ、開発カレンダーからのイベント参加状況など）は、ギフトデータと同じ連絡先レコードに紐づいているため、ギフトデータの隣に表示されます。</li>
+<li><strong>各基金における主要寄付者監視リスト。</strong> 保存済みビュー: Xへの資金提供上位20名の寄付者（ソート順） <code>days since last engagement</code>90日間連絡が途絶えた場合、担当の開発担当者にKeapタスクが送信されます。</li>
+<li><strong>制限条項を維持する。</strong> 各ファンドごとに、Keapの読み取り専用テキストフィールドには、贈与契約の参照情報と制限事項の概要が格納されます。これは各ファンドごとのレポートに添付されるため、委員長は法的背景をインラインで確認できます。</li>
+<li><strong>2日間ではなく、午後1日で済む。</strong> 開発担当者は保存済みのビューをそれぞれ開き、PDFにエクスポートし、制限テキストを添付してメールで送信します。準備にかかる時間は合計で16時間から3～4時間に短縮されます。</li>
+</ol>
+<p><img alt="四半期ごとの基金報告書を午後だけで作成：DonorPerfectの指定とKeapのエンゲージメントデータを連携させる — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-endowment-board-reports/inline-2.png"/></p>
+<h2 id="outcome">結果</h2>
+<p>このパターンを導入した後の、同等の奨学金基金からの代表的な数値は以下のとおりです。</p>
+<ul>
+<li>四半期報告書の作成時間は、1サイクルあたり16時間から約4時間に短縮され、75％の削減となる。</li>
+<li>委員会委員長の満足度（会議後のアンケートで測定）が向上したのは、奨学金ごとの関与状況に関する文脈が初めて含まれ、金額だけが考慮されなくなったためである。</li>
+<li>主要寄付者の関心低下は、四半期単位ではなく数週間単位で把握できる。90日間の活動停止監視リストは、寄付の失効という問題になる前に、問題点を明らかにする。</li>
+<li>年次報告書におけるコンプライアンス審査にかかる時間が短縮されるのは、制限事項に関する記述が構造化されており、物語の中に埋もれていないためである。</li>
+<li>開発担当者が作成する奨学金ごとの報告書の質が向上するのは、エンゲージメントデータがCSVエクスポートのフォルダではなく、寄付データと同じ画面に表示されるようになったためである。</li>
+</ul>
+<p>正直に申し上げると、これは開発担当者の四半期ごとのレビューをなくすものではありません。データを読み解き、説明文を作成するのは依然として人間です。統合によってスプレッドシートの複雑な作業は不要になりますが、判断力が不要になるわけではありません。統合によって担当者の役割が置き換えられると期待していた財団は失望しましたが、担当者がExcel作業に費やす時間を減らし、寄付者との電話対応に時間を割けるようになると期待していた財団は満足しています。</p>
+<p>プライバシーと管理責任という側面は、特に注意を払うべき点です。奨学金受給者は、寄付者とは異なるプライバシーに関する期待を持っています。報告書で使用される受給者の情報は、常にオプトイン方式とし、同意が得られればいつでも撤回できる権利を保障する必要があります。多くの大学は、寄付者や委員会メンバーと共有できる情報について、FERPA（家族教育権プライバシー法）に準拠した具体的な方針を定めています。統合にあたっては、委員会向けの報告書がデフォルトで取得しないフィールドに受給者データを構造化することで、これらの方針を尊重する必要があります。</p>
+<h2 id="what-to-automate-what-still-needs-a-human">何を自動化し、何を人間が行う必要があるのか</h2>
+<p>こうした統合を行う際、レポートを完全に自動化したくなる誘惑に駆られることがある。しかし、それに抵抗すべきだ。数値データ、エンゲージメントサマリー、奨学金ごとのビュー、主要寄付者ウォッチリストなどはすべて自動化すればよい。しかし、ある奨学金がなぜ期待以上の成果を上げ、別の奨学金がなぜ資金不足なのかを説明する解説文は、開発担当者に任せよう。理事長は、レポートを開いてから最初の30秒で、文脈のあるデータと文脈のないデータの違いを判断できる。</p>
+<p>もう一つ、人間的な対応が重要な点は、寄付者への訪問推奨です。90日間連絡がない寄付者リストはあくまでも警告であり、決定ではありません。連絡が途絶えた大口寄付者への適切な次のステップは、システムでは把握できない状況（最近の個人的な喪失、既知の人生の転機、以前に話し合った訪問時期の希望など）によって異なります。その判断を下すのは開発担当者であり、ダッシュボードではありません。</p>
+<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
+<ul>
+<li><strong>資金指定が結合キーとなります。</strong> 構造化されたフィールドとして存在しない限り、婚約と贈与の関連付けを自動化することは不可能です。</li>
+<li><strong>制限条項は脚注ではなく、独立した項目として記載されるべきである。</strong> Keapのファンド記録に保存しておけば、すべてのレポートに自動的に添付されます。</li>
+<li><strong>静かな大口寄付者を見つけるには、四半期ごとのレビューではなく、90日間のルールを適用しましょう。</strong> 四半期ごとの会合の頃には、両者の関係はすでに冷え込んでいた。</li>
+</ul>
+<h2 id="want-to-see-crmconnect-donorperfect-to-keap-in-action">CRMConnect DonorPerfectとKeapの連携動作をご覧になりたいですか？</h2>
+<p><a href="/apipartners/donorperfect/donorperfect-keap-integration-and-automation-apiant">APIアプリのページを見る</a> またはすべてを閲覧する <a href="/apps">APIANT APIアプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">市販のツールが失敗する理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#concrete-steps">具体的なステップ</a></li><li class="lvl-2"><a href="#outcome">結果</a></li><li class="lvl-2"><a href="#what-to-automate-what-still-needs-a-human">何を自動化し、何を人間が行う必要があるのか</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li><li class="lvl-2"><a href="#want-to-see-crmconnect-donorperfect-to-keap-in-action">CRMConnect DonorPerfectとKeapの連携動作をご覧になりたいですか？</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

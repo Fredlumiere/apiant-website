@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Zoho CRM에 Mindbody 계약 및 자동 결제 상태를 실시간으로 통합하는 방법 | APIANT 블로그</title>
+<meta content="CRMConnect의 MB Contracts 동기화 기능을 사용하여 실시간 계약 세부 정보와 자동 결제 상태를 Zoho CRM에 통합하면 결제 실패 시 당일 워크플로로 처리할 수 있습니다." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Zoho CRM에 Mindbody 계약 및 자동 결제 상태를 실시간으로 통합하기" property="og:title"/>
+<meta content="CRMConnect의 MB Contracts 동기화 기능을 사용하여 실시간 계약 세부 정보와 자동 결제 상태를 Zoho CRM에 통합하면 결제 실패 시 당일 워크플로로 처리할 수 있습니다." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Zoho CRM에 Mindbody 계약 및 자동 결제 상태를 실시간으로 통합하기" property="twitter:title"/>
+<meta content="CRMConnect의 MB Contracts 동기화 기능을 사용하여 실시간 계약 세부 정보와 자동 결제 상태를 Zoho CRM에 통합하면 결제 실패 시 당일 워크플로로 처리할 수 있습니다." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Putting Mindbody Contracts and Auto-Pay Status Inside Zoho CRM in Real Time",
+  "description": "Use CRMConnect's MB Contracts sync to put live contract details and auto-pay status inside Zoho CRM, so failed payments become same-day workflows.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.png",
+  "datePublished": "2024-09-11T11:34:38+00:00",
+  "dateModified": "2026-05-19T17:42:45.569595+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Putting Mindbody Contracts and Auto-Pay Status Inside Zoho CRM in Real Time", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-zoho-crm-contracts-autopay/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ko/blog/posts/mindbody-zoho-crm-contracts-autopay/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ko/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">커넥터</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">구축 시작</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ko/blog/category/api-apps" style="color:inherit;text-decoration:none;">API 앱</a>
+</div>
+<h1 class="blog-post-h1">Zoho CRM에 Mindbody 계약 및 자동 결제 상태를 실시간으로 통합하기</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ko/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024년 9월 11일</span>
+<span>5분 읽기</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ko/blog/?tag=fitness-wellness">#피트니스 &amp; 웰빙</a><a class="blog-tag" href="/ko/blog/?tag=mindbody">#심신</a><a class="blog-tag" href="/ko/blog/?tag=zoho-crm">#조호CRM</a><a class="blog-tag" href="/ko/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ko/blog/?tag=data-engine">#데이터 엔진</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Zoho CRM에 Mindbody 계약 및 자동 결제 상태를 실시간으로 통합하기" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="why-end-of-month-contract-reports-are-useless">월말 계약 보고서가 쓸모없는 이유</h2>
+<p>계약 기반 멤버십은 자동 결제가 실패하기 전까지는 예측 가능한 수익원입니다. 하지만 결제 실패 시점은 매우 짧습니다. 결제가 실패한 시점부터 24시간에서 72시간 이내에 회원은 다른 스튜디오를 알아볼 가능성이 높습니다. 대부분의 스튜디오는 매달 1일에 계약 현황 보고서를 발행하는데, 이는 3일에 발생한 결제 실패가 27일 동안 기록되지 않는다는 것을 의미합니다. 보고서가 발행될 즈음에는 회원이 이미 다른 스튜디오를 찾고 있을 가능성이 큽니다.</p>
+<p>가상 사례: 미러 레이크 필라테스(예시)는 단일 지점을 운영하는 스튜디오로, 360명의 계약 고객을 보유하고 있습니다. 영업팀은 Zoho CRM을 사용하여 모든 업무를 처리하지만, 계약 세부 정보는 Mindbody PDF 파일에 저장됩니다. 월말 정산에 반나절이 소요됩니다. 자동 결제 실패는 28일째에 발견되지만, 약 30% 정도만 복구되고 나머지는 이탈합니다.</p>
+<h2 id="why-off-the-shelf-tools-fail-here">시중에서 판매되는 도구가 여기서 실패하는 이유</h2>
+<p>Mindbody 계약은 여러 상태 변화를 가진 중첩 객체입니다. 대부분의 일반적인 연결 도구는 계약 생성 시에만 계약을 가져오고 업데이트는 하지 않습니다. 자동 결제 상태, 재시도 횟수, 예약된 변경 사항, 취소 타임스탬프는 모두 하위 객체에 저장되어 있으며, 이를 새로 고치려면 특정 API 호출이 필요합니다.</p>
+<p>진정한 해결책은 다음과 같아야 합니다:</p>
+<ul>
+<li>계약을 살아있는 상태를 가진 별도의 객체로 취급하십시오.</li>
+<li>자동 결제 상태 변경 사항을 거의 실시간으로 이벤트로 푸시합니다.</li>
+<li>안전장치로서 "현재 상태"를 매일 재계산합니다.</li>
+</ul>
+<p>맞춤형 구축은 이러한 방식을 사용하지만, 360개 계약에 걸쳐 일일 정산을 처리하는 데 필요한 요금 제한은 두 달 만에 문제가 발생하는 종류의 문제입니다.</p>
+<h2 id="the-apiant-approach">APIANT 접근법</h2>
+<p>CRMConnect Mindbody와 Zoho CRM에는 전용 기능이 포함되어 있습니다. <strong>MB 계약</strong> 사용자 정의 객체와 함께 <strong>MB 멤버십</strong>API 앱 페이지에서 발췌: "고객 계약 세부 정보와 자동 결제 상태를 Zoho CRM에 지속적으로 동기화합니다."</p>
+<p>이를 뒷받침하는 특징은 다음과 같습니다.</p>
+<ul>
+<li><strong>멤버십 및 계약 동기화</strong> MB Contracts를 전용 사용자 정의 개체로 사용합니다.</li>
+<li><strong>실시간 데이터 동기화</strong> 따라서 자동 결제 상태 변경 사항은 몇 초 내에 Zoho CRM에 반영됩니다.</li>
+<li><strong>종합 구매 및 결제</strong> 이를 통해 기본 결제 이벤트도 조회할 수 있습니다.</li>
+<li><strong>사용자 지정 개체 매핑</strong> 따라서 계약서는 업무 흐름 및 보고서에서 가장 중요한 기록물입니다.</li>
+</ul>
+<p>통합 데이터 처리 엔진은 중첩된 계약 페이로드를 처리하고 각 하위 상태를 Zoho 객체 스키마에 깔끔하게 매핑합니다.</p>
+<p><img alt="Zoho CRM에 Mindbody 계약 및 자동 결제 상태를 실시간으로 통합하기 — 그림 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/inline-1.png"/></p>
+<h2 id="what-mb-contracts-pushes-to-zoho-crm">MB Contracts가 Zoho CRM에 제공하는 정보는 무엇인가요?</h2>
+<p>MB Contracts 사용자 정의 개체에는 실제 워크플로에 필요한 모든 필드가 포함되어 있습니다.</p>
+<pre class="highlight"><code class="language-text">Zoho CRM custom object: MB Contracts
+- contract_id
+- contact_id (links to Zoho CRM contact)
+- contract_name                e.g. "12-Month Unlimited Reformer"
+- start_date / end_date
+- status                       active|pending_cancel|expired|terminated
+- autopay_status               current|retrying|failed|suspended
+- autopay_method               card|ach
+- autopay_next_charge_date
+- autopay_next_charge_amount
+- autopay_last_attempt_at
+- autopay_last_attempt_result  success|declined|insufficient_funds|...
+- autopay_retry_count
+- monthly_amount
+- balance_remaining</code></pre>
+<p>그만큼 <code>autopay_status</code> 해당 필드는 모든 중요한 사항의 트리거입니다. 상태가 변경됩니다. <code>failed</code> or <code>retrying</code>워크플로가 실행되고 복구가 시작됩니다.</p>
+<h2 id="designing-the-failed-payment-recovery-workflow">결제 실패 복구 워크플로 설계</h2>
+<p>Zoho CRM의 MB 계약 객체에 대한 워크플로:</p>
+<ol>
+<li><strong>방아쇠:</strong> <code>autopay_status</code> 변화 <code>current</code> to <code>failed</code> or <code>retrying</code>.</li>
+<li><strong>같은 시간:</strong> 고객에게 "안녕하세요, 저희 시스템에서 결제가 완료되지 않은 것으로 확인되었습니다. 빠른 업데이트는 여기에서 확인하세요: [업데이트 카드 링크]. 도움이 필요하시면 'HELP'라고 답장해 주세요."라는 내용의 SMS를 자동 전송합니다.</li>
+<li><strong>+4시간:</strong> 결제 상태가 여전히 실패로 표시되고 고객이 카드 정보를 업데이트하지 않은 경우, 전체 상황 정보(마지막 성공 결제, 재시도 횟수, 금액)를 포함하여 멤버십 전문가에게 우선순위가 높은 작업을 생성하십시오.</li>
+<li><strong>+24시간:</strong> 스튜디오 소유주가 보낸 자동 이메일: "잠깐 전화드릴까요?"</li>
+<li><strong>+48시간:</strong> 담당자에게 연락해야 하는 일정이 생성되었으며, 당일 통화 예정입니다.</li>
+<li><strong>복구 분기:</strong> 언제 <code>autopay_status</code> 다시 뒤집힙니다 <code>current</code>남은 작업을 중단하고 확인 SMS를 보냅니다.</li>
+<li><strong>에스컬레이션 분기:</strong> 5일 이상 해결되지 않으면 리드 상태가 "위험 회원"으로 변경되고 대면 유지 상담 일정이 잡힙니다.</li>
+</ol>
+<p>당일 SMS 알림 서비스는 대부분의 거래량을 복구합니다. 카드 사용 실패는 대개 카드 만료 또는 잔액 부족으로 인해 발생하며, 회원은 이러한 사실을 알지 못하는 경우가 많습니다. 몇 주가 아닌 몇 시간 내에 실패를 파악하는 것이 복구율을 높이는 가장 중요한 요소입니다.</p>
+<h2 id="renewal-dates-as-pipeline-forecasting">갱신 날짜를 파이프라인 예측으로 활용</h2>
+<p>그만큼 <code>end_date</code> MB Contracts 객체의 필드를 통해 영업팀은 갱신 수익을 몇 주 전에 예측할 수 있습니다.</p>
+<ul>
+<li>90일 선행 파이프라인: 합계 <code>monthly_amount</code> 계약의 경우 <code>end_date</code> 향후 90일 동안의 갱신율은 과거 갱신율을 기준으로 가중치를 부여합니다.</li>
+<li>갱신 문의 대기열: 계약 대상 <code>end_date - now() &lt;= 45 days</code> 그리고 <code>status = active</code>고객 생애 가치(CLTV) 순으로 정렬되었습니다.</li>
+<li>자동 갱신과 수동 갱신 분할: 기본 멤버십의 갱신 플래그를 기준으로 필터링하고 수동 갱신 측에 필요한 인력을 계획합니다.</li>
+</ul>
+<p>예측은 데이터가 실시간으로 업데이트될 때만 유용합니다. 월말 보고서는 입력 데이터가 오래되었기 때문에 예측치가 5~15% 정도 틀리는 경우가 많습니다.</p>
+<pre class="highlight"><code class="language-text">Sample forecast query (Zoho CRM Reports):
+  Select contact_id, monthly_amount, end_date
+  From MB_Contracts
+  Where end_date Between today() And today() + 90 days
+    And status = 'active'
+  Order By client_ltv DESC</code></pre>
+<p><img alt="Zoho CRM에 Mindbody 계약 및 자동 결제 상태를 실시간으로 통합하기 — 그림 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/inline-2.png"/></p>
+<h2 id="representative-recovery-rate-at-360-clients">360명의 고객을 대상으로 한 대표 회복률</h2>
+<p>이 이미지는 예시용 합성 이미지이며 실제 고객의 모습이 아닙니다.</p>
+<ul>
+<li>자동 결제 실패 복구율 기준치(월말 기준): 약 25~35%.</li>
+<li>당일 SMS 발송 및 24시간 이내 소유자 이메일 발송을 통한 회수율 향상: 60~75% 범위로 상승.</li>
+<li>조기 오류 감지를 통해 분기별로 절감되는 수익: 평균 계약 규모에 따라 계약 기반에서 상당한 비중을 차지합니다.</li>
+<li>소유주가 계약 조정에 매달 투입하는 시간은 약 4시간에서 1시간 미만으로 줄어들었으며, 남은 시간은 실제로 위험에 처한 구성원들을 지원하는 데 사용됩니다.</li>
+</ul>
+<p>이 메커니즘은 빠른 감지와 구성원이 실제로 응답할 수 있는 일련의 과정을 제공합니다. 통합 기능은 감지를 제공하고, 해당 과정은 업데이트를 요청하는 데 있어 정직해야 합니다.</p>
+<h2 id="builder-takeaway">건설업체 테이크아웃</h2>
+<ul>
+<li>계약과 멤버십을 별도의 사용자 정의 객체로 취급하세요. 고객은 멤버십 하나와 계약 세 개를 가질 수 있습니다(또는 그 반대). 개념별로 레코드를 하나씩만 보유하면 쿼리가 간결해집니다.</li>
+<li>결제 실패 복구 기능을 구축하세요. <code>autopay_status</code> 예정된 보고서가 아닌 변경 이벤트입니다. 지연 시간이 핵심입니다.</li>
+<li>사용 <code>end_date</code> 갱신 파이프라인 예측치로 활용하세요. 이는 스튜디오가 보유한 가장 신뢰할 수 있는 미래 수익 수치입니다.</li>
+</ul>
+<h2 id="try-it-in-your-studio">스튜디오에서 직접 시도해 보세요.</h2>
+<p>CRMConnect Mindbody와 Zoho CRM이 어떻게 연동되는지 직접 보고 싶으신가요? <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">API 앱 페이지를 보세요</a>.</p>
+<p>사전 제작된 커넥터 전체 카탈로그를 다음에서 살펴보세요. <a href="/apps">/앱</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-end-of-month-contract-reports-are-useless">월말 계약 보고서가 쓸모없는 이유</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">시중에서 판매되는 도구가 여기서 실패하는 이유</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT 접근법</a></li><li class="lvl-2"><a href="#what-mb-contracts-pushes-to-zoho-crm">MB Contracts가 Zoho CRM에 제공하는 정보는 무엇인가요?</a></li><li class="lvl-2"><a href="#designing-the-failed-payment-recovery-workflow">결제 실패 복구 워크플로 설계</a></li><li class="lvl-2"><a href="#renewal-dates-as-pipeline-forecasting">갱신 날짜를 파이프라인 예측으로 활용</a></li><li class="lvl-2"><a href="#representative-recovery-rate-at-360-clients">360명의 고객을 대상으로 한 대표 회복률</a></li><li class="lvl-2"><a href="#builder-takeaway">건설업체 테이크아웃</a></li><li class="lvl-2"><a href="#try-it-in-your-studio">스튜디오에서 직접 시도해 보세요.</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요</h3><p class="blog-card-excerpt">CRMConnect의 등록, 코스 예약 및 약속 동기화 기능을 활용하여 HighLevel이 모든 Mindbody 프로그램 유형에 대한 통합 캘린더 보기를 제공하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고</h3><p class="blog-card-excerpt">CRMConnect의 예약 동기화 기능이 Klaviyo 내에서 사이트별 예약 상태를 어떻게 보여주는지, 그리고 이를 통해 중앙 마케팅 부서에서 위치별 워크플로 및 보고서를 어떻게 실행할 수 있는지에 대한 내용입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 평생 가치, 평균 기부액, 캠페인 성과가 HubSpot에 동기화되면 월간 이사회 보고서 작성이 4일씩 걸리는 작업에서 저장 가능한 대시보드 형태로 간소화됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026 Apiant, Inc. 모든 권리 보유.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ko/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">은둔</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">자귀</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

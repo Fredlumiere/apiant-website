@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>高額商品のアップセル向けに、MindbodyからKlaviyoへの商品購入同期機能を導入 | APIANTブログ</title>
+<meta content="CRMConnectの購入明細と販売明細の同期によって、Klaviyo内でMindbodyパッケージの内容が明らかになり、ターゲットを絞ったアップセル、クロスセル、およびロイヤルティ自動化が可能になります。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="高額商品のアップセル向けに、MindbodyからKlaviyoへの商品購入情報の同期機能を追加" property="og:title"/>
+<meta content="CRMConnectの購入明細と販売明細の同期によって、Klaviyo内でMindbodyパッケージの内容が明らかになり、ターゲットを絞ったアップセル、クロスセル、およびロイヤルティ自動化が可能になります。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="高額商品のアップセル向けに、MindbodyからKlaviyoへの商品購入情報の同期機能を追加" property="twitter:title"/>
+<meta content="CRMConnectの購入明細と販売明細の同期によって、Klaviyo内でMindbodyパッケージの内容が明らかになり、ターゲットを絞ったアップセル、クロスセル、およびロイヤルティ自動化が可能になります。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Line-Item Purchase Sync From Mindbody to Klaviyo for High-Ticket Upsells",
+  "description": "How CRMConnect's purchase and sales line items sync exposes Mindbody package contents inside Klaviyo, unlocking targeted upsells, cross-sells, and loyalty automations.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/hero.png",
+  "datePublished": "2024-11-20T10:42:28+00:00",
+  "dateModified": "2026-05-19T17:42:41.833891+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Line-Item Purchase Sync From Mindbody to Klaviyo for High-Ticket Upsells", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-klaviyo-line-item-upsells/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/mindbody-klaviyo-line-item-upsells/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">高額商品のアップセル向けに、MindbodyからKlaviyoへの商品購入情報の同期機能を追加</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024年11月20日</span>
+<span>5分で読める</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=fitness-wellness">#フィットネス＆ウェルネス</a><a class="blog-tag" href="/ja/blog/?tag=mindbody">#心身</a><a class="blog-tag" href="/ja/blog/?tag=klaviyo">#クラヴィヨ</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ja/blog/?tag=data-engine">#データエンジン</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="高額商品のアップセル向けに、MindbodyからKlaviyoへの商品購入情報の同期機能を追加" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="why-a-single-sale-field-kills-upsell-logic">単一の販売フィールドがアップセルロジックを阻害する理由</h2>
+<p>高額なウェルネスパッケージは、単一の商品ではありません。6,200ドルの12週間のリトリートパッケージには、通常、基本宿泊費、食事プラン、毎日のクラス受講料、プライベートセッションのセット、そしてオプションの追加オプション（サウンドバス、マッサージクレジット、コーチとの1対1セッションなど）が含まれています。請求書のすべての項目は、アップセル、クロスセル、そして更新の機会となります。</p>
+<p>CRMが注文合計金額しか認識できない場合に問題が発生します。仮に、Silver Fern Wellness Retreat（例示）が12週間のローリングコホートで4,000ドルから8,000ドルのパッケージを販売しているとします。Klaviyoは、顧客が先週の火曜日に5,800ドルを支払ったことしか認識できません。しかし、パッケージに3回のマッサージクレジットと0回のプライベートコーチングセッションが含まれていることは認識できません。そのため、購入後のフローは、一般的なアップセルを実行するか（既にアップセル対象の商品を購入している顧客の半数を不快にさせる）、あるいは全く実行されないかのどちらかになります。</p>
+<h2 id="what-off-the-shelf-tools-miss">市販のツールに欠けているもの</h2>
+<p>Mindbodyの販売データには明細項目が含まれていますが、一般的な連携ツールのほとんどは、Klaviyoに到達する前に販売データを1行に集約してしまいます。その理由は通常、データモデリングにあります。Klaviyoの「注文完了」イベントはアイテム配列を想定しており、Mindbodyのネストされた販売データを正しく配列に（適切なSKU、価格、カテゴリタグを使用して）組み込む作業は、「クイックZap」で省略されてしまうからです。その結果、Klaviyoでは明細項目も追加オプションの表示もアップセル計算も含まれない、1行の注文データになってしまいます。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>CRMConnect MindbodyからKlaviyoへの接続には以下が含まれます <strong>購入・売上明細の同期</strong> 第一級の機能として、MindbodyからKlaviyoへ販売データが各明細項目をそのまま保持した状態で流れるため、Klaviyoのプロファイルとイベントペイロードには、セグメンテーションとフローロジックに必要な構造がそのまま保持されます。</p>
+<p>APIANT内部の統合データ処理エンジンは、フォーマットに依存しません。Mindbodyの販売ペイロードは、XPath（W3Cのオープン標準）を介してKlaviyoのイベントスキーマにマッピングされ、ネスト構造が失われることはありません。各明細項目には、独自のSKU、価格、カテゴリ、数量が含まれています。これがアップセルロジックを可能にする部分です。</p>
+<p>ここでは、APIアプリの3つの機能が重要な役割を果たします。</p>
+<ul>
+<li><strong>購入・売上明細の同期</strong> 構造化項目リストの場合。</li>
+<li><strong>リアルタイムのクライアントプロフィール同期</strong> つまり、購入者プロファイルは最新であり、セグメント化可能である。</li>
+<li><strong>来店追跡</strong> したがって、購入後のサポートは、顧客が実際に購入した製品を使い始めたかどうかによって分岐させることができる。</li>
+</ul>
+<p><img alt="高額商品のアップセルにおけるMindbodyからKlaviyoへの商品購入同期 — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/inline-1.png"/></p>
+<h2 id="what-line-item-sync-looks-like-in-klaviyo">Klaviyoにおける明細項目同期の仕組み</h2>
+<p>リトリートパッケージの購入は、Klaviyo上で構造化されたイベントとして登録されます。その形式は概ね以下のとおりです。</p>
+<pre class="highlight"><code class="language-json">{
+  "event": "Placed Order",
+  "customer_properties": {
+    "$email": "client@example.com",
+    "mindbody_client_id": "MB-44918"
+  },
+  "properties": {
+    "OrderId": "MB-INV-71204",
+    "Total": 5800.00,
+    "Currency": "USD",
+    "Items": [
+      { "SKU": "RETREAT-12W-DLX", "Name": "12-Week Deluxe Package", "Price": 4200, "Category": "Retreat Base" },
+      { "SKU": "MEAL-VEG-12W", "Name": "Vegetarian Meal Plan", "Price": 800, "Category": "Meal Plan" },
+      { "SKU": "MASSAGE-CR-3", "Name": "Massage Credits x3", "Price": 450, "Category": "Add-On" },
+      { "SKU": "SOUND-BATH-1", "Name": "Sound Bath Session", "Price": 350, "Category": "Add-On" }
+    ]
+  }
+}</code></pre>
+<p>Klaviyoは、「個別コーチングなしで12週間のパッケージを購入した」、「食事プランを購入したが追加オプションは購入していない」、「5,000ドル以上使ったがマッサージクレジットを一切使用していない」といったように、顧客をセグメント化できるようになりました。</p>
+<h2 id="designing-add-on-upsells-for-high-ticket-packages">高額パッケージ向け追加オプションの設計</h2>
+<p>アップセルフローには3つのトリガーがあり、それぞれが <strong>ない</strong> 明細項目から：</p>
+<ol>
+<li><strong>個人指導は購入していません。</strong> リトリート開始から3日目に、シニアコーチとの個別セッションを割引価格で提供するメールを送信する。既にコーチング関連の商品・サービスが含まれている参加者には送信しない。</li>
+<li><strong>食事プランを購入しました。追加オプションはありません。</strong> 7日目に、サウンドバスとマッサージのクレジットについて、「ご存知でしたか？」というメールを送り、セット価格を案内する。</li>
+<li><strong>追加オプションを購入しましたが、今後14日以内にレッスンの予約はありません。</strong> 厳選されたスケジュールに基づいて、再エンゲージメントメールを送信する。</li>
+</ol>
+<p>各ブランチは、プロフィールに既に登録されている商品項目に基づいて表示されます。既に購入した商品を再度勧められることはありません。これだけでも、高額商品を購入する顧客の購読解除を防ぐのに十分です。</p>
+<h2 id="layering-loyalty-rewards-on-repeat-purchases">リピート購入にロイヤルティ特典を重ねる</h2>
+<p>2つ目のフローは、同じデータに対して、より長い期間で実行されます。項目を使用して、カテゴリ別に生涯価値を計算します。</p>
+<ul>
+<li>生涯マッサージ利用額が1,500ドルを超えると、「創設者」ティアにご招待し、優先予約をご利用いただけます。</li>
+<li>12ヶ月間に2回の本格的なリトリートに参加：3回目のリトリートの食事プランは無料です。</li>
+<li>リトリート1回と追加オプション4つ：パーソナライズされたコードを使って紹介依頼をトリガーできます。</li>
+</ul>
+<p>数学はKlaviyoを使用して実行されます <code>Items</code> 各「注文完了」イベントごとに配列が作成されます。この統合により、配列の精度が維持されます。</p>
+<p><img alt="高額商品のアップセルにおけるMindbodyからKlaviyoへの商品購入同期 — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-line-item-upsells/inline-2.png"/></p>
+<h2 id="representative-aov-lift-at-4k-8k-packages">4,000ドル～8,000ドルのパッケージにおける代表的な平均注文額増加率</h2>
+<p>あくまでも参考例であり、実際の顧客像ではありません。</p>
+<ul>
+<li>追加添付率の基準値（一般的な購入後メール）：約8～12パーセント。</li>
+<li>明細項目を考慮したアップセルによる追加購入率は、主に適切なオファーが適切な購入者に届くため、20～28％の範囲に上昇します。</li>
+<li>リトリート参加者一人当たりの平均注文額：代表的なコホートにおいて6～11％の増加。</li>
+<li>購入後のフローにおける購読解除率：抑制ロジックによって「既に購入した商品を再度売り込もうとしている」という問題が解消されるため、低下する。</li>
+</ul>
+<p>これらは仕組みに基づいたものであり、魔法ではありません。項目ごとに正確なターゲティングが可能になり、その正確なターゲティングが成果向上につながります。</p>
+<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
+<ul>
+<li>MindbodyとKlaviyo間では、明細項目レベルでの同期を強く求めましょう。高額商品の場合、合計注文金額だけではマーケティング上の行き詰まりが生じます。</li>
+<li>アップセルロジックは、 <strong>不在</strong> アイテム配列から取得します。そこに、購入可能な次のステップがあります。</li>
+<li>生涯利用額（マッサージ、コーチング、食事など）をロイヤルティティアの基準として用いる。総収益は、パッケージ型リトリートビジネスには大雑把すぎる。</li>
+</ul>
+<h2 id="try-it-in-your-retreat">あなたのリトリートで試してみてください</h2>
+<p>CRMConnect MindbodyとKlaviyoの連携動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-klaviyo-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
+<p>既製コネクタの全カタログは以下をご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-a-single-sale-field-kills-upsell-logic">単一の販売フィールドがアップセルロジックを阻害する理由</a></li><li class="lvl-2"><a href="#what-off-the-shelf-tools-miss">市販のツールに欠けているもの</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#what-line-item-sync-looks-like-in-klaviyo">Klaviyoにおける明細項目同期の仕組み</a></li><li class="lvl-2"><a href="#designing-add-on-upsells-for-high-ticket-packages">高額パッケージ向け追加オプションの設計</a></li><li class="lvl-2"><a href="#layering-loyalty-rewards-on-repeat-purchases">リピート購入にロイヤルティ特典を重ねる</a></li><li class="lvl-2"><a href="#representative-aov-lift-at-4k-8k-packages">4,000ドル～8,000ドルのパッケージにおける代表的な平均注文額増加率</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li><li class="lvl-2"><a href="#try-it-in-your-retreat">あなたのリトリートで試してみてください</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

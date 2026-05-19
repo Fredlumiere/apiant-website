@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>HubSpot을 활용하여 Mindbody 자동 결제 실패를 취소로 이어지기 전에 방지하는 방법 | APIANT 블로그</title>
+<meta content="두 곳에 지점을 둔 필라테스 스튜디오는 CRMConnect의 계약 및 자동 결제 동기화 기능을 활용하여 HubSpot에서 당일 수익 회복 워크플로를 실행함으로써 회원 이탈 전에 수익을 되찾고 있습니다." name="description"/>
+
+<!-- Open Graph -->
+<meta content="HubSpot을 사용하여 Mindbody 자동 결제 실패를 취소로 이어지기 전에 미리 방지하세요." property="og:title"/>
+<meta content="두 곳에 지점을 둔 필라테스 스튜디오는 CRMConnect의 계약 및 자동 결제 동기화 기능을 활용하여 HubSpot에서 당일 수익 회복 워크플로를 실행함으로써 회원 이탈 전에 수익을 되찾고 있습니다." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-failed-autopay-recovery/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-hubspot-failed-autopay-recovery/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="HubSpot을 사용하여 Mindbody 자동 결제 실패를 취소로 이어지기 전에 미리 방지하세요." property="twitter:title"/>
+<meta content="두 곳에 지점을 둔 필라테스 스튜디오는 CRMConnect의 계약 및 자동 결제 동기화 기능을 활용하여 HubSpot에서 당일 수익 회복 워크플로를 실행함으로써 회원 이탈 전에 수익을 되찾고 있습니다." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-failed-autopay-recovery/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Catching Failed Mindbody Auto-Pays Before They Become Cancellations With HubSpot",
+  "description": "A two-location pilates studio uses CRMConnect's contract and auto-pay sync to trigger same-day recovery workflows in HubSpot, recapturing revenue before members churn.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-failed-autopay-recovery/hero.png",
+  "datePublished": "2024-07-15T10:05:23+00:00",
+  "dateModified": "2026-05-19T17:42:35.751205+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-hubspot-failed-autopay-recovery/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Catching Failed Mindbody Auto-Pays Before They Become Cancellations With HubSpot", "item": "https://apiant.com/blog/posts/mindbody-hubspot-failed-autopay-recovery/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-hubspot-failed-autopay-recovery/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ko/blog/posts/mindbody-hubspot-failed-autopay-recovery/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ko/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">커넥터</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">구축 시작</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ko/blog/category/api-apps" style="color:inherit;text-decoration:none;">API 앱</a>
+</div>
+<h1 class="blog-post-h1">HubSpot을 사용하여 Mindbody 자동 결제 실패를 취소로 이어지기 전에 미리 방지하세요.</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ko/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024년 7월 15일</span>
+<span>5분 읽기</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ko/blog/?tag=fitness-wellness">#피트니스 &amp; 웰빙</a><a class="blog-tag" href="/ko/blog/?tag=mindbody">#심신</a><a class="blog-tag" href="/ko/blog/?tag=hubspot">#허브스팟</a><a class="blog-tag" href="/ko/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ko/blog/?tag=bi-directional-sync">#양방향 동기화</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="HubSpot을 사용하여 Mindbody 자동 결제 실패를 취소로 이어지기 전에 미리 방지하세요." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-failed-autopay-recovery/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h1 id="a-members-card-expires-on-a-tuesday-mindbody-auto-pay-tries-to-charge-them-on-friday-morning-at-6-am-the-charge-fails-the-member-shows-up-that-evening-the-front-desk-waves-them-through-because-nobody-is-going-to-embarrass-a-member-at-the-door-and-the-failed-payment-sits-in-a-needs-attention-queue-in-mindbody-by-the-time-staff-sees-it-on-monday-the-member-has-missed-saturday-and-sunday-classes-started-feeling-guilty-about-not-coming-in-and-has-begun-browsing-competitors">회원의 카드 유효기간이 화요일에 만료됩니다. 마인드바디 자동 결제 시스템은 금요일 오전 6시에 회원에게 요금을 청구하려고 시도하지만, 결제가 실패합니다. 회원은 그날 저녁 마인드바디에 도착하고, 프런트 데스크 직원은 (회원을 입구에서 난처하게 만들고 싶어하는 사람은 아무도 없기 때문에) 그냥 입장시켜 줍니다. 실패한 결제 내역은 마인드바디 시스템에서 "처리 필요" 상태로 남아 있습니다. 월요일에 직원이 이 내역을 확인할 때쯤이면, 회원은 이미 토요일과 일요일 수업을 놓쳤고, 수업에 오지 못한 것에 대해 죄책감을 느끼기 시작하며 다른 헬스클럽을 알아보기 시작합니다.</h1>
+<p>화요일에 독촉 이메일을 처리할 때쯤이면 회원은 의심이 극에 달해 있을 것입니다. 소규모 스튜디오의 계약 취소 중 3분의 2는 당일에 회수되지 않은 자동 결제 실패에서 시작됩니다.</p>
+<p>가상 사례: 리포머 앤 코 필라테스(Reformer &amp; Co Pilates, 예시)는 두 곳의 지점을 운영하며 계약 기반 회원권으로 540명의 회원을 보유한 필라테스 스튜디오입니다. 이 스튜디오에서 매달 자동 결제되는 금액의 약 12%가 첫 시도에서 실패했습니다. 실패한 결제 건 중 약 70%는 회원이 직접 해결했습니다(마인드바디(Mindbody)에서 재시도에 성공하거나 회원이 카드 정보를 자동으로 업데이트하는 경우). 나머지 30%는 조용히 회원 이탈로 이어졌습니다.</p>
+<p>이 글에서는 CRMConnect Mindbody와 HubSpot을 활용하여 "결제 실패"와 "회원이 만족감을 느끼는 시점" 사이의 시간 간격을 단 하루로 단축하는 방법에 대해 설명합니다.</p>
+<h2 id="what-mindbody-tells-you-vs-what-hubspot-can-act-on">Mindbody가 알려주는 내용 vs. HubSpot이 취할 수 있는 조치</h2>
+<p>Mindbody는 계약 ID, 자동 결제 상태, 청구일, 금액, 실패 사유, 회원의 마지막 방문, 남은 세션 수, 가격 옵션 등 필요한 모든 정보를 알고 있습니다. 하지만 마케팅 자동화 엔진은 갖추고 있지 않습니다. Mindbody의 기본 자동 결제 실패 처리 기능은 재시도 버튼이 있는 목록을 제공하는 방식입니다.</p>
+<p>HubSpot에는 워크플로 엔진이 있지만, 기본적으로 누가 결제를 실패했는지 알 수 없습니다. 일반적인 해결 방법들은 모두 적절하지 않습니다.</p>
+<ul>
+<li><strong>Zapier에서 "새로운 결제 실패" 트리거를 활성화합니다.</strong> Mindbody는 이를 위한 깔끔한 웹훅을 제공하지 않습니다. 결국 판매 보고서를 주기적으로 조회해야 하는데, 이는 속도가 느리고 신뢰성이 떨어집니다.</li>
+<li><strong>Mindbody의 회계 내보내기에서 가져온 일일 CSV 파일입니다.</strong> 12시간에서 36시간을 허비하게 만들고, 완전히 잘못된 방향으로 가게 합니다.</li>
+<li><strong>직원이 HubSpot에서 수동으로 결제 실패를 표시합니다.</strong> 이는 대부분의 스튜디오에서 기본 설정이지만, 주말과 공휴일에는 제대로 작동하지 않습니다.</li>
+</ul>
+<p><img alt="HubSpot을 사용하여 Mindbody 자동 결제 실패를 취소로 이어지기 전에 포착하는 방법 — 그림 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-failed-autopay-recovery/inline-1.png"/></p>
+<h2 id="wiring-up-the-contracts-auto-pay-sync">계약 및 자동 결제 동기화 설정</h2>
+<p>CRMConnect Mindbody to HubSpot에는 전용 기능이 포함되어 있습니다. <strong>계약 및 자동 결제 동기화</strong> 기능. 앱 페이지에서 발췌: "Mindbody에서 HubSpot으로 고객 계약 및 자동 결제 정보를 원활하게 동기화하세요. 결제가 실패할 경우 즉시 알림을 받아 후속 이메일 발송이나 팀 작업 생성과 같은 복구 프로세스를 자동화할 수 있습니다."</p>
+<p>HubSpot 연락처에는 미리 채워진 사용자 지정 속성이 표시됩니다(이러한 속성은 CRMConnect에서 생성 및 유지 관리하는 120개 이상의 속성 중 일부입니다). 자동 결제가 실패하면 연락처 상태는 대략 다음과 같이 표시됩니다.</p>
+<pre class="highlight"><code class="language-json">{
+  "contract_id": "MBO-2024-00871",
+  "contract_status": "Active",
+  "auto_pay_status": "Failed",
+  "auto_pay_last_attempt": "2026-05-15T06:00:00",
+  "auto_pay_amount": 189.00,
+  "auto_pay_failure_reason": "Card Expired",
+  "last_visit_date": "2026-05-14",
+  "membership_status": "Active",
+  "next_billing_date": "2026-05-20"
+}</code></pre>
+<p>고객 및 계약 데이터가 거의 실시간으로 동기화되고 Mindbody에서 변경 사항이 발생하면 몇 초 내에 계약이 게시되므로 HubSpot 워크플로는 자동 결제가 실패한 바로 그 시간에 실행될 수 있으며, 다음 날 아침까지 기다릴 필요가 없습니다.</p>
+<h2 id="the-three-step-recovery-workflow">3단계 복구 워크플로</h2>
+<p>HubSpot(워크플로우를 사용하려면 Pro Hub 필요)에서 연락처를 등록하세요. <code>auto_pay_status changed to Failed</code>.</p>
+<ul>
+<li><strong>1단계, 0시(같은 날 아침):</strong> 스튜디오 소유주 이름으로 부드러운 이메일을 보내세요. "안녕하세요, [이름]님. 오늘 아침에 등록된 카드 결제가 제대로 처리되지 않은 것 같습니다. 큰 문제는 아니니 여기 [Mindbody 셀프 서비스 링크]에서 업데이트해 주세요." 홍보성 내용이나 과장된 사과 없이, 친근하게 안내하는 내용입니다. 소유주 이름으로 보내는 이메일은 일반적인 "청구" 메일보다 훨씬 효과적입니다.</li>
+<li><strong>2단계, 24시간째:</strong> If <code>auto_pay_status</code> 아직 <code>Failed</code>해당 지점의 프런트 데스크 담당자에게 회원 이름, 마지막 방문 날짜, 그리고 "카드 정보 업데이트가 정상적으로 완료되었는지 확인차 연락드렸습니다. 아직 요금이 청구되지 않았습니다."와 같은 한 줄짜리 메시지를 포함한 작업을 할당하세요. 이처럼 최대한 인간적인 접근 방식을 취하면 전환율이 높아집니다.</li>
+<li><strong>3단계, 72시간째:</strong> 그래도 문제가 해결되지 않으면, 멤버십을 취소하는 대신 30일 동안 일시 중지할 수 있도록 제안하는 두 번째 이메일을 보내세요. 이렇게 명시적으로 일시 중지 옵션을 제공하면 죄책감이나 예산 압박 때문에 멤버십을 취소하려는 회원들을 상당수 확보할 수 있습니다.</li>
+</ul>
+<p>레이어 1 안전 분기: 만약 <code>last_visit_date</code> 결제 실패 시점이 14일 이상 전이라면 2단계(개인 통화)를 건너뛰고 더 강력한 고객 재확보 제안으로 바로 넘어가세요. 이들은 이미 이탈하고 있던 회원들이며, 결제 실패는 단지 그 사실을 확인시켜준 것일 뿐입니다.</p>
+<p><img alt="HubSpot을 사용하여 Mindbody 자동 결제 실패를 취소로 이어지기 전에 포착하는 방법 — 그림 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-failed-autopay-recovery/inline-2.png"/></p>
+<h2 id="representative-recovery-rate-at-540-members">540명 회원 기준 대표 회복률</h2>
+<p>이 규모의 대표적인 두 지점 배포 사례에서, 자동 결제 실패 건의 복구율은 워크플로가 가동된 후 30일 이내에 기준치인 약 55%(대부분 자체 복구)에서 78~85%로 증가했습니다. 가장 큰 요인은 0시간에 발송되는 이메일이며, 당일에 발생하는 거의 모든 복구는 이 이메일 덕분입니다.</p>
+<p>540명의 회원을 보유하고 월별 첫 시도 실패율이 12%라고 가정하면, 한 달에 약 65건의 실패가 발생합니다. 복구율을 55%에서 82%로 높이면 이탈하는 회원을 매달 약 17명 더 확보할 수 있습니다. 월 평균 계약 금액이 189달러라고 하면, 단일 워크플로 개선으로 월 약 3,200달러, 연간 약 38,000달러의 수익을 절감할 수 있습니다.</p>
+<p>다시 말씀드리지만, 이 수치는 예시일 뿐이며, 카드 거절률, 계약 가격, 기존 연체료 만기일 등이 실제 결과에 큰 영향을 미칠 것입니다.</p>
+<h2 id="builder-takeaway">건설업체 테이크아웃</h2>
+<ul>
+<li><strong>복사할 내용:</strong> 사람처럼 들리는 발신자가 보낸 정각 0시 이메일. 스튜디오에서 가장 흔히 저지르는 실수는 "billing@studioname.com" 주소로 "결제 실패 알림"이라는 제목의 복구 메시지를 보내는 것입니다. 이렇게 하면 회원들이 해당 메시지를 무시하게 됩니다.</li>
+<li><strong>주목해야 할 점:</strong> Mindbody와 HubSpot 간의 계약 및 자동 결제 동기화는 단방향(Mindbody에서 HubSpot으로만)입니다. HubSpot에서 Mindbody로 계약 변경 사항을 푸시하려고 시도하지 마십시오. CRMConnect의 양방향 동기화는 고객 프로필로 제한됩니다. 또한 사용 중인 HubSpot 플랜이 워크플로를 지원하는지(Pro 이상) 확인하십시오.</li>
+<li><strong>이 패턴이 맞지 않을 때:</strong> 정기 결제가 없는 드롭인 클래스 사업은 여기서 회수할 것이 없습니다. 월 500달러 이상의 멤버십처럼 계약 가치가 매우 높은 스튜디오는 평생 가치가 시간 투자 가치가 있기 때문에 1단계로 이메일이 아닌 전화 통화를 하는 하이브리드 방식을 고려할 수 있습니다.</li>
+</ul>
+<p>CRMConnect Mindbody와 HubSpot이 어떻게 연동되는지 직접 보고 싶으신가요? <a href="/apipartners/mindbody/mindbody-hubspot-integration-and-automation-apiant">API 앱 페이지를 보세요</a>.</p>
+<p>턴키 통합 솔루션 전체 카탈로그를 다음에서 확인하세요. <a href="/apps">/앱</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#what-mindbody-tells-you-vs-what-hubspot-can-act-on">Mindbody가 알려주는 내용 vs. HubSpot이 취할 수 있는 조치</a></li><li class="lvl-2"><a href="#wiring-up-the-contracts-auto-pay-sync">계약 및 자동 결제 동기화 연결</a></li><li class="lvl-2"><a href="#the-three-step-recovery-workflow">3단계 복구 워크플로</a></li><li class="lvl-2"><a href="#representative-recovery-rate-at-540-members">540명 회원 기준 대표 회복률</a></li><li class="lvl-2"><a href="#builder-takeaway">건설업체 테이크아웃</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요</h3><p class="blog-card-excerpt">CRMConnect의 등록, 코스 예약 및 약속 동기화 기능을 활용하여 HighLevel이 모든 Mindbody 프로그램 유형에 대한 통합 캘린더 보기를 제공하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고</h3><p class="blog-card-excerpt">CRMConnect의 예약 동기화 기능이 Klaviyo 내에서 사이트별 예약 상태를 어떻게 보여주는지, 그리고 이를 통해 중앙 마케팅 부서에서 위치별 워크플로 및 보고서를 어떻게 실행할 수 있는지에 대한 내용입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 평생 가치, 평균 기부액, 캠페인 성과가 HubSpot에 동기화되면 월간 이사회 보고서 작성이 4일씩 걸리는 작업에서 저장 가능한 대시보드 형태로 간소화됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026 Apiant, Inc. 모든 권리 보유.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ko/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">은둔</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">자귀</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Het bijhouden van de conversie van dagpassen naar lidmaatschappen in Klaviyo met behulp van Mindbody-bezoekgegevens | APIANT Blog</title>
+<meta content="Gebruik de bezoekregistratie en aankoopsynchronisatie van CRMConnect om de conversie van dagpassen naar lidmaatschappen binnen Klaviyo te koppelen en gerichte flows uit te voeren voor terugkerende kopers van dagpassen." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Het bijhouden van de conversie van dagpassen naar lidmaatschappen in Klaviyo met behulp van Mindbody-bezoekgegevens." property="og:title"/>
+<meta content="Gebruik de bezoekregistratie en aankoopsynchronisatie van CRMConnect om de conversie van dagpassen naar lidmaatschappen binnen Klaviyo te koppelen en gerichte flows uit te voeren voor terugkerende kopers van dagpassen." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Het bijhouden van de conversie van dagpassen naar lidmaatschappen in Klaviyo met behulp van Mindbody-bezoekgegevens." property="twitter:title"/>
+<meta content="Gebruik de bezoekregistratie en aankoopsynchronisatie van CRMConnect om de conversie van dagpassen naar lidmaatschappen binnen Klaviyo te koppelen en gerichte flows uit te voeren voor terugkerende kopers van dagpassen." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Tracking Day-Pass to Membership Conversion in Klaviyo Using Mindbody Visit Data",
+  "description": "Use CRMConnect's visit tracking and purchase sync to attribute daypass-to-member conversion inside Klaviyo, and run targeted flows for repeat daypass buyers.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.png",
+  "datePublished": "2026-04-13T09:50:57+00:00",
+  "dateModified": "2026-05-19T17:42:42.180919+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Tracking Day-Pass to Membership Conversion in Klaviyo Using Mindbody Visit Data", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-klaviyo-daypass-to-member/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/nl/blog/posts/mindbody-klaviyo-daypass-to-member/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/nl/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Connectoren</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Begin met bouwen</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/nl/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-apps</a>
+</div>
+<h1 class="blog-post-h1">Het bijhouden van de conversie van dagpassen naar lidmaatschappen in Klaviyo met behulp van Mindbody-bezoekgegevens.</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/nl/blog/?author=fred">Fred Lumiere</a></span>
+<span>13 april 2026</span>
+<span>Leestijd: 5 minuten</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/nl/blog/?tag=fitness-wellness">#Fitness &amp; Wellness</a><a class="blog-tag" href="/nl/blog/?tag=mindbody">#Geestlichaam</a><a class="blog-tag" href="/nl/blog/?tag=klaviyo">#Klaviyo</a><a class="blog-tag" href="/nl/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Het bijhouden van de conversie van dagpassen naar lidmaatschappen in Klaviyo met behulp van Mindbody-bezoekgegevens." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="the-day-pass-attribution-problem">Het toewijzingsprobleem van dagpassen</h2>
+<p>Dagpassen zijn de goedkoopste en meest gebruikelijke manier om een klimhal, yogastudio of andere fitnessgelegenheid binnen te lopen. Ze zijn echter ook het minst goed te volgen onderdeel van de marketingtrechter. Iemand die binnenloopt, koopt een dagpas, klimt twee uur, vertrekt en wordt drie weken later lid of komt nooit meer terug. Of het conversiepercentage nu 5 procent of 25 procent is, zou bepalend moeten zijn voor je hele acquisitiestrategie. De meeste ondernemers weten niet precies welke van de twee het is.</p>
+<p>Hypothetisch voorbeeld: Basalt and Belay Climbing Co (ter illustratie) is een klimhal met 1100 leden en een gezonde mix van dagpassen. Hun Klaviyo-account bevat alle e-mailabonnees en alle lidmaatschapsaanmeldingen. Wat er echter niet is, is een duidelijke koppeling tussen de twee. De aankoop van een dagpas, het tweede bezoek, het derde bezoek en de uiteindelijke lidmaatschapsaanmelding zijn vier afzonderlijke gebeurtenissen in Klaviyo, en ze zijn niet gekoppeld aan één enkele identificatiecode.</p>
+<h2 id="why-off-the-shelf-tools-fail-here">Waarom standaardgereedschap hier tekortschiet</h2>
+<p>Het probleem met gedeelde identificatiecodes is reëel. Mindbody kent een klant-ID toe bij de eerste transactie, maar als dezelfde persoon de volgende dagpas koopt met een iets ander e-mailadres (automatisch ingevuld door een andere browser of via een gastcheckout), maakt Mindbody een duplicaat aan. Klaviyo ziet dan twee profielen. De conversieberekening loopt vast bij de stap van het verwijderen van duplicaten, niet bij de analyse.</p>
+<p>Een Zap of een aangepast script kan soms wel een match vinden op basis van e-mailadres, maar kan niet betrouwbaar dubbele gegevens verwijderen op basis van naam en telefoonnummer, en kan het aantal bezoeken niet correct verwerken wanneer een profiel later wordt samengevoegd. De integratie is mogelijk, maar het verwijderen van dubbele gegevens en het controleren van het aantal bezoeken zijn waar de meeste projecten vastlopen.</p>
+<h2 id="the-apiant-approach">De APIANT-aanpak</h2>
+<p>CRMConnect Mindbody naar Klaviyo regelt dit met twee functies die samenwerken:</p>
+<ul>
+<li><strong>Bezoek Tracking</strong> Registreert recente klantbezoeken, met dagelijkse afstemming zodat opnieuw ingevoerde of samengevoegde records geen dubbele bezoekgebeurtenissen creëren.</li>
+<li><strong>Inkoop- en verkoopregels synchroniseren</strong> Registreert de aankoop van een dagpas als een gestructureerde gebeurtenis met behoud van de SKU, los van de SKU voor een lidmaatschapsaanmelding.</li>
+</ul>
+<p>Aan de Klaviyo-kant worden profielen gekoppeld op basis van e-mailadres en direct bijgewerkt. Als er later een Mindbody-record wordt samengevoegd, wordt de gecombineerde geschiedenis overgenomen. Het resultaat is één Klaviyo-profiel per persoon, met de aankoop van een dagpas, het aantal bezoeken en de uiteindelijke aanmelding voor het lidmaatschap allemaal in dezelfde tijdlijn.</p>
+<p><img alt="Het volgen van de conversie van dagpassen naar lidmaatschappen in Klaviyo met behulp van Mindbody-bezoekgegevens — Figuur 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/inline-1.png"/></p>
+<h2 id="what-visit-tracking-surfaces-in-klaviyo">Welke bezoekersregistratieoppervlakken zijn er in Klaviyo?</h2>
+<p>Elk profiel bevat een doorlopende set kenmerken die toewijzing van dagpassen mogelijk maken:</p>
+<pre class="highlight"><code class="language-text">Klaviyo profile attributes:
+- mindbody_first_purchase_sku        e.g. DAYPASS-ADULT
+- mindbody_first_visit_at            ISO timestamp
+- mindbody_visit_count               int
+- mindbody_last_visit_at             ISO timestamp
+- mindbody_membership_status         active|expired|none
+- mindbody_membership_started_at     ISO timestamp (null until conversion)</code></pre>
+<p>De conversiegebeurtenis waar het u om gaat, is het moment <code>mindbody_membership_started_at</code> verandert van null naar een tijdstempel op een profiel waarvan <code>mindbody_first_purchase_sku</code> Het was een dagpas. Die ene vergelijking geeft antwoord op de vraag: "Hoeveel kopers van een dagpas zijn lid geworden?"</p>
+<h2 id="designing-the-daypass-visitor-conversion-flow">Het ontwerpen van het conversieproces van dagpas naar bezoekers.</h2>
+<p>Zodra de attributen zijn ingesteld, is het proces eenvoudig:</p>
+<ol>
+<li><strong>Trekker:</strong> Evenement voor de aankoop van een Mindbody dagpas.</li>
+<li><strong>Wacht 4 uur.</strong> Context van een beklimming op dezelfde dag.</li>
+<li><strong>E-mail 1 (avond van de klim):</strong> "Hopelijk was de sessie goed. Hier is je retourkaart voor 7 dagen met $5 korting."</li>
+<li><strong>Vestiging op <code>mindbody_visit_count</code> na 7 dagen:</strong></li>
+<li>Nog steeds 1: stuur een e-mail met de tekst "de eerste beklimmingen zijn het moeilijkst" en een aanbod voor een beginnersclinic.</li>
+<li>2 tot 3: Stuur een e-mail met de tekst "Je raakt verslaafd" en een vergelijking van de verschillende lidmaatschappen.</li>
+<li>4 of meer: stuur een e-mail met de vraag om zelf de kosten te berekenen en het omslagpunt voor lidmaatschap versus dagpassen te bepalen.</li>
+<li><strong>Onderdrukken op <code>mindbody_membership_status = active</code>.</strong> Stopt met het lastigvallen van iedereen die zich bekeerd heeft.</li>
+</ol>
+<p>De derde categorie is het segment met de hoogste conversieratio. Vier bezoeken in een week van iemand die een dagpas betaalt, betekent dat die persoon zich nog niet heeft aangemeld. De e-mail schrijft zichzelf dan eigenlijk.</p>
+<h2 id="reading-the-conversion-report-honestly">Het conversierapport eerlijk lezen</h2>
+<p>De verleiding is groot om elke lidmaatschapsaanmelding na een dagpas te tellen. Het werkelijke aantal ligt echter lager. Gebruik deze segmentatie in Klaviyo:</p>
+<ul>
+<li><strong>Cohort:</strong> kopers van dagpassen in kalendermaand N.</li>
+<li><strong>Raam:</strong> 60 dagen vanaf de eerste aankoop.</li>
+<li><strong>Omgezet:</strong> <code>mindbody_membership_started_at</code> valt binnen het venster.</li>
+</ul>
+<p>Rapporteer twee ratio's: conversie over 30 dagen en conversie over 60 dagen. Alles na 60 dagen is een apart marketingverhaal en mag niet aan het dagpas-kanaal worden toegeschreven. Aanbieders die de periode samenvoegen tot "ooit" overschatten het kanaal met een factor 2 of meer.</p>
+<p><img alt="Het volgen van de conversie van dagpassen naar lidmaatschappen in Klaviyo met behulp van Mindbody-bezoekgegevens — Figuur 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/inline-2.png"/></p>
+<h2 id="representative-conversion-rate-at-1100-members">Representatief conversiepercentage bij 1.100 leden</h2>
+<p>Illustratieve composities, geen echte klant:</p>
+<ul>
+<li>Het basispercentage voor de conversie van dagpassen naar lidmaatschap na 30 dagen (zonder gerichte instroom): ongeveer 4 tot 7 procent.</li>
+<li>Conversie binnen 30 dagen met bovenstaande flow: een stijging naar 9 tot 14 procent, voornamelijk in de segmenten met 2 tot 3 bezoeken en 4 of meer bezoeken, waar de aanbieding op het juiste moment komt.</li>
+<li>Gemiddeld aantal dagpassen per lid dat zich heeft aangemeld: 2,6 (wat op zich een nuttig cijfer is, omdat het de receptie vertelt waar ze het gesprek moeten beginnen).</li>
+</ul>
+<p>Je cijfers zullen fluctueren met de prijzen, de demografie van de klimmers en hoe ongunstig de berekening is van dagpassen naar lidmaatschappen. Het mechanisme blijft hetzelfde.</p>
+<h2 id="builder-takeaway">Bouwer Takeaway</h2>
+<ul>
+<li>Het draait allemaal om de gedeelde identificatiecode. Zorg voor deduplicatie op basis van e-mailadressen direct in de integratielaag, anders werkt geen enkele berekening verderop in het proces.</li>
+<li>Gebruik <code>mindbody_visit_count</code> Als belangrijkste vertakkingscriterium, niet het aantal dagen sinds het eerste bezoek. Twee bezoeken in een week wegen zwaarder dan twee bezoeken in een maand als het gaat om de intentie om lid te worden.</li>
+<li>Beperk je conversieperiode tot 30 of 60 dagen. "Voor altijd" is een mooie leugen die verhult wanneer het kanaal in werkelijkheid niet meer werkt.</li>
+</ul>
+<h2 id="try-it-in-your-gym">Probeer het eens in je sportschool.</h2>
+<p>Wil je CRMConnect Mindbody met Klaviyo in actie zien? <a href="/apipartners/mindbody/mindbody-klaviyo-integration-and-automation-apiant">Bekijk de API-apppagina</a>.</p>
+<p>Bekijk de volledige catalogus met voorgeassembleerde connectoren op <a href="/apps">/apps</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">In dit artikel</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-day-pass-attribution-problem">Het toewijzingsprobleem van dagpassen</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">Waarom standaardgereedschap hier tekortschiet</a></li><li class="lvl-2"><a href="#the-apiant-approach">De APIANT-aanpak</a></li><li class="lvl-2"><a href="#what-visit-tracking-surfaces-in-klaviyo">Welke bezoekersregistratieoppervlakken zijn er in Klaviyo?</a></li><li class="lvl-2"><a href="#designing-the-daypass-visitor-conversion-flow">Het ontwerpen van het conversieproces van dagpas naar bezoekers.</a></li><li class="lvl-2"><a href="#reading-the-conversion-report-honestly">Het conversierapport eerlijk lezen</a></li><li class="lvl-2"><a href="#representative-conversion-rate-at-1100-members">Representatief conversiepercentage bij 1.100 leden</a></li><li class="lvl-2"><a href="#builder-takeaway">Bouwer Takeaway</a></li><li class="lvl-2"><a href="#try-it-in-your-gym">Probeer het eens in je sportschool.</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Lees verder</h2><div class="blog-grid"><a class="blog-card" href="/nl/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau.</h3><p class="blog-card-excerpt">Gebruik de synchronisatiefuncties voor inschrijvingen, cursusboekingen en afspraken van CRMConnect om HighLevel één overzicht van alle Mindbody-programma's te bieden.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 mei 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen.</h3><p class="blog-card-excerpt">Hoe de afsprakensynchronisatie van CRMConnect de afspraakstatus op locatieniveau in Klaviyo weergeeft, zodat de centrale marketingafdeling per locatie workflows en rapporten kan genereren.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot.</h3><p class="blog-card-excerpt">Bestuursleden willen trendlijnen. Medewerkers willen hun avonden terug. Doordat de levenslange waarde van donateurs, de gemiddelde gift en de campagneprestaties gesynchroniseerd zijn in HubSpot, is het maandelijkse bestuursrapport geen project van vier dagen meer, maar een opgeslagen dashboardweergave.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Alle rechten voorbehouden.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/nl/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacy</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Voorwaarden</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

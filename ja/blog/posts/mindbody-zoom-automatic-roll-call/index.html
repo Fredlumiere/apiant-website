@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Zoomを使った自動出席確認：ハイブリッドピラティスにおける出席状況の把握 | APIANTブログ</title>
+<meta content="ZoomConnectの自動出席確認機能が、各クラス終了後にZoom参加者をMindbodyにサインインさせ、正確なパック追跡と更新トリガーを復元する方法。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="Zoomを使った自動出席確認：ハイブリッドピラティスにおける出席状況の把握" property="og:title"/>
+<meta content="ZoomConnectの自動出席確認機能が、各クラス終了後にZoom参加者をMindbodyにサインインさせ、正確なパック追跡と更新トリガーを復元する方法。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoom-automatic-roll-call/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-zoom-automatic-roll-call/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Zoomを使った自動出席確認：ハイブリッドピラティスにおける出席状況の把握" property="twitter:title"/>
+<meta content="ZoomConnectの自動出席確認機能が、各クラス終了後にZoom参加者をMindbodyにサインインさせ、正確なパック追跡と更新トリガーを復元する方法。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoom-automatic-roll-call/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Automatic Zoom Roll Call: Closing the Attendance Loop for Hybrid Pilates",
+  "description": "How ZoomConnect's automatic roll call signs in Zoom attendees to Mindbody after each class, restoring accurate pack tracking and renewal triggers.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoom-automatic-roll-call/hero.png",
+  "datePublished": "2026-04-17T10:59:39+00:00",
+  "dateModified": "2026-05-19T17:42:49.033567+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-zoom-automatic-roll-call/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Automatic Zoom Roll Call: Closing the Attendance Loop for Hybrid Pilates", "item": "https://apiant.com/blog/posts/mindbody-zoom-automatic-roll-call/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-zoom-automatic-roll-call/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/mindbody-zoom-automatic-roll-call/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">Zoomを使った自動出席確認：ハイブリッドピラティスにおける出席状況の把握</h1>
+<p class="blog-post-subtitle">ZoomConnectの自動出席確認機能が、各クラス終了後にZoom参加者をMindbodyにサインインさせ、正確なパック追跡と更新トリガーを復元する方法。</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2026年4月17日</span>
+<span>6分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=fitness-wellness">#フィットネス＆ウェルネス</a><a class="blog-tag" href="/ja/blog/?tag=mindbody">#心身</a><a class="blog-tag" href="/ja/blog/?tag=zoom">＃ズーム</a><a class="blog-tag" href="/ja/blog/?tag=zoomconnect">#ZoomConnect</a><a class="blog-tag" href="/ja/blog/?tag=bi-directional-sync">#双方向同期</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Zoomを使った自動出席確認：ハイブリッドピラティスにおける出席状況の把握" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoom-automatic-roll-call/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="why-hybrid-attendance-tracking-breaks">ハイブリッド出席追跡が中断される理由</h2>
+<p>ハイブリッド型のピラティススタジオでは、スタジオ参加者とZoom参加者を組み合わせたクラスを開講しています。インストラクターは、スタジオ参加者のチェックインをMindbody iPadで行います。Zoom参加者はミーティングには参加しますが、Mindbody上で出席記録が残されません。その結果、出席レポートが誤って表示され、パックの利用回数が減らず、バーチャルクラスに4回参加したクライアントのパックには、1か月後も10回分の利用回数が残っている状態になります。</p>
+<p>結局、スタジオのオーナーは月末になって初めてその事実を知り、ZoomのログとMindbodyの予約を照合して80件の出席記録を遡って入力しなければならなくなり、既に徴収できたはずの収益を失ってしまう。</p>
+<p>出席状況のずれは、マーケティングにも悪影響を及ぼします。例えば、オンラインクラスに4回参加したにもかかわらず出席記録がゼロとされている顧客は、スタジオの自動化システム上で「解約リスクのある休眠会員」として表示されます。スタジオは彼女に対して再獲得キャンペーンを開始しますが、彼女はこれまでずっと参加していたため、このキャンペーンは混乱を招くだけです。不適切なデータは不適切なアプローチにつながり、結果として会員はスタジオからのメールを完全に無視するようになります。</p>
+<p><img alt="Zoomによる自動出席確認：ハイブリッドピラティスにおける出席状況の把握 — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoom-automatic-roll-call/inline-1.png"/></p>
+<h2 id="how-automatic-roll-call-actually-works">自動点呼の仕組み</h2>
+<p>Zoomは会議後に参加者レポートを出力します。MindbodyはAPI経由で出席状況の書き込みを受け付けます。Zapierを使ってこの2つを連携させるには、Zoomの参加者を名前またはメールアドレスでMindbodyの予約と照合する必要がありますが、クライアントが夫のノートパソコンから参加したり、「Elizabeth」ではなく「Liz」と名前を入力したりすると、この連携は失敗します。</p>
+<p>単純な解決策では、出席者の15～25％を見逃してしまう。さらに悪いことに、間違った顧客（例えば、夫のメールアドレスが妻のアカウントに紐づけられているなど）に対応してしまうことがあり、これは出席者を完全に見逃すよりも深刻な問題で、データが破損してしまう。</p>
+<p>DIYツールでは見落とされがちなプライバシーと同意に関する側面があります。Zoomの参加者ログをシステム間で共有するには、適切なOAuthスコープ、適切なデータ処理、そして適切なデータ保持ポリシーが必要です。多くの自作フローは、参加者リストを予期せぬ場所に保存することで、Zoomの利用規約に密かに違反しています。専用に構築された統合ソリューションは、スコープの境界を尊重し、データを統合ソリューションの承認されたコンテキスト内に保持します。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>ZoomConnectの自動出席確認機能は、安全な固有リンクを使用してこの問題を解決します。予約したクライアントには、Mindbodyの予約に紐づけられた固有のZoom参加リンクが発行されます。クライアントが参加すると、リンクによってクライアントが識別されるため、システムはどのクライアントであるかを正確に認識します。クラス終了後、ZoomConnectは自動的に出席記録をMindbodyに書き込み、パックの残高を減らし、一連の処理を完了します。</p>
+<p>ワンデバイスアクセス制御により、クライアントが自分のリンクを友人と共有することを防ぎます。リンクは一度に1台のデバイスのみにアクセスを許可します。例えば、クライアントがスマートフォンから参加し、その後、夫がノートパソコンから参加しようとした場合、2回目のアクセスは拒否されます。講師が監視役を務めることなく、収益を守ることができます。</p>
+<p>途中参加の処理は、解決すべき重要な課題です。60分間のクラスで12分後に参加した生徒は、出席とみなされるべきでしょう。一方、最後の5分に参加した生徒は、出席とみなされるべきではありません。ZoomConnectの出席基準は、クラスの種類ごとに設定可能です。スタジオ側でルールを一度設定すれば（デフォルト：最初の20分以内に参加し、少なくとも15分間参加した場合、出席とみなす）、システムはそのルールを一貫して適用します。講師の判断に委ねる必要はなく、クラス間で適用が不整合になることもありません。</p>
+<p>キャンセル処理は対称的です。クライアントが授業開始2時間以内に予約をキャンセルした場合、そのクライアントの固有リンクは無効になり、ウェイティングリストに登録されていたクライアントに優先的に固有リンクが発行されます。これにより、出席者リストは元の予約リストではなく、実際に出席した人数と一致するため、出席者照合エラーのほとんどの原因が解消されます。</p>
+<h2 id="renewal-triggers-that-finally-fire-on-time">更新トリガーがようやく予定通りに作動</h2>
+<ol>
+<li>ZoomConnectで「セキュアな固有リンク」を有効にしてください。デフォルトでは、1つのリンクにつき1台のデバイスが接続されます。</li>
+<li>ハイブリッド形式のクラスを実施します。スタジオに来られるお客様は通常通りiPadでチェックインしてください。オンラインのお客様は、リマインダーメールに記載されているリンクをクリックしてください。</li>
+<li>ZoomConnectは、各リンクが参加者の身元情報と紐づいているため、誰がZoomに参加しているかを把握できます。</li>
+<li>授業終了後、ZoomConnectは参加したすべてのバーチャルクライアントの出席状況をMindbodyに書き込みます。パック訪問数は減少し、出席レポートは集計されます。</li>
+<li>
+<p>月末レポートを実行します。数値は最初から一致していたため、バックフィルなしで一致します。</p>
+</li>
+<li>
+<p><strong>授業の種類ごとに出席率の基準値を設定します。</strong> デフォルト設定は「最初の20分以内に参加し、少なくとも15分間滞在すること」です。30分の短期集中クラスであれば、より厳格なルールが必要になるかもしれません。90分のワークショップであれば、より緩やかなルールが必要になるかもしれません。</p>
+</li>
+<li><strong>最初の週の出席状況報告書を確認してください。</strong> ZoomConnectの出席者数記録を、スタジオが手動で記録した記録と比較してください。システムが過剰または過少にカウントしている場合は、しきい値を調整してください。</li>
+</ol>
+<p><img alt="Zoomによる自動出席確認：ハイブリッドピラティスにおける出席状況把握の仕組み — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoom-automatic-roll-call/inline-2.png"/></p>
+<h2 id="representative-pack-renewal-rate-at-280-clients">顧客数280社における代表的なパック更新率</h2>
+<p>仮説：ハイブリッド型ピラティススタジオで、週22回の混合クラスを開講しており、そのうち約40％がオンライン参加です。自動出席確認システムを導入すると、オンライン参加の記録率は約78％から約99％に上昇します。回収されたパック収益（参加したが減額されなかった訪問）は、最初の月に約1,400ドル回収され、その後は損失がゼロになります。月末の出席状況の照合にかかるオーナーの作業時間はゼロになります。</p>
+<p>特筆すべき会員体験の向上点があります。スタジオのレポートが会員の記憶している利用回数と一致しているため、会員はパックの利用回数が正しく減っていると信頼するようになります。受付での残り利用回数に関する会話は、もはや交渉ではなく確認へと変わります。スタジオのシステムへの信頼は、スタジオ全体への信頼へと繋がっていきます。</p>
+<h2 id="edge-cases-worth-knowing">知っておくべきエッジケース</h2>
+<p>途中退出して再接続するケースが最も厄介です。授業中にクライアントのWi-Fi接続が切断され、その後スマートフォンで再接続した場合、リンクIDが同じであるため、ZoomConnectはこれを同じクライアントの出席として扱います。システムは出席を二重にカウントせず、出席記録も失いません。</p>
+<p>同一世帯からの同時参加（1件の有料予約で2名が視聴する場合）は、ワンデバイスアクセス制御によって処理されます。システムは有料クライアントのみ参加を許可し、一緒に視聴している配偶者は二重にカウントされません。スタジオが世帯での同時参加を明示的に許可したい場合（少額の追加料金で許可しているスタジオもあります）、ZoomConnectは世帯ペア構成をサポートしています。</p>
+<p>キャンセル不可期間内の直前キャンセルは、通常のキャンセルとは別に処理されます。スタジオは規定に基づき、直前キャンセル料を適用できます。出席状況は「無断欠席」や「出席」ではなく「直前キャンセル」として正しく記録されるため、報告の正確性が保たれます。</p>
+<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
+<ul>
+<li>メールアドレスに基づく参加者マッチングは行き詰まりだ。拡張性のある唯一のアプローチは、IDに紐づいたリンクである。</li>
+<li>値下げされていないパックからの収益漏洩は、発見するまで目に見えない。ほとんどのスタジオは漏洩しているが、その額を把握していないだけだ。</li>
+<li>1リンクにつき1台のデバイスという制限は罰則ではありません。これは、オンライン授業の収益を守るための最低限の措置です。</li>
+</ul>
+<h2 id="try-it">試してみて</h2>
+<p>ZoomConnect Mindbody → Zoomの動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-zoom-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
+<p>既製コネクタの全カタログは以下をご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-hybrid-attendance-tracking-breaks">ハイブリッド出席追跡が中断される理由</a></li><li class="lvl-2"><a href="#how-automatic-roll-call-actually-works">自動点呼の仕組み</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#renewal-triggers-that-finally-fire-on-time">更新トリガーがようやく予定通りに作動</a></li><li class="lvl-2"><a href="#representative-pack-renewal-rate-at-280-clients">顧客数280社における代表的なパック更新率</a></li><li class="lvl-2"><a href="#edge-cases-worth-knowing">知っておくべきエッジケース</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li><li class="lvl-2"><a href="#try-it">試してみて</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

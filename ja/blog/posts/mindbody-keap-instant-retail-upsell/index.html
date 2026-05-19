@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Mindbodyの販売データに基づき、Keapにおける当日小売アップセルが促進される｜APIANTブログ</title>
+<meta content="CRMConnectの即時販売データ同期機能と購入済みサービスタグ付け機能を利用して、顧客がフロントデスクで小売商品を購入した瞬間にKeapのアップセルシーケンスを開始しましょう。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="Mindbodyの販売データに基づき、Keapにおける当日小売アップセルが促進される" property="og:title"/>
+<meta content="CRMConnectの即時販売データ同期機能と購入済みサービスタグ付け機能を利用して、顧客がフロントデスクで小売商品を購入した瞬間にKeapのアップセルシーケンスを開始しましょう。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-instant-retail-upsell/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-keap-instant-retail-upsell/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Mindbodyの販売データに基づき、Keapにおける当日小売アップセルが促進される" property="twitter:title"/>
+<meta content="CRMConnectの即時販売データ同期機能と購入済みサービスタグ付け機能を利用して、顧客がフロントデスクで小売商品を購入した瞬間にKeapのアップセルシーケンスを開始しましょう。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-instant-retail-upsell/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Same-Day Retail Upsells in Keap Driven by Mindbody Sales Data",
+  "description": "Use CRMConnect's instant sales data sync and purchased service tagging to fire Keap upsell sequences the moment a client buys a retail item at the front desk.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-instant-retail-upsell/hero.png",
+  "datePublished": "2024-09-05T17:15:17+00:00",
+  "dateModified": "2026-05-19T17:42:40.331929+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-keap-instant-retail-upsell/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Same-Day Retail Upsells in Keap Driven by Mindbody Sales Data", "item": "https://apiant.com/blog/posts/mindbody-keap-instant-retail-upsell/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-keap-instant-retail-upsell/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/mindbody-keap-instant-retail-upsell/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">Mindbodyの販売データに基づき、Keapにおける当日小売アップセルが促進される</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024年9月5日</span>
+<span>6分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=fitness-wellness">#フィットネス＆ウェルネス</a><a class="blog-tag" href="/ja/blog/?tag=mindbody">#心身</a><a class="blog-tag" href="/ja/blog/?tag=keap">#キープ</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Mindbodyの販売データに基づき、Keapにおける当日小売アップセルが促進される" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-instant-retail-upsell/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h1 id="a-guest-walks-out-of-an-aromatherapy-facial-at-1143-am-loves-the-cuticle-oil-the-esthetician-used-on-her-hands-during-the-treatment-and-buys-the-bottle-on-the-way-out-for-42-she-is-at-peak-buying-intent-for-the-next-4-to-6-hours-she-is-about-to-send-a-text-to-her-sister-about-how-good-the-appointment-was-if-a-follow-up-offer-for-the-matching-serum-lands-in-her-inbox-that-afternoon-she-opens-it-if-it-lands-the-following-tuesday-she-scrolls-past">ある客は午前11時43分にアロマセラピーフェイシャルを受け、施術中にエステティシャンが手に使ってくれたキューティクルオイルを気に入り、帰り際に42ドルでボトルを購入しました。彼女はその後4～6時間、購買意欲が最高潮に達しています。彼女は妹に、今回の施術がいかに素晴らしかったかをテキストメッセージで伝えようとしています。その日の午後に、同じシリーズの美容液のフォローアップメールが届いたら、彼女はそれを開きます。もしそれが翌週の火曜日に届いたら、彼女はスクロールして読み飛ばします。</h1>
+<p>一般的なスパのワークフローでは、この利点は完全に失われます。Mindbodyは受付で販売を記録します。販売データはMindbodyに保存されます。誰かが金曜日の午後に週ごとの販売データをエクスポートし、Keapにアップロードします。アップセルキャンペーンは翌週の月曜日に配信されます。お客様はキューティクルオイルのこと、施術室の匂い、エステティシャンの名前を忘れるのに4日間もかかっています。</p>
+<p>仮例：ヘロンズ・レスト・デイ・スパ（例示）は、エステティシャン6名を擁し、小売販売が収益の大部分を占める単一店舗のデイ・スパで、まさにこのギャップを測定しました。購入後6時間以内に送信された小売フォローアップメールは、約11%の確率で2回目の購入につながりました。同じメールを4日後に送信した場合、コンバージョン率は2%未満でした。彼らは、デフォルトで後者のパターンを採用していました。</p>
+<p>この記事では、「レジでの購入」から「アップセルメールの受信」までの時間を1時間以内に短縮する方法について解説します。</p>
+<h2 id="what-instant-sales-sync-looks-like-inside-keap">Keap内部でのインスタントセールス同期の仕組み</h2>
+<p>CRMMindbody に接続して同期を維持する <strong>購入データをリアルタイムで</strong>アプリのページには、「Mindbodyからの購入データ、会員情報、パッケージ、小売販売フローをKeapの連絡先に自動的に反映させ、的確なマーケティングとフォローアップキャンペーンを実現します。」と記載されています。顧客プロファイル、予約、売上は瞬時または数分以内に同期されます。</p>
+<p>と組み合わせると <strong>購入したサービスのタグ付け</strong> 機能（「顧客の購入に基づいてKeapタグを自動的に管理し、アップセルキャンペーン、更新リマインダー、パーソナライズされたコミュニケーションのための正確なセグメンテーションを可能にする」）により、フロントデスクがキューティクルオイルをレジに通した瞬間に、Keapの連絡先が以下のように更新されます。</p>
+<ul>
+<li>新しい <code>last_purchase_item</code>, <code>last_purchase_amount</code>, <code>last_purchase_date</code></li>
+<li>購入タグ（<code>purchased-cuticle-oil</code>, <code>purchased-retail-skincare</code>, <code>purchased-retail-aromatherapy</code>)</li>
+<li>更新された <code>lifetime_revenue</code></li>
+<li>購入直前の予約は、予約関連付けによって結び付けられています。</li>
+</ul>
+<p>Keapの契約における購入後の状態は、おおよそ次のようになります。</p>
+<pre class="highlight"><code class="language-json">{
+  "email": "guest@example.com",
+  "firstname": "Marisol",
+  "last_purchase_item": "Aromatherapy Cuticle Oil",
+  "last_purchase_amount": 42.00,
+  "last_purchase_date": "2026-05-17T11:43:00",
+  "last_visit_service": "Aromatherapy Facial",
+  "last_visit_staff": "Elena",
+  "tags": [
+    "purchased-cuticle-oil",
+    "purchased-retail-aromatherapy",
+    "facial-client",
+    "first-retail-purchase"
+  ],
+  "lifetime_revenue": 814.00,
+  "total_visits": 6
+}</code></pre>
+<p>その状態は数秒以内にKeapに反映されます。購入タグをリッスンしているKeapキャンペーンは、即座に発火できます。</p>
+<p><img alt="Mindbodyの販売データに基づき、Keapにおける当日小売アップセルが促進される — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-instant-retail-upsell/inline-1.png"/></p>
+<h2 id="designing-the-retail-to-service-upsell-sequence">小売からサービスへのアップセルシーケンスの設計</h2>
+<p>Keapでは、次の条件でトリガーされるキャンペーンシーケンスを1つ構築します。 <code>purchased-retail-skincare tag added</code>.</p>
+<p><strong>購入後1、2時間後にタッチしてください。</strong> エステティシャンのファーストネームからの短いメール（ <code>last_visit_staff</code>件名：「今日のフェイシャルと、お買い上げいただいたキューティクルオイル」。本文：1段落のお礼の後、補完的な製品（購入した製品と相性の良い美容液または保湿剤）の厳選されたおすすめを1つ。リンクは1つだけで、選択肢のカルーセルはありません。</p>
+<p><strong>タッチ2、7日目：</strong> 「キューティクルオイルの使い心地はいかがですか？」というチェックインメッセージに、次回のフェイシャル予約用のリンクがさりげなく添えられている。チェックインの表現方法が重要だ。実際にはセールスメールであるにもかかわらず、セールスメールのように聞こえないようになっている。</p>
+<p><strong>タッチ3、21日目：</strong> 2回目の購入や予約が行われていない場合は、「ご購入いただいた商品と相性の良い美容液」を明確に提示し、ワンクリックで購入できるリンクを提供します。</p>
+<p>使用する <strong>Mindbody売上パイプライン</strong> 施術ごとのアップセルロジックを同期して実行します。異なるサービスには、異なるアップセルツリーが適用されるべきです。マッサージの購入はスキンケアのクロスセルにつながるべきではなく、マッサージパックのアップセルやエッセンシャルオイルの小売クロスセルにつながるべきです。購入タグには、ロジックをきれいに分岐させるのに十分な情報が含まれています。</p>
+<h2 id="adding-treatment-specific-cross-sell-logic">治療内容に特化したクロスセルロジックの追加</h2>
+<p>スパ小売業において最も活用されていない手法の一つが、施術内容を考慮したクロスセルです。アロマセラピーフェイシャル後にキューティクルオイルを購入したお客様と、マッサージ後に同じオイルを購入したお客様は、心理状態が異なります。前者はスキンケア関連のクロスセルを受け入れやすい傾向がありますが、後者はウェルネスやアロマセラピー関連のクロスセルを受け入れやすい傾向があります。</p>
+<p>Keapキャンペーンで、 <code>last_visit_service</code>:</p>
+<ul>
+<li><code>Aromatherapy Facial</code> → 美容液またはフェイシャルミストとの併用をおすすめします</li>
+<li><code>Deep Tissue Massage</code> → アルニカバームまたは筋肉回復オイルを推奨</li>
+<li><code>Couples Massage</code> → 男女ペアの旅行キットをおすすめします</li>
+<li><code>Hydrating Body Treatment</code> → ボディローションとの組み合わせをおすすめします</li>
+</ul>
+<p>各ブランチは同じ構造シーケンス（タッチ1、タッチ2、タッチ3）を使用しますが、推奨する商品だけが異なります。ブランチ化によってキャンペーン構築作業は1時間程度増えますが、推奨内容が理にかなっているため、コンバージョン率が大幅に向上します。</p>
+<p>Mindbodyのデータフィールドはセットアップ時にKeapに事前に作成されるため、 <code>last_visit_service</code> 手動でフィールドを作成する作業なしに、自動的に入力されます。</p>
+<p><img alt="Mindbodyの販売データによって促進されたKeapにおける当日小売アップセル — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-keap-instant-retail-upsell/inline-2.png"/></p>
+<h2 id="representative-aov-lift-at-6-estheticians">6人のエステティシャンによる代表的なAOVリフト</h2>
+<p>この規模のスパでの代表的な展開では、小売アタッチ率（同じ訪問時に小売購入につながるサービスの割合）はほぼ安定しており、インスタントシンクがそれを直接変えることはありません。変化するのは、 <strong>継続購入率</strong> 小売購入後30日以内に、通常4～8％の基準値から60日以内に14～22％の範囲に上昇する。</p>
+<p>Heron’s Restの規模で考えると、月間約250件の小売購入は、キャンペーン開始後、月間約25～50件の追加小売購入につながることを意味します。平均的な追加小売購入額を58ドル（例示）とすると、月間約1,500ドルから2,900ドルの追加小売収益、年間では18,000ドルから35,000ドルの収益増が見込まれます。</p>
+<p>質的なメリットは、エステティシャンとの関係性の向上です。施術後2時間後に、エレナからパーソナルなメールが届き、エレナ自身が実際におすすめする商品が紹介されると、お客様はエステティシャンとのつながりをより強く感じます。その結果、そのエステティシャンの顧客の再予約率は、次の四半期で約6～10ポイント上昇する傾向があります。</p>
+<p>これらの数字はあくまで例示であり、実際の結果は小売構成と価格帯によって大きく左右されます。</p>
+<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
+<ul>
+<li><strong>コピーすべきもの：</strong> タッチ1の2時間という時間設定と、エステティシャンの名前によるパーソナライズが重要です。2時間という時間枠は非常に重要です。「翌日」に延期すると、その頃にはゲストはすでに妹に予約のことを話し終えているため、リフトアップ効果のほとんどが失われてしまいます。</li>
+<li><strong>注意すべき点：</strong> MindbodyとKeap間の売上データの同期は一方向のみです（MindbodyからKeapへの同期のみ）。Keapで購入記録を更新しようとしないでください。また、推奨ロジックはMindbodyのサービスカタログがクリーンな場合にのみ機能します。「アロマセラピーフェイシャル」が複数のエステティシャンで5つの異なるサービス名で記録されている場合は、分岐キャンペーンを作成する前にカタログを標準化してください。</li>
+<li><strong>このパターンが当てはまらない場合：</strong> 小売販売を全く行わないスパは、クロスセルできる商品やサービスがないため、このパターンは成り立ちません。小売販売比率が非常に高いスパ（売上高の50%以上が小売販売）は、おそらく既に専用のeコマースツールを導入しており、そこから販売シーケンスを推進することを好むでしょう。</li>
+</ul>
+<p>CRMConnect MindbodyとKeapの連携動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-keap-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
+<p>ターンキー統合の全カタログは以下をご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#what-instant-sales-sync-looks-like-inside-keap">Keap内部でのインスタントセールス同期の仕組み</a></li><li class="lvl-2"><a href="#designing-the-retail-to-service-upsell-sequence">小売からサービスへのアップセルシーケンスの設計</a></li><li class="lvl-2"><a href="#adding-treatment-specific-cross-sell-logic">治療内容に特化したクロスセルロジックの追加</a></li><li class="lvl-2"><a href="#representative-aov-lift-at-6-estheticians">6人のエステティシャンによる代表的なAOVリフト</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

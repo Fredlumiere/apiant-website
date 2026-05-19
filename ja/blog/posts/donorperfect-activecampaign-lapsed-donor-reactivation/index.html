@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ホームレス支援サービスにおける、寄付が途絶えた寄付者を再活性化するためのワークフロー：DonorPerfectからActiveCampaignへのリアルタイム連携｜APIANTブログ</title>
+<meta content="寄付が途絶えた寄付者を再び活性化させるコストは、新規寄付者を獲得するコストのほんの一部で済みます。DonorPerfectの最終寄付日と寄付履歴がActiveCampaignに連携することで、代理店は年に一度の謝罪メールを送る代わりに、体系的な再活性化キャンペーンを実施できます。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="ホームレス支援サービスにおける、寄付が途絶えた寄付者を再活性化するためのワークフロー：DonorPerfectからActiveCampaignへのリアルタイム連携" property="og:title"/>
+<meta content="寄付が途絶えた寄付者を再び活性化させるコストは、新規寄付者を獲得するコストのほんの一部で済みます。DonorPerfectの最終寄付日と寄付履歴がActiveCampaignに連携することで、代理店は年に一度の謝罪メールを送る代わりに、体系的な再活性化キャンペーンを実施できます。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ホームレス支援サービスにおける、寄付が途絶えた寄付者を再活性化するためのワークフロー：DonorPerfectからActiveCampaignへのリアルタイム連携" property="twitter:title"/>
+<meta content="寄付が途絶えた寄付者を再び活性化させるコストは、新規寄付者を獲得するコストのほんの一部で済みます。DonorPerfectの最終寄付日と寄付履歴がActiveCampaignに連携することで、代理店は年に一度の謝罪メールを送る代わりに、体系的な再活性化キャンペーンを実施できます。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "A lapsed-donor reactivation workflow for homeless services: DonorPerfect to ActiveCampaign in real time",
+  "description": "Reactivating a lapsed donor costs a fraction of acquiring a new one. With DonorPerfect Last Gift dates and giving history flowing into ActiveCampaign, an agency can run a structured reactivation push instead of a once-a-year apology email.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/hero.png",
+  "datePublished": "2024-08-02T11:22:44+00:00",
+  "dateModified": "2026-05-19T17:43:01.6629+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "A lapsed-donor reactivation workflow for homeless services: DonorPerfect to ActiveCampaign in real time", "item": "https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/donorperfect-activecampaign-lapsed-donor-reactivation/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">ホームレス支援サービスにおける、寄付が途絶えた寄付者を再活性化するためのワークフロー：DonorPerfectからActiveCampaignへのリアルタイム連携</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024年8月2日</span>
+<span>6分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=nonprofit">#非営利団体</a><a class="blog-tag" href="/ja/blog/?tag=donorperfect">#ドナーパーフェクト</a><a class="blog-tag" href="/ja/blog/?tag=activecampaign">#アクティブキャンペーン</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ja/blog/?tag=bi-directional-sync">#双方向同期</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="ホームレス支援サービスにおける、寄付が途絶えた寄付者を再活性化するためのワークフロー：DonorPerfectからActiveCampaignへのリアルタイム連携" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>新規寄付者を獲得するには、一度寄付が途絶えた寄付者を再び支援する費用の5倍から10倍の費用がかかる。これはあらゆる資金調達の教科書に書かれていることだ。しかし、ほとんどの団体はまるでそれが事実ではないかのように振る舞っている。</p>
+<p>理由は哲学的なものではなく、運用上の問題です。寄付を再開するには、どの寄付者が寄付をしていないか（そしてどのくらいの期間寄付をしていないか）を把握し、適切なタイミングで適切なペースで寄付を促し、寄付が届いた瞬間にそのペースを止める必要があります。寄付データはDonorPerfectが、メール配信システムはActiveCampaignがそれぞれ管理しており、両者をリアルタイムで連携させる仕組みがない状態では、これらの手順はどれもスムーズに機能しません。</p>
+<p>そのため、ほとんどの団体は、2年間寄付をしていないすべての人に年に一度「ご寄付をお待ちしています」というメッセージを送るだけで、ごくわずかな金額しか回収できず、これを「寄付停止者プログラム」としてカウントしています。一方、13か月前に寄付を停止した人（最も回収しやすいグループ）にも、36か月前に寄付を停止した人と同じ一般的なメッセージが送られます。どちらのグループも回収率は低いままです。</p>
+<p><img alt="ホームレス支援サービスにおける、寄付が途絶えた寄付者の再活性化ワークフロー：DonorPerfectからActiveCampaignへのリアルタイム連携 — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/inline-1.png"/></p>
+<h1 id="lapsed-donor-work-is-structurally-a-real-time-problem-the-recoverability-of-a-lapsed-donor-decays-sharply-with-time-a-donor-at-13-months-is-several-times-more-recoverable-than-the-same-donor-at-24-months-by-36-months-most-are-gone">献血を中断したドナーへの対応は、構造的にリアルタイムの問題です。献血を中断したドナーの回復可能性は、時間の経過とともに急激に低下します。13か月経過したドナーは、24か月経過した同じドナーよりも回復可能性が数倍高いですが、36か月経過すると、ほとんどのドナーは回復不能となります。</h1>
+<p>DonorPerfectのネイティブレポートでは、適切なリストは表示されますが、メール配信は実行できません。ActiveCampaignのネイティブ機能は、連携なしではDonorPerfectの寄付日を確認できません。</p>
+<p>汎用的なiPaaSコネクタは新しい寄付を同期しますが、予定されていた寄付がない場合は無視します。寄付の中断を検知するには、「この人は以前は定期的に寄付をしていましたが、13か月間寄付をしていません」と尋ねる必要があり、「この人はつい最近寄付をしました」と尋ねるよりも手間がかかります。</p>
+<p>手動でのCSVアップロードは、年1回の大量配信には有効ですが、毎日新しい連絡先が失効の閾値を超えるような継続的なプログラムには適していません。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>DonorPerfectおよびActiveCampaign向けのCRMConnectは、回収率を高めるフィールドのリアルタイム双方向同期を中心に構築されています。</p>
+<ul>
+<li><strong>最終ギフト日</strong> DonorPerfectが寄付を記録した瞬間に、ActiveCampaignが更新されます。</li>
+<li><strong>合計ギフト数</strong> そして <strong>最大の贈り物</strong> カスタムフィールドとして同期することで、過去の値に基づいて分岐させることができます。</li>
+<li><strong>フラグからタグへの同期</strong> DonorPerfectのフラグをActiveCampaignに取り込むことで、主要寄付者や役員のフラグによって、自動再活性化の対象から連絡先を除外できます。</li>
+<li><strong>双方向同期</strong> 再アクティベーションのステータスをDonorPerfectに書き戻すことで、開発チームは自分たちが使用しているシステム上でジャーニーの状態を確認できます。</li>
+<li><strong>ギフトパイプライン</strong> ActiveCampaignは新しいギフトを取引として書き込み、ギフトが届いた瞬間に再アクティベーションのループを閉じます。</li>
+<li><strong>CodeSync</strong> キャンペーンおよび勧誘コードの一貫性を保つことで、再活性化レポートが異議申し立てサイクル全体を通して正確性を維持します。</li>
+</ul>
+<h2 id="three-reactivation-sequences-by-lapse-window">遅延期間による3つの再活性化シーケンス</h2>
+<p>具体例：ハーバーライト・アウトリーチは、2,900人のアクティブな寄付者と950万ドルの予算を持つ都市部のホームレス支援団体です（架空の例であり、実在する組織ではありません）。</p>
+<p><strong>ウィンドウ1：13～17ヶ月経過（最近経過）。</strong> これらの寄付者は、おそらく意図せず寄付が途絶えてしまったのでしょう。カードの有効期限が切れた、メールアドレスの変更で更新手続きが中断された、あるいは年末の寄付依頼が忙しい週に届いてしまった、といったことが考えられます。適切な連絡方法は、温かみがあり簡潔なものです。</p>
+<ul>
+<li>0日目：プログラム責任者からの個人的なメッセージ。寄付者の過去の寄付がもたらした影響について述べられているが、寄付の依頼はない。</li>
+<li>7日目：同じプログラムからの最新情報と、穏やかな更新依頼。</li>
+<li>14日目：毎年贈ることを覚えておくよりも簡単だという趣旨で、定期的な贈り物を促す招待状。</li>
+<li>30日目：ギフトがない場合は、 <code>Lapsed 18 Months</code> そして、そのシーケンスを停止する。</li>
+</ul>
+<p><strong>ウィンドウ2：18～23ヶ月経過。</strong> 回復力は低下するものの、依然として意義がある。ペースは、質の高い単一のコンテンツと、より明確な要求へと移行する。</p>
+<ul>
+<li>0日目：過去1年間で機関にとって最も重要なプログラムに焦点を当てた、年間レビューメール。</li>
+<li>14日目：更新のお願い。可能であれば、マッチングギフトの要素も加える。</li>
+<li>30日目：最後の試みとして、少額の寄付（寄付者の過去の寄付額に関わらず、25ドルから50ドル）を提案する。</li>
+<li>45日目：一連の動作を停止する。</li>
+</ul>
+<p><strong>ウィンドウ3：24ヶ月以上経過。</strong> 新規顧客獲得のための取り組みとして扱い、再活性化とはみなさないでください。年に1回、再エンゲージメントメールを送信し、次回のダイレクトメールにも含めてください。複数回に分けてメールを送信するサイクルは避けてください。開封率とエンゲージメント率が、配信コストに見合うものではありません。</p>
+<p><strong>3つのウィンドウすべてに適用される抑制ルール。</strong> フラグをタグとして使用し、主要寄付者、理事、職員、故人、または勧誘拒否としてフラグが付けられた連絡先を除外します。寄付が途絶えた主要寄付者には、自動音声ではなく、事務局長からの直接の電話が必要です。この除外設定をリストレベルのフィルタとして構築することで、3つのウィンドウすべてに自動的に適用されます。</p>
+<h2 id="closing-the-loop">ループを閉じる</h2>
+<p>再活性化において最も重要なステップは、贈り物が届いた瞬間に一連の動作を停止することです。2つの要素があります。</p>
+<ul>
+<li><strong>新しい贈り物を受け取って終了。</strong> 各シーケンスを、次の条件が満たされたときにすぐに終了するように設定してください。 <code>Last Gift Date is less than 1 day ago</code>これにより、3日目に寄付を再開した寄付者が7日目のメールを受け取り、機関が注意を払っていなかったと感じることを防ぎます。</li>
+<li><strong>再活性化ステータスをDonorPerfectに書き戻してください。</strong> シーケンスが正常に完了したら（ギフトが記録されたら）、 <code>Reactivated 2026</code> DonorPerfect カスタム フィールドへ。シーケンスが正常に完了しなかった場合、ラプス ステージ (<code>Lapsed 18 Months</code>, <code>Lapsed 24 Months</code>開発チームは、ActiveCampaignを開かなくてもDonorPerfect内でカスタマージャーニーの状態を確認できるはずです。</li>
+</ul>
+<p><img alt="ホームレス支援サービスにおける、寄付が途絶えた寄付者の再活性化ワークフロー：DonorPerfectからActiveCampaignへのリアルタイム連携 — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-lapsed-donor-reactivation/inline-2.png"/></p>
+<h2 id="what-to-measure">何を測定するか</h2>
+<p>標準的な再活性化指標：</p>
+<ul>
+<li><strong>ウィンドウごとの再活性化率。</strong> 最近解約された口座（13～17ヶ月）は8～15%、中期解約口座（18～23ヶ月）は通常3～6%、長期解約口座（24ヶ月以上）は2%未満となる。</li>
+<li><strong>再活性化者における2回目のギフト率。</strong> 再活性化の真の価値は、一度寄付をした後、再び寄付をしてくれる寄付者にある。再活性化した寄付者の12ヶ月間の寄付状況を追跡調査する。</li>
+<li><strong>12ヶ月後の残存価値。</strong> 12ヶ月以内に2回寄付をしてくれた再活性化寄付者は、新規獲得の寄付者よりも価値が高い場合が多い。なぜなら、過去の取引履歴によって、寄付者の離脱リスクが低くなるからである。</li>
+<li><strong>再稼働あたりのコスト。</strong> 再活性化に割り当てられたスタッフの時間、広告費、プラットフォーム費用を合計し、記録された再活性化件数で割ります。これを新規寄付者獲得あたりのコストと比較します。再活性化の方が圧倒的に有利になるはずです。</li>
+</ul>
+<h2 id="edge-cases-worth-handling">対処すべきエッジケース</h2>
+<p><strong>何らかの理由で寄付が途絶えた人たち。</strong> 寄付者が支援を停止したり、引っ越しをしたり、生活状況が変わったりすると、寄付が途絶えることがあります。購読解除や連絡不要のリクエストには速やかに対応してください。これらの寄付者に対して、今後の再活性化キャンペーンで再度連絡を取ろうとしないでください。</p>
+<p><strong>追悼および記念の贈り物。</strong> 一度だけ記念品として寄付をした寄付者は、厳密には寄付が途絶えた寄付者ではありません。彼らは、寄付先とは一度限りの関係を持ったのであって、寄付機関とは関係がなかったからです。記念品としてのみ寄付をした寄付者は、通常の再活性化のサイクルから除外してください。</p>
+<p><strong>継続的に支援していたものの、支援が途絶えた方々。</strong> 定期寄付の期限が切れた（カード情報の更新に問題があった）継続寄付者には、寄付停止者向けのワークフローではなく、継続寄付者回復ワークフローが必要です。再活性化リストには、現在継続寄付者回復手続き中の連絡先を含めないようにしてください。</p>
+<p><strong>激しく跳ね返る。</strong> ActiveCampaignは、送信先アドレスをバウンスとしてマークします。その情報をDonorPerfectに書き戻すことで、ダイレクトメールチームが住所を確認したり、送信を中止したりできるようになります。</p>
+<h2 id="what-it-looks-like-in-production">実際の生産現場ではどのような様子か</h2>
+<p>ハーバーライトのような規模のイラストレーションエージェンシー（アクティブな寄付者2,900人、予算950万ドル）の場合、適切に段階的に実施された再活性化プログラムは、通常、基準となる年間募金活動に加えて、最近寄付が途絶えた寄付者の5～8％を新たに回収し、さらに中期の途絶グループからも少額ながら追加的な回収を実現します。最近寄付が途絶えた寄付者が800人いるとすると、年間40～65人が新たに再活性化され、それぞれ初年度の収益は約80～150ドルになります。再活性化した寄付者が再び寄付を行うことで、複数年にわたる寄付者維持率の向上も考慮すると、このプログラムは最初のサイクルで費用対効果を発揮します。</p>
+<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
+<ul>
+<li>3つの期間、3つの配信ペース。1つの一般的な「あなたがいなくて寂しいです」というメッセージは、寄付を中断したすべての人に同じように対応し、どのグループでも効果が低い。</li>
+<li>新規寄付の終了は変更不可です。3日目に寄付を再開した寄付者には、7日目のメールは送信されません。</li>
+<li>再アクティベーションのステータスをDonorPerfectに書き戻してください。開発チームは、自分たちが使用しているシステム上でジャーニーの状態を確認する必要があります。そうでないと、プログラムが彼らにとって見えなくなり、内部サポートを失うことになります。</li>
+</ul>
+<p>CRMConnect DonorPerfectとActiveCampaignの連携動作をご覧になりたいですか？ <a href="/apipartners/donorperfect/donorperfect-activecampaign-integration-and-automation-apiant">APIアプリのページを見る</a>既製APIANTコネクタの全カタログについては、こちらをご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#three-reactivation-sequences-by-lapse-window">遅延期間による3つの再活性化シーケンス</a></li><li class="lvl-2"><a href="#closing-the-loop">ループを閉じる</a></li><li class="lvl-2"><a href="#what-to-measure">何を測定するか</a></li><li class="lvl-2"><a href="#edge-cases-worth-handling">対処すべきエッジケース</a></li><li class="lvl-2"><a href="#what-it-looks-like-in-production">実際の生産現場ではどのような様子か</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

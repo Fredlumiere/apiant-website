@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Realtime ledenstatus in Zoho CRM voor een medische spa met twee locaties | APIANT Blog</title>
+<meta content="Hoe de MB Memberships-synchronisatie van CRMConnect Zoho CRM-medewerkers realtime inzicht geeft in de lidmaatschapsstatus, resterende sessies en verlengingsdata." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Realtime ledenstatus in Zoho CRM voor een medisch-spa-vestiging met twee locaties" property="og:title"/>
+<meta content="Hoe de MB Memberships-synchronisatie van CRMConnect Zoho CRM-medewerkers realtime inzicht geeft in de lidmaatschapsstatus, resterende sessies en verlengingsdata." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-zoho-crm-membership-status/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Realtime ledenstatus in Zoho CRM voor een medisch-spa-vestiging met twee locaties" property="twitter:title"/>
+<meta content="Hoe de MB Memberships-synchronisatie van CRMConnect Zoho CRM-medewerkers realtime inzicht geeft in de lidmaatschapsstatus, resterende sessies en verlengingsdata." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Real-Time Membership Status in Zoho CRM for a Two-Location Medspa",
+  "description": "How CRMConnect's MB Memberships sync gives Zoho CRM reps real-time visibility into membership status, sessions remaining, and renewal dates.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/hero.png",
+  "datePublished": "2026-03-16T16:44:17+00:00",
+  "dateModified": "2026-05-19T17:42:45.203776+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-zoho-crm-membership-status/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Real-Time Membership Status in Zoho CRM for a Two-Location Medspa", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-membership-status/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-zoho-crm-membership-status/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/nl/blog/posts/mindbody-zoho-crm-membership-status/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/nl/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Connectoren</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Begin met bouwen</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/nl/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-apps</a>
+</div>
+<h1 class="blog-post-h1">Realtime ledenstatus in Zoho CRM voor een medisch-spa-vestiging met twee locaties</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/nl/blog/?author=fred">Fred Lumiere</a></span>
+<span>16 maart 2026</span>
+<span>Leestijd: 5 minuten</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/nl/blog/?tag=fitness-wellness">#Fitness &amp; Wellness</a><a class="blog-tag" href="/nl/blog/?tag=mindbody">#Geestlichaam</a><a class="blog-tag" href="/nl/blog/?tag=zoho-crm">#Zoho CRM</a><a class="blog-tag" href="/nl/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/nl/blog/?tag=bi-directional-sync">#Bidirectionele synchronisatie</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Realtime ledenstatus in Zoho CRM voor een medisch-spa-vestiging met twee locaties" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="the-renewal-conversation-reps-arent-having">Het verlengingsgesprek dat vertegenwoordigers niet voeren</h2>
+<p>Lidmaatschappen voor medische spa's vormen een stabiele bron van inkomsten, maar brengen ook een constant risico op klantverlies met zich mee. Een zes maanden durend esthetisch lidmaatschap van $299 per maand levert ongeveer $1.800 aan inkomsten per lid op, en het gesprek over verlenging moet 30 tot 60 dagen voor de vervaldatum plaatsvinden om succesvol te zijn. Als het verkoopteam de lidmaatschapsgegevens alleen in een Mindbody-rapport ziet dat aan het einde van de maand wordt gegenereerd, is het gesprek over verlenging al te laat.</p>
+<p>Hypothetisch voorbeeld: Vesper Wellness Medspa (ter illustratie) is een medische spa met twee locaties, zeven behandelaars, 2200 patiënten en een actief ledenprogramma. Het verkoopteam werkt met Zoho CRM. Het klinische team werkt met Mindbody. De overdracht tussen de twee teams verliep van oudsher via "vraag het aan de receptie". Hierdoor worden verlengingen gemist, verlopen lidmaatschappen blijven wekenlang onopgemerkt en komt het verkoopteam er pas achter tijdens de algemene personeelsvergadering.</p>
+<h2 id="why-off-the-shelf-tools-fail-here">Waarom standaardgereedschap hier tekortschiet</h2>
+<p>Lidmaatschapsgegevens bestaan uit meer dan één veld. Een Mindbody-lidmaatschap omvat:</p>
+<ul>
+<li>Status (actief, verlopen, opgeschort, geannuleerd).</li>
+<li>Begin- en einddatum.</li>
+<li>Resterende sessies en reeds gebruikte sessies (voor sessiegebaseerde abonnementen).</li>
+<li>Vlag voor automatische verlenging.</li>
+<li>Gekoppeld contract (indien contractgebaseerd).</li>
+</ul>
+<p>Een algemene tool kan één van deze gegevens ophalen (meestal de status), maar voor het verlengingsgesprek zijn ze allemaal nodig. Het veld 'resterende sessies' is bepalend voor de oproep 'gebruik het voordat het verloopt' en verandert elke keer dat een sessie wordt geboekt, gebruikt of geannuleerd.</p>
+<h2 id="the-apiant-approach">De APIANT-aanpak</h2>
+<p>CRMConnect Mindbody to Zoho CRM maakt gebruik van speciale, aangepaste objecten in Zoho CRM om een volledig overzicht van de leden te bewaren. Op de API-apppagina staat: "Realtime updates over de lidmaatschapsstatus, resterende sessies, verlengingen en verlopen lidmaatschappen - alles gesynchroniseerd met Zoho CRM, zodat uw team actie kan ondernemen bij leden die dreigen op te zeggen."</p>
+<p>De relevante kenmerken:</p>
+<ul>
+<li><strong>Synchronisatie van lidmaatschap en contract</strong> met een toegewijde <strong>MB lidmaatschappen</strong> Aangepast object in Zoho CRM.</li>
+<li><strong>Klantprofiel in twee richtingen synchroniseren</strong> Om contact- en leadgegevens op elkaar af te stemmen.</li>
+<li><strong>Real-Time Gegevenssynchronisatie</strong> Wijzigingen worden dus binnen enkele seconden in Zoho CRM weergegeven.</li>
+<li><strong>Aangepaste objecttoewijzing</strong> De ledengegevens zijn dus opvraagbaar in workflows en rapporten.</li>
+</ul>
+<p>Het object MB Memberships is de bron van waarheid aan de Zoho-kant. Meerdere lidmaatschappen per patiënt (wat gebruikelijk is in een medische spa) worden opgeslagen als aparte records die aan het contact zijn gekoppeld.</p>
+<p><img alt="Realtime ledenstatus in Zoho CRM voor een medische spa met twee locaties — Afbeelding 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/inline-1.png"/></p>
+<h2 id="what-mb-memberships-surfaces-in-zoho-crm">Welke MB-lidmaatschappen worden weergegeven in Zoho CRM?</h2>
+<p>Het aangepaste object bevat het volledige record:</p>
+<pre class="highlight"><code class="language-text">Zoho CRM custom object: MB Memberships
+- membership_id
+- contact_id (links to Zoho CRM contact)
+- membership_name              e.g. "Aesthetic Essentials 6-Month"
+- status                       active|expired|suspended|cancelled
+- start_date / end_date
+- sessions_total
+- sessions_used
+- sessions_remaining           (computed live)
+- auto_renew                   true|false
+- last_payment_at
+- next_payment_at
+- mindbody_site_id</code></pre>
+<p>De velden die de workflows aansturen: <code>end_date</code> voor de verlengingstermijn, <code>sessions_remaining</code> voor het stimuleren van gebruik, <code>status</code> voor het opsporen van voormalige leden.</p>
+<h2 id="designing-the-pre-expiration-outreach-workflow">Het ontwerpen van de workflow voor contact met potentiële klanten vóór het verlopen van hun abonnement.</h2>
+<p>De Zoho CRM-workflow wordt dagelijks uitgevoerd op het object MB Memberships:</p>
+<ol>
+<li><strong>Dag -60:</strong> De workflow creëert een taak voor de toegewezen verkoopmedewerker: "Verlengingsgesprek: [patiëntnaam]". De taak bevat de lidmaatschapsnaam, de einddatum en het aantal resterende sessies als velden.</li>
+<li><strong>Dag -45:</strong> Vestiging op <code>sessions_remaining</code>:</li>
+<li>Meer dan 4: verstuur een e-mail met de melding "gebruik wat je hebt" naar de patiënt met een boekingslink.</li>
+<li>4 of minder: overslaan, de patiënt maakt gebruik van het lidmaatschap en de kans op verlenging is groot.</li>
+<li><strong>Dag -30:</strong> Verplichte belopdracht voor de medewerker, af te ronden op dezelfde dag. Wordt na 24 uur automatisch doorgestuurd naar de manager indien niet voltooid.</li>
+<li><strong>Dag -14:</strong> Een e-mail naar de patiënt met de verlengingsvoorwaarden en een link voor verlenging met één klik.</li>
+<li><strong>Dag -3:</strong> SMS-herinnering.</li>
+<li><strong>Dag 0:</strong> Het lidmaatschap verloopt. Als <code>auto_renew = true</code> En <code>next_payment_at</code> De status wordt gewist, verandert naar actief voor de volgende periode en de flow wordt beëindigd.</li>
+<li><strong>Dag +1:</strong> Als de status is <code>expired</code>, activeer de procedure voor verlopen leden.</li>
+</ol>
+<p>Het verplichte telefoongesprek op dag -30 is de conversiemotor. Het staat in de agenda, het heeft de context, het wordt geëscaleerd. De medewerker voert het uit.</p>
+<h2 id="catching-lapsed-members-before-they-drift">Leden die al een tijdje niet meer actief zijn, terugwinnen voordat ze afdwalen.</h2>
+<p>De reeks van voormalige leden loopt tegen <code>status = expired</code> En <code>end_date &gt; now() - 30 days</code>:</p>
+<ol>
+<li><strong>Dag +1 na vervaldatum:</strong> Persoonlijke e-mail van de vertegenwoordiger met een aanbod: "Uw plek is nog steeds beschikbaar."</li>
+<li><strong>Dag +7:</strong> SMS: "Wilt u dat ik uw laatste sessies met nog eens 30 dagen verleng?" (Gebruik de status van de automatische betaling als vertakking: als de automatische betaling bij het verlopen van de betaaldatum is mislukt, is dit een probleem met de opgeslagen betaalkaart, niet met klantverlies.)</li>
+<li><strong>Dag +14:</strong> Evaluatievergadering met de manager. De vertegenwoordiger brengt de lijst met verlopen contracten mee. Beslissingen genomen voor de patiënten met een hoge LTV (Loop Time Value).</li>
+<li><strong>Dag +30:</strong> De leadstatus verandert automatisch naar "Inactief lid" voor het langdurige herstelproces.</li>
+</ol>
+<p>De evaluatie door de manager na 14 dagen betaalt zichzelf terug. De gegevens staan in Zoho. Het gesprek vindt plaats. Er worden beslissingen genomen.</p>
+<p><img alt="Realtime ledenstatus in Zoho CRM voor een medische spa met twee locaties — Figuur 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/inline-2.png"/></p>
+<h2 id="representative-renewal-rate-at-2200-patients">Representatief verlengingspercentage bij 2.200 patiënten</h2>
+<p>Illustratieve composities, geen echte klant:</p>
+<ul>
+<li>Basispercentage voor verlenging van lidmaatschap (handmatig proces aan het einde van de maand): ongeveer 55 tot 65 procent.</li>
+<li>Met de 60-30-3 cadans op basis van live data: een stijging naar 70 tot 80 procent.</li>
+<li>Terugwinning van voormalige leden binnen 30 dagen: een stijging van 8 tot 14 procentpunten, voornamelijk dankzij de Day +1-e-mail die aankomt terwijl het lidmaatschap nog vers in het geheugen ligt.</li>
+<li>"Is Patty's lidmaatschap verlopen?" Slack-berichten: drastisch gedaald, omdat de gegevens nu geregistreerd zijn.</li>
+</ul>
+<p>De verbetering komt voort uit het feit dat het gesprek over verlenging een vast, contextueel moment wordt, in plaats van een reactie op een maandelijks rapport.</p>
+<h2 id="builder-takeaway">Bouwer Takeaway</h2>
+<ul>
+<li>Gebruik een speciaal aangepast object voor lidmaatschappen. Een patiënt van een medische spa met drie gelijktijdige lidmaatschappen is niet te beheren met alleen het contactrecord.</li>
+<li>Voer vernieuwingsworkflows uit op <code>end_date</code>niet op <code>created_date + duration</code>Lichaam en geest zijn de bron van waarheid voor de werkelijke einddatum, en die verandert vaker dan je zou denken.</li>
+<li>De achterstand in de automatische betalingsverwerking wordt afgesplitst. Een mislukte kaartbetaling kan binnen 24 uur worden verholpen. Een betalingsachterstand waarbij de klant de betaling per ongeluk wilde annuleren, vereist een andere aanpak.</li>
+</ul>
+<h2 id="try-it-in-your-medspa">Probeer het in uw medische spa.</h2>
+<p>Wil je CRMConnect Mindbody met Zoho CRM in actie zien? <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">Bekijk de API-apppagina</a>.</p>
+<p>Bekijk de volledige catalogus met voorgeassembleerde connectoren op <a href="/apps">/apps</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">In dit artikel</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-renewal-conversation-reps-arent-having">Het verlengingsgesprek dat vertegenwoordigers niet voeren</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">Waarom standaardgereedschap hier tekortschiet</a></li><li class="lvl-2"><a href="#the-apiant-approach">De APIANT-aanpak</a></li><li class="lvl-2"><a href="#what-mb-memberships-surfaces-in-zoho-crm">Welke MB-lidmaatschappen worden weergegeven in Zoho CRM?</a></li><li class="lvl-2"><a href="#designing-the-pre-expiration-outreach-workflow">Het ontwerpen van de workflow voor contact met potentiële klanten vóór het verlopen van hun abonnement.</a></li><li class="lvl-2"><a href="#catching-lapsed-members-before-they-drift">Leden die al een tijdje niet meer actief zijn, terugwinnen voordat ze afdwalen.</a></li><li class="lvl-2"><a href="#representative-renewal-rate-at-2200-patients">Representatief verlengingspercentage bij 2.200 patiënten</a></li><li class="lvl-2"><a href="#builder-takeaway">Bouwer Takeaway</a></li><li class="lvl-2"><a href="#try-it-in-your-medspa">Probeer het in uw medische spa.</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Lees verder</h2><div class="blog-grid"><a class="blog-card" href="/nl/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau.</h3><p class="blog-card-excerpt">Gebruik de synchronisatiefuncties voor inschrijvingen, cursusboekingen en afspraken van CRMConnect om HighLevel één overzicht van alle Mindbody-programma's te bieden.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 mei 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen.</h3><p class="blog-card-excerpt">Hoe de afsprakensynchronisatie van CRMConnect de afspraakstatus op locatieniveau in Klaviyo weergeeft, zodat de centrale marketingafdeling per locatie workflows en rapporten kan genereren.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot.</h3><p class="blog-card-excerpt">Bestuursleden willen trendlijnen. Medewerkers willen hun avonden terug. Doordat de levenslange waarde van donateurs, de gemiddelde gift en de campagneprestaties gesynchroniseerd zijn in HubSpot, is het maandelijkse bestuursrapport geen project van vier dagen meer, maar een opgeslagen dashboardweergave.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Alle rechten voorbehouden.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/nl/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacy</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Voorwaarden</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

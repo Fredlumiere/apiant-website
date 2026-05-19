@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html lang="sv">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Bygga Zoho CRM-försäljningsprestandaöversikten för en dagspaägare | APIANT-bloggen</title>
+<meta content="Hur CRMConnects omfattande köp synkroniseras och Zoho CRM Sales Performance Dashboard visar intäkter, pipeline och kampanjhänförd försäljning för ett dagspa." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Bygga Zoho CRM-försäljningsprestandaöversikten för en dagspaägare" property="og:title"/>
+<meta content="Hur CRMConnects omfattande köp synkroniseras och Zoho CRM Sales Performance Dashboard visar intäkter, pipeline och kampanjhänförd försäljning för ett dagspa." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-sales-dashboard/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-zoho-crm-sales-dashboard/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Bygga Zoho CRM-försäljningsprestandaöversikten för en dagspaägare" property="twitter:title"/>
+<meta content="Hur CRMConnects omfattande köp synkroniseras och Zoho CRM Sales Performance Dashboard visar intäkter, pipeline och kampanjhänförd försäljning för ett dagspa." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-sales-dashboard/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Building the Zoho CRM Sales Performance Dashboard for a Day Spa Owner",
+  "description": "How CRMConnect's comprehensive purchases sync and Zoho CRM Sales Performance Dashboard expose revenue, pipeline, and campaign-attributed sales for a day spa.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-sales-dashboard/hero.png",
+  "datePublished": "2025-12-01T10:22:38+00:00",
+  "dateModified": "2026-05-19T17:42:45.9086+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-zoho-crm-sales-dashboard/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Building the Zoho CRM Sales Performance Dashboard for a Day Spa Owner", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-sales-dashboard/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-zoho-crm-sales-dashboard/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/sv/blog/posts/mindbody-zoho-crm-sales-dashboard/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/sv/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blogg</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plattform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Anslutningar</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Börja bygga</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/sv/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-appar</a>
+</div>
+<h1 class="blog-post-h1">Bygga Zoho CRM-försäljningsprestandaöversikten för en dagspaägare</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/sv/blog/?author=fred">Fred Lumiere</a></span>
+<span>1 december 2025</span>
+<span>5 minuters läsning</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/sv/blog/?tag=fitness-wellness">#Fitness och välbefinnande</a><a class="blog-tag" href="/sv/blog/?tag=mindbody">#SinneKropp</a><a class="blog-tag" href="/sv/blog/?tag=zoho-crm">#Zoho CRM</a><a class="blog-tag" href="/sv/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/sv/blog/?tag=ai-copilot">#AI-co-pilot</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Bygga Zoho CRM-försäljningsprestandaöversikten för en dagspaägare" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-sales-dashboard/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="what-the-owner-actually-wants-to-see">Vad ägaren egentligen vill se</h2>
+<p>Ägare av dagspa ber inte om statistik av fåfänga skäl. De frågar eftersom tre veckor med dåliga siffror i rad utlöser ett svårt bemannings- eller prisbeslut, och de behöver upptäcka det inom en vecka, inte i slutet av kvartalet. Den instrumentpanel de vill ha svarar på fyra frågor:</p>
+<ul>
+<li>Vilka tjänster gick med vinst den här månaden, och vilka gick i noll?</li>
+<li>Vilken medarbetare driver upprepade besök, och vem är det som rör på sig i rummet?</li>
+<li>Vilken marknadsföringskampanj resulterade i faktiska behandlingsintäkter, inte bara bokningar?</li>
+<li>Hur står sig månad för månad i jämförelse med ovanstående?</li>
+</ul>
+<p>Hypotetiskt: Maple Hollow Day Spa (illustrativt) är ett spa med en enda plats, 1 400 kunder, en sund detaljhandelsmix och en marknadsföringsbudget som ägaren vill försvara. De befintliga Mindbody-rapporterna besvarar den första frågan. De besvarar inte de andra. Ägaren har hämtat CSV-filer till ett kalkylblad i två år.</p>
+<h2 id="why-off-the-shelf-tools-fail-here">Varför standardverktyg misslyckas här</h2>
+<p>Ägaren behöver Mindbodys intäktsdata i Zoho CRM, med Zoho-nativa dashboard-element (live tiles, mätare, värmekartor, MoM-delta) som körs över den. De flesta generiska verktyg publicerar aggregerade dagliga totaler, vilket eliminerar alla detaljer per tjänst eller per personal. Anpassade byggen gör detta rätt men kräver kontinuerligt underhåll varje gång Mindbody ändrar en tjänstekategori eller ägaren lägger till en ny medarbetare.</p>
+<p>Det andra felläget är halvfärdiga dashboards. En ruta som säger "intäkt: 42 118 USD" är inte en dashboard, det är en siffra. Ägaren behöver visualisering i beslutsklass.</p>
+<h2 id="the-apiant-approach">APIANT-metoden</h2>
+<p>CRMConnect Mindbody till Zoho CRM är byggt kring Zoho CRM Sales Performance Dashboard. Från API-appsidan: ”Visualisera direkt intäktshälsa: live-paneler visar leads, intäkter, pipeline och nya konton med MoM-delta, medan mätare, stapel- och värmekartvyer visar framsteg mot mål och bäst presterande branscher eller säljare – allt kopplat till Mindbody-data i Zoho CRM.”</p>
+<p>Funktionerna som matar instrumentpanelen:</p>
+<ul>
+<li><strong>Omfattande köp och betalningar</strong> registrerar statusen för varje köp, rad och betalning från Mindbody.</li>
+<li><strong>Synkronisering av kundtjänster</strong> spårar den detaljerade servicehistoriken per klient.</li>
+<li><strong>Synkronisering av klientprofiler i två riktningar</strong> håller kundregister samordnade för personal- och kampanjattribution.</li>
+<li><strong>Anpassad objektmappning</strong> så att data landar i objekt som Zoho-dashboards kan fråga direkt.</li>
+<li><strong>Instrumentpanel för försäljningsresultat</strong> som det inbyggda visualiseringslagret.</li>
+</ul>
+<p>Instrumentpanelen är inte en anpassad version. Det är det inbyggda Zoho CRM-analyslagret som körs på den synkroniserade datan.</p>
+<p><img alt="Bygga Zoho CRM-försäljningsprestandaöversikten för en dagspaägare — Figur 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-sales-dashboard/inline-1.png"/></p>
+<h2 id="how-crmconnect-powers-the-dashboard">Hur CRMConnect driver instrumentpanelen</h2>
+<p>Datamodellen på Zoho-sidan:</p>
+<pre class="highlight"><code class="language-text">Zoho CRM custom objects from CRMConnect:
+- MB Sales (one record per purchase)
+    - sale_id, contact_id, sale_date, total, payment_status
+- MB Sale Line Items (one record per item in a sale)
+    - line_item_id, sale_id, sku, name, category, quantity, price, staff_id
+- MB Client Services (services purchased and used)
+    - service_id, contact_id, service_name, category, used_at, staff_id
+- MB Payments (payment events)
+    - payment_id, sale_id, method, amount, status, processed_at
+
+Contact-level fields:
+- mindbody_lifetime_revenue
+- mindbody_last_purchase_at
+- mindbody_primary_service_category
+- mindbody_lead_source            (carried from initial capture)
+- mindbody_primary_staff_id       (most-booked staff)</code></pre>
+<p>Radposterna per försäljning är upplåsningspunkten. Utan dem kan inte instrumentpanelen dela upp intäkter per tjänstekategori eller per medarbetare.</p>
+<h2 id="connecting-sales-to-campaigns-and-staff">Koppla försäljning till kampanjer och personal</h2>
+<p>Kampanjens attributionskedja fungerar på grund av två saker: <code>mindbody_lead_source</code> fältet registreras vid den ursprungliga leadposten och skrivs aldrig över, och <code>staff_id</code> Onlineartiklar knyter varje försäljning till personen som levererade den.</p>
+<p>Instrumentpanelsrutor som ägaren vill ha, med de frågor som driver dem:</p>
+<ul>
+<li><strong>Månadsintäkt per tjänstekategori:</strong> Summa av MB-försäljningsrader grupperade efter kategori, filtrerade till innevarande månad. Månadsvis delta mot föregående månad.</li>
+<li><strong>Topp 5 anställda efter intäkter:</strong> Summa av radposter grupperade efter staff_id, innevarande månad. Stapeldiagram med föregående månads överlagring.</li>
+<li><strong>Andel återbesök av personal:</strong> Från MB Client Services, antal klienter med <code>used_count &gt; 1</code> per staff_id, dividerat med totalt antal betjänade kunder.</li>
+<li><strong>Intäkter per leadkälla:</strong> Summa av livstidsintäkter på kontaktnivå grupperade efter <code>mindbody_lead_source</code>Kakla med MoM och 90-dagars kohortdelta.</li>
+<li><strong>Rörledningsplatta:</strong> Öppna kontrakt och väntande medlemskap, summerat per <code>monthly_amount * remaining_months</code>Levande kakel.</li>
+</ul>
+<p>Dessa är alla inbyggda Zoho CRM-instrumentpanelswidgetar. Integrationen håller bara de underliggande objekten aktuella.</p>
+<h2 id="reading-mom-deltas-without-guessing">Läsa MoM-delta utan att gissa</h2>
+<p>Ägarens läsregel för MoM-deltan:</p>
+<ul>
+<li>En dålig månad: oväsen. Titta på trenden.</li>
+<li>Två dåliga månader i rad: undersök kategorin eller medarbetaren specifikt.</li>
+<li>Tre dåliga månader: agera. Personalförändringar, prisändringar eller omfördelning av marknadsföringskanaler.</li>
+</ul>
+<p>Instrumentpanelen gör den andra månaden synlig utan att en CSV-hämtning krävs. Det är den faktiska operativa ökningen.</p>
+<p>För beslut om personal är värmekartan för återkommande besök mer värdefull än intäktskartan. En medarbetare med höga intäkter och få återkommande besök rör om i rummet. En medarbetare med måttliga intäkter och många återkommande besök bygger en bok. Instrumentpanelen visar båda.</p>
+<p><img alt="Bygga Zoho CRM-försäljningsprestandaöversikten för en dagspaägare — Figur 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-sales-dashboard/inline-2.png"/></p>
+<h2 id="representative-decisions-from-the-first-quarter">Representativa beslut från första kvartalet</h2>
+<p>Illustrativa kompositer, inte en riktig kund:</p>
+<ul>
+<li>Antal CSV-hämtningar per månad som ägaren brukade göra: ungefär 8 till 12, helt eliminerat.</li>
+<li>Tid från ”något är fel” till ”jag vet vad som är fel”: förkortad från en vecka till en kontrollpanelsläsning samma dag.</li>
+<li>Operativa beslut under första kvartalet som kan spåras till instrumentpanelen: vanligtvis 3 till 5 (en personalförändring, en pensionering av tjänstekategori, en omfördelning av kampanj, ett pristest).</li>
+<li>Marknadsföringsbudget omfördelad från underpresterande kanaler: en betydande andel, med attributionskedjan för att försvara den.</li>
+</ul>
+<p>Lyftningen är inte ”mer intäkter”. Det är ”färre veckor av felaktiga beslut innan korrigeringar”. Det förvärras ytterligare.</p>
+<h2 id="builder-takeaway">Byggarens slutsats</h2>
+<ul>
+<li>Radposter, inte aggregerade totalsummor. De detaljnivåer som är viktiga (kategori, personal, kampanj) kräver alla radpostdata.</li>
+<li>Fånga <code>lead_source</code> vid inmatning och skriv aldrig över den. Kampanjens attribution dör i det ögonblick som fältet trampas ner av en senare redigering.</li>
+<li>Använd andelen återkommande besök per anställd som en ledande indikator, inte som ett fåfängt mått. Det förutspår intäkter två månader före intäktsrutan.</li>
+</ul>
+<h2 id="try-it-in-your-spa">Prova det i ditt spa</h2>
+<p>Vill du se CRMConnect Mindbody till Zoho CRM i aktion? <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">Visa API-appens sida</a>.</p>
+<p>Bläddra i hela katalogen med färdiga kontakter på <a href="/apps">/appar</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">I den här artikeln</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#what-the-owner-actually-wants-to-see">Vad ägaren egentligen vill se</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">Varför standardverktyg misslyckas här</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT-metoden</a></li><li class="lvl-2"><a href="#how-crmconnect-powers-the-dashboard">Hur CRMConnect driver instrumentpanelen</a></li><li class="lvl-2"><a href="#connecting-sales-to-campaigns-and-staff">Koppla försäljning till kampanjer och personal</a></li><li class="lvl-2"><a href="#reading-mom-deltas-without-guessing">Läsa MoM-delta utan att gissa</a></li><li class="lvl-2"><a href="#representative-decisions-from-the-first-quarter">Representativa beslut från första kvartalet</a></li><li class="lvl-2"><a href="#builder-takeaway">Byggarens slutsats</a></li><li class="lvl-2"><a href="#try-it-in-your-spa">Prova det i ditt spa</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Fortsätt läsa</h2><div class="blog-grid"><a class="blog-card" href="/sv/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Förenar Mindbody-registreringar, kurser och möten på HighLevel" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Förenar Mindbody-registreringar, kurser och möten på HighLevel</h3><p class="blog-card-excerpt">Använd CRMConnects synkronisering av registrering, kursbokning och möten för att ge HighLevel en kalendervy över alla Mindbody-programtyper.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 maj 2026</span></div></div></a><a class="blog-card" href="/sv/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Rapportering av möten för flera platser i Klaviyo för ett nätverk med 6 styrkor" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Rapportering av möten för flera platser i Klaviyo för ett nätverk med 6 styrkor</h3><p class="blog-card-excerpt">Hur CRMConnects mötessynkronisering visar mötesstatus på platsnivå i Klaviyo så att central marknadsföring kan köra flöden och rapporter per plats.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" href="/sv/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Sluta med den månatliga ombyggnaden av styrelsemöten: dashboards för insamlingar i realtid från DonorPerfect i HubSpot" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Sluta med den månatliga ombyggnaden av styrelsemöten: dashboards för insamlingar i realtid från DonorPerfect i HubSpot</h3><p class="blog-card-excerpt">Styrelser vill ha trendlinjer. Personalen vill ha tillbaka sina kvällar. Med givarens livstidsvärde, genomsnittlig gåva och kampanjresultat synkroniserade med HubSpot, slutar den månatliga styrelserapporten att vara ett fyradagarsprojekt och blir en sparad dashboardvy.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Med ensamrätt.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/sv/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blogg</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plattform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privatliv</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Villkor</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

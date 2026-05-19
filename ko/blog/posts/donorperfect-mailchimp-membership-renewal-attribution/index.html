@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>회원 갱신 기여도 분석: Mailchimp 캠페인과 DonorPerfect 갱신 간의 연결 고리 완성하기 | APIANT 블로그</title>
+<meta content="이메일 열람률만으로는 전기 요금을 낼 수 없습니다. DonorPerfect를 통해 수집된 기부 갱신 정보를 Mailchimp 캠페인 보고서와 연동하면, 박물관은 마침내 어떤 갱신 이메일이 실제로 기부를 성사시켰는지 확인할 수 있습니다." name="description"/>
+
+<!-- Open Graph -->
+<meta content="회원 갱신 기여도 분석: Mailchimp 캠페인과 DonorPerfect 갱신 간의 연결 고리 완성하기" property="og:title"/>
+<meta content="이메일 열람률만으로는 전기 요금을 낼 수 없습니다. DonorPerfect를 통해 수집된 기부 갱신 정보를 Mailchimp 캠페인 보고서와 연동하면, 박물관은 마침내 어떤 갱신 이메일이 실제로 기부를 성사시켰는지 확인할 수 있습니다." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-mailchimp-membership-renewal-attribution/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="회원 갱신 기여도 분석: Mailchimp 캠페인과 DonorPerfect 갱신 간의 연결 고리 완성하기" property="twitter:title"/>
+<meta content="이메일 열람률만으로는 전기 요금을 낼 수 없습니다. DonorPerfect를 통해 수집된 기부 갱신 정보를 Mailchimp 캠페인 보고서와 연동하면, 박물관은 마침내 어떤 갱신 이메일이 실제로 기부를 성사시켰는지 확인할 수 있습니다." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-mailchimp-membership-renewal-attribution/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Membership renewal attribution: closing the loop between Mailchimp campaigns and DonorPerfect renewals",
+  "description": "Open rates do not pay the electricity bill. By syncing DonorPerfect renewal gifts back into Mailchimp campaign reporting, a museum can finally see which renewal email actually closed the gift.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-mailchimp-membership-renewal-attribution/hero.png",
+  "datePublished": "2025-10-09T16:05:08+00:00",
+  "dateModified": "2026-05-19T17:43:05.735741+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Membership renewal attribution: closing the loop between Mailchimp campaigns and DonorPerfect renewals", "item": "https://apiant.com/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ko/blog/posts/donorperfect-mailchimp-membership-renewal-attribution/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ko/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">커넥터</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">구축 시작</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ko/blog/category/api-apps" style="color:inherit;text-decoration:none;">API 앱</a>
+</div>
+<h1 class="blog-post-h1">회원 갱신 기여도 분석: Mailchimp 캠페인과 DonorPerfect 갱신 간의 연결 고리 완성하기</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ko/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025년 10월 9일</span>
+<span>읽는 데 6분 소요</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ko/blog/?tag=nonprofit">#비영리단체</a><a class="blog-tag" href="/ko/blog/?tag=donorperfect">#기증자완벽함</a><a class="blog-tag" href="/ko/blog/?tag=mailchimp">#메일침프</a><a class="blog-tag" href="/ko/blog/?tag=mailconnect">#메일커넥트</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="회원 갱신 기여도 분석: Mailchimp 캠페인과 DonorPerfect 갱신 간의 연결 고리 완성하기" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-mailchimp-membership-renewal-attribution/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>한 지역 자연사 박물관은 매년 Mailchimp를 통해 두 차례의 대규모 회원 갱신 캠페인을 진행하고, 그 외에도 몇 차례의 소규모 알림 메일을 발송합니다. 각 캠페인마다 여러 개의 제목을 사용하고, 발송 시간을 다르게 설정하며, 다양한 디자인 변형을 테스트합니다. 마케팅 팀은 이메일 열람률과 클릭률을 박물관장에게 보고합니다. 하지만 정작 중요한 질문, 즉 어떤 이메일이 기부를 유도했는지에 대한 답을 아무도 찾지 못하고 있습니다.</p>
+<p>이메일 오픈율로는 전기세를 낼 수 없습니다. 갱신 기부금이 전기세를 내는 거죠. 대부분의 중소 규모 문화 기관에서 이러한 격차가 지속되는 이유는 구조적인 문제입니다. 기부금은 DonorPerfect에 기록되지만, 기부를 촉발한 Mailchimp 발송 내역과의 연결 고리가 없기 때문입니다. 정산은 분기별로 엑셀로 처리하는데, 아무도 신뢰하지 않습니다.</p>
+<p><img alt="회원 갱신 기여도 분석: Mailchimp 캠페인과 DonorPerfect 갱신 간의 연결 고리 완성 — 그림 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-mailchimp-membership-renewal-attribution/inline-1.png"/></p>
+<h2 id="why-off-the-shelf-tools-fail">기성품 도구가 실패하는 이유</h2>
+<p>기성 통합 솔루션은 기부금 정보는 동기화하지만, 기부자 정보 메타데이터는 손실합니다. Mailchimp 발송에 첨부되었던 갱신 캠페인 코드는 기부금이 DonorPerfect에 도착할 때쯤 사라지거나, 보고서에서 읽을 수 없는 메모 필드에 입력되는 경우가 많습니다. 결과적으로 캠페인 수준의 수익 기여도 분석은 여전히 수동 대조 작업에 의존해야 합니다.</p>
+<p>일부 기여도를 보존하는 도구들도 종종 단방향적인 정보 수집 방식을 사용합니다. Mailchimp 캠페인 보고서는 이메일 열람 및 클릭 수는 보여주지만 수익은 보여주지 않기 때문에 마케팅 팀은 여전히 잘못된 지표를 기준으로 최적화 작업을 진행합니다. 개발팀은 수익은 확인할 수 있지만 특정 발송 건과의 연관성을 파악할 수 없습니다. 두 팀은 분기별로 데이터 대조 회의를 진행하지만, 어떤 데이터가 정확한지에 대한 논쟁만 벌어지고 다음 단계에 대한 결정은 내리지 못합니다.</p>
+<p>세 번째 격차는 다중 접점 현실과 관련이 있습니다. 화요일에 봄 갱신 이메일을 받았지만 무시했고, 목요일에 후속 이메일을 받아 열어본 후 토요일에 갱신한 회원의 경우, 이 모든 것을 목요일 발송 덕분으로만 간주해서는 안 됩니다. 단일 접점, 즉 마지막 클릭만을 기준으로 기여도를 계산하는 일반적인 도구는 잘못된 기여도 계산을 초래하여 첫 번째 발송에 비해 두 번째 발송에 과도하게 투자하게 만듭니다. 다중 접점 모델링은 더 어렵지만, 최소한 마케터가 적절한 기여도 모델을 선택할 수 있도록 충분한 메타데이터를 보존하는 통합 시스템이 필요합니다.</p>
+<h2 id="the-apiant-approach">APIANT 접근법</h2>
+<p>DonorPerfect와 Mailchimp를 위한 MailConnect는 기부자 추적 정보를 유지하고 마케팅 팀이 작업하는 Mailchimp로 수익 정보를 다시 전송합니다.</p>
+<ul>
+<li><strong>코드싱크</strong> DonorPerfect의 내용을 반영합니다. <code>Campaign</code> 그리고 <code>Appeal</code> Mailchimp의 수신자 필드로 드롭다운 메뉴가 사용됩니다. Mailchimp 발송에 첨부된 갱신 캠페인 코드는 DonorPerfect 기부 기록에도 그대로 유지됩니다.</li>
+<li><strong>정기 기부 동기화</strong> 기부 금액과 날짜 정보를 매일 밤이 아닌 하루 동안 Mailchimp 병합 필드에 입력하세요. 이렇게 하면 캠페인 중간에 실제 수치를 활용하여 의사 결정을 내릴 수 있습니다.</li>
+<li><strong>사용자 정의 필드 선택</strong> 마지막 기부 금액, 기부 날짜 및 멤버십 갱신 날짜는 세분화 및 보고를 위한 Mailchimp 필드로 사용됩니다.</li>
+<li><strong>15분마다 데이터가 갱신됩니다.</strong> 갱신 여부와 보류 중인 항목의 최신 정보를 유지하여 실제 캠페인 진행 중 재할당 결정을 내릴 수 있도록 합니다.</li>
+</ul>
+<h2 id="concrete-steps">콘크리트 계단</h2>
+<p>가상의 지역 박물관인 그린필드 자연사 박물관(Mailchimp 구독자 22,000명, 회원 4,800명)을 예로 들면, 유입 경로는 다음과 같습니다.</p>
+<ol>
+<li><strong>전송에 태그를 지정하세요.</strong> Mailchimp에서는 모든 갱신 메일 발송 시 DonorPerfect 캠페인 코드와 일대일로 연결되는 캠페인 태그가 포함됩니다(예: <code>2026-SPRING-RENEW-A</code>, <code>2026-SPRING-RENEW-B</code>).</li>
+<li><strong>코드를 미러링하세요.</strong> CodeSync는 DonorPerfect를 모방합니다. <code>Campaign</code> 그리고 <code>Appeal</code> Mailchimp의 수신자 필드와 같으므로 양쪽 모두 동일한 어휘를 사용합니다.</li>
+<li><strong>갱신 관련 필드를 동기화하세요.</strong> 마지막 기부 날짜, 마지막 기부 금액, 멤버십 만료일, 마지막 갱신 캠페인 정보를 병합 필드로 저장하고 15분마다 갱신합니다.</li>
+<li><strong>갱신 대기 중인 부문.</strong> Mailchimp 부분: <code>Membership Expiration Date</code> 향후 60일 이내에 그리고 <code>Last Renewal Campaign</code> 값이 없거나 6개월 이상 지났습니다. 이것이 타겟팅 대상입니다.</li>
+<li><strong>재계약률 향상을 측정하는 A/B 테스트 설계.</strong> 두 가지 변형 모두 하위 접미사(가 붙은 동일한 Mailchimp 캠페인 코드를 받습니다.<code>A</code>, <code>B</code>갱신 선물은 접미사가 붙어서 돌아옵니다. 측정 기준은 옵션별 클릭률이 아니라 옵션별 발송당 달러입니다.</li>
+<li><strong>전송당 수익 대시보드.</strong> Mailchimp 캠페인 보고서와 동기화된 기부 금액을 상호 참조하여, 캠페인 X에 귀속된 총 수익을 발송량으로 나눈 값을 비교합니다. 캠페인 간, 그리고 세그먼트별(장기 회원, 탈퇴 후 갱신 회원, 탈퇴 이력이 없는 회원)로 비교 분석할 수 있습니다.</li>
+<li><strong>주기 중간 재분배.</strong> 변형 B가 발송당 4.20달러의 수익을 창출하고 변형 A가 1.10달러의 수익을 창출할 때, 나머지 일정은 변형 B의 제목과 광고 소재에 집중됩니다. 이 데이터는 갱신 기간 내에 활용하기에 충분히 최신 정보입니다.</li>
+</ol>
+<p><img alt="회원 갱신 기여도 분석: Mailchimp 캠페인과 DonorPerfect 갱신 간의 연결 고리 완성 — 그림 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-mailchimp-membership-renewal-attribution/inline-2.png"/></p>
+<h2 id="outcome">결과</h2>
+<p>이러한 시스템을 구축한 후 유사한 중규모 문화 기관에서 얻은 대표적인 수치는 다음과 같습니다.</p>
+<ul>
+<li>이메일 오픈율을 대신하여 발송당 수익이 핵심 지표로 자리 잡았습니다. 마케팅 팀은 클릭 수 최적화에서 벗어나 수익 최적화로 전환했습니다.</li>
+<li>A/B 테스트를 통한 갱신율은 일반적으로 두 주기 내에 8~15% 상승하는데, 이는 테스트 대상 풀이 노이즈에서 신호로 바뀌기 때문입니다.</li>
+<li>마케팅 부서와 개발 부서 간의 분기별 정산이 4시간짜리 회의에서 벗어나 공유된 저장된 보기로 바뀌었습니다.</li>
+<li>회원 등급 업그레이드 감지(더 높은 등급으로 재가입하는 회원)는 더 이상 희망적인 관찰이 아닌 측정 가능한 결과가 됩니다.</li>
+<li>갱신 지연 복구는 일반적인 갱신 실적에 포함되는 대신, 자체적인 전환율을 가진 측정 가능한 부문이 됩니다.</li>
+</ul>
+<p>현실적인 주의사항은 다음과 같습니다. 어트리뷰션은 약한 호소를 강한 호소로 바꿔주지는 않습니다. 어트리뷰션은 어떤 캠페인이 효과가 있고 어떤 캠페인이 효과가 없는지를 보여줄 뿐입니다. 어떤 팀은 이를 파악하고 데이터를 활용하지만, 어떤 팀은 이를 알아채고도 무시합니다. 어트리뷰션 통합은 후자의 경우를 해결할 수는 없습니다.</p>
+<p>회원 개인정보 보호에 대한 유의사항입니다. Mailchimp 캠페인 보고서에서 회원 세그먼트별 발송 건당 수익만 표시될 경우, 세그먼트 크기가 작으면 의도치 않게 개별 기부 정보가 노출될 수 있습니다. 예를 들어, "이사회 구성원" 세그먼트에 회원이 세 명뿐인 경우, 보고서에 총 수익만 표시되어 각 회원의 갱신 여부가 사실상 드러나게 됩니다. 따라서 개별 기부 내역을 식별할 수 없도록 세그먼트 크기를 충분히 크게 설정하여 기여도 분석 대시보드를 구축하고, 세부적인 기부 데이터는 적절한 접근 제어를 통해 보호해야 합니다.</p>
+<h2 id="pitfalls-worth-flagging">주의해야 할 함정</h2>
+<p>약정 기부는 기부금 추적을 복잡하게 만듭니다. 갱신 이메일에 응답하여 500달러를 약정하고 세 번에 걸쳐 납부하는 회원은 DonorPerfect에 동일한 캠페인 코드로 세 번의 기부 내역이 표시됩니다. 이러한 단순한 집계 방식으로는 해당 캠페인의 모금액이 1,500달러로 계산됩니다. 약정 ID를 기준으로 중복을 제거하는 보고서를 작성하거나, 개발팀과 협력하여 약정 기부와 실제 납부 내역을 별도로 기록해야 합니다.</p>
+<p>다년 약정도 마찬가지입니다. 3년 동안 매년 5,000달러씩 약정하는 신탁 회원의 경우, 약정을 촉발한 최초 메일 발송에 총 15,000달러를 모두 귀속시켜서는 안 됩니다. 첫해에는 최초 캠페인에, 그 이후에는 갱신 캠페인에 각각 배분하거나, 다년 약정에는 단년 갱신과는 별도의 배분 모델이 필요하다는 점을 인정해야 합니다.</p>
+<p>매칭 기부금 처리도 필요합니다. 회원이 250달러를 기부하고 고용주가 250달러를 매칭해 준 경우, Mailchimp 보고서에 기부금 총액이 500달러로 표시되어서는 안 됩니다. 기부자 부담분만 따로 표시하거나, 보고서에서 매칭 기부금과 기부자 기부금을 명확하게 구분해야 합니다.</p>
+<h2 id="builder-takeaway">건설업자 테이크아웃</h2>
+<ul>
+<li><strong>모든 발송 건에 DonorPerfect에 저장될 캠페인 코드를 태그하세요.</strong> 태그나 출처 표기가 없으면 안 됩니다. 이는 협상 불가입니다.</li>
+<li><strong>이사회에서 봐야 할 유일한 지표는 발송당 수익입니다.</strong> 열람 횟수와 클릭 수는 진단 지표일 뿐, 결과 지표는 아닙니다.</li>
+<li><strong>자금이 실제로 흐르는 곳은 경기 순환 중간의 재분배 시기입니다.</strong> 분기별 사후 분석은 캠페인 진행 중에 조치를 취하기에는 너무 늦습니다.</li>
+</ul>
+<h2 id="want-to-see-mailconnect-donorperfect-to-mailchimp-in-action">MailConnect DonorPerfect에서 Mailchimp로의 연동 기능을 직접 확인하고 싶으신가요?</h2>
+<p><a href="/apipartners/donorperfect/donorperfect-mailchimp-integration-and-automation-apiant">API 앱 페이지를 보세요</a> 또는 모두 보기 <a href="/apps">APIANT API 앱</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">기성품 도구가 실패하는 이유</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT 접근법</a></li><li class="lvl-2"><a href="#concrete-steps">콘크리트 계단</a></li><li class="lvl-2"><a href="#outcome">결과</a></li><li class="lvl-2"><a href="#pitfalls-worth-flagging">주의해야 할 함정</a></li><li class="lvl-2"><a href="#builder-takeaway">건설업자 테이크아웃</a></li><li class="lvl-2"><a href="#want-to-see-mailconnect-donorperfect-to-mailchimp-in-action">MailConnect DonorPerfect에서 Mailchimp로의 연동 기능을 직접 확인하고 싶으신가요?</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요</h3><p class="blog-card-excerpt">CRMConnect의 등록, 코스 예약 및 약속 동기화 기능을 활용하여 HighLevel이 모든 Mindbody 프로그램 유형에 대한 통합 캘린더 보기를 제공하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고</h3><p class="blog-card-excerpt">CRMConnect의 예약 동기화 기능이 Klaviyo 내에서 사이트별 예약 상태를 어떻게 보여주는지, 그리고 이를 통해 중앙 마케팅 부서에서 위치별 워크플로 및 보고서를 어떻게 실행할 수 있는지에 대한 내용입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 평생 가치, 평균 기부액, 캠페인 성과가 HubSpot에 동기화되면 월간 이사회 보고서 작성이 4일씩 걸리는 작업에서 저장 가능한 대시보드 형태로 간소화됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026 Apiant, Inc. 모든 권리 보유.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ko/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">블로그</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">플랫폼</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">은둔</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">자귀</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

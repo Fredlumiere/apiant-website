@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>クロスサイトCalendlyコンサルテーションを適切なMindbody拠点へルーティングする | APIANTブログ</title>
+<meta content="CalendarConnectの動的なイベント処理とリアルタイムの予約作成が、サイトをまたいだCalendlyの相談を正しいMindbodyの場所へ誘導する方法。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="クロスサイトCalendlyコンサルテーションを適切なMindbody拠点へルーティングする" property="og:title"/>
+<meta content="CalendarConnectの動的なイベント処理とリアルタイムの予約作成が、サイトをまたいだCalendlyの相談を正しいMindbodyの場所へ誘導する方法。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-calendly-multi-site-routing/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-calendly-multi-site-routing/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="クロスサイトCalendlyコンサルテーションを適切なMindbody拠点へルーティングする" property="twitter:title"/>
+<meta content="CalendarConnectの動的なイベント処理とリアルタイムの予約作成が、サイトをまたいだCalendlyの相談を正しいMindbodyの場所へ誘導する方法。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-calendly-multi-site-routing/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Routing Cross-Site Calendly Consults to the Right Mindbody Location",
+  "description": "How CalendarConnect's dynamic event handling and real-time appointment creation route cross-site Calendly consults into the correct Mindbody location.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-calendly-multi-site-routing/hero.png",
+  "datePublished": "2025-02-21T15:31:16+00:00",
+  "dateModified": "2026-05-19T17:42:51.9657+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-calendly-multi-site-routing/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Routing Cross-Site Calendly Consults to the Right Mindbody Location", "item": "https://apiant.com/blog/posts/mindbody-calendly-multi-site-routing/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-calendly-multi-site-routing/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/mindbody-calendly-multi-site-routing/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">クロスサイトCalendlyコンサルテーションを適切なMindbody拠点へルーティングする</h1>
+<p class="blog-post-subtitle">CalendarConnectの動的なイベント処理とリアルタイムの予約作成が、サイトをまたいだCalendlyの相談を正しいMindbodyの場所へ誘導する方法。</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025年2月21日</span>
+<span>5分で読める</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=fitness-wellness">#フィットネス＆ウェルネス</a><a class="blog-tag" href="/ja/blog/?tag=mindbody">#心身</a><a class="blog-tag" href="/ja/blog/?tag=calendly">#Calendly</a><a class="blog-tag" href="/ja/blog/?tag=calendarconnect">#カレンダーコネクト</a><a class="blog-tag" href="/ja/blog/?tag=for-enterprise">#企業向け</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="クロスサイトCalendlyコンサルテーションを適切なMindbody拠点へルーティングする" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-calendly-multi-site-routing/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="the-multi-site-booking-mismatch">複数拠点予約の不一致</h2>
+<p>4つの拠点を持つスパグループが、拠点をまたいだ相談のために単一のCalendlyファネルを運用している。見込み客はサービス、場所、時間を選択する。現在、予約は汎用的な予約として登録され、地域マネージャーが手動で適切なMindbody拠点に振り分ける必要がある。時々、マネージャーが間違えてしまい、顧客が拠点Aの予約であるにもかかわらず拠点Bに来店してしまうことがある。</p>
+<p>複数拠点間のルーティング障害は、フロントデスク業務における最悪の失敗だ。誰もが丁寧に対応してくれるが、二度と予約を入れる人はいない。</p>
+<p>ルーティングに問題が発生すると、ブランドの一貫性が損なわれます。グループ内の各スパはそれぞれ独自の雰囲気、施術者、専門分野を持っています。間違ったスパにルーティングされた顧客は、期待していた雰囲気とは異なる空間に到着し、多くの場合、希望していない施術者に施術されることになります。たとえ予約が取れたとしても、体験は期待外れです。オンラインレビューには「Xに行くつもりだったのにYに行ってしまった」といった書き込みが溢れ、ブランドイメージは徐々に損なわれていきます。</p>
+<p><img alt="クロスサイトCalendly相談を適切なMindbody拠点へルーティングする — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-calendly-multi-site-routing/inline-1.png"/></p>
+<h2 id="mapping-calendly-events-to-mindbody-sites">CalendlyのイベントをMindbodyサイトにマッピングする</h2>
+<p>Mindbodyのマルチサイトは独自の方針を持っています。各サイトには独自のサイトID、スタッフ、サービスがあります。サイト間ルーティングレイヤーは、予約がどのサイト向けかを把握し、そのサイトで適切なサービスを見つけ、そのサイトで対応可能なプロバイダーを見つけ、適切な部屋を予約する必要があります。汎用的な統合では、1つのサイトにのみ書き込み、他のサイトは無視します。</p>
+<p>カスタム開発で解決することは可能ですが、数ヶ月かかり、構築したスパグループはどれも、新しい施設を追加するたびに不具合が生じる脆弱なインフラストラクチャを抱えることになります。</p>
+<p>独自開発のルーティングロジックは、予測可能な形で脆弱になる。住所が不明確なクライアントではジオコーディングが失敗する。ピッカーが曖昧な場合、デフォルトサイトのフォールバックによって全員が同じ場所に誘導される。プロバイダーがサイト間を移動すると、プロバイダーレベルのルーティングが機能しなくなる。修正するたびに新たなエッジケースが発生する。カスタム開発のバックログは、縮小するよりも速いペースで増え続ける。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>CalendarConnectの複数拠点サポートと動的イベント処理を組み合わせることで、まさにこれを実現します。Calendlyのフォームで場所を入力すると、CalendarConnectがその回答を読み取り、適切なMindbodyサイトID、適切なサービス、適切な担当者、適切な部屋で予約を作成します。</p>
+<p>スタッフ割り当てマッピングは、適切な施設の適格な担当者プールから最適な担当者を選定します。選定された担当者が利用できない場合は、スパの規定に従って代替担当者に切り替えます。地域マネージャーは担当者の振り分け作業を停止し、コンバージョン率の向上に注力します。</p>
+<p>CalendarConnectのルーティングロジックは宣言型であり、手続き型ではありません。spaグループがルール（場所のドロップダウン値がサイトIDにマッピングされ、サービス値がサイトごとにサービスコードにマッピングされ、曖昧なケースのフォールバック動作など）を定義し、システムがそれを実行します。新しいサイトを追加するには、マッピングに行を追加するだけでよく、新しいコードを記述する必要はありません。新しいサービスを追加する場合も同様です。インフラストラクチャは、毎回エンジニアリング作業を行うことなく、ビジネスの成長に合わせて拡張できます。</p>
+<p>複数の拠点で勤務する医療従事者も、スムーズに対応できます。週2日ずつ2つの拠点で勤務する医療従事者は、両方の拠点の予約対象者として登録されます。CalendarConnectは、拠点をまたいだ勤務スケジュールを尊重し、選択された日に医療従事者が勤務している拠点に予約を振り分けます。医療従事者は2つのカレンダーを管理する必要はありません。</p>
+<h2 id="provider-name-vs-location-first-routing">プロバイダー名優先ルーティングとロケーション優先ルーティングの比較</h2>
+<ol>
+<li>Mindbodyの4つのサイトすべてをCalendarConnectの購読にリンクしてください。</li>
+<li>サービス選択ドロップダウンと場所選択ドロップダウンを使用して、Calendlyイベントを1つ作成します。</li>
+<li>各ロケーションのドロップダウン値を、そのサイトIDにマッピングします。各サービスを、そのサイトにおける適切なMindbodyサービスにマッピングします。</li>
+<li>サイトごとにスタッフ配置マッピングを設定します。</li>
+<li>各サイトでテスト予約を実行してください。予約が正しいサイトIDと正しい担当者に割り当てられていることを確認してください。</li>
+<li>
+<p>4つの拠点すべてのマーケティング活動において、単一のCalendlyリンクを展開する。</p>
+</li>
+<li>
+<p><strong>各拠点ごとの品質チェックリストを作成する。</strong> 各サイトは毎月ルーティングのテストを行うべきです。公開されているCalendlyリンクからテスト予約を行い、正しいプロバイダーの正しいサイトに正しく接続されることを確認してください。これにより、ルーティングのずれを早期に発見できます。</p>
+</li>
+<li><strong>マーケティングクリエイティブの調整を行う。</strong> Calendlyのリンクは1つだけで、予約の正規の入り口となります。サイト固有のマーケティングキャンペーンでも同じリンクを使用でき、フォーム内の選択機能によって予約が正しくルーティングされます。これにより、グループのマーケティングチームは4つの重複したCalendly設定を管理する必要がなくなります。</li>
+</ol>
+<p><img alt="クロスサイトCalendly相談を適切なMindbody拠点へルーティングする — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-calendly-multi-site-routing/inline-2.png"/></p>
+<h2 id="representative-routing-accuracy-at-4-sites">4つの拠点における代表的なルーティング精度</h2>
+<p>仮説：4つの拠点を持つスパグループで、週に約40件の拠点間コンサルテーションを実施しているとします。CalendarConnectによる拠点間ルーティング導入後、ルーティングミス（間違った拠点への予約）が週約3件からゼロに減少しました。ルーティング修正に費やす地域マネージャーの時間はゼロになりました。確認メールに最初から正しい拠点住所が記載されているため、来店率が向上しました。</p>
+<p>グループレベルでの運用レポートが有意義なものになります。サイト別の予約数、サイト別のコンバージョン率、サイト別のノーショー率、サイト別の予約あたりの平均収益など、データ構造が同じなので、4つの拠点すべてで比較可能です。地域マネージャーは、これまで4つあった煩雑なダッシュボードではなく、ようやく実用的なダッシュボードを手に入れることができます。</p>
+<h2 id="edge-cases-worth-knowing">知っておくべきエッジケース</h2>
+<p>選択ミス（クライアントが誤って別の場所を選択した場合など）が発生した場合は、復旧策が必要です。CalendarConnectは、選択された場所とともに予約を記録します。地域マネージャーは、明らかに間違ったケース（ニューヨークの住所でマイアミの予約など）を特定し、クライアントが旅行する前に連絡を取ることができます。この統合によって選択ミスを完全に防ぐことはできませんが、ミスを顕在化させることができます。</p>
+<p>プロバイダーのサイト間異動は、業務上よくあることです。あるプロバイダーがサイト2からサイト3に恒久的に異動するとします。すると、Mindbodyの担当業務が変更され、CalendarConnectのサイト2向けサービス対象プロバイダープールからそのプロバイダーが削除され、サイト3のプールにそのプロバイダーが追加されます。コードの変更も、手動での再設定も必要ありません。</p>
+<p>施設の閉鎖（改装、スタッフ研修のための一時閉鎖など）は、Mindbody上で施設を「利用不可」と設定することで対応します。CalendarConnectはこの設定を尊重し、Calendlyの予約フォームでは閉鎖期間中、該当施設が予約対象から非表示になります。閉鎖中の施設は予約できません。</p>
+<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
+<ul>
+<li>複数拠点でのルーティングは、Calendlyの問題でもMindbodyの問題でもなく、システム統合の問題です。</li>
+<li>予約時に一度だけ、見込み客に場所を尋ねてください。それ以外のことはすべてシステムで処理します。</li>
+<li>予約経路の誤りは、予約の失敗よりも大きな損害をもたらします。経路決定性を確保しましょう。</li>
+</ul>
+<h2 id="try-it">試してみて</h2>
+<p>CalendarConnect MindbodyからCalendlyへの連携を実際に見てみたいですか？ <a href="/apipartners/mindbody/mindbody-calendly-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
+<p>既製コネクタの全カタログは以下をご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-multi-site-booking-mismatch">複数拠点予約の不一致</a></li><li class="lvl-2"><a href="#mapping-calendly-events-to-mindbody-sites">CalendlyのイベントをMindbodyサイトにマッピングする</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#provider-name-vs-location-first-routing">プロバイダー名優先ルーティングとロケーション優先ルーティングの比較</a></li><li class="lvl-2"><a href="#representative-routing-accuracy-at-4-sites">4つの拠点における代表的なルーティング精度</a></li><li class="lvl-2"><a href="#edge-cases-worth-knowing">知っておくべきエッジケース</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li><li class="lvl-2"><a href="#try-it">試してみて</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

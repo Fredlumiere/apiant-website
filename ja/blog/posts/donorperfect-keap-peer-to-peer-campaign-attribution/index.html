@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ピアツーピア資金調達におけるアトリビューション：DonorPerfectのキャンペーンコードと勧誘コードをKeapに同期する | APIANTブログ</title>
+<meta content="ピアツーピア型のイベントでは、寄付が殺到するものの、その帰属関係の把握が困難になる場合があります。DonorPerfectのキャンペーン、寄付依頼、ソースコードをKeapに同期することで、スプレッドシートを駆使することなく、適切なチームリーダーとチャネルに寄付を計上できます。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="ピアツーピア募金の帰属表示：DonorPerfectのキャンペーンコードと勧誘コードをKeapに同期する" property="og:title"/>
+<meta content="ピアツーピア型のイベントでは、寄付が殺到するものの、その帰属関係の把握が困難になる場合があります。DonorPerfectのキャンペーン、寄付依頼、ソースコードをKeapに同期することで、スプレッドシートを駆使することなく、適切なチームリーダーとチャネルに寄付を計上できます。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-peer-to-peer-campaign-attribution/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ピアツーピア募金の帰属表示：DonorPerfectのキャンペーンコードと勧誘コードをKeapに同期する" property="twitter:title"/>
+<meta content="ピアツーピア型のイベントでは、寄付が殺到するものの、その帰属関係の把握が困難になる場合があります。DonorPerfectのキャンペーン、寄付依頼、ソースコードをKeapに同期することで、スプレッドシートを駆使することなく、適切なチームリーダーとチャネルに寄付を計上できます。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-peer-to-peer-campaign-attribution/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Attribution for peer-to-peer fundraising: syncing DonorPerfect campaign and solicitation codes into Keap",
+  "description": "Peer-to-peer events generate a surge of gifts with messy attribution. Syncing campaign, solicitation, and source codes from DonorPerfect into Keap lets you credit the right team captain and channel without a spreadsheet marathon.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-peer-to-peer-campaign-attribution/hero.png",
+  "datePublished": "2024-11-27T10:19:59+00:00",
+  "dateModified": "2026-05-19T17:43:03.869998+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Attribution for peer-to-peer fundraising: syncing DonorPerfect campaign and solicitation codes into Keap", "item": "https://apiant.com/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/donorperfect-keap-peer-to-peer-campaign-attribution/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">ピアツーピア募金の帰属表示：DonorPerfectのキャンペーンコードと勧誘コードをKeapに同期する</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2024年11月27日</span>
+<span>6分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=nonprofit">#非営利団体</a><a class="blog-tag" href="/ja/blog/?tag=donorperfect">#ドナーパーフェクト</a><a class="blog-tag" href="/ja/blog/?tag=keap">#キープ</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="ピアツーピア募金の帰属表示：DonorPerfectのキャンペーンコードと勧誘コードをKeapに同期する" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-peer-to-peer-campaign-attribution/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>ピアツーピアの募金活動は、まさに洪水のようなものです。週末の5キロマラソンでは、48時間で300～800件の寄付が集まり、それぞれが特定のチームキャプテン、特定のチャネル（Instagramストーリー、グループテキスト、キャプテンのメール配信など）、そして特定のアピールと結び付けられます。月曜日の朝までには、寄付の帰属情報が整理されているはずです。しかし実際には、部分的にタグ付けされたレコードがごちゃ混ぜになり、開発担当者がCSVエクスポートからピボットテーブルを作成するという状況になります。</p>
+<p>根本的な原因はデータ量ではありません。重要なのは、重要な4つのコード（アピール、キャンペーン、勧誘、ソース）がDonorPerfectに存在するのに対し、寄付者管理ワークフローはKeapに存在することです。これらのコードが構造化されたKeapフィールドとして連携されない場合、寄付が記録された瞬間にアトリビューションが機能しなくなります。</p>
+<p><img alt="ピアツーピア資金調達の帰属：DonorPerfectキャンペーンと勧誘コードをKeapに同期する — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-peer-to-peer-campaign-attribution/inline-1.png"/></p>
+<h2 id="why-off-the-shelf-tools-fail">市販のツールが失敗する理由</h2>
+<p>汎用的なZapierスタイルのコネクタは、DonorPerfectからの寄付をアクティビティレコードとしてKeapに取り込みます。これらのコネクタは、コードのメタデータをフラット化するか、メモ欄に自由記述テキストとして挿入します。自由記述テキストによる寄付の帰属は利用できません。それに基づいてKeapダッシュボードを作成することも、シーケンスをトリガーすることも、元の寄付依頼と照合することもできません。火曜日までに、Keapのオーディエンスは「P2P寄付者」でいっぱいになり、14人のチームキャプテンのうち誰がどの寄付を促したのかを判別する方法がなくなります。</p>
+<p>もう一つの問題点は、寄付の同期はできるものの、チームキャプテンの情報が失われてしまうことです。ほとんどのP2Pプラットフォームでは、キャプテンの情報はDonorPerfectに勧誘コードまたはフラグとして記録されます。このメタデータが統合の段階で失われてしまうと、パーソナライズされたお礼状を送ることも、キャプテンが期待するリーダーボードを表示することもできなくなります。</p>
+<p>3つ目の問題はレイテンシーです。イベント開催週末に毎晩行われるバッチ同期は役に立ちません。土曜日のレース中に30分ごとにリーダーボードを更新するキャプテンは、昨日のスナップショットしか見ることができません。彼らはそれに気づきます。イベント中に無視されていると感じるキャプテンの継続率は、リアルタイムで評価されているキャプテンに比べて著しく低く、経験豊富なキャプテンの交代はP2P募金活動において最も高額な継続コストの1つです。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>CRMConnect for DonorPerfect and Keapは、4つのコードすべてを構造化されたKeapフィールドとして保持します。構成要素は以下のとおりです。</p>
+<ul>
+<li><strong>CodeSync</strong> DonorPerfectの <code>Appeal</code>, <code>Campaign</code>, <code>Solicitation</code>、および <code>Source</code> Keapのネイティブカスタムフィールドのドロップダウンとして機能します。値は両方のシステム間で自動的に一貫性が保たれます。</li>
+<li><strong>タグとしてのフラグ</strong> DonorPerfectのフラグ（チームキャプテン名、P2Pイベント識別子、マイルストーンフラグ）を、ダッシュボードやシーケンスが読み取れるKeapタグに変換します。</li>
+<li><strong>詳細な寄付情報同期</strong> 寄付が記録される際に、寄付金額、日付、指定、および4つのコードすべてがKeapに転送されます。</li>
+<li><strong>リアルタイム同期</strong> つまり、土曜日の朝に送られたギフトは、一晩中ではなく、数分以内にKeapに届きます。キャプテンのリーダーボードは常に最新の状態です。</li>
+</ul>
+<h2 id="concrete-steps">具体的なステップ</h2>
+<p>架空の退役軍人支援非営利団体であるパトリオット・ブリッジ退役軍人財団が、5,000ドル以上のバーチャルP2Pプログラムを運営しているという例題の場合、帰属フローは次のようになります。</p>
+<ol>
+<li><strong>コードの分類体系を事前に定義する。</strong> DonorPerfectで設定します <code>Campaign = 2026-P2P-RUCKMARCH</code>, <code>Appeal = P2P-SOCIAL</code> or <code>P2P-EMAIL</code> or <code>P2P-DIRECT</code>, <code>Solicitation = TEAM-&lt;captain-slug&gt;</code>, <code>Source = web</code> or <code>mobile</code>.</li>
+<li><strong>CodeSyncで4つすべてをマッピングしてください。</strong> それぞれがKeapのカスタムドロップダウンリストになります。値リストは自動的に同期され、DonorPerfectで追加された新しいチームキャプテンは、手動で操作することなくKeapに表示されます。</li>
+<li><strong>チームキャプテンのフラグをタグとして同期します。</strong> Flags-as-Tags 変換 <code>captain-jsmith</code> 旗をキープタグに変換する。その船長に帰属するすべての贈り物は、そのタグを継承する。</li>
+<li><strong>キャプテンランキングを作成する。</strong> 保存済みレポートをグループ化したもの <code>Solicitation</code> 募金総額順に並べられたこのランキングは、イベント開催週末にリアルタイムで更新されます。キャプテンは共有リンクから自分の順位を確認できます。</li>
+<li><strong>個別の感謝のメッセージ。</strong> ギフト同期によってトリガーされたKeapシーケンスにより、マージフィールドがキャプテンの名前をメールに挿入します。「ジョンが私たちのチームのためにこのギフトを寄付してくれました。あなたのサポートが重要な理由は次のとおりです。」</li>
+<li><strong>チャネルパフォーマンスダッシュボード。</strong> グループギフト <code>Appeal</code> ソーシャルメディア、メール、ダイレクトメッセージのどれが船長一人当たりの売上を最も伸ばしたかを検証する。来年のイベントに向けた事前コーチングでは、効果が実証されたチャネルに焦点を当てる。</li>
+<li><strong>年次報告書については、寄付者への帰属情報をDonorPerfectにロールバックしてください。</strong> 双方向同期により、各キャプテンごとの最終合計がDonorPerfectのレコードフィールドとして書き込まれるため、年次報告書は2回目の照合を行うことなく、DonorPerfectからきれいに出力されます。</li>
+</ol>
+<p><img alt="ピアツーピア資金調達の帰属：DonorPerfectキャンペーンと勧誘コードをKeapに同期する — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-keap-peer-to-peer-campaign-attribution/inline-2.png"/></p>
+<h2 id="outcome">結果</h2>
+<p>このシステムを導入した後の、同様の国内P2Pプログラムの代表的な数値は以下のとおりです。</p>
+<ul>
+<li>キャプテンのリーダーボードは、月曜日の朝にExcelで再構築されるものから、イベント中は数分ごとに更新されるKeapのライブビューへと変わります。</li>
+<li>チャネルアトリビューションの明確化は、「Instagramは効果があったと思う」から「Instagramは平均42ドルのギフトをもたらし、グループSMSは平均68ドルのギフトをもたらした。来年はメールへの支出をSMSコーチングにシフトする」へと移行する。</li>
+<li>キャプテンごとの感謝のメッセージ送信にかかる時間は、ギフト投稿から「1週間以内」から15分以内に短縮されます。</li>
+<li>キャプテンがリアルタイムで評価され、イベント後の個別レポートを受け取ると、翌年のイベントへの参加継続率は通常15～25パーセント上昇する。</li>
+<li>イベント終了と同時に最終的な寄付者情報がDonorPerfectにきちんと保存されるため、年次報告書の作成期間は数週間かかっていた照合作業から、当日エクスポートへと短縮されます。</li>
+</ul>
+<p>正直な注意点として、この統合によって寄付フォームのコード管理の不備を修正することはできません。キャプテンがパーソナライズされたリンクではなく汎用的なリンクを共有した場合、アトリビューションは依然として機能しません。まずキャプテンをトレーニングしてから、統合を設定してください。もう一つの注意点は、リアルタイムのリーダーボードは、適切に設定しないと不健全な競争を生み出す可能性があるということです。いくつかの財団では、キャプテンがトップの座を追い求めて燃え尽きてしまい、翌年の採用に悪影響を及ぼした事例が見られます。リーダーボードは個人の順位ではなく、チームへの貢献と個人の成長を中心に設定してください。そうしないと、短期的なメリットよりも長期的なコストの方が大きくなる可能性があります。</p>
+<p>P2Pイベントにおいても、寄付者のプライバシーは引き続き保護されます。キャプテンは、寄付者がオプトインしない限り、個々の寄付者の身元ではなく、チームの集計数と合計額のみを確認できます。この統合は、個々の寄付に設定された匿名性フラグを尊重する必要があります。寄付者が積極的に公開を選択しない限り、キャプテンは、自分の個人的な連絡先のうち、誰が500ドルを寄付したのか、誰が50ドルを寄付したのかを知る必要はありません。</p>
+<h2 id="post-event-follow-through">イベント後のフォローアップ</h2>
+<p>イベント開催週末の熱狂は、その価値の半分に過ぎません。イベント後の1週間こそ、寄付者の定着率を高めるか、あるいは失うかの分かれ目です。キャプテンのチームに寄付をした寄付者には、イベント後5日以内にキャプテン本人（またはキャプテンの名前が入った定型メッセージ）から連絡があるべきです。イベントには参加したものの寄付をしなかった寄付者には、来年の寄付についてさりげなくフォローアップする対象者をタグ付けしましょう。初めてイベントに寄付をした寄付者には、イベント当日だけの参加者ではなく、年間を通して寄付をしてくれる寄付者になってもらうことを目的とした、別の育成プログラムを用意すべきです。</p>
+<p>この統合によってメタデータが保持されるため、これらすべてが可能になります。チームキャプテンのタグ、チャネルの属性、ギフトと出席の区別といった情報がKeapに取り込まれないと、イベント後のフォローアップは手作業となり、水曜日には棚上げされてしまいます。メタデータが適切に設定されていれば、フォローアップは日曜日の夜に実行される3つの保存済みシーケンスだけで済み、翌週は介入なしで実行されます。</p>
+<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
+<ul>
+<li><strong>キャンペーン開始前にコード分類を設定してください。開始後に設定しないでください。</strong> DonorPerfectに寄付情報が登録された後に、寄付依頼コードを後から修正するのは、手間がかかり、エラーが発生しやすい。</li>
+<li><strong>ここではリアルタイム性が重要だ。</strong> 毎晩更新されるリーダーボードは、48時間イベントにおいては無駄なリーダーボードだ。</li>
+<li><strong>フラグをタグとして扱うことで、キャプテンの次元をきれいに処理できます。</strong> 船長の身元情報を要請コードにエンコードしようとする試みは、船長が20人を超えるまでは有効だが、それ以上になるとメンテナンス上の大惨事となる。</li>
+</ul>
+<h2 id="want-to-see-crmconnect-donorperfect-to-keap-in-action">CRMConnect DonorPerfectとKeapの連携動作をご覧になりたいですか？</h2>
+<p><a href="/apipartners/donorperfect/donorperfect-keap-integration-and-automation-apiant">APIアプリのページを見る</a> またはすべてを閲覧する <a href="/apps">APIANT APIアプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">市販のツールが失敗する理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#concrete-steps">具体的なステップ</a></li><li class="lvl-2"><a href="#outcome">結果</a></li><li class="lvl-2"><a href="#post-event-follow-through">イベント後のフォローアップ</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li><li class="lvl-2"><a href="#want-to-see-crmconnect-donorperfect-to-keap-in-action">CRMConnect DonorPerfectとKeapの連携動作をご覧になりたいですか？</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

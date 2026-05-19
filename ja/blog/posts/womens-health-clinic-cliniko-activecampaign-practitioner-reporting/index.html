@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Clinikoデータを使用した女性向け健康クリニックにおけるActiveCampaignの施術者および場所レポート機能 | APIANTブログ</title>
+<meta content="12人以上の医師と3つの拠点を超えると、月次のスプレッドシート形式のレポートでは対応できなくなります。Clinikoの予約データと請求書データをActiveCampaignに連携させることで、リアルタイムかつセグメント化された医師別レポートが可能になります。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="Clinikoデータを使用した女性向け健康クリニックにおけるActiveCampaign内の施術者および場所レポート" property="og:title"/>
+<meta content="12人以上の医師と3つの拠点を超えると、月次のスプレッドシート形式のレポートでは対応できなくなります。Clinikoの予約データと請求書データをActiveCampaignに連携させることで、リアルタイムかつセグメント化された医師別レポートが可能になります。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Clinikoデータを使用した女性向け健康クリニックにおけるActiveCampaign内の施術者および場所レポート" property="twitter:title"/>
+<meta content="12人以上の医師と3つの拠点を超えると、月次のスプレッドシート形式のレポートでは対応できなくなります。Clinikoの予約データと請求書データをActiveCampaignに連携させることで、リアルタイムかつセグメント化された医師別レポートが可能になります。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Practitioner and Location Reporting Inside ActiveCampaign for a Women's Health Clinic Using Cliniko Data",
+  "description": "Once you cross a dozen practitioners and three locations, monthly spreadsheet reports stop being acceptable. Cliniko appointment and invoice data piped into ActiveCampaign powers real-time, segmentable practitioner reporting.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/hero.png",
+  "datePublished": "2025-01-03T10:59:41+00:00",
+  "dateModified": "2026-05-19T17:42:57.005088+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Practitioner and Location Reporting Inside ActiveCampaign for a Women's Health Clinic Using Cliniko Data", "item": "https://apiant.com/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">Clinikoデータを使用した女性向け健康クリニックにおけるActiveCampaign内の施術者および場所レポート</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025年1月3日</span>
+<span>5分で読める</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=healthcare">＃健康管理</a><a class="blog-tag" href="/ja/blog/?tag=cliniko">#クリニック</a><a class="blog-tag" href="/ja/blog/?tag=activecampaign">#アクティブキャンペーン</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Clinikoデータを使用した女性向け健康クリニックにおけるActiveCampaign内の施術者および場所レポート" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>クリニックの成長に伴い、月次の診療報告書を手作業で作成することが現実的ではなくなる段階が必ず訪れます。報告書が経営陣の受信箱に届く頃には、数値はすでに古くなっています。診療科ごとに分類するだけでも半日かかります。どの患者が長期的に通院を続け、どの患者が静かに離れていくのかを把握することもできません。</p>
+<p>具体例を挙げましょう。オーロラ・ウィメンズ・ヘルス・コレクティブは、骨盤理学療法士、女性専門医、授乳コンサルタントなど11名の専門家を擁する、3つの拠点を持つ架空の組織です。経営陣は現在、Clinikoのエクスポートデータをスプレッドシートに貼り付けることで、月に一度、専門家の業績を報告しています。この数値は前月のものです。専門分野別のセグメンテーションは手動で行っています。そのため、6か月後にどの専門家の患者が繰り返し来院しているかといった、継続的な状況を把握することはできません。</p>
+<p><img alt="Clinikoデータを使用した女性健康クリニック向けActiveCampaignにおける施術者および場所レポート — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/inline-1.png"/></p>
+<h2 id="why-the-spreadsheet-stops-scaling">スプレッドシートのスケーリングが停止する理由</h2>
+<p>3つの拠点と複数の専門分野にまたがる11人の実務家を抱えるこの組織では、毎月のスプレッドシートで以下の質問に答える必要がある。</p>
+<ul>
+<li>担当医師、場所、サービスライン別に予約状況を表示。</li>
+<li>施術者一人当たりの平均請求額。</li>
+<li>再受診率（一定期間内に再受診した患者の割合）。</li>
+<li>長期的な関与（6ヶ月前に受診し、現在も治療を継続している患者）。</li>
+<li>産前・産後クラスのグループセッションへの参加。</li>
+</ul>
+<p>それぞれが異なる転換点となる。報告書の作成には半日かかる。経営陣がそれをレビューする頃には、データは2週間前のものとなり、それに基づいて行動を起こすための運用上の機会は既に失われている。</p>
+<h2 id="why-off-the-shelf-tools-fail">市販のツールが失敗する理由</h2>
+<p>Clinikoのネイティブレポートは基本的な機能は備えているものの、ActiveCampaignの自動化、セグメンテーション、マーケティングレポートとの連携はできません。Clinikoからエクスポートしたデータに基づいて構築された別のBIダッシュボードは、経営陣にグラフを提供しますが、マーケティング上の意思決定には役立ちません。ActiveCampaignを運用するマーケターは、同じ医師と場所の情報を自動化ツール内で確認できる必要があり、月曜日にしか確認しない別のダッシュボードでは不十分です。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>CRMConnect ClinikoはActiveCampaignと連携し、患者の予約状況、訪問場所、最終予約日、総予約回数を各連絡先にストリーミング配信します。予約完了時には担当医師とサービスラインのタグが自動的に適用され、請求書の活動状況も同期されます。ActiveCampaign内のレポートとマーケティングオートメーションは、どちらも常に更新される同じデータセットを読み取ります。毎月のスプレッドシート作業は不要になります。</p>
+<h2 id="concrete-steps">具体的なステップ</h2>
+<ol>
+<li>予約同期を有効にすると、ActiveCampaignの各連絡先に、最後に訪問した場所、最後の予約日、予約総数、過去90日間の予約がカスタムフィールドとして保存されます。</li>
+<li>予約完了時のタグ付けを設定します。Clinikoで予約が記録されると、連携機能により、担当医師、場所、予約の種類を識別するタグが自動的に適用されます。これにより、ActiveCampaignのレポートを、手動での修正なしに担当医師ごとに分類できるようになります。</li>
+<li>グループ形式の産前・産後クラスは別々に扱います。この統合により、個人予約とグループ予約が区別されるため、グループ参加タグが個々の施術者による評価指標に影響を与えることはありません。</li>
+<li>ActiveCampaign内に、担当者レベルのダッシュボードを作成します。担当者タグごとに、月ごとの予約件数、期間中に初めて来店した担当者、期間中に再来店した担当者、および平均請求額（請求書同期が有効になっている場合）を表示します。</li>
+<li>場所ごとのダッシュボードを作成します。場所のタグごとに、来院予約数、新規患者数、新規来院と再来院の内訳を表示します。</li>
+<li>長期エンゲージメントレポートを作成します。セグメント：初回アポイントメントから6か月が経過したコンタクト。サブセグメント：現在もアクティブなコンタクト（過去90日以内にアポイントメントがあったコンタクト）と、アポイントメントが途絶えたコンタクト。これは、マーケティング担当者が最も必要としているセグメントでありながら、現状では把握できていないものです。</li>
+</ol>
+<p><img alt="Clinikoデータを使用した女性健康クリニック向けActiveCampaignにおける施術者および場所レポート — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/womens-health-clinic-cliniko-activecampaign-practitioner-reporting/inline-2.png"/></p>
+<h2 id="outcome">結果</h2>
+<p>オーロラのプロファイルに合致するクリニックは、通常、最初の60日以内に3つのことを発見します。まず、毎月のスプレッドシート作業が不要になります（毎月半日分の時間を節約できます）。次に、経営陣は、1人か2人の医師が他の医師よりも6か月後の患者維持率が著しく高いことに気づき、従来の報告方法では隠されていた臨床面および運営面での議論が始まります。3つ目は、拠点ごとの新規患者獲得状況がリアルタイムで可視化されるため、マーケティングチームは四半期ごとではなく毎週、拠点間で予算を再配分できるようになります。</p>
+<h2 id="group-sessions-without-contaminating-one-to-one-metrics">個別セッションの指標を汚染しないグループセッション</h2>
+<p>妊婦向けグループ教室、産後回復グループ、骨盤底筋クラスは、女性健康クリニックの主要な収益源です。これらの収益は測定されるべきですが、グループ参加者数を施術者ごとの個別評価に混ぜてしまうと、両方の指標が歪んでしまいます。統合することで、グループセッションごとに参加者数ではなくグループ参加者数というタグが付与されるため、施術者ごとの個別参加者数は正確に記録され、グループ参加者数は独自のレポート項目として表示されます。</p>
+<h2 id="the-mistake-worth-avoiding">避けるべき間違い</h2>
+<p>タグが自動的に生成されるようになると、ActiveCampaignのタグを並行した患者記録として使いたくなる誘惑に駆られるかもしれません。しかし、それは避けてください。ActiveCampaignのタグは、自動化とセグメンテーションのためのシグナルレイヤーです。患者記録はClinikoにあります。「患者は現在妊娠中」や「患者は産後回復期」といったタグを作成していることに気づいたら、すぐにやめてください。前者はマーケティングツールには全く存在すべきではありません（同意に関わる臨床的な文脈です）。後者は、自動化を促す必要がある場合はClinikoの症例ステータスから取得するべきであり、ActiveCampaignで手動で維持するべきではありません。</p>
+<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
+<ul>
+<li>完了時に適用される施術者と場所のタグが基本構成要素です。まずこれらを作成し、その上にレポートを構築してください。</li>
+<li>個人予約とグループ予約の指標は別々のデータストリームで管理してください。これらを混在させると、医療従事者の評価結果が誤解を招く可能性があります。</li>
+<li>マーケティングタグは患者記録ではありません。Clinikoが患者記録です。この統合により、両者を混同することなく同期を保つことができます。</li>
+</ul>
+<p>CRMConnect ClinikoとActiveCampaignの連携動作をご覧になりたいですか？ <a href="/apipartners/cliniko/cliniko-activecampaign-integration-and-automation-apiant">APIアプリのページを見る</a>または、全文を閲覧する <a href="/apps.html">APIアプリカタログ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-the-spreadsheet-stops-scaling">スプレッドシートのスケーリングが停止する理由</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">市販のツールが失敗する理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#concrete-steps">具体的なステップ</a></li><li class="lvl-2"><a href="#outcome">結果</a></li><li class="lvl-2"><a href="#group-sessions-without-contaminating-one-to-one-metrics">個別セッションの指標を汚染しないグループセッション</a></li><li class="lvl-2"><a href="#the-mistake-worth-avoiding">避けるべき間違い</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

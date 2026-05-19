@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ClinikoとSalesforceを活用した作業療法ネットワークにおける紹介チャネルのアトリビューション分析 | APIANTブログ</title>
+<meta content="Salesforce経由で紹介が入り、Clinikoでコンバージョンが発生する場合、経営陣はどのチャネルが実際にビジネスの資金源となっているのかを把握できません。Clinikoから供給されるカスタムSalesforceオブジェクトを使用することで、この問題を解決できます。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="ClinikoとSalesforceを活用した作業療法ネットワークにおける紹介チャネルの属性分析" property="og:title"/>
+<meta content="Salesforce経由で紹介が入り、Clinikoでコンバージョンが発生する場合、経営陣はどのチャネルが実際にビジネスの資金源となっているのかを把握できません。Clinikoから供給されるカスタムSalesforceオブジェクトを使用することで、この問題を解決できます。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/occupational-therapy-cliniko-salesforce-referral-attribution/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ClinikoとSalesforceを活用した作業療法ネットワークにおける紹介チャネルの属性分析" property="twitter:title"/>
+<meta content="Salesforce経由で紹介が入り、Clinikoでコンバージョンが発生する場合、経営陣はどのチャネルが実際にビジネスの資金源となっているのかを把握できません。Clinikoから供給されるカスタムSalesforceオブジェクトを使用することで、この問題を解決できます。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/occupational-therapy-cliniko-salesforce-referral-attribution/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Referral Channel Attribution for an Occupational Therapy Network With Cliniko + Salesforce",
+  "description": "When referrals enter through Salesforce but conversion happens in Cliniko, leadership cannot see which channels actually fund the business. Custom Salesforce objects fed by Cliniko close that loop.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/occupational-therapy-cliniko-salesforce-referral-attribution/hero.png",
+  "datePublished": "2025-10-07T11:35:13+00:00",
+  "dateModified": "2026-05-19T17:42:57.735064+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Referral Channel Attribution for an Occupational Therapy Network With Cliniko + Salesforce", "item": "https://apiant.com/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/occupational-therapy-cliniko-salesforce-referral-attribution/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">ClinikoとSalesforceを活用した作業療法ネットワークにおける紹介チャネルの属性分析</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025年10月7日</span>
+<span>4分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=healthcare">＃健康管理</a><a class="blog-tag" href="/ja/blog/?tag=cliniko">#クリニック</a><a class="blog-tag" href="/ja/blog/?tag=salesforce">#Salesforce</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ja/blog/?tag=bi-directional-sync">#双方向同期</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="ClinikoとSalesforceを活用した作業療法ネットワークにおける紹介チャネルの属性分析" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/occupational-therapy-cliniko-salesforce-referral-attribution/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>Salesforce経由で紹介が来ても、コンバージョンがClinikoで行われる場合、経営陣はどのチャネルが実際にビジネスの資金源となっているのかを把握できません。受付担当者は紹介情報しか見ることができず、臨床スケジューラーは予約情報しか見ることができません。両者の関連性が分からないため、来年度のパートナーシップ投資を決定する上で重要な問い、つまりどの紹介チャネルが実際に治療計画の完了につながっているのかという問いに誰も答えることができないのです。</p>
+<p>具体例を挙げましょう。メリディアン作業療法グループは、6つのクリニック、28人の作業療法士、保険会社、一般開業医、学区、自己紹介など様々な紹介元を持つ、架空の地域プロバイダーです。受付チームはSalesforceで業務を行い、スケジュール管理と臨床結果はClinikoで管理されています。経営陣は、どの紹介チャネルが初回アセスメントの完了、ましてやケアプランの完了につながっているのかを把握できていません。チャネルへの投資決定は、直感に基づいて行われています。</p>
+<p><img alt="ClinikoとSalesforceを用いた作業療法ネットワークにおける紹介チャネルの帰属分析 — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/occupational-therapy-cliniko-salesforce-referral-attribution/inline-1.png"/></p>
+<h2 id="the-intake-bottleneck">吸気ボトルネック</h2>
+<p>6つのクリニックからなるネットワークにおける典型的な受付フローは次のようになります。紹介状がファックス、ポータル、または電話で届きます。受付コーディネーターが紹介元を紐付けたSalesforceリードを作成します。リードがクリニックに割り当てられます。割り当てられたクリニックでClinikoに患者が作成されます。Clinikoで予約がスケジュールされます。Clinikoで治療が行われます。SalesforceリードとCliniko患者は、直接的な連携のない別々のレコードです。紹介によって初回評価が完了したかどうか、ましてやケアプランが完成したかどうかは、Clinikoのエクスポートデータから手動で再構築する必要があります。</p>
+<h2 id="why-off-the-shelf-tools-fail">市販のツールが失敗する理由</h2>
+<p>SalesforceからClinikoへの一方的なデータ送信（患者の作成）と四半期ごとのCSVによるデータ取得（発生した事象の報告）では、情報が古く、情報が失われてしまいます。CSVの調整が完了する頃には、受付チームの再教育や紹介パートナーシップの調整を行うべきタイミングは過ぎてしまっています。さらに大きな問題は、紹介元の属性情報が翻訳の過程で失われてしまうことです。Salesforceのリードのソースフィールドが、Clinikoの患者情報にレポート可能なフィールドとして反映されることはほとんどありません。そのため、手動でエクスポートしても、「紹介チャネル別の完了したケアプラン」という質問に対する回答を得ることができません。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>CRMConnect ClinikoとSalesforceは双方向の患者および連絡先同期を提供するため、受付時に作成されたSalesforce連絡先は、患者の診療過程全体を通してClinikoのリアルタイムアクティビティで強化されるレコードと同じになります。Clinikoの予約は、ステータス（予約済み、到着済み、DNA、キャンセル済み）を持つカスタムオブジェクトとしてSalesforceにストリーミングされます。Clinikoの症例情報（紹介元、紹介医、マイルストーン、セッション制限）もSalesforceオブジェクトとして公開されます。Salesforceレポートでは、紹介チャネルごとにグループ化し、実際に重要な項目（到着した初回評価と完了したケアプラン）をカウントできるようになりました。</p>
+<h2 id="concrete-steps">具体的なステップ</h2>
+<ol>
+<li>双方向の患者情報同期を設定します。受付時に作成されたSalesforceの連絡先は、患者としてClinikoに反映されます。Cliniko側で行われた更新（電話番号の修正、住所の更新、重複データの統合など）は、Salesforceの連絡先にも反映されます。</li>
+<li>Clinikoの予約をSalesforceのカスタムオブジェクトとして有効化します。各予約は、患者、医師、クリニック、予約タイプ、ステータスが記録されたSalesforceレコードとなります。Clinikoでのステータス変更は数分以内に反映されます。</li>
+<li>Clinikoの症例情報をSalesforceオブジェクトとして有効化します。紹介元フィールド、紹介医、マイルストーン、セッション制限、症例ステータスはすべて、レポート可能なSalesforceディメンションになります。</li>
+<li>チャネルアトリビューションレポートを作成します。紹介元ごとにグループ化します。列：受信したリード、予約済みのアポイントメントがあるコンタクト、初回アセスメントが行われたコンタクト、ケアプランが完了したコンタクト（マイルストーン完了時にケースがクローズとしてマークされた）、請求総額。</li>
+<li>コストを考慮に入れる。Salesforceでマーケティング費用やパートナーシップ費用をチャネルごとに追跡している場合、レポートには紹介件数あたりのコストだけでなく、初回アセスメントの実施件数あたりのコストとケアプランの完了件数あたりのコストも表示されるようになりました。</li>
+<li>複数クリニックへの患者割り当てを設定します。この統合により、割り当てられたクリニック（Clinikoの事業所）がすべての予約のフィールドとして保持されます。Salesforceの割り当てルールを使用して、紹介元の属性を失うことなく、地理、専門分野、または保険プランに基づいて、新しい紹介を6つのクリニックのうち適切なクリニックにルーティングします。</li>
+</ol>
+<p><img alt="ClinikoとSalesforceを用いた作業療法ネットワークにおける紹介チャネルの帰属分析 — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/occupational-therapy-cliniko-salesforce-referral-attribution/inline-2.png"/></p>
+<h2 id="outcome">結果</h2>
+<p>メリディアンのようなプロファイルを持つネットワークでは、通常、最初の四半期のうちに、強力だと思っていた紹介チャネルのうち1つか2つが実際には完了したケアプランの点で中程度（紹介件数は多いが、来院した患者へのコンバージョン率が低い）である一方、より小規模なチャネルが最も価値の高い患者群を生み出していることに気づくでしょう。これは、経営陣がこれまで話し合うことができなかったパートナーシップ投資に関する議論です。受付担当者はレポートを手作業で再構築する必要がなくなり、地域ディレクターは、完了したケアプラン、請求済み収益、チャネルごとのコストをリアルタイムで更新した単一のSalesforceダッシュボードを利用できるようになります。</p>
+<h2 id="multi-clinic-dispatch-without-losing-attribution">複数の診療所への派遣を、属性を失うことなく実現する</h2>
+<p>ここで避けるべき間違いは、紹介先クリニックで手動で新規リードを作成することで、紹介患者を別のクリニックに振り分けることです。これは、元の紹介元情報との関連付けを損なってしまいます。正しい方法は、元のSalesforceの連絡先情報を保持し、割り当てられたクリニックのフィールドを更新することです。この連携機能により、紹介元情報を失うことなく、適切なクリニックでClinikoの患者情報が作成または更新されます。</p>
+<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
+<ul>
+<li>双方向の患者情報同期が基盤となる。これがなければ、どちらかの側で記録が初めて更新された時点で、属性の特定が不可能になる。</li>
+<li>Salesforceのカスタムオブジェクトとして予約情報と症例情報を活用することで、実際に必要なレポートを作成できるようになります。これらがなければ、Salesforceにはリード情報、Clinikoには結果情報しかなく、その間の情報は一切得られません。</li>
+<li>チャネル別貢献度は「獲得リード数」ではなく、「チャネル別完了ケアプラン数（コスト調整済み）」です。まずはそのレポートを作成してください。その他はすべて補足的な証拠となります。</li>
+</ul>
+<p>CRMConnect ClinikoとSalesforceの連携動作をご覧になりたいですか？ <a href="/apipartners/cliniko/cliniko-salesforce-integration-and-automation-apiant">APIアプリのページを見る</a>または、全文を閲覧する <a href="/apps.html">APIアプリカタログ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-intake-bottleneck">吸気ボトルネック</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">市販のツールが失敗する理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#concrete-steps">具体的なステップ</a></li><li class="lvl-2"><a href="#outcome">結果</a></li><li class="lvl-2"><a href="#multi-clinic-dispatch-without-losing-attribution">複数の診療所への派遣を、属性を失うことなく実現する</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

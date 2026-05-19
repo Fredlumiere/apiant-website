@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="sv">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Minska antalet utebliven besök hos pediatriska företag med Salesforce-flöden utlösta av Clinicos mötesstatus | APIANT-bloggen</title>
+<meta content="En utebliven andel på 19 procent äter upp dina dyraste fritidstider efter skolan. Med Cliniko-bokningsstatus synkroniserad med Salesforce som anpassade objekt slutar dina vårdkoordinatorer att jaga rapporter och börjar arbeta i en kö." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Minska antalet utebliven ankomster hos barn med Salesforce-flöden utlösta av Clinicos mötesstatus" property="og:title"/>
+<meta content="En utebliven andel på 19 procent äter upp dina dyraste fritidstider efter skolan. Med Cliniko-bokningsstatus synkroniserad med Salesforce som anpassade objekt slutar dina vårdkoordinatorer att jaga rapporter och börjar arbeta i en kö." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Minska antalet utebliven ankomster hos barn med Salesforce-flöden utlösta av Clinicos mötesstatus" property="twitter:title"/>
+<meta content="En utebliven andel på 19 procent äter upp dina dyraste fritidstider efter skolan. Med Cliniko-bokningsstatus synkroniserad med Salesforce som anpassade objekt slutar dina vårdkoordinatorer att jaga rapporter och börjar arbeta i en kö." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cutting Pediatric No-Shows With Salesforce Flows Triggered by Cliniko Appointment Status",
+  "description": "A 19 percent no-show rate eats your most expensive after-school slots. With Cliniko appointment status syncing into Salesforce as custom objects, your care coordinators stop chasing reports and start working a queue.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/hero.png",
+  "datePublished": "2025-12-29T11:04:52+00:00",
+  "dateModified": "2026-05-19T17:42:58.086891+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Cutting Pediatric No-Shows With Salesforce Flows Triggered by Cliniko Appointment Status", "item": "https://apiant.com/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/sv/blog/posts/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/sv/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blogg</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plattform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Anslutningar</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Börja bygga</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/sv/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-appar</a>
+</div>
+<h1 class="blog-post-h1">Minska antalet utebliven ankomster hos barn med Salesforce-flöden utlösta av Clinicos mötesstatus</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/sv/blog/?author=fred">Fred Lumiere</a></span>
+<span>29 december 2025</span>
+<span>5 minuters läsning</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/sv/blog/?tag=healthcare">#Hälsovård</a><a class="blog-tag" href="/sv/blog/?tag=cliniko">#Cliniko</a><a class="blog-tag" href="/sv/blog/?tag=salesforce">#Salesforce</a><a class="blog-tag" href="/sv/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Minska antalet utebliven ankomster hos barn med Salesforce-flöden utlösta av Clinicos mötesstatus" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>Tider efter skolan är den mest värdefulla egendomen på en pediatrisk terapiklinik. Det är också de tider familjer missar oftast, och kostnaden för dessa tider är asymmetrisk: en oanvänd tid klockan 15:30 är svårare att fylla med kort varsel än en tid mitt på dagen, och familjer som missar tider efter skolan tenderar att missa igen nästa månad om ingenting förändras.</p>
+<p>Ta ett illustrativt exempel: Little Roots Pediatric Therapy, ett hypotetiskt nätverk med fyra kliniker, 18 pediatriska arbetsterapeuter och sjukgymnaster samt cirka 2 400 aktiva familjer. De har en "Did Not Arrival"-frekvens på 19 procent. Vårdkoordinatorer jagar ombokningar från en Cliniciko-rapport varje morgon och arbetar med en lista som redan är föråldrad när de börjar. Samma familjer försvinner igen nästa månad. Nettoeffekt: den kliniska kapaciteten är underutnyttjad, familjer får inte den konsekvens som deras vårdplan behöver och intäkter läcker ut i stor skala.</p>
+<p><img alt="Minska antalet utebliven ankomst hos barn med Salesforce-flöden utlösta av Clinicos mötesstatus — Figur 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/inline-1.png"/></p>
+<h2 id="why-pediatric-after-school-slots-are-the-highest-cost-no-show">Varför barnpass efter skoltid är den dyraste tiden för utebliven ankomst</h2>
+<p>En klinik som körs med en typisk avgift på 135 dollar per session, med en rusningstid mellan 15:30 och 17:30 som fylls 8 veckor i förväg, förlorar ungefär 270 dollar i marginalintäkter varje gång en fritidsplats blir tom (själva sessionen plus svårigheten att fylla platsen med kort varsel). Med 19 procent DNA och 20 fritidstider per klinik och vecka, förlorar nätverket bara femsiffrigt i veckan på dessa platser. Morgonrapporten från Clinico fångar inte upp problemet tillräckligt snabbt eftersom familjen redan har gått vidare med sin dag när samordnaren ringer.</p>
+<h2 id="why-off-the-shelf-tools-fail">Varför standardverktyg misslyckas</h2>
+<p>Påminnelseverktyg med fast schema (24 timmar före, 2 timmar före) anpassar sig inte till familjesammanhanget. En 5-årings förälder behöver en annan rytm på en onsdagseftermiddag än en 14-årig klients förälder. Återhämtning är den större klyftan: de flesta påminnelseverktyg har inget koncept med "tiden blev just markerad som Kom inte fram, kontakta familjen inom 30 minuter". Barnvårdskoordinatorer behöver en kö i realtid, inte en morgonrapport.</p>
+<h2 id="the-apiant-approach">APIANT-metoden</h2>
+<p>CRMConnect Cliniko till Salesforce strömmar Cliniko-bokningar som anpassade Salesforce-objekt, med statusövergångar (Bokade, Ankomna, DNA, Avbrutna) som sker i nästan realtid. Salesforce Flow kan utlösas vid alla statusändringar, vilket ger vårdkoordinatorer en livekö snarare än en inaktuell rapport. Integrationen skiljer också individuella från gruppbokningar, så att sociala färdighetsgrupper får sin egen påminnelsekadens utan att störa den enskilda DNA-rapporteringen.</p>
+<h2 id="concrete-steps">Betongsteg</h2>
+<ol>
+<li>Aktivera Cliniciko-bokningar som anpassade Salesforce-objekt. Bekräfta att statusändringar implementeras inom några minuter.</li>
+<li>Bygg DNA-återställningsflödet. Utlösare: statusen för mötesposten ändras till "Har inte kommit fram". Åtgärd: skapa en Salesforce-uppgift tilldelad familjens vårdkoordinator med ett 30-minuters SLA, skicka ett SMS till föräldern via din Salesforce-anslutna SMS-leverantör, logga beröringen på kontaktens tidslinje.</li>
+<li>Skapa flaggan för upprepat DNA. Schemalägg ett Salesforce Flow som körs varje natt: för alla kontakter vars länkade patient har 3 eller fler DNA-möten under de senaste 90 dagarna, sätt en flagga för "Upprepa DNA-granskning" och skapa en uppgift för den kliniska chefen och klinikchefen.</li>
+<li>Bygg upp påminnelsekadensen efter patientens ålder. Använd Cliniko-patientens födelsedatum (visat på Salesforce-kontakten) för att dela upp familjer i påminnelsekohorter. Yngre barn (under 8 år) får en påminnelse med längre förvarningstid och en påminnelse samma dag. Äldre klienter får en enda 24-timmarskontakt.</li>
+<li>Bygg upp kadensen för vårdfasen. Använd Clinicos fallinformation (bedömning kontra pågående behandling) för att skicka en annan påminnelsekopia. En initial bedömningspåminnelse måste ställa andra förväntningar än en påminnelse om den 15:e pågående behandlingssessionen.</li>
+<li>Hantera gruppsessioner separat. Grupper för sociala färdigheter har sina egna möteshanteringsobjekt i integrationen. Bygg ett separat grupppåminnelseflöde så att individuell sessions-DNA-rapportering inte kontamineras av gruppens närvarosignaler.</li>
+<li>Bygg DNA-instrumentpanelen. Per klinik, per läkare, per bokad tid (morgon, middag, efter skolan). Spåra DNA-frekvens, återhämtningsfrekvens (ombokad inom 7 dagar), återvunna intäkter. Jämför med baslinjen före driftsättning.</li>
+</ol>
+<p><img alt="Minska antalet utebliven ankomst hos barn med Salesforce-flöden utlösta av Clinicos mötesstatus — Figur 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/pediatric-therapy-clinic-cliniko-salesforce-no-show-reduction/inline-2.png"/></p>
+<h2 id="outcome">Resultat</h2>
+<p>Ett pediatriskt nätverk som matchar Little Roots profil hämtar vanligtvis DNA från 19 procent ner till 10 till 12 procent inom ett kvartal. Den största enskilda bidragsgivaren är 30-minuters SLA på DNA-återställningsflödet: familjer som får ett personligt samtal samma timme från sin faktiska vårdkoordinator bokar om med 2 till 3 gånger högre hastighet än antalet familjer som ringer nästa morgon. Flaggan för upprepat DNA visar en liten grupp familjer (vanligtvis 4 till 7 procent av ärendebelastningen) vars mönster motiverar ett kliniskt och operativt samtal, vilket är omöjligt att upptäcka i en platt månadsrapport. Utnyttjandet av fritidsplatser ökar från de höga 70-talet till de låga 90-talet, vilket i nätverksskala är en betydande veckoinkomst.</p>
+<h2 id="what-to-avoid">Vad man ska undvika</h2>
+<p>Två fallgropar värda att nämna:</p>
+<ul>
+<li>Låt inte SMS:et om DNA-återställning läsas som ett marknadsföringsmeddelande. Familjer svarar på ett personligt meddelande från "din vårdkoordinator på [kliniknamn]", inte på en mallbaserad varumärkesröst. Använd fälten för vårdgivarens identitet och kliniknamn som integrationen redan tillhandahåller.</li>
+<li>Utlös inte automatisk återställning av inställda möten på samma sätt som DNA. En avbokning är en meddelad avbokning. Att skicka ett meddelande med "vi märkte att du missade" till en familj som artigt avbokat urholkar förtroendet. Förgrena flödet baserat på faktisk status.</li>
+</ul>
+<h2 id="builder-takeaway">Byggare takeaway</h2>
+<ul>
+<li>DNA-återställning är ett problem med ett SLA-avtal som utlöses inom 30 minuter, inte ett problem med ett samtal nästa morgon. Salesforce Flow som utlöses vid statusändring i Cliniko är mekanismen som gör det SLA-avtalet möjligt.</li>
+<li>Repeterad DNA-detektion är rapporten du inte kan bygga på något annat sätt. Bygg den. Mönstren den visar styr kliniska och operativa beslut.</li>
+<li>Gruppsessioner får sina egna påminnelser och rapporteringsflöden. Att blanda dem med individuella mätvärden bryter båda.</li>
+</ul>
+<p>Vill du se CRMConnect Cliniko till Salesforce i aktion? <a href="/apipartners/cliniko/cliniko-salesforce-integration-and-automation-apiant">Visa API-appens sida</a>Eller bläddra igenom hela <a href="/apps.html">API-appkatalog</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">I den här artikeln</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-pediatric-after-school-slots-are-the-highest-cost-no-show">Varför barnpass efter skoltid är den dyraste tiden för utebliven ankomst</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">Varför standardverktyg misslyckas</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT-metoden</a></li><li class="lvl-2"><a href="#concrete-steps">Betongsteg</a></li><li class="lvl-2"><a href="#outcome">Resultat</a></li><li class="lvl-2"><a href="#what-to-avoid">Vad man ska undvika</a></li><li class="lvl-2"><a href="#builder-takeaway">Byggare takeaway</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Fortsätt läsa</h2><div class="blog-grid"><a class="blog-card" href="/sv/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Förenar Mindbody-registreringar, kurser och möten på HighLevel" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Förenar Mindbody-registreringar, kurser och möten på HighLevel</h3><p class="blog-card-excerpt">Använd CRMConnects synkronisering av registrering, kursbokning och möten för att ge HighLevel en kalendervy över alla Mindbody-programtyper.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 maj 2026</span></div></div></a><a class="blog-card" href="/sv/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Rapportering av möten för flera platser i Klaviyo för ett nätverk med 6 styrkor" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Rapportering av möten för flera platser i Klaviyo för ett nätverk med 6 styrkor</h3><p class="blog-card-excerpt">Hur CRMConnects mötessynkronisering visar mötesstatus på platsnivå i Klaviyo så att central marknadsföring kan köra flöden och rapporter per plats.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" href="/sv/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Sluta med den månatliga ombyggnaden av styrelsemöten: dashboards för insamlingar i realtid från DonorPerfect i HubSpot" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Sluta med den månatliga ombyggnaden av styrelsemöten: dashboards för insamlingar i realtid från DonorPerfect i HubSpot</h3><p class="blog-card-excerpt">Styrelser vill ha trendlinjer. Personalen vill ha tillbaka sina kvällar. Med givarens livstidsvärde, genomsnittlig gåva och kampanjresultat synkroniserade med HubSpot, slutar den månatliga styrelserapporten att vara ett fyradagarsprojekt och blir en sparad dashboardvy.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Med ensamrätt.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/sv/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blogg</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plattform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privatliv</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Villkor</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

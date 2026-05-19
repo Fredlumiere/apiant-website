@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>監査に耐えうるアトリビューション：資金調達キャンペーンにおけるActiveCampaignの送信とDonorPerfectの寄付の連携｜APIANTブログ</title>
+<meta content="寄付を特定のメール送信と紐づけることができなければ、キャンペーン予算の正当性を主張することはできません。DonorPerfectからActiveCampaignに寄付情報を同期することで、どのメッセージが実際に資金を集めたのかを開発部門が証明できるようになり、収益化のプロセスが明確になります。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="監査に耐えうるアトリビューション：ActiveCampaignの送信とDonorPerfectの寄付を連携させて資金調達キャンペーンに活用する" property="og:title"/>
+<meta content="寄付を特定のメール送信と紐づけることができなければ、キャンペーン予算の正当性を主張することはできません。DonorPerfectからActiveCampaignに寄付情報を同期することで、どのメッセージが実際に資金を集めたのかを開発部門が証明できるようになり、収益化のプロセスが明確になります。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-capital-campaign-attribution/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="監査に耐えうるアトリビューション：ActiveCampaignの送信とDonorPerfectの寄付を連携させて資金調達キャンペーンに活用する" property="twitter:title"/>
+<meta content="寄付を特定のメール送信と紐づけることができなければ、キャンペーン予算の正当性を主張することはできません。DonorPerfectからActiveCampaignに寄付情報を同期することで、どのメッセージが実際に資金を集めたのかを開発部門が証明できるようになり、収益化のプロセスが明確になります。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-capital-campaign-attribution/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Attribution that survives the audit: connecting ActiveCampaign sends to DonorPerfect gifts for capital campaigns",
+  "description": "If you cannot tie a gift back to a specific email send, you cannot defend your campaign budget. Syncing donation deals from DonorPerfect into ActiveCampaign closes the loop so the development office can prove which messages actually raised money.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-capital-campaign-attribution/hero.png",
+  "datePublished": "2025-03-03T10:32:30+00:00",
+  "dateModified": "2026-05-19T17:43:02.01503+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Attribution that survives the audit: connecting ActiveCampaign sends to DonorPerfect gifts for capital campaigns", "item": "https://apiant.com/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/donorperfect-activecampaign-capital-campaign-attribution/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">監査に耐えうるアトリビューション：ActiveCampaignの送信とDonorPerfectの寄付を連携させて資金調達キャンペーンに活用する</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025年3月3日</span>
+<span>6分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=nonprofit">#非営利団体</a><a class="blog-tag" href="/ja/blog/?tag=donorperfect">#ドナーパーフェクト</a><a class="blog-tag" href="/ja/blog/?tag=activecampaign">#アクティブキャンペーン</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="監査に耐えうるアトリビューション：ActiveCampaignの送信とDonorPerfectの寄付を連携させて資金調達キャンペーンに活用する" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-capital-campaign-attribution/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>資金調達キャンペーンは監査の対象となり、年間基金の決定事項は理事会で議論される。どちらの場合も、開発部門は同じ質問をされるが、どのメッセージが実際にどの寄付につながったのか、という問いに明確な答えを出すことはほとんどない。</p>
+<p>メールの開封は寄付ではありません。クリックも寄付ではありません。寄付者が3月にクリックしたリンクと、5月に送金した5,000ドルの寄付の間には、12週間の期間、オフラインでの会話、そして夕食会での役員からの後押しがあります。監査を通過するキャンペーンのアトリビューションは、ActiveCampaignの送信とDonorPerfectの寄付を、支出を正当化するのに十分なメタデータで結びつける必要があります。</p>
+<p>ほとんどの美術館はそこまで到達できない。開発部は開封率とクリック率を報告しているが、それはそれらのデータを持っているからだ。理事会は、寄付レベルの貢献度分析が存在しないため、開封率とクリック率に基づいて来年度のメール予算を承認する。</p>
+<p><img alt="監査に耐えうるアトリビューション：ActiveCampaignの送信とDonorPerfectの寄付を連携させて資金調達キャンペーンを実施する — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-activecampaign-capital-campaign-attribution/inline-1.png"/></p>
+<h1 id="the-attribution-problem-looks-different-from-the-donor-cultivation-problem-cultivation-is-about-getting-the-right-message-to-the-right-person-attribution-is-about-proving-which-message-produced-which-dollar">寄付者育成の問題とは、寄付者への貢献度を検証する問題とは異なる。寄付者育成とは、適切なメッセージを適切な人に届けることである。一方、寄付者育成とは、どのメッセージがどの寄付金を生み出したかを証明することである。</h1>
+<p>ActiveCampaignはメッセージレベルのエンゲージメントを正確にレポートしますが、寄付の記録はできません。寄付者がキャンペーンリンクをクリックして寄付ページに移動し、寄付を行います。ActiveCampaignはクリックを記録し、DonorPerfectは寄付を記録します。連携がなければ、この2つのイベントを結びつけることはできません。</p>
+<p>寄付フォームのUTMトラッキング機能は、キャンペーンのメタデータをDonorPerfectに渡すことができますが、そのためには、寄付フォームがUTMをカスタムフィールドとして取得し、寄付記録に保存するように設定されている必要があります。ほとんどのフォームはそのような設定になっていません。</p>
+<p>手作業による照合は、30件の寄付を集める資金調達キャンペーンには有効だが、3,000件の寄付を集める年間募金活動では通用しない。</p>
+<p>DonorPerfectのネイティブキャンペーンコードは、問題の一部（どのキャンペーンが寄付につながったか）は解決しますが、より詳細な問題（どのメールを送信したか、件名、セグメントなど）は解決しません。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>DonorPerfectおよびActiveCampaign向けのCRMConnectは、各寄付を第一級のデータオブジェクトとして扱い、キャンペーンのメタデータを両システム間で共有します。監査レベルのアトリビューションを可能にする機能は以下のとおりです。</p>
+<ul>
+<li><strong>簡単な寄付トラッキング</strong> DonorPerfectは、各寄付を、金額、寄付日、寄付の種類、キャンペーン、勧誘、およびサブ勧誘が添付されたActiveCampaign取引として書き込みます。</li>
+<li><strong>キャンペーンパフォーマンスインサイト</strong> ActiveCampaignの取引プロパティ値を、リアルタイム同期によってDonorPerfectのキャンペーンコードと常に一致させます。</li>
+<li><strong>ドロップダウン用CodeSync</strong> キャンペーンコードリストを同期します。DonorPerfectで新しいアピールコードを追加すると、ActiveCampaignのドロップダウンリストが自動的に更新されます。</li>
+<li><strong>カスタムフィールド同期</strong> 寄付フォームで取得したUTMパラメータを取引まで引き継ぐため、寄付元と媒体は寄付とともに伝達されます。</li>
+<li><strong>双方向同期</strong> 監査証跡のために、アトリビューション集計結果をDonorPerfectに書き戻します。</li>
+</ul>
+<h2 id="building-audit-grade-campaign-attribution">監査レベルのキャンペーンアトリビューションを構築する</h2>
+<p>具体例：コーストライン海洋博物館は、会員数1万1000人の地域博物館で、年間4回の資金調達キャンペーンを実施している（架空の例であり、実在する組織ではない）。</p>
+<p><strong>ステップ1. ギフトに有効なキャンペーンコードをタグ付けします。</strong> ActiveCampaignでは、すべてのキャンペーン送信に、DonorPerfectキャンペーンコードにマッピングされるカスタムURLパラメータを含める必要があります。春の資金調達キャンペーンでは、次のようなキャンペーンが送信される可能性があります。 <code>2026_SPRING_CAP_VESSEL_RESTORATION</code>メール内の寄付リンクには <code>?utm_campaign=2026_SPRING_CAP_VESSEL_RESTORATION&amp;utm_source=activecampaign&amp;utm_medium=email&amp;utm_content=lead_email</code>.</p>
+<p><strong>ステップ2．寄付フォーム上のUTMパラメータを取得します。</strong> DonorPerfectの寄付フォームを設定して、 <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>、および <code>utm_term</code> ギフトレコードのカスタムフィールドに反映させます。これはフォーム上の小さなJavaScriptコードで、クエリ文字列を読み取り、非表示のフォームフィールドに値を入力します。一度反映されると、すべてのギフトにその発生元メタデータが付与されます。</p>
+<p><strong>ステップ3：UTMフィールドをActiveCampaignの取引プロパティにマッピングします。</strong> CRMConnectのフィールドマッピングで、ActiveCampaignに5つのカスタム取引フィールド（元のソース、元のメディア、元のキャンペーン、元のコンテンツ、元の用語）を作成し、それぞれを対応するDonorPerfectのUTMカスタムフィールドにマッピングします。このマッピングは新しい寄付が同期されるたびに実行されるため、アトリビューションは取引レベルで取得され、連絡先レベルでは取得されません。</p>
+<p><strong>ステップ4．資金調達キャンペーンのための取引パイプラインを構築する。</strong> 複数回にわたる資金調達キャンペーンでは、通常、「特定」、「育成」、「提案」、「誓約」、「初回支払い受領」、「全額支払い」などの段階があります。各段階は、寄付の道のりの異なる時点に対応しています。CRMConnect は、DonorPerfect のギフト タイプに基づいて適切な段階を自動的に入力します。複数年にわたる誓約の場合は、キャッシュ パイプラインで支払いごとに取引を作成し、コミットメント パイプラインで合計金額に対して別の誓約コミットメント取引を作成します。これが、現金ベースのレポートの正確性を維持する唯一の方法です。</p>
+<p><strong>ステップ5．アトリビューションダッシュボードを作成する。</strong> 資金調達キャンペーンの成果帰属分析の大部分は、以下の3つの報告書によって行われる。</p>
+<ul>
+<li><strong>メール送信による収益。</strong> 取引をオリジナルコンテンツ（メール送信識別子を含む）ごとにグループ化し、取引金額を合計します。降順で並べ替えます。上位3件の送信は通常、収益の60%以上を占めます。下位半分の送信は削除しても構いません。</li>
+<li><strong>受取人一人当たりの収益。</strong> 各送信における収益を受信者数で割ってください。キャンペーン最適化において重要なのは、開封率ではなく、この指標です。</li>
+<li><strong>マルチタッチパス解析。</strong> 寄付前に複数回連絡を受けた寄付者については、寄付に至るまでの連絡履歴を一覧にしてください。ActiveCampaignの連絡先アクティビティログを使えば、この情報を簡単に確認できます。</li>
+</ul>
+<p><strong>ステップ6．ボードへの表面的な帰属表示。</strong> ActiveCampaignのダッシュボードを作成し、キャンペーン別、セグメント別、パイプラインのステージ別価値を表示します。閲覧専用の役員会アクセス権限で共有します。役員会は「メールの指標についてご説明します」から「これがダッシュボードです。次に何をするかはこれです」へとスムーズに移行します。</p>
+<h2 id="pitfalls-that-kill-attribution-accuracy">帰属精度を損なう落とし穴</h2>
+<p><strong>寄付金を収益として計上する。</strong> 5万ドルの寄付約束は、今四半期の5万ドルの収益を意味するものではありません。それは、今後5年間、年間1万ドルの収益を生み出す可能性のある約束です。寄付約束は、支払いとは別のパイプラインで管理してください。両方について報告しますが、決して合計しないでください。</p>
+<p><strong>複数年契約の料金は、将来の年度に支払われます。</strong> 2026年に誓約し、2027年に支払われた寄付金は、支払いを受けた2027年の報告期間ではなく、誓約を生み出した2026年のキャンペーンに帰属するべきです。各寄付金の支払いには「元のキャンペーン」フィールドを必ず含め、支払い日以降も帰属情報が維持されるようにしてください。</p>
+<p><strong>お揃いのギフト。</strong> 1,000ドルの寄付に対して、2か月後に寄付者の雇用主から1,000ドルのマッチングギフトが贈られます。マッチングギフトは、元の寄付と同じキャンペーン名で贈られるべきであり、マッチングギフトが届いた時点で実施されていたキャンペーン名で贈られるべきではありません。</p>
+<p><strong>ソフトクレジット。</strong> 財団が寄付を行ったものの、その関係構築を理事会メンバーが行った場合、関係構築の功績は理事会メンバーに、資金提供の功績は財団に帰属するべきです。二重計上を避けるため、これらを別々の取引タイプとして追跡してください。</p>
+<p><strong>ラストタッチ対ファーストタッチ。</strong> UTMパラメータは最後の接触のみを捉えます。検討期間が長い資金調達キャンペーンの場合、UTMベースのアトリビューションに加えて、最初の接触ビューを追加してください。つまり、どのキャンペーンが最初に顧客に美術館の資金調達の訴求ポイントを紹介したのかを把握します。資金調達パイプラインにおける顧客の最初の取引を最初の接触の指標として使用してください。</p>
+<h2 id="what-it-looks-like-in-production">実際の生産現場ではどのような様子か</h2>
+<p>コーストライン博物館のような規模の展示型博物館（会員数11,000人、年間収益520万ドル、年間4回の資金調達キャンペーン）の場合、監査レベルのアトリビューション分析を実施すると、通常、1サイクルあたり1～2回のキャンペーンが収益の50～70%を占め、2～3回のキャンペーンは一桁台のROIしか生み出していないことが明らかになります。実績のあるキャンペーンに予算を再配分することで、追加支出なしにサイクルごとの収益を30～50%増加させることができます。理事会は、前年度の予算にインフレ率を加えた額を承認するのではなく、1ドルあたりの実績が文書化されたポートフォリオを承認するようになります。</p>
+<p>監査での勝利は大きな話題となった。組織内部における文化的な勝利は、開発部門が意思決定をエンゲージメント率で正当化するのをやめ、成約金額で正当化し始めたことである。</p>
+<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
+<ul>
+<li>送信時に、DonorPerfectキャンペーンコードに対応するUTMキャンペーンタグを付けてください。このマッピングによって、他のすべての機能が可能になります。</li>
+<li>寄付フォームでUTMパラメータを取得し、DonorPerfectのカスタムフィールドに取り込んでください。この手順を行わないと、寄付が行われた時点でアトリビューションチェーン全体が途切れてしまいます。</li>
+<li>寄付の約束と支払いは別々のプロセスで処理されます。5年間の寄付約束を当四半期の収益として計上すると、収益帰属の信頼性が損なわれます。</li>
+</ul>
+<p>CRMConnect DonorPerfectとActiveCampaignの連携動作をご覧になりたいですか？ <a href="/apipartners/donorperfect/donorperfect-activecampaign-integration-and-automation-apiant">APIアプリのページを見る</a>既製APIANTコネクタの全カタログについては、こちらをご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#building-audit-grade-campaign-attribution">監査レベルのキャンペーンアトリビューションを構築する</a></li><li class="lvl-2"><a href="#pitfalls-that-kill-attribution-accuracy">帰属精度を損なう落とし穴</a></li><li class="lvl-2"><a href="#what-it-looks-like-in-production">実際の生産現場ではどのような様子か</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

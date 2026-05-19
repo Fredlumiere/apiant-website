@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>SalesforceのCliniko Invoicesを基盤とした、医療関連クリニックの90日間収益予測 | APIANTブログ</title>
+<meta content="従業員数が19名、売上高が300万ドルに達すると、スプレッドシートはもはや適切な予測ツールではなくなります。Clinikoの請求書と予約情報をSalesforceのカスタムオブジェクトに同期することで、財務部門は90日間の正確な予測を把握できるようになります。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="SalesforceのCliniko Invoicesに基づいて構築された、医療関連クリニックの90日間の収益予測" property="og:title"/>
+<meta content="従業員数が19名、売上高が300万ドルに達すると、スプレッドシートはもはや適切な予測ツールではなくなります。Clinikoの請求書と予約情報をSalesforceのカスタムオブジェクトに同期することで、財務部門は90日間の正確な予測を把握できるようになります。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="SalesforceのCliniko Invoicesに基づいて構築された、医療関連クリニックの90日間の収益予測" property="twitter:title"/>
+<meta content="従業員数が19名、売上高が300万ドルに達すると、スプレッドシートはもはや適切な予測ツールではなくなります。Clinikoの請求書と予約情報をSalesforceのカスタムオブジェクトに同期することで、財務部門は90日間の正確な予測を把握できるようになります。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "A 90-Day Revenue Forecast for an Allied Health Clinic Built on Cliniko Invoices in Salesforce",
+  "description": "Spreadsheets stop being the right forecasting tool at 19 practitioners and $3M in revenue. Cliniko invoices and appointments synced into Salesforce custom objects give finance a real 90-day view.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/hero.png",
+  "datePublished": "2025-08-18T16:18:59+00:00",
+  "dateModified": "2026-05-19T17:42:58.418521+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "A 90-Day Revenue Forecast for an Allied Health Clinic Built on Cliniko Invoices in Salesforce", "item": "https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">SalesforceのCliniko Invoicesに基づいて構築された、医療関連クリニックの90日間の収益予測</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025年8月18日</span>
+<span>4分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=healthcare">＃健康管理</a><a class="blog-tag" href="/ja/blog/?tag=cliniko">#クリニック</a><a class="blog-tag" href="/ja/blog/?tag=salesforce">#Salesforce</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ja/blog/?tag=for-enterprise">#企業向け</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="SalesforceのCliniko Invoicesに基づいて構築された、医療関連クリニックの90日間の収益予測" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>財務担当者が毎週月曜日にスプレッドシートで予測を再構築している状況は、その企業が予測インフラの規模を超えて成長していることを示す主要な兆候です。一定の規模を超えると、スプレッドシートはもはやツールではなく、ボトルネックとなるのです。</p>
+<p>具体例を挙げましょう。サウスバンク・インテグレーテッド・ヘルスは、理学療法、栄養学、心理学、運動生理学の分野で19名の専門家を擁し、年間売上高が約310万ドルの架空の大規模クリニックです。財務マネージャーは毎週月曜日に90日間の予測を手作業で再構築しています。請求書はClinikoで管理され、パイプラインはSalesforceで管理されています。しかし、誰もこの予測を完全に信頼していません。NDIS（国民障害者保険制度）の資金提供を受けたプランでは、スプレッドシートで一貫性のない処理しかできない、繰り返し発生する請求対象活動が加わります。経営陣の会議では、毎週火曜日のかなりの時間を、正しい数字に基づいて行動するのではなく、どの数字が正しいかを議論することに費やしています。</p>
+<p><img alt="SalesforceのCliniko Invoicesに基づいて構築された、医療関連クリニックの90日間の収益予測 — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/inline-1.png"/></p>
+<h2 id="why-the-finance-managers-spreadsheet-is-the-bottleneck">財務マネージャーのスプレッドシートがボトルネックになる理由</h2>
+<p>この規模のスプレッドシートによる予測は、次の3つの点で不十分である。</p>
+<ul>
+<li>鮮度：製造直後が最も鮮度が高く、24時間以内に鮮度が落ちます。</li>
+<li>粒度：施術者別またはサービスライン別にピボットするには何時間もかかり、列名も一致しない。</li>
+<li>完全性：資金提供を受けたプランの請求可能容量（NDISセッションの残り、保険会社のプラン上限）は正しくモデル化されることはほとんどないため、予測は既に上限に達している資金提供を受けた収益を過大に予測するか、間近に迫っている更新を過小に予測するかのいずれかになります。</li>
+</ul>
+<p>その結果、経営陣は予測に基づいて行動するのではなく、議論を重ねることになる。その代償は、財務担当者の時間（もちろんそれも重要なのだが）ではない。真の代償は、意思決定の遅延にあるのだ。</p>
+<h2 id="why-off-the-shelf-tools-fail">市販のツールが失敗する理由</h2>
+<p>ClinikoとSalesforceの間に会計ソフトウェアを連携させることで、税務上の収益認識は可能になりますが、業務予測はできません（会計レイヤーは請求書発行に基づいており、予約に基づいているわけではないため）。Clinikoからエクスポートしたデータに基づいてスタンドアロンのBIダッシュボードを作成すれば、経営陣はグラフを確認できますが、Salesforce内での操作画面は表示されません。Salesforce内には、既に営業パイプラインやプログラム活動といったデータが格納されているにもかかわらずです。Salesforceから予測機能を分離すると、記録システムが2つに分かれてしまいます。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>CRMConnect Cliniko to Salesforceは、Clinikoの請求書と予約をSalesforceのネイティブカスタムオブジェクトとしてストリーミングし、ケース情報（セッション制限、請求可能最大金額、ケースステータス）も併せて公開します。予測は、確定済み請求書（認識済み収益）、予約済みだが未請求の予約（高い可能性）、キャパシティ制約のある資金調達済みプラン（継続可能収益）の3つのレイヤーで構築されたSalesforceレポートになります。スプレッドシートを使った面倒な作業は不要になります。</p>
+<h2 id="concrete-steps">具体的なステップ</h2>
+<ol>
+<li>Clinikoの請求書をSalesforceオブジェクトとして有効化します。各請求書は、請求書番号、発行日、金額、正味金額、税金、割引、支払い状況、患者情報を含むSalesforceレコードを作成します。ステータスはClinikoのステータス（下書き、保留中、支払い済み、無効）を反映します。</li>
+<li>Clinikoの予約をSalesforceオブジェクトとして有効化します。各予約には、日付、担当医師、場所、種類、ステータス、および予約の種類から算出される予想請求金額が含まれます。ステータスはClinikoのステータスを反映します。</li>
+<li>ケース情報の同期を有効にします。プログラムの種類、ケースのステータス、セッション制限、完了したセッション数、請求可能な最大金額、およびアクティブなすべてのケースの残りのキャパシティを記録します。特にNDIS（国家障害者保険制度）の資金提供を受けているプランは、プランの上限が患者一人当たりの予測可能な収益の上限となるため、この機能の恩恵を受けます。</li>
+<li>Salesforce で 30/60/90 予測を作成します。予測は、次の 3 つの要素の合計です。(a) 期間内に発行日がある支払い済みの請求書 (認識済み)、(b) 期間内に発行日がある保留中の請求書 (可能性、過去の支払い率で加重)、(c) 期間内に予約日がある予約済みまたは到着済みの予約に、過去の到着から請求への変換率を乗じたもの。</li>
+<li>資金提供プラン調整を追加します。資金提供プランの対象となるアクティブなケースについては、予測される予約収益を、残りの最大請求可能額に制限します。これにより、予測がプランの上限を超える請求可能活動を予測することを防ぎます。</li>
+<li>施術者別およびサービスライン別のスライスを作成します。予測を施術者別、サービスライン別（初回アセスメント、フォローアップ、グループプログラム、パッケージ訪問）にグループ化します。このビューにより、経営陣は予測が集中している箇所と、キャパシティが十分に活用されていない箇所を把握できます。</li>
+<li>レポートの頻度を設定します。経営陣への週次予測は自動的に更新されます（手動での再構築は不要）。財務部門との月次差異レビューでは、第4週の予測と実績を比較します。</li>
+</ol>
+<p><img alt="SalesforceのCliniko Invoicesに基づいて構築された、医療関連クリニックの90日間の収益予測 — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-salesforce-revenue-forecast-90-day/inline-2.png"/></p>
+<h2 id="outcome">結果</h2>
+<p>サウスバンクのようなクリニックでは、3層構造のSalesforce予測が稼働すると、通常、スプレッドシートのベースラインである75～82%（第3週の予測値と実績値の差）から90%台前半まで予測精度が向上します。財務マネージャーは週に4～6時間の時間を節約できます。経営陣は予測について議論するのをやめ、予測に基づいて行動を開始します。NDIS（国民障害者保険制度）による収益は、過小評価や過大評価ではなく、正確に予測されるようになります。これは、オーストラリアの多くの医療関連事業所における予測のばらつきの最大の原因です。</p>
+<h2 id="funded-plan-tracking-done-responsibly">資金提供計画の追跡を責任を持って実施する</h2>
+<p>資金提供プランの追跡は、ケース情報の同期によって大きなメリットを得られますが、ガバナンス上の要件があります。プランID、資金源、患者の資格ステータスは機密性の高い運用データであり、マーケティングに安全なデータではありません。これらの情報は、財務および運用ダッシュボードに表示してください。マーケティングレポートには表示しないでください。この統合のフィールドレベルの設定により、この区別を明確に行うことができます。</p>
+<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
+<ul>
+<li>この予測は、請求書、予約、およびケース処理能力を組み合わせたものです。ダッシュボードを作成する前に、これら3つすべてがSalesforceオブジェクトである必要があります。</li>
+<li>予算上限額は、過剰予測エラーの最も一般的な原因です。ケースの最大請求可能金額フィールドが、この問題を解決します。</li>
+<li>適切な報告頻度は、週次予測と月次差異分析です。この統合により、両方とも自動化されます。</li>
+</ul>
+<p>CRMConnect ClinikoとSalesforceの連携動作をご覧になりたいですか？ <a href="/apipartners/cliniko/cliniko-salesforce-integration-and-automation-apiant">APIアプリのページを見る</a>または、全文を閲覧する <a href="/apps.html">APIアプリカタログ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-the-finance-managers-spreadsheet-is-the-bottleneck">財務マネージャーのスプレッドシートがボトルネックになる理由</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">市販のツールが失敗する理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#concrete-steps">具体的なステップ</a></li><li class="lvl-2"><a href="#outcome">結果</a></li><li class="lvl-2"><a href="#funded-plan-tracking-done-responsibly">資金提供計画の追跡を責任を持って実施する</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

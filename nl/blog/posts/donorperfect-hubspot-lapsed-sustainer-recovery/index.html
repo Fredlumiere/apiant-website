@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Donateurs die al een tijdje niet meer doneren, binnen 24 uur terugwinnen: een herstelworkflow van DonorPerfect naar HubSpot voor dierenopvangcentra | APIANT Blog</title>
+<meta content="Mislukte terugkerende donaties zijn stille inkomstenverliezen. Door de datums van de laatste donatie in DonorPerfect in realtime naar HubSpot te synchroniseren, kan een herstelactie zonder annulering dezelfde dag nog worden gestart, in plaats van er pas twee maanden later achter te komen." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Donateurs die hun donatie niet meer doen, binnen 24 uur terugwinnen: een DonorPerfect-naar-HubSpot-herstelworkflow voor dierenopvangcentra" property="og:title"/>
+<meta content="Mislukte terugkerende donaties zijn stille inkomstenverliezen. Door de datums van de laatste donatie in DonorPerfect in realtime naar HubSpot te synchroniseren, kan een herstelactie zonder annulering dezelfde dag nog worden gestart, in plaats van er pas twee maanden later achter te komen." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-lapsed-sustainer-recovery/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Donateurs die hun donatie niet meer doen, binnen 24 uur terugwinnen: een DonorPerfect-naar-HubSpot-herstelworkflow voor dierenopvangcentra" property="twitter:title"/>
+<meta content="Mislukte terugkerende donaties zijn stille inkomstenverliezen. Door de datums van de laatste donatie in DonorPerfect in realtime naar HubSpot te synchroniseren, kan een herstelactie zonder annulering dezelfde dag nog worden gestart, in plaats van er pas twee maanden later achter te komen." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-lapsed-sustainer-recovery/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Catching lapsed sustainers in 24 hours: a DonorPerfect to HubSpot recovery workflow for animal rescues",
+  "description": "Recurring-gift failures are silent revenue leaks. By mirroring DonorPerfect Last Gift dates into HubSpot in real time, a no-kill rescue can launch a same-day recovery sequence instead of finding out two months later.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-lapsed-sustainer-recovery/hero.png",
+  "datePublished": "2024-08-05T10:49:26+00:00",
+  "dateModified": "2026-05-19T17:42:59.829132+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Catching lapsed sustainers in 24 hours: a DonorPerfect to HubSpot recovery workflow for animal rescues", "item": "https://apiant.com/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/nl/blog/posts/donorperfect-hubspot-lapsed-sustainer-recovery/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/nl/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Connectoren</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Begin met bouwen</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/nl/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-apps</a>
+</div>
+<h1 class="blog-post-h1">Donateurs die hun donatie niet meer doen, binnen 24 uur terugwinnen: een DonorPerfect-naar-HubSpot-herstelworkflow voor dierenopvangcentra</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/nl/blog/?author=fred">Fred Lumiere</a></span>
+<span>5 augustus 2024</span>
+<span>Leestijd: 6 minuten</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/nl/blog/?tag=nonprofit">#Non-profit</a><a class="blog-tag" href="/nl/blog/?tag=donorperfect">#DonorPerfect</a><a class="blog-tag" href="/nl/blog/?tag=hubspot">#HubSpot</a><a class="blog-tag" href="/nl/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/nl/blog/?tag=bi-directional-sync">#Bidirectionele synchronisatie</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Donateurs die hun donatie niet meer doen, binnen 24 uur terugwinnen: een DonorPerfect-naar-HubSpot-herstelworkflow voor dierenopvangcentra" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-lapsed-sustainer-recovery/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>Terugkerende giften vormen de meest waardevolle post op de balans van een non-profitorganisatie, maar zijn tegelijkertijd ook de meest kwetsbare. Een maandelijkse donateur van $25 levert $300 per jaar op. Als je deze donaties verliest, verlies je niet alleen de inkomsten van deze maand. Je verliest ook de voorspelbare cashflow waarmee salarissen van medewerkers tussen de inzamelingsacties door betaald kunnen worden.</p>
+<p>De meest voorkomende oorzaak van het verlies van vaste donateurs is niet ontevredenheid. Het is een verlopen creditcard die niemand heeft opgemerkt. Een betaalprovider weigert de terugkerende betaling. DonorPerfect registreert de fout. De marketingdirecteur, die in HubSpot werkt, ziet het niet. Zestig dagen later maakt iemand een rapport over vaste donateurs, ontdekt een hiaat en mailt de donateur om te vragen of alles in orde is. Tegen die tijd is de donateur alweer vertrokken, is de opgeslagen creditcard geblokkeerd en is de relatie bekoeld.</p>
+<p><img alt="Donateurs die hun donatie hebben stopgezet, binnen 24 uur terughalen: een herstelworkflow van DonorPerfect naar HubSpot voor dierenopvangcentra — Figuur 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-lapsed-sustainer-recovery/inline-1.png"/></p>
+<h1 id="sustainer-recovery-is-one-of-those-problems-that-looks-easy-on-a-whiteboard-and-is-hard-in-production">Het terugwinnen van de benodigde middelen is een van die problemen die er op een whiteboard eenvoudig uitzien, maar in de praktijk lastig zijn.</h1>
+<p>Het standaard DonorPerfect-rapport 'Mislukte transacties' bevindt zich in DonorPerfect zelf. Degene die het uitvoert, moet eraan denken om het te doen, moet weten wat de volgende stappen zijn en moet met twee systemen werken. In de meeste organisaties voert de ontwikkelingsmanager het wekelijks uit. Wekelijks is te laat.</p>
+<p>Generieke iPaaS-connectoren synchroniseren doorgaans nieuwe giften, maar negeren de afwezigheid van een verwachte gift. Ze hebben geen begrip van "deze donateur had een terugkerend schema en de verwachte afschrijving heeft niet plaatsgevonden". Je kunt dit simuleren door in HubSpot te kijken naar de datum van de laatste gift en te filteren op donateurs van wie de laatste gift meer dan 35 dagen geleden was, maar alleen als de datum van de laatste gift daadwerkelijk in realtime wordt gesynchroniseerd en alleen als het veld voor de terugkerende status ook wordt doorgegeven.</p>
+<p>Zelfgemaakte Zapier-builds komen een eind op weg, maar lopen vast zodra DonorPerfect een nieuw veld toevoegt of de naam van een donatiecode verandert.</p>
+<h2 id="the-apiant-approach">De APIANT-aanpak</h2>
+<p>De bidirectionele synchronisatie van CRMConnect is ontworpen om het volledige DonorPerfect-donorprofiel te synchroniseren, niet slechts een deel ervan. Dat omvat ook de velden die ervoor zorgen dat het terugvorderen van donateurs daadwerkelijk werkt:</p>
+<ul>
+<li><strong>Laatste cadeaudatum</strong> En <strong>Eerste cadeaudatum</strong> Realtime weergave. Zodra DonorPerfect een succesvolle betaling registreert, ziet HubSpot dit.</li>
+<li><strong>Status van terugkerende giften, volgende geplande giftdatum en toegezegd saldo</strong> Doorstroming als standaard contacteigenschappen.</li>
+<li><strong>Vlaggen synchroniseren als tags</strong> Dit weerspiegelt DonorPerfect Flags als HubSpot multi-select tags. Gebruik dit om te markeren <code>Active Sustainer</code>, <code>Card Update Sent</code>, <code>Recovery In Progress</code>of iets anders dat uw team al bijhoudt.</li>
+<li><strong>CodeSync voor Dropdowns</strong> Zorgt ervoor dat de DonorPerfect-codes voor donatietype en frequentie consistent blijven met de dropdownwaarden in HubSpot, zodat de segmentatie niet verschuift.</li>
+<li><strong>Aangepast veld terugschrijven</strong> Hiermee kan HubSpot een aangepast veld van DonorPerfect bijwerken (bijvoorbeeld, <code>Recovery Sequence Status</code>) zodat DonorPerfect-gebruikers kunnen zien wat HubSpot heeft gedaan.</li>
+</ul>
+<p>Dankzij deze combinatie kan HubSpot een actuele lijst bijhouden van donateurs die al hadden moeten doneren maar dat nog niet hebben gedaan, en het incassoproces binnen enkele uren in plaats van maanden activeren.</p>
+<h2 id="wiring-up-same-day-sustainer-recovery">Het aansluiten van de duurzame stroomvoorziening op dezelfde dag</h2>
+<p>Illustratief scenario: Cedar Hollow Animal Rescue, een dierenasiel zonder euthanasiebeleid met drie afdelingen en 4.800 donateurs (hypothetisch voorbeeld, geen echte organisatie).</p>
+<p><strong>Stap 1. Stel uw lijst met donateurs samen.</strong> Maak in HubSpot een actieve lijst aan met de volgende criteria: <code>Recurring Gift Status is Active</code> AND <code>Last Gift Date is more than 35 days ago</code> AND <code>Pledge Balance is greater than 0</code>Het tijdsbestek van 35 dagen omvat zowel maandelijkse als driemaandelijkse schema's, met een kleine marge. Pas dit aan als u een aanzienlijk aantal wekelijkse of tweewekelijkse donateurs heeft.</p>
+<p><strong>Stap 2. Voeg onderdrukkingsregels toe.</strong> Sluit getagde contacten uit. <code>Card Update Sent in last 7 days</code> Om te voorkomen dat donateurs die al in actie zijn gekomen, ongevraagd worden benaderd. Sluit gemarkeerde contactpersonen uit. <code>Deceased</code>, <code>Major Donor</code> (die vereisen een persoonlijk telefoontje, geen geautomatiseerd antwoordsysteem), en <code>Do Not Solicit</code> vanuit het perspectief van DonorPerfect.</p>
+<p><strong>Stap 3. Bouw de herstelsequentie op.</strong> Een workflow die de donor respecteert en de meeste herstelbare fouten verhelpt, ziet er als volgt uit:</p>
+<ul>
+<li>Dag 0 (binnen 24 uur na detectie): SMS of e-mail met een titel als "We konden de gift van deze maand niet verwerken", met een link naar een updatekaart waarmee de donateur met één klik toegang krijgt tot het donatieformulier van DonorPerfect, dat al is ingevuld met het terugkerende donatieschema van de donateur.</li>
+<li>Dag 3: een vriendelijkere vervolgmail, gericht op het werk, niet op de mislukking. Een verhaal over een recente pleegplaatsing, gevolgd door een rustig berichtje: "We hadden problemen met het verwerken van uw maandelijkse gift. U kunt uw kaart hier bijwerken wanneer u even tijd heeft."</li>
+<li>Dag 7: een telefoongesprektaak toegewezen aan de coördinator donorrelaties, waarbij de donatiegeschiedenis van de contactpersoon, de notitie van het laatste gesprek en het terugkerende schema vooraf in HubSpot zijn geladen vanuit de DonorPerfect-synchronisatie.</li>
+<li>Dag 14: een laatste e-mail van de directeur of bestuursvoorzitter, geformuleerd als een check-in: "We hebben niets van u vernomen en willen er zeker van zijn dat alles in orde is."</li>
+<li>Dag 21: als er geen succesvolle betaling is geregistreerd, schrijf dan een <code>Sustainer Lapsed</code> Stuur het signaal terug naar DonorPerfect via een synchronisatie met aangepaste velden en verwijder het contact uit de herstellijst.</li>
+</ul>
+<p><strong>Stap 4. Sluit de lus.</strong> Wanneer DonorPerfect een nieuwe succesvolle terugkerende betaling voor een contactpersoon in de herstelreeks registreert, wordt de update van de laatste donatiedatum automatisch geactiveerd. Voeg een exit-voorwaarde toe aan de workflow: <code>Last Gift Date is less than 1 day ago</code> Verwijdert het contact uit de reeks. Schrijven <code>Recovery Successful</code> naar een aangepast veld in DonorPerfect, zodat de fondsenwerver het in het relatieprofiel kan zien zonder HubSpot te hoeven openen.</p>
+<p><strong>Stap 5. Behandel de randgevallen.</strong></p>
+<ul>
+<li>Processorfouten die vanzelf oplossen: veel gateways proberen een zachte afwijzing 48 uur later opnieuw. Wacht 48 tot 72 uur voordat u de procedure start, zodat u geen contact opneemt met donateurs van wie de kaart bij de tweede poging wél werkte.</li>
+<li>Eerbetoongeschenken: een eenmalig eerbetoon is geen mislukking van de ondersteuning. Bevestig dat uw reeks alleen wordt geactiveerd bij contacten met <code>Recurring Gift Status is Active</code>Niet zomaar een donor die recent geen gift heeft gedaan.</li>
+<li>Verlopen kaartgegevens versus geweigerde betalingen: beide worden in DonorPerfect weergegeven als mislukte transacties. Het bericht met de kaartupdate werkt voor beide, maar de sms-versie moet worden bewaard voor verlopen kaarten (waarbij de donateur actie moet ondernemen) en vermeden worden voor geweigerde betalingen die mogelijk slechts een tijdelijk probleem van de bank betreffen.</li>
+</ul>
+<p><img alt="Donateurs die hun donatie hebben stopgezet, binnen 24 uur terugwinnen: een herstelworkflow van DonorPerfect naar HubSpot voor dierenopvangcentra — Figuur 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-lapsed-sustainer-recovery/inline-2.png"/></p>
+<h2 id="what-it-looks-like-in-production">Hoe het er in de productie uitziet</h2>
+<p>Voor een organisatie van de omvang van Cedar Hollow (3 afdelingen, $1,6 miljoen omzet, ongeveer 600 actieve donateurs) zorgt een goed opgezet herstelproces met directe terugroepacties er doorgaans voor dat 40% tot 55% van de donateurs die hun donatie hebben opgegeven, binnen de eerste 21 dagen worden teruggewonnen. Dit is aanzienlijk hoger dan de 15% tot 20% bij een handmatige aanpak per kwartaal. Bij 600 donateurs met een gemiddeld jaarlijks opzegpercentage van 8% tot 10%, komt dit neer op 48 tot 60 verwachte opzeggingen per jaar. Het betere proces redt hiermee 15 tot 25 donateurs. Bij een gemiddelde maandelijkse gift van $20 levert dit $3.600 tot $6.000 aan teruggewonnen jaarlijkse inkomsten op, plus de waarde over meerdere jaren van donateurs die anders definitief zouden zijn afgehaakt.</p>
+<p>De grootste winst is kwalitatief. Het personeel van de opvang stopt met het maandelijks bijwerken van het herstelrapport en gaat de gezondheid van donateurs beschouwen als een systeem dat zichzelf runt, waarbij hun aandacht volledig is gericht op de telefoontjes van grote donateurs die daadwerkelijk menselijke tussenkomst vereisen.</p>
+<h2 id="builder-takeaway">Bouwer afhaalmaaltijd</h2>
+<ul>
+<li>De trigger die ertoe doet is niet "Laatste donatiedatum is oud", maar "Laatste donatiedatum is oud EN de status van terugkerende donaties is actief". Zonder de tweede voorwaarde stuur je spam naar elke donateur die ooit een donatie heeft gedaan.</li>
+<li>Wacht 48 tot 72 uur voordat je de reeks uitvoert, zodat de processor de herhaalpogingen kan voltooien. Donateurs raken geïrriteerd als je hen vraagt een kaart bij te werken die vanochtend al succesvol door de betaalprovider is afgeschreven.</li>
+<li>Stuur de herstelstatus terug naar DonorPerfect, zodat het ontwikkelteam de voortgang in hun eigen systeem kan zien, in plaats van over te schakelen naar HubSpot om te achterhalen wat er is gebeurd.</li>
+</ul>
+<p>Wil je CRMConnect DonorPerfect -&gt; HubSpot in actie zien? <a href="/apipartners/donorperfect/donorperfect-hubspot-integration-and-automation-apiant">Bekijk de API-apppagina</a>Voor de volledige catalogus van voorgeassembleerde APIANT-connectoren kunt u terecht op <a href="/apps">/apps</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">In dit artikel</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-apiant-approach">De APIANT-aanpak</a></li><li class="lvl-2"><a href="#wiring-up-same-day-sustainer-recovery">Het aansluiten van de duurzame stroomvoorziening op dezelfde dag</a></li><li class="lvl-2"><a href="#what-it-looks-like-in-production">Hoe het er in de productie uitziet</a></li><li class="lvl-2"><a href="#builder-takeaway">Bouwer afhaalmaaltijd</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Lees verder</h2><div class="blog-grid"><a class="blog-card" href="/nl/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Het samenbrengen van inschrijvingen, cursussen en afspraken voor lichaam en geest op hoog niveau.</h3><p class="blog-card-excerpt">Gebruik de synchronisatiefuncties voor inschrijvingen, cursusboekingen en afspraken van CRMConnect om HighLevel één overzicht van alle Mindbody-programma's te bieden.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 mei 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Rapportage van afspraken op meerdere locaties in Klaviyo voor een Strength Network met 6 vestigingen.</h3><p class="blog-card-excerpt">Hoe de afsprakensynchronisatie van CRMConnect de afspraakstatus op locatieniveau in Klaviyo weergeeft, zodat de centrale marketingafdeling per locatie workflows en rapporten kan genereren.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" href="/nl/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-apps</div><h3 class="blog-card-title">Geen gedoe meer met het maandelijks opnieuw samenstellen van de presentatie: realtime dashboards voor fondsenwerving van DonorPerfect in HubSpot.</h3><p class="blog-card-excerpt">Bestuursleden willen trendlijnen. Medewerkers willen hun avonden terug. Doordat de levenslange waarde van donateurs, de gemiddelde gift en de campagneprestaties gesynchroniseerd zijn in HubSpot, is het maandelijkse bestuursrapport geen project van vier dagen meer, maar een opgeslagen dashboardweergave.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Alle rechten voorbehouden.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/nl/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacy</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Voorwaarden</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

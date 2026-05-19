@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Was synchronisiert und was in Cliniko belassen werden sollte: Ein Daten-Governance-Muster für eine Beratungspraxis auf HubSpot | APIANT-Blog</title>
+<meta content="Eine Beratungsstelle sollte keine Sitzungsinhalte, Diagnosen oder klinischen Notizen in ein Marketing-CRM einspeisen. Der richtige Ansatz ist die Datenverarbeitung auf Fachebene: Synchronisieren Sie nur, was das Marketing benötigt, niemals die Daten der Therapeuten." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Was synchronisiert und was in Cliniko belassen werden sollte: Ein Daten-Governance-Muster für eine Beratungspraxis auf HubSpot" property="og:title"/>
+<meta content="Eine Beratungsstelle sollte keine Sitzungsinhalte, Diagnosen oder klinischen Notizen in ein Marketing-CRM einspeisen. Der richtige Ansatz ist die Datenverarbeitung auf Fachebene: Synchronisieren Sie nur, was das Marketing benötigt, niemals die Daten der Therapeuten." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Was synchronisiert und was in Cliniko belassen werden sollte: Ein Daten-Governance-Muster für eine Beratungspraxis auf HubSpot" property="twitter:title"/>
+<meta content="Eine Beratungsstelle sollte keine Sitzungsinhalte, Diagnosen oder klinischen Notizen in ein Marketing-CRM einspeisen. Der richtige Ansatz ist die Datenverarbeitung auf Fachebene: Synchronisieren Sie nur, was das Marketing benötigt, niemals die Daten der Therapeuten." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "What to Sync and What to Leave in Cliniko: a Data Governance Pattern for a Counseling Practice on HubSpot",
+  "description": "A counseling clinic should not have session content, diagnoses, or clinical notes flowing into a marketing CRM. The right pattern is field-level: sync what marketing needs, never sync what clinicians own.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/hero.png",
+  "datePublished": "2024-08-19T12:09:47+00:00",
+  "dateModified": "2026-05-19T17:42:55.512271+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "What to Sync and What to Leave in Cliniko: a Data Governance Pattern for a Counseling Practice on HubSpot", "item": "https://apiant.com/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/de/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/de/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plattform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Konnektoren</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Jetzt starten</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/de/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-Anwendungen</a>
+</div>
+<h1 class="blog-post-h1">Was synchronisiert und was in Cliniko belassen werden sollte: Ein Daten-Governance-Muster für eine Beratungspraxis auf HubSpot</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/de/blog/?author=fred">Fred Lumiere</a></span>
+<span>19. August 2024</span>
+<span>5 Minuten Lesezeit</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/de/blog/?tag=healthcare">#Gesundheitspflege</a><a class="blog-tag" href="/de/blog/?tag=cliniko">#Cliniko</a><a class="blog-tag" href="/de/blog/?tag=hubspot">#HubSpot</a><a class="blog-tag" href="/de/blog/?tag=crmconnect">#CRMConnect</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Was synchronisiert und was in Cliniko belassen werden sollte: Ein Daten-Governance-Muster für eine Beratungspraxis auf HubSpot" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>Diese Diskussion kennt jede psychotherapeutische Praxis, die jemals über die Einführung eines CRM-Systems nachgedacht hat. Die Marketingabteilung möchte vierteljährlich eine E-Mail mit Feedback und Geburtstagsgrüße versenden. Der ärztliche Leiter weist zu Recht darauf hin, dass die Praxis ein viel größeres Problem hat als eine ruhelose E-Mail-Liste, sobald Sitzungsnotizen, Diagnosen oder Behandlungspläne das System verlassen. Die Diskussion endet meist mit einem „Nein“ für die Marketingabteilung und der ruhenden E-Mail-Liste.</p>
+<p>Nehmen wir ein anschauliches Beispiel: Wellspring Counseling Associates, eine fiktive, auf Teletherapie spezialisierte Praxis mit 12 approbierten Therapeuten und rund 5.500 aktiven Klienten. Die Marketingabteilung wünscht sich HubSpot. Der klinische Leiter ist zu Recht vorsichtig. Die richtige Antwort lautet nicht „Nein“, sondern „Ja, aber mit Kontrolle vor Ort“.</p>
+<p><img alt="Was synchronisiert und was in Cliniko belassen werden sollte: Ein Daten-Governance-Muster für eine Beratungspraxis auf HubSpot – Abbildung 1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/inline-1.png"/></p>
+<h2 id="why-sync-everything-is-the-wrong-default">Warum „Alles synchronisieren“ die falsche Standardeinstellung ist</h2>
+<p>Die Bequemlichkeit einer Ein-Klick-Integration mit der Funktion „Alle Felder synchronisieren“ birgt im Beratungskontext genau das Risiko. Sobald SOAP-Notizen, Diagnosen, Behandlungspläne oder Sitzungsberichte in einem Marketing-CRM landen, treten drei negative Folgen gleichzeitig ein. Das Marketingteam unterliegt nun den Richtlinien der Praxis zur Einhaltung klinischer Standards, selbst wenn es die Patientenakten nie öffnet. Das HubSpot-Benutzerberechtigungsmodell (das nicht für geschützte Gesundheitsdaten konzipiert wurde) wird zur faktischen Zugriffskontrolle der Praxis. Jede Drittanbieter-App oder -Integration von HubSpot, die das Marketingteam installiert, übernimmt diese Angriffsfläche.</p>
+<p>Das richtige Vorgehen ist auf Feldebene, nicht auf Datensatzebene. Das Marketing sollte seine Bedürfnisse ermitteln. Kliniker sollten alle anderen Daten im klinischen System belassen, wo sie hingehören.</p>
+<h2 id="the-three-buckets">Die drei Eimer</h2>
+<p>Jeder Datenpunkt in Cliniko lässt sich einer von drei Kategorien zuordnen. Diese Kategorien laut auszusprechen, bevor man irgendetwas konfiguriert, beugt zukünftigen Problemen vor:</p>
+<ul>
+<li><strong>Marketing sicher.</strong> Name, E-Mail-Adresse, Telefonnummer, Anschrift, Präferenzen für Marketingkommunikation, Termindatum und -uhrzeit (ohne Termindetails), Rechnungssumme (ohne Einzelposten). Diese Daten werden an HubSpot übermittelt.</li>
+<li><strong>Betrieb sicher.</strong> Terminstatus (Gebucht, Erschienen, Nicht erschienen, Storniert), Praxisstandort, Name des Behandlers, Fallmeilensteine, Sitzungslimits, maximaler Rechnungsbetrag. Diese Daten können an HubSpot übertragen werden, sofern die Praxis für jedes Feld einen klaren Anwendungsfall hat.</li>
+<li><strong>Nur für medizinisches Fachpersonal.</strong> Sitzungsnotizen, SOAP-Dokumentation, Behandlungsziele, Diagnosen, Beurteilungsergebnisse, narrative Fallinhalte, alle Freitextfelder im klinischen Bereich. Diese Daten verlassen Cliniko nie.</li>
+</ul>
+<p>Der Integrationsverantwortliche und der klinische Leiter sollten sich vor der Aktivierung schriftlich darauf einigen, welches Cliniko-Feld in welche Kategorie fällt. Die Liste gehört in ein gemeinsames Dokument, das der Compliance-Beauftragte jährlich prüfen kann.</p>
+<h2 id="the-apiant-approach">Der APIANT-Ansatz</h2>
+<p>Die CRMConnect-Lösung von Cliniko zu HubSpot basiert auf der Konfiguration auf Feldebene anstatt auf einer vollständigen Synchronisierung von Datensätzen. Patientendaten, Terminstatus, Rechnungskopfdaten und Kontaktpräferenzen können unabhängig synchronisiert werden. Die Synchronisierung von Fallinformationen stellt Strukturfelder (Meilensteine, Limits, Status) bereit, ohne narrative Notizen zu übertragen. Die klinischen Notizen von Cliniko werden nicht synchronisiert. Marketingpräferenzen und Einwilligungen werden unidirektional von Cliniko nach HubSpot übertragen, sodass das klinische System die maßgebliche Datenquelle bleibt.</p>
+<h2 id="concrete-steps">Betonstufen</h2>
+<ol>
+<li>Erstellen Sie zuerst die Feldzuordnung. Listen Sie alle Cliniko-Felder auf, die Sie synchronisieren möchten, ordnen Sie sie dem entsprechenden Bereich zu (z. B. „Für Marketing“, „Für den Betrieb“, „Nur für Ärzte“) und lassen Sie sie vom Klinikdirektor und dem Compliance-Beauftragten freigeben. Felder, die nur Ärzten zugänglich sind, werden nicht konfiguriert.</li>
+<li>Aktivieren Sie die Synchronisierung der Patientendemografie nur für marketingsichere Felder. Stellen Sie sicher, dass in der Feldübersicht keine klinischen Felder angezeigt werden.</li>
+<li>Aktivieren Sie die Terminsynchronisierung nur für Statusänderungen. Falls das Feld „Terminart“ klinische Details enthält (z. B. „Trauma-Aufnahmeuntersuchung“), sollte es vor der Übertragung an HubSpot entweder unterdrückt oder durch eine allgemeine Bezeichnung ersetzt werden.</li>
+<li>Aktivieren Sie die Rechnungssynchronisierung nur für die Kopfzeilen (Rechnungsnummer, Datum, Gesamtbetrag, Status). Synchronisieren Sie keine Einzelposten, wenn diese Details zur Leistungsart enthalten.</li>
+<li>Einwilligungen und Marketingpräferenzen von Cliniko werden einseitig in HubSpot übertragen. Wenn ein Kunde seine Marketingeinwilligung in Cliniko widerruft, muss diese Änderung übernommen werden. Sollte das Marketing eine HubSpot-Einstellung ändern, darf sich dies nicht auf Cliniko auswirken.</li>
+<li>Konfigurieren Sie die Benutzerberechtigungen von HubSpot so, dass Marketingrollen die für den operativen Bereich relevanten Felder (Terminstatus, Geschäftsstandort, Identität des Leistungserbringers) nicht sehen können und operative Rollen keine Marketingkampagneninhalte sehen können, auf die sie keinen Zugriff haben.</li>
+</ol>
+<p><img alt="Was synchronisiert und was in Cliniko belassen werden soll: Ein Daten-Governance-Muster für eine Beratungspraxis auf HubSpot – Abbildung 2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/inline-2.png"/></p>
+<h2 id="a-working-example">Ein praktisches Beispiel</h2>
+<p>Eine marketingsichere Automatisierung in diesem Setup: eine vierteljährliche E-Mail mit dem Betreff „Wir sind für Sie da, wenn Sie uns brauchen“ an Kunden, die der Marketingkommunikation zugestimmt haben und in den nächsten 30 Tagen keinen Termin gebucht haben. Die Automatisierung kann die Terminbuchung einsehen. Sie kann den medizinischen Grund für den fehlenden Termin nicht einsehen. Das ist auch nicht nötig.</p>
+<p>Eine Marketing-ungeeignete Automatisierung hingegen: eine E-Mail mit dem Betreff „Wir haben festgestellt, dass Sie Ihren letzten Termin versäumt haben“, die aufgrund des Status „Nicht erschienen“ ausgelöst wird. Im Beratungskontext ist der Versand einer solchen E-Mail über die Marketinginfrastruktur möglicherweise völlig unangebracht. Das Behandlungsteam sollte diesen Kontaktpunkt direkt in Cliniko verwalten und nach klinischer Beurteilung entscheiden, ob und wie eine Nachverfolgung erfolgt. Die Integration kann das Signal zwar aufdecken, aber die Praxisrichtlinien sollten festlegen, was zu einer automatisierten E-Mail wird und was ein persönliches Gespräch mit dem/der Behandler/in bleibt.</p>
+<h2 id="outcome">Ergebnis</h2>
+<p>Eine Beratungspraxis, die dem Profil von Wellspring entspricht und dieses Modell anwendet, erzielt in der Regel den gewünschten Marketingvorteil (eine Steigerung der Wiedereinbindung von Klienten um 5 bis 8 Prozent nach einer Pause – bescheiden, aber real) ohne die befürchteten Compliance-Risiken. Der klinische Leiter kann in einem Absatz genau beschreiben, was die Grenze überschreitet und was nicht. Der Compliance-Beauftragte verfügt über eine Übersicht, die er in 20 Minuten pro Quartal prüfen kann, anstatt einer undurchsichtigen Integration, die Feld für Feld geprüft werden muss.</p>
+<h2 id="quarterly-governance-review">Vierteljährliche Überprüfung der Unternehmensführung</h2>
+<p>Konfigurieren Sie jetzt die Kalendereinladung. Vierteljährlich überprüfen der Integrationsverantwortliche, der klinische Leiter und der Compliance-Beauftragte Folgendes:</p>
+<ul>
+<li>Die aktuelle Feldkarte (alle Ergänzungen seit der letzten Überprüfung).</li>
+<li>Änderungen der HubSpot-Benutzerberechtigungen (neue Rollen, Änderungen der Rollenberechtigungen).</li>
+<li>Alle neuen HubSpot-Apps oder Integrationen, die das Marketingteam installiert hat (diese erhalten automatisch Zugriff auf die synchronisierten Daten).</li>
+<li>Eine Stichprobe synchronisierter Datensätze, um zu bestätigen, dass keine klinischen Inhalte versehentlich die Grenze überschritten haben.</li>
+</ul>
+<p>Zwanzig Minuten einmal im Quartal. Die Alternative wäre ein deutlich längeres Gespräch mit einer Aufsichtsbehörde.</p>
+<h2 id="builder-takeaway">Fazit für Bauherren</h2>
+<ul>
+<li>Erstellen Sie den Lageplan, bevor Sie die Integration aktivieren. Der vom Klinikdirektor unterzeichnete Lageplan dient dazu, spätere Streitigkeiten zu vermeiden.</li>
+<li>Verwenden Sie die Synchronisierung auf Feldebene, nicht auf Datensatzebene. CRMConnect ist genau dafür ausgelegt. Die Integration als Alles-oder-Nichts-Lösung zu behandeln, ist die Konfigurationseinstellung, die Sicherheitslücken schafft.</li>
+<li>Planen Sie jetzt die vierteljährliche Überprüfung der Unternehmensführung ein. Zwanzig Minuten pro Quartal sind eine günstige Versicherung gegen eine Integration, die ins Stocken gerät.</li>
+</ul>
+<p>Möchten Sie CRMConnect Cliniko mit HubSpot in Aktion sehen? <a href="/apipartners/cliniko/cliniko-hubspot-integration-automation-apiant">API-App-Seite anzeigen</a>Oder durchsuchen Sie die vollständige <a href="/apps.html">API-Apps-Katalog</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">In diesem Artikel</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-sync-everything-is-the-wrong-default">Warum „Alles synchronisieren“ die falsche Standardeinstellung ist</a></li><li class="lvl-2"><a href="#the-three-buckets">Die drei Eimer</a></li><li class="lvl-2"><a href="#the-apiant-approach">Der APIANT-Ansatz</a></li><li class="lvl-2"><a href="#concrete-steps">Betonstufen</a></li><li class="lvl-2"><a href="#a-working-example">Ein praktisches Beispiel</a></li><li class="lvl-2"><a href="#outcome">Ergebnis</a></li><li class="lvl-2"><a href="#quarterly-governance-review">Vierteljährliche Überprüfung der Unternehmensführung</a></li><li class="lvl-2"><a href="#builder-takeaway">Fazit für Bauherren</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Lesen Sie weiter</h2><div class="blog-grid"><a class="blog-card" href="/de/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Vereinheitlichung von Mindbody-Einschreibungen, Kursen und Terminen in HighLevel" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-Anwendungen</div><h3 class="blog-card-title">Vereinheitlichung von Mindbody-Einschreibungen, Kursen und Terminen in HighLevel</h3><p class="blog-card-excerpt">Nutzen Sie die Anmelde-, Kursbuchungs- und Terminsynchronisierungsfunktionen von CRMConnect, um HighLevel eine einheitliche Kalenderansicht für alle Mindbody-Programmtypen zu bieten.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18. Mai 2026</span></div></div></a><a class="blog-card" href="/de/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Standortübergreifende Terminberichterstattung in Klaviyo für ein Stärke-Netzwerk mit 6 Standorten" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-Anwendungen</div><h3 class="blog-card-title">Standortübergreifende Terminberichterstattung in Klaviyo für ein Stärke-Netzwerk mit 6 Standorten</h3><p class="blog-card-excerpt">Wie die Terminsynchronisierung von CRMConnect den Terminstatus auf Standortebene in Klaviyo sichtbar macht, damit das zentrale Marketing standortbezogene Abläufe und Berichte erstellen kann.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21. April 2026</span></div></div></a><a class="blog-card" href="/de/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Schluss mit dem monatlichen Neuaufbau von Präsentationen: Echtzeit-Spenden-Dashboards von DonorPerfect in HubSpot" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">API-Anwendungen</div><h3 class="blog-card-title">Schluss mit dem monatlichen Neuaufbau von Präsentationen: Echtzeit-Spenden-Dashboards von DonorPerfect in HubSpot</h3><p class="blog-card-excerpt">Vorstände wünschen sich Trendanalysen. Mitarbeiter möchten ihre Abende zurück. Dank der Synchronisierung von Spenderlebenszeitwert, durchschnittlicher Spende und Kampagnenperformance in HubSpot wird der monatliche Vorstandsbericht nicht länger zu einem viertägigen Projekt, sondern zu einer gespeicherten Dashboard-Ansicht.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20. April 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Alle Rechte vorbehalten.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/de/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plattform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Datenschutz</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Bedingungen</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

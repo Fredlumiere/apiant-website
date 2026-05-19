@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>MindbodyサイトとHighLevelサブアカウント間の複数拠点リードルーティング | APIANTブログ</title>
+<meta content="CRMConnectの複数拠点サポートが、MindbodyサイトとHighLevelサブアカウント間でリードをスムーズにルーティングし、フランチャイズ所有権に関する紛争を設計段階から解決する方法。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="MindbodyサイトとHighLevelサブアカウント間の複数拠点リードルーティング" property="og:title"/>
+<meta content="CRMConnectの複数拠点サポートが、MindbodyサイトとHighLevelサブアカウント間でリードをスムーズにルーティングし、フランチャイズ所有権に関する紛争を設計段階から解決する方法。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-multi-location-routing/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-highlevel-multi-location-routing/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="MindbodyサイトとHighLevelサブアカウント間の複数拠点リードルーティング" property="twitter:title"/>
+<meta content="CRMConnectの複数拠点サポートが、MindbodyサイトとHighLevelサブアカウント間でリードをスムーズにルーティングし、フランチャイズ所有権に関する紛争を設計段階から解決する方法。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-multi-location-routing/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Multi-Location Lead Routing Between Mindbody Sites and HighLevel Sub-Accounts",
+  "description": "How CRMConnect's multi-location support routes leads between Mindbody sites and HighLevel sub-accounts cleanly, settling franchise ownership disputes by design.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-multi-location-routing/hero.png",
+  "datePublished": "2025-06-09T09:13:59+00:00",
+  "dateModified": "2026-05-19T17:42:44.482312+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-highlevel-multi-location-routing/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Multi-Location Lead Routing Between Mindbody Sites and HighLevel Sub-Accounts", "item": "https://apiant.com/blog/posts/mindbody-highlevel-multi-location-routing/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-highlevel-multi-location-routing/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/mindbody-highlevel-multi-location-routing/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">MindbodyサイトとHighLevelサブアカウント間の複数拠点リードルーティング</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025年6月9日</span>
+<span>5分で読める</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=fitness-wellness">#フィットネス＆ウェルネス</a><a class="blog-tag" href="/ja/blog/?tag=mindbody">#心身</a><a class="blog-tag" href="/ja/blog/?tag=highlevel">#ハイレベル</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ja/blog/?tag=for-enterprise">#企業向け</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="MindbodyサイトとHighLevelサブアカウント間の複数拠点リードルーティング" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-multi-location-routing/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h2 id="the-franchise-lead-ownership-fight">フランチャイズの主導権争い</h2>
+<p>複数の店舗を展開するブティックジムブランドでは、ほぼ必ず同じような社内抗争が起こります。見込み客が企業のウェブサイトのフォームに記入します。クリックしたのは企業のマーケティング部門です。見込み客はフランチャイズAの近くに住んでいて、フランチャイズBの近くで働いています。最初の1ヶ月で両方のジムを訪れます。見込み客の所有権は誰にあるのか？コミッションは誰にあるのか？見込み客を呼び込んだ広告費は誰が支払うのか？</p>
+<p>仮説：Tradewind Athletic Network（例示）は、12店舗を展開し、7,200人の会員を抱えるフランチャイズブランドです。各フランチャイズ加盟店は独自のHighLevelサブアカウントを運用し、本社はブランド全体のマーケティングを管理しています。統合に明確なルーティングルールが組み込まれていないため、複数の店舗にまたがる会員同士のやり取りは、Slack上での議論の火種となりかねません。</p>
+<h2 id="why-off-the-shelf-tools-fail-at-franchise-scale">既製ツールがフランチャイズ規模で失敗する理由</h2>
+<p>複数拠点のHighLevelとMindbodyを同時に使用すると、サブアカウントの問題とサイトIDの問題が発生します。ほとんどの汎用ツールは、どちらか一方しか処理できません。</p>
+<ul>
+<li>彼らは郵便番号に基づいてルートを選定する（ただし、郵便番号は市の境界で途切れ、会員が実際に利用するジムは考慮されない）。</li>
+<li>それらのデータは、単一の「中央」HighLevelアカウント（フランチャイズ加盟店はアクセスできない）にルーティングされる。</li>
+<li>これらは複数のHighLevelサブアカウントにルーティングされますが、重複排除機能がないため、同じメンバーが2つのサブアカウントに連絡先を作成することになります。</li>
+</ul>
+<p>カスタム構築は有効ですが、新しいフランチャイズがオープンしたり、サブアカウントが再構成されたり、会員が別のジムに移籍したりするたびに、継続的なメンテナンスが必要になります。統合こそが境界線となるべきであり、企業のオペレーションマネージャーが手作業で管理するスプレッドシートであってはなりません。</p>
+<h2 id="the-apiant-approach">APIANTアプローチ</h2>
+<p>CRMConnect Mindbody to HighLevel の内容 <strong>マルチロケーション・サポート</strong> まさにこのケースのために設計された、一流の機能です。APIアプリのページには、「単一のHighLevelアカウントと同期された複数のMindbodyサイトを効率的に管理します。フランチャイズや複数拠点を持つビジネスに最適で、リードをそれぞれのMindbody拠点に自動的にルーティングします。」と記載されています。複数のサブアカウントを持つフランチャイズネットワークの場合、同じルーティングロジックがサブアカウントごとに適用されます。</p>
+<p>フランチャイズモデルを支える特徴：</p>
+<ul>
+<li><strong>マルチロケーション・サポート</strong> サイトとサブアカウントのマッピングのため。</li>
+<li><strong>双方向クライアント同期</strong> つまり、企業が獲得した見込み客情報は、適切なフランチャイズのMindbodyサイトに誘導されるということだ。</li>
+<li><strong>スマートな重複プロフィール処理</strong> つまり、複数拠点のメンバーは連絡先が1つであり、2つではないということです。</li>
+<li><strong>140以上のカスタムコンタクトフィールド</strong> つまり、自宅所在地、第二の所在地、および最終訪問場所はすべて、クエリ可能な属性として存在します。</li>
+</ul>
+<p><img alt="MindbodyサイトとHighLevelサブアカウント間の複数拠点リードルーティング — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-multi-location-routing/inline-1.png"/></p>
+<h2 id="how-multi-location-routing-works-in-crmconnect">CRMConnectにおける複数拠点ルーティングの仕組み</h2>
+<p>設定は簡単です。</p>
+<ol>
+<li>各MindbodyサイトはCRMConnectに安定した状態で登録されています <code>site_id</code>.</li>
+<li>HighLevelの各サブアカウントは安定した <code>subaccount_id</code>.</li>
+<li>サイトとサブアカウントのマッピングが定義されています。 <code>site_id -&gt; subaccount_id</code>.</li>
+<li>新規リード（集中型キャプチャフォームから）のルーティングルール：</li>
+<li>リードフォームにロケーションタグが含まれている場合は、マッピングされたサブアカウントにルーティングし、マッピングされたMindbodyサイトにプッシュします。</li>
+<li>タグがない場合は、トリアージのために「中央」の保留サブアカウントにルーティングします。</li>
+<li>既存メンバーのルーティングルール：</li>
+<li>会員 <code>mindbody_home_location</code> このフィールドは、プライマリサブアカウントを定義します。</li>
+<li>異なる拠点への訪問は、同じ連絡先のホームサブアカウント内のイベントとして記録されます。</li>
+</ol>
+<p>スマートな重複防止ロジックにより、最もよくある失敗、つまり同じメールアドレスで同じ週にサイトAとサイトBの両方に登録してしまう事態を防ぎます。CRMConnectは一致する登録を検出し、単一の連絡先に統合し、プロファイルに両方の場所をタグ付けします。</p>
+<h2 id="mapping-sites-to-sub-accounts-without-duplicates">重複なくサイトをサブアカウントにマッピングする</h2>
+<pre class="highlight"><code class="language-text">Routing configuration:
+site-01 (Downtown) -&gt; subaccount-tradewind-downtown
+site-02 (Pearl)    -&gt; subaccount-tradewind-pearl
+site-03 (Eastside) -&gt; subaccount-tradewind-eastside
+...
+site-12 (Airport)  -&gt; subaccount-tradewind-airport
+
+HighLevel contact custom fields:
+- mindbody_home_location_id          primary site, drives sub-account ownership
+- mindbody_home_location_name
+- mindbody_visited_sites_30d         list of site_ids
+- mindbody_last_visit_site_id        most recent visit location
+- mindbody_lead_source_site_id       set at lead capture, never overwritten</code></pre>
+<p>の <code>home_location_id</code> リード所有権フィールドです。リードが有料会員になった時点で設定され、文書化されたプロセス（会員が都市を移動、メインのジムが変更）を通じて再割り当てできます。 <code>visited_sites_30d</code> このフィールドは、所有権を変更することなく、複数の拠点間の活動を捉えます。</p>
+<h2 id="cross-site-member-activity-without-account-crossfire">アカウントなしでのクロスサイトメンバーアクティビティ Crossfire</h2>
+<p>本社運営チームは、すべてのサブアカウントを網羅した明確なビューを得られます。各フランチャイズ加盟店は、自身の連絡先のみを確認できます。拠点間の活動は、適切な場所に記録されます。</p>
+<ul>
+<li>会員のホームサブアカウント：完全な履歴、主要連絡先記録。</li>
+<li>訪問した（自宅以外の）サイトのレポート：連絡先レコードとしてではなく、「ゲスト訪問」セグメントに表示されます。</li>
+</ul>
+<p>サイトBのフランチャイズ加盟店は、サイトAの会員が頻繁にジムを訪れていることに気づき、本社運営プロセスを通じて会員の移転を申請できます。システムは移転をサポートしますが、どちらのフランチャイズ加盟店も直接連絡先を取得することはできません。このルールは統合レイヤーで適用されます。</p>
+<p>結果として、Slackでの議論は発生しません。所有権は一元化されます。複数拠点間で発生した収益は、リードを獲得した拠点ではなく、利用状況に基づいて収益を上げた拠点に帰属します。</p>
+<p><img alt="MindbodyサイトとHighLevelサブアカウント間の複数拠点リードルーティング — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-multi-location-routing/inline-2.png"/></p>
+<h2 id="representative-operational-lift-at-7200-members">7,200人規模における代表的な運用能力</h2>
+<p>あくまでも参考例であり、実際の顧客像ではありません。</p>
+<ul>
+<li>HighLevelサブアカウント全体における重複連絡先数（四半期ごと）：定期的なクリーンアップ作業から、四半期あたり約5～15件の統合へと減少しました。</li>
+<li>フランチャイズ関連の紛争解決に費やす企業運営の週あたりの時間：約6～10時間（回収済み）。</li>
+<li>中央集約型のリードの場合、リードから初回訪問までの時間が1～2日短縮されます。これは、手動での引き継ぎではなく、受付時にルーティングが行われるためです。</li>
+<li>メンバーの移籍リクエストは、（場当たり的な対応ではなく）すべて一つのプロセス内で処理されます。これは、統合によって単一のホームロケーションが強制されるためです。</li>
+</ul>
+<p>この動きは主に政治的なものだ。統合によって所有権ルールを交渉ではなく制度化することで、議論は終結する。</p>
+<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
+<ul>
+<li>サイトとサブアカウントのマッピングを統合に組み込んでください。スプレッドシートでのルーティングは、3つ以上のフランチャイズには対応していません。</li>
+<li>使用 <code>home_location_id</code> 単一所有権の分野として扱われます。複数拠点間の訪問は活動であり、所有権の主張ではありません。</li>
+<li>統合機能によって重複排除が強制されます。境界でのスマートなマッチングにより、四半期ごとのクリーンアップ作業を削減できます。</li>
+</ul>
+<h2 id="try-it-in-your-network">あなたのネットワークで試してみてください</h2>
+<p>CRMConnect Mindbody to HighLevelの動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-highlevel-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
+<p>既製コネクタの全カタログは以下をご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-franchise-lead-ownership-fight">フランチャイズの主導権争い</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-at-franchise-scale">既製ツールがフランチャイズ規模で失敗する理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#how-multi-location-routing-works-in-crmconnect">CRMConnectにおける複数拠点ルーティングの仕組み</a></li><li class="lvl-2"><a href="#mapping-sites-to-sub-accounts-without-duplicates">重複なくサイトをサブアカウントにマッピングする</a></li><li class="lvl-2"><a href="#cross-site-member-activity-without-account-crossfire">アカウントなしでのクロスサイトメンバーアクティビティ Crossfire</a></li><li class="lvl-2"><a href="#representative-operational-lift-at-7200-members">7,200人規模における代表的な運用能力</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li><li class="lvl-2"><a href="#try-it-in-your-network">あなたのネットワークで試してみてください</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

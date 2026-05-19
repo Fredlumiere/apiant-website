@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>3つのスプレッドシートをMindbody IndexesとActiveCampaign Segmentsに置き換える | APIANTブログ</title>
+<meta content="CRMConnectのクライアントインデックスとカスタムフィールド同期を利用して、帯のランク、年齢層、家族構成などのActiveCampaignセグメントを作成し、スプレッドシートを完全に不要にしましょう。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="3つのスプレッドシートをMindbody IndexesとActiveCampaign Segmentsに置き換える" property="og:title"/>
+<meta content="CRMConnectのクライアントインデックスとカスタムフィールド同期を利用して、帯のランク、年齢層、家族構成などのActiveCampaignセグメントを作成し、スプレッドシートを完全に不要にしましょう。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-activecampaign-segment-from-indexes/hero.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/mindbody-activecampaign-segment-from-indexes/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="3つのスプレッドシートをMindbody IndexesとActiveCampaign Segmentsに置き換える" property="twitter:title"/>
+<meta content="CRMConnectのクライアントインデックスとカスタムフィールド同期を利用して、帯のランク、年齢層、家族構成などのActiveCampaignセグメントを作成し、スプレッドシートを完全に不要にしましょう。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-activecampaign-segment-from-indexes/hero.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Replacing Three Spreadsheets With Mindbody Indexes and ActiveCampaign Segments",
+  "description": "Use CRMConnect's client index and custom field sync to drive ActiveCampaign segments for belt rank, age group, and family membership, killing the spreadsheets for good.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-activecampaign-segment-from-indexes/hero.png",
+  "datePublished": "2025-09-05T14:17:08+00:00",
+  "dateModified": "2026-05-19T17:42:38.547253+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/mindbody-activecampaign-segment-from-indexes/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "Replacing Three Spreadsheets With Mindbody Indexes and ActiveCampaign Segments", "item": "https://apiant.com/blog/posts/mindbody-activecampaign-segment-from-indexes/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/mindbody-activecampaign-segment-from-indexes/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/mindbody-activecampaign-segment-from-indexes/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">3つのスプレッドシートをMindbody IndexesとActiveCampaign Segmentsに置き換える</h1>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2025年9月5日</span>
+<span>5分で読める</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=fitness-wellness">#フィットネス＆ウェルネス</a><a class="blog-tag" href="/ja/blog/?tag=mindbody">#心身</a><a class="blog-tag" href="/ja/blog/?tag=activecampaign">#アクティブキャンペーン</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ja/blog/?tag=data-engine">#データエンジン</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="3つのスプレッドシートをMindbody IndexesとActiveCampaign Segmentsに置き換える" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-activecampaign-segment-from-indexes/hero.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<h1 id="walk-into-the-back-office-of-a-230-student-karate-dojo-and-you-will-find-spreadsheets-one-for-current-belt-rank-maintained-by-the-sensei-one-for-the-upcoming-belt-test-roster-maintained-by-the-assistant-instructor-one-for-gear-orders-uniforms-sparring-pads-weapons-maintained-by-the-front-desk-one-for-tournament-signups-maintained-by-the-head-coach-one-for-family-memberships-maintained-by-whoever-happens-to-remember-whose-siblings-are-also-students">生徒数230人の空手道場の奥の事務室に入ると、スプレッドシートがいくつも並んでいる。先生が管理する現在の帯のランク表、アシスタントインストラクターが管理する次回の帯昇級審査の受験者名簿、受付が管理する用具（道着、組手用パッド、武器）の発注表、ヘッドコーチが管理する大会参加登録表、そして兄弟姉妹も生徒である人がたまたま覚えている人が管理する家族会員名簿などだ。</h1>
+<p>これらのスプレッドシートはどれも互いに連携しておらず、ActiveCampaignにもデータを提供していません。そのため、道場が昇級審査のリマインダーを送信すると、最初の審査まで6か月もある白帯の生徒や、先週審査を受けた茶帯の生徒の親など、全員に通知が届いてしまいます。購読解除率は上昇し、信頼は低下します。</p>
+<p>仮題：生徒数230名、家族会員の割合が高い単一道場のストーンパイン空手（例）は、まさにこの問題を抱えていました。師範は「ActiveCampaignにすべて入力してみよう」と2度試みましたが、Mindbodyのデータとスプレッドシートの数値が様々な点で食い違っていたため、いずれも断念しました。</p>
+<p>この記事では、スプレッドシートをMindbodyのインデックスとカスタムフィールドに置き換え、ActiveCampaignのセグメントにスムーズに同期させる方法について説明します。</p>
+<h2 id="what-indexes-and-custom-fields-sync-to-activecampaign">ActiveCampaignに同期されるインデックスとカスタムフィールドはどれですか？</h2>
+<p>Mindbodyは、構造化された顧客メタデータを持つあらゆる企業にとって、あまり活用されていない2つの機能をサポートしています。 <strong>クライアントインデックス</strong> （「帯のランク」や「年齢層」のようなドロップダウンメニューや選択リストを想像してください） <strong>カスタムクライアントフィールド</strong> （「兄弟姉妹の数」や「トーナメント出場資格」などの自由形式または構造化されたフィールド）。</p>
+<p>CRMConnect MindbodyとActiveCampaignは、両者を直接同期します。アプリページには、「MindbodyのインデックスとカスタムフィールドをActiveCampaignに自動的に同期し、強力なセグメンテーションと高度にパーソナライズされたキャンペーンを実現します。」と記載されています。また、「ウェルネスビジネス向けに特別に設計された120以上のカスタムフィールドをActiveCampaignに自動的に入力し、より詳細なセグメンテーションとパーソナライズされた自動化を実現します。」とも記載されています。</p>
+<p>インデックスとカスタムフィールドは、ActiveCampaignに標準のカスタムフィールドとして表示され、セグメントビルダーや条件付きコンテンツブロックで使用できます。学生レコードは次のようになります。</p>
+<pre class="highlight"><code class="language-json">{
+  "email": "parent@example.com",
+  "firstname": "Kai",
+  "belt_rank": "Green Stripe",
+  "age_group": "Youth 8-11",
+  "family_membership_id": "FAM-00231",
+  "is_paid_for_by": "parent@example.com",
+  "tournament_eligible": true,
+  "next_belt_test_date": "2026-06-14",
+  "gear_size_uniform": "Size 3",
+  "last_visit_date": "2026-05-15",
+  "membership_status": "Active"
+}</code></pre>
+<p>その1つの連絡先情報で、スプレッドシートの4行分が置き換えられます。</p>
+<p><img alt="3つのスプレッドシートをMindbody IndexesとActiveCampaign Segmentsに置き換える — 図1" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-activecampaign-segment-from-indexes/inline-1.png"/></p>
+<h2 id="designing-three-segments-that-replace-three-spreadsheets">3つのスプレッドシートを置き換える3つのセグメントの設計</h2>
+<p>ActiveCampaignで、保存済みセグメントを3つ作成します。それぞれが1つのスプレッドシートを置き換えます。</p>
+<p><strong>セグメント1：ベルトテストの受験者リスト。</strong> フィルター <code>next_belt_test_date is in next 30 days AND membership_status = Active</code>このリストは、先生がMindbodyで試験日を変更した日に自動的に更新されます。手動での名簿管理は不要です。</p>
+<p><strong>セグメント2：ギアの再注文対象。</strong> フィルター <code>gear_size_uniform is known AND last_gear_order_date is more than 9 months ago</code>これにより、制服がサイズアウトしていると思われる生徒を、四半期ごとに各家庭に催促することなく見つけ出すことができます。</p>
+<p><strong>セグメント3：トーナメントプール。</strong> フィルター <code>tournament_eligible = true AND belt_rank in (Green Stripe, Brown, Black) AND age_group in (Youth 12-15, Teen 16-17, Adult)</code>大会主催者は、登録開始日の朝にこのリストを作成します。リストは常に最新の情報です。</p>
+<p>親向けのセグメントを1つ上に重ねる： <strong>第4部：家族間のコミュニケーション（大人向け）</strong> フィルター <code>is_paid_for_by is empty</code> （つまり、料金を支払う大人であるということ） <code>AND family_membership_id is known</code>これは保護者との連絡リストです。9歳のお子様への帯のテストのお知らせは、お子様本人ではなく保護者の方にお送りください。家族間の連携機能を使えば、このようなことは簡単にできます。</p>
+<h2 id="automating-belt-tests-gear-and-tournament-comms">ベルトテスト、装備、トーナメント通信の自動化</h2>
+<p>セグメントを定義したら、3つの小さな自動化プロセスを作成します。</p>
+<p><strong>ベルト試験対策。</strong> セグメント 1 エントリーに登録。テスト前の 30 日間に 5 つの接触: サインアップ確認、「期待されること」準備メール、ユニフォームチェックのリマインダー、前日のロジスティクス、および翌日の結果通知 ( <code>last_belt_test_passed</code> 先生がMindbodyでカスタムフィールドを更新しました。</p>
+<p><strong>装備品の再注文。</strong> セグメント2のエントリーに登録済み。2回の接触：9か月目に生徒の現在のサイズが登録されているサイズチェックメールを送信し、14日以内に注文がない場合はフォローアップメールを送信します。パーソナライズ <code>gear_size_uniform</code> そうすれば親が調べる必要がなくなる。</p>
+<p><strong>トーナメントサイクル。</strong> セグメント 3 エントリーに登録し、キャンペーン レベルのマージ フィールドとして保存された今後のトーナメントの日付でゲートします。 3 つのタッチ: 登録開始、登録終了の警告、前日のロジスティクス。キャンペーンから登録した学生を自動的に削除します ( <code>tournament_registered</code> 登録フォーム経由で入力したフィールド（フィールド変更時に終了）。</p>
+<p>CRMConnectがActiveCampaign内に作成するMindbody予約パイプラインは、各生徒のトレーニング予約を取引として追跡するため、指導者はActiveCampaignから離れることなく、生徒ごとの月ごとの出席傾向を確認できます。</p>
+<p><img alt="3つのスプレッドシートをMindbody IndexesとActiveCampaign Segmentsに置き換える — 図2" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-activecampaign-segment-from-indexes/inline-2.png"/></p>
+<h2 id="representative-time-saved-at-230-students">生徒数230名の場合の代表的な時間短縮効果</h2>
+<p>この規模の道場での代表的な導入事例では、廃止された3つのスプレッドシートによって、主任師範と受付担当者の事務作業時間が週におよそ4～6時間削減されました。これは年間約250時間に相当します。さらに重要なのは、スタッフがスプレッドシートへの依存をやめ、Mindbodyを信頼できる情報源として活用するようになったことです。つまり、誰も「本当の」コピーを別に保管しなくなったため、Mindbody自体のデータ品質が向上したのです。</p>
+<p>メールのエンゲージメント指標は大きく変動する傾向があります。一斉送信メールの購読解除率は、通常60日以内に半減します。これは、セグメント化によって、生徒は明らかに自分に関係のない情報を受け取らなくなるためです（茶帯の生徒には白帯のオリエンテーションメールが届かなくなります）。</p>
+<p>Stone Pineの場合、ギアの再注文自動化だけで第1四半期の統合コストを賄うことができました。9か月時点での再注文率は、親が自発的に気づいたことによる緩やかな35％から、サイズを考慮したメール配信によって65～70％へと大幅に上昇しました。</p>
+<p>これらの数字はあくまで例示であり、既に厳格な記録管理を行っている道場では時間の節約効果は小さく、記録管理がずさんな道場でははるかに大きな節約効果が見込まれる。</p>
+<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
+<ul>
+<li><strong>コピーすべきもの：</strong> 「1つのセグメントにつき1つのスプレッドシート」というパターンを避けましょう。理論上のユーザーペルソナに基づいてセグメントを構築しようとするのではなく、スタッフが実際に紙で管理しているリストに基づいてセグメントを構築してください。</li>
+<li><strong>注意すべき点：</strong> インデックスとカスタムフィールドは、Mindbody に入力されたとおりにのみ同期されます。既存のクライアントベースの半分が <code>belt_rank</code> フィールドが空の場合は、セグメントが有用になるまでに1日分のデータ入力が必要です。また、アクティビティのMindbodyとActiveCampaign間の同期は一方向です。ActiveCampaignからMindbodyにベルトランクを更新しようとしないでください（変更のソース・オブ・トゥルースにはMindbodyを使用してください）。</li>
+<li><strong>このパターンが当てはまらない場合：</strong> 構造化されたカスタムフィールドがほとんどないビジネス（例えば、予約不要のフィットネスクラスなど）は、その恩恵を受けにくい。このパターンが真価を発揮するのは、異なるコミュニケーションを促す3つ以上の直交する顧客属性が存在する場合である。</li>
+</ul>
+<p>CRMConnect MindbodyとActiveCampaignの連携動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-activecampaign-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
+<p>ターンキー統合の全カタログは以下をご覧ください。 <a href="/apps">/アプリ</a>.</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#what-indexes-and-custom-fields-sync-to-activecampaign">ActiveCampaignに同期されるインデックスとカスタムフィールドはどれですか？</a></li><li class="lvl-2"><a href="#designing-three-segments-that-replace-three-spreadsheets">3つのスプレッドシートを置き換える3つのセグメントの設計</a></li><li class="lvl-2"><a href="#automating-belt-tests-gear-and-tournament-comms">ベルトテスト、装備、トーナメント通信の自動化</a></li><li class="lvl-2"><a href="#representative-time-saved-at-230-students">生徒数230名の場合の代表的な時間短縮効果</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="心身統合型高レベル登録、コース、予約" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.png"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>
