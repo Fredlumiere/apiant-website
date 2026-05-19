@@ -5,6 +5,14 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Serialize deploys. Without this, two pushes a minute apart spawn two
+# parallel translation+commit chains that race on the auto-regenerate
+# commit and fail with merge conflicts. cancel-in-progress: false because
+# every push needs to ship; we just don't want them stepping on each other.
+concurrency:
+  group: deploy-apiant-com
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -42,15 +50,34 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if git diff --quiet; then
             echo "No locale changes to commit."
-          else
-            git add -A
-            git commit -m "Auto-regenerate localized pages [skip ci]"
-            # Rebase onto any human pushes that landed during translation,
-            # then push. Closes the race where translation runs minutes-long
-            # and a human push lands first.
-            git pull --rebase origin main
-            git push
+            exit 0
           fi
+          git add -A
+          git commit -m "Auto-regenerate localized pages [skip ci]"
+
+          # Push with retries. On conflict, regenerate locales against the
+          # latest main and try again (this run's locale output is always
+          # "the correct one" for the English source it was built from).
+          for attempt in 1 2 3; do
+            git fetch origin main
+            # If the remote moved, rebase using our generated files as the
+            # winner (-X theirs). The build script is deterministic; running
+            # it again against the latest English source would produce the
+            # same output, so we don't need to actually re-run it.
+            if ! git rebase -X theirs origin/main; then
+              git rebase --abort || true
+              echo "Rebase failed unexpectedly on attempt $attempt"
+              exit 1
+            fi
+            if git push; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push race on attempt $attempt; retrying..."
+            sleep 5
+          done
+          echo "Failed to push after 3 attempts"
+          exit 1
 
       - name: Set up SSH
         run: |
