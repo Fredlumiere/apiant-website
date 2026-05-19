@@ -62,7 +62,8 @@
 </head>
 <body class="blog-shell">
 <!-- Blog nav: streamlined version of main site nav. Absolute paths so it
-     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/. -->
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
 <header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
   <div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
     <a href="/" style="display:flex;align-items:center;text-decoration:none;">
@@ -72,10 +73,28 @@
       <a href="/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
       <a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
       <a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Connectors</a>
+
+      <div class="lang-switcher" style="position:relative;display:flex;align-items:center;">
+        <button class="lang-switcher-btn" type="button" aria-haspopup="true" aria-expanded="false" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;">
+          <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span class="lang-switcher-current">EN</span>
+          <svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+        </button>
+        <div class="lang-switcher-dropdown"></div>
+      </div>
+
       <a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Start Building</a>
     </nav>
   </div>
 </header>
+<style>
+  .lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .lang-switcher-dropdown.open { display: block; }
+  .lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
 
 
 <section class="blog-hero">
@@ -87,6 +106,9 @@
 </section>
 
 <div class="blog-container">
+  <div class="blog-search-row">
+    <input id="blog-search-input" type="search" placeholder="Search posts..." autocomplete="off" aria-label="Search blog posts"/>
+  </div>
   <div class="blog-filters">
     <a class="blog-pill" href="/blog/">All</a>
 <a class="blog-pill active" href="/blog/category/use-cases">Use Cases</a>
@@ -97,8 +119,6 @@
   <section class="blog-grid">
     <a class="blog-card" href="/blog/posts/revolutionize-your-yoga-studio-with-marketing-automation/"><div class="blog-card-image"><img alt="Revolutionize Your Yoga Studio with Marketing Automation" loading="lazy" src="https://5004658.fs1.hubspotusercontent-na1.net/hubfs/5004658/Yoga%20mindbody%20hubspot%20crmconnect-1.jpg"/></div><div class="blog-card-body"><div class="blog-category-chip">Use Cases</div><h3 class="blog-card-title">Revolutionize Your Yoga Studio with Marketing Automation</h3><p class="blog-card-excerpt">Discover how automating client communication can transform your yoga studio&#x27;s marketing strategy and streamline operations.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Mar 16, 2024</span></div></div></a><a class="blog-card" href="/blog/posts/9-key-questions-businesses-using-mindbody-must-answer-to-automate-growth/"><div class="blog-card-image"><img alt="How Businesses Using Mindbody Can Use the Answers to 9 Key Questions to Automate Growth" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/AdobeStock_195637927.jpeg?width=1600&amp;name=AdobeStock_195637927.jpeg"/></div><div class="blog-card-body"><div class="blog-category-chip">Use Cases</div><h3 class="blog-card-title">How Businesses Using Mindbody Can Use the Answers to 9 Key Questions to Automate Growth</h3><p class="blog-card-excerpt">Are you looking to revolutionize the growth of your wellness business through automation?</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Mar 16, 2024</span></div></div></a><a class="blog-card" href="/blog/posts/9-key-questions-businesses-using-mindbody-must-answer-to-automate-growth-0/"><div class="blog-card-image"><img alt="Meeting Modern Marketing Demands for Wellness Businesses: Automation and Segmentation" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/Marketing.jpeg?width=1600&amp;name=Marketing.jpeg"/></div><div class="blog-card-body"><div class="blog-category-chip">Use Cases</div><h3 class="blog-card-title">Meeting Modern Marketing Demands for Wellness Businesses: Automation and Segmentation</h3><p class="blog-card-excerpt">Effective marketing in the wellness industry in 2023 involves understanding customer behavior, utilizing data and technology, and personalizing communications through automation and segmentation. CRMConnect syncs Mindbody and HubSpot for ta</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Mar 16, 2024</span></div></div></a><a class="blog-card" href="/blog/posts/5-reasons-you-can-reduce-churn-by-integrating-your-mindbody-and-hubspot-accounts/"><div class="blog-card-image"><img alt="5 Ways Integrating Mindbody and HubSpot Can Reduce Churn" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/Man%20doing%20a%20curl%20with%20dumbell%20with%20a%20woman%20behind%20him.jpeg?width=1600&amp;name=Man%20doing%20a%20curl%20with%20dumbell%20with%20a%20woman%20behind%20him.jpeg"/></div><div class="blog-card-body"><div class="blog-category-chip">Use Cases</div><h3 class="blog-card-title">5 Ways Integrating Mindbody and HubSpot Can Reduce Churn</h3><p class="blog-card-excerpt">Unforeseen circumstances can lead to customer churn, but there are proactive steps you can take to prevent it. By integrating Mindbody and HubSpot, you can effectively reduce churn and keep your clients engaged and loyal.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Mar 16, 2024</span></div></div></a><a class="blog-card" href="/blog/posts/automating-marketing-with-mindbody-and-hubspot/"><div class="blog-card-image"><img alt="Automating Marketing with Mindbody and HubSpot" loading="lazy" src="https://5004658.fs1.hubspotusercontent-na1.net/hub/5004658/hubfs/CRMConnect%20with%20Mindbody%20%E2%86%92%20HubSpot.jpg?width=1600&amp;name=CRMConnect%20with%20Mindbody%20%E2%86%92%20HubSpot.jpg"/></div><div class="blog-card-body"><div class="blog-category-chip">Use Cases</div><h3 class="blog-card-title">Automating Marketing with Mindbody and HubSpot</h3><p class="blog-card-excerpt">Discover the power of automating your marketing efforts using Mindbody and HubSpot integration.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Mar 16, 2024</span></div></div></a><a class="blog-card" href="/blog/posts/how-beautyfix-uses-hubspot-and-mindbody-to-send-targeted-social-media-campaigns/"><div class="blog-card-image"><img alt="Maximizing Marketing Success: BeautyFix&#x27;s HubSpot and Mindbody Integration" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/MedSpa%20NYC%20BeautyFix%20MedSpa%202022-04-20%20at%203.38.31%20PM.jpg?width=1600&amp;name=MedSpa%20NYC%20BeautyFix%20MedSpa%202022-04-20%20at%203.38.31%20PM.jpg"/></div><div class="blog-card-body"><div class="blog-category-chip">Use Cases</div><h3 class="blog-card-title">Maximizing Marketing Success: BeautyFix&#x27;s HubSpot and Mindbody Integration</h3><p class="blog-card-excerpt"></p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Jan 1, 2022</span></div></div></a>
   </section>
-
-  
 </div>
 
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
@@ -118,5 +138,9 @@
   </div>
 </footer>
 
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js" defer></script>
+<script src="/js/blog-search.js" defer></script>
+<script src="/js/i18n.js" defer></script>
 </body>
 </html>
