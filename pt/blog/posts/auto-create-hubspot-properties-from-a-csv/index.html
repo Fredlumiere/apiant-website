@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="pt">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Auto create HubSpot properties from a CSV | APIANT Blog</title>
+<meta content="How to auto-create HubSpot properties (contact, deal or company) using this free import automation built on APIANT." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Auto create HubSpot properties from a CSV" property="og:title"/>
+<meta content="How to auto-create HubSpot properties (contact, deal or company) using this free import automation built on APIANT." property="og:description"/>
+<meta content="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/auto-create-hubspot-properties-from-a-csv/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Auto create HubSpot properties from a CSV" property="twitter:title"/>
+<meta content="How to auto-create HubSpot properties (contact, deal or company) using this free import automation built on APIANT." property="twitter:description"/>
+<meta content="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Auto create HubSpot properties from a CSV",
+  "description": "How to auto-create HubSpot properties (contact, deal or company) using this free import automation built on APIANT.",
+  "image": "https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png",
+  "datePublished": "2024-09-18T17:11:03+00:00",
+  "dateModified": "2026-05-19T13:12:01.790016+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/auto-create-hubspot-properties-from-a-csv/"
+  },
+  "articleSection": "For Builders"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "For Builders", "item": "https://apiant.com/blog/category/for-builders" },
+    { "@type": "ListItem", "position": 4, "name": "Auto create HubSpot properties from a CSV", "item": "https://apiant.com/blog/posts/auto-create-hubspot-properties-from-a-csv/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/auto-create-hubspot-properties-from-a-csv/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/pt/blog/posts/auto-create-hubspot-properties-from-a-csv/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plataforma</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Conectores</a>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Comece a construir</a>
+</nav>
+</div>
+</header>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/blog/category/for-builders" style="color:inherit;text-decoration:none;">For Builders</a>
+</div>
+<h1 class="blog-post-h1">Auto create HubSpot properties from a CSV</h1>
+<div class="blog-post-meta">
+<span><a href="/blog/?author=fred">Fred Lumiere</a></span>
+<span>Sep 18, 2024</span>
+<span>3 min read</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/blog/?tag=hubspot">#HubSpot</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Auto create HubSpot properties from a CSV" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>How to auto-create HubSpot properties (contact, deal or company) using this free import automation built on APIANT.</p>
+<p>Target Audience: HubSpot Admin</p>
+<p>Steps to auto-create HubSpot properties with a CSV with a Free APIANT account for HubSpot admins.</p>
+<h3 id="first-youll-need-an-apiant-account">First you’ll need an APIANT account…</h3>
+<h3 id="are-you-a-hubspot-admin-and-would-like-a-free-apiant-account-for-hubspot-admins-if-so-you-can-submit-an-application-below">Are you a HubSpot Admin and would like a free APIANT account for HubSpot Admins? If so, you can submit an application below:</h3>
+<p>First Name*</p>
+<p>Last Name*</p>
+<p>Job Title*</p>
+<p>Email*</p>
+<p>Mobile Phone Number*</p>
+<p>Company Name*</p>
+<p>Target solutions</p>
+<h3 id="then-copy-and-edit-this-google-sheet">Then copy and edit this Google sheet</h3>
+<p><a href="https://docs.google.com/spreadsheets/d/1vkeryPZVqflnmDHV0MUvKfjjGKBS0GH_xMcoWm_EYu4/edit?usp=sharing"></a></p>
+<p>Here’s the <a href="https://docs.google.com/spreadsheets/d/1vkeryPZVqflnmDHV0MUvKfjjGKBS0GH_xMcoWm_EYu4/edit?usp=sharing">link to the Google sheet</a>.</p>
+<p>Add as many rows as you like.</p>
+<p>Choose the HubSpot object you’d like to create the properties for:</p>
+<ul>
+<li>Contact</li>
+<li>Deal</li>
+<li>Empresa</li>
+</ul>
+<p>Give it a property group name</p>
+<p>You can always list a property and choose “No” to create custom property in HubSpot to ignore it for now.</p>
+<p>Choose the display name, api name</p>
+<p>Select the property type from the drop-down:</p>
+<ul>
+<li>Date picker</li>
+<li>Date time</li>
+<li>Dropdown select</li>
+<li>Multi-line text</li>
+<li>Multi-select</li>
+<li>Number field</li>
+<li>Single line text</li>
+<li>Single on/off checkbox</li>
+<li>HubSpot native</li>
+</ul>
+<p>And finally enter your property description</p>
+<p>Once you’ve entered all your rows (one per property), download the sheet as a CSV:</p>
+<p><img alt="HubSpot Properties - Google Sheets 2024-09-18 at 12.55.39 PM" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.55.39%20PM.png?width=481&amp;height=505&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.55.39%20PM.png"/></p>
+<h3 id="install-the-template-automation-in-your-apiant-account">Install the template automation in your APIANT account</h3>
+<p><a href="https://apiant.com/aip_templates?template=c3aefe7cdf0a442c8de3c98737d9c24f"><img alt="Templates 2024-09-18 at 1.01.01 PM" src="https://blog.apiant.com/hs-fs/hubfs/Templates%202024-09-18%20at%201.01.01%20PM.png?width=589&amp;height=435&amp;name=Templates%202024-09-18%20at%201.01.01%20PM.png"/></a></p>
+<p>Here’s the <a href="https://apiant.com/aip_templates?template=c3aefe7cdf0a442c8de3c98737d9c24f">link</a> to the template called <a href="https://apiant.com/aip_templates?template=c3aefe7cdf0a442c8de3c98737d9c24f">Create HubSpot custom properties from CSV</a></p>
+<h3 id="once-installed-connect-a-hubspot-hub-from-the-menu">Once installed, connect a HubSpot Hub from the menu</h3>
+<p><img alt="connections" src="https://blog.apiant.com/hs-fs/hubfs/connections.png?width=552&amp;height=122&amp;name=connections.png"/></p>
+<h3 id="choose-systems-public-app-and-login-the-hub">Choose System’s Public App, and login the Hub</h3>
+<p><img alt="system public app" src="https://blog.apiant.com/hs-fs/hubfs/system%20public%20app.png?width=602&amp;height=197&amp;name=system%20public%20app.png"/></p>
+<h3 id="turn-on-the-automation">Turn on the automation</h3>
+<p><img alt="turn on automation" src="https://blog.apiant.com/hs-fs/hubfs/turn%20on%20automation.png?width=242&amp;height=129&amp;name=turn%20on%20automation.png"/></p>
+<h3 id="press-play-button-for-the-automation-since-this-is-a-form-app-based-trigger">Press play button for the automation since this is a <a href="https://info.apiant.com/forms-overview">Form App</a> based trigger</h3>
+<p><img alt="press play" src="https://blog.apiant.com/hs-fs/hubfs/press%20play.png?width=251&amp;height=122&amp;name=press%20play.png"/></p>
+<h3 id="click-to-upload-your-csv">Click to upload your CSV</h3>
+<p><img alt="upload csv" src="https://blog.apiant.com/hs-fs/hubfs/upload%20csv.png?width=258&amp;height=205&amp;name=upload%20csv.png"/>
+Your properties will auto-create and a report will generate.</p>
+<p>Feel free to edit the automation as you see fit (could you even add values to drop-downs and multi selects).</p>
+<p>Head over to <a href="http://forum.apiant.com/">forum.apiant.com</a> to share your experience and help each other.</p>
+<p><img alt="avatar" src="https://app.hubspot.com/settings/avatar/0e6daae3ad4bbd06085b1b0a82d40571"/></p>
+<p><a href="https://blog.apiant.com/en/author/fred-lumiere"><strong>Fred Lumiere</strong></a> Co-Founder &amp; CEO of APIANT</p>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">In this article</div><ul class="blog-toc-list"><li class="lvl-3"><a href="#first-youll-need-an-apiant-account">First you&amp;rsquo;ll need an APIANT account&amp;hellip;</a></li><li class="lvl-3"><a href="#are-you-a-hubspot-admin-and-would-like-a-free-apiant-account-for-hubspot-admins-if-so-you-can-submit-an-application-below">Are you a HubSpot Admin and would like a free APIANT account for HubSpot Admins? If so, you can submit an application below:</a></li><li class="lvl-3"><a href="#then-copy-and-edit-this-google-sheet">Then copy and edit this Google sheet</a></li><li class="lvl-3"><a href="#install-the-template-automation-in-your-apiant-account">Install the template automation in your APIANT account</a></li><li class="lvl-3"><a href="#once-installed-connect-a-hubspot-hub-from-the-menu">Once installed, connect a HubSpot Hub from the menu</a></li><li class="lvl-3"><a href="#choose-systems-public-app-and-login-the-hub">Choose System&amp;rsquo;s Public App, and login the Hub</a></li><li class="lvl-3"><a href="#turn-on-the-automation">Turn on the automation</a></li><li class="lvl-3"><a href="#press-play-button-for-the-automation-since-this-is-a-form-app-based-trigger">Press play button for the automation since this is a Form App based trigger</a></li><li class="lvl-3"><a href="#click-to-upload-your-csv">Click to upload your CSV</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Keep reading</h2><div class="blog-grid"><a class="blog-card" href="/blog/posts/create-a-custom-hubspot-crm-card-without-coding-with-apiant/"><div class="blog-card-image"><img alt="Create a Custom HubSpot CRM Card without Coding with APIANT" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png?width=1600&amp;name=Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">For Builders</div><h3 class="blog-card-title">Create a Custom HubSpot CRM Card without Coding with APIANT</h3><p class="blog-card-excerpt">Learn how to easily create a customized HubSpot CRM Card without any coding with APIANT.</p><div class="blog-card-meta"><span>Fred Lumiere</span><span>Mar 17, 2024</span></div></div></a><a class="blog-card" href="/blog/posts/setting-up-virtual-yoga-classes-with-zoom-and-mindbody/"><div class="blog-card-image"><img alt="Setting Up Virtual Yoga Classes with Zoom and Mindbody" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/AdobeStock_355157235.jpeg?width=1600&amp;name=AdobeStock_355157235.jpeg"/></div><div class="blog-card-body"><div class="blog-category-chip">For Builders</div><h3 class="blog-card-title">Setting Up Virtual Yoga Classes with Zoom and Mindbody</h3><p class="blog-card-excerpt">Discover how to seamlessly transition your yoga classes online using Zoom and Mindbody to reach a wider audience and enhance your studio's offerings.</p><div class="blog-card-meta"><span>Fred Lumiere</span><span>Mar 17, 2024</span></div></div></a><a class="blog-card" href="/blog/posts/appconnects-enhanced-mindbody-zapier-connectors/"><div class="blog-card-image"><img alt="AppConnect's Enhanced Mindbody-Zapier Connectors" loading="lazy" src="https://5004658.fs1.hubspotusercontent-na1.net/hubfs/5004658/Screen%20Shot%202025-03-10%20at%203.19.49%20PM-3.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">AppConnect's Enhanced Mindbody-Zapier Connectors</h3><p class="blog-card-excerpt">Exciting Enhancements to AppConnect's Prebuilt Connectors: More Data, More Possibilities</p><div class="blog-card-meta"><span>Fred Lumiere</span><span>Mar 10, 2025</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. All Rights Reserved.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plataforma</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacidade</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Termos</a>
+</div>
+</div>
+</footer>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>
