@@ -88,3 +88,22 @@ jobs:
             --exclude='blog/_templates/' \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
             ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Sync blog tree with --delete (origin only)
+        # Scoped delete for /blog/ on the English root and every locale.
+        # Without this, orphaned category/post folders linger forever on
+        # origin after rename/removal (see the platform-deep-dives etc.
+        # cleanup we had to do manually). The main rsync above stays
+        # non-deleting to protect any server-only files in other paths.
+        run: |
+          for path in blog ar/blog bn/blog de/blog es/blog fr/blog he/blog \
+                       hi/blog id/blog it/blog ja/blog ko/blog nl/blog \
+                       pl/blog pt/blog ru/blog sv/blog th/blog tr/blog \
+                       vi/blog zh/blog; do
+            if [ -d "$path" ]; then
+              rsync -rltz --omit-dir-times --delete-after \
+                --exclude='_templates/' \
+                -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+                "$path/" "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/$path/"
+            fi
+          done

@@ -243,7 +243,7 @@ def render_post_card(post: dict) -> str:
         f'<h3 class="blog-card-title">{html.escape(post["title"])}</h3>'
         f'<p class="blog-card-excerpt">{excerpt}</p>'
         f'<div class="blog-card-meta">'
-        f'<span>{html.escape(author)}</span>'
+        f'<span class="notranslate">{html.escape(author)}</span>'
         f'<span>{html.escape(published)}</span>'
         f'</div></div></a>'
     )
