@@ -40,14 +40,18 @@ jobs:
       # other — deploy used to translate stale blog HTML and then win the
       # rebase, reverting the build-blog output (avif images, descriptive
       # alt text, data-tags). Running build_blog here makes deploy
-      # self-sufficient. Skipped silently if Supabase secrets aren't set
-      # (e.g. forks running without credentials).
+      # self-sufficient. Skipped at the shell level if Supabase env vars
+      # aren't set (forks without credentials).
       - name: Refresh blog HTML from Supabase
-        if: ${{ secrets.SUPABASE_URL != '' }}
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: python scripts/build_blog.py --all
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
+            echo "Supabase secrets not configured; skipping blog refresh."
+            exit 0
+          fi
+          python scripts/build_blog.py --all
 
       - name: Regenerate localized pages
         env:
