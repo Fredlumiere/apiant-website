@@ -68,7 +68,10 @@ jobs:
             exit 0
           fi
           SLUG="${{ github.event.client_payload.slug }}"
-          MSG="Publish blog post ${SLUG:-(full rebuild)} [skip translations]"
+          # Note: commit does NOT carry [skip translations] anymore. The
+          # downstream deploy.yml will run update_translations.sh so blog
+          # posts get regenerated across all 19 locales.
+          MSG="Publish blog post ${SLUG:-(full rebuild)}"
           git commit -m "$MSG"
           git pull --rebase origin main
           git push

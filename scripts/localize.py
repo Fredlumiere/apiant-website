@@ -104,6 +104,26 @@ PAGES = [
     'dpa.html',
 ]
 
+
+def _discover_blog_pages() -> list[str]:
+    """Auto-discover blog pages so we don't have to hand-maintain the list.
+    build_blog.py owns the file set under /blog/ and the slugs change as
+    posts and categories are added/removed. Globbing keeps the two in sync.
+    Skips /blog/_templates/ (build inputs, not pages)."""
+    blog_root = ROOT / 'blog'
+    if not blog_root.exists():
+        return []
+    out: list[str] = []
+    for p in blog_root.rglob('index.html'):
+        rel = p.relative_to(ROOT).as_posix()
+        if '_templates' in rel.split('/'):
+            continue
+        out.append(rel)
+    return sorted(out)
+
+
+PAGES.extend(_discover_blog_pages())
+
 LOCALIZED_SET = set(PAGES)
 
 SKIP_TAGS = frozenset(['script', 'style', 'code', 'pre', 'svg', 'noscript', 'math'])
