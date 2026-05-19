@@ -35,6 +35,20 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r scripts/requirements.txt
 
+      # Refresh blog HTML from Supabase before translation. Closes the race
+      # where build-blog.yml and deploy.yml start within seconds of each
+      # other — deploy used to translate stale blog HTML and then win the
+      # rebase, reverting the build-blog output (avif images, descriptive
+      # alt text, data-tags). Running build_blog here makes deploy
+      # self-sufficient. Skipped silently if Supabase secrets aren't set
+      # (e.g. forks running without credentials).
+      - name: Refresh blog HTML from Supabase
+        if: ${{ secrets.SUPABASE_URL != '' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python scripts/build_blog.py --all
+
       - name: Regenerate localized pages
         env:
           GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
