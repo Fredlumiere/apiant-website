@@ -196,7 +196,7 @@
 <div class="blog-post-hero-image"><img alt="当会话包数量低于 3 个时触发 ActiveCampaign 续订电子邮件" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-activecampaign-session-pack-renewals/hero.png"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h1 id="class-packs-and-session-packs-are-the-unloved-children-of-fitness-crm-memberships-have-auto-pay-drop-ins-are-obvious-one-shots-packs-are-the-awkward-middle-a-client-buys-10-sessions-burns-through-them-at-one-a-week-and-somewhere-around-session-8-the-trainer-is-supposed-to-have-the-renewal-conversation-half-the-time-the-trainer-forgets-the-other-half-the-trainer-remembers-two-sessions-too-late-and-the-client-takes-a-three-week-gap-that-turns-into-an-indefinite-one">课程包和单次课程包是健身客户关系管理系统中不受待见的“孩子”。会员卡有自动续费功能，单次课程显然是一次性的，而课程包则尴尬地介于两者之间：客户购买了10节课，每周使用一节，大约在第8节课左右，教练应该“和客户谈谈续费的事”。一半的情况下，教练会忘记；另一半情况下，教练会晚两节课才想起来，导致客户中断三周，最终变成无限期的空档期。</h1>
+<h1 id="class-packs-and-session-packs-are-the-unloved-children-of-fitness-crm-memberships-have-auto-pay-drop-ins-are-obvious-one-shots-packs-are-the-awkward-middle-a-client-buys-10-sessions-burns-through-them-at-one-a-week-and-somewhere-around-session-8-the-trainer-is-supposed-to-have-the-renewal-conversation-half-the-time-the-trainer-forgets-the-other-half-the-trainer-remembers-two-sessions-too-late-and-the-client-takes-a-three-week-gap-that-turns-into-an-indefinite-one">课程包和单次课程包是健身客户关系管理系统中不受待见的“孩子”。会员卡有自动续费功能，单次课程显然是一次性的，而课程包则显得尴尬：客户购买了10节课，每周用一节，大约在第8节课左右，教练应该“提醒客户续费”。但教练经常忘记，另一半时间，教练会晚两节课才想起来，导致客户中断三周，最终变成无限期的空档期。</h1>
 <p>假设：North Ridge Strength（举例）是一家单店私人健身工作室，拥有6名教练和180名购买了课程套餐的客户。该工作室进行了一次人工审核，发现大约22%的套餐客户在上次套餐过期后就再也没有续订。这些客户大多并非有意放弃，只是因为之前的课程安排被打乱而不再来上课。</p>
 <p>这些教练并不懒惰。他们只是在指导客户的同时，还要负责续费追踪。这种工作量对于每个教练来说，最多只能服务大约30个客户。</p>
 <h2 id="what-crmconnect-syncs-each-night">CRMConnect 每晚同步的内容</h2>
@@ -204,7 +204,7 @@
 <p>每个联系人的相关字段均自动填充：</p>
 <ul>
 <li><code>remaining_sessions</code> （整数，每次访问后更新）</li>
-<li><code>pricing_option_name</code> （例如，“10人私人训练”）</li>
+<li><code>pricing_option_name</code> （例如，“10次私人训练”）</li>
 <li><code>pricing_option_expiration_date</code></li>
 <li><code>last_visit_date</code>, <code>last_visit_staff</code>, <code>last_visit_service</code></li>
 <li><code>membership_status</code> （有效、过期、暂停等）</li>
@@ -227,7 +227,7 @@
 <p>在 ActiveCampaign 中（条件逻辑需要 Plus 或更高版本），创建一个已注册的自动化流程 <code>remaining_sessions drops below 3 AND membership_status = Active</code>.</p>
 <p><strong>接触 1：当天晚上。</strong> 一封教练发来的简短邮件，格式类似短信。“嗨，[名字]，你的[定价方案名称]还剩[剩余课程]节课。要不要我帮你把下一节课的课程包添加到你的账户里，这样我们就不会错过一周的课程了？” 个性化发件人 <code>last_visit_staff</code> 所以读起来像是私人信件。</p>
 <p><strong>触摸 2：48 小时后如果 <code>remaining_sessions</code> 仍然大于 0 且未发生变化。</strong> 通过一键续订链接进行更强烈的催促。</p>
-<p><strong>第三次接触：与最后一次接触同一天。</strong> “今天最后一个，[预约时间]见。” 使用 <code>next_scheduled_appointment</code> 这封邮件很重要，因为它使面对面的续费对话变得正常化；教练知道客户刚刚收到一封关于续费的邮件，所以当面询问时就不会感到尴尬了。</p>
+<p><strong>触球3：与最后一节课同一天。</strong> “今天最后一个，[预约时间]见。” 使用 <code>next_scheduled_appointment</code> 这封邮件很重要，因为它使面对面的续费对话变得正常化；教练知道客户刚刚收到一封关于续费的邮件，所以当面询问时就不会感到尴尬了。</p>
 <p><strong>第 4 次触摸：包装过期后 3 天内，如果没有购买新包装，则触摸。</strong> 温和地重新吸引客户，或许可以提供一次小额的额外课程。</p>
 <p>第一层安全措施：如果 <code>last_visit_date is more than 14 days ago</code>跳过前三次接触，直接进行客户挽回。续约推销对已经失去兴趣的客户无效；你需要先重新培养他们的消费习惯。</p>
 <h2 id="personalizing-the-offer-per-trainer">为每位教练提供个性化服务</h2>

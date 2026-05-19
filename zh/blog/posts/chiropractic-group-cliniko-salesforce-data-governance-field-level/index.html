@@ -8,7 +8,7 @@
 <meta content="对于提供多次就诊疗程的脊椎按摩诊所来说，采用“先同步所有数据，以后再解决问题”的方式是行不通的。只有通过合规性审查，才能在 Cliniko 和 Salesforce 之间实现字段级控制。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="针对脊椎按摩集团的字段级数据治理：将 Cliniko 数据同步到 Salesforce" property="og:title"/>
+<meta content="为一家脊椎按摩诊所集团实现 Cliniko 与 Salesforce 的字段级数据治理" property="og:title"/>
 <meta content="对于提供多次就诊疗程的脊椎按摩诊所来说，采用“先同步所有数据，以后再解决问题”的方式是行不通的。只有通过合规性审查，才能在 Cliniko 和 Salesforce 之间实现字段级控制。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.png" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" property="og:url"/>
@@ -16,7 +16,7 @@
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="针对脊椎按摩集团的字段级数据治理：将 Cliniko 数据同步到 Salesforce" property="twitter:title"/>
+<meta content="为一家脊椎按摩诊所集团实现 Cliniko 与 Salesforce 的字段级数据治理" property="twitter:title"/>
 <meta content="对于提供多次就诊疗程的脊椎按摩诊所来说，采用“先同步所有数据，以后再解决问题”的方式是行不通的。只有通过合规性审查，才能在 Cliniko 和 Salesforce 之间实现字段级控制。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.png" property="twitter:image"/>
 <!-- Fonts -->
@@ -185,7 +185,7 @@
 <div class="blog-category-chip">
 <a href="/zh/blog/category/api-apps" style="color:inherit;text-decoration:none;">应用程序接口</a>
 </div>
-<h1 class="blog-post-h1">针对脊椎按摩集团的字段级数据治理：将 Cliniko 数据同步到 Salesforce</h1>
+<h1 class="blog-post-h1">为一家脊椎按摩诊所集团实现 Cliniko 与 Salesforce 的字段级数据治理</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/zh/blog/?author=fred">Fred Lumiere</a></span>
 <span>2025年7月17日</span>
@@ -193,7 +193,7 @@
 </div>
 <div class="blog-post-tags"><a class="blog-tag" href="/zh/blog/?tag=healthcare">＃卫生保健</a><a class="blog-tag" href="/zh/blog/?tag=cliniko">#Cliniko</a><a class="blog-tag" href="/zh/blog/?tag=salesforce">#Salesforce</a><a class="blog-tag" href="/zh/blog/?tag=crmconnect">#CRM连接</a></div>
 </header>
-<div class="blog-post-hero-image"><img alt="针对脊椎按摩集团的字段级数据治理：将 Cliniko 数据同步到 Salesforce" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.png"/></div>
+<div class="blog-post-hero-image"><img alt="为一家脊椎按摩诊所集团实现 Cliniko 与 Salesforce 的字段级数据治理" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.png"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
 <p>从 Cliniko 一次性导出 CSV 数据到 Salesforce 是最糟糕的方案。它勉强算得上是集成，但数据又不够及时，容易出错，而且数据丢失严重，让人无法完全信任。此外，它完全无法提供合规官审核诊所数据处理所需的审计跟踪信息。</p>
@@ -202,7 +202,7 @@
 <h2 id="why-the-one-time-csv-is-the-worst-of-all-worlds-for-compliance">为什么一次性 CSV 文件是合规性方面最糟糕的选择</h2>
 <p>三个原因：</p>
 <ul>
-<li>不支持字段级范围限定。CSV 导出通常要么“包含所有患者字段”，要么“不包含任何患者字段”，这与最小权限原则背道而驰。</li>
+<li>不支持字段级范围限定。CSV 导出通常要么全部导出患者字段，要么全部不导出患者字段，这与最小权限原则背道而驰。</li>
 <li>没有审计追踪。CSV 文件上传后，不会记录哪些记录被导入、何时导入以及由谁导入。合规性审查无从下手。</li>
 <li>有意为之，数据已过时。每月或每季度导出的数据意味着 Salesforce 反映的是历史数据。Cliniko 端的更新和删除（例如撤销同意、合并重复记录、更正记录）不会同步到 Salesforce。</li>
 </ul>
