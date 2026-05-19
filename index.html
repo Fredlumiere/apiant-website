@@ -2507,6 +2507,17 @@
     document.querySelectorAll('.popup-trigger').forEach(function(btn) {
       btn.addEventListener('click', function(e) { e.preventDefault(); openPopup('contact-popup'); });
     });
+    // Auto-open the qualification popup when landed on /?talk=1
+    // (used by the blog's Start Building button to surface the same form).
+    (function() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('talk') === '1') {
+          // Defer one tick so Turnstile + cqLog + the popup DOM are ready.
+          setTimeout(function() { openPopup('contact-popup'); }, 60);
+        }
+      } catch (e) {}
+    })();
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         document.querySelectorAll('.apiant-popup.active').forEach(function(p) { closePopup(p.id); });
