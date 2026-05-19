@@ -168,11 +168,53 @@
 
   searchInput.addEventListener('input', onInput);
 
-  // Debounced query string support (?q=foo deep-links)
+  // -------- ?tag= filter (category pages) --------
+  // When the URL carries ?tag=foo, filter the server-rendered cards to
+  // those whose data-tags attribute contains the tag slug. No fetch
+  // needed; the cards already know their own tag set.
+  function applyTagFilter(tagSlug) {
+    if (!tagSlug) return;
+    var anyMatch = false;
+    cards.forEach(function (c) {
+      var tags = (c.dataset.tags || '').split(' ').filter(Boolean);
+      var match = tags.indexOf(tagSlug) !== -1;
+      c.style.display = match ? '' : 'none';
+      if (match) anyMatch = true;
+    });
+    removeLoadMore();
+    if (featured) featured.style.display = 'none';
+    document.querySelectorAll('.blog-tag-pill').forEach(function (p) {
+      p.classList.toggle('active', p.dataset.tag === tagSlug);
+    });
+    if (!anyMatch) {
+      grid.innerHTML = '<div class="blog-empty"><h2>No posts with this tag here</h2><p>Try removing the tag filter.</p></div>';
+    }
+  }
+
+  // Wire tag pill clicks to do in-place filtering instead of navigating.
+  document.querySelectorAll('.blog-tag-pill').forEach(function (pill) {
+    pill.addEventListener('click', function (e) {
+      e.preventDefault();
+      var tag = pill.dataset.tag;
+      var current = new URLSearchParams(window.location.search).get('tag');
+      var next = current === tag ? '' : tag;
+      var url = new URL(window.location.href);
+      if (next) url.searchParams.set('tag', next);
+      else url.searchParams.delete('tag');
+      window.history.replaceState(null, '', url.toString());
+      if (next) applyTagFilter(next);
+      else restorePaginated();
+    });
+  });
+
+  // -------- query-string deep links --------
   var params = new URLSearchParams(window.location.search);
   var initialQ = params.get('q');
+  var initialTag = params.get('tag');
   if (initialQ) {
     searchInput.value = initialQ;
     onInput({ target: searchInput });
+  } else if (initialTag) {
+    applyTagFilter(initialTag);
   }
 })();

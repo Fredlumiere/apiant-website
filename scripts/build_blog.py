@@ -235,8 +235,16 @@ def render_post_card(post: dict) -> str:
     excerpt = html.escape(normalize(post.get("excerpt")) or "")
     published = format_date(post.get("published_at") or post.get("updated_at"))
     author = (post.get("author") or {}).get("display_name", "")
+    # Tag slugs as a space-separated data attribute so blog-search.js can
+    # filter cards by tag without re-rendering the grid.
+    tag_slugs = []
+    for t in (post.get("tags") or []):
+        inner = t.get("blog_tags") if isinstance(t, dict) else None
+        if inner and inner.get("slug"):
+            tag_slugs.append(inner["slug"])
+    data_tags = html.escape(" ".join(tag_slugs))
     return (
-        f'<a class="blog-card" href="/blog/posts/{html.escape(post["slug"])}/">'
+        f'<a class="blog-card" data-tags="{data_tags}" href="/blog/posts/{html.escape(post["slug"])}/">'
         f'{hero_html}'
         f'<div class="blog-card-body">'
         f'<div class="blog-category-chip">{html.escape(cat.get("name", ""))}</div>'
@@ -260,6 +268,34 @@ def render_category_pills(categories: list[dict], active_slug: str | None) -> st
             f'{html.escape(c["name"])}</a>'
         )
     return "\n".join(pills)
+
+
+def render_tag_filter(posts: list[dict], category_slug: str) -> str:
+    """Render a clickable tag-pill row for a category page.
+    Aggregates all unique tags across the given posts and renders them
+    as pills that link to /blog/category/{slug}?tag={tag} (handled by
+    blog-search.js for client-side filtering).
+    """
+    tag_set: dict[str, str] = {}  # slug -> name
+    for p in posts:
+        for t in (p.get("tags") or []):
+            inner = t.get("blog_tags") if isinstance(t, dict) else None
+            if inner and inner.get("slug"):
+                tag_set[inner["slug"]] = inner.get("name", inner["slug"])
+    if not tag_set:
+        return ""
+    pills = []
+    for slug, name in sorted(tag_set.items(), key=lambda kv: kv[1].lower()):
+        pills.append(
+            f'<a class="blog-tag-pill" data-tag="{html.escape(slug)}" '
+            f'href="/blog/category/{html.escape(category_slug)}?tag={html.escape(slug)}">'
+            f'#{html.escape(name)}</a>'
+        )
+    return (
+        '<div class="blog-tag-filter" role="group" aria-label="Filter by tag">'
+        + "".join(pills) +
+        '</div>'
+    )
 
 
 def render_featured(post: dict) -> str:
@@ -436,6 +472,7 @@ def write_category(category: dict, posts: list[dict], all_categories: list[dict]
         "CATEGORY_NAME_UPPER": html.escape(category["name"].upper()),
         "CATEGORY_DESCRIPTION": html.escape(normalize(category.get("description")) or ""),
         "CATEGORY_PILLS": render_category_pills(all_categories, category["slug"]),
+        "TAG_FILTER": render_tag_filter(posts, category["slug"]),
         "POST_CARDS": cards if cards else '<div class="blog-empty"><h2>No posts yet</h2><p>Check back soon.</p></div>',
         "PAGINATION_BLOCK": "",
         "JSON_CATEGORY_NAME": js(category["name"]),
