@@ -1170,50 +1170,84 @@
     .faq-section .platform-container { max-width: 880px; }
     .faq-section h2 { font-family: 'Inter','DM Sans',sans-serif; font-size: 36px; font-weight: 700; color: #ffffff; line-height: 1.25; margin-bottom: 40px; text-align: center; }
     .faq-list { display: flex; flex-direction: column; gap: 16px; }
-    .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px 28px; transition: border-color 0.3s, background 0.3s; }
+    .faq-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      transition: border-color 0.3s, background 0.3s;
+      overflow: hidden;
+    }
     .faq-item:hover { border-color: rgba(26,183,89,0.35); background: rgba(255,255,255,0.05); }
-    .faq-item h3 { font-size: 18px; font-weight: 600; color: #ffffff; margin: 0 0 10px 0; line-height: 1.35; }
-    .faq-item p { font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.75); margin: 0; }
+    .faq-item[open] { border-color: rgba(26,183,89,0.5); background: rgba(255,255,255,0.05); }
+    .faq-item > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 28px;
+      cursor: pointer;
+      list-style: none;
+      font-family: 'Inter','DM Sans',sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+    .faq-item > summary::-webkit-details-marker { display: none; }
+    .faq-item > summary::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231ab759' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 14px 14px;
+      transition: transform 0.3s ease;
+    }
+    .faq-item[open] > summary::after { transform: rotate(180deg); }
+    .faq-item .faq-body { padding: 0 28px 24px; }
+    .faq-item .faq-body p { font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.75); margin: 0; }
     @media (max-width: 640px) {
       .faq-section { padding: 60px 0; }
       .faq-section h2 { font-size: 28px; margin-bottom: 28px; }
-      .faq-item { padding: 20px 22px; }
-      .faq-item h3 { font-size: 17px; }
-      .faq-item p { font-size: 15px; }
+      .faq-item > summary { padding: 18px 22px; font-size: 17px; }
+      .faq-item .faq-body { padding: 0 22px 20px; }
+      .faq-item .faq-body p { font-size: 15px; }
     }
   </style>
 <section class="faq faq-section">
 <div class="platform-container">
 <h2>Frequently asked questions</h2>
 <div class="faq-list">
-<div class="faq-item">
-<h3>How is APIANT different from Zapier, Make, or Workato?</h3>
-<p>Zapier and Make are shallow, multi-tenant automation tools best for lightweight triggers. Workato is closer to APIANT in depth but runs your workflows on their shared infrastructure. APIANT gives you a dedicated server you brand as your own, plus a unified data processing engine that handles JSON, XML, CSV, EDI, and binary formats through one internal model. You get deep integrations (custom objects, bi-directional sync, real business logic), full white-label, and no per-task pricing that blows up at scale.</p>
-</div>
-<div class="faq-item">
-<h3>What does "dedicated server" actually mean, and why does it matter?</h3>
-<p>Every APIANT customer runs on their own isolated server instance. No shared tenancy, no noisy neighbors, and no data commingling with other customers' workloads. That matters for compliance (your data never touches shared infrastructure), performance (you own the rate limit headroom), and branding (the server runs on your subdomain, under your name).</p>
-</div>
-<div class="faq-item">
-<h3>What happens when a third-party API goes down or returns an error?</h3>
-<p>The Automation Editor has retry logic, error branching, and dead-letter handling built in. Failed calls are logged with full request and response bodies so your team can search by any field (client ID, email, record number) and see exactly what went wrong. You can configure retry intervals, route errors to alerts, or push them to Splunk, Datadog, or any monitoring tool for enterprise deployments.</p>
-</div>
-<div class="faq-item">
-<h3>The AI Co-Pilot builds connectors automatically. How production-ready is the output?</h3>
-<p>The Co-Pilot reads the API docs, determines authentication, generates operations, and tests them against live endpoints. It self-corrects when something breaks. The output is an Assembly (a set of ingredients) you still review before putting in front of customers, the same way you would review any other connector. It removes the grunt work, not the engineering judgment.</p>
-</div>
-<div class="faq-item">
-<h3>Do I need developers on my team to run APIANT?</h3>
-<p>No. The person building integrations on APIANT needs domain expertise, not engineering skill. We call them workflow architects. They work visually in the Automation and Assembly editors, use the AI Co-Pilot for new API connections, and the platform handles rate limiting, retries, error handling, monitoring, and scaling. If you have someone in partnerships, solutions engineering, or customer success who understands your customers' workflows, they can operate APIANT.</p>
-</div>
-<div class="faq-item">
-<h3>How do you handle rate limits when one API has 50 customers behind it?</h3>
-<p>Rate limiting is enforced at the platform layer across every automation hitting the same endpoint. When 50 locations share a single Salesforce or Mindbody app, APIANT throttles and queues requests so the combined traffic stays under the API's limits. You set the limits once in the Admin Console and the system enforces them everywhere.</p>
-</div>
-<div class="faq-item">
-<h3>What's included with the platform vs. what costs extra?</h3>
-<p>Published pricing tiers (Sandbox $99/mo, Pro $499/mo, Scale $1,500/mo, Enterprise from $3,500/mo) include the dedicated server, the full Automation and Assembly editors with AI Co-Pilot, the Admin Console, FormApps, access to 500+ prebuilt connectors, and platform-level monitoring. Enterprise tiers add dedicated AWS infrastructure, a contractual SLA, priority support, and help with migration and training. Anything custom (managed build, specific compliance documentation) is scoped separately.</p>
-</div>
+<details class="faq-item">
+<summary>How is APIANT different from Zapier, Make, or Workato?</summary>
+<div class="faq-body"><p>Zapier and Make are shallow, multi-tenant automation tools best for lightweight triggers. Workato is closer to APIANT in depth but runs your workflows on their shared infrastructure. APIANT gives you a dedicated server you brand as your own, plus a unified data processing engine that handles JSON, XML, CSV, EDI, and binary formats through one internal model. You get deep integrations (custom objects, bi-directional sync, real business logic), full white-label, and no per-task pricing that blows up at scale.</p></div>
+</details>
+<details class="faq-item">
+<summary>What does "dedicated server" actually mean, and why does it matter?</summary>
+<div class="faq-body"><p>Every APIANT customer runs on their own isolated server instance. No shared tenancy, no noisy neighbors, and no data commingling with other customers' workloads. That matters for compliance (your data never touches shared infrastructure), performance (you own the rate limit headroom), and branding (the server runs on your subdomain, under your name).</p></div>
+</details>
+<details class="faq-item">
+<summary>What happens when a third-party API goes down or returns an error?</summary>
+<div class="faq-body"><p>The Automation Editor has retry logic, error branching, and dead-letter handling built in. Failed calls are logged with full request and response bodies so your team can search by any field (client ID, email, record number) and see exactly what went wrong. You can configure retry intervals, route errors to alerts, or push them to Splunk, Datadog, or any monitoring tool for enterprise deployments.</p></div>
+</details>
+<details class="faq-item">
+<summary>The AI Co-Pilot builds connectors automatically. How production-ready is the output?</summary>
+<div class="faq-body"><p>The Co-Pilot reads the API docs, determines authentication, generates operations, and tests them against live endpoints. It self-corrects when something breaks. The output is an Assembly (a set of ingredients) you still review before putting in front of customers, the same way you would review any other connector. It removes the grunt work, not the engineering judgment.</p></div>
+</details>
+<details class="faq-item">
+<summary>Do I need developers on my team to run APIANT?</summary>
+<div class="faq-body"><p>No. The person building integrations on APIANT needs domain expertise, not engineering skill. We call them workflow architects. They work visually in the Automation and Assembly editors, use the AI Co-Pilot for new API connections, and the platform handles rate limiting, retries, error handling, monitoring, and scaling. If you have someone in partnerships, solutions engineering, or customer success who understands your customers' workflows, they can operate APIANT.</p></div>
+</details>
+<details class="faq-item">
+<summary>How do you handle rate limits when one API has 50 customers behind it?</summary>
+<div class="faq-body"><p>Rate limiting is enforced at the platform layer across every automation hitting the same endpoint. When 50 locations share a single Salesforce or Mindbody app, APIANT throttles and queues requests so the combined traffic stays under the API's limits. You set the limits once in the Admin Console and the system enforces them everywhere.</p></div>
+</details>
+<details class="faq-item">
+<summary>What's included with the platform vs. what costs extra?</summary>
+<div class="faq-body"><p>Published pricing tiers (Sandbox $99/mo, Pro $499/mo, Scale $1,500/mo, Enterprise from $3,500/mo) include the dedicated server, the full Automation and Assembly editors with AI Co-Pilot, the Admin Console, FormApps, access to 500+ prebuilt connectors, and platform-level monitoring. Enterprise tiers add dedicated AWS infrastructure, a contractual SLA, priority support, and help with migration and training. Anything custom (managed build, specific compliance documentation) is scoped separately.</p></div>
+</details>
 </div>
 </div>
 </section>
