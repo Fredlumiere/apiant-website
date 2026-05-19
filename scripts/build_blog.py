@@ -497,6 +497,31 @@ def pick_related(post: dict, all_live: list[dict], limit: int = 3) -> list[dict]
     return (same_cat + others)[:limit]
 
 
+def write_search_index(posts: list[dict]) -> Path:
+    """Emit a flat JSON index used by client-side Fuse.js search on the hub.
+    Keep the payload lean: title, excerpt, category, tag slugs, hero, URL.
+    """
+    index = []
+    for p in posts:
+        cat = p.get("category") or {}
+        tags = [t["blog_tags"] for t in (p.get("tags") or []) if t.get("blog_tags")]
+        index.append({
+            "slug": p["slug"],
+            "title": p["title"],
+            "excerpt": (p.get("excerpt") or "")[:280],
+            "category": cat.get("slug", ""),
+            "category_name": cat.get("name", ""),
+            "tags": [t["slug"] for t in tags],
+            "tag_names": [t["name"] for t in tags],
+            "hero_image_url": p.get("hero_image_url") or "",
+            "url": f"/blog/posts/{p['slug']}/",
+            "published_at": p.get("published_at"),
+        })
+    out_path = BLOG_DIR / "search-index.json"
+    out_path.write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
+    return out_path
+
+
 def rebuild_all_hubs() -> None:
     categories = fetch_categories()
     live = fetch_live_posts()
@@ -505,6 +530,7 @@ def rebuild_all_hubs() -> None:
         in_cat = [p for p in live if (p.get("category") or {}).get("id") == c["id"]]
         write_category(c, in_cat, categories)
     write_rss(live)
+    write_search_index(live)
 
 
 def build_one(post_id: str) -> None:
