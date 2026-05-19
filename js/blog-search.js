@@ -17,6 +17,30 @@
   var PAGE_SIZE = 12;
   var SEARCH_INDEX_URL = '/blog/search-index.json';
 
+  var LANGUAGES = [
+    { code: 'en', native: 'EN', name: 'English' },
+    { code: 'es', native: 'ES', name: 'Español' },
+    { code: 'fr', native: 'FR', name: 'Français' },
+    { code: 'de', native: 'DE', name: 'Deutsch' },
+    { code: 'it', native: 'IT', name: 'Italiano' },
+    { code: 'pt', native: 'PT', name: 'Português' },
+    { code: 'nl', native: 'NL', name: 'Nederlands' },
+    { code: 'pl', native: 'PL', name: 'Polski' },
+    { code: 'sv', native: 'SV', name: 'Svenska' },
+    { code: 'ru', native: 'RU', name: 'Русский' },
+    { code: 'tr', native: 'TR', name: 'Türkçe' },
+    { code: 'ar', native: 'AR', name: 'العربية' },
+    { code: 'he', native: 'HE', name: 'עברית' },
+    { code: 'hi', native: 'HI', name: 'हिन्दी' },
+    { code: 'bn', native: 'BN', name: 'বাংলা' },
+    { code: 'th', native: 'TH', name: 'ไทย' },
+    { code: 'vi', native: 'VI', name: 'Tiếng Việt' },
+    { code: 'id', native: 'ID', name: 'Bahasa Indonesia' },
+    { code: 'ja', native: 'JA', name: '日本語' },
+    { code: 'ko', native: 'KO', name: '한국어' },
+    { code: 'zh', native: 'ZH', name: '中文' },
+  ];
+
   // Detect locale prefix from URL: /es/blog/... -> "es", /blog/... -> ""
   function detectLocale() {
     var m = window.location.pathname.match(/^\/([a-z]{2})\/blog\//);
@@ -24,6 +48,41 @@
   }
 
   var locale = detectLocale();
+
+  // -------- language dropdown population --------
+  (function buildLangSwitcher() {
+    var btn = document.querySelector('.blog-lang-switcher-btn');
+    var dd = document.querySelector('.blog-lang-switcher-dropdown');
+    var current = document.querySelector('.blog-lang-switcher-current');
+    if (!btn || !dd) return;
+
+    var activeCode = locale || 'en';
+    if (current) current.textContent = (activeCode || 'en').toUpperCase();
+
+    function buildLocalizedPath(targetCode) {
+      var path = window.location.pathname;
+      // Strip existing locale prefix if any.
+      path = path.replace(/^\/[a-z]{2}\//, '/');
+      if (targetCode === 'en') return path;
+      return '/' + targetCode + path;
+    }
+
+    dd.innerHTML = LANGUAGES.map(function (lng) {
+      var cls = lng.code === activeCode ? ' class="current"' : '';
+      return '<a href="' + buildLocalizedPath(lng.code) + '"' + cls +
+        '>' + lng.native + ' &middot; ' + lng.name + '</a>';
+    }).join('');
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+      btn.setAttribute('aria-expanded', dd.classList.contains('open'));
+    });
+    document.addEventListener('click', function () {
+      dd.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  })();
   function localizeHref(href) {
     if (!locale) return href;
     if (href.indexOf('/' + locale + '/') === 0) return href;
@@ -118,6 +177,74 @@
   }
 
   var featured = document.querySelector('.blog-featured');
+
+  // -------- client-side tag pill rendering --------
+  // Build the tag-pill row from the data-tags on the visible cards so
+  // the locale auto-regen step can never strip it.
+  (function buildTagPills() {
+    var container = document.querySelector('.blog-tag-filter');
+    if (!container) return;
+    var categorySlug = container.dataset.category || '';
+    var tagFreq = {};
+    var tagNames = {};
+    // Aggregate from search-index later if available; for now use card tags.
+    cards.forEach(function (c) {
+      var tags = (c.dataset.tags || '').split(' ').filter(Boolean);
+      tags.forEach(function (t) {
+        tagFreq[t] = (tagFreq[t] || 0) + 1;
+      });
+    });
+    // Pretty name lookup: fetch from search-index for proper labels with spaces/cases
+    loadIndex().then(function () {
+      if (Array.isArray(index)) {
+        index.forEach(function (p) {
+          (p.tags || []).forEach(function (slug, i) {
+            if (!(slug in tagNames)) {
+              var name = (p.tag_names && p.tag_names[i]) || slug;
+              tagNames[slug] = name;
+            }
+          });
+        });
+      }
+      renderTagPills();
+    });
+    function renderTagPills() {
+      var sorted = Object.keys(tagFreq).sort(function (a, b) {
+        return (tagNames[a] || a).toLowerCase().localeCompare((tagNames[b] || b).toLowerCase());
+      });
+      var html = sorted.map(function (slug) {
+        var name = tagNames[slug] || slug;
+        var href = categorySlug
+          ? '/blog/category/' + categorySlug + '?tag=' + slug
+          : '/blog/?tag=' + slug;
+        return '<a class="blog-tag-pill" data-tag="' + escapeHtml(slug) +
+          '" href="' + escapeHtml(href) + '">#' + escapeHtml(name) + '</a>';
+      }).join('');
+      container.innerHTML = html;
+      // Wire clicks
+      container.querySelectorAll('.blog-tag-pill').forEach(function (pill) {
+        pill.addEventListener('click', function (e) {
+          e.preventDefault();
+          var tag = pill.dataset.tag;
+          var current = new URLSearchParams(window.location.search).get('tag');
+          var next = current === tag ? '' : tag;
+          var url = new URL(window.location.href);
+          if (next) url.searchParams.set('tag', next);
+          else url.searchParams.delete('tag');
+          window.history.replaceState(null, '', url.toString());
+          if (next) applyTagFilter(next);
+          else restorePaginated();
+        });
+      });
+      // Re-apply existing filter (e.g. on deep-link)
+      var initialTag = new URLSearchParams(window.location.search).get('tag');
+      if (initialTag) {
+        container.querySelectorAll('.blog-tag-pill').forEach(function (p) {
+          p.classList.toggle('active', p.dataset.tag === initialTag);
+        });
+      }
+    }
+  })();
 
   function renderResults(results) {
     if (featured) featured.style.display = 'none';

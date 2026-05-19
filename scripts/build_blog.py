@@ -271,30 +271,15 @@ def render_category_pills(categories: list[dict], active_slug: str | None) -> st
 
 
 def render_tag_filter(posts: list[dict], category_slug: str) -> str:
-    """Render a clickable tag-pill row for a category page.
-    Aggregates all unique tags across the given posts and renders them
-    as pills that link to /blog/category/{slug}?tag={tag} (handled by
-    blog-search.js for client-side filtering).
-    """
-    tag_set: dict[str, str] = {}  # slug -> name
-    for p in posts:
-        for t in (p.get("tags") or []):
-            inner = t.get("blog_tags") if isinstance(t, dict) else None
-            if inner and inner.get("slug"):
-                tag_set[inner["slug"]] = inner.get("name", inner["slug"])
-    if not tag_set:
-        return ""
-    pills = []
-    for slug, name in sorted(tag_set.items(), key=lambda kv: kv[1].lower()):
-        pills.append(
-            f'<a class="blog-tag-pill" data-tag="{html.escape(slug)}" '
-            f'href="/blog/category/{html.escape(category_slug)}?tag={html.escape(slug)}">'
-            f'#{html.escape(name)}</a>'
-        )
+    """Return the empty container div for the tag-pill row.
+    blog-search.js fills it at runtime from the data-tags attributes on
+    the visible cards. Empty server-rendered div survives locale auto-
+    regen (which has been observed to strip inline-rendered tag pills
+    during BS4 roundtrip)."""
     return (
-        '<div class="blog-tag-filter" role="group" aria-label="Filter by tag">'
-        + "".join(pills) +
-        '</div>'
+        '<div class="blog-tag-filter" '
+        'data-category="' + html.escape(category_slug) + '" '
+        'role="group" aria-label="Filter by tag"></div>'
     )
 
 
