@@ -525,6 +525,10 @@
   max-width: 720px;
   margin: 0 auto;
   width: 100%;
+  /* Grid items default to min-width:auto, which lets wide content
+     (images, code) expand the track and overflow the viewport.
+     min-width:0 lets the 1fr track shrink to the container. */
+  min-width: 0;
   font-size: 18px;
   line-height: 1.7;
   color: var(--blog-body);
@@ -579,6 +583,9 @@
 .blog-article img {
   max-width: 100%;
   height: auto;
+  /* border-box so the 1px border is included in max-width:100% and
+     does not push the image past the container. */
+  box-sizing: border-box;
   border-radius: 12px;
   border: 1px solid var(--blog-card-border);
   margin: 24px 0;
@@ -589,6 +596,44 @@
   border: 0;
   border-top: 1px solid var(--blog-card-border);
   margin: 48px 0;
+}
+
+/* ----- Tables ----- */
+.blog-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.blog-article th,
+.blog-article td {
+  border: 1px solid var(--blog-card-border);
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-article thead th {
+  background: var(--blog-card-bg);
+  color: var(--blog-heading);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.blog-article tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* On narrow screens, let wide tables scroll inside the article instead
+   of forcing the whole page to scroll horizontally. */
+@media (max-width: 768px) {
+  .blog-article table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* ----- Pull quotes ----- */
@@ -611,6 +656,7 @@
   border: 1px solid var(--blog-accent-soft);
   border-radius: 12px;
   padding: 20px;
+  box-sizing: border-box;
   overflow-x: auto;
   font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
   font-size: 14px;
@@ -746,4 +792,133 @@
   font-size: 24px;
   color: var(--blog-heading);
   margin: 0 0 8px;
+}
+
+/* =================================================================
+   Responsive refinements
+   The blog nav (blog/_templates/_nav.html) is inline-styled, so the
+   overrides below use specific selectors and !important to win over
+   inline styles. Nav links are matched by position (:nth-of-type)
+   rather than href so localized blogs (/es/, /fr/, ...) are covered.
+   ================================================================= */
+
+/* Prevent long unbroken strings (slugs, URLs) from forcing page width. */
+.blog-hero-title,
+.blog-featured-title,
+.blog-card-title,
+.blog-post-h1,
+.blog-article {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.blog-article pre {
+  max-width: 100%;
+}
+
+/* ----- Nav: tablet and below ----- */
+@media (max-width: 768px) {
+  /* Let the nav row wrap instead of forcing horizontal page scroll. */
+  .blog-nav > .blog-container {
+    height: auto !important;
+    min-height: 64px;
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+  .blog-nav nav {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 16px !important;
+  }
+}
+
+/* ----- Nav: phones ----- */
+@media (max-width: 600px) {
+  /* Hide secondary links (Platform, Connectors) — both remain in the
+     footer. Keeps logo + Blog + language switcher + CTA on one line. */
+  .blog-nav nav > a:nth-of-type(2),
+  .blog-nav nav > a:nth-of-type(3) {
+    display: none !important;
+  }
+  .blog-nav nav {
+    gap: 12px !important;
+  }
+  /* Slimmer CTA so the row fits a 320px viewport. */
+  .blog-nav nav > a:last-of-type {
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+  }
+  /* Larger tap targets for nav links. */
+  .blog-nav nav > a {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+}
+
+/* ----- Tap targets: filter + tag pills, pagination ----- */
+@media (max-width: 768px) {
+  .blog-pill {
+    padding: 10px 14px;
+  }
+  .blog-tag-pill {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .blog-page-link {
+    min-width: 44px;
+    padding: 10px 14px;
+  }
+  .blog-tag {
+    padding: 8px 12px;
+  }
+  /* Filter row can scroll horizontally if pills overflow, rather than
+     wrapping into a tall stack that eats the viewport. */
+  .blog-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .blog-filters::-webkit-scrollbar {
+    display: none;
+  }
+  .blog-pill {
+    flex: 0 0 auto;
+  }
+}
+
+/* ----- Article: phones ----- */
+@media (max-width: 640px) {
+  .blog-article {
+    font-size: 17px;
+  }
+  .blog-article h2 {
+    font-size: 26px;
+    margin: 44px 0 14px;
+  }
+  .blog-article h3 {
+    font-size: 20px;
+    margin: 32px 0 10px;
+  }
+  .blog-article blockquote {
+    font-size: 19px;
+    padding-left: 18px;
+  }
+  .blog-article pre {
+    padding: 16px;
+    font-size: 13px;
+  }
+  .blog-article-layout {
+    padding: 40px 0 64px;
+  }
+  .blog-post-hero-image {
+    margin: 32px auto -16px;
+    border-radius: 12px;
+  }
+  .blog-related {
+    padding: 48px 0 64px;
+  }
+  .blog-related-heading {
+    font-size: 22px;
+  }
 }

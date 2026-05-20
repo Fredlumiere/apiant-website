@@ -428,7 +428,7 @@ def write_hub(posts: list[dict], categories: list[dict]) -> Path:
         "NAV": load_template("_nav.html"),
         "FOOTER": load_template("_footer.html"),
         "HERO_TITLE": "Builder notes from the integration trenches.",
-        "HERO_SUB": "Real integration problems solved with the APIANT platform — and the AI Co-Pilot that built it.",
+        "HERO_SUB": "Real integration problems solved with the APIANT platform, and the AI Co-Pilot that built it.",
         "CATEGORY_PILLS": render_category_pills(categories, None),
         "FEATURED_BLOCK": featured,
         "POST_CARDS": cards,
