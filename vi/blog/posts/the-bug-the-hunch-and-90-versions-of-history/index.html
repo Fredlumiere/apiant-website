@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Kỹ thuật tích hợp ưu tiên AI: Một phiên gỡ lỗi thực tế</title>
+<meta content="Một phiên gỡ lỗi APIANT thực tế, với các lời nhắc thực sự. Hãy xem AI đọc một tích hợp tương tự và lịch sử phiên bản bốn năm, và xem trực giác của người xây dựng ngăn chặn một lỗi hồi quy mà mã nguồn chưa từng ghi lại." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Con bọ, linh cảm và 90 phiên bản lịch sử" property="og:title"/>
+<meta content="Một phiên gỡ lỗi APIANT thực tế, với các lời nhắc thực sự. Hãy xem AI đọc một tích hợp tương tự và lịch sử phiên bản bốn năm, và xem trực giác của người xây dựng ngăn chặn một lỗi hồi quy mà mã nguồn chưa từng ghi lại." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Con bọ, linh cảm và 90 phiên bản lịch sử" property="twitter:title"/>
+<meta content="Một phiên gỡ lỗi APIANT thực tế, với các lời nhắc thực sự. Hãy xem AI đọc một tích hợp tương tự và lịch sử phiên bản bốn năm, và xem trực giác của người xây dựng ngăn chặn một lỗi hồi quy mà mã nguồn chưa từng ghi lại." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Bug, the Hunch, and 90 Versions of History",
+  "description": "A real APIANT debugging session, with the actual prompts. Watch an AI read a sibling integration and four years of version history, and watch a builder's hunch stop a regression the codebase never recorded.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif",
+  "datePublished": "2026-05-20T22:57:58.556823+00:00",
+  "dateModified": "2026-05-20T22:58:00.108783+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"
+  },
+  "articleSection": "For Builders"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "For Builders", "item": "https://apiant.com/blog/category/for-builders" },
+    { "@type": "ListItem", "position": 4, "name": "The Bug, the Hunch, and 90 Versions of History", "item": "https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/vi/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/vi/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Nền tảng</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Đầu nối</a>
+<!--
+        Blog-scoped language switcher. Class is "blog-lang-switcher" (not
+        the site-wide "lang-switcher") because localize.py's
+        add_language_switcher() decomposes .lang-switcher elements during
+        re-runs. Populated by /js/blog-search.js at runtime.
+      -->
+<div class="blog-lang-switcher" style="position:relative;display:flex;align-items:center;">
+<button aria-expanded="false" aria-haspopup="true" class="blog-lang-switcher-btn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+<span class="blog-lang-switcher-current">EN</span>
+<svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<div class="blog-lang-switcher-dropdown"></div>
+</div>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Bắt đầu xây dựng</a>
+</nav>
+</div>
+</header>
+<style>
+  .blog-lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .blog-lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .blog-lang-switcher-dropdown.open { display: block; }
+  .blog-lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .blog-lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .blog-lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/vi/blog/category/for-builders" style="color:inherit;text-decoration:none;">Dành cho các nhà xây dựng</a>
+</div>
+<h1 class="blog-post-h1">Con bọ, linh cảm và 90 phiên bản lịch sử</h1>
+<p class="blog-post-subtitle">Hướng dẫn chi tiết về kỹ thuật tích hợp ưu tiên trí tuệ nhân tạo, kèm theo các câu hỏi gợi ý thực tế.</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/vi/blog/?author=fred">Fred Lumiere</a></span>
+<span>Ngày 20 tháng 5 năm 2026</span>
+<span>Thời gian đọc: 8 phút</span>
+</div>
+</header>
+<div class="blog-post-hero-image"><img alt="Hình minh họa chia đôi khung hình: một phiếu hỗ trợ và một thẻ vấn đề GitHub ở bên trái, một mạng lưới các nút tự động hóa được kết nối ở bên phải, được nối với nhau bằng một đường màu xanh lá cây duy nhất." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>Hầu hết các câu chuyện "AI viết mã cho tôi" đều là các bản demo với lời nhắc và kết quả rõ ràng. Nhưng đây không phải vậy. Đây là một phiên làm việc thực tế trên một sản phẩm tích hợp APIANT thực sự, bao gồm cả các lời nhắc thực tế, những sai lầm, những chỉnh sửa và khoảnh khắc trí nhớ con người đánh bại máy móc.</p>
+<p>Vấn đề không phải là trí tuệ nhân tạo (AI) gây ấn tượng. Vấn đề là sự hợp tác thực sự diễn ra như thế nào khi bạn ngồi xuống và bắt tay vào làm việc.</p>
+<h2 id="the-setup">Cấu hình</h2>
+<p>Sản phẩm này là một trong những tích hợp CRMConnect của chúng tôi, Mindbody với HubSpot. Một khách hàng đã báo cáo rằng các giao dịch bán hàng được thanh toán bằng nhiều phương thức khác nhau đang được đồng bộ hóa không chính xác. Một giao dịch bán hàng trị giá 8.400 đô la được chia cho ba phương thức thanh toán khác nhau lại hiển thị trong HubSpot dưới dạng một giao dịch duy nhất trị giá 400 đô la. 8.000 đô la còn lại đã bị thiếu trong quy trình bán hàng.</p>
+<p>Chúng tôi theo dõi công việc kỹ thuật trên GitHub Issues. Cuộc trò chuyện với khách hàng diễn ra trên HubSpot Service Hub. Buổi làm việc bắt đầu bằng việc người xây dựng hướng AI vào công việc cần thực hiện.</p>
+<blockquote>
+<p><strong>Gợi ý:</strong> “Hãy xem xét vấn đề thanh toán”</p>
+</blockquote>
+<p>Trí tuệ nhân tạo (AI) đã tìm kiếm các vấn đề trên GitHub của kho lưu trữ, tìm thấy sự cố đang mở, trích xuất toàn bộ nội dung và đọc lại: một lỗi bán hàng đa phương thức thanh toán, với hai ID thực thi sản phẩm được trích dẫn làm bằng chứng. Không cần hướng dẫn từng bước. Sau đó, nó hỏi bước tiếp theo một cách rõ ràng thay vì đoán mò.</p>
+<blockquote>
+<p><strong>Gợi ý:</strong> “Logic hoạt động như thế nào và những thao tác/hành động tự động nào được thực hiện?”</p>
+</blockquote>
+<p>Trí tuệ nhân tạo (AI) đã tải quy trình tự động hóa liên quan từ nền tảng, phân tích cấu trúc từng bước và giải thích chính xác lỗi xảy ra. Quy trình tự động hóa tạo ra một khóa loại bỏ trùng lặp cho mỗi giao dịch HubSpot. Đối với các giao dịch bán hàng đa phương thức thanh toán, Mindbody trả về một hàng cho mỗi phương thức thanh toán, tất cả đều dùng chung một khóa, vì vậy hàng thứ hai và thứ ba xung đột với giao dịch được tạo bởi hàng thứ nhất và số tiền của chúng đã bị loại bỏ một cách âm thầm.</p>
+<p>Hữu ích. Nhưng nhà thầu đã có lợi thế hơn rồi.</p>
+<h2 id="the-hint-that-redirected-everything">Gợi ý đã thay đổi mọi thứ.</h2>
+<blockquote>
+<p><strong>Gợi ý:</strong> “Hãy so sánh mã định danh duy nhất này cho giao dịch với cách chúng ta thực hiện với dự án crmconnect-mindbody-zoho. Tôi tưởng chúng ta đã giải quyết xong vấn đề ở đó rồi. Hãy so sánh thật kỹ.”</p>
+</blockquote>
+<p>Chỉ một câu này đã thay đổi hoàn toàn cục diện công việc. Người thợ xây không mô tả cách khắc phục. Anh ta chỉ vào một sản phẩm tương tự và nói, đại ý là, hãy đi đọc tài liệu đó.</p>
+<p>Vì vậy, trí tuệ nhân tạo đã làm điều đó. Nó mở tích hợp Mindbody với Zoho, một sản phẩm hoàn toàn riêng biệt, định vị quy trình tự động hóa xử lý lịch sử bán hàng và đọc dữ liệu từ đó. Sau đó, nó tìm và đọc chương trình con ghi lại các bản ghi thanh toán. Không phải là các bản tóm tắt. Mà là logic tự động hóa thực tế, từng bước một.</p>
+<p>Nó đưa ra một sự so sánh tập trung hơn. Việc tích hợp Zoho thực sự đã giải quyết được vấn đề này, nhưng với một kiến trúc khác:</p>
+<ul>
+<li>Sản phẩm của HubSpot ghi một giao dịch cố định cho mỗi dòng bán hàng, sử dụng điểm cuối bán hàng cũ hơn của Mindbody, trả về các dòng thanh toán đã được chia nhỏ trước đó.</li>
+<li>Sản phẩm của Zoho ghi một bản ghi mua hàng chính cùng với các bản ghi con riêng biệt cho từng mặt hàng và từng khoản thanh toán, sử dụng điểm cuối mới hơn của Mindbody, trong đó mỗi khoản thanh toán đều có ID thanh toán thực riêng.</li>
+</ul>
+<p><img alt='Hai bảng sản phẩm đặt cạnh nhau. Tích hợp Mindbody với HubSpot tạo một hộp giao dịch đơn giản; tích hợp Mindbody với Zoho tạo một giao dịch mua chính kèm theo các mặt hàng và thông tin thanh toán. Một mũi tên cong nối giữa chúng, ghi chú "đọc tích hợp anh em".' src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-1.avif"/></p>
+<p>Trí tuệ nhân tạo (AI) nhận định rằng Zoho có cấu trúc gọn gàng hơn, và ban đầu đề xuất chuyển toàn bộ mô hình ba đối tượng sang HubSpot.</p>
+<h2 id="the-builder-pulls-scope-back">Nhà thầu thu hẹp phạm vi công việc.</h2>
+<p>Đây là nơi mà con người giữ cho mọi thứ luôn ở trạng thái thực tế.</p>
+<blockquote>
+<p><strong>Gợi ý:</strong> “Chưa sẵn sàng cho phiên bản 4.0. Hãy để dành nó cho sau này, hiện tại chúng tôi cần khắc phục các sự cố về việc thiếu giao dịch mà khách hàng đã báo cáo.”</p>
+</blockquote>
+<p>Trí tuệ nhân tạo (AI) đã hướng tới việc viết lại kiến trúc một cách thỏa đáng. Người xây dựng đã quay trở lại vấn đề cốt lõi: khách hàng cần số tiền giao dịch chính xác, chứ không phải một mô hình dữ liệu mới. AI đồng ý, đóng đề xuất viết lại kiến trúc như một hạng mục cần xử lý trong tương lai, và tập trung vào việc sửa chữa triệt để các quy trình tự động hóa giao dịch hiện có.</p>
+<p>Sự điều chỉnh đó rất quan trọng. Trí tuệ nhân tạo giỏi trong việc tìm ra giải pháp tổng quát thanh lịch. Nhưng nó không phải lúc nào cũng giỏi trong việc biết khi nào giải pháp thanh lịch đó lại vượt quá yêu cầu của thời điểm hiện tại. Người xây dựng đã đưa ra nhận định đó chỉ bằng một câu.</p>
+<p>Trí tuệ nhân tạo (AI) đã áp dụng nguyên tắc thiết kế của Zoho mà không sao chép cấu trúc của nó: đối chiếu một giao dịch cho mỗi mặt hàng bán hàng, lấy dữ liệu từ điểm cuối giàu thông tin hơn của Mindbody và tổng hợp số tiền chính xác trên các phương thức thanh toán thay vì để khoản thanh toán đầu tiên ghi đè lên các khoản còn lại. Nền tảng khác nhau, hành động khác nhau, nhưng ý tưởng cốt lõi vẫn giống nhau.</p>
+<h2 id="the-hunch">Linh cảm</h2>
+<p>Trong quá trình chỉnh sửa khóa loại bỏ trùng lặp, AI đã xem xét một trong các thành phần của nó: ngày tháng. Lý luận của nó rất rõ ràng. ID giao dịch và ID chi tiết giao dịch đã làm cho khóa trở nên duy nhất. Ngày tháng là dư thừa. Nó đề xuất loại bỏ ngày tháng để đơn giản hóa khóa và loại bỏ nguồn gây lỗi giữa hai quy trình tự động hóa.</p>
+<p>Người thợ xây không có văn bản quy định nào để viện dẫn. Ông ta chỉ có trí nhớ.</p>
+<blockquote>
+<p><strong>Gợi ý:</strong> “Tôi nhớ là mình đã thêm ngày tháng vào vì nó cần thiết (hai khoản thanh toán trong cùng một giao dịch, hoặc một trường hợp kỳ lạ nào đó tương tự)?”</p>
+</blockquote>
+<p>Cả hai đều không thể chứng minh điều đó từ hệ thống tự động hiện tại. Vì vậy, AI đã xem xét lịch sử phiên bản của hệ thống tự động. Hệ thống tự động có chín mươi ba phiên bản đã lưu, từ năm 2021. AI đã đọc các mô tả thay đổi cho đến khi tìm thấy những thay đổi có liên quan.</p>
+<p><img alt="Một dòng thời gian dọc thể hiện các phiên bản tự động hóa, hầu hết đều mờ, với một phiên bản tháng 2 năm 2022 được làm nổi bật và kéo vào phần chú thích có nội dung: đã thêm ngày bán hàng để xử lý thanh toán cho các giao dịch bán hàng trước đó." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-2.avif"/></p>
+<p>Từ tháng 1 năm 2022:</p>
+<blockquote>
+<p>“Đã thêm EPOCH MILLIS để lưu ID giao dịch trong cơ sở dữ liệu nhằm đảm bảo tính duy nhất khi thực hiện nhiều khoản thanh toán cho cùng một mặt hàng.”</p>
+</blockquote>
+<p>Từ tháng 2 năm 2022:</p>
+<blockquote>
+<p>“Đã thêm ngày bán hàng vào chức năng tìm kiếm giao dịch theo thuộc tính tùy chỉnh để hệ thống xử lý thanh toán cho các giao dịch đã thực hiện trước đó.”</p>
+</blockquote>
+<p>Theo lời của chính nhà xây dựng, điều đó đã xảy ra bốn năm trước. Khi khách hàng thanh toán sau cho một giao dịch đã thực hiện trước đó, Mindbody sẽ phát hành lại giao dịch đó vào ngày mới. Nếu không có ngày trong khóa, khoản thanh toán sau sẽ xung đột với giao dịch ban đầu và không thể được ghi nhận riêng. Ngày đó không phải là thừa. Nó có vai trò chịu tải, được cố ý thêm vào để xử lý các khoản thanh toán trả góp và thanh toán tự động.</p>
+<p><img alt='Khóa loại bỏ trùng lặp bốn phần được hiển thị dưới dạng bốn phân đoạn: ID khách hàng, ID giao dịch, ID chi tiết giao dịch và ngày tháng. Phân đoạn ngày tháng được khoanh tròn, với một mũi tên ghi "AI có vẻ dư thừa" và một mũi tên ghi "Lịch sử chịu tải".' src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-3.avif"/></p>
+<p>Phản ứng của AI là lập tức đảo ngược khuyến nghị của mình và nói rõ điều đó:</p>
+<blockquote>
+<p>“Hãy tin vào trí nhớ đó. Nếu bạn cố tình thêm ngày tháng, nó sẽ được giữ nguyên và việc xóa nó là không thể. Tôi đã tìm thấy nó trong lịch sử phiên bản.”</p>
+</blockquote>
+<p>Sau đó, vấn đề được giải quyết triệt để hơn. Vì ngày tháng phải được giữ nguyên, hai quy trình tự động cần tạo ra cùng một giá trị ngày tháng chính xác, nếu không các khóa sẽ không khớp và sẽ xuất hiện các giao dịch trùng lặp. Quy trình tự động ban đầu tạo ra ngày tháng từ một trường cụ thể trong Mindbody. Trí tuệ nhân tạo (AI) đã điều chỉnh lại quy trình tự động mới để đọc trường giống hệt đó, từ cùng một lệnh gọi API, với cùng một chuyển đổi múi giờ. Cùng một đầu vào, cùng một đầu ra, các khóa được đảm bảo khớp nhau.</p>
+<p>Một lỗi hồi quy có thể âm thầm phá vỡ hệ thống xử lý thanh toán trả góp đã không xảy ra. Không phải vì AI cẩn thận, mà vì một người nhớ ra một linh cảm và AI có thể xác minh linh cảm đó dựa trên dữ liệu bốn năm chỉ trong vài giây.</p>
+<h2 id="the-unglamorous-part-build-run-read-the-trace-fix">Phần không hào nhoáng: biên dịch, chạy, đọc dấu vết, sửa lỗi.</h2>
+<p>Sau khi thiết kế được hoàn thiện, quá trình tiếp theo là kỹ thuật lặp đi lặp lại. Xây dựng thay đổi trong môi trường phát triển, chạy thử, đọc dấu vết thực thi, tìm ra vấn đề tiếp theo, sửa lỗi, chạy lại. Những lỗi thực sự thường gặp lại là những lỗi thông thường:</p>
+<ul>
+<li>Bước tạo lập thỏa thuận đã thất bại với mười sáu <code>PROPERTY_DOESNT_EXIST</code> Lỗi xảy ra do các liên kết trường không sử dụng tên thuộc tính nội bộ của HubSpot. Trí tuệ nhân tạo đã đọc dấu vết, lấy lược đồ trường của trình kết nối và liên kết lại mọi trường với ID chính xác của nó.</li>
+<li>Vòng lặp chạy hai lần trong khi đáng lẽ chỉ chạy một lần, vì nền tảng đang đếm số lần lặp dựa trên mảng dài nhất trong dữ liệu nguồn, và mảng thanh toán dài hơn mảng các mục hàng. Trí tuệ nhân tạo đã chèn một điều khiển lặp rõ ràng để vòng lặp chỉ đếm các mục hàng.</li>
+<li>Bước "tìm kiếm giao dịch" đã làm dừng toàn bộ quá trình khi chưa có giao dịch nào tồn tại, vì chế độ lỗi mặc định của nó coi "không tìm thấy" là lỗi nghiêm trọng. Trí tuệ nhân tạo đã chuyển nó sang chế độ tiếp tục khi xảy ra lỗi để nhánh tạo có thể chạy, phù hợp với cách mà quy trình tự động hóa tương tự đã xử lý.</li>
+</ul>
+<p><img alt="Một vòng lặp gỡ lỗi bốn nút: Xây dựng, Chạy, Đọc dấu vết, Sửa lỗi, được kết nối theo chu kỳ với một đồng hồ bấm giờ ở trung tâm được ghi nhãn là phút, không phải giờ." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-4.avif"/></p>
+<p>Tất cả những điều này đều không hào nhoáng. Đây chính là bản chất thực sự của công việc tích hợp. Điều đã thay đổi là tốc độ vòng lặp. Trí tuệ nhân tạo (AI) có thể đọc toàn bộ dấu vết thực thi từng bước và chỉ ra bước bị lỗi ngay lập tức, do đó mỗi chu kỳ sửa lỗi chỉ mất vài phút. Không có gì được giao cho khách hàng cho đến khi các bài kiểm tra của nhà phát triển thành công.</p>
+<p><img alt="Hai cột nằm cạnh nhau. Cột AI đọc mã nguồn, đối chiếu và kiểm tra lịch sử. Cột Builder ghi nhớ, đánh giá phạm vi và hiểu khách hàng. Một biểu tượng dấu cộng màu xanh lá cây nối liền chúng." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-5.avif"/></p>
+<h2 id="what-this-means-for-builders">Điều này có ý nghĩa gì đối với các nhà xây dựng?</h2>
+<p>Loại bỏ phần tường thuật và đây là mô hình hoạt động:</p>
+<ul>
+<li><strong>Điểm mạnh của trí tuệ nhân tạo là khả năng đọc.</strong> Nó đã nghiên cứu toàn bộ quá trình tích hợp các thành phần anh em, đối chiếu một vấn đề mà chúng tôi đã giải quyết, điều chỉnh kiến trúc trên hai nền tảng khác nhau và xem xét lại lịch sử đến chín mươi phiên bản để xác minh một quyết định thiết kế. Không một người nào có thể làm được điều đó chỉ trong một buổi chiều.</li>
+<li><strong>Điểm mạnh của con người là trí nhớ và khả năng phán đoán.</strong> Câu “Tôi nghĩ tôi thêm điều đó vào vì một lý do nào đó” không có trong bất kỳ tập tin nào. Câu “Chưa sẵn sàng cho phiên bản 4.0” cũng không có trong bất kỳ tập tin nào. Cả hai đều xuất phát từ kinh nghiệm sử dụng sản phẩm thực tế. Mỗi câu đều làm thay đổi kết quả cuối cùng.</li>
+<li><strong>Tốc độ đến từ vòng lặp.</strong> Đọc nhật ký lỗi, sửa bước đó, chạy lại chương trình. Những trở ngại thường làm chậm quá trình gỡ lỗi, tái tạo lại những gì đã xảy ra, giờ đã biến mất.</li>
+</ul>
+<p>Kỹ thuật tích hợp ưu tiên AI không phải là AI hoạt động độc lập, và cũng không phải là con người làm việc nhanh hơn. Đó là AI thực hiện việc đọc mà con người không có thời gian làm, và con người cung cấp ngữ cảnh mà mã nguồn không ghi lại. Kết hợp hai điều đó lại, một lỗi lặp đi lặp lại suốt bốn năm sẽ được hiểu, sửa chữa và xác minh chỉ trong một phiên làm việc duy nhất.</p>
+<p>Đó chính là quy trình làm việc đáng để hướng tới.</p>
+<aside class="blog-apps-cta"><div class="blog-apps-cta-heading">Xem toàn bộ danh mục Ứng dụng API</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">Giải pháp Tâm-Thể</span><span class="blog-apps-cta-desc">Sự kết hợp giữa thể dục và sức khỏe</span><span class="blog-apps-cta-arrow">Khám phá →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Giải pháp Cliniko</span><span class="blog-apps-cta-desc">Sự phối hợp giữa chăm sóc sức khỏe và các ngành y tế liên quan</span><span class="blog-apps-cta-arrow">Khám phá →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">Giải pháp DonorPerfect</span><span class="blog-apps-cta-desc">Sự hợp tác giữa các tổ chức phi lợi nhuận và hoạt động gây quỹ</span><span class="blog-apps-cta-arrow">Khám phá →</span></a></div></aside>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">Trong bài viết này</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-setup">Cấu hình</a></li><li class="lvl-2"><a href="#the-hint-that-redirected-everything">Gợi ý đã thay đổi mọi thứ.</a></li><li class="lvl-2"><a href="#the-builder-pulls-scope-back">Nhà thầu thu hẹp phạm vi công việc.</a></li><li class="lvl-2"><a href="#the-hunch">Linh cảm</a></li><li class="lvl-2"><a href="#the-unglamorous-part-build-run-read-the-trace-fix">Phần không hào nhoáng: biên dịch, chạy, đọc dấu vết, sửa lỗi.</a></li><li class="lvl-2"><a href="#what-this-means-for-builders">Điều này có ý nghĩa gì đối với các nhà xây dựng?</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Tiếp tục đọc</h2><div class="blog-grid"><a class="blog-card" data-tags="hubspot" href="/vi/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="Tự động tạo thuộc tính HubSpot từ tệp CSV" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Dành cho các nhà xây dựng</div><h3 class="blog-card-title">Tự động tạo thuộc tính HubSpot từ tệp CSV</h3><p class="blog-card-excerpt">Hướng dẫn cách tự động tạo thuộc tính HubSpot (liên hệ, giao dịch hoặc công ty) bằng công cụ tự động nhập dữ liệu miễn phí được xây dựng trên APIANT.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Ngày 18 tháng 9 năm 2024</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/vi/blog/posts/create-a-custom-hubspot-crm-card-without-coding-with-apiant/"><div class="blog-card-image"><img alt="Tạo thẻ CRM HubSpot tùy chỉnh mà không cần lập trình với APIANT." loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png?width=1600&amp;name=Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Dành cho các nhà xây dựng</div><h3 class="blog-card-title">Tạo thẻ CRM HubSpot tùy chỉnh mà không cần lập trình với APIANT.</h3><p class="blog-card-excerpt">Hãy tìm hiểu cách dễ dàng tạo Thẻ CRM HubSpot tùy chỉnh mà không cần lập trình với APIANT.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Ngày 17 tháng 3 năm 2024</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/vi/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Học viện BJJ với thảm trải sàn khắp nơi, đai võ phục được cuộn gọn gàng trên kệ, bao cát treo ở góc phòng, ánh sáng ấm áp từ đèn trần." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">Ứng dụng API</div><h3 class="blog-card-title">Một lịch trình rõ ràng cho mỗi học sinh trong tất cả các chương trình bạn điều hành.</h3><p class="blog-card-excerpt">Nếu phòng tập của bạn tổ chức các chương trình dành cho người mới bắt đầu, các khóa học dài hạn và các buổi học riêng cùng một lúc, đây là cách để lời nhắc của bạn cuối cùng khớp với lịch học thực tế của từng học viên.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Ngày 18 tháng 5 năm 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Bảo lưu mọi quyền.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/vi/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Nền tảng</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Sự riêng tư</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Điều khoản</a>
+</div>
+</div>
+</footer>
+<!-- blog-search.js carries buildLangSwitcher (populates the language
+     dropdown + sets the current-locale label). It early-returns past the
+     search/pagination code when there's no search input, so it is safe
+     and cheap on post pages. Fuse.js is not loaded here: search is
+     hub/category-only and blog-search.js never references Fuse unless a
+     search actually runs. -->
+<script defer="" src="/js/blog-search.js"></script>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

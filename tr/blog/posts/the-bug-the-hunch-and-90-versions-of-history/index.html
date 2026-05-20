@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Yapay Zeka Odaklı Entegrasyon Mühendisliği: Gerçek Bir Hata Ayıklama Oturumu</title>
+<meta content="Gerçek komut istemleriyle birlikte gerçek bir APIANT hata ayıklama oturumu. Bir yapay zekanın kardeş entegrasyonu ve dört yıllık sürüm geçmişini okumasını ve bir geliştiricinin sezgisinin, kod tabanında hiç kaydedilmemiş bir gerilemeyi durdurmasını izleyin." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Hata, Sezgi ve Tarihin 90 Versiyonu" property="og:title"/>
+<meta content="Gerçek komut istemleriyle birlikte gerçek bir APIANT hata ayıklama oturumu. Bir yapay zekanın kardeş entegrasyonu ve dört yıllık sürüm geçmişini okumasını ve bir geliştiricinin sezgisinin, kod tabanında hiç kaydedilmemiş bir gerilemeyi durdurmasını izleyin." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Hata, Sezgi ve Tarihin 90 Versiyonu" property="twitter:title"/>
+<meta content="Gerçek komut istemleriyle birlikte gerçek bir APIANT hata ayıklama oturumu. Bir yapay zekanın kardeş entegrasyonu ve dört yıllık sürüm geçmişini okumasını ve bir geliştiricinin sezgisinin, kod tabanında hiç kaydedilmemiş bir gerilemeyi durdurmasını izleyin." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Bug, the Hunch, and 90 Versions of History",
+  "description": "A real APIANT debugging session, with the actual prompts. Watch an AI read a sibling integration and four years of version history, and watch a builder's hunch stop a regression the codebase never recorded.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif",
+  "datePublished": "2026-05-20T22:57:58.556823+00:00",
+  "dateModified": "2026-05-20T22:58:00.108783+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"
+  },
+  "articleSection": "For Builders"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "For Builders", "item": "https://apiant.com/blog/category/for-builders" },
+    { "@type": "ListItem", "position": 4, "name": "The Bug, the Hunch, and 90 Versions of History", "item": "https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/tr/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/tr/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Bağlayıcılar</a>
+<!--
+        Blog-scoped language switcher. Class is "blog-lang-switcher" (not
+        the site-wide "lang-switcher") because localize.py's
+        add_language_switcher() decomposes .lang-switcher elements during
+        re-runs. Populated by /js/blog-search.js at runtime.
+      -->
+<div class="blog-lang-switcher" style="position:relative;display:flex;align-items:center;">
+<button aria-expanded="false" aria-haspopup="true" class="blog-lang-switcher-btn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+<span class="blog-lang-switcher-current">EN</span>
+<svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<div class="blog-lang-switcher-dropdown"></div>
+</div>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Oluşturmaya Başla</a>
+</nav>
+</div>
+</header>
+<style>
+  .blog-lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .blog-lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .blog-lang-switcher-dropdown.open { display: block; }
+  .blog-lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .blog-lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .blog-lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/tr/blog/category/for-builders" style="color:inherit;text-decoration:none;">İnşaatçılar İçin</a>
+</div>
+<h1 class="blog-post-h1">Hata, Sezgi ve Tarihin 90 Versiyonu</h1>
+<p class="blog-post-subtitle">Yapay zekâ odaklı entegrasyon mühendisliğinin, gerçek komutlarla birlikte eksiksiz bir adım adım açıklaması.</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/tr/blog/?author=fred">Fred Lumiere</a></span>
+<span>20 Mayıs 2026</span>
+<span>8 dakikalık okuma süresi</span>
+</div>
+</header>
+<div class="blog-post-hero-image"><img alt="Bölünmüş çerçeve illüstrasyonu: solda bir destek bileti ve bir GitHub sorun kartı, sağda tek bir yeşil çizgiyle birbirine bağlanmış otomasyon düğümlerinden oluşan bir ağ." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>Çoğu "yapay zeka kodumu yazdı" hikayesi, temiz bir komut istemi ve temiz bir sonuç sunan demolar şeklindedir. Bu ise öyle değil. Bu, gerçek bir APIANT entegrasyon ürünü üzerinde yapılan gerçek bir oturum; gerçek komut istemleri, yanlış adımlar, düzeltmeler ve insan hafızasının makineyi yendiği an da dahil.</p>
+<p>Mesele yapay zekanın etkileyici olması değil. Mesele, masaya oturup işi yaptığınızda iş birliğinin gerçekte nasıl göründüğüdür.</p>
+<h2 id="the-setup">Kurulum</h2>
+<p>Ürün, CRMConnect entegrasyonlarımızdan biri olan Mindbody ile HubSpot entegrasyonudur. Bir müşteri, birden fazla ödeme yöntemiyle yapılan satışların yanlış senkronize edildiğini bildirdi. Üç ödeme yöntemiyle yapılan 8.400 dolarlık bir satış, HubSpot'ta tek bir 400 dolarlık işlem olarak görünüyordu. Diğer 8.000 dolar ise satış hattında yoktu.</p>
+<p>Mühendislik çalışmalarını GitHub Issues üzerinden takip ediyoruz. Müşteri görüşmeleri HubSpot Service Hub'da gerçekleşiyor. Oturum, geliştiricinin yapay zekayı işe yönlendirmesiyle başladı.</p>
+<blockquote>
+<p><strong>Çabuk:</strong> “Ödeme sorununa bakın”</p>
+</blockquote>
+<p>Yapay zeka, deponun GitHub sorunlarını aradı, açık olayı buldu, tüm içeriği çekti ve geri okudu: iki üretim yürütme kimliği kanıt olarak gösterilen çoklu ödeme satış hatası. Hiçbir yönlendirmeye gerek kalmadı. Ardından, tahmin etmek yerine, bir sonraki adımı açık ve net bir şekilde sordu.</p>
+<blockquote>
+<p><strong>Çabuk:</strong> “Mantık ne yapıyor ve hangi otomasyon/eylemler gerçekleştiriliyor?”</p>
+</blockquote>
+<p>Yapay zeka, platformdan ilgili otomasyonu yükledi, yapısını adım adım inceledi ve hatayı tam olarak açıkladı. Otomasyon, her HubSpot işlemi için bir tekilleştirme anahtarı oluşturuyor. Çoklu ödeme satışlarında Mindbody, her ödeme yöntemi için aynı anahtarı paylaşan bir satır döndürüyor; bu nedenle ikinci ve üçüncü satırlar, birinci satır tarafından oluşturulan işlemle çakıştı ve tutarları sessizce silindi.</p>
+<p>Faydalı. Ancak müteahhit zaten daha büyük bir avantaja sahipti.</p>
+<h2 id="the-hint-that-redirected-everything">Her şeyi yeniden yönlendiren ipucu</h2>
+<blockquote>
+<p><strong>Çabuk:</strong> “Bu anlaşma için kullanılan benzersiz tanımlayıcıyı, crmconnect-mindbody-zoho projesinde kullandığımız yöntemle karşılaştırın. Orada sorunu çözdüğümüzü sanıyordum. Lazer odaklı bir karşılaştırma yapın.”</p>
+</blockquote>
+<p>Bu tek cümle, işin gidişatını değiştirdi. İnşaatçı bir çözümden bahsetmedi. Benzer bir ürüne işaret ederek, aslında "Gidip okuyun" dedi.</p>
+<p>Yapay zeka da öyle yaptı. Tamamen ayrı bir ürün olan Mindbody'nin Zoho entegrasyonunu açtı, geçmiş satışları işleyen otomasyonu buldu ve okudu. Ardından ödeme kayıtlarını yazan alt programı buldu ve okudu. Özetler değil. Gerçek otomasyon mantığı, adım adım.</p>
+<p>Odaklanmış bir karşılaştırma ile geri döndü. Zoho entegrasyonu gerçekten de bu sorunu çözmüştü, ancak farklı bir mimariyle:</p>
+<ul>
+<li>HubSpot ürünü, Mindbody'nin eski satış uç noktasını kullanarak, her satış satırı için tek bir sabit fiyatlı işlem kaydı oluşturur; bu uç nokta, önceden bölünmüş ödeme satırlarını döndürür.</li>
+<li>Zoho ürünü, Mindbody'nin yeni uç noktasını kullanarak, ana satın alma kaydının yanı sıra, her ödemenin kendi gerçek ödeme kimliğine sahip olduğu, kalemler ve ödemeler için ayrı alt kayıtlar oluşturur.</li>
+</ul>
+<p><img alt="Yan yana iki ürün paneli. Mindbody'den HubSpot'a tek bir düz işlem kutusu yazılırken; Mindbody'den Zoho'ya ana satın alma işlemi artı kalemler ve ödemeler yazılır. Aralarında kavisli bir ok bulunur ve &quot;kardeş entegrasyonu oku&quot; olarak etiketlenmiştir." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-1.avif"/></p>
+<p>Yapay zekanın vardığı sonuç, Zoho'nun mimari olarak daha temiz olduğu yönündeydi ve başlangıçta üç nesneden oluşan modelin tamamını HubSpot'a aktarmayı önerdi.</p>
+<h2 id="the-builder-pulls-scope-back">İnşaatçı kapsamı daraltıyor.</h2>
+<p>İşte burada insan her şeyi dengede tuttu.</p>
+<blockquote>
+<p><strong>Çabuk:</strong> “4.0 sürümüne henüz hazır değiliz. Bunu sonraya bırakalım, şu anda müşteriler tarafından bildirilen eksik fırsatlarla ilgili sorunları çözmemiz gerekiyor.”</p>
+</blockquote>
+<p>Yapay zeka, tatmin edici bir mimari yeniden yazım yönünde ilerlemişti. Geliştirici, sorunu asıl probleme indirgedi: Müşterinin yeni bir veri modeline değil, doğru işlem tutarlarına ihtiyacı vardı. Yapay zeka da bunu kabul etti, yeniden yazım önerisini gelecekteki bir madde olarak kapattı ve mevcut işlem otomasyonlarında cerrahi bir düzeltmeye odaklandı.</p>
+<p>Bu düzeltme önemlidir. Yapay zeka, zarif genel çözümü bulmakta iyidir. Ancak zarif çözümün o anın gerektirdiğinden fazla olup olmadığını her zaman iyi bilemez. Geliştirici bu değerlendirmeyi tek bir cümleyle yaptı.</p>
+<p>Yapay zeka daha sonra Zoho tasarımının ardındaki prensibi, yapısını kopyalamadan uyarladı: her satış kalemi için bir anlaşmayı uzlaştırmak, verileri Mindbody'nin daha zengin uç noktasından almak ve ilk ödemenin diğerlerini geçersiz kılmasına izin vermek yerine tutarı ödeme yöntemleri arasında doğru şekilde toplamak. Farklı platform, farklı işlemler, aynı temel fikir.</p>
+<h2 id="the-hunch">Önsezi</h2>
+<p>Tekrarlanan kayıtları kaldırma anahtarını yeniden düzenlerken, yapay zeka bileşenlerinden birine, yani tarihe baktı. Mantığı açıktı. Satış kimliği ve satış detay kimliği zaten anahtarı benzersiz kılıyor. Tarih gereksiz. Anahtarı basitleştirmek ve iki otomasyon arasındaki kırılganlık kaynağını ortadan kaldırmak için tarihi kaldırmayı önerdi.</p>
+<p>İnşaatçının itiraz edebileceği bir kod referansı yoktu. Hafızası vardı.</p>
+<blockquote>
+<p><strong>Çabuk:</strong> "Sanırım tarihi eklememin sebebi gerekli olmasıydı (aynı işlemde 2 ödeme veya buna benzer garip bir durum)?"</p>
+</blockquote>
+<p>İkisinin de mevcut otomasyondan bunu kanıtlayamadığı görüldü. Bu yüzden yapay zeka, otomasyonun sürüm geçmişine baktı. Otomasyonun 2021 yılına kadar uzanan doksan üç kayıtlı sürümü vardı. Yapay zeka, ilgili olanları bulana kadar değişiklik açıklamalarını okudu.</p>
+<p><img alt='Otomasyon sürümlerinin dikey bir zaman çizelgesi, çoğu soluk renkte gösterilmiş, Şubat 2022 sürümü ise vurgulanarak şu şekilde bir açıklama eklenmiştir: "Önceki satışlardaki ödemeleri işlemek için satış tarihi eklendi."' src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-2.avif"/></p>
+<p>Ocak 2022'den itibaren:</p>
+<blockquote>
+<p>"Aynı ürün için birden fazla ödeme yapıldığında benzersiz kalması için EPOCH MILLIS işlem kimliği kaydetme özelliği veritabanına eklendi."</p>
+</blockquote>
+<p>Şubat 2022'den itibaren:</p>
+<blockquote>
+<p>"Özel mülke göre fırsat bulma özelliğine satış tarihi eklendi, böylece önceki satışlara ilişkin ödemeler işleniyor."</p>
+</blockquote>
+<p>İşte orada, inşaatçının kendi sözleriyle, dört yıl önce. Bir müşteri daha önceki bir satışa karşılık daha sonra ödeme yaptığında, Mindbody bu satışı yeni tarihte yeniden kaydeder. Anahtarda tarih olmadığı için, daha sonraki ödeme orijinal anlaşmayla çakışır ve kendi kaydını oluşturamaz. Tarih gereksiz değildi. Taksitli ve otomatik ödeme işlemlerini yönetmek için bilerek eklenmiş, yük taşıyıcı bir unsurdu.</p>
+<p><img alt='Dört parçadan oluşan bir veri tekilleştirme anahtarı, dört hap şeklinde segment olarak gösterilmiştir: müşteri kimliği, satış kimliği, satış detay kimliği ve tarih. Tarih segmenti daire içine alınmış olup, bir ok "Yapay Zeka gereksiz görünüyor" ve diğer ok "Geçmiş yükü taşıyor" şeklinde etiketlenmiştir.' src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-3.avif"/></p>
+<p>Yapay zekânın yanıtı, tavsiyesini derhal geri çekmek ve bunu açıkça belirtmek oldu:</p>
+<blockquote>
+<p>“Hatırladığınıza güvenin. Tarihi bilerek eklediyseniz, bu önemli bir bilgidir ve kaldırmak söz konusu bile olamaz. Sürüm geçmişinde buldum.”</p>
+</blockquote>
+<p>Sonrasında işler daha da ileri gitti. Tarihin aynı kalması gerektiğinden, iki otomasyonun da tam olarak aynı tarih değerini üretmesi gerekiyordu, aksi takdirde anahtarlar eşleşmez ve mükerrer işlemler ortaya çıkardı. Orijinal otomasyon, tarihi belirli bir Mindbody alanından oluşturuyordu. Yapay zeka, yeni otomasyonu aynı API çağrısından, aynı saat dilimi dönüşümüyle, aynı alanı okuyacak şekilde yeniden yönlendirdi. Aynı girdi, aynı çıktı, anahtarların eşleşmesi garanti edildi.</p>
+<p>Taksit ödeme işlemlerini sessizce bozacak bir gerileme yaşanmadı. Bunun nedeni yapay zekanın dikkatli olması değil, bir insanın sezgisini hatırlaması ve yapay zekanın bunu saniyeler içinde dört yıllık geçmiş verilerle doğrulayabilmesiydi.</p>
+<h2 id="the-unglamorous-part-build-run-read-the-trace-fix">İşin en zor kısmı: derle, çalıştır, hata izini oku, düzelt.</h2>
+<p>Tasarım tamamlandıktan sonra, süreç yinelemeli mühendisliğe dönüştü. Değişikliği geliştirme ortamında oluşturun, çalıştırın, yürütme izini okuyun, bir sonraki sorunu bulun, düzeltin, tekrar çalıştırın. Gerçek hatalar sıradandı:</p>
+<ul>
+<li>On altı kişiyle yapılan anlaşma oluşturma aşaması başarısızlıkla sonuçlandı. <code>PROPERTY_DOESNT_EXIST</code> Alan bağlamaları HubSpot'un dahili özellik adlarını taşımadığı için hatalar oluştu. Yapay zeka izleme kaydını okudu, bağlayıcının alan şemasını aldı ve her alanı doğru kimliğiyle yeniden bağladı.</li>
+<li>Platform, kaynak verilerdeki en uzun diziyi temel alarak yinelemeleri saydığı için ve ödeme dizisi satır öğeleri dizisinden daha uzun olduğu için, döngü bir kez çalışması gerekirken iki kez çalıştı. Yapay zeka, döngünün yalnızca satır öğelerini saymasını sağlayacak açık bir yineleme kontrolü ekledi.</li>
+<li>"Anlaşma bul" adımı, henüz bir anlaşma olmadığı halde tüm çalışmayı durdurdu çünkü varsayılan hata modu "bulunamadı" durumunu ölümcül bir hata olarak ele alıyordu. Yapay zeka, kardeş otomasyonun zaten nasıl ele aldığına uygun olarak, oluşturma dalının çalışabilmesi için bunu "hata durumunda devam et" moduna geçirdi.</li>
+</ul>
+<p><img alt="Dört düğümlü bir hata ayıklama döngüsü: Derleme, Çalıştırma, İzlemeyi okuma, Düzeltme; bu döngü, ortasında saat değil dakika gösteren bir kronometre ile birbirine bağlanmıştır." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-4.avif"/></p>
+<p>Bunların hiçbiri göz alıcı değil. Bu, entegrasyon çalışmalarının gerçek özü. Değişen şey döngü hızıydı. Yapay zeka, adım adım yürütme izini tam olarak okuyabiliyor ve başarısız olan adımı anında belirleyebiliyordu, bu nedenle her düzeltme döngüsü dakikalar sürüyordu. Geliştirme testleri geçene kadar hiçbir şey müşteriye gönderilmiyordu.</p>
+<p><img alt="Yan yana iki sütun. Yapay Zeka sütunu kod tabanını okur, çapraz referanslar yapar ve geçmişi kontrol eder. Geliştirici sütunu ise hatırlar, kapsamı değerlendirir ve müşteriyi tanır. Yeşil bir artı sembolü onları birleştirir." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-5.avif"/></p>
+<h2 id="what-this-means-for-builders">Bu durum inşaatçılar için ne anlama geliyor?</h2>
+<p>Anlatıyı bir kenara bırakırsak, işte çalışma modeli:</p>
+<ul>
+<li><strong>Yapay zekanın güçlü yönü okuma yeteneğidir.</strong> Tüm kardeş entegrasyonunu inceledi, daha önce çözdüğümüz bir sorunu çapraz referansla ele aldı, mimariyi iki farklı platforma uyarladı ve bir tasarım kararını doğrulamak için doksan farklı geçmiş sürümünü inceledi. Hiçbir insan bunu bir öğleden sonra yapamaz.</li>
+<li><strong>İnsanın gücü hafıza ve muhakeme yeteneğindedir.</strong> “Bunu bir sebeple eklediğimi düşünüyorum” ifadesi hiçbir dosyada yok. “Henüz V4.0 için hazır değil” ifadesi de hiçbir dosyada yok. Her ikisi de ürünü deneyimlemekten kaynaklandı. Her biri sonucu değiştirdi.</li>
+<li><strong>Hız, döngüden kaynaklanıyor.</strong> Hata izini okuyun, adımı düzeltin, yeniden çalıştırın. Genellikle hata ayıklamayı yavaşlatan, ne olduğunu yeniden oluşturmayı zorlaştıran engel ortadan kalktı.</li>
+</ul>
+<p>Yapay zekâ odaklı entegrasyon mühendisliği, yapay zekânın tek başına çalışması veya insanın daha hızlı çalışması anlamına gelmez. Yapay zekâ, insanın zamanının olmadığı okuma işlemlerini yaparken, insan da kod tabanında bulunmayan bağlamı sağlar. Bunları bir araya getirdiğinizde, dört yıldır tekrar eden bir hata tek bir çalışma oturumunda anlaşılır, düzeltilir ve doğrulanır.</p>
+<p>İşte hedef olarak belirlemeye değer iş akışı budur.</p>
+<aside class="blog-apps-cta"><div class="blog-apps-cta-heading">API Uygulamaları kataloğunun tamamına göz atın.</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">Zihin ve Beden Çözümleri</span><span class="blog-apps-cta-desc">Fitness ve sağlıklı yaşam entegrasyonları</span><span class="blog-apps-cta-arrow">Keşfet →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Klinik Çözümleri</span><span class="blog-apps-cta-desc">Sağlık hizmetleri ve ilgili sağlık alanlarının entegrasyonu</span><span class="blog-apps-cta-arrow">Keşfet →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Çözümleri</span><span class="blog-apps-cta-desc">Kar amacı gütmeyen kuruluşlar ve bağış toplama entegrasyonları</span><span class="blog-apps-cta-arrow">Keşfet →</span></a></div></aside>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">Bu makalede</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-setup">Kurulum</a></li><li class="lvl-2"><a href="#the-hint-that-redirected-everything">Her şeyi yeniden yönlendiren ipucu</a></li><li class="lvl-2"><a href="#the-builder-pulls-scope-back">İnşaatçı kapsamı daraltıyor.</a></li><li class="lvl-2"><a href="#the-hunch">Önsezi</a></li><li class="lvl-2"><a href="#the-unglamorous-part-build-run-read-the-trace-fix">İşin en zor kısmı: derle, çalıştır, hata izini oku, düzelt.</a></li><li class="lvl-2"><a href="#what-this-means-for-builders">Bu durum inşaatçılar için ne anlama geliyor?</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Okumaya devam edin</h2><div class="blog-grid"><a class="blog-card" data-tags="hubspot" href="/tr/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="CSV dosyasından otomatik olarak HubSpot özellikleri oluştur" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">İnşaatçılar İçin</div><h3 class="blog-card-title">CSV dosyasından otomatik olarak HubSpot özellikleri oluştur</h3><p class="blog-card-excerpt">APIANT üzerine kurulu bu ücretsiz içe aktarma otomasyonunu kullanarak HubSpot özelliklerini (kişi, fırsat veya şirket) otomatik olarak nasıl oluşturabilirsiniz?</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 Eylül 2024</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/tr/blog/posts/create-a-custom-hubspot-crm-card-without-coding-with-apiant/"><div class="blog-card-image"><img alt="APIANT kullanarak kodlama yapmadan özel bir HubSpot CRM kartı oluşturun." loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png?width=1600&amp;name=Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">İnşaatçılar İçin</div><h3 class="blog-card-title">APIANT kullanarak kodlama yapmadan özel bir HubSpot CRM kartı oluşturun.</h3><p class="blog-card-excerpt">APIANT kullanarak kodlama yapmadan kolayca özelleştirilmiş bir HubSpot CRM Kartı oluşturmayı öğrenin.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>17 Mart 2024</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/tr/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Duvarlardan duvarlara minderlerle kaplı, raflarda rulo halinde gi kemerleri bulunan, köşede asılı ağır kum torbası ve yukarıdan sıcak bir aydınlatma ile donatılmış BJJ akademisi." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API Uygulamaları</div><h3 class="blog-card-title">Yürüttüğünüz her programda her öğrenci için tek ve net bir ders programı.</h3><p class="blog-card-excerpt">Stüdyonuzda aynı anda başlangıç seviyesi programları, daha uzun kurslar ve özel dersler veriyorsanız, hatırlatıcılarınızın her öğrencinin gerçekten ne için rezervasyon yaptırdığına uygun şekilde ayarlanması şu şekildedir.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 Mayıs 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Tüm Hakları Saklıdır.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/tr/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Mahremiyet</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Şartlar</a>
+</div>
+</div>
+</footer>
+<!-- blog-search.js carries buildLangSwitcher (populates the language
+     dropdown + sets the current-locale label). It early-returns past the
+     search/pagination code when there's no search input, so it is safe
+     and cheap on post pages. Fuse.js is not loaded here: search is
+     hub/category-only and blog-search.js never references Fuse unless a
+     search actually runs. -->
+<script defer="" src="/js/blog-search.js"></script>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

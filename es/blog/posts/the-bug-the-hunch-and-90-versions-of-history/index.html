@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Ingeniería de integración centrada en la IA: una sesión de depuración real</title>
+<meta content="Una auténtica sesión de depuración de APIANT, con las indicaciones reales. Observa cómo una IA analiza una integración hermana y cuatro años de historial de versiones, y cómo la intuición de un desarrollador detiene una regresión que el código fuente nunca registró." name="description"/>
+
+<!-- Open Graph -->
+<meta content="El bicho, la corazonada y 90 versiones de la historia" property="og:title"/>
+<meta content="Una auténtica sesión de depuración de APIANT, con las indicaciones reales. Observa cómo una IA analiza una integración hermana y cuatro años de historial de versiones, y cómo la intuición de un desarrollador detiene una regresión que el código fuente nunca registró." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="El bicho, la corazonada y 90 versiones de la historia" property="twitter:title"/>
+<meta content="Una auténtica sesión de depuración de APIANT, con las indicaciones reales. Observa cómo una IA analiza una integración hermana y cuatro años de historial de versiones, y cómo la intuición de un desarrollador detiene una regresión que el código fuente nunca registró." property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Bug, the Hunch, and 90 Versions of History",
+  "description": "A real APIANT debugging session, with the actual prompts. Watch an AI read a sibling integration and four years of version history, and watch a builder's hunch stop a regression the codebase never recorded.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif",
+  "datePublished": "2026-05-20T22:57:58.556823+00:00",
+  "dateModified": "2026-05-20T22:58:00.108783+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"
+  },
+  "articleSection": "For Builders"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "For Builders", "item": "https://apiant.com/blog/category/for-builders" },
+    { "@type": "ListItem", "position": 4, "name": "The Bug, the Hunch, and 90 Versions of History", "item": "https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/es/blog/posts/the-bug-the-hunch-and-90-versions-of-history/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/es/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plataforma</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Conectores</a>
+<!--
+        Blog-scoped language switcher. Class is "blog-lang-switcher" (not
+        the site-wide "lang-switcher") because localize.py's
+        add_language_switcher() decomposes .lang-switcher elements during
+        re-runs. Populated by /js/blog-search.js at runtime.
+      -->
+<div class="blog-lang-switcher" style="position:relative;display:flex;align-items:center;">
+<button aria-expanded="false" aria-haspopup="true" class="blog-lang-switcher-btn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+<span class="blog-lang-switcher-current">EN</span>
+<svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<div class="blog-lang-switcher-dropdown"></div>
+</div>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Comenzar a construir</a>
+</nav>
+</div>
+</header>
+<style>
+  .blog-lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .blog-lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .blog-lang-switcher-dropdown.open { display: block; }
+  .blog-lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .blog-lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .blog-lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/es/blog/category/for-builders" style="color:inherit;text-decoration:none;">Para constructores</a>
+</div>
+<h1 class="blog-post-h1">El bicho, la corazonada y 90 versiones de la historia</h1>
+<p class="blog-post-subtitle">Un recorrido completo por la ingeniería de integración basada en IA, con las indicaciones reales.</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/es/blog/?author=fred">Fred Lumiere</a></span>
+<span>20 de mayo de 2026</span>
+<span>8 minutos de lectura</span>
+</div>
+</header>
+<div class="blog-post-hero-image"><img alt="Ilustración con marco dividido: un ticket de soporte y una tarjeta de incidencia de GitHub a la izquierda, una red de nodos de automatización conectados a la derecha, unidos por una única línea verde." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>La mayoría de las historias de "la IA escribió mi código" son demostraciones con una consigna clara y un resultado impecable. Este no es el caso. Se trata de una sesión real con un producto de integración APIANT real, incluyendo las consignas reales, los errores, las correcciones y el momento en que la memoria humana superó a la máquina.</p>
+<p>La cuestión no es que la IA sea impresionante. La cuestión es cómo se ve realmente la colaboración cuando uno se sienta a trabajar.</p>
+<h2 id="the-setup">La configuración</h2>
+<p>El producto es una de nuestras integraciones de CRMConnect, Mindbody a HubSpot. Un cliente informó que las ventas pagadas con más de un método de pago no se sincronizaban correctamente. Una venta de $8,400 dividida entre tres métodos de pago aparecía en HubSpot como una sola transacción de $400. Los otros $8,000 no figuraban en el embudo de ventas.</p>
+<p>Hacemos un seguimiento del trabajo de ingeniería en GitHub Issues. La conversación con el cliente se encuentra en HubSpot Service Hub. La sesión comenzó cuando el desarrollador le indicó a la IA el trabajo a realizar.</p>
+<blockquote>
+<p><strong>Inmediato:</strong> “analicen el problema del pago”</p>
+</blockquote>
+<p>La IA buscó en los problemas de GitHub del repositorio, encontró el incidente abierto, extrajo el texto completo y lo leyó: un error de ventas con múltiples pagos, con dos identificadores de ejecución de producción citados como evidencia. No necesitó ayuda. Luego, preguntó cuál era el siguiente paso en términos sencillos, en lugar de adivinar.</p>
+<blockquote>
+<p><strong>Inmediato:</strong> “¿Qué hace la lógica y qué automatizaciones/acciones?”</p>
+</blockquote>
+<p>La IA cargó la automatización correspondiente desde la plataforma, analizó su estructura paso a paso y explicó el fallo con precisión. La automatización crea una clave de deduplicación para cada transacción de HubSpot. En el caso de ventas con múltiples métodos de pago, Mindbody devuelve una fila por método de pago, todas con la misma clave, por lo que las filas dos y tres se superponían con la transacción creada por la fila uno y sus importes se descartaban automáticamente.</p>
+<p>Útil. Pero el constructor ya tenía una ventaja mayor.</p>
+<h2 id="the-hint-that-redirected-everything">La pista que lo redirigió todo</h2>
+<blockquote>
+<p><strong>Inmediato:</strong> “Compara este identificador único para el acuerdo con cómo lo hacemos en el proyecto crmconnect-mindbody-zoho. Creí que lo habíamos resuelto. Haz una comparación muy precisa.”</p>
+</blockquote>
+<p>Esta simple frase cambió el rumbo de la obra. El constructor no describió una solución. Señaló un producto similar y, en esencia, dijo: «Vayan a leerlo».</p>
+<p>La IA lo hizo. Abrió la integración de Mindbody con Zoho, un producto completamente independiente, localizó la automatización que gestiona el historial de ventas y la leyó. Luego encontró y leyó la subrutina que registra los pagos. No los resúmenes. La lógica de automatización propiamente dicha, paso a paso.</p>
+<p>El resultado fue una comparación detallada. La integración con Zoho sí había resuelto el problema, pero con una arquitectura diferente:</p>
+<ul>
+<li>El producto de HubSpot registra una única transacción por línea de venta, utilizando el antiguo punto final de ventas de Mindbody, que devuelve filas de pago predivididas.</li>
+<li>El producto Zoho crea un registro de compra principal, además de registros secundarios separados para los artículos y los pagos, utilizando el punto final más reciente de Mindbody, donde cada pago lleva su propio ID de pago real.</li>
+</ul>
+<p><img alt='Dos paneles de productos uno al lado del otro. Mindbody para HubSpot escribe un cuadro de oferta plano; Mindbody para Zoho escribe una compra principal más los artículos y los pagos. Una flecha curva los conecta, etiquetada como "Leer la integración hermana".' src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-1.avif"/></p>
+<p>La IA concluyó que Zoho tenía una arquitectura más limpia y, en un principio, propuso trasladar todo el modelo de tres objetos a HubSpot.</p>
+<h2 id="the-builder-pulls-scope-back">El constructor reduce el alcance del proyecto.</h2>
+<p>Aquí es donde el ser humano mantenía las cosas con los pies en la tierra.</p>
+<blockquote>
+<p><strong>Inmediato:</strong> “Aún no estamos listos para la versión 4.0. La dejaremos para más adelante; ahora necesitamos solucionar los problemas con las ofertas que faltan, según lo reportado por los clientes.”</p>
+</blockquote>
+<p>La IA se había encaminado hacia una reescritura arquitectónica satisfactoria. El desarrollador la centró en el problema real: el cliente necesita importes de transacción correctos, no un nuevo modelo de datos. La IA estuvo de acuerdo, archivó la propuesta de reescritura como un tema futuro y reorientó el alcance hacia una solución precisa para las automatizaciones de transacciones existentes.</p>
+<p>Esa corrección es importante. La IA es buena para encontrar la solución general elegante. No siempre es buena para saber cuándo la solución elegante es más de lo que la situación requiere. El desarrollador expresó ese juicio en una sola frase.</p>
+<p>La IA adaptó el principio de diseño de Zoho, sin copiar su estructura: conciliar una transacción por cada artículo de venta, obtener los datos del punto final más completo de Mindbody y agregar correctamente el importe entre los distintos métodos de pago, en lugar de permitir que el primer pago sobrescriba el resto. Plataforma diferente, acciones diferentes, misma idea subyacente.</p>
+<h2 id="the-hunch">La corazonada</h2>
+<p>Al revisar la clave de deduplicación, la IA analizó uno de sus componentes: la fecha. Su razonamiento fue claro. El ID de venta y el ID de detalle de venta ya hacen que la clave sea única. La fecha es redundante. Recomendó eliminarla para simplificar la clave y eliminar una fuente de vulnerabilidad entre las dos automatizaciones.</p>
+<p>El constructor no tenía ninguna referencia de código con la que discutir. Tenía memoria.</p>
+<blockquote>
+<p><strong>Inmediato:</strong> “Creo recordar que añadí la fecha porque era necesaria (dos pagos en la misma transacción, o algo raro por el estilo).”</p>
+</blockquote>
+<p>Ninguno de los dos pudo demostrarlo a partir de la automatización actual. Así que la IA consultó el historial de versiones de la automatización. Esta tenía noventa y tres versiones guardadas, que se remontaban a 2021. La IA leyó las descripciones de los cambios hasta encontrar las relevantes.</p>
+<p><img alt="Una línea de tiempo vertical de las versiones de automatización, la mayoría atenuadas, con una versión de febrero de 2022 resaltada y añadida a una nota que dice: se agregó la fecha de venta para que procese los pagos de ventas anteriores." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-2.avif"/></p>
+<p>Desde enero de 2022:</p>
+<blockquote>
+<p>“Se agregó EPOCH MILLIS al guardado del ID de transacción en la base de datos para mantenerlo único cuando se realizan múltiples pagos por el mismo artículo”.</p>
+</blockquote>
+<p>Desde febrero de 2022:</p>
+<blockquote>
+<p>“Se agregó la fecha de venta para buscar ofertas por propiedad personalizada, de modo que procese los pagos de ventas anteriores”.</p>
+</blockquote>
+<p>Ahí estaba, en palabras del propio constructor, cuatro años antes. Cuando un cliente realiza un pago posterior a una venta anterior, Mindbody vuelve a emitir esa venta en la nueva fecha. Sin la fecha en la clave, el pago posterior entra en conflicto con la transacción original y no puede obtener su propio registro. La fecha no era redundante. Era un elemento fundamental, añadido deliberadamente para gestionar los pagos a plazos y los pagos automáticos.</p>
+<p><img alt="Una clave de deduplicación de cuatro partes se muestra como cuatro segmentos de píldora: ID de cliente, ID de venta, ID de detalle de venta y fecha. El segmento de fecha está rodeado por un círculo, con una flecha que indica que la IA parece redundante y otra que indica que el historial soporta cargas." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-3.avif"/></p>
+<p>La respuesta de la IA fue retractarse de su recomendación de inmediato y decirlo claramente:</p>
+<blockquote>
+<p>“Confía en mi recuerdo. Si añadiste la fecha deliberadamente, es un elemento determinante, y eliminarla ya no sirve. La encontré en el historial de versiones.”</p>
+</blockquote>
+<p>Luego, la cosa fue más allá. Dado que la fecha debía permanecer invariable, las dos automatizaciones debían generar el mismo valor de fecha; de lo contrario, las claves no coincidirían y aparecerían ofertas duplicadas. La automatización original obtiene la fecha de un campo específico de Mindbody. La IA reorientó la nueva automatización para que leyera ese mismo campo, mediante la misma llamada a la API y con la misma conversión de zona horaria. Misma entrada, misma salida, claves que coinciden garantizadamente.</p>
+<p>Nunca se produjo una regresión que hubiera afectado silenciosamente la gestión de pagos a plazos. No porque la IA fuera cuidadosa, sino porque un humano recordó una intuición y la IA pudo verificarla en segundos con cuatro años de historial.</p>
+<h2 id="the-unglamorous-part-build-run-read-the-trace-fix">La parte menos glamurosa: construir, ejecutar, leer el registro de errores, corregir</h2>
+<p>Una vez definido el diseño, se pasó a la ingeniería iterativa. Se implementaba el cambio en un entorno de desarrollo, se ejecutaba, se leía el registro de ejecución, se encontraba el siguiente problema, se corregía y se volvía a ejecutar. Los errores reales eran comunes:</p>
+<ul>
+<li>Un paso para crear un acuerdo fracasó con dieciséis <code>PROPERTY_DOESNT_EXIST</code> Se produjeron errores porque las vinculaciones de campos no contenían los nombres de propiedades internas de HubSpot. La IA leyó el registro, recuperó el esquema de campos del conector y volvió a vincular cada campo con su ID correcto.</li>
+<li>El bucle se ejecutó dos veces cuando debería haberse ejecutado una sola vez, porque la plataforma contaba las iteraciones a partir del array más largo de los datos de origen, y el array de pagos era más largo que el array de artículos. La IA insertó un control de iteración explícito para que el bucle contara solo los artículos.</li>
+<li>Un paso de “búsqueda de ofertas” detuvo toda la ejecución cuando aún no existía ninguna oferta, porque su modo de error predeterminado consideraba “no encontrado” como un error fatal. La IA lo cambió a continuar en caso de error para que la rama de creación pudiera ejecutarse, de forma similar a como lo había gestionado la automatización hermana.</li>
+</ul>
+<p><img alt="Un bucle de depuración de cuatro nodos: Construir, Ejecutar, Leer el rastro, Corregir, conectados en un ciclo con un cronómetro en el centro etiquetado como minutos, no horas." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-4.avif"/></p>
+<p>Nada de esto es glamuroso. Es la cruda realidad del trabajo de integración. Lo que cambió fue la velocidad del ciclo. La IA podía leer un registro completo de la ejecución paso a paso e identificar el paso que fallaba de inmediato, por lo que cada ciclo de corrección duraba minutos. No se enviaba nada al cliente hasta que las pruebas de desarrollo se superaban con éxito.</p>
+<p><img alt="Dos columnas una al lado de la otra. La columna de IA lee el código fuente, realiza referencias cruzadas y consulta el historial. La columna de Constructor recuerda, evalúa el alcance y conoce al cliente. Un símbolo de suma verde las une." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/inline-5.avif"/></p>
+<h2 id="what-this-means-for-builders">¿Qué significa esto para los constructores?</h2>
+<p>Si eliminamos la narrativa, este es el modelo de trabajo:</p>
+<ul>
+<li><strong>La fortaleza de la IA reside en la lectura.</strong> Estudió la integración completa de dos hermanos, contrastó un problema que ya habíamos resuelto, adaptó una arquitectura a dos plataformas diferentes y examinó noventa versiones del historial para verificar una decisión de diseño. Ningún ser humano hace eso en una tarde.</li>
+<li><strong>La fortaleza del ser humano reside en la memoria y el juicio.</strong> “Creo que lo añadí por alguna razón” no aparece en ningún archivo. “Aún no está listo para la versión 4.0” tampoco aparece en ningún archivo. Ambas ideas surgieron de haber usado el producto. Cada una cambió el resultado.</li>
+<li><strong>La velocidad proviene del bucle.</strong> Lee el registro de errores, corrige el paso y vuelve a ejecutar. La dificultad que suele ralentizar la depuración y la reconstrucción de lo sucedido desaparece.</li>
+</ul>
+<p>La ingeniería de integración centrada en la IA no consiste en que la IA trabaje sola, ni en que el humano trabaje más rápido. Consiste en que la IA realice la lectura que ningún humano tiene tiempo de hacer, y el humano proporcione el contexto que no se encuentra en los registros del código fuente. Al combinar ambos elementos, un error recurrente de cuatro años se comprende, se corrige y se verifica en una sola sesión de trabajo.</p>
+<p>Ese es el flujo de trabajo que vale la pena construir.</p>
+<aside class="blog-apps-cta"><div class="blog-apps-cta-heading">Explora el catálogo completo de aplicaciones API.</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">Soluciones mente-cuerpo</span><span class="blog-apps-cta-desc">Integraciones de fitness y bienestar</span><span class="blog-apps-cta-arrow">Explorar →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Soluciones Cliniko</span><span class="blog-apps-cta-desc">Integraciones de atención médica y profesiones paramédicas</span><span class="blog-apps-cta-arrow">Explorar →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">Soluciones DonorPerfect</span><span class="blog-apps-cta-desc">Integraciones con organizaciones sin fines de lucro y de recaudación de fondos</span><span class="blog-apps-cta-arrow">Explorar →</span></a></div></aside>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">En este artículo</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-setup">La configuración</a></li><li class="lvl-2"><a href="#the-hint-that-redirected-everything">La pista que lo redirigió todo</a></li><li class="lvl-2"><a href="#the-builder-pulls-scope-back">El constructor reduce el alcance del proyecto.</a></li><li class="lvl-2"><a href="#the-hunch">La corazonada</a></li><li class="lvl-2"><a href="#the-unglamorous-part-build-run-read-the-trace-fix">La parte menos glamurosa: construir, ejecutar, leer el registro de errores, corregir</a></li><li class="lvl-2"><a href="#what-this-means-for-builders">¿Qué significa esto para los constructores?</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Sigue leyendo</h2><div class="blog-grid"><a class="blog-card" data-tags="hubspot" href="/es/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="Creación automática de propiedades de HubSpot a partir de un archivo CSV." loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Para constructores</div><h3 class="blog-card-title">Creación automática de propiedades de HubSpot a partir de un archivo CSV.</h3><p class="blog-card-excerpt">Cómo crear automáticamente propiedades de HubSpot (contacto, oportunidad o empresa) utilizando esta automatización de importación gratuita basada en APIANT.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 de septiembre de 2024</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/es/blog/posts/create-a-custom-hubspot-crm-card-without-coding-with-apiant/"><div class="blog-card-image"><img alt="Crea una tarjeta personalizada de HubSpot CRM sin necesidad de programar con APIANT." loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png?width=1600&amp;name=Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">Para constructores</div><h3 class="blog-card-title">Crea una tarjeta personalizada de HubSpot CRM sin necesidad de programar con APIANT.</h3><p class="blog-card-excerpt">Aprende a crear fácilmente una tarjeta personalizada de HubSpot CRM sin necesidad de programar con APIANT.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>17 de marzo de 2024</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/es/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Academia de BJJ con colchonetas de pared a pared, cinturones de gi enrollados en estantes, saco pesado colgado en una esquina y luz cálida en el techo." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicaciones API</div><h3 class="blog-card-title">Un horario claro por estudiante para todos los programas que impartas.</h3><p class="blog-card-excerpt">Si tu estudio ofrece programas para principiantes, cursos más largos y clases particulares al mismo tiempo, aquí te explicamos cómo tus recordatorios finalmente coincidirán con lo que cada estudiante ha reservado.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 de mayo de 2026</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Todos los derechos reservados.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/es/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Plataforma</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacidad</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Términos</a>
+</div>
+</div>
+</footer>
+<!-- blog-search.js carries buildLangSwitcher (populates the language
+     dropdown + sets the current-locale label). It early-returns past the
+     search/pagination code when there's no search input, so it is safe
+     and cheap on post pages. Fuse.js is not loaded here: search is
+     hub/category-only and blog-search.js never references Fuse unless a
+     search actually runs. -->
+<script defer="" src="/js/blog-search.js"></script>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>
