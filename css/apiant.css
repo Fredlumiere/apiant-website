@@ -8320,7 +8320,22 @@ input[type="submit"][style*="1ab759"]:hover {
 }
 .apiant-popup-field input::placeholder,
 .apiant-popup-field textarea::placeholder {
-  color: rgba(255, 255, 255, 0.75);
+  /* Faint, clearly distinct from entered text (#f7f8f8) so the field
+     doesn't read as pre-filled. */
+  color: rgba(255, 255, 255, 0.38);
+}
+
+/* Honeypot field: off-screen, never shown to humans. Bots that fill
+   every input get caught by the submit-handler check. Not display:none
+   because some bots skip those; off-screen positioning keeps it in the
+   render tree so naive bots still see and fill it. */
+.apiant-hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 .apiant-popup-field input:focus,
 .apiant-popup-field textarea:focus,
