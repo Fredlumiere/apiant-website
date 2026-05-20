@@ -22,6 +22,12 @@ export async function verifyTurnstile(
   token: string | undefined,
   req: Request,
 ): Promise<{ ok: boolean; reason?: string }> {
+  // Turnstile is disabled for now: the offscreen widget blocked any
+  // visitor Cloudflare chose to challenge. Verification is bypassed
+  // site-wide until a replacement bot check (e.g. honeypot) is in place.
+  // Re-enable by removing this short-circuit.
+  return { ok: true };
+
   const secret = Deno.env.get("TURNSTILE_SECRET_KEY");
   const isDev = (Deno.env.get("ENV") || "").toLowerCase() === "dev";
 
