@@ -31,6 +31,7 @@ EXCLUDE_DIRS = {
     "appResources", "ai", ".uisnap", "__pycache__",
     "connect", "connections",
     "other-pages", "protected-content", "pdf-build",
+    "_templates",
 }
 
 EXCLUDE_FILES = {
@@ -42,6 +43,7 @@ EXCLUDE_FILES = {
     "zoomconnect-nextsteps.html",
     "apps2.html",
     "index2.html",
+    "index3.html",
     "temp.html",
     "ADOPTION-PLAN.html",
     "servlettemplateconnect.html",
