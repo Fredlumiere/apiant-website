@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>MindbodyのクラスデータからHubSpotでコーチのパフォーマンスダッシュボードを構築する方法 | APIANTブログ</title>
-<meta content="CRMConnectの予約パイプライン、販売パイプライン、および最終訪問追跡機能を使用して、コーチ別およびクラス別の出席状況、収益、および顧客維持率を示すHubSpotレポートを作成できます。" name="description"/>
+<title>Mindbodyデータからコーチのパフォーマンスダッシュボードを構築する</title>
+<meta content="どのコーチの定着率が最も高いかを尋ねても、直感でしか判断できず、具体的な数字は得られません。ここでは、実際のデータに基づいて、コーチごとの出席率、収益、定着率を確認する方法をご紹介します。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="MindbodyクラスデータからHubSpotでコーチパフォーマンスダッシュボードを構築する" property="og:title"/>
-<meta content="CRMConnectの予約パイプライン、販売パイプライン、および最終訪問追跡機能を使用して、コーチ別およびクラス別の出席状況、収益、および顧客維持率を示すHubSpotレポートを作成できます。" property="og:description"/>
+<meta content="あなたのジムで実際に生徒の定着率を高めているコーチは誰なのか見てみましょう" property="og:title"/>
+<meta content="どのコーチの定着率が最も高いかを尋ねても、直感でしか判断できず、具体的な数字は得られません。ここでは、実際のデータに基づいて、コーチごとの出席率、収益、定着率を確認する方法をご紹介します。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mindbody-hubspot-coach-performance-dashboard/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="MindbodyクラスデータからHubSpotでコーチパフォーマンスダッシュボードを構築する" property="twitter:title"/>
-<meta content="CRMConnectの予約パイプライン、販売パイプライン、および最終訪問追跡機能を使用して、コーチ別およびクラス別の出席状況、収益、および顧客維持率を示すHubSpotレポートを作成できます。" property="twitter:description"/>
+<meta content="あなたのジムで実際に生徒の定着率を高めているコーチは誰なのか見てみましょう" property="twitter:title"/>
+<meta content="どのコーチの定着率が最も高いかを尋ねても、直感でしか判断できず、具体的な数字は得られません。ここでは、実際のデータに基づいて、コーチごとの出席率、収益、定着率を確認する方法をご紹介します。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Building a Coach Performance Dashboard in HubSpot From Mindbody Class Data",
-  "description": "Use CRMConnect's appointment pipeline, sales pipeline, and last-visit tracking to build HubSpot reports that show attendance, revenue, and retention by coach and by class.",
+  "headline": "See Which Coach Actually Drives Retention at Your Gym",
+  "description": "Ask which coach has the best retention and you get a gut feeling, not a number. Here is how to see attendance, revenue, and retention by coach with real data.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/hero.avif",
   "datePublished": "2025-01-15T13:06:46+00:00",
-  "dateModified": "2026-05-20T13:39:44.416072+00:00",
+  "dateModified": "2026-05-20T16:43:21.081104+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Building a Coach Performance Dashboard in HubSpot From Mindbody Class Data", "item": "https://apiant.com/blog/posts/mindbody-hubspot-coach-performance-dashboard/" }
+    { "@type": "ListItem", "position": 4, "name": "See Which Coach Actually Drives Retention at Your Gym", "item": "https://apiant.com/blog/posts/mindbody-hubspot-coach-performance-dashboard/" }
   ]
 }
 </script>
@@ -196,7 +196,7 @@
 <div class="blog-category-chip">
 <a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
 </div>
-<h1 class="blog-post-h1">MindbodyクラスデータからHubSpotでコーチパフォーマンスダッシュボードを構築する</h1>
+<h1 class="blog-post-h1">あなたのジムで実際に生徒の定着率を高めているコーチは誰なのか見てみましょう</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
 <span>2025年1月15日</span>
@@ -207,61 +207,41 @@
 <div class="blog-post-hero-image"><img alt="ゴム製の床、トレーニング器具やバーベル、ガレージのドアから差し込む朝の光、空気中に舞うチョークの粉塵。工業的な雰囲気のクロスフィットジムの内部。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h1 id="ask-a-crossfit-head-coach-which-of-their-staff-has-the-best-retention-rate-they-will-give-you-a-confident-answer-ask-them-to-back-it-up-with-numbers-and-the-answer-becomes-well-you-know-you-can-just-feel-it">クロスフィットのヘッドコーチに、スタッフの定着率が最も高いのは誰かと尋ねてみてください。彼らは自信満々に答えるでしょう。しかし、それを数字で裏付けるように求めると、「まあ、なんとなく分かるでしょう」という答えが返ってくるかもしれません。</h1>
-<p>Mindbodyのレポートは会計処理向けに作られており、コーチング向けではありません。クラス出席状況のエクスポート、売上レポート、欠席者リストなどは作成できますが、どれも連携しません。担当者には、毎週それらを統合する時間もSQLの知識もありません。そのため、パフォーマンスに関する話し合いは印象論に留まり、休会中の会員は3週間も遅れて通知され、時間当たりの収益が最も高いコーチが評価されることはほとんどありません。</p>
-<p>仮説：Anvil Strength CrossFit（例）は、1つの場所に320人の会員を抱え、1日に7つのクラスを開講しているジムで、四半期ごとのレビューで毎回この問題に直面していました。オーナーは、会員の定着率とクラスの満席率に連動した少額の変動ボーナスをコーチに支払いたいと考えていましたが、どちらも確実に測定できなかったため、実現できませんでした。</p>
-<p>この記事では、CRMConnect MindbodyをHubSpotの組み込みパイプラインとプロパティに接続し、コーチのパフォーマンスダッシュボードのソースデータを作成する方法を解説します。このダッシュボードは、構築に約半日かかります。</p>
-<h2 id="pipelines-you-get-for-free-with-crmconnect">CRMConnectで無料で利用できるパイプライン</h2>
-<p>CRMConnectには、HubSpotの取引パイプラインが2つ標準搭載されており、あらかじめデータが入力され、継続的に更新されます。</p>
-<p><strong>マインドボディ予約パイプライン。</strong> アプリのページには、「CRMConnectはHubSpot内に専用のMindbody予約パイプラインを作成・維持し、各予約を自動的に取引として表示します。各取引には、関連する購入、スケジュールの変更、予約ステータス、残りのセッション数などの詳細情報が含まれます。」と記載されています。更新は15分ごとに行われます。</p>
-<p><strong>Mindbodyの販売パイプライン。</strong> 顧客による購入ごとに取引を項目化し、担当者、場所、サービスを割り当てます。毎日照合されます。</p>
-<p>CRMConnectが各コンタクトに対して保持する120以上のカスタムHubSpotプロパティと組み合わせると、以下の機能が得られます。</p>
-<ul>
-<li>連絡先ごと: <code>last_visit_date</code>, <code>last_visit_staff</code>, <code>total_visits</code>, <code>next_scheduled_appointment</code>, <code>remaining_sessions</code>, <code>membership_status</code></li>
-<li>予約ごとの契約：スタッフ（コーチ）、サービス（クラス）、場所、ステータス、購入関連</li>
-<li>販売ごとの取引: 金額、商品、担当者、場所、日付</li>
-</ul>
-<p>コーチレベルのレポートを作成するには、これだけで十分です。データウェアハウス、dbt、BIライセンスは必要ありません。</p>
+<h2 id="why-coach-reviews-run-on-gut-feeling">コーチの評価が直感に基づいている理由</h2>
+<p>ヘッドコーチに、スタッフの定着率が最も高いのは誰かと尋ねてみてください。彼らは自信満々に答えるでしょう。しかし、それを数字で裏付けるように求めると、「まあ、なんとなく分かるんだよ」という答えが返ってくるでしょう。</p>
+<p>Mindbodyのレポートは会計処理のために作られており、コーチングには適していません。クラス出席状況のエクスポート、売上レポート、欠席者リストなどは作成できますが、どれも互いに整合性がなく、ジムのスタッフには毎週それらを統合する時間はありません。そのため、パフォーマンスに関する話し合いは印象論的なものになり、休会中の会員は3週間も遅れて気づかれ、実際に時間当たりの収益が最も高いコーチが評価されないという事態が頻繁に起こります。</p>
+<p>仮説：Anvil Strength CrossFit（例示）は、1つの場所に320人の会員を抱え、1日に7つのクラスを開講しているジムです。オーナーは、会員の継続率とクラスの満席率に応じてコーチに少額のボーナスを支払いたいと考えていました。しかし、どちらも確実に測定することができなかったため、実現できませんでした。</p>
+<h2 id="what-coaching-blindness-costs-you">コーチングにおける盲点がもたらす損失</h2>
+<p>コーチのパフォーマンスが目に見えないと、評価すべき対象が間違ってしまいます。カリスマ性のあるコーチが称賛される一方で、休会した会員一人ひとりに静かに連絡を取り、継続して通わせているコーチは見過ごされてしまいます。レッスンのスケジュールは、参加者の定着率や継続率ではなく、習慣に基づいて組まれてしまいます。そして、誰も早期警告を発する責任を負っていないため、休会した会員は誰の目にも留まりません。気づかれずに離脱してしまう会員は、適切なタイミングでたった1通のメッセージを送るだけで節約できたはずの、継続的な収益の損失なのです。</p>
+<p>朗報です。データは既にお持ちです。あとは、それらを一箇所にまとめて連携させるだけです。</p>
+<h2 id="the-data-you-already-have-joined-up">既にお持ちのデータを統合</h2>
+<p>CRMConnect Mindbody to HubSpotは、MindbodyのアクティビティをHubSpotに取り込み、レポート作成に活用できる形式で提供します。2つの情報が自動的に取り込まれ、常に最新の状態に保たれます。</p>
+<p>まず、HubSpotでは、すべての予約が個別のレコードとして表示され、コーチ、クラス、場所、ステータス、および関連する購入情報が含まれます。次に、クライアントの購入はすべて明細化され、担当者、場所、およびサービスが紐付けられます。さらに、各会員のレコードには、最終訪問日、最後に担当したコーチ、総訪問回数、次回の予約、残りのセッション数、および会員ステータスが記録されます。</p>
+<p>コーチレベルのレポートを作成するために必要なものは、これだけです。データアナリストや別途レポート作成ツールは必要ありません。</p>
 <p><img alt="工業的な雰囲気のクロスフィットジムにある黒板の壁をクローズアップした写真。黒板にはチョークで書かれたクラスのスコアが記されており、柔らかなサイドライトが当てられている。背景にはラックに置かれたバーベルがソフトフォーカスで写っている。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/inline-1.avif"/></p>
-<h2 id="designing-the-coach-performance-dashboard">コーチパフォーマンスダッシュボードの設計</h2>
-<p>HubSpot Reports（Pro Hubが必要、完全なカスタムレポート機能を利用するにはSales Hub Professional以上が必要）内で、4つのレポートを作成し、「コーチのパフォーマンス」という名前の単一のダッシュボードにピン留めします。</p>
-<p><strong>レポート1：過去30日間に指導した授業数。</strong> Mindbody予約パイプラインに絞り込まれた取引レポート。スタッフ別にグループ化され、ステータスが「完了」の取引件数が表示されます。クラスタイプ別に積み重ねて表示されます。</p>
-<p><strong>レポート2：過去30日間の収益計上状況。</strong> Mindbodyの販売パイプラインに関する取引レポート（スタッフ別、金額合計）。これは、そのスタッフとのやり取りに関連する購入収益であり、スタジオの総収益ではありません。</p>
-<p><strong>レポート3：コーチ別のクラス定員充足率。</strong> 担当者とクラス別にグループ化された、アポイントメントパイプラインに関する取引レポート。完了件数と予定総数を比較。降順で並べ替え。</p>
-<p><strong>レポート4：コーチごとの退会会員数。</strong> 連絡先レポートをフィルタリングして <code>last_visit_date is more than 14 days ago AND last_visit_staff is known</code>グループ化 <code>last_visit_staff</code>これはあまり知られていない報告書です。コーチごとに、現在「彼ら」のメンバーのうち何人が危険にさらされているかを示しています。</p>
-<p>アンビルの四半期レビューに、オーナーは5つ目の項目を追加した。 <strong>コーチのオンボーディング別定着率コホート。</strong> 連絡先をフィルタリングして <code>total_visits &gt;= 1 AND created_date between Q1 dates</code>グループ化 <code>first_visit_staff</code> （ワークフローを通じてサインアップ時に入力するプロパティです。）90日後もアクティブなユーザーの割合を比較してください。これは、何ヶ月もかけずに、実際のリテンションアトリビューションに最も近い結果を得る方法です。</p>
+<h2 id="building-the-coach-performance-dashboard">コーチのパフォーマンスダッシュボードの構築</h2>
+<p>HubSpotのレポート機能内で、4つのレポートを作成し、「コーチのパフォーマンス」という名前の単一のダッシュボードにピン留めしてください。レポートは4つに絞りましょう。コーチはウィジェットが多すぎるダッシュボードを見るのをやめてしまいます。</p>
+<p>過去30日間に担当したレッスン数。完了したレッスン数をコーチごとに集計し、レッスンの種類別に分類します。これは、実際にスケジュールをこなしているコーチを把握するための最もシンプルな指標です。</p>
+<p>各コーチに関連する過去30日間の収益。各コーチとのやり取りに関連する購入の合計額です。これはスタジオの総収益ではなく、そのコーチの会員に関連する収益です。</p>
+<p>コーチ別のクラス充足率。コーチとクラスごとに、予約済み定員数と実際に充足した定員数を比較。並べ替えることで、どのコーチが常にクラスを満員にしているかが分かります。</p>
+<p>コーチごとの休会会員数。最後に訪問してから2週間以上経過した会員を、最後に面会したコーチごとにグループ分けしています。これはコーチが日々実際に使用するレポートです。各コーチに対し、現在どの会員が休会リスクにさらされているかを正確に示します。</p>
+<p>四半期ごとのレビューに、5つ目の項目として、メンバーの初回レッスンを担当したコーチ別の継続率を追加しましょう。各コーチが担当したメンバーのうち、90日後も継続して利用しているメンバーの数を比較します。これは、数ヶ月にわたるプロジェクトを実施することなく、実際の継続率の要因を特定できる最も近い方法です。</p>
 <h2 id="catching-lapsed-members-before-coaches-notice">コーチが気づく前に、脱退したメンバーを捕まえる</h2>
-<p>退会した会員レポートは、コーチが実際に日々使用する部分です。連絡先を登録する HubSpot ワークフローを構築します。 <code>last_visit_date crossed 14 days AND membership_status = Active</code>、そしてタスクを連絡先にルーティングします。 <code>last_visit_staff</code> 「[名前]さんが2週間出勤していないのを見ました。簡単なメッセージを送ってもらえますか？」という一行のスクリプト付き。</p>
-<p>これは、CRMConnectの最終訪問同期機能が充実しているためです。「CRMConnectは、各クライアントの最新の訪問詳細（日付、種類（予約、クラス、到着）、提供されたサービス、担当者、イベント名など）をHubSpotに常に最新の状態で提供します。」コーチは、メンバーが最後にどのクラスに参加したかを正確に把握し、テキスト内でそれを参照できます。</p>
+<p>会員資格が失効した会員に関するレポートは、コーチが毎日使用する機能です。会員が2週間以上来院せず、かつ会員資格が有効である場合に、コーチに「ジェイミーが2週間来院していないようですが、簡単なメッセージを送っていただけますか？」という一行のスクリプトを含むタスクが自動的に送信されるように設定しましょう。</p>
+<p>これは、前回の訪問に関する詳細情報が豊富であるため効果的です。コーチは、会員が最後に参加したクラス、訪問の種類、サービス内容を正確に把握し、それを自然な形でメッセージに反映させることができます。前回のクラスを担当したコーチからの具体的で個人的なメッセージは、「会えなくて寂しいです」といった一般的なメールよりもはるかに効果的です。</p>
 <p><img alt="コーチのスマートフォンのクローズアップ。HubSpotのタスク通知が表示されており、スマートフォンはフォーム製のプライオボックスの上に置かれ、背後にはケトルベルがソフトフォーカスで写っている。ジムの窓からの光が差し込んでいる。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-hubspot-coach-performance-dashboard/inline-2.avif"/></p>
-<p>アポイントメントレベルでのアトリビューションの場合、HubSpotのアポイントメント取引レコードは概ね次のようになります。</p>
-<pre class="highlight"><code class="language-json">{
-  "deal_pipeline": "Mindbody Appointment Pipeline",
-  "deal_stage": "Completed",
-  "service": "CrossFit 6:00am",
-  "staff": "Marco",
-  "location": "Anvil HQ",
-  "remaining_sessions": 14,
-  "associated_contact": "athlete@example.com",
-  "scheduled_date": "2026-05-17T06:00:00",
-  "purchase_associated": "10-Class Pack"
-}</code></pre>
-<h2 id="representative-insights-from-the-first-quarter">第1四半期の代表的な分析結果</h2>
-<p>この規模のボックスでの代表的な展開では、コーチダッシュボードの最初の四半期で通常3つのパターンが明らかになります。まず、最もカリスマ性が高いと認識されているコーチが、維持率が最も高いことはまれです。維持率は、休会したメンバーにテキストメッセージを送るコーチとより強く相関しています。次に、午前6時のクラスは常に満席率が最も低く、維持率が最も高くなっています。これは直感に反するように思えますが、午前6時の参加者は非常に熱心です。3つ目は、最後にクラスを担当したコーチからの休会メンバーへのテキストメッセージは、約30～40％で再訪問につながりますが、一般的な再エンゲージメントメールの場合は10％未満です。</p>
-<p>Anvilの規模（会員数320名、月間潜在解約者数320名）では、毎月解約の可能性のある会員の15%を回復するだけでも、約5～8名の会員維持につながり、月間経常収益（MRR）の削減額は約700～1,100ドルになります。年間で見れば、システム統合費用を何倍も回収できる計算になります。</p>
-<p>これらの数字はあくまで例示であり、メッセージの返信率（コンバージョン率）は、コーチの文化や、メッセージがどれだけ個人的なものに感じられるかに大きく左右されます。</p>
-<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
-<ul>
-<li><strong>コピーすべきもの：</strong> 4つのレポートで構成されるダッシュボード構造。過剰に複雑にしてはいけません。私の経験上、コーチはウィジェットが5つ以上あるダッシュボードを見なくなります。</li>
-<li><strong>注意すべき点：</strong> Mindbodyのセールスパイプラインはリアルタイムではなく日次で調整されるため、収益数値は1日遅れます。アポイントメントパイプラインは15分ごとに更新されますが、これは「今夜のクラスは満席か？」といったリアルタイムのユースケース以外では問題ありません。また、コーチへの収益帰属は本質的に曖昧です。クラス終了後の受付での販売が、指導コーチの「功績」となる場合もあれば、そうでない場合もあります。</li>
-<li><strong>このパターンが当てはまらない場合：</strong> 予約制のビジネス（マンツーマンの理学療法、メディカルスパなど）は、各予約に必ず1人の施術者が担当するため、より正確なアトリビューションが可能になります。一方、ローテーション制のグループレッスンなどのビジネスでは、アトリビューションのばらつきが大きく、ダッシュボードを作成する前に「担当コーチ」の定義を明確にする必要があります。</li>
-</ul>
+<h2 id="representative-results-from-the-first-quarter">第1四半期の代表的な業績</h2>
+<p>これらはあくまで例示のための合成画像であり、実際の顧客ではありません。この規模のシステムへの導入では、コーチダッシュボードの最初の四半期で通常3つのパターンが現れます。</p>
+<p>カリスマ性が最も高いと認識されているコーチが、必ずしも会員維持率が高いとは限りません。会員維持率は、休会した会員に実際に連絡を取るコーチとより密接に関係しています。初期のクラスは、参加率が最も低く、会員維持率が最も高い傾向がありますが、初期のクラス参加者は熱心であることを理解すれば、これは理にかなっています。また、会員が最後に受講したクラスを担当したコーチが休会した会員に連絡を取ると、会員の約30～40％が復帰しますが、一般的な再エンゲージメントメールでは復帰率は10％未満にとどまります。</p>
+<p>会員数が320人の場合、毎月解約予定者の15%を回復できれば、約5～8人の会員を維持でき、月間収益は約700～1,100ドル削減できます。年間で見れば、統合費用を何倍も回収できる計算になります。解約通知の回復率は、コーチングの文化や、通知がどれだけパーソナルなものに感じられるかに大きく左右されます。</p>
+<h2 id="what-this-means-for-your-studio">これはあなたのスタジオにとって何を意味するのか</h2>
+<p>パーソナルトレーニングやメディカルスパのようなマンツーマン型のビジネスでは、各セッションに必ず1人の担当者がつくため、貢献度の特定は比較的容易です。一方、コーチが交代制のグループレッスンを行うジムでは、状況が複雑になるため、ダッシュボードを作成する前に「貢献度を評価されるコーチ」の定義を明確にしておく必要があります。いずれにしても、重要な点は変わりません。コーチごとの出席率、収益、会員維持率を把握できれば、実際に会員を維持しているコーチに報酬を与え、満席になるようなクラスをスケジュールし、会員離れを未然に防ぐことができます。これこそが、勘に頼ったコーチングと真実に基づいたコーチングの違いなのです。</p>
 <p>CRMConnect MindbodyとHubSpotの連携動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-hubspot-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">APIアプリの全カタログをご覧ください</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">マインドボディソリューションズ</span><span class="blog-apps-cta-desc">フィットネスとウェルネスの統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">クリニコソリューションズ</span><span class="blog-apps-cta-desc">医療および関連医療分野の統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非営利団体および資金調達との連携</span><span class="blog-apps-cta-arrow">探索する →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#pipelines-you-get-for-free-with-crmconnect">CRMConnectで無料で利用できるパイプライン</a></li><li class="lvl-2"><a href="#designing-the-coach-performance-dashboard">コーチパフォーマンスダッシュボードの設計</a></li><li class="lvl-2"><a href="#catching-lapsed-members-before-coaches-notice">コーチが気づく前に、脱退したメンバーを捕まえる</a></li><li class="lvl-2"><a href="#representative-insights-from-the-first-quarter">第1四半期の代表的な分析結果</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-coach-reviews-run-on-gut-feeling">コーチの評価が直感に基づいている理由</a></li><li class="lvl-2"><a href="#what-coaching-blindness-costs-you">コーチングにおける盲点がもたらす損失</a></li><li class="lvl-2"><a href="#the-data-you-already-have-joined-up">既にお持ちのデータを統合</a></li><li class="lvl-2"><a href="#building-the-coach-performance-dashboard">コーチのパフォーマンスダッシュボードの構築</a></li><li class="lvl-2"><a href="#catching-lapsed-members-before-coaches-notice">コーチが気づく前に、脱退したメンバーを捕まえる</a></li><li class="lvl-2"><a href="#representative-results-from-the-first-quarter">第1四半期の代表的な業績</a></li><li class="lvl-2"><a href="#what-this-means-for-your-studio">これはあなたのスタジオにとって何を意味するのか</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">実施するすべてのプログラムにおいて、生徒一人につき明確なスケジュールを一つだけ作成します。</h3><p class="blog-card-excerpt">もしあなたのスタジオが初心者向けプログラム、長期コース、プライベートレッスンを同時に提供している場合、リマインダーが各生徒が実際に予約した内容と最終的に一致するようにするには、以下の手順を踏む必要があります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">6つのジムからなる筋力トレーニングネットワークの拠点別マーケティング</h3><p class="blog-card-excerpt">中央マーケティングチームが6つのジムからなるネットワークの全メンバーに一斉送信するメールを送ると、コーチの名前とジムの住所が半分の確率で間違ってしまう。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会議資料の再構築を終わらせよう：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。スタッフは夜の時間を取り戻したい。寄付額、平均寄付額、キャンペーン実績がHubSpotに集約されることで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードとして活用できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

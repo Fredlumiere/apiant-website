@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>在 Zoho CRM 中实时管理双店医疗美容中心的会员状态 | APIANT 博客</title>
-<meta content="CRMConnect 的 MB 会员资格同步功能如何让 Zoho CRM 代表实时了解会员资格状态、剩余会话和续订日期。" name="description"/>
+<title>在您的 Zoho CRM 中查看 Mindbody 会员实时状态</title>
+<meta content="续费洽谈必须在会员资格到期前几周进行。如果您的销售团队直到月底才看到会员数据，那么洽谈就已经错过了最佳时机。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="在 Zoho CRM 中实时显示两家医疗美容中心的会员状态" property="og:title"/>
-<meta content="CRMConnect 的 MB 会员资格同步功能如何让 Zoho CRM 代表实时了解会员资格状态、剩余会话和续订日期。" property="og:description"/>
+<meta content="在续费错过之前，请在 Zoho CRM 中查看会员状态" property="og:title"/>
+<meta content="续费洽谈必须在会员资格到期前几周进行。如果您的销售团队直到月底才看到会员数据，那么洽谈就已经错过了最佳时机。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mindbody-zoho-crm-membership-status/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="在 Zoho CRM 中实时显示两家医疗美容中心的会员状态" property="twitter:title"/>
-<meta content="CRMConnect 的 MB 会员资格同步功能如何让 Zoho CRM 代表实时了解会员资格状态、剩余会话和续订日期。" property="twitter:description"/>
+<meta content="在续费错过之前，请在 Zoho CRM 中查看会员状态" property="twitter:title"/>
+<meta content="续费洽谈必须在会员资格到期前几周进行。如果您的销售团队直到月底才看到会员数据，那么洽谈就已经错过了最佳时机。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Real-Time Membership Status in Zoho CRM for a Two-Location Medspa",
-  "description": "How CRMConnect's MB Memberships sync gives Zoho CRM reps real-time visibility into membership status, sessions remaining, and renewal dates.",
+  "headline": "See Membership Status in Zoho CRM Before Renewals Slip Away",
+  "description": "Renewal conversations have to happen weeks before a membership expires. If your sales team only sees membership data at month end, that conversation is already late.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/hero.avif",
   "datePublished": "2026-03-16T16:44:17+00:00",
-  "dateModified": "2026-05-20T13:39:47.807601+00:00",
+  "dateModified": "2026-05-20T16:45:16.885171+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Real-Time Membership Status in Zoho CRM for a Two-Location Medspa", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-membership-status/" }
+    { "@type": "ListItem", "position": 4, "name": "See Membership Status in Zoho CRM Before Renewals Slip Away", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-membership-status/" }
   ]
 }
 </script>
@@ -196,7 +196,7 @@
 <div class="blog-category-chip">
 <a href="/zh/blog/category/api-apps" style="color:inherit;text-decoration:none;">应用程序接口</a>
 </div>
-<h1 class="blog-post-h1">在 Zoho CRM 中实时显示两家医疗美容中心的会员状态</h1>
+<h1 class="blog-post-h1">在续费错过之前，请在 Zoho CRM 中查看会员状态</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/zh/blog/?author=fred">Fred Lumiere</a></span>
 <span>2026年3月16日</span>
@@ -207,92 +207,66 @@
 <div class="blog-post-hero-image"><img alt="宁静的医美中心走廊，配有背光治疗室指示牌、柔和的灰褐色墙壁和拉丝金色的吊灯。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h2 id="the-renewal-conversation-reps-arent-having">代表们不愿谈及续约事宜</h2>
-<p>医美会员制既是稳定的收入来源，也是持续存在的客户流失风险。一份为期六个月、每月收费 299 美元的医美会员资格，每位会员大约能带来 1800 美元的收入。为了促成续费，需要在会员到期前 30 到 60 天进行沟通。如果销售团队只能在月底的 Mindbody 报告中查看会员数据，那么续费洽谈就为时已晚。</p>
-<p>假设：Vesper Wellness Medspa（示例）是一家拥有两家分店的医疗美容中心，共有七位医护人员、2200名患者，并设有活跃的会员制项目。销售团队使用Zoho CRM系统，临床团队使用Mindbody系统。过去，两团队之间的交接方式一直是“询问前台”。续费经常被遗漏，过期会员资格无人跟进数周，销售团队往往只有在全体员工会议上才得知此事。</p>
-<h2 id="why-off-the-shelf-tools-fail-here">为什么现成的工具在这里会失效</h2>
-<p>会员数据不止一个字段。Mindbody 会员包含：</p>
+<h2 id="the-renewal-conversation-your-team-keeps-missing">你的团队一直错过的续约对话</h2>
+<p>会员制是医美机构稳定的收入来源，但同时也存在持续的流失风险。一份为期六个月、每月收费 299 美元的美容会员卡，每位会员大约能带来 1800 美元的收入。续费洽谈必须在会员到期前 30 到 60 天进行，才能真正促成交易。如果您的销售团队只能在月底 Mindbody 报告生成时才能看到会员信息，那么在任何人开始洽谈之前，续费洽谈就已经错过了最佳时机。</p>
+<p>举个例子来说明。假设Vesper Wellness Medspa是一家拥有两家分店的医疗机构，有七位医护人员、2200名患者，并运营着一个活跃的会员制项目。销售团队使用Zoho CRM系统，而临床团队则使用Mindbody系统。两团队之间的交接一直都是“问前台”。结果就是，续费经常被忽略，过期会员无人跟进，销售团队往往只有在全体员工大会上才得知此事。</p>
+<h2 id="what-the-disconnect-actually-costs">沟通不畅的实际代价是什么</h2>
+<p>会员资格并非单一信息。它包含状态、起止日期、已用疗程数和剩余疗程数，以及是否自动续订等信息。续订沟通需要所有这些信息。“剩余疗程数”尤其重要，它提醒患者在会员资格到期前使用已付费的疗程，并且每次预约或使用疗程后，剩余疗程数都会更新。</p>
+<p>当所有数据都存储在 Mindbody 系统中，而您的销售团队却使用 Zoho CRM 系统时，这种信息鸿沟要么需要人工弥合，要么根本无法弥合。代价并非销售代表花几分钟时间询问前台，而是那些从未收到 60 天续费提醒的客户、那些拥有四次未使用疗程却悄悄过期的患者，以及那些因为无人知晓而无人跟进的过期会员。</p>
+<h2 id="how-it-works-once-membership-data-flows-into-zoho-crm">会员数据流入 Zoho CRM 后的工作原理</h2>
+<p>将 Mindbody CRM 连接到 Zoho CRM，即可在您销售团队已使用的 CRM 系统中保持完整的会员信息实时更新。会员状态、起止日期、已用和剩余疗程以及续费信息都会自动更新。例如，一位患者同时拥有三个会员资格（这在医疗美容机构中很常见），系统会显示所有三个会员资格的信息。</p>
+<p>您的销售团队在每份患者记录中都能看到以下内容：</p>
 <ul>
-<li>状态（有效、过期、暂停、取消）。</li>
-<li>开始日期和结束日期。</li>
-<li>剩余会话数和已用会话数（适用于按会话计费的计划）。</li>
-<li>自动续订标志。</li>
-<li>关联合同（如果基于合同）。</li>
+<li>会员资格的状态（有效、过期、暂停或取消）会随着状态的变化而更新。</li>
+<li>还剩下多少次会议，这样他们就知道该催促谁了。</li>
+<li>确切的到期日期，以便续约推广活动能够根据实际情况进行，而不是靠猜测。</li>
 </ul>
-<p>通用的数据粘合工具可以提取其中一项信息（通常是状态），但续订对话需要所有信息。“剩余会话数”字段用于触发“过期前使用”的提醒，并且每次会话被预订、使用或取消时，该字段都会发生变化。</p>
-<h2 id="the-apiant-approach">APIANT 方法</h2>
-<p>CRMConnect Mindbody 与 Zoho CRM 的连接利用 Zoho CRM 中的专用自定义对象来保存完整的会员信息。API 应用页面显示：“会员状态、剩余课程、续费和到期等信息实时更新，所有数据都会同步到 Zoho CRM，以便您的团队能够在会员流失前采取行动。”</p>
-<p>相关特征：</p>
-<ul>
-<li><strong>会员资格和合同同步</strong> 拥有专门的 <strong>MB 会员资格</strong> Zoho CRM中的自定义对象。</li>
-<li><strong>双向客户端配置文件同步</strong> 保持联系人和潜在客户记录一致。</li>
-<li><strong>实时数据同步</strong> 因此，更改会在几秒钟内反映在 Zoho CRM 中。</li>
-<li><strong>自定义对象映射</strong> 因此，可以在工作流程和报告中查询会员数据。</li>
-</ul>
-<p>MB Memberships 对象是 Zoho 端的数据源。每位患者可能拥有多个会员资格（这在医疗美容机构中很常见），这些会员资格会作为单独的记录与联系人关联。</p>
+<p>前台不再收到“帕蒂的会员资格过期了吗？”这样的询问信息。答案已记录在案。</p>
 <p><img alt="宁静的医美中心走廊，配有背光治疗室指示牌和拉丝金色吊灯，墙壁为柔和的灰褐色。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/inline-1.avif"/></p>
-<h2 id="what-mb-memberships-surfaces-in-zoho-crm">在 Zoho CRM 中，MB 会员资格会显示哪些信息？</h2>
-<p>自定义对象保存完整记录：</p>
-<pre class="highlight"><code class="language-text">Zoho CRM custom object: MB Memberships
-- membership_id
-- contact_id (links to Zoho CRM contact)
-- membership_name              e.g. "Aesthetic Essentials 6-Month"
-- status                       active|expired|suspended|cancelled
-- start_date / end_date
-- sessions_total
-- sessions_used
-- sessions_remaining           (computed live)
-- auto_renew                   true|false
-- last_payment_at
-- next_payment_at
-- mindbody_site_id</code></pre>
-<p>驱动工作流程的字段： <code>end_date</code> 关于续订时间， <code>sessions_remaining</code> 用于促进利用率提升， <code>status</code> 用于抓捕过期会员。</p>
-<h2 id="designing-the-pre-expiration-outreach-workflow">设计到期前外联工作流程</h2>
-<p>Zoho CRM 工作流程每天都会针对 MB Memberships 对象运行：</p>
+<h2 id="building-a-renewal-cadence-that-actually-happens">建立真正能够实现的更新节奏</h2>
+<p>一旦 Zoho CRM 中启用了到期日期和会话计数功能，您就可以围绕它们制定一个稳定、可重复的续订流程。以下是一个可行的示例：</p>
 <ol>
-<li><strong>第-60天：</strong> 工作流程会为指定的销售代表创建一个任务：“续约洽谈：[患者姓名]”。任务字段包括会员姓名、结束日期和剩余疗程数。</li>
-<li><strong>第-45天：</strong> 分支 <code>sessions_remaining</code>:</li>
-<li>超过 4 例：向患者发送一封“利用现有资源”的电子邮件，其中包含预约链接。</li>
-<li>4 或更少：跳过，患者正在使用会员资格，很可能续费。</li>
-<li><strong>第-30天：</strong> 销售代表必须当天完成的电话任务。如果24小时内未完成，系统将自动上报给经理。</li>
-<li><strong>第-14天：</strong> 向患者发送电子邮件，其中包含续订条款和一键续订链接。</li>
-<li><strong>第-3天：</strong> 短信提醒。</li>
-<li><strong>第0天：</strong> 会员资格到期。 <code>auto_renew = true</code> 和 <code>next_payment_at</code> 清除后，状态变为活动状态，进入下一阶段，流程结束。</li>
-<li><strong>第+1天：</strong> 如果状态为 <code>expired</code>触发失效成员序列。</li>
+<li>60 天后，指定的代表会收到一项任务：“续费洽谈”，其中包含会员姓名、到期日期和剩余会期等信息。</li>
+<li>提前45天，流程会根据使用情况而有所不同。如果患者剩余疗程很多，他们会收到一封友好的邮件，提醒他们“快来用完剩余疗程吧”，邮件中包含预约链接。如果他们已经在使用会员资格，则无需提醒：他们很可能无论如何都会续订。</li>
+<li>30天后，销售代表的日程表上会显示当天需要完成的电话任务。如果一天内没有完成，任务将上报给经理。</li>
+<li>两周后，患者将收到续保条款和简单的一键续保选项。</li>
+<li>提前三天，会发出简短的短信提醒。</li>
+<li>到期日当天，设置为自动续期的会员资格将进入下一个任期并退出序列。</li>
+<li>第二天，所有实际过期的会员资格都将进入失效会员后续跟进流程。</li>
 </ol>
-<p>第 30 天的强制性电话是转化率的关键驱动因素。它已列入日程，有明确的背景信息，并且已上报。销售代表会执行该电话。</p>
+<p>30 天回访电话是促成转化的关键因素。它已列入日程安排，并附有相关背景信息，如果错过，后续流程将自动升级。因此，它最终一定会被安排。</p>
 <h2 id="catching-lapsed-members-before-they-drift">在落后成员流失之前将其追回</h2>
-<p>失效成员序列与 <code>status = expired</code> 和 <code>end_date &gt; now() - 30 days</code>:</p>
+<p>对于到期的会员资格，一个简短的恢复流程可以确保会员资格继续有效：</p>
 <ol>
-<li><strong>过期后第1天：</strong> 代表发来一封私人邮件，告知“您的位置仍然保留”。</li>
-<li><strong>第7天：</strong> 短信：“您是否想让我将您的上次课程再延长 30 天？”（使用自动付款状态作为分行：如果自动付款在到期时失败，这是已绑定银行卡的问题，而不是客户流失的问题。）</li>
-<li><strong>第14天：</strong> 经理审核会议。代表带来失效患者名单。针对高长期价值患者做出决定。</li>
-<li><strong>第 30 天：</strong> 潜在客户状态自动更改为“非活跃成员”，以便进行长期的客户挽回培育。</li>
+<li>到期后的第二天，销售代表发来一封私人邮件，告知“您的名额仍然有效”。</li>
+<li>一周后，收到一条短信，询问是否可以将最后几节课再延长30天。如果这次中断是由于信用卡失效而非真正决定退会造成的，那就把它当作一次快速的信用卡更新，而不是客户流失问题。</li>
+<li>到期两周后，经理会进行审核，代表会带来失效名单，并对最有价值的患者做出决定。</li>
+<li>一个月后，所有仍不活跃的客户都将进入长期客户挽回培育阶段。</li>
 </ol>
-<p>第 14 天的经理评估才是真正物有所值的环节。数据都存储在 Zoho 系统中。讨论由此展开，决策也由此做出。</p>
+<p>每两周一次的经理绩效评估环节非常有效，物超所值。数据已经录入 Zoho CRM，因此沟通能够真正展开，决策也能顺利做出。</p>
 <p><img alt="平板电脑上显示着简洁的会员仪表盘，上面标有续费日期；诊所里摆放着拉丝大理石台面；灯光柔和温暖。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-membership-status/inline-2.avif"/></p>
-<h2 id="representative-renewal-rate-at-2200-patients">2200 名患者的代表性续保率</h2>
-<p>图片仅为示意图，并非真实客户：</p>
+<h2 id="what-the-numbers-could-look-like">这些数字可能是什么样子</h2>
+<p>这些是示例性合成图，并非真实客户，但它们展示了在约有 2200 名患者的诊所中发生的变化情况：</p>
 <ul>
-<li>会员续费率基准（人工月末流程）：大约 55% 至 65%。</li>
-<li>根据实时数据，60-30-3 节奏提升至 70% 至 80% 的水平。</li>
-<li>30 天内流失会员的恢复率：提升了 8 到 14 个百分点，主要得益于在会员资格仍然占据用户心头的第一天发送的电子邮件。</li>
-<li>“Patty的会员资格过期了吗？” Slack消息数量急剧下降，因为数据已被记录在案。</li>
+<li>人工月末流程的续约率：大约 55% 至 65%。</li>
+<li>根据实时数据，以 60 天、30 天和 3 天为周期的续订率：提升至 70% 至 80% 的水平。</li>
+<li>流失会员在 30 天内恢复：提升了 8 到 14 个百分点，这主要是因为第二天发送的电子邮件在会员仍然对会员资格记忆犹新的时候就送到了。</li>
+<li>向前台询问“这位患者的会员资格是否已过期？”的人数急剧下降，因为答案会被记录在案。</li>
 </ul>
-<p>提升效果的关键在于将续约谈判变成一个有具体内容的日程安排事件，而不是对月度报告的反应。</p>
-<h2 id="builder-takeaway">建筑商外卖</h2>
+<p>提升效果的关键在于将续约谈判变成一个有具体内容的计划活动，而不是对月度报告的被动反应。</p>
+<h2 id="why-this-matters-for-your-practice">这对您的实践为何重要</h2>
 <ul>
-<li>为会员资格使用专用的自定义对象。仅靠联系人记录无法管理拥有三个同时会员资格的医美中心患者。</li>
-<li>运行续订工作流程 <code>end_date</code>不，不是在 <code>created_date + duration</code>身心才是决定最终结局的真正依据，而且它的变化比你想象的要大得多。</li>
-<li>根据自动付款状态对失效的自动付款记录进行分支处理。如果是信用卡支付失败导致的失效，可以在24小时内解决。但如果是“他们本想取消”导致的失效，则需要另行处理。</li>
+<li>提前60天看到的续订通知，相当于一次对话。月底看到的续订通知，则意味着一次挽救尝试，而且难度更大。</li>
+<li>未使用的疗程是客户流失的明显信号。发现这些疗程可以帮助您在患者觉得浪费了钱之前重新吸引他们。</li>
+<li>如果是因为信用卡申请失败而导致的疏忽，可以在24小时内解决。但如果是因为真正决定离职而导致的疏忽，则需要进行不同的讨论。区分这两种情况，可以让团队把精力集中在真正重要的事情上。</li>
 </ul>
 <h2 id="try-it-in-your-medspa">在您的医疗美容中心试试吧</h2>
-<p>想看看 CRMConnect Mindbody 与 Zoho CRM 的实际应用吗？ <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">查看 API 应用页面</a>.</p>
+<p>想知道这项技术如何处理您的患者数据？ <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">查看 API 应用页面</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">浏览完整的 API 应用目录</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">身心解决方案</span><span class="blog-apps-cta-desc">健身与健康融合</span><span class="blog-apps-cta-arrow">探索 →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Cliniko Solutions</span><span class="blog-apps-cta-desc">医疗保健和辅助医疗整合</span><span class="blog-apps-cta-arrow">探索 →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非营利组织和筹款整合</span><span class="blog-apps-cta-arrow">探索 →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-renewal-conversation-reps-arent-having">代表们不愿谈及续约问题</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">为什么现成的工具在这里会失效</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT 方法</a></li><li class="lvl-2"><a href="#what-mb-memberships-surfaces-in-zoho-crm">在 Zoho CRM 中，MB 会员资格会显示哪些信息？</a></li><li class="lvl-2"><a href="#designing-the-pre-expiration-outreach-workflow">设计到期前外联工作流程</a></li><li class="lvl-2"><a href="#catching-lapsed-members-before-they-drift">在落后成员流失之前将其追回</a></li><li class="lvl-2"><a href="#representative-renewal-rate-at-2200-patients">2200 名患者的代表性续保率</a></li><li class="lvl-2"><a href="#builder-takeaway">建筑商外卖</a></li><li class="lvl-2"><a href="#try-it-in-your-medspa">在您的医疗美容中心试试吧</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-renewal-conversation-your-team-keeps-missing">你的团队一直错过的续约对话</a></li><li class="lvl-2"><a href="#what-the-disconnect-actually-costs">沟通不畅的实际代价是什么</a></li><li class="lvl-2"><a href="#how-it-works-once-membership-data-flows-into-zoho-crm">会员数据流入 Zoho CRM 后的工作原理</a></li><li class="lvl-2"><a href="#building-a-renewal-cadence-that-actually-happens">建立真正能够实现的更新节奏</a></li><li class="lvl-2"><a href="#catching-lapsed-members-before-they-drift">在落后成员流失之前将其追回</a></li><li class="lvl-2"><a href="#what-the-numbers-could-look-like">这些数字可能是什么样子</a></li><li class="lvl-2"><a href="#why-this-matters-for-your-practice">这对您的实践为何重要</a></li><li class="lvl-2"><a href="#try-it-in-your-medspa">在您的医疗美容中心试试吧</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">继续阅读</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/zh/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="巴西柔术学院，墙到墙铺着垫子，架子上卷着道服腰带，角落里挂着沙袋，头顶有温暖的灯光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">在高级系统中统一身心注册、课程和预约。</h3><p class="blog-card-excerpt">使用 CRMConnect 的注册、课程预订和预约同步功能，为 HighLevel 提供跨 Mindbody 所有课程类型的统一日历视图。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/zh/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="现代力量训练健身房，配有成排的深蹲架、橡胶草坪、全景窗户、拉丝钢和黑色调、环境照明顶灯。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">Klaviyo中针对6个地点的Strength Network的多站点预约报告</h3><p class="blog-card-excerpt">CRMConnect 的预约同步功能如何在 Klaviyo 中显示站点级别的预约状态，以便中央营销部门可以运行按地点划分的流程和报告。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/zh/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="镜头拍摄于一个学区会议室，不同背景的成年人围坐在木桌旁审阅打印的报告，透过大窗户可以看到午后的阳光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">告别每月重新制作董事会演示文稿的繁琐：HubSpot 中 DonorPerfect 的实时筹款仪表盘</h3><p class="blog-card-excerpt">董事会需要趋势线，员工则希望重获夜晚时光。通过将捐赠者终身价值、平均捐赠额和筹款活动绩效同步到 HubSpot，每月董事会报告不再需要耗费四天时间，而变成了一个可保存的仪表盘视图。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">继续阅读</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/zh/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="巴西柔术学院，墙到墙铺着垫子，架子上卷着道服腰带，角落里挂着沙袋，头顶有温暖的灯光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">每个学生在所有项目中都应有一份清晰的课程表。</h3><p class="blog-card-excerpt">如果你的工作室同时开设入门课程、长期课程和私人课程，那么你的提醒最终会与每个学生实际预订的课程相匹配。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/zh/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="现代力量训练健身房，配有成排的深蹲架、橡胶草坪、全景窗户、拉丝钢和黑色调、环境照明顶灯。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">针对拥有6家健身房的力量训练网络的单店营销</h3><p class="blog-card-excerpt">一个中央营销团队向拥有 6 家健身房的连锁机构的每个成员发送一封邮件，结果有一半的概率会把教练姓名和健身房地址写错。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/zh/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="镜头拍摄于一个学区会议室，不同背景的成年人围坐在木桌旁审阅打印的报告，透过大窗户可以看到午后的阳光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">告别每月重新制作筹款看板的繁琐流程：在 HubSpot 中使用 DonorPerfect 的实时筹款仪表盘</h3><p class="blog-card-excerpt">董事会需要趋势线，员工则希望重获夜晚时光。有了 HubSpot，捐赠者价值、平均捐赠额和活动绩效等数据就能轻松导入，每月董事会报告不再需要耗费四天时间，而变成了一个可保存的仪表盘。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

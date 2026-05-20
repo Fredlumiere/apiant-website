@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Rastreando a conversão de passes diários em assinaturas no Klaviyo usando dados de visitas do Mindbody | Blog da APIANT</title>
-<meta content="Utilize o rastreamento de visitas e a sincronização de compras do CRMConnect para atribuir a conversão de passes diários em membros dentro do Klaviyo e execute fluxos direcionados para compradores recorrentes de passes diários." name="description"/>
+<title>Conversão de passe para dia de pista em assinatura de academia no Klaviyo</title>
+<meta content="Os passes diários são a forma mais comum de as pessoas experimentarem sua academia, e também a que tem o pior acompanhamento. Se você não sabe qual é a sua taxa de conversão, não pode melhorá-la." name="description"/>
 
 <!-- Open Graph -->
-<meta content="Rastreamento da conversão de passes diários em assinaturas no Klaviyo usando dados de visitas do Mindbody" property="og:title"/>
-<meta content="Utilize o rastreamento de visitas e a sincronização de compras do CRMConnect para atribuir a conversão de passes diários em membros dentro do Klaviyo e execute fluxos direcionados para compradores recorrentes de passes diários." property="og:description"/>
+<meta content="Quantos visitantes com passe diário realmente se tornam membros?" property="og:title"/>
+<meta content="Os passes diários são a forma mais comum de as pessoas experimentarem sua academia, e também a que tem o pior acompanhamento. Se você não sabe qual é a sua taxa de conversão, não pode melhorá-la." property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Rastreamento da conversão de passes diários em assinaturas no Klaviyo usando dados de visitas do Mindbody" property="twitter:title"/>
-<meta content="Utilize o rastreamento de visitas e a sincronização de compras do CRMConnect para atribuir a conversão de passes diários em membros dentro do Klaviyo e execute fluxos direcionados para compradores recorrentes de passes diários." property="twitter:description"/>
+<meta content="Quantos visitantes com passe diário realmente se tornam membros?" property="twitter:title"/>
+<meta content="Os passes diários são a forma mais comum de as pessoas experimentarem sua academia, e também a que tem o pior acompanhamento. Se você não sabe qual é a sua taxa de conversão, não pode melhorá-la." property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Tracking Day-Pass to Membership Conversion in Klaviyo Using Mindbody Visit Data",
-  "description": "Use CRMConnect's visit tracking and purchase sync to attribute daypass-to-member conversion inside Klaviyo, and run targeted flows for repeat daypass buyers.",
+  "headline": "How Many Day-Pass Visitors Actually Become Members?",
+  "description": "Day passes are the most common way people try your gym, and the worst-tracked. If you do not know your conversion rate, you cannot improve it.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif",
   "datePublished": "2026-04-13T09:50:57+00:00",
-  "dateModified": "2026-05-20T13:39:46.873373+00:00",
+  "dateModified": "2026-05-20T16:43:27.332954+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Tracking Day-Pass to Membership Conversion in Klaviyo Using Mindbody Visit Data", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" }
+    { "@type": "ListItem", "position": 4, "name": "How Many Day-Pass Visitors Actually Become Members?", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" }
   ]
 }
 </script>
@@ -196,7 +196,7 @@
 <div class="blog-category-chip">
 <a href="/pt/blog/category/api-apps" style="color:inherit;text-decoration:none;">Aplicativos de API</a>
 </div>
-<h1 class="blog-post-h1">Rastreamento da conversão de passes diários em assinaturas no Klaviyo usando dados de visitas do Mindbody</h1>
+<h1 class="blog-post-h1">Quantos visitantes com passe diário realmente se tornam membros?</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/pt/blog/?author=fred">Fred Lumiere</a></span>
 <span>13 de abril de 2026</span>
@@ -207,73 +207,52 @@
 <div class="blog-post-hero-image"><img alt="Interior de ginásio de escalada com parede de boulder em balanço, agarras coloridas, piso acolchoado, treliças industriais e iluminação ambiente com spots de luz aconchegantes." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h2 id="the-day-pass-attribution-problem">O problema da atribuição de passes diários</h2>
-<p>Os passes diários são a forma mais barata e comum de acesso a uma academia de escalada, um estúdio de ioga ou qualquer negócio de fitness sem necessidade de inscrição prévia. No entanto, são também a parte do funil de vendas com pior acompanhamento. Um cliente compra um passe diário, escala por duas horas, vai embora e, três semanas depois, ou se torna membro ou nunca mais volta. A taxa de conversão, seja de 5% ou de 25%, deve nortear toda a sua estratégia de aquisição. A maioria dos operadores não sabe qual é a ideal.</p>
-<p>Hipótese: A Basalt and Belay Climbing Co (exemplar) é uma academia de escalada com 1.100 membros e uma boa quantidade de passes diários. Sua conta no Klaviyo possui todos os assinantes de e-mail e todas as inscrições de membros. O que falta é uma ligação clara entre os dois. A compra do passe diário, a segunda visita, a terceira visita e a eventual inscrição como membro são quatro eventos separados para o Klaviyo e não estão vinculados a um único identificador.</p>
-<h2 id="why-off-the-shelf-tools-fail-here">Por que as ferramentas prontas para uso falham aqui</h2>
-<p>O problema do identificador compartilhado é real. O Mindbody atribui um ID de cliente na primeira transação, mas se a mesma pessoa comprar o passe do dia seguinte com um e-mail ligeiramente diferente (preenchido automaticamente por um navegador diferente ou por meio de uma compra como visitante), o Mindbody cria um perfil duplicado. O Klaviyo, então, passa a ver dois perfis. O cálculo da conversão falha na etapa de desduplicação, não na etapa de análise.</p>
-<p>Um Zap ou um script personalizado às vezes consegue encontrar correspondências por e-mail, mas não consegue eliminar duplicatas de forma confiável com base em nome e telefone, nem reconciliar a contagem de visitas quando um perfil é mesclado posteriormente. A integração é possível, mas a eliminação de duplicatas e a reconciliação de visitas são os pontos que mais frequentemente encontram dificuldades.</p>
-<h2 id="the-apiant-approach">A abordagem APIANT</h2>
-<p>O CRMConnect Mindbody para Klaviyo resolve isso com dois recursos que funcionam em conjunto:</p>
+<h2 id="you-probably-do-not-know-your-day-pass-conversion-rate">Você provavelmente não sabe qual é a sua taxa de conversão de passes diários.</h2>
+<p>Os passes diários são a forma mais barata e comum de alguém experimentar uma academia de escalada, um estúdio de ioga ou qualquer negócio de fitness sem agendamento. Eles também são a parte do funil de vendas com pior acompanhamento. Um visitante compra um passe diário, escala por duas horas, vai embora e, três semanas depois, ou se torna membro ou nunca mais volta. A taxa de conversão, seja de 5% ou 25%, deve moldar toda a sua estratégia de aquisição. A maioria dos operadores não tem ideia de qual seja.</p>
+<p>Eis um exemplo ilustrativo. A Basalt and Belay Climbing Co. (uma academia hipotética) é uma academia com 1.100 membros, com uma boa proporção de passes diários. Sua ferramenta de marketing possui todos os assinantes de e-mail e todas as inscrições de membros. O que falta é uma ligação clara entre os dois. A compra do passe diário, a segunda visita, a terceira visita e a eventual inscrição como membro são quatro eventos separados, e nada os conecta a uma única pessoa.</p>
+<h2 id="why-this-is-so-hard-to-track-without-help">Por que é tão difícil rastrear isso sem ajuda?</h2>
+<p>O problema reside nos registros duplicados. A mesma pessoa compra o ingresso para o primeiro dia, depois retorna e compra outro com um e-mail ligeiramente diferente (preenchido automaticamente por um navegador diferente ou por meio de uma compra como visitante). Agora, existem dois registros para a mesma pessoa. Sua ferramenta de marketing vê duas pessoas. Os cálculos de conversão falham, não porque as análises estejam erradas, mas porque a mesma pessoa é contabilizada duas vezes.</p>
+<p>As ferramentas de correção de erros às vezes conseguem encontrar correspondências por e-mail, mas não conseguem determinar com certeza se "Sam, com este número de telefone" e "Samuel, com aquele e-mail" são o mesmo alpinista, e não conseguem corrigir a contagem de visitas quando os registros são mesclados posteriormente. Portanto, a maioria das tentativas de medir isso discretamente produz números em que ninguém confia.</p>
+<h2 id="how-crmconnect-closes-the-gap">Como o CRMConnect preenche a lacuna</h2>
+<p>O CRMConnect Mindbody para Klaviyo resolve isso com duas coisas funcionando em conjunto:</p>
 <ul>
-<li><strong>Rastreamento de visitas</strong> Registra as visitas recentes dos clientes, com reconciliação diária para que registros reinseridos ou mesclados não criem eventos de visita duplicados.</li>
-<li><strong>Sincronização de itens de compra e venda</strong> Captura a compra do passe diário como um evento estruturado com o SKU intacto, separado do SKU de inscrição de membro.</li>
+<li>O rastreamento de visitas registra as visitas recentes dos clientes e é conciliado diariamente para que registros reinseridos ou mesclados não criem visitas duplicadas.</li>
+<li>A sincronização de compras e vendas registra a compra do passe diário como um evento distinto, separado da inscrição de um membro.</li>
 </ul>
-<p>No Klaviyo, os perfis são combinados por e-mail e atualizados automaticamente. Se um registro do Mindbody for posteriormente incorporado, o histórico unificado será mantido. O resultado é um único perfil do Klaviyo para cada pessoa real, com a compra do passe diário, a contagem de visitas e a eventual inscrição como membro, tudo na mesma linha do tempo.</p>
+<p>No Klaviyo, cada pessoa real acaba sendo um perfil, associado por e-mail e mantido atualizado. Se um registro do Mindbody for mesclado posteriormente, o histórico combinado será mantido. O resultado é um único perfil por pessoa real, com a compra do passe diário, a contagem de visitas e a eventual inscrição como membro, tudo em uma única linha do tempo.</p>
 <p><img alt="Parede de escalada com agarras coloridas e um saco de magnésio pendurado num gancho, piso acolchoado em primeiro plano, holofotes aconchegantes." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/inline-1.avif"/></p>
-<h2 id="what-visit-tracking-surfaces-in-klaviyo">Que recursos de rastreamento de visitas surgem no Klaviyo?</h2>
-<p>Cada perfil possui um conjunto contínuo de atributos que possibilitam a atribuição do passe diário:</p>
-<pre class="highlight"><code class="language-text">Klaviyo profile attributes:
-- mindbody_first_purchase_sku        e.g. DAYPASS-ADULT
-- mindbody_first_visit_at            ISO timestamp
-- mindbody_visit_count               int
-- mindbody_last_visit_at             ISO timestamp
-- mindbody_membership_status         active|expired|none
-- mindbody_membership_started_at     ISO timestamp (null until conversion)</code></pre>
-<p>O evento de conversão que lhe interessa é o momento <code>mindbody_membership_started_at</code> alterna de nulo para um carimbo de data/hora em um perfil cujo <code>mindbody_first_purchase_sku</code> era um passe diário. Essa simples comparação responde à pergunta "quantos compradores de passes diários se tornaram membros".</p>
-<h2 id="designing-the-daypass-visitor-conversion-flow">Desenvolvendo o fluxo de conversão de visitantes com passe diário</h2>
-<p>Uma vez que os atributos estejam definidos, o fluxo é simples:</p>
-<ol>
-<li><strong>Acionar:</strong> Evento de compra de passes diários do Mindbody.</li>
-<li><strong>Aguarde 4 horas.</strong> Contexto de escalada no mesmo dia.</li>
-<li><strong>E-mail 1 (noite da escalada):</strong> “Espero que a sessão tenha sido boa. Aqui está seu passe de retorno de 7 dias com desconto de $5.”</li>
-<li><strong>Ramo em <code>mindbody_visit_count</code> após 7 dias:</strong></li>
-<li>Ainda 1: envie um e-mail com a frase “as primeiras escaladas são as mais difíceis” e ofereça um curso para iniciantes.</li>
-<li>2 a 3: envie um e-mail com a frase "você está ficando viciado" e uma comparação de planos de assinatura.</li>
-<li>4 ou mais: enviar um e-mail com os cálculos, indicando o ponto de equilíbrio entre a adesão e os passes diários.</li>
-<li><strong>Suprimir em <code>mindbody_membership_status = active</code>.</strong> Para de importunar quem se converteu.</li>
-</ol>
-<p>O terceiro grupo é o segmento de alta conversão. Quatro visitas em uma semana de alguém que paga o passe diário representam um membro que ainda não se inscreveu. O e-mail praticamente se escreve sozinho.</p>
-<h2 id="reading-the-conversion-report-honestly">Lendo o relatório de conversão com honestidade</h2>
-<p>A tentação é contabilizar todas as novas inscrições de membros que se seguem a qualquer passe diário. O número real é mais restrito. Use esta segmentação no Klaviyo:</p>
+<h2 id="what-you-can-finally-see">O que você finalmente poderá ver</h2>
+<p>Cada perfil contém um resumo: qual foi a primeira compra, quando foi a primeira visita, quantas vezes já esteve na loja, quando foi a última visita, se possui uma assinatura ativa e a data de adesão.</p>
+<p>A conversão que importa é o momento em que um perfil cuja primeira compra foi um passe diário adquire uma data de início de assinatura. Conte esses casos e você finalmente terá a resposta real para a pergunta "quantos compradores de passes diários se tornaram membros".</p>
+<h2 id="the-day-pass-conversion-flow">Fluxo de Conversão de Passes Diários</h2>
+<p>Uma vez que essa imagem esteja definida, o processo se torna simples.</p>
+<p>Tudo começa quando alguém compra um passe diário. O sistema espera 4 horas, então chega à noite, com a escalada ainda fresca na memória, e envia um primeiro e-mail: “Espero que a sessão tenha sido boa. Aqui está seu passe de retorno de 7 dias com desconto de US$ 5.”</p>
+<p>Em seguida, após 7 dias, verifica quantas vezes essa pessoa compareceu:</p>
 <ul>
-<li><strong>Coorte:</strong> compradores de passes diários no mês civil N.</li>
-<li><strong>Janela:</strong> 60 dias a partir da primeira compra.</li>
-<li><strong>Convertido:</strong> <code>mindbody_membership_started_at</code> cai dentro da janela.</li>
+<li>Ainda apenas uma visita: um e-mail com a mensagem “as primeiras escaladas são as mais difíceis” e uma oferta de um curso para iniciantes.</li>
+<li>Duas ou três visitas: um e-mail do tipo "você está ficando viciado" com uma comparação de planos de assinatura.</li>
+<li>Quatro ou mais visitas: um e-mail com os cálculos, detalhando o ponto de equilíbrio entre a adesão e os passes diários.</li>
 </ul>
-<p>Apresente duas taxas de conversão: conversão em 30 dias e conversão em 60 dias. Qualquer período superior a 60 dias constitui uma análise de marketing à parte e não deve ser atribuído ao canal de passes diários. Os operadores que reduzem a janela de conversão para "qualquer período" superestimam o desempenho desse canal em 2 vezes ou mais.</p>
+<p>E no momento em que alguém entra, o fluxo para de enviar mensagens para essa pessoa. Ninguém é incomodado depois de se converter.</p>
+<p>Esse terceiro grupo é o seu segmento de alta conversão. Quatro visitas em uma semana de alguém que paga o ingresso diário representam um membro que simplesmente ainda não se inscreveu. O e-mail praticamente se escreve sozinho.</p>
+<h2 id="reading-the-numbers-honestly">Lendo os números com honestidade</h2>
+<p>A tentação é contabilizar todas as novas adesões que surgem após a compra de um passe diário. O número real, porém, é mais restrito. Observe um grupo específico: todos que compraram um passe diário em um determinado mês. Dê a eles um período de 60 dias. Conte quantas pessoas aderiram durante esse período.</p>
+<p>Apresente dois números: conversão em 30 dias e conversão em 60 dias. Qualquer valor após 60 dias é uma história de marketing diferente e não deve ser atribuído ao canal de passes diários. Operadores que estendem esse período para "qualquer" superestimam o canal em duas vezes ou mais, e então tomam decisões de aquisição com base em uma mentira lisonjeira.</p>
 <p><img alt="Close-up de um formulário de inscrição de madeira em uma prancheta com uma caneta, sob iluminação suave de academia." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/inline-2.avif"/></p>
-<h2 id="representative-conversion-rate-at-1100-members">Taxa de conversão representativa com 1.100 membros</h2>
-<p>Imagens ilustrativas, não um cliente real:</p>
+<h2 id="what-this-means-for-your-gym">O que isso significa para a sua academia</h2>
+<p>Aqui estão exemplos ilustrativos, não se trata de um cliente real:</p>
 <ul>
-<li>Taxa de conversão de passes diários em membros em 30 dias (sem fluxo direcionado): aproximadamente de 4 a 7%.</li>
-<li>Taxa de conversão em 30 dias com o fluxo acima: um aumento para a faixa de 9 a 14%, principalmente nos segmentos de 2 a 3 visitas e 4 ou mais visitas, onde a oferta é bem cronometrada.</li>
-<li>Média de passes diários por membro convertido antes da inscrição: 2,6 (um número útil, pois indica à recepção por onde começar a conversa).</li>
+<li>Taxa de conversão de passes diários em membros (30 dias) sem fluxo direcionado: aproximadamente de 4 a 7%.</li>
+<li>Taxa de conversão em 30 dias com o fluxo acima: um aumento para a faixa de 9 a 14%, principalmente nos grupos de duas a três visitas e quatro ou mais visitas, onde a oferta é bem cronometrada.</li>
+<li>O tempo médio que um novo membro passa após comprar o produto antes de se inscrever é de 2,6 dias, o que por si só é útil, pois indica à sua equipe de recepção por onde começar a conversa.</li>
 </ul>
-<p>Seus números irão variar de acordo com os preços, o perfil dos escaladores e a dificuldade em converter passes diários em assinaturas. O mecanismo é o mesmo.</p>
-<h2 id="builder-takeaway">Para levar para o construtor</h2>
-<ul>
-<li>O sucesso depende totalmente do identificador compartilhado. É preciso implementar a desduplicação baseada em e-mail diretamente na camada de integração, caso contrário, nenhum dos cálculos subsequentes funcionará.</li>
-<li>Usar <code>mindbody_visit_count</code> Como chave de ramificação, e não os dias desde a primeira visita. Duas visitas em uma semana são mais importantes do que duas visitas em um mês para determinar a intenção de adesão.</li>
-<li>Limite o período de conversão a 30 ou 60 dias. "Para sempre" é uma mentira lisonjeira que esconde o momento real em que o canal para de funcionar.</li>
-</ul>
-<h2 id="try-it-in-your-gym">Experimente na sua academia.</h2>
+<p>Seus números irão variar de acordo com os preços, o número de visitantes e a dificuldade em converter ingressos diários em assinaturas. O mecanismo é o mesmo: conheça sua taxa de conversão real e envie a oferta certa para as pessoas no momento em que elas estiverem mais propensas a se associar.</p>
 <p>Quer ver o CRMConnect Mindbody para Klaviyo em ação? <a href="/apipartners/mindbody/mindbody-klaviyo-integration-and-automation-apiant">Veja a página do aplicativo da API</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">Navegue pelo catálogo completo de aplicativos de API.</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">Soluções Mindbody</span><span class="blog-apps-cta-desc">Integrações de fitness e bem-estar</span><span class="blog-apps-cta-arrow">Explorar →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Soluções Cliniko</span><span class="blog-apps-cta-desc">Integrações de cuidados de saúde e áreas afins</span><span class="blog-apps-cta-arrow">Explorar →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">Soluções DonorPerfect</span><span class="blog-apps-cta-desc">Integrações de organizações sem fins lucrativos e de arrecadação de fundos</span><span class="blog-apps-cta-arrow">Explorar →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">Neste artigo</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-day-pass-attribution-problem">O problema da atribuição de passes diários</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">Por que as ferramentas prontas para uso falham aqui</a></li><li class="lvl-2"><a href="#the-apiant-approach">A abordagem APIANT</a></li><li class="lvl-2"><a href="#what-visit-tracking-surfaces-in-klaviyo">Que recursos de rastreamento de visitas surgem no Klaviyo?</a></li><li class="lvl-2"><a href="#designing-the-daypass-visitor-conversion-flow">Desenvolvendo o fluxo de conversão de visitantes com passe diário</a></li><li class="lvl-2"><a href="#reading-the-conversion-report-honestly">Lendo o relatório de conversão com honestidade</a></li><li class="lvl-2"><a href="#representative-conversion-rate-at-1100-members">Taxa de conversão representativa com 1.100 membros</a></li><li class="lvl-2"><a href="#builder-takeaway">Para levar para o construtor</a></li><li class="lvl-2"><a href="#try-it-in-your-gym">Experimente na sua academia.</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">Neste artigo</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#you-probably-do-not-know-your-day-pass-conversion-rate">Você provavelmente não sabe qual é a sua taxa de conversão de passes diários.</a></li><li class="lvl-2"><a href="#why-this-is-so-hard-to-track-without-help">Por que é tão difícil rastrear isso sem ajuda?</a></li><li class="lvl-2"><a href="#how-crmconnect-closes-the-gap">Como o CRMConnect preenche a lacuna</a></li><li class="lvl-2"><a href="#what-you-can-finally-see">O que você finalmente poderá ver</a></li><li class="lvl-2"><a href="#the-day-pass-conversion-flow">Fluxo de Conversão de Passes Diários</a></li><li class="lvl-2"><a href="#reading-the-numbers-honestly">Lendo os números com honestidade</a></li><li class="lvl-2"><a href="#what-this-means-for-your-gym">O que isso significa para a sua academia</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">Continue lendo</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/pt/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Academia de Jiu-Jitsu com tatames de parede a parede, faixas de kimono enroladas em prateleiras, saco de pancadas pendurado em um canto, luz quente no teto." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Unificando matrículas, cursos e agendamentos de mente e corpo no HighLevel</h3><p class="blog-card-excerpt">Utilize a sincronização de inscrições, reservas de cursos e agendamentos do CRMConnect para fornecer à HighLevel uma visão unificada do calendário para todos os tipos de programas do Mindbody.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 de maio de 2026</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/pt/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Academia de musculação moderna com fileiras de racks para agachamento, grama sintética, janelas panorâmicas, aço escovado e paleta de cores pretas, iluminação ambiente no teto." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Relatórios de agendamento em vários locais no Klaviyo para uma rede de força com 6 locais.</h3><p class="blog-card-excerpt">Como a sincronização de agendamentos do CRMConnect exibe o status dos agendamentos em nível de site dentro do Klaviyo, permitindo que o marketing central execute fluxos e relatórios por local.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 de abril de 2026</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/pt/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Foto de uma sala de conferências de um distrito escolar com diversos adultos sentados ao redor de uma mesa de madeira, analisando relatórios impressos, com uma grande janela que permite a entrada da luz da tarde." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Acabando com a necessidade de reformular mensalmente as apresentações para o conselho: painéis de controle de arrecadação de fundos em tempo real do DonorPerfect no HubSpot.</h3><p class="blog-card-excerpt">Os conselhos administrativos querem linhas de tendência. Os funcionários querem suas noites de volta. Com o valor vitalício do doador, a doação média e o desempenho da campanha sincronizados no HubSpot, o relatório mensal para o conselho deixa de ser um projeto de quatro dias e se torna uma visualização de painel salva.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 de abril de 2026</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">Continue lendo</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/pt/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="Academia de Jiu-Jitsu com tatames de parede a parede, faixas de kimono enroladas em prateleiras, saco de pancadas pendurado em um canto, luz quente no teto." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Um cronograma claro por aluno em todos os seus programas.</h3><p class="blog-card-excerpt">Se o seu estúdio oferece programas para iniciantes, cursos mais longos e aulas particulares simultaneamente, veja como seus lembretes finalmente corresponderão ao que cada aluno realmente reservou.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 de maio de 2026</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/pt/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Academia de musculação moderna com fileiras de racks para agachamento, grama sintética, janelas panorâmicas, aço escovado e paleta de cores pretas, iluminação ambiente no teto." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Marketing por localização para uma rede de 6 academias de musculação</h3><p class="blog-card-excerpt">Uma equipe central de marketing que envia um único comunicado para todos os membros de uma rede de 6 academias erra o nome do treinador e o endereço da academia metade das vezes.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 de abril de 2026</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/pt/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Foto de uma sala de conferências de um distrito escolar com diversos adultos sentados ao redor de uma mesa de madeira, analisando relatórios impressos, com uma grande janela que permite a entrada da luz da tarde." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">Aplicativos de API</div><h3 class="blog-card-title">Acabe com a reformulação mensal da apresentação para o conselho: painéis de controle de arrecadação de fundos em tempo real do DonorPerfect no HubSpot.</h3><p class="blog-card-excerpt">Seu conselho quer linhas de tendência. Sua equipe quer suas noites de volta. Com o valor do doador, a doação média e o desempenho da campanha integrados ao HubSpot, o relatório mensal para o conselho deixa de ser um projeto de quatro dias e se torna um painel de controle salvo.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 de abril de 2026</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

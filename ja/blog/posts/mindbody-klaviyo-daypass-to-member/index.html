@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Mindbodyの訪問データを使用してKlaviyoでデイパスからメンバーシップへのコンバージョンを追跡する方法 | APIANTブログ</title>
-<meta content="CRMConnectの訪問追跡機能と購入同期機能を使用して、Klaviyo内でデイパスから会員へのコンバージョンを記録し、デイパスをリピート購入する顧客向けにターゲットを絞ったフローを実行します。" name="description"/>
+<title>Klaviyoでトラックデイパスをジム会員権に変換する</title>
+<meta content="一日利用券は、人々がジムを試す最も一般的な方法ですが、その効果測定が最も不十分です。コンバージョン率を把握していなければ、改善することはできません。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="Mindbodyの訪問データを使用してKlaviyoでデイパスからメンバーシップへのコンバージョンを追跡する" property="og:title"/>
-<meta content="CRMConnectの訪問追跡機能と購入同期機能を使用して、Klaviyo内でデイパスから会員へのコンバージョンを記録し、デイパスをリピート購入する顧客向けにターゲットを絞ったフローを実行します。" property="og:description"/>
+<meta content="一日券購入者のうち、実際に会員になる人はどれくらいいるのか？" property="og:title"/>
+<meta content="一日利用券は、人々がジムを試す最も一般的な方法ですが、その効果測定が最も不十分です。コンバージョン率を把握していなければ、改善することはできません。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Mindbodyの訪問データを使用してKlaviyoでデイパスからメンバーシップへのコンバージョンを追跡する" property="twitter:title"/>
-<meta content="CRMConnectの訪問追跡機能と購入同期機能を使用して、Klaviyo内でデイパスから会員へのコンバージョンを記録し、デイパスをリピート購入する顧客向けにターゲットを絞ったフローを実行します。" property="twitter:description"/>
+<meta content="一日券購入者のうち、実際に会員になる人はどれくらいいるのか？" property="twitter:title"/>
+<meta content="一日利用券は、人々がジムを試す最も一般的な方法ですが、その効果測定が最も不十分です。コンバージョン率を把握していなければ、改善することはできません。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Tracking Day-Pass to Membership Conversion in Klaviyo Using Mindbody Visit Data",
-  "description": "Use CRMConnect's visit tracking and purchase sync to attribute daypass-to-member conversion inside Klaviyo, and run targeted flows for repeat daypass buyers.",
+  "headline": "How Many Day-Pass Visitors Actually Become Members?",
+  "description": "Day passes are the most common way people try your gym, and the worst-tracked. If you do not know your conversion rate, you cannot improve it.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif",
   "datePublished": "2026-04-13T09:50:57+00:00",
-  "dateModified": "2026-05-20T13:39:46.873373+00:00",
+  "dateModified": "2026-05-20T16:43:27.332954+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Tracking Day-Pass to Membership Conversion in Klaviyo Using Mindbody Visit Data", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" }
+    { "@type": "ListItem", "position": 4, "name": "How Many Day-Pass Visitors Actually Become Members?", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" }
   ]
 }
 </script>
@@ -196,7 +196,7 @@
 <div class="blog-category-chip">
 <a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
 </div>
-<h1 class="blog-post-h1">Mindbodyの訪問データを使用してKlaviyoでデイパスからメンバーシップへのコンバージョンを追跡する</h1>
+<h1 class="blog-post-h1">一日券購入者のうち、実際に会員になる人はどれくらいいるのか？</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
 <span>2026年4月13日</span>
@@ -207,73 +207,52 @@
 <div class="blog-post-hero-image"><img alt="オーバーハングしたボルダリングウォール、カラフルなホールド、クッション性のある床、工業用トラス、温かみのある雰囲気のスポットライトを備えたクライミングジムの内部。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h2 id="the-day-pass-attribution-problem">デイパスの帰属問題</h2>
-<p>デイパスは、クライミングジム、ヨガスタジオ、その他あらゆるドロップイン型フィットネス施設への最も安価で一般的な入り口です。しかし、顧客獲得ファネルの中で最も追跡が難しい部分でもあります。来店客はデイパスを購入し、2時間クライミングをして帰り、3週間後に会員になるか、二度と戻ってこないかのどちらかです。このコンバージョン率が5%なのか25%なのかによって、顧客獲得戦略全体が左右されるはずです。しかし、ほとんどの運営者はどちらなのかを把握していません。</p>
-<p>仮に、Basalt and Belay Climbing Co（例）は、会員数1,100人のジムで、日帰り利用の顧客もバランスよく利用しているとします。Klaviyoアカウントには、すべてのメール購読者とすべての会員登録者が登録されています。しかし、この2つの間に明確なリンクがありません。日帰り利用、2回目の利用、3回目の利用、そして最終的な会員登録は、Klaviyoにとっては4つの別々のイベントであり、単一の識別子に結び付けられていません。</p>
-<h2 id="why-off-the-shelf-tools-fail-here">既製ツールがここで失敗する理由</h2>
-<p>識別子の共有問題は実際に存在します。Mindbodyは最初の取引時にクライアントIDを割り当てますが、同じユーザーが翌日のパスを少し異なるメールアドレス（別のブラウザによる自動入力、またはゲストチェックアウトなど）で購入した場合、Mindbodyは重複したIDを作成します。その結果、Klaviyoは2つのプロファイルを認識します。コンバージョン計算が破綻するのは、分析段階ではなく、重複排除段階です。</p>
-<p>Zapやカスタムスクリプトはメールアドレスの照合はできる場合もありますが、名前と電話番号の組み合わせで確実に重複を排除することはできず、後でプロファイルが統合された際に訪問回数を照合することもできません。統合自体は可能ですが、重複排除と訪問回数の照合が、ほとんどの構築作業の行き詰まりの原因となっています。</p>
-<h2 id="the-apiant-approach">APIANTアプローチ</h2>
-<p>CRMConnect Mindbody to Klaviyoは、連携して動作する2つの機能でこれを処理します。</p>
+<h2 id="you-probably-do-not-know-your-day-pass-conversion-rate">おそらくあなたは、デイパスのコンバージョン率を知らないでしょう。</h2>
+<p>デイパスは、クライミングジム、ヨガスタジオ、その他ドロップイン型のフィットネス施設を気軽に試せる、最も安価で一般的な方法です。しかし、顧客獲得ファネルの中で最も追跡が難しい部分でもあります。来店客はデイパスを購入し、2時間クライミングを楽しんだ後、施設を後にします。そして、3週間後に会員になるか、二度と来ないかのどちらかです。このコンバージョン率が5%なのか25%なのかによって、顧客獲得戦略全体が大きく左右されるはずです。しかし、ほとんどの事業者は、その正確な数値を把握していません。</p>
+<p>具体例を挙げましょう。Basalt and Belay Climbing Co（架空のジム）は、会員数1,100人のジムで、デイパスの利用率も高いとします。同社のマーケティングツールには、メール購読者と会員登録者のデータが全て含まれています。しかし、この2つの間に明確な関連性がありません。デイパスの購入、2回目の利用、3回目の利用、そして最終的な会員登録は、それぞれ独立したイベントであり、これらを1人の人物に結びつける仕組みが全くないのです。</p>
+<h2 id="why-this-is-so-hard-to-track-without-help">なぜ支援なしでは追跡が非常に難しいのか</h2>
+<p>問題は重複レコードの問題です。同じ人物が最初の1日パスを購入した後、少し異なるメールアドレス（別のブラウザで自動入力されたもの、またはゲストチェックアウトによるもの）で再度購入した場合、1人の人物に対して2つのレコードが作成されます。マーケティングツールでは2人の人物として認識され、コンバージョン計算が狂ってしまいます。これは分析結果が間違っているからではなく、同じ人物が2回カウントされているためです。</p>
+<p>パッチツールはメールアドレスに基づいて照合できる場合もあるが、「この電話番号のサム」と「あのメールアドレスのサミュエル」が同一人物であることを確実に判別することはできず、後でレコードが統合された際に訪問回数を修正することもできない。そのため、こうした測定を密かに試みるほとんどの試みは、誰も信用しないような数値を生み出すことになる。</p>
+<h2 id="how-crmconnect-closes-the-gap">CRMConnectがギャップを埋める方法</h2>
+<p>CRMConnect Mindbody to Klaviyoは、以下の2つの要素が連携することでこの問題を解決します。</p>
 <ul>
-<li><strong>来店追跡</strong> 最近の顧客訪問を記録し、毎日照合を行うことで、再入力または統合された記録によって重複した訪問イベントが作成されないようにします。</li>
-<li><strong>購入・売上明細の同期</strong> デイパスの購入を、会員登録時のSKUとは別に、SKUを保持したまま構造化されたイベントとして記録します。</li>
+<li>訪問追跡機能は、最近の顧客訪問を記録し、毎日照合することで、再入力または統合された記録によって重複した訪問が発生しないようにします。</li>
+<li>購入と販売の同期機能により、1日パスの購入は会員登録とは別の明確なイベントとして記録されます。</li>
 </ul>
-<p>Klaviyo側では、プロフィールはメールアドレスに基づいて照合され、その場で更新されます。後日Mindbodyの記録が統合された場合、統合された履歴が反映されます。その結果、実際のユーザーごとに1つのKlaviyoプロフィールが作成され、1日パスの購入、訪問回数、そして最終的な会員登録といったすべての履歴が同じタイムライン上に記録されます。</p>
+<p>Klaviyo側では、各ユーザーはそれぞれ1つのプロフィールとして登録され、メールアドレスに基づいて照合され、常に最新の状態に保たれます。後からMindbodyの記録が統合された場合、統合された履歴が引き継がれます。結果として、1人のユーザーにつき1つのプロフィールが作成され、1日パスの購入、訪問回数、そして最終的な会員登録といったすべての履歴が1つのタイムラインに表示されます。</p>
 <p><img alt="カラフルなホールドが付いたボルダリングウォール、フックに掛けられたチョークバッグ、手前にはクッション性のある床、温かみのあるスポットライト。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/inline-1.avif"/></p>
-<h2 id="what-visit-tracking-surfaces-in-klaviyo">Klaviyoで訪問者追跡機能がどのように動作するのか</h2>
-<p>各プロファイルには、デイパスの利用状況を特定するための属性セットが継続的に付与されています。</p>
-<pre class="highlight"><code class="language-text">Klaviyo profile attributes:
-- mindbody_first_purchase_sku        e.g. DAYPASS-ADULT
-- mindbody_first_visit_at            ISO timestamp
-- mindbody_visit_count               int
-- mindbody_last_visit_at             ISO timestamp
-- mindbody_membership_status         active|expired|none
-- mindbody_membership_started_at     ISO timestamp (null until conversion)</code></pre>
-<p>あなたが気にしているコンバージョンイベントは、 <code>mindbody_membership_started_at</code> プロファイルのタイムスタンプを null から反転します。 <code>mindbody_first_purchase_sku</code> 一日パスだった。このたった一つの比較こそが、「一日パス購入者のうち、何人が会員になったか」という問いへの答えだ。</p>
-<h2 id="designing-the-daypass-visitor-conversion-flow">日帰りパスからビジターへのコンバージョンフローの設計</h2>
-<p>属性が設定されれば、あとは流れは簡単です。</p>
-<ol>
-<li><strong>トリガー：</strong> Mindbodyの1日パス購入イベント。</li>
-<li><strong>4時間待ってください。</strong> 同日登山の状況。</li>
-<li><strong>メール1（登山当日の夜）：</strong> 「セッションがうまくいったことを願っています。7日間有効の再利用パスを5ドル割引でご提供します。」</li>
-<li><strong>ブランチ <code>mindbody_visit_count</code> 7日後：</strong></li>
-<li>もう一つの方法：初心者向け講習会のご案内とともに「最初の登りが一番難しい」というメールを送る。</li>
-<li>2～3：会員比較を添えて「あなたはハマっています」というメールを送信します。</li>
-<li>4人以上の場合、会員制と一日パスの損益分岐点を記載した「計算してみましょう」メールを送信します。</li>
-<li><strong>抑制する <code>mindbody_membership_status = active</code>.</strong> 改宗した人へのしつこい勧誘をやめる。</li>
-</ol>
-<p>3つ目のカテゴリーは、コンバージョン率の高い層です。1週間に4回、1日パス料金を支払ってサイトを訪問している人は、まだ会員登録をしていないものの、会員である可能性が高いと言えます。メールの内容はほぼ自動的に作成されます。</p>
-<h2 id="reading-the-conversion-report-honestly">コンバージョンレポートを正直に読む</h2>
-<p>1日パスの後に続くすべての会員登録を数えてしまいがちですが、正確な数はもっと少ないです。Klaviyoで以下のセグメンテーションを使用してください。</p>
+<h2 id="what-you-can-finally-see">ついに見ることができるもの</h2>
+<p>各プロフィールには、最初の購入品、初来店日、来店回数、最終来店日、現在会員であるかどうか、そして入会日などの情報が掲載されています。</p>
+<p>あなたが重視するコンバージョンとは、最初に1日パスを購入したユーザーが、会員登録開始日を設定した瞬間のことです。これらのユーザー数をカウントすれば、「1日パス購入者のうち、何人が会員になったのか」という問いに対する真の答えが得られます。</p>
+<h2 id="the-day-pass-conversion-flow">デイパスへの変換フロー</h2>
+<p>そのイメージが掴めば、あとは流れは簡単です。</p>
+<p>誰かが1日券を購入すると、システムは4時間待機し、登りの興奮がまだ冷めない夕方に到着し、最初のメールを送信します。「セッションはいかがでしたか？7日間有効の往復パスを5ドル割引でご提供します。」</p>
+<p>そして7日後、その人が何回来店したかを確認します。</p>
 <ul>
-<li><strong>コホート：</strong> 暦月Nのデイパス購入者。</li>
-<li><strong>ウィンドウ：</strong> 初回購入日から60日間。</li>
-<li><strong>変換された：</strong> <code>mindbody_membership_started_at</code> 範囲内に収まる。</li>
+<li>それでも、たった一度の訪問だけでした。「最初の登山が一番難しい」というメールと、初心者向け講習会の案内が届いただけです。</li>
+<li>2、3回訪問すると、「あなたはハマり始めています」というメールが届き、会員プランの比較が提示されます。</li>
+<li>4回以上の利用の場合：会員費と1日パスの損益分岐点をまとめた「計算してみましょう」メールが送信されます。</li>
 </ul>
-<p>30日間コンバージョンと60日間コンバージョンの2つの比率を報告してください。60日を超えるものは別のマーケティングストーリーであり、デイパスチャネルの成果として計上すべきではありません。期間を「一度でも」短縮する事業者は、このチャネルの成果を2倍以上過大評価しています。</p>
+<p>そして、誰かが参加した瞬間から、その人へのメッセージ配信は停止します。登録後は、誰もしつこく連絡されることはありません。</p>
+<p>3つ目のグループは、コンバージョン率の高いセグメントです。1週間に4回、1日パス料金を支払ってサイトを訪れる人は、まだ会員登録をしていないだけのメンバーです。メールの内容はほぼ自動的に作成されます。</p>
+<h2 id="reading-the-numbers-honestly">数字を正直に読み解く</h2>
+<p>1日パス購入後に新規会員登録した人数をすべて数えてしまいたくなる気持ちもわかりますが、正確な数字はもっと絞り込む必要があります。特定の月に1日パスを購入した人全員という明確なグループに着目し、60日間の期間を設けて、その期間中に新規会員登録した人数を数えましょう。</p>
+<p>30日間コンバージョンと60日間コンバージョンの2つの数値を報告してください。60日を超える期間は別のマーケティングストーリーであり、デイパスチャネルの成果として計上すべきではありません。期間を「いつか」まで引き延ばしてチャネルの成果を2倍以上に誇張し、都合の良い嘘に基づいて顧客獲得の意思決定を行う事業者は、注意が必要です。</p>
 <p><img alt="クリップボードに挟まれた木製の会員登録用紙とペンのクローズアップ。ジムの柔らかな照明。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/inline-2.avif"/></p>
-<h2 id="representative-conversion-rate-at-1100-members">会員数1,100人における代表的なコンバージョン率</h2>
-<p>あくまでも参考例であり、実際の顧客像ではありません。</p>
+<h2 id="what-this-means-for-your-gym">これはあなたのジムにとって何を意味するのか</h2>
+<p>以下は参考用の合成例であり、実際の顧客ではありません。</p>
 <ul>
-<li>30日間のデイパスから会員へのコンバージョン率の基準値（ターゲットとなる顧客フローなし）：約4～7パーセント。</li>
-<li>上記の流れにおける30日間のコンバージョン率：9～14％の範囲に上昇。これは主に、オファーのタイミングが適切である2～3回訪問および4回以上の訪問セグメントからのものです。</li>
-<li>新規登録前の会員一人当たりの平均デイパス枚数：2.6枚（これはフロントデスクが会話を始めるべきポイントを示す有用な数値です）。</li>
+<li>ターゲットを絞ったフローがない場合の30日間デイパスから会員へのコンバージョン率：約4～7％。</li>
+<li>上記の流れにおける30日間のコンバージョン率：9～14％の範囲に上昇。これは主に、オファーのタイミングが適切だった2～3回訪問グループと4回以上訪問グループからのものです。</li>
+<li>新規会員が登録前に購入した1日パスの平均枚数は2.6枚で、これはフロントデスクが会話を始める際の参考になるので、それ自体が役立つ情報です。</li>
 </ul>
-<p>価格設定、登山者の属性、そして日帰りパスから会員制への移行に伴う料金体系の厳しさによって、数字は変動します。仕組みは同じです。</p>
-<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
-<ul>
-<li>このゲームの鍵は共有識別子にあります。統合レイヤーでメールベースの重複排除を正しく実装しないと、後続の処理で計算が全く機能しません。</li>
-<li>使用 <code>mindbody_visit_count</code> 分岐点として重要なのは、初回訪問からの日数ではなく、週2回の訪問です。会員登録意向を示す指標としては、月2回の訪問よりも週2回の訪問の方が優れています。</li>
-<li>コンバージョン期間を30日または60日に限定しましょう。「永久」というのは、実際にはそのチャネルが機能しなくなる時点を隠すための、都合の良い言い訳です。</li>
-</ul>
-<h2 id="try-it-in-your-gym">ジムで試してみよう</h2>
+<p>価格設定、クライマーの数、そしてデイパスから会員への切り替え条件によって、数字は変動します。基本的な仕組みは同じです。実際のコンバージョン率を把握し、会員登録する可能性が最も高いタイミングで適切なオファーを送ることが重要です。</p>
 <p>CRMConnect MindbodyとKlaviyoの連携動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-klaviyo-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">APIアプリの全カタログをご覧ください</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">マインドボディソリューションズ</span><span class="blog-apps-cta-desc">フィットネスとウェルネスの統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">クリニコソリューションズ</span><span class="blog-apps-cta-desc">医療および関連医療分野の統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非営利団体および資金調達との連携</span><span class="blog-apps-cta-arrow">探索する →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-day-pass-attribution-problem">デイパスの帰属問題</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">既製ツールがここで失敗する理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#what-visit-tracking-surfaces-in-klaviyo">Klaviyoで訪問者追跡機能がどのように動作するのか</a></li><li class="lvl-2"><a href="#designing-the-daypass-visitor-conversion-flow">日帰りパスからビジターへのコンバージョンフローの設計</a></li><li class="lvl-2"><a href="#reading-the-conversion-report-honestly">コンバージョンレポートを正直に読む</a></li><li class="lvl-2"><a href="#representative-conversion-rate-at-1100-members">会員数1,100人における代表的なコンバージョン率</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li><li class="lvl-2"><a href="#try-it-in-your-gym">ジムで試してみよう</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#you-probably-do-not-know-your-day-pass-conversion-rate">おそらくあなたは、デイパスのコンバージョン率を知らないでしょう。</a></li><li class="lvl-2"><a href="#why-this-is-so-hard-to-track-without-help">なぜ支援なしでは追跡が非常に難しいのか</a></li><li class="lvl-2"><a href="#how-crmconnect-closes-the-gap">CRMConnectがギャップを埋める方法</a></li><li class="lvl-2"><a href="#what-you-can-finally-see">ついに見ることができるもの</a></li><li class="lvl-2"><a href="#the-day-pass-conversion-flow">デイパスへの変換フロー</a></li><li class="lvl-2"><a href="#reading-the-numbers-honestly">数字を正直に読み解く</a></li><li class="lvl-2"><a href="#what-this-means-for-your-gym">これはあなたのジムにとって何を意味するのか</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">実施するすべてのプログラムにおいて、生徒一人につき明確なスケジュールを一つだけ作成します。</h3><p class="blog-card-excerpt">もしあなたのスタジオが初心者向けプログラム、長期コース、プライベートレッスンを同時に提供している場合、リマインダーが各生徒が実際に予約した内容と最終的に一致するようにするには、以下の手順を踏む必要があります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">6つのジムからなる筋力トレーニングネットワークの拠点別マーケティング</h3><p class="blog-card-excerpt">中央マーケティングチームが6つのジムからなるネットワークの全メンバーに一斉送信するメールを送ると、コーチの名前とジムの住所が半分の確率で間違ってしまう。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会議資料の再構築を終わらせよう：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。スタッフは夜の時間を取り戻したい。寄付額、平均寄付額、キャンペーン実績がHubSpotに集約されることで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードとして活用できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

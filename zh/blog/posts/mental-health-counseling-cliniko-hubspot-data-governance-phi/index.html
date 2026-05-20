@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Cliniko 中哪些数据需要同步，哪些数据需要保留：基于 HubSpot 的咨询实践数据治理模式 | APIANT 博客</title>
-<meta content="咨询诊所不应将咨询内容、诊断或临床记录导入营销客户关系管理系统 (CRM)。正确的做法是字段级同步：同步营销所需信息，切勿同步临床医生拥有的信息。" name="description"/>
+<title>咨询实践数据治理：Cliniko 和 HubSpot</title>
+<meta content="咨询诊所绝不应该将咨询记录、诊断或治疗方案导入营销工具。正确的做法是，既要分享营销所需的信息，又要确保所有临床信息都只存在于该在的地方。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="Cliniko 中哪些数据需要同步，哪些数据需要保留：基于 HubSpot 的咨询实践数据治理模式" property="og:title"/>
-<meta content="咨询诊所不应将咨询内容、诊断或临床记录导入营销客户关系管理系统 (CRM)。正确的做法是字段级同步：同步营销所需信息，切勿同步临床医生拥有的信息。" property="og:description"/>
+<meta content="在 HubSpot 上，Cliniko 中哪些数据应该共享，哪些数据应该保留：咨询实践的数据规划" property="og:title"/>
+<meta content="咨询诊所绝不应该将咨询记录、诊断或治疗方案导入营销工具。正确的做法是，既要分享营销所需的信息，又要确保所有临床信息都只存在于该在的地方。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Cliniko 中哪些数据需要同步，哪些数据需要保留：基于 HubSpot 的咨询实践数据治理模式" property="twitter:title"/>
-<meta content="咨询诊所不应将咨询内容、诊断或临床记录导入营销客户关系管理系统 (CRM)。正确的做法是字段级同步：同步营销所需信息，切勿同步临床医生拥有的信息。" property="twitter:description"/>
+<meta content="在 HubSpot 上，Cliniko 中哪些数据应该共享，哪些数据应该保留：咨询实践的数据规划" property="twitter:title"/>
+<meta content="咨询诊所绝不应该将咨询记录、诊断或治疗方案导入营销工具。正确的做法是，既要分享营销所需的信息，又要确保所有临床信息都只存在于该在的地方。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "What to Sync and What to Leave in Cliniko: a Data Governance Pattern for a Counseling Practice on HubSpot",
-  "description": "A counseling clinic should not have session content, diagnoses, or clinical notes flowing into a marketing CRM. The right pattern is field-level: sync what marketing needs, never sync what clinicians own.",
+  "headline": "What to Share and What to Keep in Cliniko: a Data Plan for a Counseling Practice on HubSpot",
+  "description": "A counseling clinic should never have session notes, diagnoses, or treatment plans flowing into a marketing tool. The right approach shares what marketing needs and keeps everything clinical exactly where it belongs.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/hero.avif",
   "datePublished": "2024-08-19T12:09:47+00:00",
-  "dateModified": "2026-05-19T18:27:50.894595+00:00",
+  "dateModified": "2026-05-20T16:46:34.633038+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "What to Sync and What to Leave in Cliniko: a Data Governance Pattern for a Counseling Practice on HubSpot", "item": "https://apiant.com/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" }
+    { "@type": "ListItem", "position": 4, "name": "What to Share and What to Keep in Cliniko: a Data Plan for a Counseling Practice on HubSpot", "item": "https://apiant.com/blog/posts/mental-health-counseling-cliniko-hubspot-data-governance-phi/" }
   ]
 }
 </script>
@@ -196,69 +196,63 @@
 <div class="blog-category-chip">
 <a href="/zh/blog/category/api-apps" style="color:inherit;text-decoration:none;">应用程序接口</a>
 </div>
-<h1 class="blog-post-h1">Cliniko 中哪些数据需要同步，哪些数据需要保留：基于 HubSpot 的咨询实践数据治理模式</h1>
+<h1 class="blog-post-h1">在 HubSpot 上，Cliniko 中哪些数据应该共享，哪些数据应该保留：咨询实践的数据规划</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/zh/blog/?author=fred">Fred Lumiere</a></span>
 <span>2024年8月19日</span>
-<span>阅读时间：6分钟</span>
+<span>阅读时间：5分钟</span>
 </div>
 <div class="blog-post-tags"><a class="blog-tag" href="/zh/blog/?tag=healthcare">＃卫生保健</a><a class="blog-tag" href="/zh/blog/?tag=cliniko">#Cliniko</a><a class="blog-tag" href="/zh/blog/?tag=hubspot">#HubSpot</a><a class="blog-tag" href="/zh/blog/?tag=crmconnect">#CRM连接</a></div>
 </header>
 <div class="blog-post-hero-image"><img alt="一张咨询师办公室的图片，布置成视频会议的场景。木桌上的笔记本电脑显示着通用的视频会议界面（模糊不清），环境舒适。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<p>几乎所有考虑过引入客户关系管理系统（CRM）的心理健康机构都会经历类似的对话。市场部门希望每季度发送一次回访邮件，并在患者生日时送上祝福。临床主任则一针见血地指出，一旦诊疗记录、诊断结果或治疗方案离开临床系统，机构面临的问题就远不止邮件列表无人问津那么简单了。对话通常以市场部门被拒绝而告终，邮件列表也因此保持沉默。</p>
-<p>举个例子：假设有一家名为Wellspring Counseling Associates的咨询机构，以远程医疗为主，拥有12名持证治疗师和约5500名活跃客户。市场部想用HubSpot。临床主任的谨慎是正确的。正确的答案不是“不”，而是“可以，但需要现场控制”。</p>
+<p>几乎所有考虑过引入营销工具的心理健康机构都会经历类似的对话。市场部希望每季度发送一次回访邮件，并在患者生日时送上祝福。临床主任一针见血地指出，一旦诊疗记录、诊断结果或治疗方案离开临床系统，机构面临的问题就远不止邮件列表无人问津那么简单了。对话通常以市场部被拒绝而告终，邮件列表也继续保持沉默。</p>
+<p>举个例子：假设有一家名为 Wellspring Counseling Associates 的远程医疗诊所，拥有 12 位持证治疗师和约 5500 名活跃客户。市场部想用 HubSpot。临床主任的谨慎是正确的。正确的答案不是“不”，而是“是的，以下是 Cliniko 的具体功能。”</p>
 <p><img alt="照片展示了一间整洁的咨询室，里面有一张舒适的扶手椅和一条柔软的毯子，一台合上的笔记本电脑放在一张小桌子上，窗边有一盆植物，还有一盏温暖的台灯。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/inline-1.avif"/></p>
-<h2 id="why-sync-everything-is-the-wrong-default">为什么“同步所有内容”是错误的默认设置。</h2>
-<p>一键“同步所有字段”集成的便捷性恰恰是其在咨询环境中的危险之处。一旦 SOAP 记录、诊断、治疗方案或会谈记录被导入营销 CRM 系统，就会同时发生三件坏事。营销团队现在也处于诊所所有临床合规措施的管辖范围之内，即使他们从未打开过这些记录。HubSpot 的用户权限模型（并非为受保护的健康信息而设计）实际上成为了诊所的临床访问控制。营销团队安装的任何第三方 HubSpot 应用或集成都会继承这一权限范围。</p>
-<p>正确的模式应该基于字段级别，而不是记录级别。市场部门应该了解市场部门的需求。临床医生应该将其他所有信息都保留在临床系统中，因为它们本来就应该在那里。</p>
+<h2 id="why-share-everything-is-the-wrong-default">为什么“分享一切”是错误的默认设置。</h2>
+<p>一键“共享所有数据”的便捷性恰恰是其对咨询机构的危险之处。一旦咨询记录、诊断、治疗方案或临床叙述被导入营销工具，就会同时发生三件坏事。首先，即使营销团队从未打开过任何记录，他们也已进入诊所的临床合规范围。其次，营销工具的用户权限原本并非为保护敏感健康信息而设计，却悄然成为诊所的临床访问控制。最后，营销团队在 HubSpot 中安装的任何插件都会获得访问这些数据的权限。</p>
+<p>正确的方法是逐项选择数据。市场部门关注市场需求。临床医生则将其他所有数据都保存在 Cliniko 系统中，确保它们各就各位。</p>
 <h2 id="the-three-buckets">三个水桶</h2>
-<p>Cliniko 中的每个数据点都属于以下三个类别之一。在进行任何配置之前，先将它们明确命名，可以有效预防未来出现问题：</p>
+<p>Cliniko 中的所有信息都可归入以下三个类别之一。在启用任何功能之前，大声说出这三个类别的名称，可以避免将来出现问题：</p>
 <ul>
-<li><strong>营销安全。</strong> 姓名、邮箱、电话、地址、营销沟通偏好、预约日期和时间（非预约类型详情）、发票总额（非明细项目）。这些信息会传输到 HubSpot。</li>
-<li><strong>操作安全。</strong> 预约状态（已预约、已到达、未到、已取消）、诊所地点、执业医师身份、病例里程碑、诊疗次数限制、最高可开票金额。如果诊所对每个字段都有明确的运营用途，这些信息可以同步到 HubSpot。</li>
-<li><strong>仅限临床医生。</strong> 会诊记录、SOAP记录、治疗目标、诊断、评估分数、病例叙述内容以及任何自由文本临床字段，这些信息始终保存在Cliniko系统中。</li>
+<li><strong>营销安全。</strong> 姓名、邮箱、电话、地址、营销偏好、预约日期和时间（不包括具体会谈类型）、发票总额（不包括明细项目）。这些信息会传输到 HubSpot。</li>
+<li><strong>操作安全。</strong> 预约状态（已预约、已到达、未到、已取消）、客户就诊的诊所、医生、治疗里程碑、疗程次数限制。只有当诊所对每项信息都有明确的运营理由时，这些信息才能同步到 HubSpot。</li>
+<li><strong>仅限临床医生。</strong> 诊疗记录、治疗目标、诊断、评估分数、任何临床叙述、任何自由文本临床字段，这些信息永远不会离开 Cliniko。</li>
 </ul>
-<p>在启用任何功能之前，集成负责人和临床主任应以书面形式就 Cliniko 中每个字段所属的类别达成一致。该列表应保存在一份共享文档中，供合规官每年审核。</p>
-<h2 id="the-apiant-approach">APIANT 方法</h2>
-<p>CRMConnect Cliniko 与 HubSpot 的集成基于字段级配置，而非非此即彼的记录同步。患者人口统计信息、预约状态、发票抬头和联系人偏好可以独立同步。病例信息同步会显示结构化字段（里程碑、限制、状态），但不会显示叙述性备注。Cliniko 临床备注层中的任何内容都不会同步到 HubSpot。营销偏好和同意信息会从 Cliniko 单向镜像到 HubSpot，因此临床系统仍然是数据的权威来源。</p>
-<h2 id="concrete-steps">混凝土台阶</h2>
-<ol>
-<li>首先编写字段映射表。列出所有计划同步的 Cliniko 字段，并根据其所属类别（市场营销安全、运营安全、仅限临床医生）进行标记，然后由临床主任和合规官签字确认。仅限临床医生使用的字段不包含在配置中。</li>
-<li>仅对营销安全字段启用患者人口统计信息同步。确认字段映射中不显示任何临床字段。</li>
-<li>仅对状态变更启用预约同步。如果预约类型字段包含临床细节信息（例如“创伤入院评估”），则在将其同步到 HubSpot 之前，应将其隐藏或替换为通用操作标签。</li>
-<li>仅对发票抬头（发票编号、日期、总额、状态）启用发票同步。如果明细项目包含服务类型详细信息，则不同步明细项目。</li>
-<li>将 Cliniko 中的用户同意和营销偏好单向同步到 HubSpot。如果客户在 Cliniko 中撤销了营销同意，则该更改必须同步到 HubSpot。如果营销活动以某种方式更改了 HubSpot 中的偏好设置，则不应将此更改反馈到 Cliniko。</li>
-<li>配置 HubSpot 用户权限，使营销角色无法看到他们不需要的操作安全字段（预约状态、业务地点、从业人员身份），并且使操作角色无法看到他们没有理由访问的营销活动内容。</li>
-</ol>
+<p>在任何功能启用之前，集成负责人和临床主任应以书面形式确认 Cliniko 的各项数据应归入哪个类别。该列表应保存在一份共享文档中，供合规官每年审核。</p>
+<h2 id="how-a-careful-setup-works">精心布置的运作原理</h2>
+<p>CRMConnect Cliniko 到 HubSpot 的数据共享机制旨在逐项共享数据，而非全部共享。客户联系方式、预约状态、发票总额和沟通偏好均可独立共享。护理计划结构（里程碑、疗程限制、状态）可以共享，但不会泄露其背后的病历记录。Cliniko 的临床病历记录绝不会包含在共享的数据中。营销偏好和同意信息仅单向流动，从 Cliniko 流向 HubSpot，因此临床系统始终是唯一的数据源。</p>
+<p>设置方法如下：</p>
+<p><strong>首先编写数据映射表。</strong> 列出您计划共享的每项 Cliniko 详细信息，并为每个详细信息添加所属类别标签，然后由临床主任和合规官签字确认。仅限临床医生查看的信息绝不包含在设置中。</p>
+<p><strong>仅分享符合营销规范的联系方式。</strong> 确认地图上任何地方都没有出现临床细节。</p>
+<p><strong>分享预约状态，而非预约内容。</strong> 如果预约类型本身透露出一些临床信息（例如，“创伤入院评估”），要么将其删除，要么在到达 HubSpot 之前将其替换为普通的操作标签。</p>
+<p><strong>分享发票总额，而不是明细项目。</strong> 发票编号、日期、总额和状态都可以。但包含服务类型的明细项目则不行。</p>
+<p><strong>保持同意单向流动。</strong> 如果客户在 Cliniko 中撤回了营销许可，则该撤回必须同步到 HubSpot。在 HubSpot 中更改的偏好设置绝不能同步回 Cliniko。</p>
+<p><strong>设置 HubSpot 访问权限以匹配。</strong> 营销人员不应该看到他们不需要的运营细节，运营人员也不应该看到他们没有理由访问的营销活动内容。</p>
 <p><img alt="一张办公桌的照片，上面放着打印好的清单、一支笔和一个咖啡杯，柔和的日光，纸上没有可读的文字，温暖的中性色调，纪实风格。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mental-health-counseling-cliniko-hubspot-data-governance-phi/inline-2.avif"/></p>
 <h2 id="a-working-example">一个工作示例</h2>
-<p>在此设置中，营销自动化流程安全可靠：每季度向已同意接收营销信息且未来 30 天内未预约的客户发送一封“我们随时为您服务”的电子邮件。该自动化流程可以识别预约安排情况，但无法识别未预约的具体临床原因，也无需识别。</p>
-<p>相比之下，一种不安全的营销自动化方式是：当预约状态显示“未到”时，系统自动发送一封“我们注意到您错过了上次预约”的电子邮件。在咨询环境中，通过营销渠道发送此类邮件可能完全不合适。临床团队应该直接在 Cliniko 系统中负责跟进，并根据临床判断决定是否以及如何进行后续跟进。系统集成可以识别到这一信号，但诊所的政策应该决定哪些内容需要自动发送邮件，哪些内容需要由临床医生主导的对话。</p>
-<h2 id="outcome">结果</h2>
-<p>一家与Wellspring情况相符的咨询机构如果采用这种模式，通常能够获得他们想要的市场营销收益（客户流失后的重新参与率提升5%到8%，虽然幅度不大，但确实存在），同时避免他们之前担忧的合规风险。临床主任只需一段话就能准确描述哪些内容越界，哪些内容不越界。合规官只需每季度花20分钟查看一份字段图，而无需像以前那样逐个字段地审核晦涩难懂的集成系统。</p>
-<h2 id="quarterly-governance-review">季度治理审查</h2>
-<p>立即配置日历邀请。每季度一次，集成负责人、临床主任和合规官将进行审核：</p>
+<p>在此设置中，一个安全的自动化流程是：每季度向已同意接收营销信息且未来 30 天内未预约的客户发送一封“我们随时为您服务”的电子邮件。该自动化流程可以识别出客户未预约，但无法识别未预约的具体临床原因，也无需识别。</p>
+<p>相比之下，不安全的自动化流程则不然：例如，当患者未到场时，系统自动发送一封“我们注意到您错过了上次预约”的电子邮件。在咨询环境中，通过营销渠道发送此类邮件可能根本不合适。临床团队应该直接在 Cliniko 系统中负责跟进，并根据临床判断决定是否以及如何进行后续跟进。系统集成可以识别到患者未到场的情况，但最终决定哪些内容需要自动发送邮件，哪些内容需要由临床医生主导的对话的，应该是您诊所的政策。</p>
+<h2 id="what-you-get-from-this">你从中能得到什么</h2>
+<p>遵循这种模式的咨询机构通常能获得他们想要的市场营销收益：客户流失后重新联系率能稳步提升5%到8%，而且无需承担他们之前担忧的合规风险。临床主任只需一段话就能准确描述哪些行为越界，哪些行为不越界。合规官只需每季度花20分钟就能查看数据概览，而无需面对晦涩难懂的系统，逐条分析数据。</p>
+<h2 id="the-quarterly-governance-review">季度治理审查</h2>
+<p>立即添加日历邀请。每季度一次，整合负责人、临床主任和合规官将进行审核：</p>
 <ul>
-<li>当前区域分布图（自上次审核以来新增的任何区域）。</li>
-<li>HubSpot 用户权限变更（任何新角色，任何角色权限变更）。</li>
-<li>营销团队安装的任何新的 HubSpot 应用或集成（这些应用或集成继承了对同步数据的访问权限）。</li>
-<li>抽取同步记录样本，以确认没有临床内容意外越界。</li>
+<li>当前数据地图以及自上次更新以来新增的数据。</li>
+<li>HubSpot访问权限变更，任何新增角色或权限变更。</li>
+<li>营销团队安装的任何新的 HubSpot 插件，因为这些插件都继承了对共享数据的访问权限。</li>
+<li>抽取共享记录样本进行确认，以确认没有临床内容意外越界。</li>
 </ul>
 <p>每季度一次，每次二十分钟。另一种选择是与监管机构进行更长时间的谈话。</p>
-<h2 id="builder-takeaway">建筑商外卖</h2>
-<ul>
-<li>在启用集成之前，请先构建字段图。该字段图需经临床主任签字，是防止日后出现争议的凭证。</li>
-<li>请使用字段级同步，而不是记录级同步。CRMConnect 就是为此设计的。将集成视为非此即彼的选择会带来风险。</li>
-<li>现在就把季度治理审查安排进日程。每个季度花二十分钟，就能有效防止整合工作出现偏差，可谓一举两得。</li>
-</ul>
-<p>想看看 CRMConnect Cliniko 与 HubSpot 的实际应用吗？ <a href="/apipartners/cliniko/cliniko-hubspot-integration-automation-apiant">查看 API 应用页面</a>或者浏览完整内容。 <a href="/apps.html">API 应用目录</a>.</p>
+<h2 id="why-this-matters-for-your-practice">这对您的实践为何重要</h2>
+<p>“没有营销工具”的恐惧是真实存在的，尤其是在只能共享所有信息的情况下，这种恐惧更是不无道理。但如果您可以选择以书面形式（并按季度审核）明确哪些客户信息可供营销部门查看，哪些临床记录则完全保密，那么这种恐惧便会消失。您的治疗师可以保留属于他们自己的信息。您的营销团队可以获得一份可以负责任地使用的名单。您的合规官可以获得一份简洁明了的文件进行签字确认。</p>
+<p>想看看 CRMConnect Cliniko 与 HubSpot 的实际应用吗？ <a href="/apipartners/cliniko/cliniko-hubspot-integration-automation-apiant">查看 API 应用页面</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">浏览完整的 API 应用目录</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">身心解决方案</span><span class="blog-apps-cta-desc">健身与健康融合</span><span class="blog-apps-cta-arrow">探索 →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Cliniko Solutions</span><span class="blog-apps-cta-desc">医疗保健和辅助医疗整合</span><span class="blog-apps-cta-arrow">探索 →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非营利组织和筹款整合</span><span class="blog-apps-cta-arrow">探索 →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-sync-everything-is-the-wrong-default">为什么“同步所有内容”是错误的默认设置</a></li><li class="lvl-2"><a href="#the-three-buckets">三个水桶</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT 方法</a></li><li class="lvl-2"><a href="#concrete-steps">混凝土台阶</a></li><li class="lvl-2"><a href="#a-working-example">一个工作示例</a></li><li class="lvl-2"><a href="#outcome">结果</a></li><li class="lvl-2"><a href="#quarterly-governance-review">季度治理审查</a></li><li class="lvl-2"><a href="#builder-takeaway">建筑商外卖</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-share-everything-is-the-wrong-default">为什么“分享一切”是错误的默认设置</a></li><li class="lvl-2"><a href="#the-three-buckets">三个水桶</a></li><li class="lvl-2"><a href="#how-a-careful-setup-works">精心布置的运作原理</a></li><li class="lvl-2"><a href="#a-working-example">一个工作示例</a></li><li class="lvl-2"><a href="#what-you-get-from-this">你从中能得到什么</a></li><li class="lvl-2"><a href="#the-quarterly-governance-review">季度治理审查</a></li><li class="lvl-2"><a href="#why-this-matters-for-your-practice">这对您的实践为何重要</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">继续阅读</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/zh/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="巴西柔术学院，墙到墙铺着垫子，架子上卷着道服腰带，角落里挂着沙袋，头顶有温暖的灯光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">在高级系统中统一身心注册、课程和预约。</h3><p class="blog-card-excerpt">使用 CRMConnect 的注册、课程预订和预约同步功能，为 HighLevel 提供跨 Mindbody 所有课程类型的统一日历视图。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/zh/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="现代力量训练健身房，配有成排的深蹲架、橡胶草坪、全景窗户、拉丝钢和黑色调、环境照明顶灯。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">Klaviyo中针对6个地点的Strength Network的多站点预约报告</h3><p class="blog-card-excerpt">CRMConnect 的预约同步功能如何在 Klaviyo 中显示站点级别的预约状态，以便中央营销部门可以运行按地点划分的流程和报告。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/zh/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="镜头拍摄于一个学区会议室，不同背景的成年人围坐在木桌旁审阅打印的报告，透过大窗户可以看到午后的阳光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">告别每月重新制作董事会演示文稿的繁琐：HubSpot 中 DonorPerfect 的实时筹款仪表盘</h3><p class="blog-card-excerpt">董事会需要趋势线，员工则希望重获夜晚时光。通过将捐赠者终身价值、平均捐赠额和筹款活动绩效同步到 HubSpot，每月董事会报告不再需要耗费四天时间，而变成了一个可保存的仪表盘视图。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">继续阅读</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/zh/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="巴西柔术学院，墙到墙铺着垫子，架子上卷着道服腰带，角落里挂着沙袋，头顶有温暖的灯光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">每个学生在所有项目中都应有一份清晰的课程表。</h3><p class="blog-card-excerpt">如果你的工作室同时开设入门课程、长期课程和私人课程，那么你的提醒最终会与每个学生实际预订的课程相匹配。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/zh/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="现代力量训练健身房，配有成排的深蹲架、橡胶草坪、全景窗户、拉丝钢和黑色调、环境照明顶灯。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">针对拥有6家健身房的力量训练网络的单店营销</h3><p class="blog-card-excerpt">一个中央营销团队向拥有 6 家健身房的连锁机构的每个成员发送一封邮件，结果有一半的概率会把教练姓名和健身房地址写错。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/zh/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="镜头拍摄于一个学区会议室，不同背景的成年人围坐在木桌旁审阅打印的报告，透过大窗户可以看到午后的阳光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">告别每月重新制作筹款看板的繁琐流程：在 HubSpot 中使用 DonorPerfect 的实时筹款仪表盘</h3><p class="blog-card-excerpt">董事会需要趋势线，员工则希望重获夜晚时光。有了 HubSpot，捐赠者价值、平均捐赠额和活动绩效等数据就能轻松导入，每月董事会报告不再需要耗费四天时间，而变成了一个可保存的仪表盘。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Mindbodyの契約と自動支払いステータスをZoho CRMにリアルタイムで統合する方法 | APIANTブログ</title>
-<meta content="CRMConnectのMB契約同期機能を使用すると、契約の詳細情報と自動支払いのステータスをZoho CRMにリアルタイムで取り込むことができ、支払いの失敗を即日処理ワークフローにすることができます。" name="description"/>
+<title>メンバーが離脱する前に、Mindbodyの自動支払いの失敗を検知しよう</title>
+<meta content="会員の自動支払いが失敗した場合、会員が他のスタジオに移ってしまうまでには1～2日の猶予があります。ここでは、失敗した支払いをその日のうちにすべて検知する方法をご紹介します。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="Mindbodyの契約と自動支払いステータスをZoho CRMにリアルタイムで統合する" property="og:title"/>
-<meta content="CRMConnectのMB契約同期機能を使用すると、契約の詳細情報と自動支払いのステータスをZoho CRMにリアルタイムで取り込むことができ、支払いの失敗を即日処理ワークフローにすることができます。" property="og:description"/>
+<meta content="月末ではなく、当日中に自動支払いの失敗を確認してください" property="og:title"/>
+<meta content="会員の自動支払いが失敗した場合、会員が他のスタジオに移ってしまうまでには1～2日の猶予があります。ここでは、失敗した支払いをその日のうちにすべて検知する方法をご紹介します。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Mindbodyの契約と自動支払いステータスをZoho CRMにリアルタイムで統合する" property="twitter:title"/>
-<meta content="CRMConnectのMB契約同期機能を使用すると、契約の詳細情報と自動支払いのステータスをZoho CRMにリアルタイムで取り込むことができ、支払いの失敗を即日処理ワークフローにすることができます。" property="twitter:description"/>
+<meta content="月末ではなく、当日中に自動支払いの失敗を確認してください" property="twitter:title"/>
+<meta content="会員の自動支払いが失敗した場合、会員が他のスタジオに移ってしまうまでには1～2日の猶予があります。ここでは、失敗した支払いをその日のうちにすべて検知する方法をご紹介します。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Putting Mindbody Contracts and Auto-Pay Status Inside Zoho CRM in Real Time",
-  "description": "Use CRMConnect's MB Contracts sync to put live contract details and auto-pay status inside Zoho CRM, so failed payments become same-day workflows.",
+  "headline": "See Failed Auto-Pays the Same Day, Not at Month End",
+  "description": "When a member's auto-pay fails, you have a day or two before they drift to another studio. Here's how to catch every failed payment the same day it happens.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.avif",
   "datePublished": "2024-09-11T11:34:38+00:00",
-  "dateModified": "2026-05-20T13:39:49.119284+00:00",
+  "dateModified": "2026-05-20T16:45:16.772688+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Putting Mindbody Contracts and Auto-Pay Status Inside Zoho CRM in Real Time", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" }
+    { "@type": "ListItem", "position": 4, "name": "See Failed Auto-Pays the Same Day, Not at Month End", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" }
   ]
 }
 </script>
@@ -196,7 +196,7 @@
 <div class="blog-category-chip">
 <a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
 </div>
-<h1 class="blog-post-h1">Mindbodyの契約と自動支払いステータスをZoho CRMにリアルタイムで統合する</h1>
+<h1 class="blog-post-h1">月末ではなく、当日中に自動支払いの失敗を確認してください</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
 <span>2024年9月11日</span>
@@ -207,96 +207,64 @@
 <div class="blog-post-hero-image"><img alt="リフォーマーマシン、全身鏡、素焼きの鉢植えの植物、温かい午後の光が差し込むモダンなピラティススタジオ。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h2 id="why-end-of-month-contract-reports-are-useless">月末の契約報告書が役に立たない理由</h2>
-<p>契約制の会員制サービスは、自動支払いが失敗するまでは安定した収益が見込めます。しかし、支払いが失敗した場合の猶予期間は短く、支払い失敗から会員が別のスタジオを探し始めるまで24時間から72時間しかありません。ほとんどのスタジオは毎月1日に契約状況レポートを作成するため、3日の支払い失敗は27日間も記録に残らないことになります。レポートが作成される頃には、会員はすでに退会しているのです。</p>
-<p>仮説：ミラーレイクピラティス（例示）は、契約ベースの顧客360人を抱える単一拠点のスタジオです。営業チームは、契約の詳細を除くすべての業務にZoho CRMを使用していますが、契約の詳細はMindbodyのPDFファイルに保存されています。月末の精算には半日かかります。自動支払いの失敗は28日目に発見され、回復率は30%程度で、残りは解約してしまいます。</p>
-<h2 id="why-off-the-shelf-tools-fail-here">既製ツールがここで失敗する理由</h2>
-<p>Mindbodyの契約は、複数の状態変化を伴うネストされたオブジェクトです。一般的な連携ツールのほとんどは、契約作成時に契約を取得し、更新することはありません。自動支払いステータス、再試行回数、スケジュールされた変更、キャンセルタイムスタンプはすべて子オブジェクトに存在し、更新するには特定のAPI呼び出しが必要です。</p>
-<p>真の解決策には以下が求められる。</p>
+<h2 id="why-end-of-month-contract-reports-cost-you-members">月末契約レポートが会員にコスト負担をかける理由</h2>
+<p>契約会員制は、自動支払いが失敗するまでは安定した収益源のように見えます。しかし、支払いが失敗した後の猶予期間は短いのです。カード決済が拒否された会員は、およそ24時間から72時間以内に、他のスタジオを探し始めるでしょう。ほとんどのスタジオは毎月1日に契約状況レポートを作成するため、3日に失敗した支払いは27日間も放置されることになります。誰かがそのレポートを見る頃には、会員はすでに他のスタジオに移っているのです。</p>
+<p>具体例を考えてみましょう。ミラーレイクピラティス（架空の単一拠点スタジオ）には、360人の契約会員がいます。受付と営業チームは、契約の詳細を除いて、すべてZoho CRMで管理しています。契約の詳細はMindbodyに保存されています。月末の照合には半日かかります。自動支払いの失敗は28日目頃に気づき、3分の1程度しか復旧できず、残りは解約してしまいます。誰も間違ったことをしているわけではありません。ただ、情報が届くのが遅すぎて対応できないだけなのです。</p>
+<h2 id="what-the-manual-process-actually-costs">手作業による処理の実際のコスト</h2>
+<p>契約情報と支払い情報が1つのシステムに、会員情報が別のシステムに保存されている場合、誰かが手作業でそのギャップを埋める必要があります。通常、それはマネージャーがレポートを作成し、PDFファイルを相互チェックし、月末にスプレッドシートを更新することを意味します。</p>
+<p>本当のコストは、半日分の事務処理ではありません。誰も気づかない27日間の間に起こるすべてのことが問題なのです。カードの有効期限が切れた会員には、事前に通知が届きません。一度だけ残高不足になった会員には、親切な連絡すらありません。月末になると、会員との関係は冷え込み、残高回復のための会話は、ルーティンワークではなく、気まずいものになってしまうのです。</p>
+<h2 id="how-it-works-once-contracts-flow-into-zoho-crm">Zoho CRMに契約情報が取り込まれた後の仕組み</h2>
+<p>CRMConnect MindbodyとZoho CRMを連携させることで、契約情報や自動支払い情報をチームが既に利用しているCRM内にリアルタイムで保持できます。契約の詳細、自動支払いのステータス、次回の請求日、金額、更新日などはすべて自動的に最新の状態に保たれます。誰もデータを再入力する必要はなく、レポートを待つ必要もありません。</p>
+<p>フロントデスクとマネージャーが見るもの：</p>
 <ul>
-<li>契約は、ライブ状態を持つ独立したオブジェクトとして扱います。</li>
-<li>自動支払いの状態変更はすべて、ほぼリアルタイムのイベントとして通知します。</li>
-<li>安全策として、「現在の状態」を毎日再計算する。</li>
+<li>各会員の記録には、自動支払いが正常に機能しているか、再試行中か、失敗したかが表示され、変更があるとすぐに更新されます。</li>
+<li>契約名、開始日と終了日、月額金額は、Mindbodyを開かなくても確認できます。</li>
+<li>支払いが失敗した瞬間、そのメンバーはチームがすぐに対応できるリストに表示されます。</li>
 </ul>
-<p>カスタム構築ではこれが可能ですが、360件の契約にわたる日々の照合を考慮したレート制限は、2か月も経たないうちに破綻してしまうようなものです。</p>
-<h2 id="the-apiant-approach">APIANTアプローチ</h2>
-<p>CRMConnect Mindbody to Zoho CRMには専用の <strong>MB契約</strong> カスタムオブジェクトと並んで <strong>MBメンバーシップ</strong>APIアプリのページより：「クライアントの契約詳細と自動支払いステータスをZoho CRMに直接継続的に同期します。」</p>
-<p>これを支える機能：</p>
-<ul>
-<li><strong>会員情報と契約内容の同期</strong> MB Contractsを専用のカスタムオブジェクトとして使用します。</li>
-<li><strong>リアルタイムデータ同期</strong> そのため、自動支払いの状態変更は数秒以内にZoho CRMに反映されます。</li>
-<li><strong>包括的な購入と支払い</strong> キャプチャすることで、基となる支払いイベントも照会可能になります。</li>
-<li><strong>カスタムオブジェクトマッピング</strong> そのため、契約書はワークフローやレポートにおいて第一級の記録として扱われます。</li>
-</ul>
-<p>統合データ処理エンジンは、ネストされた契約ペイロードを処理し、各子状態をZohoオブジェクトスキーマに適切にマッピングします。</p>
+<p>実際のところ、その変化は単純だ。月末に支払失敗を発見するのではなく、数時間以内に把握できるようになる。</p>
 <p><img alt="リフォーマーマシンと全身鏡を備えたモダンなピラティススタジオ。素焼きの鉢植えの植物が置かれ、午後の温かい光が差し込む。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/inline-1.avif"/></p>
-<h2 id="what-mb-contracts-pushes-to-zoho-crm">MB ContractsがZoho CRMに推進しているもの</h2>
-<p>MB Contractsカスタムオブジェクトには、ライブワークフローに必要なすべてのフィールドが含まれています。</p>
-<pre class="highlight"><code class="language-text">Zoho CRM custom object: MB Contracts
-- contract_id
-- contact_id (links to Zoho CRM contact)
-- contract_name                e.g. "12-Month Unlimited Reformer"
-- start_date / end_date
-- status                       active|pending_cancel|expired|terminated
-- autopay_status               current|retrying|failed|suspended
-- autopay_method               card|ach
-- autopay_next_charge_date
-- autopay_next_charge_amount
-- autopay_last_attempt_at
-- autopay_last_attempt_result  success|declined|insufficient_funds|...
-- autopay_retry_count
-- monthly_amount
-- balance_remaining</code></pre>
-<p>の <code>autopay_status</code> フィールドは、重要なすべてのトリガーです。ステータスが切り替わります。 <code>failed</code> or <code>retrying</code>ワークフローが起動すると、復旧が開始されます。</p>
-<h2 id="designing-the-failed-payment-recovery-workflow">支払失敗時の回収ワークフローの設計</h2>
-<p>MB ContractsオブジェクトにおけるZoho CRMのワークフロー：</p>
+<h2 id="turning-a-failed-payment-into-a-same-day-recovery">失敗した支払いを即日回収に変える</h2>
+<p>Zoho CRMで自動支払いのステータスが有効になったら、それに基づいてスムーズな自動復旧シーケンスを構築できます。実用的な例は次のようになります。</p>
 <ol>
-<li><strong>トリガー：</strong> <code>autopay_status</code> 変更点 <code>current</code> to <code>failed</code> or <code>retrying</code>.</li>
-<li><strong>同時刻：</strong> 顧客に「お支払いが完了しなかったようです。システムで確認できました。最新情報はこちらをご覧ください：[update_card_link]。サポートが必要な場合は「HELP」と返信してください。」というSMSを自動送信します。</li>
-<li><strong>+4時間:</strong> ステータスが依然として失敗で、クライアントがカード情報を更新していない場合は、メンバーシップスペシャリスト向けに、完全なコンテキスト（最後の支払い成功、再試行回数、金額）を含む高優先度タスクを作成します。</li>
-<li><strong>+24時間:</strong> スタジオオーナーからの自動送信メール「ちょっとお電話しましょうか？」</li>
-<li><strong>+48時間:</strong> オーナーからの連絡タスクが作成されました。期限は同日です。</li>
-<li><strong>リカバリーブランチ:</strong> いつ <code>autopay_status</code> 元に戻る <code>current</code>残りのタスクを抑制し、確認のSMSを送信します。</li>
-<li><strong>エスカレーションブランチ:</strong> 5日以上未解決の場合、リードのステータスが「リスクのあるメンバー」に変更され、対面での顧客維持のための話し合いが予定されます。</li>
+<li>支払いが失敗したと判断されると、会員にはその日のうちに「お支払いが完了しませんでした。こちらからカード情報を更新できます。ご不明な点があればご返信ください。」というメッセージが届きます。</li>
+<li>4時間後もカード情報が更新されていない場合、会員担当者は、最終決済完了日時、未払い金額、再試行回数など、詳細な情報を含むタスクを受け取ります。</li>
+<li>翌日、スタジオのオーナーから短いメールが届き、簡単な電話を希望する旨が伝えられた。</li>
+<li>2日間解決されない場合、その日の所有者への連絡タスクが作成されます。</li>
+<li>会員がカード情報を更新した場合、残りの手順は停止し、確認のテキストメッセージが送信されます。</li>
+<li>5日間経過しても解決しない場合、その会員はリスクが高いと判断され、対面での会員維持に関する話し合いが予定されます。</li>
 </ol>
-<p>当日中にSMSを送信することで、ほとんどの取引が回復します。決済失敗の原因は、通常、カードの有効期限切れや残高不足など、利用者が気づいていない事象です。決済失敗を数週間ではなく数時間以内に検知することが、回復率を左右する最大の要因となります。</p>
-<h2 id="renewal-dates-as-pipeline-forecasting">更新日をパイプライン予測として活用する</h2>
-<p>の <code>end_date</code> MB Contractsオブジェクトのフィールドを使用すると、営業チームは更新収益を数週間前から予測できます。</p>
+<p>当日中にテキストメッセージを送信すれば、ほとんどの取引量は自動的に回復します。決済失敗の原因は、通常、カードの有効期限切れか、会員自身が気づいていない一時的な資金不足です。決済失敗を数週間ではなく数時間以内に検知することが、会員を維持できるかどうかの最大の要因となります。</p>
+<h2 id="renewal-dates-become-a-revenue-forecast">更新日が収益予測となる</h2>
+<p>同じリアルタイム接続により、すべての契約の終了日が営業チームの目の前に表示され、更新は対応に追われるのではなく、計画的に進めることができるようになります。</p>
 <ul>
-<li>90日間のフォワードパイプラインの合計 <code>monthly_amount</code> 契約に関して <code>end_date</code> 今後90日間における、過去の更新率で加重平均した数値。</li>
-<li>更新コールキュー:契約 <code>end_date - now() &lt;= 45 days</code> そして <code>status = active</code>顧客生涯価値順に並べ替え。</li>
-<li>自動更新と手動更新の区分け：基となる会員情報の更新フラグでフィルタリングし、手動更新側の人員配置を計画する。</li>
+<li>90日間の見通し：今後3ヶ月以内に期限を迎えるすべての契約の月額料金を合計することで、更新に伴う収益が失われる前にその額を把握できます。</li>
+<li>更新連絡キュー：45日以内に期限が切れる契約を優先順位付けし、最も価値の高い会員から優先的に担当者と直接話せるようにします。</li>
+<li>人員配置の明確化：自動更新される契約と手動での対応が必要な契約を区別し、それに応じてチームの時間を計画する。</li>
 </ul>
-<p>予測が有効なのは、データがリアルタイムで更新されているからに他なりません。月末のレポートでは、入力データが古くなっているため、予測が5～15パーセントずれることがあります。</p>
-<pre class="highlight"><code class="language-text">Sample forecast query (Zoho CRM Reports):
-  Select contact_id, monthly_amount, end_date
-  From MB_Contracts
-  Where end_date Between today() And today() + 90 days
-    And status = 'active'
-  Order By client_ltv DESC</code></pre>
+<p>予測が信頼できるのは、基礎となる数値が最新だからに他なりません。月末の報告書では、入力データが古くなっているため、更新予測が5～15％もずれてしまうことがあります。</p>
 <p><img alt="ノートパソコンの画面には、更新パイプラインの数値を示す予測ダッシュボードが表示され、清潔な木製の机には柔らかな窓からの光が当たっている。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/inline-2.avif"/></p>
-<h2 id="representative-recovery-rate-at-360-clients">360社の顧客における代表的な回収率</h2>
-<p>あくまでも参考例であり、実際の顧客像ではありません。</p>
+<h2 id="what-the-numbers-could-look-like">数字はどのようなものになるか</h2>
+<p>これらの数字はあくまでも例示のための合成図であり、実際の顧客像を表しているわけではありませんが、約360名の契約社員を抱えるスタジオにおける変化の様相を示しています。</p>
 <ul>
-<li>自動支払い失敗時の復旧率（月末時点の回収率）：約25～35パーセント。</li>
-<li>当日SMS送信と24時間以内のオーナーへのメール送信を組み合わせた場合の回収率は、60～75％の範囲に上昇する。</li>
-<li>早期の障害検出によって四半期ごとに節約できる収益：平均契約規模にもよるが、契約基盤のかなりの割合を占める。</li>
-<li>契約調整に費やすオーナーの月間時間：約4時間から1時間未満に削減され、残りの時間は真にリスクの高いメンバーの対応に充てられる。</li>
+<li>月末に不具合が発覚した場合の復旧率は、およそ25～35パーセントです。</li>
+<li>同日中にテキストメッセージを送信し、翌日に所有者にメールを送信した場合の回収率は、60～75％の範囲に上昇する。</li>
+<li>早期発見によって四半期ごとに節約できる収益：平均契約規模にもよるが、契約総額のかなりの割合を占める。</li>
+<li>オーナーが契約内容の調整に費やす時間：月平均約4時間から1時間未満に減少。その1時間は、本当に対応が必要な会員への対応に充てられるようになった。</li>
 </ul>
-<p>この仕組みは、迅速な検出と、メンバーが実際に応答できるシーケンスに基づいています。統合によって検出が実現されます。シーケンスは、更新を要求する際に正直でなければなりません。</p>
-<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
+<p>この仕組みは巧妙なマーケティングではありません。迅速な検出と、メンバーが実際に対応できる一連の動作を組み合わせたものです。検出はシステム統合によって処理されます。あなたのシーケンスは、正直で、簡単に対応できるものでなければなりません。</p>
+<h2 id="why-this-matters-for-your-bottom-line">これがあなたの収益にとって重要な理由</h2>
 <ul>
-<li>契約と会員資格は別々のカスタムオブジェクトとして扱います。クライアントは1つの会員資格と3つの契約を持つことができます（またはその逆も可能です）。概念ごとに1つのレコードにすることで、クエリの安定性が保たれます。</li>
-<li>支払い失敗時の回復機能を構築する <code>autopay_status</code> 変更イベントは、定期レポートではなく、変更イベントとして扱われます。レイテンシがすべてを左右します。</li>
-<li>使用 <code>end_date</code> 更新パイプライン予測として活用できます。これは、スタジオにとって最も信頼性の高い将来予測収益指標です。</li>
+<li>自動支払いの失敗は、月末に発覚するのではなく、その日のうちに発生した事象として対処してください。対応の速さが、回収率の大部分を占めます。</li>
+<li>親しみやすく、押し付けがましくない最初のメッセージを送ることで、単にカードの有効期限が切れていただけの会員を取り戻すことができる。</li>
+<li>契約終了日は、スタジオにとって最も信頼できる将来の収益予測指標です。報告のためだけでなく、計画策定にも活用しましょう。</li>
 </ul>
 <h2 id="try-it-in-your-studio">あなたのスタジオで試してみましょう</h2>
-<p>CRMConnect MindbodyとZoho CRMの連携動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
+<p>会員データに関して、これがどのように機能するのか興味がありますか？ <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">APIアプリの全カタログをご覧ください</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">マインドボディソリューションズ</span><span class="blog-apps-cta-desc">フィットネスとウェルネスの統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">クリニコソリューションズ</span><span class="blog-apps-cta-desc">医療および関連医療分野の統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非営利団体および資金調達との連携</span><span class="blog-apps-cta-arrow">探索する →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-end-of-month-contract-reports-are-useless">月末の契約報告書が役に立たない理由</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">既製ツールがここで失敗する理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#what-mb-contracts-pushes-to-zoho-crm">MB ContractsがZoho CRMに推進しているもの</a></li><li class="lvl-2"><a href="#designing-the-failed-payment-recovery-workflow">支払失敗時の回収ワークフローの設計</a></li><li class="lvl-2"><a href="#renewal-dates-as-pipeline-forecasting">更新日をパイプライン予測として活用する</a></li><li class="lvl-2"><a href="#representative-recovery-rate-at-360-clients">360社の顧客における代表的な回収率</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li><li class="lvl-2"><a href="#try-it-in-your-studio">あなたのスタジオで試してみましょう</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-end-of-month-contract-reports-cost-you-members">月末契約レポートが会員にコスト負担をかける理由</a></li><li class="lvl-2"><a href="#what-the-manual-process-actually-costs">手作業による処理の実際のコスト</a></li><li class="lvl-2"><a href="#how-it-works-once-contracts-flow-into-zoho-crm">Zoho CRMに契約情報が取り込まれた後の仕組み</a></li><li class="lvl-2"><a href="#turning-a-failed-payment-into-a-same-day-recovery">失敗した支払いを即日回収に変える</a></li><li class="lvl-2"><a href="#renewal-dates-become-a-revenue-forecast">更新日が収益予測となる</a></li><li class="lvl-2"><a href="#what-the-numbers-could-look-like">数字はどのようなものになるか</a></li><li class="lvl-2"><a href="#why-this-matters-for-your-bottom-line">これがあなたの収益にとって重要な理由</a></li><li class="lvl-2"><a href="#try-it-in-your-studio">あなたのスタジオで試してみましょう</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">実施するすべてのプログラムにおいて、生徒一人につき明確なスケジュールを一つだけ作成します。</h3><p class="blog-card-excerpt">もしあなたのスタジオが初心者向けプログラム、長期コース、プライベートレッスンを同時に提供している場合、リマインダーが各生徒が実際に予約した内容と最終的に一致するようにするには、以下の手順を踏む必要があります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">6つのジムからなる筋力トレーニングネットワークの拠点別マーケティング</h3><p class="blog-card-excerpt">中央マーケティングチームが6つのジムからなるネットワークの全メンバーに一斉送信するメールを送ると、コーチの名前とジムの住所が半分の確率で間違ってしまう。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会議資料の再構築を終わらせよう：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。スタッフは夜の時間を取り戻したい。寄付額、平均寄付額、キャンペーン実績がHubSpotに集約されることで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードとして活用できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

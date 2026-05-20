@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>将 Mindbody 合同和自动付款状态实时导入 Zoho CRM | APIANT 博客</title>
-<meta content="使用 CRMConnect 的 MB 合同同步功能，将实时合同详情和自动付款状态导入 Zoho CRM，以便将付款失败的情况转化为当日工作流程。" name="description"/>
+<title>在会员流失前发现 Mindbody 自动付款失败的情况</title>
+<meta content="当会员的自动付款失败时，你只有一两天的时间来阻止他们转到其他工作室。以下是如何在当天就发现并处理所有失败的付款。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="将 Mindbody 合同和自动付款状态实时导入 Zoho CRM" property="og:title"/>
-<meta content="使用 CRMConnect 的 MB 合同同步功能，将实时合同详情和自动付款状态导入 Zoho CRM，以便将付款失败的情况转化为当日工作流程。" property="og:description"/>
+<meta content="请查看当天发生的自动付款失败事件，而不是月底发生的事件。" property="og:title"/>
+<meta content="当会员的自动付款失败时，你只有一两天的时间来阻止他们转到其他工作室。以下是如何在当天就发现并处理所有失败的付款。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="将 Mindbody 合同和自动付款状态实时导入 Zoho CRM" property="twitter:title"/>
-<meta content="使用 CRMConnect 的 MB 合同同步功能，将实时合同详情和自动付款状态导入 Zoho CRM，以便将付款失败的情况转化为当日工作流程。" property="twitter:description"/>
+<meta content="请查看当天发生的自动付款失败事件，而不是月底发生的事件。" property="twitter:title"/>
+<meta content="当会员的自动付款失败时，你只有一两天的时间来阻止他们转到其他工作室。以下是如何在当天就发现并处理所有失败的付款。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Putting Mindbody Contracts and Auto-Pay Status Inside Zoho CRM in Real Time",
-  "description": "Use CRMConnect's MB Contracts sync to put live contract details and auto-pay status inside Zoho CRM, so failed payments become same-day workflows.",
+  "headline": "See Failed Auto-Pays the Same Day, Not at Month End",
+  "description": "When a member's auto-pay fails, you have a day or two before they drift to another studio. Here's how to catch every failed payment the same day it happens.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.avif",
   "datePublished": "2024-09-11T11:34:38+00:00",
-  "dateModified": "2026-05-20T13:39:49.119284+00:00",
+  "dateModified": "2026-05-20T16:45:16.772688+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Putting Mindbody Contracts and Auto-Pay Status Inside Zoho CRM in Real Time", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" }
+    { "@type": "ListItem", "position": 4, "name": "See Failed Auto-Pays the Same Day, Not at Month End", "item": "https://apiant.com/blog/posts/mindbody-zoho-crm-contracts-autopay/" }
   ]
 }
 </script>
@@ -196,7 +196,7 @@
 <div class="blog-category-chip">
 <a href="/zh/blog/category/api-apps" style="color:inherit;text-decoration:none;">应用程序接口</a>
 </div>
-<h1 class="blog-post-h1">将 Mindbody 合同和自动付款状态实时导入 Zoho CRM</h1>
+<h1 class="blog-post-h1">请查看当天发生的自动付款失败事件，而不是月底发生的事件。</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/zh/blog/?author=fred">Fred Lumiere</a></span>
 <span>2024年9月11日</span>
@@ -207,96 +207,64 @@
 <div class="blog-post-hero-image"><img alt="现代普拉提工作室，配有普拉提器械、全身镜、原色陶盆中的植物，以及温暖的午后阳光。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h2 id="why-end-of-month-contract-reports-are-useless">为什么月末合同报告毫无用处</h2>
-<p>合约会员制带来的收入是可预测的，直到自动扣款失败。但失败的窗口期很短：从扣款失败到会员悄悄寻找其他工作室，只有24到72小时。大多数工作室会在每月1号生成一份合约状态报告，这意味着3号的扣款失败会在27天内无人知晓。等到报告生成时，会员可能已经流失了。</p>
-<p>假设：Mirror Lake Pilates（示例）是一家单店工作室，拥有 360 位合约客户。销售团队使用 Zoho CRM 管理除合同详情以外的所有信息，合同详情则保存在 Mindbody 的 PDF 文件中。每月月底的对账工作需要花费半天时间。自动付款失败的情况通常在第 28 天被发现，可能只有 30% 的客户能够追回，其余客户则流失。</p>
-<h2 id="why-off-the-shelf-tools-fail-here">为什么现成的工具在这里会失效</h2>
-<p>Mindbody 合约是嵌套对象，包含多个状态变更。大多数通用粘合工具在创建合约时获取该合约，但之后不会对其进行更新。自动付款状态、重试次数、计划变更和取消时间戳都存储在子对象中，需要调用特定的 API 才能刷新。</p>
-<p>真正的解决方案必须：</p>
+<h2 id="why-end-of-month-contract-reports-cost-you-members">为什么月末合同报告会给您的会员带来损失？</h2>
+<p>合约会员看似收入稳定，直到自动扣款失败为止。但失败后的窗口期很短。信用卡被拒的会员通常会在24到72小时内开始悄悄地考虑去附近的健身房。大多数健身房会在每月1号生成合约状态报告，这意味着3号失败的付款会被搁置27天。等到有人注意到的时候，会员可能早就流失了。</p>
+<p>举个例子。假设Mirror Lake Pilates是一家单店工作室，拥有360名签约会员。前台和销售团队的所有业务都通过Zoho CRM系统处理，但合同详情除外，这些信息存储在Mindbody系统中。每月月底的对账工作要花费半天时间。自动付款失败的情况大约在第28天左右才会被发现，大约有三分之一的失败案例能够成功解决，其余的则导致会员流失。没有人做错什么，只是信息到达得太晚，无法及时采取行动。</p>
+<h2 id="what-the-manual-process-actually-costs">人工操作的实际成本是多少？</h2>
+<p>当合同和付款信息存储在一个系统中，而会员关系信息存储在另一个系统中时，就需要有人手动进行系统间的衔接。这通常意味着经理需要提取报告、交叉核对PDF文件，并在月底更新电子表格。</p>
+<p>真正的成本并非半天的行政工作，而是在无人问津的27天里发生的一切。会员卡过期了，却从未收到任何通知；偶尔出现余额不足问题的会员，也从未得到任何友好的提醒。到了月底，彼此的关系已经冷却，催款对话也变得尴尬，不再是例行公事。</p>
+<h2 id="how-it-works-once-contracts-flow-into-zoho-crm">合同导入 Zoho CRM 后的运作方式</h2>
+<p>将 Mindbody CRM 连接到 Zoho CRM，即可将实时合同和自动付款信息直接保留在您团队已使用的 CRM 系统中。合同详情、自动付款状态、下次扣款日期、金额和续订日期等信息都会自动更新。无需重复录入，也无需等待报告。</p>
+<p>前台和经理看到的：</p>
 <ul>
-<li>将合约视为具有动态状态的独立对象。</li>
-<li>将每次自动付款状态变更都作为近乎实时的事件推送。</li>
-<li>每天重新计算“当前状态”，作为安全保障。</li>
+<li>每个会员记录都会显示其自动付款状态（正常、正在重试或失败），并在发生变化时立即更新。</li>
+<li>无需打开 Mindbody 即可查看合同名称、开始和结束日期以及每月金额。</li>
+<li>一旦付款失败，该成员就会出现在列表中，您的团队可以立即采取行动。</li>
 </ul>
-<p>自定义构建可以做到这一点，但是对 360 份合同进行每日对账的速率限制会计处理，这种事情通常会在两个月后出现问题。</p>
-<h2 id="the-apiant-approach">APIANT 方法</h2>
-<p>CRMConnect Mindbody 到 Zoho CRM 包含一个专用接口 <strong>MB 合同</strong> 自定义对象旁边 <strong>MB 会员资格</strong>. 来自 API 应用页面：“将客户合同详情和自动付款状态持续同步到 Zoho CRM。”</p>
-<p>具备此功能的特性：</p>
-<ul>
-<li><strong>会员资格和合同同步</strong> 将 MB 合约作为专用自定义对象。</li>
-<li><strong>实时数据同步</strong> 因此，自动付款状态的更改会在几秒钟内同步到 Zoho CRM。</li>
-<li><strong>综合采购和支付</strong> 捕获这些信息，以便可以查询底层支付事件。</li>
-<li><strong>自定义对象映射</strong> 因此，合同是工作流程和报告中的一流记录。</li>
-</ul>
-<p>统一的数据处理引擎处理嵌套的合约有效负载，并将每个子状态清晰地映射到 Zoho 对象模式中。</p>
+<p>实际操作上的改变很简单。你不再需要等到月底才能发现付款失败的情况，而是几个小时内就能看到。</p>
 <p><img alt="现代普拉提工作室，配有普拉提器械和全身镜，原色陶盆里摆放着植物，午后阳光温暖。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/inline-1.avif"/></p>
-<h2 id="what-mb-contracts-pushes-to-zoho-crm">MB Contracts 向 Zoho CRM 推送了哪些内容</h2>
-<p>MB Contracts 自定义对象包含实时工作流程所需的所有字段：</p>
-<pre class="highlight"><code class="language-text">Zoho CRM custom object: MB Contracts
-- contract_id
-- contact_id (links to Zoho CRM contact)
-- contract_name                e.g. "12-Month Unlimited Reformer"
-- start_date / end_date
-- status                       active|pending_cancel|expired|terminated
-- autopay_status               current|retrying|failed|suspended
-- autopay_method               card|ach
-- autopay_next_charge_date
-- autopay_next_charge_amount
-- autopay_last_attempt_at
-- autopay_last_attempt_result  success|declined|insufficient_funds|...
-- autopay_retry_count
-- monthly_amount
-- balance_remaining</code></pre>
-<p>这 <code>autopay_status</code> 该字段是所有重要事件的触发器。状态切换为 <code>failed</code> or <code>retrying</code>工作流触发，恢复开始。</p>
-<h2 id="designing-the-failed-payment-recovery-workflow">设计失败付款追回工作流程</h2>
-<p>在 MB Contracts 对象上执行 Zoho CRM 工作流程：</p>
+<h2 id="turning-a-failed-payment-into-a-same-day-recovery">将支付失败转化为当日追回</h2>
+<p>在 Zoho CRM 中启用自动付款状态后，您可以围绕它构建一个平稳的自动化恢复流程。一个可行的方案如下所示：</p>
 <ol>
-<li><strong>扳机：</strong> <code>autopay_status</code> 变化 <code>current</code> to <code>failed</code> or <code>retrying</code>.</li>
-<li><strong>同一时间：</strong> 自动向客户发送短信：“您好，我们的系统显示您的付款未成功。请点击此处快速更新：[update_card_link]。如果您需要帮助，请回复‘HELP’。”</li>
-<li><strong>+4 小时：</strong> 如果状态仍然失败且客户尚未更新卡片，则为会员专员创建一个高优先级任务，并提供完整的上下文（上次成功付款、重试次数、金额）。</li>
-<li><strong>+24小时：</strong> 工作室老板自动发送邮件：“需要我给你打个电话吗？”</li>
-<li><strong>+48小时：</strong> 业主已创建任务，当天即可完成。</li>
-<li><strong>恢复分支：</strong> 什么时候 <code>autopay_status</code> 翻转回来 <code>current</code>抑制剩余任务并发送确认短信。</li>
-<li><strong>升级分支：</strong> 如果问题在 5 天内仍未解决，则潜在客户状态将变为“有风险的成员”，并安排面对面的客户挽留谈话。</li>
+<li>一旦付款被标记为失败，会员会在同一小时内收到一条友好的短信：“我们的系统显示您的付款未成功。您可以在这里更新您的银行卡信息。如果您需要帮助，请回复。”</li>
+<li>四小时后，如果卡片仍未更新，会员专员将收到一个包含完整上下文的任务：上次成功付款、欠款金额、重试次数。</li>
+<li>第二天，工作室老板发来一封简短的电子邮件，表示可以快速通话。</li>
+<li>两天后问题仍未解决，当天将创建一个业主呼叫任务。</li>
+<li>如果会员在任何时候更新了他们的卡片，剩余步骤将停止，并发出确认短信。</li>
+<li>如果五天后问题仍未解决，则该会员将被标记为有风险，并安排一次面对面的挽留谈话。</li>
 </ol>
-<p>当天通过短信就能找回大部分欠款。欠款卡通常是卡片过期或余额不足等用户不知情的情况。在几小时内（而不是几周内）发现欠款是提高找回率的关键因素。</p>
-<h2 id="renewal-dates-as-pipeline-forecasting">续约日期作为管道预测</h2>
-<p>这 <code>end_date</code> MB Contracts 对象上的字段允许销售团队提前数周预测续约收入：</p>
+<p>当天发送的短信就能挽回大部分欠款。刷卡失败通常是卡片过期或会员不知情的临时资金问题。能否在几小时内而不是几周内发现刷卡失败，是能否留住会员的关键因素。</p>
+<h2 id="renewal-dates-become-a-revenue-forecast">续约日期成为收入预测指标</h2>
+<p>通过同样的实时连接，每个合同的到期日都会呈现在您的销售团队面前，这使得续约成为您可以围绕其进行规划而不是被动应对的事情。</p>
 <ul>
-<li>90 天远期管道：总和 <code>monthly_amount</code> 对于与……签订的合同 <code>end_date</code> 未来 90 天内，按历史续约率加权计算。</li>
-<li>续约呼叫队列：与……签订的合同 <code>end_date - now() &lt;= 45 days</code> 和 <code>status = active</code>按客户生命周期价值排序。</li>
-<li>自动续费与手动续费的区别：根据基础会员资格的续费标志进行筛选，为手动续费方面制定人员配备计划。</li>
+<li>展望未来 90 天：将未来三个月内到期的每个合同的月价值加起来，以了解续约收入在受到影响之前的情况。</li>
+<li>续约电话队列：将 45 天内到期的合同进行排序，以便您最有价值的会员优先获得个性化通话。</li>
+<li>明确人员配置：将自动续约的合同与需要人工处理的合同分开，并据此安排团队的时间。</li>
 </ul>
-<p>只有数据是实时更新的，预测才有用。月底的报告由于数据过时，预测结果会有 5% 到 15% 的误差。</p>
-<pre class="highlight"><code class="language-text">Sample forecast query (Zoho CRM Reports):
-  Select contact_id, monthly_amount, end_date
-  From MB_Contracts
-  Where end_date Between today() And today() + 90 days
-    And status = 'active'
-  Order By client_ltv DESC</code></pre>
+<p>只有基于最新数据的基础数据，预测才可信。月末报告的续约预测误差通常在 5% 到 15% 之间，原因很简单，就是因为输入数据已经过时。</p>
 <p><img alt="笔记本电脑屏幕上显示着包含续约管道数据的预测仪表盘，柔和的窗户光线照射在干净的木桌上。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-zoho-crm-contracts-autopay/inline-2.avif"/></p>
-<h2 id="representative-recovery-rate-at-360-clients">360位客户的代表性回收率</h2>
-<p>图片仅为示意图，并非真实客户：</p>
+<h2 id="what-the-numbers-could-look-like">这些数字可能是什么样子</h2>
+<p>这些数字是示例性的综合数据，并非真实客户数据，但它们显示了拥有约 360 名签约成员的工作室的变化趋势：</p>
 <ul>
-<li>自动付款失败恢复率基线（月底查获）：大约 25% 至 35%。</li>
-<li>通过当日短信 + 24 小时内向车主发送电子邮件，恢复率可提升至 60% 至 75%。</li>
-<li>通过及早发现故障而节省的每季度收入：在合同基础中占有相当大的比例，具体取决于平均合同规模。</li>
-<li>业主每月用于合同核对的时间从大约 4 小时减少到不到 1 小时，剩余的时间用于真正面临风险的成员。</li>
+<li>月末发现故障时的恢复率：大约 25% 至 35%。</li>
+<li>通过当天发送短信和第二天发送邮件给车主，恢复率可提升至 60% 至 75%。</li>
+<li>每个季度因早期发现而节省的收入：在合同基础中占有相当大的比例，具体取决于平均合同规模。</li>
+<li>业主在合同核对上花费的时间：从每月约 4 小时减少到不到 1 小时，而这 1 小时现在用于真正需要关注的成员。</li>
 </ul>
-<p>该机制的核心在于快速检测和成员可以实际响应的序列。集成功能负责检测。序列必须如实表明请求更新。</p>
-<h2 id="builder-takeaway">建筑商外卖</h2>
+<p>这套机制并非什么高明的营销手段，而是快速检测加上一套会员可以实际操作的流程。系统负责检测，你只需确保流程真实可靠且易于操作即可。</p>
+<h2 id="why-this-matters-for-your-bottom-line">这对您的最终收益至关重要</h2>
 <ul>
-<li>将合同和会员资格视为独立的自定义对象。一个客户可以拥有一个会员资格和三个合同（反之亦然）。每个概念一条记录，可以保持查询的简洁性。</li>
-<li>建立失败付款追回机制 <code>autopay_status</code> 变更事件，而非按计划报告。延迟是关键所在。</li>
-<li>使用 <code>end_date</code> 作为您的续约预测。这是工作室拥有的最可靠的前瞻性收入数据。</li>
+<li>将自动付款失败视为当日事件，而非月底才发现。响应速度是挽回率的关键。</li>
+<li>友好、轻松的第一条信息可以赢回那些会员卡过期的会员。</li>
+<li>合同到期日是制片厂能够获得的最可靠的未来收入预测数据。要利用这些日期进行规划，而不仅仅是用于汇报。</li>
 </ul>
 <h2 id="try-it-in-your-studio">在你的工作室试试吧</h2>
-<p>想看看 CRMConnect Mindbody 与 Zoho CRM 的实际应用吗？ <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">查看 API 应用页面</a>.</p>
+<p>想知道这是如何处理您的会员数据的吗？ <a href="/apipartners/mindbody/mindbody-zoho-crm-integration-and-automation-apiant">查看 API 应用页面</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">浏览完整的 API 应用目录</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">身心解决方案</span><span class="blog-apps-cta-desc">健身与健康融合</span><span class="blog-apps-cta-arrow">探索 →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Cliniko Solutions</span><span class="blog-apps-cta-desc">医疗保健和辅助医疗整合</span><span class="blog-apps-cta-arrow">探索 →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非营利组织和筹款整合</span><span class="blog-apps-cta-arrow">探索 →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-end-of-month-contract-reports-are-useless">为什么月末合同报告毫无用处</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">为什么现成的工具在这里会失效</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT 方法</a></li><li class="lvl-2"><a href="#what-mb-contracts-pushes-to-zoho-crm">MB Contracts 向 Zoho CRM 推送了哪些内容</a></li><li class="lvl-2"><a href="#designing-the-failed-payment-recovery-workflow">设计失败付款追回工作流程</a></li><li class="lvl-2"><a href="#renewal-dates-as-pipeline-forecasting">续约日期作为管道预测</a></li><li class="lvl-2"><a href="#representative-recovery-rate-at-360-clients">360位客户的代表性回收率</a></li><li class="lvl-2"><a href="#builder-takeaway">建筑商外卖</a></li><li class="lvl-2"><a href="#try-it-in-your-studio">在你的工作室试试吧</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-end-of-month-contract-reports-cost-you-members">为什么月末合同报告会给您的会员带来损失？</a></li><li class="lvl-2"><a href="#what-the-manual-process-actually-costs">人工操作的实际成本是多少？</a></li><li class="lvl-2"><a href="#how-it-works-once-contracts-flow-into-zoho-crm">合同导入 Zoho CRM 后的运作方式</a></li><li class="lvl-2"><a href="#turning-a-failed-payment-into-a-same-day-recovery">将支付失败转化为当日追回</a></li><li class="lvl-2"><a href="#renewal-dates-become-a-revenue-forecast">续约日期成为收入预测指标</a></li><li class="lvl-2"><a href="#what-the-numbers-could-look-like">这些数字可能是什么样子</a></li><li class="lvl-2"><a href="#why-this-matters-for-your-bottom-line">这对您的最终收益至关重要</a></li><li class="lvl-2"><a href="#try-it-in-your-studio">在你的工作室试试吧</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">继续阅读</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/zh/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="巴西柔术学院，墙到墙铺着垫子，架子上卷着道服腰带，角落里挂着沙袋，头顶有温暖的灯光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">在高级系统中统一身心注册、课程和预约。</h3><p class="blog-card-excerpt">使用 CRMConnect 的注册、课程预订和预约同步功能，为 HighLevel 提供跨 Mindbody 所有课程类型的统一日历视图。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/zh/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="现代力量训练健身房，配有成排的深蹲架、橡胶草坪、全景窗户、拉丝钢和黑色调、环境照明顶灯。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">Klaviyo中针对6个地点的Strength Network的多站点预约报告</h3><p class="blog-card-excerpt">CRMConnect 的预约同步功能如何在 Klaviyo 中显示站点级别的预约状态，以便中央营销部门可以运行按地点划分的流程和报告。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/zh/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="镜头拍摄于一个学区会议室，不同背景的成年人围坐在木桌旁审阅打印的报告，透过大窗户可以看到午后的阳光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">告别每月重新制作董事会演示文稿的繁琐：HubSpot 中 DonorPerfect 的实时筹款仪表盘</h3><p class="blog-card-excerpt">董事会需要趋势线，员工则希望重获夜晚时光。通过将捐赠者终身价值、平均捐赠额和筹款活动绩效同步到 HubSpot，每月董事会报告不再需要耗费四天时间，而变成了一个可保存的仪表盘视图。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">继续阅读</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/zh/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="巴西柔术学院，墙到墙铺着垫子，架子上卷着道服腰带，角落里挂着沙袋，头顶有温暖的灯光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">每个学生在所有项目中都应有一份清晰的课程表。</h3><p class="blog-card-excerpt">如果你的工作室同时开设入门课程、长期课程和私人课程，那么你的提醒最终会与每个学生实际预订的课程相匹配。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/zh/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="现代力量训练健身房，配有成排的深蹲架、橡胶草坪、全景窗户、拉丝钢和黑色调、环境照明顶灯。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">针对拥有6家健身房的力量训练网络的单店营销</h3><p class="blog-card-excerpt">一个中央营销团队向拥有 6 家健身房的连锁机构的每个成员发送一封邮件，结果有一半的概率会把教练姓名和健身房地址写错。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/zh/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="镜头拍摄于一个学区会议室，不同背景的成年人围坐在木桌旁审阅打印的报告，透过大窗户可以看到午后的阳光。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">应用程序接口</div><h3 class="blog-card-title">告别每月重新制作筹款看板的繁琐流程：在 HubSpot 中使用 DonorPerfect 的实时筹款仪表盘</h3><p class="blog-card-excerpt">董事会需要趋势线，员工则希望重获夜晚时光。有了 HubSpot，捐赠者价值、平均捐赠额和活动绩效等数据就能轻松导入，每月董事会报告不再需要耗费四天时间，而变成了一个可保存的仪表盘。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

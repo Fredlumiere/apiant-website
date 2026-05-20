@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>カイロプラクティックグループのためのフィールドレベルデータガバナンス：ClinikoとSalesforceの同期 | APIANTブログ</title>
-<meta content="複数回の通院が必要な治療プランを提供するカイロプラクティックグループにとって、「すべてを同期させて、あとは後で考えよう」というアプローチは通用しません。ClinikoとSalesforce間のフィールドレベルでの制御こそが、コンプライアンス審査を通過できる唯一の仕組みです。" name="description"/>
+<title>カイロプラクティックグループ向けClinikoからSalesforceへのデータガバナンス移行</title>
+<meta content="マーケティングチームはリアルタイムの患者データを必要としています。コンプライアンス担当者は管理権限を求めています。Salesforceに送信する患者情報を正確に選択し、その記録を保持することこそが、両者を満足させる唯一の方法です。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="カイロプラクティックグループ向けフィールドレベルデータガバナンス：ClinikoとSalesforceの同期" property="og:title"/>
-<meta content="複数回の通院が必要な治療プランを提供するカイロプラクティックグループにとって、「すべてを同期させて、あとは後で考えよう」というアプローチは通用しません。ClinikoとSalesforce間のフィールドレベルでの制御こそが、コンプライアンス審査を通過できる唯一の仕組みです。" property="og:description"/>
+<meta content="ClinikoのデータをSalesforceと安全に共有する：カイロプラクティックグループのためのガバナンスパターン" property="og:title"/>
+<meta content="マーケティングチームはリアルタイムの患者データを必要としています。コンプライアンス担当者は管理権限を求めています。Salesforceに送信する患者情報を正確に選択し、その記録を保持することこそが、両者を満足させる唯一の方法です。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="カイロプラクティックグループ向けフィールドレベルデータガバナンス：ClinikoとSalesforceの同期" property="twitter:title"/>
-<meta content="複数回の通院が必要な治療プランを提供するカイロプラクティックグループにとって、「すべてを同期させて、あとは後で考えよう」というアプローチは通用しません。ClinikoとSalesforce間のフィールドレベルでの制御こそが、コンプライアンス審査を通過できる唯一の仕組みです。" property="twitter:description"/>
+<meta content="ClinikoのデータをSalesforceと安全に共有する：カイロプラクティックグループのためのガバナンスパターン" property="twitter:title"/>
+<meta content="マーケティングチームはリアルタイムの患者データを必要としています。コンプライアンス担当者は管理権限を求めています。Salesforceに送信する患者情報を正確に選択し、その記録を保持することこそが、両者を満足させる唯一の方法です。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Field-Level Data Governance for a Chiropractic Group Syncing Cliniko Into Salesforce",
-  "description": "A chiropractic group with multi-visit care plans cannot afford a 'sync everything and figure it out later' approach. Field-level control between Cliniko and Salesforce is the only setup that survives a compliance review.",
+  "headline": "Sharing Cliniko Data With Salesforce Safely: a Governance Pattern for a Chiropractic Group",
+  "description": "Your marketing team wants live patient data. Your compliance officer wants control. Choosing exactly which patient details reach Salesforce, and keeping a record of it, is the only setup that keeps both happy.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.avif",
   "datePublished": "2025-07-17T13:18:32+00:00",
-  "dateModified": "2026-05-19T18:27:53.323426+00:00",
+  "dateModified": "2026-05-20T16:46:34.529876+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Field-Level Data Governance for a Chiropractic Group Syncing Cliniko Into Salesforce", "item": "https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" }
+    { "@type": "ListItem", "position": 4, "name": "Sharing Cliniko Data With Salesforce Safely: a Governance Pattern for a Chiropractic Group", "item": "https://apiant.com/blog/posts/chiropractic-group-cliniko-salesforce-data-governance-field-level/" }
   ]
 }
 </script>
@@ -196,67 +196,57 @@
 <div class="blog-category-chip">
 <a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
 </div>
-<h1 class="blog-post-h1">カイロプラクティックグループ向けフィールドレベルデータガバナンス：ClinikoとSalesforceの同期</h1>
+<h1 class="blog-post-h1">ClinikoのデータをSalesforceと安全に共有する：カイロプラクティックグループのためのガバナンスパターン</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
 <span>2025年7月17日</span>
-<span>5分で読める</span>
+<span>4分で読めます</span>
 </div>
 <div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=healthcare">＃健康管理</a><a class="blog-tag" href="/ja/blog/?tag=cliniko">#クリニック</a><a class="blog-tag" href="/ja/blog/?tag=salesforce">#Salesforce</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a></div>
 </header>
 <div class="blog-post-hero-image"><img alt="机に向かい、タブレットで患者の治療計画を確認しているカイロプラクターの画像。後ろの棚には脊椎の解剖模型が置かれている。清潔でプロフェッショナルな診察風景。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<p>ClinikoからSalesforceへのCSVデータの一括エクスポートは、最悪の設定と言えるでしょう。連携しているように見せかけるには十分なリアルタイム性がありながら、同時に情報が古く、誤りが発生する可能性も高い。また、データ損失も大きいため、誰も完全に信頼することができません。さらに、コンプライアンス担当者が診療所のデータ処理を承認するために必要な監査証跡も、一切提供されないのです。</p>
-<p>具体例を挙げましょう。サミット・スパイン・アンド・ジョイント・カイロプラクティックは、3つのクリニック、9人のカイロプラクター、年間約140万ドルの収益を誇る架空のグループです。このクリニックは複数回通院型のケアプランを提供しています。コンプライアンス担当者は、どの患者データがSalesforceに取り込まれるか、営業およびマーケティング部門の誰がそれを閲覧できるか、そして明確な監査証跡について厳格な管理を求めています。現在の設定は、誰も完全に信頼していない定期的なCSVエクスポートです。マーケティングチームはリアルタイムデータを求めており、コンプライアンス担当者はガバナンスを求めています。どちらも正しいのです。</p>
+<p>ClinikoからSalesforceへのスプレッドシートの一括エクスポートは、あらゆる面で最悪です。統合されているように感じられるほどには最新ですが、同時に情報が古すぎて間違っている可能性もあり、また、不完全なため誰も完全に信頼してくれません。さらに、コンプライアンス担当者が患者データの取り扱い状況を示す必要が生じた際に、根拠となるデータが何も残らないという問題もあります。</p>
+<p>具体例を挙げましょう。サミット・スパイン・アンド・ジョイント・カイロプラクティックは、3つのクリニック、9人のカイロプラクター、年間約140万ドルの収益を誇る架空のグループです。このクリニックは複数回通院型のケアプランを提供しています。コンプライアンス担当者は、どの患者情報がSalesforceに送られるか、営業・マーケティング部門の誰がそれを見られるか、そして何がいつ移動したかを明確に記録することを厳密に管理したいと考えています。現在の設定は、誰も完全に信頼していない定期的なスプレッドシートのエクスポートです。マーケティングチームはリアルタイムのデータを求めており、コンプライアンス担当者はガバナンスを求めています。どちらも正しいのです。</p>
 <p><img alt="カイロプラクターの診察台の写真。後ろの棚には脊椎の解剖模型があり、机の上には閉じたタブレットが置かれている。温かみのあるランプが灯り、柔らかな自然光が差し込んでいる。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/inline-1.avif"/></p>
-<h2 id="why-the-one-time-csv-is-the-worst-of-all-worlds-for-compliance">ワンタイムCSVがコンプライアンスにとって最悪の選択肢である理由</h2>
-<p>3つの理由：</p>
+<h2 id="why-the-periodic-spreadsheet-export-fails-you">定期的なスプレッドシートのエクスポートが失敗する理由</h2>
+<p>コンプライアンス審査を通過できない3つの理由：</p>
 <ul>
-<li>フィールドレベルのスコープ設定はできません。CSVエクスポートは「患者フィールドのみ」または「患者フィールドなし」のいずれかになりがちで、これは最小権限の原則に反します。</li>
-<li>監査証跡がありません。CSVファイルがアップロードされると、どのレコードがいつ、誰によってインポートされたかのログは残りません。コンプライアンスレビューを行う際に確認すべき情報が何もないのです。</li>
-<li>意図的に古いデータになっています。月次または四半期ごとのエクスポートでは、Salesforceには過去のデータのみが反映されます。Cliniko側での更新や削除（同意の取り消し、重複データの統合、レコードの修正など）は反映されません。</li>
+<li><strong>一か八かだ。</strong> スプレッドシート形式でエクスポートすると、患者の詳細情報がすべて含まれるか、まったく含まれないかのどちらかになりがちです。これは、マーケティング部門が本当に必要とする情報だけを共有するという、本来の目的とは正反対です。</li>
+<li><strong>痕跡を一切残さない。</strong> ファイルがSalesforceにアップロードされると、どの患者が、いつ、誰によってインポートされたかの記録は一切残りません。そのため、コンプライアンス審査では検証すべき事項が何もなくなります。</li>
+<li><strong>それは作られた瞬間に時代遅れになる。</strong> 月次または四半期ごとのエクスポートでは、Salesforceには過去のデータが反映されます。Clinikoで行った修正（患者によるマーケティング同意の撤回、重複データの統合、レコードの修正など）はSalesforceには反映されません。</li>
 </ul>
-<p>コンプライアンス担当者がこの設定に何か問題があると直感的に感じたのは正しい。正しい解決策は、フィールドレベルで双方向通信を行い、ログを記録することである。</p>
-<h2 id="the-apiant-approach">APIANTアプローチ</h2>
-<p>CRMConnect Cliniko to Salesforceは、フィールドレベルの同期設定をサポートしています。Salesforceに送信されるClinikoのすべてのフィールドは、明示的にオプトインされ、オプトアウトされることはありません。双方向の患者同期により、どちらの側での更新も反映され、同意や修正の変更は四半期ごとではなく数分以内に反映されます。同期ログは永続化され、クエリ可能なので、コンプライアンス担当者はCSV方式では提供できない監査証跡を取得できます。</p>
-<h2 id="concrete-steps">具体的なステップ</h2>
-<ol>
-<li>設定を行う前に、フィールドマップを作成してください。Salesforceと同期するClinikoのすべてのフィールドをリストアップします。それぞれのフィールドを、マーケティング用、運用用、または臨床医専用としてタグ付けします。臨床医専用フィールドは設定しません。コンプライアンス担当者がマップに署名します。</li>
-<li>マーケティングおよび運用上の安全性が確保された人口統計フィールドのみ、双方向の患者同期を有効にしてください。対象となるフィールドの例：氏名、メールアドレス、電話番号、郵送先住所、マーケティングコミュニケーション設定、事業所所在地。対象外となるフィールドの例：自由記述式の臨床フィールド、診断フィールド、治療計画フィールド。</li>
-<li>ケース情報をSalesforceオブジェクトとして有効化し、フィールドレベルのスコープを設定します。Salesforceのスコープに含まれる項目：ケースステータス、セッション制限、完了したセッション、請求可能な最大金額、マイルストーンの進捗状況。スコープ外の項目：臨床記述、ケースノート、患者の状態や治療への反応を説明する自由記述フィールド。</li>
-<li>Salesforceのプロファイルと権限セットを同期マップに合わせて調整します。臨床担当者は、運用関連のフィールドのみを表示できます。請求担当者は、請求書と支払いに関するフィールドを表示できます。マーケティング担当者は、マーケティング関連のフィールドのみを表示できます。ロール間のアクセスは明示的に設定する必要があり、デフォルト設定ではありません。</li>
-<li>マーケティング設定と同意は、ClinikoからSalesforceへの一方向通信として構成します。Clinikoの同意フィールドが真の情報源となります。患者がClinikoで同意を取り消すと、その変更はSalesforceに即座に反映されます。Salesforceで開始された同意の変更は、管理されたログ記録プロセスが導入されていない限り、Clinikoに反映されません。</li>
-<li>同期ログの保持期間を設定します。ログに記録される内容（レコードの作成、レコードの更新、変更されたフィールド、変更元）を確認し、保持期間が組織のコンプライアンス体制を満たしていることを確認し、コンプライアンス担当者がログの照会方法を理解していることを確認します。</li>
-<li>四半期ごとのガバナンスレビューをスケジュールしてください。各四半期につき20分、コンプライアンス担当者、統合責任者、臨床ディレクターが参加します。議題は下記をご覧ください。</li>
-</ol>
+<p>コンプライアンス担当者の「何かがおかしい」という直感は正しい。適切な設定を行えば、データを項目ごとに選択でき、両方のシステムを常に最新の状態に保ち、すべての変更履歴を記録できる。</p>
+<h2 id="a-safer-way-to-connect-cliniko-and-salesforce">ClinikoとSalesforceをより安全に接続する方法</h2>
+<p>CRMConnect Cliniko to Salesforceを使用すると、患者情報をSalesforceに送信する項目を一つ一つ正確に選択できます。意図的に有効にしない限り、何も共有されません。患者情報の更新は双方向で常に最新の状態に保たれるため、患者が同意を撤回したり、Clinikoで記録を修正したりした場合、Salesforceには数ヶ月以内に反映され、数ヶ月後に反映されることはありません。また、変更内容の記録も保持されるため、スプレッドシート方式では決して得られない履歴を把握できます。</p>
+<h2 id="how-to-set-it-up-responsibly">責任を持って設定する方法</h2>
+<p><strong>電源を入れる前に、データマップを作成してください。</strong> Salesforceと共有する予定のClinikoの詳細情報をすべてリストアップしてください。それぞれの情報を、マーケティング用、運用用、または臨床医専用としてマークしてください。臨床医専用の項目は、決して共有されません。コンプライアンス担当者がこのマップに署名します。</p>
+<p><strong>連絡先情報のみを共有してください。双方向でお願いします。</strong> マーケティングや業務運営上安全な情報、つまり氏名、メールアドレス、電話番号、住所、マーケティングに関する希望、患者が通院しているクリニックなどは、両方のシステムで最新の状態に保たれます。臨床情報、自由記述式のメモ、診断結果、治療計画などは、システムから除外されます。</p>
+<p><strong>ケアプランの内容ではなく、ケアプランの進捗状況を共有してください。</strong> Salesforceは、ケアプランに関する構造的な情報（症例ステータス、許可されたセッション数、使用済みセッション数、請求限度額、マイルストーンの進捗状況など）を把握できます。しかし、患者の状態を説明する臨床的な記述やメモを見ることはありません。</p>
+<p><strong>Salesforceへのアクセス権限をデータマップに一致させる。</strong> 臨床現場のスタッフは、業務上安全な詳細情報を閲覧できます。請求担当スタッフは、請求書と支払いの詳細を閲覧できます。マーケティング担当スタッフは、マーケティング上安全な詳細情報のみを閲覧できます。これらの境界線を越えて閲覧できるのは、デフォルト設定による偶然ではなく、意図的な選択の結果です。</p>
+<p><strong>Clinikoを同意に関する唯一の信頼できる情報源にしましょう。</strong> 患者がClinikoでマーケティング同意を取り消した場合、その情報はSalesforceに即座に反映されます。Salesforce側では、同意を取り消すための管理された記録プロセスがない限り、同意内容は変更されません。</p>
+<p><strong>何が記録されるか確認してください。</strong> 記録の作成、更新、変更されたフィールド、および各変更の発生源がすべてログに記録されていること、保持期間がコンプライアンス体制に合致していること、およびコンプライアンス担当者がそれらの情報を検索する方法を知っていることを確認してください。</p>
+<p><strong>四半期ごとのレビューを予約しましょう。</strong> コンプライアンス担当者、システム統合責任者、臨床ディレクターと四半期ごとに20分間のミーティングを行う。</p>
 <p><img alt="印刷されたチェックリスト、ペン、タブレットが置かれた机の写真。柔らかな自然光が差し込み、紙や画面には判読できる文字はなく、温かみのあるニュートラルな色調で、自然なドキュメンタリー風に撮影されている。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/chiropractic-group-cliniko-salesforce-data-governance-field-level/inline-2.avif"/></p>
-<h2 id="quarterly-governance-review">四半期ごとのガバナンスレビュー</h2>
-<p>議題は簡潔かつ一貫している。</p>
+<h2 id="the-quarterly-governance-review">四半期ごとのガバナンスレビュー</h2>
+<p>議題は簡潔かつ一貫性のあるものにしましょう。</p>
 <ul>
-<li>承認なしに現場地図が変更されていないことを確認してください。追加事項があれば記録してください。</li>
-<li>前四半期以降のSalesforceプロファイルと権限セットの変更点を確認してください。同期データに影響を与える新しいロールや新しいアクセス権限を特定してください。</li>
-<li>四半期の同期ログを確認してください。少数の記録を抜き取り、境界を越えるべきではない臨床コンテンツがないか確認してください。</li>
-<li>マーケティング同意件数を確認してください。ClinikoとSalesforceのオプトイン件数が一致していることを確認してください。不一致がある場合は調査してください。</li>
-<li>調査結果を診療所のコンプライアンスファイルに記録してください。</li>
+<li>データマップが承認なしに変更されていないことを確認してください。追加事項があれば記録してください。</li>
+<li>前四半期以降のSalesforceのアクセス権限の変更点を確認してください。共有データにアクセスする新たな役割やアクセス権限があれば特定してください。</li>
+<li>四半期ごとの変更履歴を確認してください。少数の記録を抜き取り検査し、臨床関連の内容が漏れていないことを確認してください。</li>
+<li>マーケティング同意数を比較する。ClinikoとSalesforceのデータが一致していることを確認する。差異があれば調査する。</li>
+<li>診療所のコンプライアンスファイルに、そのレビューの内容を記載してください。</li>
 </ul>
-<p>四半期あたり20分。CSV方式では、レビュー対象がないため、レビューに費やす時間はゼロ分です。レビューを可能にするのは、統合の監査証跡です。</p>
-<h2 id="outcome">結果</h2>
-<p>サミットのようなプロファイルを持つカイロプラクティックグループがこのパターンを採用すると、「マーケティングチームとコンプライアンス担当者が統合の安全性について意見が分かれる」状態から、「両チームが文書化され、署名され、四半期ごとに見直されるガバナンス体制を確立する」状態へと移行します。運用面では、マーケティングチームは、診療所の実態を露呈させるような記録を残すことなく、必要なリアルタイムデータ（複数回受診のケアプランの進捗状況、離脱患者の兆候、生涯価値など）を取得できます。コンプライアンス担当者は、必要な監査証跡を入手できます。CFOは、報告の正確性に関する質問を受けることがなくなります。</p>
-<h2 id="salesforce-profiles-and-permission-sets-aligned-to-what-cliniko-exposes">Clinikoが公開する情報に合わせたSalesforceのプロファイルと権限セット</h2>
-<p>よくある失敗例：マーケティングチームが、運用目的で同期されたフィールド（ケースステータス、セッション制限など）を表示できるSalesforce権限を取得してしまうケース。これは、設定時に権限セットの範囲が適切に設定されていないことが原因です。解決策は一度限りですが、初日に実施する必要があります。臨床、請求、マーケティングの権限セットをそれぞれ分け、必要な同期フィールドのサブセットにマッピングします。それ以外の権限はすべてデフォルトで拒否します。</p>
-<h2 id="builder-takeaway">建築業者の持ち帰り</h2>
-<ul>
-<li>フィールドマップは、署名入りの文書です。これは、統合を「私を信じてください」から「これがポリシーです」へと変える成果物でもあります。何かを有効にする前に、必ずフィールドマップを作成してください。</li>
-<li>双方向同期はコンプライアンス遵守のために必須です。患者がClinikoで同意を取り消した場合、その変更は数分以内にSalesforceに反映されなければならず、数ヶ月もかかることは許されません。</li>
-<li>監査証跡の有無は、コンプライアンス審査の合否を分ける重要な要素です。このシステム統合によって、監査証跡が提供されます。コンプライアンス担当者がその使い方を理解していることを確認してください。</li>
-</ul>
-<p>CRMConnect ClinikoとSalesforceの連携動作をご覧になりたいですか？ <a href="/apipartners/cliniko/cliniko-salesforce-integration-and-automation-apiant">APIアプリのページを見る</a>または、全文を閲覧する <a href="/apps.html">APIアプリカタログ</a>.</p>
+<p>四半期ごとに20分。スプレッドシート方式では、レビューする内容がないため、レビュー時間はゼロ分です。レビューを可能にするのは、記録された履歴です。</p>
+<h2 id="what-this-means-for-your-group">あなたのグループにとってこれは何を意味するのか</h2>
+<p>このパターンに従うカイロプラクティックグループは、「マーケティング部門とコンプライアンス部門が、これが安全かどうかについて意見が分かれている」状態から、「両者が署名済みの書面による合意を四半期ごとに見直す」状態へと移行します。マーケティングチームは、診療所を危険にさらすような記録を公開することなく、ケアプランの進捗状況、離脱患者の兆候、患者価値といった、望んでいたリアルタイムデータを入手します。コンプライアンス担当者は、必要な記録を入手できます。そして、CFOは、報告内容の信頼性について質問されることがなくなります。</p>
+<p>CRMConnect ClinikoとSalesforceの連携動作をご覧になりたいですか？ <a href="/apipartners/cliniko/cliniko-salesforce-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">APIアプリの全カタログをご覧ください</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">マインドボディソリューションズ</span><span class="blog-apps-cta-desc">フィットネスとウェルネスの統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">クリニコソリューションズ</span><span class="blog-apps-cta-desc">医療および関連医療分野の統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非営利団体および資金調達との連携</span><span class="blog-apps-cta-arrow">探索する →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-the-one-time-csv-is-the-worst-of-all-worlds-for-compliance">ワンタイムCSVがコンプライアンスにとって最悪の選択肢である理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#concrete-steps">具体的なステップ</a></li><li class="lvl-2"><a href="#quarterly-governance-review">四半期ごとのガバナンスレビュー</a></li><li class="lvl-2"><a href="#outcome">結果</a></li><li class="lvl-2"><a href="#salesforce-profiles-and-permission-sets-aligned-to-what-cliniko-exposes">Clinikoが公開する情報に合わせたSalesforceのプロファイルと権限セット</a></li><li class="lvl-2"><a href="#builder-takeaway">建築業者の持ち帰り</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#why-the-periodic-spreadsheet-export-fails-you">定期的なスプレッドシートのエクスポートが失敗する理由</a></li><li class="lvl-2"><a href="#a-safer-way-to-connect-cliniko-and-salesforce">ClinikoとSalesforceをより安全に接続する方法</a></li><li class="lvl-2"><a href="#how-to-set-it-up-responsibly">責任を持って設定する方法</a></li><li class="lvl-2"><a href="#the-quarterly-governance-review">四半期ごとのガバナンスレビュー</a></li><li class="lvl-2"><a href="#what-this-means-for-your-group">あなたのグループにとってこれは何を意味するのか</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">実施するすべてのプログラムにおいて、生徒一人につき明確なスケジュールを一つだけ作成します。</h3><p class="blog-card-excerpt">もしあなたのスタジオが初心者向けプログラム、長期コース、プライベートレッスンを同時に提供している場合、リマインダーが各生徒が実際に予約した内容と最終的に一致するようにするには、以下の手順を踏む必要があります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">6つのジムからなる筋力トレーニングネットワークの拠点別マーケティング</h3><p class="blog-card-excerpt">中央マーケティングチームが6つのジムからなるネットワークの全メンバーに一斉送信するメールを送ると、コーチの名前とジムの住所が半分の確率で間違ってしまう。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会議資料の再構築を終わらせよう：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。スタッフは夜の時間を取り戻したい。寄付額、平均寄付額、キャンペーン実績がHubSpotに集約されることで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードとして活用できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

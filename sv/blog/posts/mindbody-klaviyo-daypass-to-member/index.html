@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Spåra konvertering från dagskort till medlemskap i Klaviyo med hjälp av Mindbody-besöksdata | APIANT-bloggen</title>
-<meta content="Använd CRMConnects besöksspårning och köpsynkronisering för att tillskriva konvertering från dagskort till medlem i Klaviyo och köra riktade flöden för återkommande dagskortsköpare." name="description"/>
+<title>Spåra konvertering av dagskort till gymmedlemskap i Klaviyo</title>
+<meta content="Dagspass är det vanligaste sättet folk besöker ditt gym, och det som sämst spåras. Om du inte vet din konverteringsfrekvens kan du inte förbättra den." name="description"/>
 
 <!-- Open Graph -->
-<meta content="Spåra konvertering från dagskort till medlemskap i Klaviyo med hjälp av Mindbody-besöksdata" property="og:title"/>
-<meta content="Använd CRMConnects besöksspårning och köpsynkronisering för att tillskriva konvertering från dagskort till medlem i Klaviyo och köra riktade flöden för återkommande dagskortsköpare." property="og:description"/>
+<meta content="Hur många dagskortsbesökare blir faktiskt medlemmar?" property="og:title"/>
+<meta content="Dagspass är det vanligaste sättet folk besöker ditt gym, och det som sämst spåras. Om du inte vet din konverteringsfrekvens kan du inte förbättra den." property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Spåra konvertering från dagskort till medlemskap i Klaviyo med hjälp av Mindbody-besöksdata" property="twitter:title"/>
-<meta content="Använd CRMConnects besöksspårning och köpsynkronisering för att tillskriva konvertering från dagskort till medlem i Klaviyo och köra riktade flöden för återkommande dagskortsköpare." property="twitter:description"/>
+<meta content="Hur många dagskortsbesökare blir faktiskt medlemmar?" property="twitter:title"/>
+<meta content="Dagspass är det vanligaste sättet folk besöker ditt gym, och det som sämst spåras. Om du inte vet din konverteringsfrekvens kan du inte förbättra den." property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Tracking Day-Pass to Membership Conversion in Klaviyo Using Mindbody Visit Data",
-  "description": "Use CRMConnect's visit tracking and purchase sync to attribute daypass-to-member conversion inside Klaviyo, and run targeted flows for repeat daypass buyers.",
+  "headline": "How Many Day-Pass Visitors Actually Become Members?",
+  "description": "Day passes are the most common way people try your gym, and the worst-tracked. If you do not know your conversion rate, you cannot improve it.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif",
   "datePublished": "2026-04-13T09:50:57+00:00",
-  "dateModified": "2026-05-20T13:39:46.873373+00:00",
+  "dateModified": "2026-05-20T16:43:27.332954+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Tracking Day-Pass to Membership Conversion in Klaviyo Using Mindbody Visit Data", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" }
+    { "@type": "ListItem", "position": 4, "name": "How Many Day-Pass Visitors Actually Become Members?", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-daypass-to-member/" }
   ]
 }
 </script>
@@ -196,7 +196,7 @@
 <div class="blog-category-chip">
 <a href="/sv/blog/category/api-apps" style="color:inherit;text-decoration:none;">API-appar</a>
 </div>
-<h1 class="blog-post-h1">Spåra konvertering från dagskort till medlemskap i Klaviyo med hjälp av Mindbody-besöksdata</h1>
+<h1 class="blog-post-h1">Hur många dagskortsbesökare blir faktiskt medlemmar?</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/sv/blog/?author=fred">Fred Lumiere</a></span>
 <span>13 april 2026</span>
@@ -207,73 +207,52 @@
 <div class="blog-post-hero-image"><img alt="Klättergyminredning med överhängande boulderingvägg, färgglada grepp, vadderat golv, industriella fackverk och stämningsfulla varma spotlights." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h2 id="the-day-pass-attribution-problem">Problemet med dagskortsattributionen</h2>
-<p>Dagskort är den billigaste och vanligaste inträdesvägen till ett klättergym, en yogastudio eller vilken drop-in-fitnessverksamhet som helst. De är också den sämst rönta delen av tratten. En drop-in-gäst köper ett dagskort, klättrar i två timmar, lämnar och blir antingen medlem tre veckor senare eller återvänder aldrig. Huruvida konverteringen är 5 procent eller 25 procent bör styra hela din förvärvsstrategi. De flesta operatörer vet inte vilket.</p>
-<p>Hypotetiskt: Basalt and Belay Climbing Co (illustrativt) är ett gym med 1 100 medlemmar och en hälsosam blandning av dagskort. Deras Klaviyo-konto har alla e-postprenumeranter och alla medlemsregistreringar. Vad de saknar är en tydlig länk mellan de två. Köpet av dagskort, det andra besöket, det tredje besöket och den slutliga medlemsregistreringen är fyra separata händelser för Klaviyo, och de är inte knutna till en enda identifierare.</p>
-<h2 id="why-off-the-shelf-tools-fail-here">Varför standardverktyg misslyckas här</h2>
-<p>Problemet med delade identifierare är verkligt. Mindbody tilldelar ett klient-ID vid den första transaktionen, men om samma person köper sitt nästa dagspass med en något annorlunda e-postadress (automatiskt ifylld av en annan webbläsare eller en gästbetalning) skapar Mindbody en dubblett. Klaviyo ser sedan två profiler. Konverteringsberäkningarna faller isär vid dedupliceringssteget, inte vid analyssteget.</p>
-<p>Ett Zap eller ett anpassat skript kan ibland matcha e-post, men det kan inte på ett tillförlitligt sätt deduplicera namn plus telefonnummer, och det kan inte stämma av besöksantalet när en profil slås samman senare. Integrationen är genomförbar, men dedupliceringen och besöksavstämningen är där de flesta byggen stannar av.</p>
-<h2 id="the-apiant-approach">APIANT-metoden</h2>
-<p>CRMConnect Mindbody till Klaviyo hanterar detta med två funktioner som fungerar tillsammans:</p>
+<h2 id="you-probably-do-not-know-your-day-pass-conversion-rate">Du vet förmodligen inte din konverteringsfrekvens för dagskort</h2>
+<p>Dagskort är det billigaste och vanligaste sättet att prova ett klättergym, en yogastudio eller någon annan drop-in-fitnessverksamhet. De är också den delen av tratten som får sämst resultat. En drop-in-gäst köper ett dagskort, klättrar i två timmar, lämnar och blir antingen medlem tre veckor senare eller kommer aldrig tillbaka. Huruvida konverteringsfrekvensen är 5 procent eller 25 procent bör forma hela din förvärvsstrategi. De flesta operatörer har ingen aning om vilken det är.</p>
+<p>Här är ett illustrativt exempel. Basalt and Belay Climbing Co (ett hypotetiskt gym) är ett gym med 1 100 medlemmar och en hälsosam blandning av dagskort. Deras marknadsföringsverktyg har alla e-postprenumeranter och alla medlemsregistreringar. Vad de saknar är en tydlig länk mellan de två. Dagskortsköpet, det andra besöket, det tredje besöket och den slutliga medlemsregistreringen är fyra separata händelser, och ingenting binder dem till en person.</p>
+<h2 id="why-this-is-so-hard-to-track-without-help">Varför detta är så svårt att spåra utan hjälp</h2>
+<p>Problemet är problemet med dubbletter av poster. Samma person köper sitt första dagskort, kommer sedan tillbaka och köper ett annat med en något annorlunda e-postadress (automatiskt ifylld av en annan webbläsare eller en gästs utcheckning). Nu finns det två poster för en människa. Ditt marknadsföringsverktyg ser två personer. Konverteringsmatematiken faller isär, inte för att analyserna är fel, utan för att samma person räknas två gånger.</p>
+<p>Patchverktyg kan ibland matcha e-postmeddelanden, men de kan inte på ett tillförlitligt sätt avgöra om "Sam på det här telefonnumret" och "Samuel på den e-postadressen" är samma klättrare, och de kan inte korrigera besöksantalet när poster slås samman senare. Så de flesta försök att mäta detta producerar i tysthet siffror som ingen litar på.</p>
+<h2 id="how-crmconnect-closes-the-gap">Hur CRMConnect minskar gapet</h2>
+<p>CRMConnect Mindbody till Klaviyo hanterar detta med två saker som samverkar:</p>
 <ul>
-<li><strong>Spårning av besök</strong> registrerar de senaste kundbesöken, med daglig avstämning så att ominmatade eller sammanslagna poster inte skapar dubbletter av besökshändelser.</li>
-<li><strong>Synkronisering av inköps- och försäljningsrader</strong> registrerar dagskortsköpet som en strukturerad händelse med intakt SKU, separat från en medlemsregistrerings-SKU.</li>
+<li>Besöksspårning registrerar de senaste kundbesöken och stäms av dagligen så att ominmatade eller sammanslagna poster inte skapar dubbletter av besök.</li>
+<li>Synkronisering av köp och försäljning registrerar dagskortsköpet som en egen tydlig händelse, separat från en medlemsregistrering.</li>
 </ul>
-<p>På Klaviyo-sidan matchas profiler via e-post och uppdateras på plats. Om en Mindbody-post senare slås samman följer den enhetliga historiken. Resultatet är en enda Klaviyo-profil per verklig människa, med köp av dagskort, besöksantal och slutlig medlemsregistrering på samma tidslinje.</p>
+<p>På Klaviyo-sidan blir varje verklig person en enda profil, matchad via e-post och uppdaterad. Om en Mindbody-post sammanfogas senare följer den kombinerade historiken. Resultatet är en enda profil per verklig människa, med köp av dagskort, antal besök och slutlig medlemsregistrering, allt på en och samma tidslinje.</p>
 <p><img alt="Bouldervägg med färgglada grepp och en kritpåse hängande på en krok, vadderat golv i förgrunden, varma spotlights." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/inline-1.avif"/></p>
-<h2 id="what-visit-tracking-surfaces-in-klaviyo">Vilka besöksspårningsytor i Klaviyo</h2>
-<p>Varje profil har en löpande uppsättning attribut som möjliggör tillskrivning av dagskort:</p>
-<pre class="highlight"><code class="language-text">Klaviyo profile attributes:
-- mindbody_first_purchase_sku        e.g. DAYPASS-ADULT
-- mindbody_first_visit_at            ISO timestamp
-- mindbody_visit_count               int
-- mindbody_last_visit_at             ISO timestamp
-- mindbody_membership_status         active|expired|none
-- mindbody_membership_started_at     ISO timestamp (null until conversion)</code></pre>
-<p>Konverteringshändelsen du bryr dig om är ögonblicket <code>mindbody_membership_started_at</code> växlar från null till en tidsstämpel på en profil vars <code>mindbody_first_purchase_sku</code> var ett dagskort. Den enda jämförelsen är svaret på frågan "hur många dagskortsköpare som blev medlemmar".</p>
-<h2 id="designing-the-daypass-visitor-conversion-flow">Utforma konverteringsflödet för dagspassbesökare</h2>
-<p>När attributen är på plats är flödet enkelt:</p>
-<ol>
-<li><strong>Utlösare:</strong> Evenemang för köp av Mindbody-dagspass.</li>
-<li><strong>Vänta 4 timmar.</strong> Kontext för klättring samma dag.</li>
-<li><strong>E-post 1 (klättringskväll):</strong> "Hoppas att sessionen var bra. Här är ditt 7-dagars returpass med 5 dollar rabatt."</li>
-<li><strong>Gren på <code>mindbody_visit_count</code> efter 7 dagar:</strong></li>
-<li>Fortfarande 1: skicka e-postmeddelandet ”de första klättringarna är svårast” med ett erbjudande om en nybörjarklinik.</li>
-<li>2 till 3: skicka ett e-postmeddelande med en medlemsjämförelse där det står ”du börjar bli fast”.</li>
-<li>4 eller fler: skicka ett e-postmeddelande med en "räkna ut"-funktion och brytpunkten för medlemskap kontra dagskort.</li>
-<li><strong>Undertryck på <code>mindbody_membership_status = active</code>.</strong> Slutar tjata på alla som konverterat.</li>
-</ol>
-<p>Den tredje kategorin är segmentet med hög konvertering. Fyra besök på en vecka från någon som betalar dagskortspriser är en medlem som inte har registrerat sig än. Mejlet skriver i princip sig självt.</p>
-<h2 id="reading-the-conversion-report-honestly">Att läsa konverteringsrapporten ärligt</h2>
-<p>Frestelsen är att räkna varje medlemsregistrering som följer på ett dagskort. Det ärliga antalet är smalare. Använd denna segmentering i Klaviyo:</p>
+<h2 id="what-you-can-finally-see">Vad du äntligen kan se</h2>
+<p>Varje profil innehåller en löpande bild: vad deras första köp var, när de besökte sidan första gången, hur många gånger de har varit där, när de senast besökte sidan, om de för närvarande är medlem och datumet de gick med.</p>
+<p>Den konvertering du bryr dig om är det ögonblick då en profil vars första köp var ett dagskort får ett medlemskapsstartdatum. Räkna dessa, så har du äntligen det riktiga svaret på "hur många dagskortsköpare som blev medlemmar".</p>
+<h2 id="the-day-pass-conversion-flow">Flödet för konvertering av dagskort</h2>
+<p>När den bilden väl är på plats är flödet enkelt.</p>
+<p>Det börjar när någon köper ett dagskort. Den väntar i fyra timmar, så den landar på kvällen, med klättringen fortfarande färsk, och skickar ett första mejl: ”Hoppas passet var bra. Här är ditt 7-dagars returkort med 5 dollar rabatt.”</p>
+<p>Sedan, efter 7 dagar, tittar den på hur många gånger personen har kommit in:</p>
 <ul>
-<li><strong>Kohort:</strong> köpare av dagskort i kalendermånad N.</li>
-<li><strong>Fönster:</strong> 60 dagar från första köpet.</li>
-<li><strong>Konverterad:</strong> <code>mindbody_membership_started_at</code> faller innanför fönstret.</li>
+<li>Fortfarande bara ett besök: ett mejl med texten ”de första klättringarna är svårast” och ett erbjudande om en nybörjarklinik.</li>
+<li>Två eller tre besök: ett mejl med en medlemsjämförelse där det står att du börjar bli fast.</li>
+<li>Fyra eller fler besök: ett "räkneresultat"-mejl som anger brytpunkten mellan medlemskap och dagskort.</li>
 </ul>
-<p>Rapportera två förhållanden: 30-dagars konvertering och 60-dagars konvertering. Allt efter 60 dagar är en separat marknadsföringshistoria och bör inte krediteras dagskortskanalen. Operatörer som minimerar fönstret för att "någonsin" överskatta kanalen med 2x eller mer.</p>
+<p>Och i det ögonblick någon går med slutar flödet att skicka meddelanden till dem. Ingen blir tjatad efter att de konverterat.</p>
+<p>Den tredje gruppen är ditt segment med hög konvertering. Fyra besök på en vecka från någon som betalar dagskortspriser är en medlem som helt enkelt inte har registrerat sig än. Mejlet skriver i princip sig självt.</p>
+<h2 id="reading-the-numbers-honestly">Att läsa siffrorna ärligt</h2>
+<p>Det frestande draget är att räkna alla medlemsregistreringar som någonsin följer ett dagskort. Det ärliga antalet är smalare. Titta på en tydlig kohort: alla som köpte ett dagskort under en given månad. Ge dem ett fönster på 60 dagar. Räkna hur många som gick med inom det.</p>
+<p>Rapportera två siffror: 30-dagars konvertering och 60-dagars konvertering. Allt efter 60 dagar är en annan marknadsföringshistoria och bör inte krediteras dagskortskanalen. Operatörer som sträcker ut fönstret för att "någonsin" överskatta kanalen med två gånger eller mer, och sedan fattar förvärvsbeslut baserat på en smickrande lögn.</p>
 <p><img alt="Närbild på ett medlemsregistreringsformulär i trä på ett urklipp med en penna och mjuk gymbelysning." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-daypass-to-member/inline-2.avif"/></p>
-<h2 id="representative-conversion-rate-at-1100-members">Representativ konverteringsfrekvens vid 1 100 medlemmar</h2>
-<p>Illustrativa kompositer, inte en riktig kund:</p>
+<h2 id="what-this-means-for-your-gym">Vad detta innebär för ditt gym</h2>
+<p>Här är illustrativa kompositer, inte en riktig kund:</p>
 <ul>
-<li>Baslinje för konvertering från dagskort till medlem efter 30 dagar (inget riktat flöde): ungefär 4 till 7 procent.</li>
-<li>30-dagars konvertering med flödet ovan: en ökning till intervallet 9 till 14 procent, främst från segmenten 2 till 3 besök och 4+ där erbjudandet är vältajmat.</li>
-<li>Genomsnittligt antal dagskort per konverterad medlem före registrering: 2,6 (vilket i sig är ett användbart nummer, eftersom det talar om för receptionen var samtalet ska börja).</li>
+<li>30-dagars konvertering från dagskort till medlem utan riktat flöde: ungefär 4 till 7 procent.</li>
+<li>30-dagars konvertering med flödet ovan: en ökning till intervallet 9 till 14 procent, främst från grupperna med två till tre besök och fyra plus där erbjudandet är vältajmat.</li>
+<li>Genomsnittliga dagskort som en konverterad medlem köpte innan han registrerade sig: 2,6, vilket i sig är användbart eftersom det talar om för receptionen var konversationen ska börja.</li>
 </ul>
-<p>Dina siffror kommer att förändras med prissättning, klättrardemografi och hur krävande beräkningarna från dagskort till medlemskap är. Mekanismen är densamma.</p>
-<h2 id="builder-takeaway">Byggarens slutsats</h2>
-<ul>
-<li>Hela spelet bygger på den delade identifieraren. Få e-postbaserad deduplicering direkt i integrationslagret, annars fungerar ingen av de efterföljande matematikerna.</li>
-<li>Använda <code>mindbody_visit_count</code> som förgreningsnyckel, inte dagar sedan första besöket. Två besök på en vecka slår två besök på en månad för medlemskapsintention.</li>
-<li>Begränsa ditt konverteringsfönster till 30 eller 60 dagar. ”Någonsin” är en smickrande lögn som döljer var kanalen faktiskt slutar fungera.</li>
-</ul>
-<h2 id="try-it-in-your-gym">Prova det i ditt gym</h2>
+<p>Dina siffror kommer att förändras med prissättningen, dina klättrare och hur krävande dina beräkningar från dagskort till medlemskap är. Mekanismen är densamma: ta reda på din verkliga konverteringsfrekvens och skicka sedan rätt erbjudande till personerna just i det ögonblick de är mest benägna att gå med.</p>
 <p>Vill du se CRMConnect Mindbody till Klaviyo i aktion? <a href="/apipartners/mindbody/mindbody-klaviyo-integration-and-automation-apiant">Visa API-appens sida</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">Bläddra i hela API-appkatalogen</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">Mindbody-lösningar</span><span class="blog-apps-cta-desc">Fitness- och wellnessintegrationer</span><span class="blog-apps-cta-arrow">Utforska →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Kliniko-lösningar</span><span class="blog-apps-cta-desc">Integrationer inom hälso- och sjukvård och allierad hälso- och sjukvård</span><span class="blog-apps-cta-arrow">Utforska →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">Integrationer av ideella organisationer och insamlingsorganisationer</span><span class="blog-apps-cta-arrow">Utforska →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">I den här artikeln</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-day-pass-attribution-problem">Problemet med dagskortsattributionen</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail-here">Varför standardverktyg misslyckas här</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT-metoden</a></li><li class="lvl-2"><a href="#what-visit-tracking-surfaces-in-klaviyo">Vilka besöksspårningsytor i Klaviyo</a></li><li class="lvl-2"><a href="#designing-the-daypass-visitor-conversion-flow">Utforma konverteringsflödet för dagspassbesökare</a></li><li class="lvl-2"><a href="#reading-the-conversion-report-honestly">Att läsa konverteringsrapporten ärligt</a></li><li class="lvl-2"><a href="#representative-conversion-rate-at-1100-members">Representativ konverteringsfrekvens vid 1 100 medlemmar</a></li><li class="lvl-2"><a href="#builder-takeaway">Byggarens slutsats</a></li><li class="lvl-2"><a href="#try-it-in-your-gym">Prova det i ditt gym</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">I den här artikeln</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#you-probably-do-not-know-your-day-pass-conversion-rate">Du vet förmodligen inte din konverteringsfrekvens för dagskort</a></li><li class="lvl-2"><a href="#why-this-is-so-hard-to-track-without-help">Varför detta är så svårt att spåra utan hjälp</a></li><li class="lvl-2"><a href="#how-crmconnect-closes-the-gap">Hur CRMConnect minskar gapet</a></li><li class="lvl-2"><a href="#what-you-can-finally-see">Vad du äntligen kan se</a></li><li class="lvl-2"><a href="#the-day-pass-conversion-flow">Flödet för konvertering av dagskort</a></li><li class="lvl-2"><a href="#reading-the-numbers-honestly">Att läsa siffrorna ärligt</a></li><li class="lvl-2"><a href="#what-this-means-for-your-gym">Vad detta innebär för ditt gym</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">Fortsätt läsa</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/sv/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="BJJ-akademi med mattor från vägg till vägg, rullade gi-bälten på hyllor, hängande tung väska i hörnet och varmt takljus." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Förenar Mindbody-registreringar, kurser och möten på HighLevel</h3><p class="blog-card-excerpt">Använd CRMConnects synkronisering av registrering, kursbokning och möten för att ge HighLevel en kalendervy över alla Mindbody-programtyper.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 maj 2026</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/sv/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Modernt styrkegym med rader av knäböjsställ, gummigräs, panoramafönster, borstat stål och svart palett samt stämningsfull takbelysning." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Rapportering av möten för flera platser i Klaviyo för ett nätverk med 6 styrkor</h3><p class="blog-card-excerpt">Hur CRMConnects mötessynkronisering visar mötesstatus på platsnivå i Klaviyo så att central marknadsföring kan köra flöden och rapporter per plats.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/sv/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Bild på ett konferensrum i skoldistriktet med olika vuxna som sitter runt ett träbord och granskar utskrivna rapporter, stort fönster i eftermiddagsljus." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Sluta med den månatliga ombyggnaden av styrelsemöten: dashboards för insamlingar i realtid från DonorPerfect i HubSpot</h3><p class="blog-card-excerpt">Styrelser vill ha trendlinjer. Personalen vill ha tillbaka sina kvällar. Med givarens livstidsvärde, genomsnittlig gåva och kampanjresultat synkroniserade med HubSpot, slutar den månatliga styrelserapporten att vara ett fyradagarsprojekt och blir en sparad dashboardvy.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">Fortsätt läsa</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/sv/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="BJJ-akademi med mattor från vägg till vägg, rullade gi-bälten på hyllor, hängande tung väska i hörnet och varmt takljus." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Ett tydligt schema per elev för varje program du driver</h3><p class="blog-card-excerpt">Om din studio erbjuder nybörjarprogram, längre kurser och privatlektioner samtidigt, så här matchar dina påminnelser slutligen vad varje elev faktiskt har bokat.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 maj 2026</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/sv/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="Modernt styrkegym med rader av knäböjsställ, gummigräs, panoramafönster, borstat stål och svart palett samt stämningsfull takbelysning." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Marknadsföring per plats för ett styrkenätverk med 6 gym</h3><p class="blog-card-excerpt">Ett centralt marknadsföringsteam skickar ett meddelande till varje medlem i ett nätverk med sex gym, vilket får tränarens namn och gymmets adress fel hälften av gångerna.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>21 april 2026</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/sv/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="Bild på ett konferensrum i skoldistriktet med olika vuxna som sitter runt ett träbord och granskar utskrivna rapporter, stort fönster i eftermiddagsljus." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API-appar</div><h3 class="blog-card-title">Avsluta den månatliga ombyggnaden av styrelsemöten: live-insamlingsdashboards från DonorPerfect i HubSpot</h3><p class="blog-card-excerpt">Er styrelse vill ha trendlinjer. Er personal vill ha tillbaka sina kvällar. Med givarvärde, genomsnittlig gåva och kampanjresultat som flödar in i HubSpot, slutar den månatliga styrelserapporten att vara ett fyradagarsprojekt och blir en sparad instrumentpanel.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 april 2026</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

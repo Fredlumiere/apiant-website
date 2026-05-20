@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>KlaviyoのウェルカムフローのトリガーとなるリアルタイムのMindbodyプロファイル同期｜APIANTブログ</title>
-<meta content="CRMConnectのリアルタイム顧客プロファイル同期機能により、Klaviyoのウェルカムフローが、顧客が最初のクラスを予約した瞬間に開始され、3日後まで待たずに済む仕組みをご紹介します。" name="description"/>
+<title>Mindbodyでの初回予約時にウェルカムフローを開始</title>
+<meta content="ファーストクラスの予約は、新規顧客があなたに与えてくれる最も高い購買意欲の瞬間です。もしウェルカムメールがニュースレター登録を促すだけなら、あなたはそれを逃していることになります。" name="description"/>
 
 <!-- Open Graph -->
-<meta content="KlaviyoのウェルカムフローのトリガーとしてリアルタイムのMindbodyプロファイル同期" property="og:title"/>
-<meta content="CRMConnectのリアルタイム顧客プロファイル同期機能により、Klaviyoのウェルカムフローが、顧客が最初のクラスを予約した瞬間に開始され、3日後まで待たずに済む仕組みをご紹介します。" property="og:description"/>
+<meta content="新規顧客への挨拶は、予約時のみ行うべきであり、リストへの登録時ではない。" property="og:title"/>
+<meta content="ファーストクラスの予約は、新規顧客があなたに与えてくれる最も高い購買意欲の瞬間です。もしウェルカムメールがニュースレター登録を促すだけなら、あなたはそれを逃していることになります。" property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-welcome-flow/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/mindbody-klaviyo-welcome-flow/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="APIANT Blog" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="KlaviyoのウェルカムフローのトリガーとしてリアルタイムのMindbodyプロファイル同期" property="twitter:title"/>
-<meta content="CRMConnectのリアルタイム顧客プロファイル同期機能により、Klaviyoのウェルカムフローが、顧客が最初のクラスを予約した瞬間に開始され、3日後まで待たずに済む仕組みをご紹介します。" property="twitter:description"/>
+<meta content="新規顧客への挨拶は、予約時のみ行うべきであり、リストへの登録時ではない。" property="twitter:title"/>
+<meta content="ファーストクラスの予約は、新規顧客があなたに与えてくれる最も高い購買意欲の瞬間です。もしウェルカムメールがニュースレター登録を促すだけなら、あなたはそれを逃していることになります。" property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-welcome-flow/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Real-Time Mindbody Profile Sync as the Trigger for Klaviyo's Welcome Flow",
-  "description": "How CRMConnect's real-time client profile sync makes Klaviyo's welcome flow start the moment a client books their first class, not three days later.",
+  "headline": "Greet New Clients When They Book, Not When They Join a List",
+  "description": "A first class booking is the highest-intent moment a new client gives you. If your welcome email fires off a newsletter signup instead, you miss it.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-welcome-flow/hero.avif",
   "datePublished": "2025-05-26T16:30:18+00:00",
-  "dateModified": "2026-05-20T13:39:45.858195+00:00",
+  "dateModified": "2026-05-20T16:43:27.654493+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Real-Time Mindbody Profile Sync as the Trigger for Klaviyo's Welcome Flow", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-welcome-flow/" }
+    { "@type": "ListItem", "position": 4, "name": "Greet New Clients When They Book, Not When They Join a List", "item": "https://apiant.com/blog/posts/mindbody-klaviyo-welcome-flow/" }
   ]
 }
 </script>
@@ -196,87 +196,60 @@
 <div class="blog-category-chip">
 <a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
 </div>
-<h1 class="blog-post-h1">KlaviyoのウェルカムフローのトリガーとしてリアルタイムのMindbodyプロファイル同期</h1>
+<h1 class="blog-post-h1">新規顧客への挨拶は、予約時のみ行うべきであり、リストへの登録時ではない。</h1>
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
 <span>2025年5月26日</span>
-<span>5分で読める</span>
+<span>4分で読めます</span>
 </div>
 <div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=fitness-wellness">#フィットネス＆ウェルネス</a><a class="blog-tag" href="/ja/blog/?tag=mindbody">#心身</a><a class="blog-tag" href="/ja/blog/?tag=klaviyo">#クラヴィヨ</a><a class="blog-tag" href="/ja/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ja/blog/?tag=bi-directional-sync">#双方向同期</a></div>
 </header>
 <div class="blog-post-hero-image"><img alt="光が差し込むピラティススタジオ。白いリフォーマーマシン、薄手の麻のカーテン、磨き上げられたオーク材の床、心地よい朝の光。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-welcome-flow/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<h2 id="the-72-hour-window-youre-losing">あなたが失っている72時間の猶予</h2>
-<p>ウェルネスブランドにとって、新規顧客から得られる最も高い購買意欲の瞬間は、初めてのクラス予約です。顧客はクレジットカード情報を入力し、希望の日時を選び、カレンダーに予定をブロックし、予約を確定します。この購買意欲は72時間ほど持続します。しかし、その後はエネルギーが消耗し、再び顧客の注目を集めるために奮闘しなければならなくなります。</p>
-<p>Klaviyoのウェルカムフローがニュースレターの購読時のみにトリガーされる場合、その意図はデータに反映されません。例：Crescent Pilates Lab（例示）は、eコマースに力を入れているブランドで、顧客数380名のスタジオです。Klaviyoチームはウェルカムメールの作成方法を熟知しています。彼らの問題はメールそのものではなく、メールが間違ったシグナルを発信していることです。リストへの登録は実際のクラス予約の数日前（場合によっては数週間後）に行われ、ウェルカムフローは、初めてリフォーマーセッションを予約したばかりの人に挨拶するのではなく、リストに登録したことを祝福する内容になっています。</p>
-<h2 id="why-email-signup-triggers-miss-the-real-first-touch">メール登録のトリガーが本当の最初の接触を逃してしまう理由</h2>
-<p>Klaviyoの教科書的なウェルカムフローは、ニュースレターフォームの送信、またはShopifyの「初回注文完了」イベントのいずれかのシグナルを監視します。Mindbodyはどちらのチャネルにも該当しません。そのため、スタジオは3つの好ましくない選択肢に直面することになります。</p>
-<ol>
-<li>Mindbodyから毎朝CSV形式でエクスポートされたデータを、手動でKlaviyoにリストとしてアップロードします。リストへの参加時にトリガーが作動しますが、これは数時間、あるいは丸一日遅れることがあります。「予約済み」というコンテキストが完全に失われてしまいます。</li>
-<li>MindbodyのWebhookを監視してKlaviyoプロファイルを作成するZapまたはMakeシナリオ。名前にアポストロフィが含まれている場合、電話番号の先頭にゼロが含まれている場合、または予約が変更されるまでは正常に動作します（これらの場合、重複処理ロジックが機能しなくなります）。</li>
-<li>同じパイプラインを社内で構築する。週末のプロジェクトが、Mindbodyがレート制限を変更した途端、1年間のメンテナンス負担に変わってしまう。</li>
-</ol>
-<p>これらの方法のいずれも、予約したクラス、場所、訪問履歴が添付された、当日中に挨拶できるようなクリーンなKlaviyoプロフィールを作成することはできません。</p>
+<h2 id="the-72-hour-window-you-are-losing">あなたが失っている72時間のチャンス</h2>
+<p>ウェルネスブランドにとって、新規顧客から得られる最も高い購買意欲の瞬間は、初めてのクラス予約です。顧客はカード情報を入力し、時間を選び、カレンダーに予定をブロックし、予約を確定します。この購買意欲は72時間ほど持続します。その後はエネルギーが消耗し、再び顧客の注目を集めるために奮闘しなければならなくなります。</p>
+<p>ウェルカムメールシリーズがニュースレターへの登録時にしか開始されない場合、その意図は全く活かされていません。以下に例を示します。クレセントピラティスラボ（架空のスタジオ）は、顧客数380名のスタジオで、強力なブランドと、ウェルカムメールシリーズの書き方を熟知したマーケティングチームを擁しています。彼らの問題はメールそのものではなく、メールが間違ったシグナルを発信していることです。ニュースレターへの登録は、実際のクラス予約の数日前、あるいは数週間後に行われます。そのため、ウェルカムメールシリーズは、初めてリフォーマーセッションを予約したばかりの人への挨拶ではなく、リストへの登録を祝福する内容になってしまうのです。</p>
+<h2 id="why-a-newsletter-trigger-misses-the-real-first-touch">ニュースレター配信のトリガーが真のファーストタッチを逃す理由</h2>
+<p>教科書的なウェルカムシリーズは、ニュースレターへの登録、またはオンラインストアでの初回注文のいずれかをきっかけに開始されます。Mindbodyでのクラス予約はどちらにも該当しません。そのため、スタジオは3つの好ましくない選択肢に直面することになります。</p>
+<ul>
+<li>毎朝Mindbodyからデータをエクスポートし、リストとしてアップロードします。ウェルカムメッセージはリストのアップロード時に開始されますが、これは数時間、あるいは丸一日遅れるため、「クラスを予約しました」という文脈が完全に失われてしまいます。</li>
+<li>Mindbodyの予約を監視する接続を修正しました。名前にアポストロフィが含まれている場合、電話番号の先頭にゼロが付いている場合、または予約が変更された場合は正常に動作しますが、それ以降は重複処理がうまく機能しなくなります。</li>
+<li>全て自社で構築する。週末のプロジェクトのはずが、一年中続くメンテナンスの負担になってしまう。</li>
+</ul>
+<p>これらのどれも、予約したクラス、場所、訪問履歴が添付された、当日対応に必要なクリーンな顧客記録を期日までに作成するものではありません。</p>
 <p><img alt="ウェルカムフローの指標を示すノートパソコンのマーケティングダッシュボードのクローズアップ。柔らかなスタジオ照明、背景にはぼやけたヨガ用具が写っている。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-welcome-flow/inline-1.avif"/></p>
-<h2 id="the-apiant-approach">APIANTアプローチ</h2>
-<p>CRMConnect Mindbody to Klaviyoは、メール購読情報ではなく、Mindbodyのプロファイルを信頼できる情報源として扱います。Mindbodyで新しい顧客レコードが作成された瞬間（予約時）、そのプロファイルは完全なコンテキスト情報とともにKlaviyoに反映されます。その後、Mindbodyへの初回訪問、初回販売、初回予約など、実際のイベントが発生すると、ウェルカムフローがトリガーされます。</p>
-<p>APIアプリの3つの要素がその役割を果たします。</p>
+<h2 id="how-crmconnect-closes-the-gap">CRMConnectがギャップを埋める方法</h2>
+<p>CRMConnect Mindbody to Klaviyoは、ニュースレター登録ではなく、実際のクラス予約を起点としています。新規顧客がMindbodyで予約した瞬間、その顧客の記録がマーケティングツールに表示され、予約したクラス、場所、時間といった詳細な情報が添付されます。そこから、初回予約、初回訪問、初回購入といった実際のイベントをきっかけに、ウェルカムシリーズが開始されます。</p>
+<p>また、重複レコードも自動的に処理し、メールアドレスを基準として利用します。メールアドレスが既に存在する場合はレコードが更新され、存在しない場合はMindbodyの詳細情報を含む新しいレコードが作成されます。誤ってダブルタップしてウェルカムシリーズのタイマーがリセットされるようなこともありません。</p>
+<h2 id="building-the-first-class-welcome-series">一流の歓迎シリーズを構築する</h2>
+<p>Klaviyoの内部では、シリーズは次のように表示されます。</p>
+<p>予約が入った瞬間から処理が開始されます。30分間待機し、予約が確定するのを待つとともに、即時キャンセルを除外します。その後、最初のメールが送信されます。そこには、レッスン内容、スタジオでのマナー、駐車場、持ち物などが記載された確認メールです。以前は受付担当者が初回の電話で繰り返し説明していた内容がすべて含まれています。</p>
+<p>そして、授業の前日まで待ってから、テキストメッセージ機能が有効になっている場合は、「明日の午前9時、会えるのが待ち遠しいよ」という短いリマインダーを送信します。</p>
+<p>その後、実際の初回訪問を待ち、結果は2つに分かれます。クライアントが参加した場合、30分後に授業後のメールが送信され、温かい歓迎の言葉、講師のプロフィール、そして7日以内に2回目の授業を予約するよう促すメッセージが添えられます。クライアントが欠席した場合、翌朝、再予約を促すリンクと授業スケジュールが記載されたメールが送信されます。</p>
+<p>シリーズ全体は、Mindbodyが既に保有している情報に基づいて動作します。受付では、タグ付け、エクスポート、貼り付けなどの作業は一切行いません。</p>
+<h2 id="nudging-toward-class-two">クラス2への移行に向けて</h2>
+<p>最初の訪問が記録されると、その後の訪問も記録され続けます。これにより、一連の訪問を2つのフォローアップに分割できます。</p>
 <ul>
-<li><strong>リアルタイムのクライアントプロファイル同期。</strong> Mindbodyの新規または更新されたクライアントプロファイルは、Klaviyoに即座に同期されます。</li>
-<li><strong>授業の同期と出席状況の追跡。</strong> 今後のレッスン予約、出席状況、キャンセル状況は、イベントとしてプロフィールに表示されます。</li>
-<li><strong>訪問追跡。</strong> 最近の訪問履歴を照合することで、ウェルカムフローは予約時だけでなく、実際の最初の訪問時まで待つことができます。</li>
+<li>「2回目の読書」を促す機能で、2回目の訪問が記録された瞬間に自動的に停止する。</li>
+<li>7日間経過しても2回目の予約がない場合にのみ発動する、「2回目の授業のために戻ってくる」というセーブ試行。</li>
 </ul>
-<p>この連携機能は、Klaviyo側でメールアドレスを一意のキーとして使用し、重複排除処理を行います。メールアドレスが既に存在する場合は、プロファイルが更新されます。存在しない場合は、Mindbodyデータが既に添付された新しいプロファイルが作成されます。ウェルカムフローのタイマーをリセットするダブルタップ機能はありません。</p>
-<h2 id="building-the-first-class-welcome-flow">一流の歓迎フローを構築する</h2>
-<p>Klaviyo内部のフローは次のようになります。</p>
-<ol>
-<li><strong>トリガー：</strong> プロフィールが更新されました <code>mindbody_first_booking_at</code> セット、またはMindbodyの予約イベント。</li>
-<li><strong>30分待ってください。</strong> 予約を確定させ、即時キャンセルの煩わしさを排除します。</li>
-<li><strong>メール1：授業内容の確認と、授業で何が期待できるかについて。</strong> スタジオでのマナー、駐車場、持ち物。受付係が初回の電話のたびに繰り返し説明していた情報。</li>
-<li><strong>授業の1日前まで待ってください。</strong></li>
-<li><strong>SMS 1（任意）：明日の午前9時、あなたに会えるのが待ち遠しいです。</strong> Klaviyo SMS専用。KlaviyoプランでSMSが有効になっている必要があります。</li>
-<li><strong>イベント「初回訪問」をお待ちください。</strong> 出席か無断欠席かで分岐する。</li>
-<li><strong>出席した支店：授業終了2時間30分後にメール</strong> 授業後の歓迎メッセージ、講師のプロフィール、そして7日以内に2回目の授業を予約するようさりげなく促すメッセージが含まれています。</li>
-<li><strong>無断欠席支店：翌朝メール2</strong> 予約変更が容易なリンクとスタジオのレッスンスケジュールが掲載されています。</li>
-</ol>
-<p>トリガーと分岐はすべて、Mindbodyが既に保有しているデータに基づいて動作します。フロントデスクがタグ付け、エクスポート、貼り付けなどの作業を行う必要は一切ありません。</p>
-<h2 id="layering-in-visit-tracking-after-class-one">初回授業後の訪問追跡の重ね合わせ</h2>
-<p>最初の訪問が完了すると、同じプロファイルがその後の訪問も収集し始めます。これにより、ウェルカムメッセージを2つのフォローアップに分割できます。</p>
-<ul>
-<li>A <strong>「ブッククラス２」</strong> 2回目の訪問が記録された瞬間に自動的に抑制される仕組み。</li>
-<li>A <strong>「2回目の授業に戻ってきてください」</strong> 7日間連続で2回目の予約がない場合にのみ実行されるセーブ試行。</li>
-</ul>
-<p>両方のブランチは同じMindbody訪問回数属性からデータを読み取ります。2つ目の統合やリストの操作は不要です。</p>
-<pre class="highlight"><code class="language-text">Klaviyo profile attributes from CRMConnect:
-- mindbody_client_id
-- mindbody_home_location
-- mindbody_first_booking_at
-- mindbody_last_visit_at
-- mindbody_visit_count
-- mindbody_last_purchase</code></pre>
+<p>どちらも顧客レコード上の同じ訪問回数を読み取ります。2つ目の統合も、リストの操作も不要です。</p>
 <p><img alt="ピラティスリフォーマーを上から撮影した写真。滑り止めソックス、水筒、白いタオルがきちんと並べられており、朝の自然光が差し込んでいる。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-welcome-flow/inline-2.avif"/></p>
-<h2 id="representative-first-class-repeat-booking-rate-at-380-clients">顧客数380名における代表的なファーストクラスのリピート予約率</h2>
-<p>これらの数値はあくまでも例示のための合成値であり、実際の顧客指標ではありません。結果は個人によって異なります。</p>
+<h2 id="what-this-means-for-your-studio">これはあなたのスタジオにとって何を意味するのか</h2>
+<p>以下はあくまで例示であり、実際の顧客指標ではありません。結果は異なる場合があります。</p>
 <ul>
-<li>ファーストクラスの確認メールの開封率：約70～80％（購入意欲が高く、当日中に届くメールとして関連性が高い場合）。</li>
-<li>クラス2は7日以内に予約されました。ニュースレターへの登録ではなく、実際の予約をトリガーとした場合、ベースラインの約30%から45～55%の範囲に上昇しました。</li>
-<li>リスト管理にかかるフロントデスクの作業時間を週あたり90分から120分削減。繰り返し発生する雑務から解放される。</li>
+<li>ファーストクラスの予約確認メールの開封率は約70～80％。これは、顧客が予約したばかりで、タイミングが適切であるためです。</li>
+<li>クラス2は7日以内に予約が入った。これは、ニュースレター登録ではなく実際の予約をトリガーとした場合、ベースラインの約30％から45～55％の範囲に上昇した。</li>
+<li>リスト管理にかかるフロントデスクの時間を毎週90分から120分節約でき、繰り返し発生する面倒な作業から解放される。</li>
 </ul>
-<p>この仕組みは魔法ではありません。適切なタイミングで適切なイベントに対して処理を実行するだけです。</p>
-<h2 id="builder-takeaway">ビルダーテイクアウト</h2>
-<ul>
-<li>Klaviyoのウェルカムフローは、ニュースレター登録ではなく、Mindbodyの初回予約をトリガーとして開始してください。同じオーディエンスでも、コンバージョン率の計算方法は全く異なります。</li>
-<li>使用する <code>mindbody_visit_count</code> 属性によって第2クラスのナッジを制御することで、別の抑制リストなしでフローが自己抑制されるようにします。</li>
-<li>Klaviyo側ではメールアドレスを重複排除キーとして使用し、プロファイルの更新はCRMConnectに任せましょう。Zap内で独自の固有性ロジックを維持するのはやめましょう。</li>
-</ul>
-<h2 id="try-it-in-your-studio">あなたのスタジオで試してみましょう</h2>
+<p>その仕組みは魔法ではありません。単に、顧客が予約したばかりのクラスにまだ興奮しているうちに、適切なイベントで適切なタイミングでウェルカムメールシリーズを実行するだけです。</p>
 <p>CRMConnect MindbodyとKlaviyoの連携動作をご覧になりたいですか？ <a href="/apipartners/mindbody/mindbody-klaviyo-integration-and-automation-apiant">APIアプリのページを見る</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">APIアプリの全カタログをご覧ください</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">マインドボディソリューションズ</span><span class="blog-apps-cta-desc">フィットネスとウェルネスの統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">クリニコソリューションズ</span><span class="blog-apps-cta-desc">医療および関連医療分野の統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非営利団体および資金調達との連携</span><span class="blog-apps-cta-arrow">探索する →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-72-hour-window-youre-losing">あなたが失っている72時間の時間</a></li><li class="lvl-2"><a href="#why-email-signup-triggers-miss-the-real-first-touch">メール登録のトリガーが本当の最初の接触を逃してしまう理由</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANTアプローチ</a></li><li class="lvl-2"><a href="#building-the-first-class-welcome-flow">一流の歓迎フローを構築する</a></li><li class="lvl-2"><a href="#layering-in-visit-tracking-after-class-one">初回授業後の訪問追跡の重ね合わせ</a></li><li class="lvl-2"><a href="#representative-first-class-repeat-booking-rate-at-380-clients">顧客数380名における代表的なファーストクラスのリピート予約率</a></li><li class="lvl-2"><a href="#builder-takeaway">ビルダーテイクアウト</a></li><li class="lvl-2"><a href="#try-it-in-your-studio">あなたのスタジオで試してみましょう</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-72-hour-window-you-are-losing">あなたが失っている72時間のチャンス</a></li><li class="lvl-2"><a href="#why-a-newsletter-trigger-misses-the-real-first-touch">ニュースレター配信のトリガーが真のファーストタッチを逃す理由</a></li><li class="lvl-2"><a href="#how-crmconnect-closes-the-gap">CRMConnectがギャップを埋める方法</a></li><li class="lvl-2"><a href="#building-the-first-class-welcome-series">一流の歓迎シリーズを構築する</a></li><li class="lvl-2"><a href="#nudging-toward-class-two">クラス2への移行に向けて</a></li><li class="lvl-2"><a href="#what-this-means-for-your-studio">これはあなたのスタジオにとって何を意味するのか</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">心身統合型高レベル登録、コース、予約</h3><p class="blog-card-excerpt">CRMConnectの登録、コース予約、およびアポイントメントの同期機能を利用することで、HighLevelはMindbodyのすべてのプログラムタイプを1つのカレンダービューで確認できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">Klaviyoにおける6拠点のStrength Network向け複数拠点予約レポート</h3><p class="blog-card-excerpt">CRMConnectの予約同期機能によって、Klaviyo内でサイトレベルの予約状況が明らかになり、中央マーケティング部門が拠点ごとのワークフローやレポートを実行できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会資料作成作業をなくす：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。職員は夜の時間を取り戻したい。寄付者の生涯価値、平均寄付額、キャンペーン実績をHubSpotに同期することで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードビューとして利用できるようになる。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">実施するすべてのプログラムにおいて、生徒一人につき明確なスケジュールを一つだけ作成します。</h3><p class="blog-card-excerpt">もしあなたのスタジオが初心者向けプログラム、長期コース、プライベートレッスンを同時に提供している場合、リマインダーが各生徒が実際に予約した内容と最終的に一致するようにするには、以下の手順を踏む必要があります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">6つのジムからなる筋力トレーニングネットワークの拠点別マーケティング</h3><p class="blog-card-excerpt">中央マーケティングチームが6つのジムからなるネットワークの全メンバーに一斉送信するメールを送ると、コーチの名前とジムの住所が半分の確率で間違ってしまう。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">毎月の役員会議資料の再構築を終わらせよう：HubSpotのDonorPerfectによるリアルタイム資金調達ダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。スタッフは夜の時間を取り戻したい。寄付額、平均寄付額、キャンペーン実績がHubSpotに集約されることで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードとして活用できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">

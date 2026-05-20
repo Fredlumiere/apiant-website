@@ -4,12 +4,12 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Cliniko와 HubSpot을 활용한 다학제 진료소의 의료진 및 위치 보고 | APIANT 블로그</title>
-<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, '누가 시술했는지'를 파악하기 위해 별도의 데이터 내보내기가 필요하지 않습니다. HubSpot에서 Cliniko 데이터와 동기화하여 보고 기능을 구축할 수 있습니다." name="description"/>
+<title>보건의료진료소의 의료진 및 근무지 보고</title>
+<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, 누가 시술했는지 파악하는 데 밤늦게까지 스프레드시트 작업을 할 필요가 없습니다. 클리니코(Cliniko) 데이터를 활용하면 이러한 보고서를 자동으로 생성할 수 있습니다." name="description"/>
 
 <!-- Open Graph -->
 <meta content="클리니코(Cliniko)와 허브스팟(HubSpot)을 활용한 다학제 진료소의 의료진 및 위치 보고" property="og:title"/>
-<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, '누가 시술했는지'를 파악하기 위해 별도의 데이터 내보내기가 필요하지 않습니다. HubSpot에서 Cliniko 데이터와 동기화하여 보고 기능을 구축할 수 있습니다." property="og:description"/>
+<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, 누가 시술했는지 파악하는 데 밤늦게까지 스프레드시트 작업을 할 필요가 없습니다. 클리니코(Cliniko) 데이터를 활용하면 이러한 보고서를 자동으로 생성할 수 있습니다." property="og:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/hero.avif" property="og:image"/>
 <meta content="https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" property="og:url"/>
 <meta content="article" property="og:type"/>
@@ -17,7 +17,7 @@
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="클리니코(Cliniko)와 허브스팟(HubSpot)을 활용한 다학제 진료소의 의료진 및 위치 보고" property="twitter:title"/>
-<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, '누가 시술했는지'를 파악하기 위해 별도의 데이터 내보내기가 필요하지 않습니다. HubSpot에서 Cliniko 데이터와 동기화하여 보고 기능을 구축할 수 있습니다." property="twitter:description"/>
+<meta content="여러 분야에 걸쳐 12명 이상의 의료진이 있는 경우, 누가 시술했는지 파악하는 데 밤늦게까지 스프레드시트 작업을 할 필요가 없습니다. 클리니코(Cliniko) 데이터를 활용하면 이러한 보고서를 자동으로 생성할 수 있습니다." property="twitter:description"/>
 <meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/hero.avif" property="twitter:image"/>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -35,11 +35,11 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Practitioner and Location Reporting for a Multi-Disciplinary Clinic With Cliniko + HubSpot",
-  "description": "Once you cross a dozen practitioners across multiple disciplines, the answer to 'who is performing' should not require a custom export. Here is the reporting layer to build in HubSpot on top of synced Cliniko data.",
+  "headline": "Practitioner and Location Reporting for a Multi-Disciplinary Clinic With Cliniko and HubSpot",
+  "description": "Once you cross a dozen practitioners across several disciplines, knowing who is performing should not mean another late-night spreadsheet. Here is the reporting your Cliniko data can power automatically.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/hero.avif",
   "datePublished": "2024-10-07T16:35:19+00:00",
-  "dateModified": "2026-05-19T18:27:50.65504+00:00",
+  "dateModified": "2026-05-20T16:46:34.747056+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -68,7 +68,7 @@
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
     { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
-    { "@type": "ListItem", "position": 4, "name": "Practitioner and Location Reporting for a Multi-Disciplinary Clinic With Cliniko + HubSpot", "item": "https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" }
+    { "@type": "ListItem", "position": 4, "name": "Practitioner and Location Reporting for a Multi-Disciplinary Clinic With Cliniko and HubSpot", "item": "https://apiant.com/blog/posts/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/" }
   ]
 }
 </script>
@@ -207,51 +207,44 @@
 <div class="blog-post-hero-image"><img alt="밝고 환한 분위기의 다분야 진료소 접수처와 복도를 넓게 촬영한 장면이다. 여러 색깔의 유니폼을 입은 의료진들이 진료실 사이를 오가고 있다." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/hero.avif"/></div>
 <div class="blog-article-layout">
 <div class="blog-article" id="blog-article">
-<p>한 병원에 여러 진료과에 걸쳐 12명이 넘는 의료진이 근무하게 되면, "누가 진료를 담당했는지"에 대한 답을 클리니코(Cliniko)에서 내보낸 데이터만으로는 확인할 수 없게 됩니다. 병원 관리자는 매주, 최고운영책임자(COO)는 매달, 그리고 이사회는 분기마다 같은 질문을 던지는데, 매번 맞춤형 데이터 내보내기를 통해 답을 얻어야 하는 것은 비효율적입니다.</p>
-<p>예를 들어 설명하자면, 가상의 Harbourview Allied Health Collective는 물리치료, 작업치료, 영양학, 운동생리학 분야의 전문가 22명이 근무하는 4개 지점을 운영하는 의료기관입니다. 이 기관의 관리자는 간단한 분야 간 질문에도 답할 수 없습니다. 물리치료사가 영양학으로 의뢰하는 환자는 한 달에 몇 명이나 될까요? 재예약률이 가장 높은 전문가는 누구일까요? 어느 지점의 예약률이 네트워크 평균을 떨어뜨리고 있을까요? 각 질문에 답하려면 새로운 CSV 파일, 새로운 피벗 테이블, 그리고 수동으로 환자 ID를 추가하는 작업이 필요합니다.</p>
+<p>한 병원에 여러 진료과에 걸쳐 12명 이상의 의료진이 근무하게 되면, "누가 진료를 담당하고 있는가"라는 질문에 대한 답을 단순히 눈으로만 파악할 수 없게 됩니다. 병원장은 매주, 최고운영책임자는 매달, 이사회는 분기마다 같은 질문을 던지는데, 매번 새로운 스프레드시트를 만들어야만 답을 얻을 수 있는 상황이 되어서는 안 됩니다.</p>
+<p>예를 들어 설명하자면, 하버뷰 연합 의료 집단(Harbourview Allied Health Collective)은 물리치료, 작업치료, 영양학, 운동생리학 분야의 전문가 22명이 근무하는 4개 지점을 운영하는 가상의 단체입니다. 이 단체에서 관리자는 간단한 분야 간 질문에도 쉽게 답할 수 없습니다. 예를 들어, 물리치료사가 영양학으로 의뢰하는 환자는 한 달에 몇 명이나 될까요? 재예약률이 가장 높은 전문가는 누구일까요? 어느 지점의 진료 일정이 네트워크 평균을 떨어뜨리고 있을까요? 각 질문에 답하려면 데이터를 새로 내보내고, 분석 기준을 새롭게 설정하고, 환자 정보를 수동으로 다시 매칭해야 합니다.</p>
 <p><img alt="분주한 현대식 보건의료 클리닉 복도를 넓게 촬영한 장면으로, 다양한 색상의 유니폼을 입은 의료진들이 진료실 사이를 오가고 있으며, 밝은 색의 나무 바닥이 깔려 있다." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/inline-1.avif"/></p>
-<h2 id="the-cross-discipline-questions-you-actually-need-answered">여러분이 실제로 답을 얻고 싶어하는 학제 간 질문들</h2>
-<p>22명의 의료진으로 구성된 클리닉은 단일 진료소가 아니라 소규모 네트워크로 운영됩니다. 경영진은 다음과 같은 질문에 대한 답을 찾아야 합니다.</p>
+<h2 id="the-questions-a-multi-disciplinary-clinic-actually-needs-answered">다학제 진료 클리닉이 실제로 답을 필요로 하는 질문들</h2>
+<p>22명의 의료진이 소속된 클리닉은 단일 진료소가 아니라 소규모 네트워크처럼 운영됩니다. 경영진은 다음과 같은 질문에 대한 답을 찾아야 합니다.</p>
 <ul>
-<li>어떤 의료진이 최대 수용 능력에 도달했고, 어떤 의료진은 활용률이 60% 미만입니까?</li>
+<li>어떤 의료진이 최대 수용 능력에 도달했고, 어떤 의료진은 그보다 훨씬 적은 수요를 보이고 있습니까?</li>
 <li>어떤 진료과 조합이 내부 의뢰를 가장 많이 발생시키나요? (물리치료사에서 영양사로, 작업치료사에서 운동생리학자로)</li>
-<li>어느 지역의 신규 환자당 평생 가치가 가장 높으며, 그 차이는 무엇으로 설명할 수 있을까요?</li>
-<li>어떤 의료 전문가가 초기 평가를 바탕으로 치료 계획을 가장 효율적으로 수립합니까?</li>
+<li>어느 지역이 신규 환자당 평생 가치를 가장 많이 창출하며, 그 이유는 무엇입니까?</li>
+<li>어떤 의료 전문가가 초기 평가를 바탕으로 지속적인 치료 계획을 수립하는 데 가장 뛰어날까요?</li>
 </ul>
-<p>이러한 데이터는 평면적인 Cliniko 내보내기 방식으로는 제대로 저장되지 않습니다. 의료진, 사업장 위치, 예약, 환자, 진료 기록 등이 모두 일급 객체로 취급되어 자유롭게 피벗할 수 있는 관계형 모델이 필요합니다.</p>
-<h2 id="why-off-the-shelf-tools-fail">기성품 도구가 실패하는 이유</h2>
-<p>클리니코의 기본 보고 기능은 기본적인 정보(의사별 수익, 일일 예약 건수)는 제공하지만, 여러 진료 분야 간 보고에 필요한 데이터 통합 기능은 지원하지 않습니다. 클리니코에서 일방적으로 데이터를 내보내고 그 위에 BI 도구를 적용하면 데이터가 최신 상태를 유지하지 못하고, 환자 간 의뢰 관계를 파악하기 어려우며, 분석가가 직접 관리해야 하는 번거로움이 발생합니다. 스프레드시트를 붙여넣는 방식은 의사가 6명 정도일 때는 괜찮지만, 22명에 달하면 사실상 불가능합니다.</p>
-<h2 id="the-apiant-approach">APIANT 접근법</h2>
-<p>CRMConnect Cliniko와 HubSpot을 연동하면 Cliniko의 예약, 환자 프로필, 청구서, 의료진, 사업체(위치) 및 사례 정보가 올바른 관계를 유지하면서 HubSpot의 네이티브 객체로 표시됩니다. 예약 파이프라인에는 모든 거래에 의료진과 사업체 위치 정보가 이미 포함되어 있으므로 HubSpot 보고서 및 대시보드는 추가 엔지니어링 작업 없이 두 가지 차원 중 하나로 구분할 수 있습니다. 양방향 환자 동기화를 통해 환자가 여러 진료과의 의료진을 만나더라도 진료 의뢰 관계가 유지됩니다.</p>
-<h2 id="concrete-steps">콘크리트 계단</h2>
-<ol>
-<li>예약, 환자, 청구서, 의료진 및 사업체 정보 동기화가 모두 켜져 있는지 확인하십시오. 일반적으로 처음 세 가지는 기본 설정이지만, 의료진과 사업체를 독립적인 개체로 설정해야 병원 간 보고 기능을 사용할 수 있습니다.</li>
-<li>의료진 성과 보고서를 작성하세요. 의료진별로 그룹화하고, 예약 완료 건수(지난 30일), 예약 불이행률(DNA 비율), 재예약률(예약 완료 후 28일 이내 재예약률), 평균 예약 금액 등의 열을 추가하세요.</li>
-<li>지점별 성과 보고서를 작성하세요. 사업장 위치별로 그룹화하고, 캘린더 활용률(예약 도착 건수 대비 의료진 가용 시간), 신규 환자 확보(해당 기간 내 첫 진료 예약 건수), 그리고 해당 지점의 환자 집단 전체의 평균 평생 가치를 나타내는 열을 추가하세요.</li>
-<li>내부 의뢰 보고서를 작성하세요. HubSpot 거래 연관 기능을 활용하여 여러 진료과에 걸쳐 진료 예약을 한 환자를 식별합니다. 의뢰 진료과와 목적지 진료과별로 그룹화하세요. 이 보고서를 통해 귀사의 다학제 모델이 실제로 다학제 모델인지, 아니면 단순히 한 장소에 모여 있는 개별 진료진인지 파악할 수 있습니다.</li>
-<li>위치별로 접근 권한을 분할하세요. HubSpot 팀을 Cliniko 사업장 위치에 맞춰 구성하면 각 클리닉 관리자가 자신의 연락처와 거래만 볼 수 있습니다. 모든 거래에 포함된 위치 필드를 통해 이러한 접근 권한 설정이 가능해집니다.</li>
-</ol>
+<p>이러한 데이터는 일반 스프레드시트로 내보낼 때는 제대로 저장되지 않습니다. 모든 환자, 예약, 의료진, 위치 및 치료 계획이 연결되어 있어야 데이터를 자유롭게 분석할 수 있습니다.</p>
+<h2 id="what-the-manual-reporting-process-costs-you">수동 보고 프로세스에 드는 비용</h2>
+<p>클리니코의 내장 보고서는 의료진별 수익, 일일 예약 건수와 같은 기본적인 정보는 제공하지만, 여러 진료 분야를 아우르는 보고에 필요한 연결 고리를 제공하지 못합니다. 오래된 데이터를 기반으로 구축된 보고 도구는 환자 간의 추천 연결 고리를 놓치고, 분석가가 지속적으로 관리해야 합니다. 스프레드시트를 붙여넣는 방식은 의료진이 6명일 때는 괜찮지만 22명이 되면 불가능해집니다. 결국 병원 관리자는 보고서를 수작업으로 계속 재작성해야 하고, 최고운영책임자(COO)는 답변을 며칠씩 기다려야 하며, 불완전한 정보에 기반하여 의사결정이 내려집니다.</p>
+<h2 id="how-automatic-reporting-works">자동 보고 작동 방식</h2>
+<p>CRMConnect를 Cliniko와 HubSpot에 연결하면 예약, 환자, 청구서, 의료진, 진료 장소, 치료 계획 등 모든 데이터가 보고서 작성에 필요한 구성 요소가 되어 자동으로 최신 상태로 유지되며, 구성 요소 간의 관계도 그대로 보존됩니다. 모든 예약에는 의료진과 진료 장소 정보가 이미 포함되어 있으므로 추가 작업 없이 의료진 또는 진료 장소별로 보고서를 분류할 수 있습니다. 또한 환자 기록이 네트워크를 통해 연결되어 있기 때문에 한 환자가 여러 진료과의 의료진을 만나더라도 진료 의뢰 내역을 확인할 수 있습니다.</p>
+<p>다음은 여러분이 직접 작성할 수 있는 보고서입니다.</p>
+<p><strong>실무자의 성과.</strong> 각 의료진별로 지난 30일간의 예약 건수, 예약 불이행률, 재예약률(예약 건수 중 28일 이내에 재예약으로 이어진 비율), 평균 예약 금액을 집계했습니다.</p>
+<p><strong>위치 성능.</strong> 각 지점별로 예약률과 의료진 가용 시간 대비 예약 현황, 해당 기간 동안 확보한 신규 환자 수, 그리고 해당 지점의 환자 평생 평균 가치를 분석합니다.</p>
+<p><strong>내부 의뢰.</strong> 두 개 이상의 진료과에 진료 예약을 한 환자를 파악하고, 의뢰 출처와 진료과별로 그룹화하십시오. 이 보고서는 다학제 진료 모델이 진정한 의미의 다학제 진료 모델인지, 아니면 단순히 한 건물에 모여 있는 개별 진료팀에 불과한지 판단하는 데 도움이 됩니다.</p>
+<p><strong>위치별 접근 권한 범위 설정.</strong> 각 클리닉 관리자는 자신의 환자와 업무 내역만 볼 수 있는 반면, 최고운영책임자(COO)는 전체 네트워크를 볼 수 있습니다. 모든 예약에 기록되는 위치 정보 덕분에 이러한 권한 분담이 명확하고 효과적으로 시행될 수 있습니다.</p>
 <p><img alt="수술복을 입은 두 의료진이 병원 접수대에서 태블릿을 살펴보는 사진. 은은하고 따뜻한 조명이 비추고 있으며, 병원 내부는 흐릿하게 처리되어 있어 내용을 읽을 수 없다." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/multi-disciplinary-clinic-cliniko-hubspot-practitioner-reporting/inline-2.avif"/></p>
-<h2 id="outcome">결과</h2>
-<p>하버뷰와 같은 프로필을 가진 클리닉은 일반적으로 첫 달 안에 두세 명의 의료진이 95%의 활용률을 보이는 반면 다른 두 명은 55% 미만이라는 사실, 한 지점이 전체 물리치료사-영양사 내부 의뢰의 80%를 차지하는 반면 나머지 세 곳은 거의 전무하다는 사실, 그리고 고객 생애 가치가 가장 높은 지점이 마케팅 비용을 가장 많이 지출한 곳이 아니라는 사실을 발견하게 됩니다. 이러한 모든 사항은 의사 결정으로 이어집니다. 보고서는 실시간으로 업데이트되고, 운영 책임자는 더 이상 "스프레드시트"를 요구하지 않으며, 분기별 이사회 보고는 이틀이 아닌 20분 만에 완료됩니다.</p>
-<h2 id="what-you-should-not-do-with-practitioner-reporting">의료 전문가 보고와 관련하여 해서는 안 되는 일</h2>
-<p>실무자 수준의 지표는 관리 도구이지 공개적인 성과표가 아닙니다. 두 가지 주의 사항을 언급할 필요가 있습니다.</p>
+<h2 id="what-you-typically-discover">일반적으로 발견하는 것</h2>
+<p>하버뷰와 같은 프로필을 가진 클리닉은 일반적으로 첫 달 안에 두세 명의 의료진이 95%의 가동률을 보이는 반면 다른 두 명은 55% 미만으로 운영되고 있다는 사실, 한 지점이 물리치료사에서 영양사로의 내부 의뢰의 80%를 차지하는 반면 나머지 세 곳은 거의 0에 가깝다는 사실, 그리고 고객 생애 가치가 가장 높은 지점이 마케팅 비용을 가장 많이 지출한 지점이 아니라는 사실을 발견하게 됩니다. 이러한 모든 사항은 결정을 기다리고 있는 문제입니다. 보고서는 자동으로 최신 상태로 유지되고, 운영 책임자는 더 이상 "스프레드시트"를 요구하지 않으며, 분기별 이사회 보고는 이틀이 아닌 20분 만에 완료됩니다.</p>
+<h2 id="how-to-use-practitioner-reporting-fairly">의료진 보고서를 공정하게 활용하는 방법</h2>
+<p>의료 종사자 수는 관리 도구이지 공개적인 성적표가 아닙니다. 두 가지 주의 사항을 언급할 필요가 있습니다.</p>
 <ul>
-<li>진료 예약 건수를 기준으로 병원 슬랙 채널에 순위표를 게시하지 마십시오. 진료 분야마다 진료 시간과 사례의 복잡성이 다릅니다. 75분짜리 골반 물리치료 평가가 20분짜리 후속 교정 치료와 동일한 것은 아닙니다.</li>
-<li>HubSpot 대시보드에 임상 메타데이터(진료 기록, 진단, 치료 세부 정보)를 표시하지 마십시오. 진료 정보 동기화는 세션 제한 및 마일스톤과 같은 운영 관련 구조적 데이터만 표시합니다. 임상 기록은 Cliniko에 유지됩니다.</li>
+<li>진료 예약 건수를 직원 채팅방에 게시하는 순위표로 활용하지 마십시오. 진료 분야마다 진료 시간과 사례의 복잡성이 다릅니다. 75분짜리 골반 물리치료 평가와 20분짜리 후속 진료는 동일한 업무 단위가 아닙니다.</li>
+<li>진료 기록, 진단, 치료 세부 사항과 같은 임상 정보는 관리 대시보드에 입력하지 마십시오. 진료 횟수 제한 및 주요 목표와 같은 진료 계획 구조는 운영 목적으로 보고해도 무방합니다. 임상 관련 내용은 Cliniko에 보관하십시오.</li>
 </ul>
-<h2 id="builder-takeaway">건설업자 테이크아웃</h2>
-<ul>
-<li>이 통합을 통해 실무자(Practitioner)와 비즈니스(Business)를 실제 HubSpot 차원으로 사용할 수 있습니다. 진료 예약 메모에서 추출한 텍스트 필드가 아닌 이러한 차원을 기준으로 보고서를 작성하세요.</li>
-<li>내부 의뢰 보고서는 다학제 진료 클리닉이 구축할 수 있는 가장 가치 있는 요소입니다. 왜냐하면 이 보고서를 통해 진료 모델이 효과적인지 여부를 알 수 있기 때문입니다. 하지만 대부분의 클리닉은 이 보고서를 작성하지 않습니다.</li>
-<li>HubSpot 팀과 비즈니스(위치) 필드를 활용하여 권한을 적용하세요. COO 수준의 종합 보고와 위치 수준의 범위 지정 보고 모두 동일한 데이터를 기반으로 합니다.</li>
-</ul>
-<p>CRMConnect Cliniko와 HubSpot의 연동 기능을 직접 확인하고 싶으신가요? <a href="/apipartners/cliniko/cliniko-hubspot-integration-automation-apiant">API 앱 페이지를 보세요</a>또는 전체 내용을 살펴보세요. <a href="/apps.html">API 앱 카탈로그</a>.</p>
+<h2 id="why-this-matters-for-your-clinic">이것이 귀하의 병원에 중요한 이유</h2>
+<p>의료진이 12명 이상일 경우, 직감만으로는 충분하지 않고 수동 보고서 작성 속도도 너무 느려집니다. 실시간 의료진, 진료 장소, 내부 의뢰 보고 기능을 활용하면 "누가 잘하고 있는가"라는 질문에 대한 답을 실제 수치를 바탕으로 몇 초 만에, 매번 정확하게 얻을 수 있습니다. 특히 내부 의뢰 보고서는 대부분의 다학제 진료 기관에서 제대로 구축하지 않는 기능이지만, 진료 모델이 실제로 효과적인지 여부를 알려주는 핵심적인 자료입니다.</p>
+<p>CRMConnect Cliniko와 HubSpot의 연동 기능을 직접 확인하고 싶으신가요? <a href="/apipartners/cliniko/cliniko-hubspot-integration-automation-apiant">API 앱 페이지를 보세요</a>.</p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">전체 API 앱 카탈로그를 살펴보세요.</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">마인드바디 솔루션</span><span class="blog-apps-cta-desc">피트니스 및 웰니스 통합</span><span class="blog-apps-cta-arrow">탐색하기 →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">클리니코 솔루션</span><span class="blog-apps-cta-desc">의료 및 보건 관련 분야 통합</span><span class="blog-apps-cta-arrow">탐색하기 →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">도너퍼펙트 솔루션</span><span class="blog-apps-cta-desc">비영리 단체 및 모금 활동 통합</span><span class="blog-apps-cta-arrow">탐색하기 →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-cross-discipline-questions-you-actually-need-answered">여러분이 실제로 답을 얻고 싶어하는 학제 간 질문들</a></li><li class="lvl-2"><a href="#why-off-the-shelf-tools-fail">기성품 도구가 실패하는 이유</a></li><li class="lvl-2"><a href="#the-apiant-approach">APIANT 접근법</a></li><li class="lvl-2"><a href="#concrete-steps">콘크리트 계단</a></li><li class="lvl-2"><a href="#outcome">결과</a></li><li class="lvl-2"><a href="#what-you-should-not-do-with-practitioner-reporting">의료 전문가 보고와 관련하여 해서는 안 되는 일</a></li><li class="lvl-2"><a href="#builder-takeaway">건설업자 테이크아웃</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-questions-a-multi-disciplinary-clinic-actually-needs-answered">다학제 진료 클리닉이 실제로 답을 필요로 하는 질문들</a></li><li class="lvl-2"><a href="#what-the-manual-reporting-process-costs-you">수동 보고 프로세스에 드는 비용</a></li><li class="lvl-2"><a href="#how-automatic-reporting-works">자동 보고 작동 방식</a></li><li class="lvl-2"><a href="#what-you-typically-discover">일반적으로 발견하는 것</a></li><li class="lvl-2"><a href="#how-to-use-practitioner-reporting-fairly">의료진 보고서를 공정하게 활용하는 방법</a></li><li class="lvl-2"><a href="#why-this-matters-for-your-clinic">이것이 귀하의 병원에 중요한 이유</a></li></ul></aside>
 </div>
-<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="매트가 벽면 전체에 깔려 있고, 선반에는 돌돌 말린 도복 벨트가 있으며, 구석에는 헤비백이 걸려 있고, 따뜻한 천장 조명이 있는 주짓수 아카데미." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">HighLevel에서 심신 수련 등록, 강좌 및 예약을 통합 관리하세요</h3><p class="blog-card-excerpt">CRMConnect의 등록, 코스 예약 및 약속 동기화 기능을 활용하여 HighLevel이 모든 Mindbody 프로그램 유형에 대한 통합 캘린더 보기를 제공하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="스쿼트 랙이 줄지어 있는 현대적인 헬스장, 인조 잔디 바닥, 탁 트인 전망을 감상할 수 있는 창문, 브러시드 스틸과 블랙 계열의 마감재, 은은한 천장 조명." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 지점으로 구성된 네트워크를 위한 Klaviyo의 다중 지점 예약 보고</h3><p class="blog-card-excerpt">CRMConnect의 예약 동기화 기능이 Klaviyo 내에서 사이트별 예약 상태를 어떻게 보여주는지, 그리고 이를 통해 중앙 마케팅 부서에서 위치별 워크플로 및 보고서를 어떻게 실행할 수 있는지에 대한 내용입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="학교 회의실의 한 장면으로, 다양한 배경을 가진 어른들이 나무 테이블에 둘러앉아 인쇄된 보고서를 검토하고 있으며, 큰 창문을 통해 오후 햇살이 쏟아져 들어온다." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 진행하던 모금 자료 재구성 작업을 없애세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 평생 가치, 평균 기부액, 캠페인 성과가 HubSpot에 동기화되면 월간 이사회 보고서 작성이 4일씩 걸리는 작업에서 저장 가능한 대시보드 형태로 간소화됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
+<section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ko/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="매트가 벽면 전체에 깔려 있고, 선반에는 돌돌 말린 도복 벨트가 있으며, 구석에는 헤비백이 걸려 있고, 따뜻한 천장 조명이 있는 주짓수 아카데미." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">운영하는 모든 프로그램에서 학생별로 명확한 시간표 하나만 제공하세요.</h3><p class="blog-card-excerpt">스튜디오에서 초급반, 장기 코스, 개인 레슨을 동시에 운영하는 경우, 각 학생이 실제로 예약한 내용과 알림이 정확히 일치하는 방법을 아래에서 확인하세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 18일</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ko/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="스쿼트 랙이 줄지어 있는 현대적인 헬스장, 인조 잔디 바닥, 탁 트인 전망을 감상할 수 있는 창문, 브러시드 스틸과 블랙 계열의 마감재, 은은한 천장 조명." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">6개 체육관으로 구성된 헬스 네트워크를 위한 지점별 마케팅 전략</h3><p class="blog-card-excerpt">6개 지점을 운영하는 네트워크의 모든 회원에게 한 번에 대량 메일을 보내는 중앙 마케팅 팀에서 코치 이름과 지점 주소를 절반이나 잘못 기재하는 경우가 있습니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 21일</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ko/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="학교 회의실의 한 장면으로, 다양한 배경을 가진 어른들이 나무 테이블에 둘러앉아 인쇄된 보고서를 검토하고 있으며, 큰 창문을 통해 오후 햇살이 쏟아져 들어온다." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">API 앱</div><h3 class="blog-card-title">매달 이사회 자료를 새로 만드는 번거로움을 끝내세요: HubSpot에서 DonorPerfect의 실시간 모금 대시보드를 활용하세요</h3><p class="blog-card-excerpt">이사회는 추세선을 원하고, 직원들은 저녁 시간을 되찾고 싶어합니다. 기부자 가치, 평균 기부액, 캠페인 성과 등의 데이터가 HubSpot에 통합되면 월간 이사회 보고서 작성이 4일짜리 작업이 아닌, 저장된 대시보드로 대체됩니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 4월 20일</span></div></div></a></div></section>
 </div>
 </article>
 <footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
