@@ -1754,49 +1754,63 @@
     .fs-faq { padding: 80px 40px; max-width: 880px; margin: 0 auto; }
     .fs-faq h2 { font-size: 42px; font-weight: 700; color: #ffffff; line-height: 1.2; margin-bottom: 40px; text-align: center; letter-spacing: -0.01em; }
     .fs-faq-list { display: flex; flex-direction: column; gap: 16px; }
-    .fs-faq .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px 28px; transition: border-color 0.3s, background 0.3s; }
+    .fs-faq .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; transition: border-color 0.3s, background 0.3s; overflow: hidden; }
     .fs-faq .faq-item:hover { border-color: rgba(139,92,246,0.35); background: rgba(139,92,246,0.04); }
-    .fs-faq .faq-item h3 { font-size: 18px; font-weight: 600; color: #ffffff; margin: 0 0 10px 0; line-height: 1.35; }
-    .fs-faq .faq-item p { font-size: 16px; line-height: 1.7; color: #94a3b8; margin: 0; }
+    .fs-faq .faq-item[open] { border-color: rgba(139,92,246,0.5); background: rgba(139,92,246,0.04); }
+    .fs-faq .faq-item > summary {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 22px 28px; cursor: pointer; list-style: none;
+      font-size: 18px; font-weight: 600; color: #ffffff; line-height: 1.35;
+    }
+    .fs-faq .faq-item > summary::-webkit-details-marker { display: none; }
+    .fs-faq .faq-item > summary::after {
+      content: ''; width: 14px; height: 14px; flex-shrink: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+      background-repeat: no-repeat; background-position: center; background-size: 14px 14px;
+      transition: transform 0.3s ease;
+    }
+    .fs-faq .faq-item[open] > summary::after { transform: rotate(180deg); }
+    .fs-faq .faq-item .faq-body { padding: 0 28px 24px; }
+    .fs-faq .faq-item .faq-body p { font-size: 16px; line-height: 1.7; color: #94a3b8; margin: 0; }
     @media (max-width: 768px) {
       .fs-faq { padding: 60px 20px; }
       .fs-faq h2 { font-size: 30px; margin-bottom: 28px; }
-      .fs-faq .faq-item { padding: 20px 22px; }
-      .fs-faq .faq-item h3 { font-size: 17px; }
-      .fs-faq .faq-item p { font-size: 15px; }
+      .fs-faq .faq-item > summary { padding: 20px 22px; font-size: 17px; }
+      .fs-faq .faq-item .faq-body { padding: 0 22px 20px; }
+      .fs-faq .faq-item .faq-body p { font-size: 15px; }
     }
   </style>
 <section class="faq fs-faq">
 <h2 class="reveal">Frequently asked questions</h2>
 <div class="fs-faq-list">
-<div class="faq-item">
-<h3>Where does our data live, and who has access to it?</h3>
-<p>Every APIANT deployment runs on a dedicated, isolated server under your control. No shared tenancy. No data commingling with other customers' workloads. Credentials are encrypted at rest, webhook endpoints are HTTPS-only, and role-based access control in the Admin Console governs who sees what. Specific compliance documentation (SOC 2, HIPAA, GDPR) is available on request from our team.</p>
-</div>
-<div class="faq-item">
-<h3>How does APIANT fit next to our existing iPaaS (MuleSoft, Boomi, Workato)?</h3>
-<p>Many enterprises run APIANT alongside a heavyweight iPaaS for specific workloads where that tool is too slow, too expensive, or too shallow. APIANT shines on customer-facing integrations, multi-location deployments, and verticals the big platforms do not cover well. The AI Co-Pilot lets you build a new connector in hours instead of weeks, which is the common reason teams bring us in even when they have an incumbent platform.</p>
-</div>
-<div class="faq-item">
-<h3>What does an SLA look like, and what is your uptime history?</h3>
-<p>Enterprise customers get a contractual SLA covering uptime, response time, and escalation procedures; specific numbers and credits are negotiated per agreement. Because every deployment is dedicated infrastructure on AWS, uptime is not dragged down by other customers' workloads. Ask our team for the current SLA template and operational history during procurement.</p>
-</div>
-<div class="faq-item">
-<h3>Can APIANT connect to internal systems behind our firewall?</h3>
-<p>Yes, through secured endpoints, VPN, or private link configurations depending on your environment. Dedicated deployments give you control over network rules, IP allowlists, and credential handling. For SAP, Oracle, legacy ERPs, or internal microservices, we scope the network topology during the pilot phase.</p>
-</div>
-<div class="faq-item">
-<h3>How do we handle change management across dozens of departments on one platform?</h3>
-<p>The Admin Console gives centralized control over users, automations, connections, and deployments with role-based access. Bulk deployment lets you test a change on one unit, then push it to every department simultaneously; version comparison shows exactly what changed. Master routing directs incoming data to the right business unit automatically, so adding a new department does not require building a new endpoint.</p>
-</div>
-<div class="faq-item">
-<h3>What does the managed pilot actually include?</h3>
-<p>Under the Managed Pilot, APIANT scopes, builds, and deploys your highest-priority integrations on your dedicated server within weeks. Your IT team gets full visibility through the Admin Console, monitoring dashboards, and execution logs, without carrying the build burden. Support, monitoring, and upgrades are handled by us during the pilot. If the results validate the platform, your team takes ownership of new integrations from there.</p>
-</div>
-<div class="faq-item">
-<h3>What happens to our integrations if we leave APIANT?</h3>
-<p>You own your data, your credentials, and your connection configurations. Integration logic lives in the Automation Editor as visual recipes; export and documentation are available so your team can rebuild elsewhere if needed. Dedicated deployments mean there is no shared vendor lock at the data layer. Contract terms cover data portability and transition assistance explicitly; we can share the standard enterprise agreement during evaluation.</p>
-</div>
+<details class="faq-item">
+<summary>Where does our data live, and who has access to it?</summary>
+<div class="faq-body"><p>Every APIANT deployment runs on a dedicated, isolated server under your control. No shared tenancy. No data commingling with other customers' workloads. Credentials are encrypted at rest, webhook endpoints are HTTPS-only, and role-based access control in the Admin Console governs who sees what. Specific compliance documentation (SOC 2, HIPAA, GDPR) is available on request from our team.</p></div>
+</details>
+<details class="faq-item">
+<summary>How does APIANT fit next to our existing iPaaS (MuleSoft, Boomi, Workato)?</summary>
+<div class="faq-body"><p>Many enterprises run APIANT alongside a heavyweight iPaaS for specific workloads where that tool is too slow, too expensive, or too shallow. APIANT shines on customer-facing integrations, multi-location deployments, and verticals the big platforms do not cover well. The AI Co-Pilot lets you build a new connector in hours instead of weeks, which is the common reason teams bring us in even when they have an incumbent platform.</p></div>
+</details>
+<details class="faq-item">
+<summary>What does an SLA look like, and what is your uptime history?</summary>
+<div class="faq-body"><p>Enterprise customers get a contractual SLA covering uptime, response time, and escalation procedures; specific numbers and credits are negotiated per agreement. Because every deployment is dedicated infrastructure on AWS, uptime is not dragged down by other customers' workloads. Ask our team for the current SLA template and operational history during procurement.</p></div>
+</details>
+<details class="faq-item">
+<summary>Can APIANT connect to internal systems behind our firewall?</summary>
+<div class="faq-body"><p>Yes, through secured endpoints, VPN, or private link configurations depending on your environment. Dedicated deployments give you control over network rules, IP allowlists, and credential handling. For SAP, Oracle, legacy ERPs, or internal microservices, we scope the network topology during the pilot phase.</p></div>
+</details>
+<details class="faq-item">
+<summary>How do we handle change management across dozens of departments on one platform?</summary>
+<div class="faq-body"><p>The Admin Console gives centralized control over users, automations, connections, and deployments with role-based access. Bulk deployment lets you test a change on one unit, then push it to every department simultaneously; version comparison shows exactly what changed. Master routing directs incoming data to the right business unit automatically, so adding a new department does not require building a new endpoint.</p></div>
+</details>
+<details class="faq-item">
+<summary>What does the managed pilot actually include?</summary>
+<div class="faq-body"><p>Under the Managed Pilot, APIANT scopes, builds, and deploys your highest-priority integrations on your dedicated server within weeks. Your IT team gets full visibility through the Admin Console, monitoring dashboards, and execution logs, without carrying the build burden. Support, monitoring, and upgrades are handled by us during the pilot. If the results validate the platform, your team takes ownership of new integrations from there.</p></div>
+</details>
+<details class="faq-item">
+<summary>What happens to our integrations if we leave APIANT?</summary>
+<div class="faq-body"><p>You own your data, your credentials, and your connection configurations. Integration logic lives in the Automation Editor as visual recipes; export and documentation are available so your team can rebuild elsewhere if needed. Dedicated deployments mean there is no shared vendor lock at the data layer. Contract terms cover data portability and transition assistance explicitly; we can share the standard enterprise agreement during evaluation.</p></div>
+</details>
 </div>
 </section>
 <!-- ===== FOOTER ===== -->

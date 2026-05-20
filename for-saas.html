@@ -1578,49 +1578,63 @@
     .fs-faq { padding: 80px 40px; max-width: 880px; margin: 0 auto; }
     .fs-faq h2 { font-size: 42px; font-weight: 700; color: #ffffff; line-height: 1.2; margin-bottom: 40px; text-align: center; letter-spacing: -0.01em; }
     .fs-faq-list { display: flex; flex-direction: column; gap: 16px; }
-    .fs-faq .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px 28px; transition: border-color 0.3s, background 0.3s; }
+    .fs-faq .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; transition: border-color 0.3s, background 0.3s; overflow: hidden; }
     .fs-faq .faq-item:hover { border-color: rgba(59,130,246,0.35); background: rgba(59,130,246,0.04); }
-    .fs-faq .faq-item h3 { font-size: 18px; font-weight: 600; color: #ffffff; margin: 0 0 10px 0; line-height: 1.35; }
-    .fs-faq .faq-item p { font-size: 16px; line-height: 1.7; color: #94a3b8; margin: 0; }
+    .fs-faq .faq-item[open] { border-color: rgba(59,130,246,0.5); background: rgba(59,130,246,0.04); }
+    .fs-faq .faq-item > summary {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 22px 28px; cursor: pointer; list-style: none;
+      font-size: 18px; font-weight: 600; color: #ffffff; line-height: 1.35;
+    }
+    .fs-faq .faq-item > summary::-webkit-details-marker { display: none; }
+    .fs-faq .faq-item > summary::after {
+      content: ''; width: 14px; height: 14px; flex-shrink: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+      background-repeat: no-repeat; background-position: center; background-size: 14px 14px;
+      transition: transform 0.3s ease;
+    }
+    .fs-faq .faq-item[open] > summary::after { transform: rotate(180deg); }
+    .fs-faq .faq-item .faq-body { padding: 0 28px 24px; }
+    .fs-faq .faq-item .faq-body p { font-size: 16px; line-height: 1.7; color: #94a3b8; margin: 0; }
     @media (max-width: 768px) {
       .fs-faq { padding: 60px 20px; }
       .fs-faq h2 { font-size: 30px; margin-bottom: 28px; }
-      .fs-faq .faq-item { padding: 20px 22px; }
-      .fs-faq .faq-item h3 { font-size: 17px; }
-      .fs-faq .faq-item p { font-size: 15px; }
+      .fs-faq .faq-item > summary { padding: 20px 22px; font-size: 17px; }
+      .fs-faq .faq-item .faq-body { padding: 0 22px 20px; }
+      .fs-faq .faq-item .faq-body p { font-size: 15px; }
     }
   </style>
 <section class="faq fs-faq">
 <h2 class="reveal">Frequently asked questions</h2>
 <div class="fs-faq-list">
-<div class="faq-item">
-<h3>We already use an embedded iPaaS. Why switch?</h3>
-<p>Embedded iPaaS vendors own the multi-tenant infrastructure, the connectors, and often the customer UX. You rent capacity. When you outgrow their integration depth (custom objects, industry-specific logic, rate-limited multi-location support), you have no path to extend it without their roadmap. APIANT gives you a dedicated server branded as yours, with full control over logic, UI, and pricing to your customers. The workflow architect on your side owns the product.</p>
-</div>
-<div class="faq-item">
-<h3>Is this really white-label, or does the APIANT brand leak through?</h3>
-<p>It is complete white-label. Your server runs on your subdomain. FormApps embed inside your product with your styling, so the end user never leaves your app to configure an integration. There is no vendor logo in the setup flow, no third-party billing page, and no redirect to a partner portal. Your customers see your product.</p>
-</div>
-<div class="faq-item">
-<h3>What does "deep integration" actually mean for our customers?</h3>
-<p>Deep means bi-directional sync with custom objects, not one-way contact pushes. It means understanding that a Mindbody class booking is not the same as attendance, that a 10-pack purchase depletes over time and should trigger replenishment campaigns, that family members sharing an email need to roll up to a single company record in HubSpot. Shallow connectors move records. Deep integrations encode the business logic that makes the data actually useful.</p>
-</div>
-<div class="faq-item">
-<h3>How fast can we launch the first integration?</h3>
-<p>For an API already covered by a prebuilt connector, days to a couple of weeks from the first build session. For an API we have never touched, the AI Co-Pilot typically produces production-ready ingredients overnight, and the workflow architect wraps them in the Automation Editor within days. Compare that to months of engineering time in-house.</p>
-</div>
-<div class="faq-item">
-<h3>What happens when we outgrow a tier?</h3>
-<p>You move up. Sandbox is for evaluation, Pro ($499/mo) suits most SaaS companies with a single production server and 10 connections, Scale ($1,500/mo) is the sweet spot for production workloads with 50 connections, and Enterprise (from $3,500/mo) adds dedicated AWS infrastructure with an SLA. Tiers are about headroom, not feature gating: the editors, AI Co-Pilot, and connector catalog are available at every level.</p>
-</div>
-<div class="faq-item">
-<h3>Who owns the customer relationship and the billing?</h3>
-<p>In Path 1 (APIANT builds and manages), your customers subscribe directly to APIANT and you refer. In Path 2 (you own the platform), you own the billing, the pricing, and the customer. Many SaaS companies start on Path 1 to ship fast and migrate to Path 2 once integrations become a strategic revenue line.</p>
-</div>
-<div class="faq-item">
-<h3>How does APIANT handle upgrades without breaking our customers' integrations?</h3>
-<p>The settings-vs-logic architecture separates what is universal from what is unique. Logic (data flow, error handling, object mapping) is the same for every deployment. Settings (which fields to sync, which features to enable) differ per customer. When you push a logic upgrade, every customer inherits it simultaneously without touching their configuration. No per-tenant migrations, no long-tail breakage.</p>
-</div>
+<details class="faq-item">
+<summary>We already use an embedded iPaaS. Why switch?</summary>
+<div class="faq-body"><p>Embedded iPaaS vendors own the multi-tenant infrastructure, the connectors, and often the customer UX. You rent capacity. When you outgrow their integration depth (custom objects, industry-specific logic, rate-limited multi-location support), you have no path to extend it without their roadmap. APIANT gives you a dedicated server branded as yours, with full control over logic, UI, and pricing to your customers. The workflow architect on your side owns the product.</p></div>
+</details>
+<details class="faq-item">
+<summary>Is this really white-label, or does the APIANT brand leak through?</summary>
+<div class="faq-body"><p>It is complete white-label. Your server runs on your subdomain. FormApps embed inside your product with your styling, so the end user never leaves your app to configure an integration. There is no vendor logo in the setup flow, no third-party billing page, and no redirect to a partner portal. Your customers see your product.</p></div>
+</details>
+<details class="faq-item">
+<summary>What does "deep integration" actually mean for our customers?</summary>
+<div class="faq-body"><p>Deep means bi-directional sync with custom objects, not one-way contact pushes. It means understanding that a Mindbody class booking is not the same as attendance, that a 10-pack purchase depletes over time and should trigger replenishment campaigns, that family members sharing an email need to roll up to a single company record in HubSpot. Shallow connectors move records. Deep integrations encode the business logic that makes the data actually useful.</p></div>
+</details>
+<details class="faq-item">
+<summary>How fast can we launch the first integration?</summary>
+<div class="faq-body"><p>For an API already covered by a prebuilt connector, days to a couple of weeks from the first build session. For an API we have never touched, the AI Co-Pilot typically produces production-ready ingredients overnight, and the workflow architect wraps them in the Automation Editor within days. Compare that to months of engineering time in-house.</p></div>
+</details>
+<details class="faq-item">
+<summary>What happens when we outgrow a tier?</summary>
+<div class="faq-body"><p>You move up. Sandbox is for evaluation, Pro ($499/mo) suits most SaaS companies with a single production server and 10 connections, Scale ($1,500/mo) is the sweet spot for production workloads with 50 connections, and Enterprise (from $3,500/mo) adds dedicated AWS infrastructure with an SLA. Tiers are about headroom, not feature gating: the editors, AI Co-Pilot, and connector catalog are available at every level.</p></div>
+</details>
+<details class="faq-item">
+<summary>Who owns the customer relationship and the billing?</summary>
+<div class="faq-body"><p>In Path 1 (APIANT builds and manages), your customers subscribe directly to APIANT and you refer. In Path 2 (you own the platform), you own the billing, the pricing, and the customer. Many SaaS companies start on Path 1 to ship fast and migrate to Path 2 once integrations become a strategic revenue line.</p></div>
+</details>
+<details class="faq-item">
+<summary>How does APIANT handle upgrades without breaking our customers' integrations?</summary>
+<div class="faq-body"><p>The settings-vs-logic architecture separates what is universal from what is unique. Logic (data flow, error handling, object mapping) is the same for every deployment. Settings (which fields to sync, which features to enable) differ per customer. When you push a logic upgrade, every customer inherits it simultaneously without touching their configuration. No per-tenant migrations, no long-tail breakage.</p></div>
+</details>
 </div>
 </section>
 <!-- ===== FOOTER ===== -->
