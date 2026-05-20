@@ -217,6 +217,8 @@
         var href = categorySlug
           ? '/blog/category/' + categorySlug + '?tag=' + slug
           : '/blog/?tag=' + slug;
+        // Keep the visitor in their locale on middle-click / no-JS.
+        href = localizeHref(href);
         return '<a class="blog-tag-pill" data-tag="' + escapeHtml(slug) +
           '" href="' + escapeHtml(href) + '">#' + escapeHtml(name) + '</a>';
       }).join('');

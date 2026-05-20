@@ -87,6 +87,38 @@
     window.location.href = buildLocalizedUrl(lang);
   }
 
+  // Paths that are NOT localized (no /{lang}/ copy exists) or must never
+  // be rewritten. Matched against the start of a root-relative href.
+  var NO_LOCALE = /^\/(editor|admin|api|webhook|oauth|css|js|images|videos|fonts|appResources|sitemap|robots|blog\/feed\.xml|blog\/search-index\.json)\b/;
+
+  /**
+   * Site-wide language stickiness: when on a localized page, rewrite
+   * internal absolute links (/foo) to carry the current /{lang}/ prefix
+   * so navigating between sections (marketing <-> blog, plus the blog
+   * nav's absolute links) keeps the visitor in their language.
+   *
+   * Relative links (for-saas, platform/) already resolve correctly
+   * inside /{lang}/ and are left untouched. Already-prefixed links,
+   * external links, anchors, mailto/tel, and NO_LOCALE paths are skipped.
+   */
+  function localizeInternalLinks() {
+    var lang = getCurrentLang();
+    if (lang === 'en') return;
+    var prefix = '/' + lang;
+    var alreadyPrefixed = new RegExp('^/(' + SUPPORTED.join('|') + ')(/|$)');
+    var anchors = document.querySelectorAll('a[href]');
+    for (var i = 0; i < anchors.length; i++) {
+      var a = anchors[i];
+      var href = a.getAttribute('href');
+      // Only same-site root-relative paths ("/something"). Skips
+      // external, protocol-relative (//), anchors (#), mailto:, tel:.
+      if (!href || href.charAt(0) !== '/' || href.charAt(1) === '/') continue;
+      if (alreadyPrefixed.test(href)) continue;
+      if (NO_LOCALE.test(href)) continue;
+      a.setAttribute('href', prefix + href);
+    }
+  }
+
   function initSwitcher() {
     var containers = document.querySelectorAll('.lang-switcher-dropdown');
     var current = getCurrentLang();
@@ -133,9 +165,12 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { initSwitcher(); autoRedirect(); });
+    document.addEventListener('DOMContentLoaded', function() {
+      initSwitcher(); localizeInternalLinks(); autoRedirect();
+    });
   } else {
     initSwitcher();
+    localizeInternalLinks();
     autoRedirect();
   }
 
