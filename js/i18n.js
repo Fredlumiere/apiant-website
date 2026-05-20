@@ -115,6 +115,10 @@
       if (!href || href.charAt(0) !== '/' || href.charAt(1) === '/') continue;
       if (alreadyPrefixed.test(href)) continue;
       if (NO_LOCALE.test(href)) continue;
+      // Language switchers point at other locales on purpose. Their
+      // English option is the unprefixed root path; prefixing it would
+      // trap the visitor in the current locale.
+      if (a.closest('.blog-lang-switcher-dropdown, .lang-switcher-dropdown')) continue;
       a.setAttribute('href', prefix + href);
     }
   }

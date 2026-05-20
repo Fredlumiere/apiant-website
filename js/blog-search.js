@@ -69,9 +69,17 @@
 
     dd.innerHTML = LANGUAGES.map(function (lng) {
       var cls = lng.code === activeCode ? ' class="current"' : '';
-      return '<a href="' + buildLocalizedPath(lng.code) + '"' + cls +
-        '>' + lng.native + ' &middot; ' + lng.name + '</a>';
+      return '<a href="' + buildLocalizedPath(lng.code) + '" data-lang-code="' +
+        lng.code + '"' + cls + '>' + lng.native + ' &middot; ' + lng.name + '</a>';
     }).join('');
+
+    // Persist the choice so it sticks site-wide. js/i18n.js reads this key
+    // (apiant_lang) for the switcher state and the auto-redirect decision.
+    dd.querySelectorAll('a[data-lang-code]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        try { localStorage.setItem('apiant_lang', a.getAttribute('data-lang-code')); } catch (e) {}
+      });
+    });
 
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
