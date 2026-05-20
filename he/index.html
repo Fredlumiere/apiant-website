@@ -2086,18 +2086,36 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 </div>
 </div>
 </section>
-<footer>
-<div class="wrap frow">
-<div>© 2026 APIANT. פטנט בהמתנה.</div>
-<div class="flinks">
-<a href="/">בַּיִת</a>
-<a href="/platform">פלטפורמה</a>
-<a href="/privacy">פְּרָטִיוּת</a>
-<a href="/tos">תנאים</a>
-<a href="/cookie-policy">עוגיות</a>
+<!-- ===== FOOTER ===== -->
+<div class="footer-section">
+<div class="footer-container">
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 40px;">
+<div class="footer-wrapper" style="display: flex; justify-content: space-between; align-items: flex-start; padding: 60px 0 40px; flex-wrap: wrap; gap: 40px;">
+<a class="footer-brand w-inline-block" href="/" style="text-decoration: none;">
+<img alt="אפיאנט" decoding="async" loading="lazy" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height: 28px; margin-bottom: 12px;"/>
+<div class="footer-paragraph-holder">
+<p style="color: #64748b; font-size: 13px;">© 2026, אפיאנט בע"מ<br/>כל הזכויות שמורות.</p>
+</div>
+</a>
+<div style="display: flex; gap: 60px; flex-wrap: wrap;">
+<div class="footer-block">
+<div style="color: #94a3b8; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">חברה</div>
+<a href="/privacy" style="display: block; color: #64748b; font-size: 14px; text-decoration: none; margin-bottom: 8px;">מדיניות פרטיות</a>
+<a href="/cookie-policy" style="display: block; color: #64748b; font-size: 14px; text-decoration: none; margin-bottom: 8px;">מדיניות עוגיות</a>
+<a class="footer-link" href="#" onclick="ccShowBanner(); return false;">הגדרות קובצי Cookie</a>
+<a href="/tos" style="display: block; color: #64748b; font-size: 14px; text-decoration: none;">תנאי שירות</a>
+</div>
+<div class="footer-block">
+<div style="color: #94a3b8; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">משאבים</div>
+<a href="https://discord.gg/tx5PankREq" rel="noopener" style="display: block; color: #64748b; font-size: 14px; text-decoration: none; margin-bottom: 8px;" target="_blank">קהילה</a>
+<a href="https://info.apiant.com" rel="noopener" style="display: block; color: #64748b; font-size: 14px; text-decoration: none;" target="_blank">תיעוד</a>
+<a href="/he/blog" style="display: block; color: #64748b; font-size: 14px; text-decoration: none; margin-top: 8px;">בלוג</a>
 </div>
 </div>
-</footer>
+</div>
+</div>
+</div>
+</div>
 <script>
 // Card spotlight follow cursor
 document.querySelectorAll('.card').forEach(c=>{
@@ -3277,6 +3295,8 @@ document.querySelectorAll('.card').forEach(c=>{
     document.querySelectorAll('.popup-trigger').forEach(function(btn) {
       btn.addEventListener('click', function(e) { e.preventDefault(); openPopup('contact-popup'); });
     });
+    // Pages without their own popup link here as /?talk=1 to open it.
+    if (new URLSearchParams(location.search).get('talk') === '1') openPopup('contact-popup');
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         document.querySelectorAll('.apiant-popup.active').forEach(function(p) { closePopup(p.id); });
