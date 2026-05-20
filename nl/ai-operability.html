@@ -25,7 +25,6 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap" media="print" onload="this.media='all'" rel="stylesheet"/>
 <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap" rel="stylesheet"/></noscript>
 <link href="/images/favicon.png" rel="shortcut icon" type="image/x-icon"/>
-<script async="" defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
 <script src="/js/phone-verify.js" type="text/javascript"></script>
 <script src="/js/forum-post.js" type="text/javascript"></script>
 <style>:root{
@@ -451,6 +450,17 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
   }
 }
 </script>
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
 <style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
 .lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
 .lang-option.active{color:#1ab759;font-weight:600;}
@@ -4489,15 +4499,6 @@ document.querySelectorAll('.card').forEach(c=>{
       var prevErr = document.querySelector('#contact-form .cq-inline-error');
       if (prevErr) prevErr.style.display = 'none';
 
-      if (typeof turnstile === 'undefined') {
-        cqShowInlineError('contact-form', 'Verification failed to load. Please refresh the page and try again.');
-        return false;
-      }
-      var captchaToken = turnstile.getResponse();
-      if (!captchaToken) {
-        cqShowInlineError('contact-form', 'Please wait for verification to complete.');
-        return false;
-      }
       var email = $("#contact-email").val().trim();
       if (!email) {
         cqShowInlineError('contact-form', 'Please enter your work email.');
@@ -4902,6 +4903,5 @@ document.querySelectorAll('.card').forEach(c=>{
 <script src="/js/reveal.js"></script>
 <script src="/js/gtag-consent.js"></script>
 <script src="/js/cookie-consent.js"></script>
-</div><div class="cf-turnstile" data-appearance="interaction-only" data-callback="onTurnstileSuccess" data-sitekey="0x4AAAAAACqP7kMK5m2aXb3g" data-size="flexible" data-theme="dark" style="position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:2147483647;"></div>
-<script src="/js/i18n.js"></script></body>
+</div><script src="/js/i18n.js"></script></body>
 </html>
