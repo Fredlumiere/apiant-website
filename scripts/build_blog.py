@@ -340,6 +340,36 @@ def render_related(posts: list[dict]) -> str:
     )
 
 
+def render_api_apps_cta() -> str:
+    """Three tiny cards at the foot of every post, one per turnkey vertical
+    hub. Replaces the old single 'browse the full catalog' text link."""
+    cards = [
+        ("Mindbody Solutions",
+         "Fitness and wellness integrations",
+         "/apipartners/mindbody-turnkey-integration-solutions"),
+        ("Cliniko Solutions",
+         "Healthcare and allied-health integrations",
+         "/apipartners/cliniko-turnkey-integration-solutions"),
+        ("DonorPerfect Solutions",
+         "Nonprofit and fundraising integrations",
+         "/apipartners/donorperfect-turnkey-integration-solutions"),
+    ]
+    items = "".join(
+        f'<a class="blog-apps-cta-card" href="{html.escape(url)}">'
+        f'<span class="blog-apps-cta-name">{html.escape(name)}</span>'
+        f'<span class="blog-apps-cta-desc">{html.escape(desc)}</span>'
+        f'<span class="blog-apps-cta-arrow">Explore &rarr;</span>'
+        f'</a>'
+        for name, desc, url in cards
+    )
+    return (
+        '<aside class="blog-apps-cta">'
+        '<div class="blog-apps-cta-heading">Browse the full API Apps catalog</div>'
+        f'<div class="blog-apps-cta-grid">{items}</div>'
+        '</aside>'
+    )
+
+
 def render_hero_image(post: dict) -> str:
     hero = normalize(post.get("hero_image_url"))
     if not hero:
@@ -391,6 +421,7 @@ def write_post_page(post: dict, related: list[dict]) -> Path:
         "READ_TIME": str(estimate_read_minutes(post["body_md"])),
         "HERO_IMAGE_BLOCK": render_hero_image(post),
         "BODY_HTML": body_html,
+        "API_APPS_CTA": render_api_apps_cta(),
         "TOC_BLOCK": render_toc(toc),
         "TAGS_BLOCK": render_tags(tags),
         "RELATED_BLOCK": render_related(related),
