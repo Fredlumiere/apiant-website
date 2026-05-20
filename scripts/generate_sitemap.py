@@ -43,7 +43,6 @@ EXCLUDE_FILES = {
     "zoomconnect-nextsteps.html",
     "apps2.html",
     "index2.html",
-    "index3.html",
     "temp.html",
     "ADOPTION-PLAN.html",
     "servlettemplateconnect.html",
