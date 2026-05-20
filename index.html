@@ -1069,6 +1069,73 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 .tb-name{color:var(--text);font-size:13px;font-weight:600}
 .tb-role{color:var(--muted);font-size:12px}
 @media(max-width:480px){.tb-card{flex:0 0 280px}}
+
+/* === Phone-width refinements (<=480px) — fully mobile-friendly pass === */
+@media (max-width:480px){
+  /* Tighter page gutters so content has more room on a ~390px screen */
+  .wrap{padding:0 16px}
+
+  /* Hero: keep the status eyebrow on a controlled line, no awkward wrap */
+  .hero-home{padding:56px 0 44px}
+  .hero-home .eyebrow{font-size:10px;letter-spacing:.06em;padding:6px 10px;gap:7px;margin-bottom:20px}
+  .home-lead{font-size:16px}
+  .hero-home .cta-row{margin-bottom:40px}
+  .hero-home .btn{width:100%;justify-content:center}
+
+  /* CC stage / terminal: stack and fit, never overflow */
+  .cc-stage{margin-top:14px}
+  /* The -20px inset glow pushes the decorative pseudo past the page gutter;
+     pull it back in so .wrap has zero horizontal overflow on a phone. */
+  .cc-stage::before{inset:0}
+  .cc-emanation{max-width:100%}
+  .cc-content{font-size:10.5px;padding:12px 12px;max-height:340px}
+
+  /* Lifecycle pipeline: 9 nodes must fit a phone — shrink lines, gaps, circles */
+  .hp2-pipeline{flex-wrap:wrap;gap:10px 4px;justify-content:center}
+  .hp2-pipe-node{flex:0 0 calc(20% - 4px);min-width:0}
+  .hp2-pipe-circle{width:34px;height:34px}
+  .hp2-pipe-circle svg{width:14px;height:14px}
+  .hp2-pipe-label{font-size:8.5px;line-height:1.25}
+  .hp2-pipe-line{display:none}
+
+  /* Partner marquee: scale logos down so a single mark does not fill the screen */
+  .partner-strip{padding:36px 0}
+  .partner-strip .company-logo-container{grid-column-gap:28px;padding-right:28px}
+  .partner-strip .company-logo{width:84px}
+  .partner-strip .company-logo.dpo{width:130px;height:auto}
+  .partner-strip .company-logo.mailchimp{width:108px}
+  .partner-strip .company-logo.keap{width:64px}
+  .partner-strip .company-logo-wrapper.dpo{margin-right:24px}
+  .partner-strip .company-logo-wrapper.activecampaign{width:auto}
+
+  /* Display headings: scale down so nothing overflows or looks broken */
+  .home-h1{font-size:30px;line-height:1.1}
+  .s .sec-head h2{font-size:26px}
+  .own-section h2,.before-after h2{font-size:26px}
+
+  /* Stacked single-column grids with sensible spacing */
+  .arch-proof-grid,.compare-grid,.aud-grid,.ba-grid,.own-bullets,.pc-grid,.triad,.example{gap:12px}
+  .aud-card{padding:32px 22px 26px}
+  .case-frame{padding:32px 18px}
+  .case-stats{gap:14px}
+  .compare-col{padding:22px 18px}
+
+  /* Featured testimonial: trim padding so the quote does not crowd the edge */
+  .tb-featured{padding:24px 22px}
+  .tb-featured-quote{font-size:18px}
+
+  /* Run-log timeline content stays inside the viewport */
+  .run-prompt,.run-totals,.run-closing{font-size:13px}
+
+  /* Final CTA + footer: comfortable stacking and tap targets */
+  .final-cta{padding:60px 0 72px}
+  .final-cta .cta-row .btn,.cta-row .btn{width:100%;justify-content:center}
+  footer .frow{flex-direction:column;align-items:flex-start;gap:12px}
+  footer .flinks{gap:14px 18px}
+
+  /* Comfortable tap targets for inline nav/CTA links */
+  .hero-home .btn,.final-cta .btn,.cta .btn{min-height:48px}
+}
 </style>
 <!-- HERO -->
 <section class="hero hero-home">
