@@ -898,6 +898,28 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 .hero-home .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:15px;text-decoration:none;transition:transform .12s,box-shadow .15s,background .15s;border:1px solid transparent}
 .hero-home .btn.primary{background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;box-shadow:0 4px 18px rgba(26,183,89,.28)}
 .hero-home .btn.primary:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(26,183,89,.42)}
+/* Founder video link */
+.hero-watch{display:inline-flex;align-items:center;gap:13px;padding:7px 20px 7px 7px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color .2s,background .2s,transform .12s}
+.hero-watch:hover{border-color:rgba(26,183,89,.5);background:rgba(26,183,89,.07);transform:translateY(-1px)}
+.hero-watch:focus-visible{outline:2px solid #1ab759;outline-offset:2px}
+.hero-watch-play{position:relative;flex-shrink:0;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d7a3a,#1ab759);box-shadow:0 4px 14px rgba(26,183,89,.4)}
+.hero-watch-play svg{width:15px;height:15px;margin-left:2px;fill:#fff}
+.hero-watch-play::before{content:'';position:absolute;inset:-1px;border-radius:50%;border:2px solid rgba(26,183,89,.55);animation:heroWatchPulse 2.6s ease-out infinite}
+@keyframes heroWatchPulse{0%{transform:scale(1);opacity:.75}70%{transform:scale(1.55);opacity:0}100%{opacity:0}}
+.hero-watch-txt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25}
+.hero-watch-txt b{font-weight:600;font-size:14px;color:#f7f8f8}
+.hero-watch-txt small{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.02em;margin-top:2px}
+@media(max-width:760px){.hero-watch{width:100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.hero-watch-play::before{animation:none}}
+/* Founder video lightbox */
+.fv-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(5,7,6,.93);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:24px}
+.fv-overlay.open{display:flex}
+.fv-frame{position:relative;width:100%;max-width:1180px;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.fv-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.fv-frame:fullscreen{max-width:none;width:100vw;height:100vh;border-radius:0}
+.fv-close{position:absolute;top:-46px;right:0;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.fv-close:hover{background:rgba(255,255,255,.18)}
+.fv-frame:fullscreen .fv-close{top:18px;right:18px}
 .hero-home .btn.ghost{background:transparent;color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.18);font-family:var(--mono);font-size:14px}
 .hero-home .btn.ghost:hover{border-color:rgba(255,255,255,.35);color:#fff}
 
@@ -1266,6 +1288,10 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 <p class="lead home-lead"><a class="home-lead-link" href="ai-operability#inventory-skills">42 skills</a> and <a class="home-lead-link" href="ai-operability#inventory-tools">138 MCP tools</a> cover the full lifecycle of deep, productized integrations with any API: build a custom connector, compose multi-step automations, run branch-coverage tests, deploy across tenants, monitor production, support customers, upgrade. End to end.</p>
 <div class="cta-row">
 <a class="btn primary popup-trigger" href="#">Start Building</a>
+<button aria-label="Play video: a walk through the APIANT platform with founder Fred" class="hero-watch" onclick="openFounderVideo()" type="button">
+<span class="hero-watch-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></span>
+<span class="hero-watch-txt"><b>Walk through APIANT with Fred</b><small>2-min founder demo</small></span>
+</button>
 </div>
 <!-- Claude Code terminal + Automation Editor canvas -->
 <div aria-hidden="true" class="cc-stage">
@@ -4266,5 +4292,50 @@ document.querySelectorAll('.card').forEach(c=>{
   }
 })();
 </script>
-<script src="/js/i18n.js"></script></body>
+<script src="/js/i18n.js"></script>
+<!-- Founder video lightbox -->
+<div aria-hidden="true" aria-label="Video" class="fv-overlay" id="founder-video" role="dialog">
+<div class="fv-frame" id="fv-frame">
+<button aria-label="Close video" class="fv-close" onclick="closeFounderVideo()" type="button">✕</button>
+<div id="fv-player"></div>
+</div>
+</div>
+<script>
+(function () {
+  var EMBED = 'https://www.youtube-nocookie.com/embed/oXuFK7M1aJk?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+  var overlay, frame, player;
+  function refs() {
+    overlay = overlay || document.getElementById('founder-video');
+    frame = frame || document.getElementById('fv-frame');
+    player = player || document.getElementById('fv-player');
+  }
+  window.openFounderVideo = function () {
+    refs();
+    if (!overlay) return;
+    player.innerHTML = '<iframe src="' + EMBED + '" title="A walk through the APIANT platform with founder Fred" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (frame.requestFullscreen) { frame.requestFullscreen().catch(function () {}); }
+  };
+  window.closeFounderVideo = function () {
+    refs();
+    if (!overlay) return;
+    if (document.fullscreenElement) { try { document.exitFullscreen(); } catch (e) {} }
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    player.innerHTML = '';
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay && overlay.classList.contains('open') && !document.fullscreenElement) {
+      window.closeFounderVideo();
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (overlay && e.target === overlay) { window.closeFounderVideo(); }
+  });
+})();
+</script>
+</body>
 </html>
