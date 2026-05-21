@@ -34,6 +34,33 @@ All forms use Webflow's form markup (`w-form` classes) with custom jQuery submit
 **Form ID:** `start-building`
 **Webhook:** `https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26`
 
+### Qualification Popup Webhook Payload (current)
+
+The "Talk to Us" popup posts its contact step to the webhook above via jQuery
+AJAX (`$.ajax`, form-url-encoded). The handler lives in the inline popup script
+on every popup page. Payload keys, ready for the sales@apiant.com automation to
+map into HubSpot contact properties:
+
+| Key | Example | Suggested HubSpot property |
+|-----|---------|----------------------------|
+| `WorkEmail` | `jane@acme.com` | `email` |
+| `Mobile` | `+14155550123` (E.164) | `mobilephone` |
+| `Company` | `Acme Inc` | `company` |
+| `CompanyDomain` | `acme.com` | `website` |
+| `CompanyType` | `saas` / `si` / `enterprise` | (custom) |
+| `CompanyTypeLabel` | `SaaS Company` / `System Integrator` / `Enterprise` | (custom) |
+| `IntegrationNeeds` | free text | note / custom |
+| `PageTitle` | page `document.title` | lead source detail |
+
+`CompanyType` / `CompanyTypeLabel` come from the first card the visitor picks
+(SaaS / System Integrator / Enterprise). `Mobile` is captured with the
+intl-tel-input country selector (flag + dial code) and normalized to E.164
+(`+` country code + national digits). The same lead is also saved to Supabase
+`submit-lead` for the WhatsApp handoff; that path does not include the phone.
+
+> The table below documents the **legacy** pre-2026 contact form and no longer
+> reflects the live popup.
+
 ### Fields
 
 | Field | Element ID | Type | Required |
