@@ -3710,27 +3710,30 @@ document.querySelectorAll('.card').forEach(c=>{
       return labels[type] || type;
     }
 
-    // Contact form submission (Step 6): collect form data and submit
-    $("#contact-form").submit(function() {
+    // Contact form submission (Step 6): collect form data and submit.
+    // Bound natively (not via jQuery) because this inline script runs before
+    // jQuery loads on this page. A $() call here would throw ReferenceError
+    // and the submit handler would never bind, so the form would not submit.
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
       // Hide any previous inline error
       var prevErr = document.querySelector('#contact-form .cq-inline-error');
       if (prevErr) prevErr.style.display = 'none';
 
-      var email = $("#contact-email").val().trim();
+      var email = document.getElementById('contact-email').value.trim();
       if (!email) {
         cqShowInlineError('contact-form', 'Please enter your work email.');
-        return false;
+        return;
       }
       // Preserve phone data from OTP step, add form fields
       CQ_FORM_DATA.PageTitle = document.title;
       CQ_FORM_DATA.CompanyType = CQ_SELECTED_TYPE;
       CQ_FORM_DATA.CompanyDomain = CQ_VERIFIED_DOMAIN;
       CQ_FORM_DATA.WorkEmail = email;
-      CQ_FORM_DATA.Company = $("#contact-company").val().trim();
-      CQ_FORM_DATA.IntegrationNeeds = $("#contact-needs").val().trim();
+      CQ_FORM_DATA.Company = document.getElementById('contact-company').value.trim();
+      CQ_FORM_DATA.IntegrationNeeds = document.getElementById('contact-needs').value.trim();
       // Submit and route to call/schedule
       cqSubmitAndRoute();
-      return false;
     });
 
     // Phone-only OTP (SMS or WhatsApp)
