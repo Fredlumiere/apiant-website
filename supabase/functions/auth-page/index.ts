@@ -4,7 +4,7 @@ import { timingSafeEqual } from "../_shared/auth.ts";
 import { verifyTurnstile } from "../_shared/turnstile.ts";
 import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
 
-const ALLOWED_SLUGS = ["apiant-ai-advantage", "market-opportunity", "activecampaign-pricing"];
+const ALLOWED_SLUGS = ["apiant-ai-advantage", "market-opportunity", "activecampaign-pricing", "partner-pricing"];
 
 function slugEnvKey(slug: string): string {
   return slug.replace(/[^a-zA-Z0-9]/g, "_").toUpperCase();
