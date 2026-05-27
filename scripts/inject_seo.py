@@ -104,7 +104,7 @@ def is_english_page(path: Path) -> bool:
     # Skip servlet templates. They have {TEMPLATE_*} placeholders the server
     # replaces at serve time. A static canonical or schema would be wrong.
     name = rel.name
-    if name in {"servlettemplateconnect.html", "servlettemplateconnections.html"}:
+    if name in {"servletTemplateConnect.html", "servletTemplateConnections.html"}:
         return False
     return True
 

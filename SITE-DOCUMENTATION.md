@@ -148,7 +148,7 @@
 **Title:** Connect
 **Purpose:** Shows a CONNECTION between TWO specific apps (displays Cliniko + Stripe as default/example)
 
-### Server-Side Template: `connect/servlettemplateconnect.html`
+### Server-Side Template: `connect/servletTemplateConnect.html`
 **Title:** `Connect {TEMPLATE_FROM_APP} to {TEMPLATE_TO_APP} with APIANT`
 **Purpose:** Backend servlet replaces placeholders with real app names/icons/endpoint data to generate unique SEO pages for every app-to-app combination.
 
@@ -174,7 +174,7 @@
 **Title:** Cliniko Integrations | APIANT
 **Purpose:** Shows a SINGLE app's integration page (Cliniko as default/example)
 
-### Server-Side Template: `connections/servlettemplateconnections.html`
+### Server-Side Template: `connections/servletTemplateConnections.html`
 **Title:** `{TEMPLATE_APP_NAME} Integrations | APIANT`
 **Purpose:** Generates individual app integration listing pages for any single app.
 

@@ -71,11 +71,11 @@ apipartners/
 
 connect/
   connect.html                        Static two-app connect page (Cliniko+Stripe example)
-  servlettemplateconnect.html         Server-side template with {TEMPLATE_*} placeholders
+  servletTemplateConnect.html         Server-side template with {TEMPLATE_*} placeholders
 
 connections/
   connections.html                    Static single-app page (Cliniko example)
-  servlettemplateconnections.html     Server-side template with {TEMPLATE_*} placeholders
+  servletTemplateConnections.html     Server-side template with {TEMPLATE_*} placeholders
 
 appconnect-next-steps.html            Post-signup (Zapier), noindex
 shopconnect-next-steps.html           Post-signup (Shopify), noindex
@@ -88,7 +88,7 @@ privacy.html / cookie-policy.html / tos.html    Legal pages
 
 ## Servlet Template Pages
 
-`connect/servlettemplateconnect.html` and `connections/servlettemplateconnections.html` are server-side templates. The APIANT backend replaces placeholders like `{TEMPLATE_FROM_APP}`, `{TEMPLATE_TO_APP}`, `{TEMPLATE_FROM_ICON}`, etc. to generate unique SEO pages for every app combination. Do not change the `{TEMPLATE_*}` placeholder syntax.
+`connect/servletTemplateConnect.html` and `connections/servletTemplateConnections.html` are server-side templates. The APIANT backend replaces placeholders like `{TEMPLATE_FROM_APP}`, `{TEMPLATE_TO_APP}`, `{TEMPLATE_FROM_ICON}`, etc. to generate unique SEO pages for every app combination. Do not change the `{TEMPLATE_*}` placeholder syntax.
 
 ## Common Page Patterns
 

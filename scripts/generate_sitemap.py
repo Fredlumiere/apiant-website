@@ -45,8 +45,8 @@ EXCLUDE_FILES = {
     "index2.html",
     "temp.html",
     "ADOPTION-PLAN.html",
-    "servlettemplateconnect.html",
-    "servlettemplateconnections.html",
+    "servletTemplateConnect.html",
+    "servletTemplateConnections.html",
     "workshop-appointment-confirmation.html",
 }
 

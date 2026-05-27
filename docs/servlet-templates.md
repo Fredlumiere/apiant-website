@@ -28,14 +28,14 @@ These URLs are served by the APIANT Java backend (servlet), not by the static fi
 
 | File | Purpose | URL Pattern |
 |------|---------|-------------|
-| `connect/servlettemplateconnect.html` | Two-app integration page | `/connect/{app1}/{app2}` |
-| `connections/servlettemplateconnections.html` | Single-app integrations page | `/connections/{app}` |
+| `connect/servletTemplateConnect.html` | Two-app integration page | `/connect/{app1}/{app2}` |
+| `connections/servletTemplateConnections.html` | Single-app integrations page | `/connections/{app}` |
 
 Both files share the same head boilerplate, nav bar, and footer as regular pages.
 
 ## Connect Template
 
-**File:** `connect/servlettemplateconnect.html`
+**File:** `connect/servletTemplateConnect.html`
 
 Shows a page for connecting two specific apps, with triggers and actions for both.
 
@@ -71,7 +71,7 @@ Shows a page for connecting two specific apps, with triggers and actions for bot
 
 ## Connections Template
 
-**File:** `connections/servlettemplateconnections.html`
+**File:** `connections/servletTemplateConnections.html`
 
 Shows a page for a single app's available integrations.
 
@@ -129,7 +129,7 @@ Browser requests: apiant.com/connect/hubspot/salesforce
 APIANT Java servlet receives the request
                          |
                          v
-Reads connect/servlettemplateconnect.html
+Reads connect/servletTemplateConnect.html
                          |
                          v
 Looks up "hubspot" and "salesforce" in its app database
@@ -152,8 +152,8 @@ For development and testing, static versions of these pages exist:
 
 | Static File | Template It Mirrors |
 |-------------|-------------------|
-| `connect/connect.html` | `servlettemplateconnect.html` (Cliniko + Stripe example) |
-| `connections/connections.html` | `servlettemplateconnections.html` (Cliniko example) |
+| `connect/connect.html` | `servletTemplateConnect.html` (Cliniko + Stripe example) |
+| `connections/connections.html` | `servletTemplateConnections.html` (Cliniko example) |
 
 These static files have hardcoded content instead of `{TEMPLATE_*}` placeholders and can be opened directly in a browser.
 

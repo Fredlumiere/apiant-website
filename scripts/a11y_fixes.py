@@ -47,8 +47,8 @@ LOCALE_DIRS = {
     "ko", "it", "nl", "tr", "pl", "vi", "th", "id", "sv", "he",
 }
 SKIP_FILES = {
-    "servlettemplateconnect.html",
-    "servlettemplateconnections.html",
+    "servletTemplateConnect.html",
+    "servletTemplateConnections.html",
 }
 SKIP_ROOT_PREFIXES = (
     "admin", "test", "temp", "architecture-illustration",

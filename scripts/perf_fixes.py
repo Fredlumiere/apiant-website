@@ -42,8 +42,8 @@ LOCALE_DIRS = {
     "ko", "it", "nl", "tr", "pl", "vi", "th", "id", "sv", "he",
 }
 SKIP_FILES = {
-    "servlettemplateconnect.html",
-    "servlettemplateconnections.html",
+    "servletTemplateConnect.html",
+    "servletTemplateConnections.html",
 }
 # Only skip these when they live at the repo root (they are admin/test/
 # scaffolding pages). `platform/admin-console.html` is a legitimate product

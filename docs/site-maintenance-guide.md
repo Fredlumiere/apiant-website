@@ -26,7 +26,7 @@ This site has **no includes, partials, or build system**. Every HTML file is sta
 - Platform: `platform/index.html`, `platform/automation-editor.html`, `platform/assembly-editor.html`, `platform/admin-console.html`
 - API Partners hub pages: `apipartners/mindbody-turnkey-integration-solutions.html`, `apipartners/cliniko-turnkey-integration-solutions.html`, `apipartners/donorperfect-turnkey-integration-solutions.html`
 - API Partners product pages: 10 Mindbody, 3 Cliniko, 4 DonorPerfect (in `apipartners/{vertical}/`)
-- Connect/Connections: `connect/connect.html`, `connect/servlettemplateconnect.html`, `connections/connections.html`, `connections/servlettemplateconnections.html`
+- Connect/Connections: `connect/connect.html`, `connect/servletTemplateConnect.html`, `connections/connections.html`, `connections/servletTemplateConnections.html`
 - Next-steps: `appconnect-next-steps.html`, `shopconnect-next-steps.html`, `mailconnect-next-steps.html`, `zoomconnect-nextsteps.html`
 - Legal: `privacy.html`, `cookie-policy.html`, `tos.html`
 - Error: `401.html`, `404.html`
