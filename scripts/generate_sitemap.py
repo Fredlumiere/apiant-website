@@ -101,6 +101,8 @@ def url_from_path(path: Path) -> str:
         rel = rel[: -len("index.html")]
     elif rel == "index.html":
         rel = ""
+    elif rel.endswith(".html"):
+        rel = rel[: -len(".html")]
     return f"{BASE_URL}/{rel}" if rel else f"{BASE_URL}/"
 
 
@@ -139,6 +141,8 @@ def locale_url_for(english_path: Path, locale: str) -> str | None:
         rel_str = rel_str[: -len("index.html")]
     elif rel_str == "index.html":
         rel_str = ""
+    elif rel_str.endswith(".html"):
+        rel_str = rel_str[: -len(".html")]
     return f"{BASE_URL}/{locale}/{rel_str}" if rel_str else f"{BASE_URL}/{locale}/"
 
 
