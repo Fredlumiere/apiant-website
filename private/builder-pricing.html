@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<title>APIANT For Builders &mdash; Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="/css/cookie-consent.css" rel="stylesheet" type="text/css"/>
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --text: #f2f1ed;
+    --text-muted: #8a887f;
+    --border: #26262c;
+    --accent: #1ab759;
+    --danger: #e06d60;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); min-height: 100vh; }
+  #auth-gate { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .auth-card { width: 100%; max-width: 380px; padding: 36px 32px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; }
+  .auth-label { font-size: 11px; letter-spacing: 0.22em; color: var(--accent); text-transform: uppercase; margin-bottom: 22px; font-weight: 600; }
+  .auth-card h1 { font-weight: 300; font-size: 28px; line-height: 1.15; margin-bottom: 10px; letter-spacing: -0.02em; }
+  .auth-card p.auth-intro { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 26px; }
+  .auth-field { margin-bottom: 14px; }
+  .auth-field label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .auth-field input { width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 15px; font-family: inherit; outline: none; }
+  .auth-field input:focus { border-color: var(--accent); }
+  .auth-submit { width: 100%; padding: 12px; background: var(--accent); color: #0a0a0b; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; margin-top: 6px; letter-spacing: 0.04em; }
+  .auth-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .auth-error { color: var(--danger); font-size: 13px; margin-top: 12px; text-align: center; display: none; }
+</style>
+</head>
+<body>
+<div id="auth-gate">
+  <form class="auth-card" id="auth-form" autocomplete="off">
+    <div class="auth-label">Confidential &middot; Builder Pricing</div>
+    <h1>APIANT For Builders</h1>
+    <p class="auth-intro">This pricing is shared confidentially with prospective SaaS partners. Enter the access code provided by Fred to continue.</p>
+    <div class="auth-field">
+      <label for="auth-pass">Access code</label>
+      <input type="password" id="auth-pass" name="password" required autofocus>
+    </div>
+    <button type="submit" class="auth-submit" id="auth-submit">Unlock</button>
+    <div class="auth-error" id="auth-error"></div>
+  </form>
+</div>
+<div id="page-content" style="display:none;"></div>
+<script>
+  var AUTH_ENDPOINT = 'https://kereljzjgeerrdnssttu.supabase.co/functions/v1/auth-page';
+  var PAGE_SLUG = 'builder-pricing';
+  var CACHE_KEY = 'pp2_' + PAGE_SLUG;
+  var CACHE_TTL = 30 * 60 * 1000;
+
+  function injectContent(html) {
+    document.getElementById('auth-gate').style.display = 'none';
+    var container = document.getElementById('page-content');
+    container.innerHTML = html;
+    container.style.display = 'block';
+    var scripts = container.querySelectorAll('script');
+    scripts.forEach(function(oldScript) {
+      var newScript = document.createElement('script');
+      for (var i = 0; i < oldScript.attributes.length; i++) {
+        var attr = oldScript.attributes[i];
+        newScript.setAttribute(attr.name, attr.value);
+      }
+      if (!oldScript.src) newScript.textContent = oldScript.textContent;
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+  }
+
+  (function() {
+    try {
+      var cached = sessionStorage.getItem(CACHE_KEY);
+      if (cached) {
+        var data = JSON.parse(cached);
+        if (data.timestamp && (Date.now() - data.timestamp) < CACHE_TTL) {
+          injectContent(data.html);
+          return;
+        }
+        sessionStorage.removeItem(CACHE_KEY);
+      }
+    } catch(e) {}
+  })();
+
+  document.getElementById('auth-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('auth-submit');
+    var errEl = document.getElementById('auth-error');
+    errEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Unlocking...';
+
+    fetch(AUTH_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: 'builder',
+        password: document.getElementById('auth-pass').value.trim(),
+        page_slug: PAGE_SLUG,
+        turnstile_token: (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){};return t;})()
+      })
+    })
+    .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
+    .then(function(result) {
+      if (!result.ok) {
+        errEl.textContent = result.data.error === 'Invalid credentials' ? 'Incorrect access code.' : (result.data.error || 'Incorrect access code.');
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Unlock';
+        return;
+      }
+      try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ html: result.data.html, timestamp: Date.now() })); } catch(e) {}
+      injectContent(result.data.html);
+    })
+    .catch(function() {
+      errEl.textContent = 'Connection error. Please try again.';
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Unlock';
+    });
+  });
+</script>
+<script src="/js/cookie-consent.js"></script>
+</body>
+</html>
