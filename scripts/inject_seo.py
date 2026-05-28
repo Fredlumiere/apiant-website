@@ -113,6 +113,19 @@ def is_indexable(content: str) -> bool:
     return not (NOINDEX_META_RE.search(content) or NOINDEX_META_REV_RE.search(content))
 
 
+# Directories whose canonical tags must never be rewritten by this script.
+# /connect/ and /connections/ are forwarded entirely to Tomcat via mod_jk (the
+# static files here are never served), and their pages carry intentional
+# cross-page canonicals (e.g. -> /apps.html) that an existing system relies on.
+# /connection/ is listed defensively in case such a path is ever added.
+CANONICAL_EXCLUDED_DIRS = {"connect", "connection", "connections"}
+
+
+def is_canonical_excluded(path: Path) -> bool:
+    """True if the page lives under an excluded dir, so its canonical is preserved as-is."""
+    return path.relative_to(ROOT).parts[0] in CANONICAL_EXCLUDED_DIRS
+
+
 def url_for(path: Path) -> str:
     rel = path.relative_to(ROOT).as_posix()
     if rel == "index.html":
@@ -746,9 +759,11 @@ def process_file(path: Path) -> dict:
     content, changed = ensure_consent_tag(content)
     if changed:
         ops.append("consent")
-    content, changed = ensure_canonical(content, url_for(path))
-    if changed:
-        ops.append("canonical")
+    canonical_excluded = is_canonical_excluded(path)
+    if not canonical_excluded:
+        content, changed = ensure_canonical(content, url_for(path))
+        if changed:
+            ops.append("canonical")
     content, changed = ensure_og_url(content, url_for(path))
     if changed:
         ops.append("og_url")
@@ -766,7 +781,11 @@ def process_file(path: Path) -> dict:
         ops.append("hreflang_dedup")
     if content != original:
         path.write_text(content, encoding="utf-8")
-    return {"path": str(path.relative_to(ROOT)), "ops": ops}
+    return {
+        "path": str(path.relative_to(ROOT)),
+        "ops": ops,
+        "canonical_excluded": canonical_excluded,
+    }
 
 
 def walk_english_pages() -> list[Path]:
@@ -794,6 +813,9 @@ def main() -> int:
     skipped = [r for r in results if r.get("skipped")]
     if skipped:
         print(f"Skipped {len(skipped)} noindex pages")
+    canon_excluded = [r for r in results if r.get("canonical_excluded")]
+    if canon_excluded:
+        print(f"Preserved canonical on {len(canon_excluded)} excluded pages (connect/connection/connections)")
     return 0
 
 
