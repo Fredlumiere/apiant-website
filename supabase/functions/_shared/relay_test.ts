@@ -13,15 +13,17 @@ const lead = {
   mobile: "+14155550123",
   first_name: "Sam",
   last_name: "Rivera",
+  job_title: "VP Engineering",
   company_name: "Acme",
   integration_needs: "Sync HubSpot to our app",
   page_title: "APIANT | Start Building",
 };
 
-Deno.test("lead relay carries FirstName/LastName", () => {
+Deno.test("lead relay carries FirstName/LastName/JobTitle", () => {
   const p = buildRelayParams(lead);
   assertEquals(p.get("FirstName"), "Sam");
   assertEquals(p.get("LastName"), "Rivera");
+  assertEquals(p.get("JobTitle"), "VP Engineering");
 });
 
 Deno.test("relay maps validated lead to legacy CQ_FORM_DATA field names", () => {
@@ -58,9 +60,9 @@ Deno.test("relay surface is minimal: no internal fields leak", () => {
   assertEquals(p.has("company_url"), false);
   assertEquals(p.has("form_id"), false);
   assertEquals(p.has("source_url"), false);
-  // Exactly the 10 expected keys (incl. FirstName/LastName).
+  // Exactly the 11 expected keys (incl. FirstName/LastName/JobTitle).
   assertEquals([...p.keys()].sort().join(","),
-    "Company,CompanyDomain,CompanyType,CompanyTypeLabel,FirstName,IntegrationNeeds,LastName,Mobile,PageTitle,WorkEmail");
+    "Company,CompanyDomain,CompanyType,CompanyTypeLabel,FirstName,IntegrationNeeds,JobTitle,LastName,Mobile,PageTitle,WorkEmail");
 });
 
 /* ---- apiapps (Contact Us) builder + routing selection ---- */
@@ -69,12 +71,17 @@ const contact = {
   page_title: "Mindbody + HubSpot | APIANT",
   first_name: "Jane",
   last_name: "Doe",
+  job_title: "Owner",
   company: "FitStudio",
   email: "jane@fitstudio.com",
   mobile: "+14155550199",
   country: "United States",
   integration_needs: "Sync clients to HubSpot",
 };
+
+Deno.test("apiapps relay carries JobTitle", () => {
+  assertEquals(buildContactParams(contact).get("JobTitle"), "Owner");
+});
 
 Deno.test("apiapps relay maps Contact Us fields with legacy names", () => {
   const p = buildContactParams(contact);

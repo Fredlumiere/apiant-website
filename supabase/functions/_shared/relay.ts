@@ -51,6 +51,7 @@ export interface RelayLead {
   mobile: string;
   first_name: string;
   last_name: string;
+  job_title: string;
   company_name: string;
   integration_needs: string;
   page_title: string;
@@ -72,6 +73,7 @@ export function buildRelayParams(lead: RelayLead): URLSearchParams {
     Mobile: lead.mobile || "",
     FirstName: lead.first_name || "",
     LastName: lead.last_name || "",
+    JobTitle: lead.job_title || "",
     Company: lead.company_name || "",
     IntegrationNeeds: lead.integration_needs || "",
   });
@@ -91,6 +93,7 @@ export interface RelayContact {
   page_title: string;
   first_name: string;
   last_name: string;
+  job_title: string;
   company: string;
   email: string;
   mobile: string;
@@ -104,6 +107,7 @@ export function buildContactParams(c: RelayContact): URLSearchParams {
     PageTitle: c.page_title || "",
     FirstName: c.first_name || "",
     LastName: c.last_name || "",
+    JobTitle: c.job_title || "",
     Company: c.company || "",
     WorkEmail: c.email || "",
     Mobile: c.mobile || "",

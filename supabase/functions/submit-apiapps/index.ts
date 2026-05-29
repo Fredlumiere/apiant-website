@@ -63,6 +63,7 @@ serve(async (req) => {
     const email = normalizeEmail(body.WorkEmail);
     const first_name = cap(body.FirstName, 80).trim();
     const last_name = cap(body.LastName, 80).trim();
+    const job_title = cap(body.JobTitle, 120).trim();
 
     if (!isValidEmail(email)) {
       logEvent({ evt: "apiapps_reject", reason: "invalid_email", ip: getClientIp(req), form_id });
@@ -71,6 +72,11 @@ serve(async (req) => {
     if (!first_name || !last_name) {
       logEvent({ evt: "apiapps_reject", reason: "missing_name", ip: getClientIp(req), form_id });
       return new Response(JSON.stringify({ error: "First and last name are required" }), { status: 400, headers: { ...cors, "Content-Type": "application/json" } });
+    }
+    // job_title required only for forms that collect it (e.g. builder-pricing).
+    if (form_id === "builder-pricing" && !job_title) {
+      logEvent({ evt: "apiapps_reject", reason: "missing_job_title", ip: getClientIp(req), form_id });
+      return new Response(JSON.stringify({ error: "Job title is required" }), { status: 400, headers: { ...cors, "Content-Type": "application/json" } });
     }
 
     // Replay / double-submit protection: dedupe on ip+email over a short window.
@@ -84,6 +90,7 @@ serve(async (req) => {
       page_title: cap(body.PageTitle, 300),
       first_name,
       last_name,
+      job_title,
       company: cap(body.Company, 200),
       email,
       mobile: cap(body.Mobile, 40),

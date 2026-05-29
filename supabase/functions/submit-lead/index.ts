@@ -116,6 +116,7 @@ serve(async (req) => {
     const form_id = cap(body.form_id, 64) || "unknown";
     const first_name = cap(body.first_name, 80).trim();
     const last_name = cap(body.last_name, 80).trim();
+    const job_title = cap(body.job_title, 120).trim();
 
     if (!isValidEmail(email)) {
       logEvent({ evt: "lead_reject", reason: "invalid_email", ip: getClientIp(req), form_id });
@@ -138,6 +139,15 @@ serve(async (req) => {
         { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
+    // job_title is required only for forms that collect it (e.g. builder-pricing).
+    // Other lead pages don't collect it, so a global requirement would reject them.
+    if (form_id === "builder-pricing" && !job_title) {
+      logEvent({ evt: "lead_reject", reason: "missing_job_title", ip: getClientIp(req), form_id });
+      return new Response(
+        JSON.stringify({ error: "Job title is required" }),
+        { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
+      );
+    }
 
     // Call-now is a follow-up signal fired after the lead was already submitted
     // (user clicks "call me now"). Relay only the WantsCallNow flag to the lead
@@ -152,6 +162,7 @@ serve(async (req) => {
         mobile: cap(body.mobile, 40),
         first_name,
         last_name,
+        job_title,
         company_name: cap(body.company_name, 200),
         integration_needs: cap(body.integration_needs, 4000),
         page_title: cap(body.source_page, 500),
@@ -246,6 +257,7 @@ serve(async (req) => {
       mobile,
       first_name,
       last_name,
+      job_title,
       company_name,
       integration_needs,
       page_title: source_page,
