@@ -3,7 +3,7 @@
  * Run with: deno test supabase/functions/_shared/relay_test.ts
  */
 import { assertEquals } from "https://deno.land/std@0.168.0/testing/asserts.ts";
-import { buildRelayParams } from "./relay.ts";
+import { buildContactParams, buildRelayParams } from "./relay.ts";
 
 const lead = {
   company_type: "saas",
@@ -53,4 +53,50 @@ Deno.test("relay surface is minimal: no internal fields leak", () => {
   // Exactly the 8 expected keys.
   assertEquals([...p.keys()].sort().join(","),
     "Company,CompanyDomain,CompanyType,CompanyTypeLabel,IntegrationNeeds,Mobile,PageTitle,WorkEmail");
+});
+
+/* ---- apiapps (Contact Us) builder + routing selection ---- */
+
+const contact = {
+  page_title: "Mindbody + HubSpot | APIANT",
+  first_name: "Jane",
+  last_name: "Doe",
+  company: "FitStudio",
+  email: "jane@fitstudio.com",
+  mobile: "+14155550199",
+  country: "United States",
+  integration_needs: "Sync clients to HubSpot",
+};
+
+Deno.test("apiapps relay maps Contact Us fields with legacy names", () => {
+  const p = buildContactParams(contact);
+  assertEquals(p.get("FirstName"), "Jane");
+  assertEquals(p.get("LastName"), "Doe");
+  assertEquals(p.get("WorkEmail"), "jane@fitstudio.com");
+  assertEquals(p.get("Mobile"), "+14155550199");
+  assertEquals(p.get("Country"), "United States");
+  assertEquals(p.get("Company"), "FitStudio");
+  assertEquals(p.get("IntegrationNeeds"), "Sync clients to HubSpot");
+  assertEquals(p.get("PageTitle"), "Mindbody + HubSpot | APIANT");
+});
+
+Deno.test("apiapps: empty Mobile/Country become empty string, never null/undefined", () => {
+  const p = buildContactParams({ ...contact, mobile: "", country: "" });
+  assertEquals(p.get("Mobile"), "");
+  assertEquals(p.get("Country"), "");
+});
+
+Deno.test("call-now flag is included only when set (lead family)", () => {
+  assertEquals(buildRelayParams({ ...lead, wants_call_now: true }).get("WantsCallNow"), "yes");
+  assertEquals(buildRelayParams(lead).has("WantsCallNow"), false);
+});
+
+Deno.test("routing selection: families produce distinct field sets", () => {
+  const leadKeys = [...buildRelayParams(lead).keys()].sort().join(",");
+  const apiappsKeys = [...buildContactParams(contact).keys()].sort().join(",");
+  // lead family carries CompanyType/CompanyDomain; apiapps carries FirstName/LastName/Country
+  assertEquals(leadKeys.includes("CompanyType"), true);
+  assertEquals(leadKeys.includes("FirstName"), false);
+  assertEquals(apiappsKeys.includes("FirstName"), true);
+  assertEquals(apiappsKeys.includes("CompanyType"), false);
 });

@@ -130,6 +130,36 @@ serve(async (req) => {
       );
     }
 
+    // Call-now is a follow-up signal fired after the lead was already submitted
+    // (user clicks "call me now"). Relay only the WantsCallNow flag to the lead
+    // downstream; do not create a second lead_sessions row and do not let the
+    // ip+email idempotency window drop it.
+    if (body.wants_call_now === true) {
+      const cnRelay = await relayToWebhook({
+        company_type,
+        company_type_label: COMPANY_TYPE_LABELS[company_type] || company_type,
+        domain: cap(body.domain, 253),
+        email,
+        mobile: cap(body.mobile, 40),
+        company_name: cap(body.company_name, 200),
+        integration_needs: cap(body.integration_needs, 4000),
+        page_title: cap(body.source_page, 500),
+        wants_call_now: true,
+      });
+      logEvent({
+        evt: "lead_accept",
+        form_id,
+        event: "call_now",
+        relay: cnRelay.skipped ? "skipped" : (cnRelay.ok ? "ok" : "failed"),
+        relay_status: cnRelay.status ?? null,
+        ip: getClientIp(req),
+      });
+      return new Response(
+        JSON.stringify({ ok: true }),
+        { headers: { ...cors, "Content-Type": "application/json" } },
+      );
+    }
+
     // Replay / double-submit protection: dedupe on ip+email over a short window.
     // A duplicate is treated as success (benign) but is NOT persisted or relayed
     // again, so a double-click or retry cannot create duplicate leads.

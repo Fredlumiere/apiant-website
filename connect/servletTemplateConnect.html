@@ -1472,15 +1472,9 @@
         "Company Type": $("[id='stc-CompanyType']").val(),
         "IntegrationNeeds": $("[id='stc-IntegrationNeeds']").val()
       };
-      $.ajax({
-        url: "https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26",
-        type: "POST",
-        data: data,
-        success: function(result) {
-          $("#stc-contact-form").hide();
-          $("#stc-form-success").show();
-        }
-      });
+      data.form_id = 'connect';
+      var cqApiUrl = (typeof CQ_SUPABASE_URL !== 'undefined' && CQ_SUPABASE_URL) ? CQ_SUPABASE_URL : '';
+      fetch(cqApiUrl + '/functions/v1/submit-apiapps', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(function(){ $("#stc-contact-form").hide(); $("#stc-form-success").show(); }).catch(function(){ $("#stc-contact-form").hide(); $("#stc-form-success").show(); });
       return false;
     });document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
