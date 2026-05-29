@@ -1214,7 +1214,7 @@
     cqLog('form_submit', { email: CQ_FORM_DATA.WorkEmail, company: CQ_FORM_DATA.Company, company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN });
     $.ajax({ url: "https://apiant.com/webhook/e68fef48cd714da480f372762771d8c6_30835da4cc274ef28b6034ae43a00b26", type: "POST", data: CQ_FORM_DATA, error: function() { console.warn('[CQ] Webhook submission failed'); } });
     var verifyResult = CQ_VERIFY_RESULT || {};
-    var leadData = { company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN || '', company_description: verifyResult.description || '', detected_type: verifyResult.detected_type || '', email: CQ_FORM_DATA.WorkEmail, company_name: CQ_FORM_DATA.Company || '', integration_needs: CQ_FORM_DATA.IntegrationNeeds || '', source_page: document.title };
+    var leadData = { company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN || '', company_description: verifyResult.description || '', detected_type: verifyResult.detected_type || '', email: CQ_FORM_DATA.WorkEmail, mobile: CQ_FORM_DATA.Mobile || '', company_name: CQ_FORM_DATA.Company || '', integration_needs: CQ_FORM_DATA.IntegrationNeeds || '', source_page: document.title };
     if (!CQ_SUPABASE_URL) { CQ_SUBMITTING = false; cqGoTo('cq-step-success'); return; }
     leadData.turnstile_token = (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})();
     fetch(CQ_SUPABASE_URL + '/functions/v1/submit-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) })

@@ -10,6 +10,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { verifyTurnstile } from "../_shared/turnstile.ts";
 import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
+import { isHoneypotTripped } from "../_shared/honeypot.ts";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -25,6 +26,17 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
+
+    // Honeypot bot trap: drop before sending an email. Return a benign success
+    // shape so the bot cannot tell its submission was discarded.
+    if (isHoneypotTripped(body)) {
+      console.log("contact-form: honeypot tripped, not sending email");
+      return new Response(
+        JSON.stringify({ success: true }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
     const turnstile = await verifyTurnstile(body.turnstile_token, req);
     if (!turnstile.ok) {
       return new Response(

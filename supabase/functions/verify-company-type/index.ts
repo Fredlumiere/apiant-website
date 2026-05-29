@@ -18,6 +18,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
 import { verifyTurnstile } from "../_shared/turnstile.ts";
 import { checkRateLimit, rateLimitResponse } from "../_shared/ratelimit.ts";
+import { isHoneypotTripped } from "../_shared/honeypot.ts";
 
 const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
 
@@ -197,6 +198,25 @@ serve(async (req) => {
   try {
     const body = await req.json();
     const { domain, claimed_type, turnstile_token } = body;
+
+    // Honeypot bot trap: drop before spending Firecrawl + Claude credits.
+    // Return a benign unverified result so the client flow continues without
+    // signalling to the bot that its submission was discarded.
+    if (isHoneypotTripped(body)) {
+      console.log("verify-company-type: honeypot tripped, skipping scrape/classify");
+      return new Response(
+        JSON.stringify({
+          company_name: "",
+          description: "",
+          detected_type: "other",
+          verified: false,
+          confidence: "low",
+          reason: "",
+          suggested_vertical: "",
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
 
     const turnstile = await verifyTurnstile(turnstile_token, req);
     if (!turnstile.ok) {
