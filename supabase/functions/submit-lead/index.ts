@@ -114,6 +114,8 @@ serve(async (req) => {
     const email = normalizeEmail(body.email);
     const company_type = normalizeCompanyType(body.company_type);
     const form_id = cap(body.form_id, 64) || "unknown";
+    const first_name = cap(body.first_name, 80).trim();
+    const last_name = cap(body.last_name, 80).trim();
 
     if (!isValidEmail(email)) {
       logEvent({ evt: "lead_reject", reason: "invalid_email", ip: getClientIp(req), form_id });
@@ -129,6 +131,13 @@ serve(async (req) => {
         { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
+    if (!first_name || !last_name) {
+      logEvent({ evt: "lead_reject", reason: "missing_name", ip: getClientIp(req), form_id });
+      return new Response(
+        JSON.stringify({ error: "First and last name are required" }),
+        { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
+      );
+    }
 
     // Call-now is a follow-up signal fired after the lead was already submitted
     // (user clicks "call me now"). Relay only the WantsCallNow flag to the lead
@@ -141,6 +150,8 @@ serve(async (req) => {
         domain: cap(body.domain, 253),
         email,
         mobile: cap(body.mobile, 40),
+        first_name,
+        last_name,
         company_name: cap(body.company_name, 200),
         integration_needs: cap(body.integration_needs, 4000),
         page_title: cap(body.source_page, 500),
@@ -180,8 +191,6 @@ serve(async (req) => {
     const domain = cap(body.domain, 253);
     const company_description = cap(body.company_description, 2000);
     const detected_type = cap(body.detected_type, 32);
-    const first_name = cap(body.first_name, 80);
-    const last_name = cap(body.last_name, 80);
     const company_name = cap(body.company_name, 200);
     const integration_needs = cap(body.integration_needs, 4000);
     const source_page = cap(body.source_page, 500);
@@ -235,6 +244,8 @@ serve(async (req) => {
       domain,
       email,
       mobile,
+      first_name,
+      last_name,
       company_name,
       integration_needs,
       page_title: source_page,

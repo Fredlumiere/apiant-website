@@ -68,9 +68,9 @@ serve(async (req) => {
       logEvent({ evt: "apiapps_reject", reason: "invalid_email", ip: getClientIp(req), form_id });
       return new Response(JSON.stringify({ error: "A valid email is required" }), { status: 400, headers: { ...cors, "Content-Type": "application/json" } });
     }
-    if (!first_name && !last_name) {
+    if (!first_name || !last_name) {
       logEvent({ evt: "apiapps_reject", reason: "missing_name", ip: getClientIp(req), form_id });
-      return new Response(JSON.stringify({ error: "A name is required" }), { status: 400, headers: { ...cors, "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ error: "First and last name are required" }), { status: 400, headers: { ...cors, "Content-Type": "application/json" } });
     }
 
     // Replay / double-submit protection: dedupe on ip+email over a short window.

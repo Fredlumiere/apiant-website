@@ -49,6 +49,8 @@ export interface RelayLead {
   domain: string;
   email: string;
   mobile: string;
+  first_name: string;
+  last_name: string;
   company_name: string;
   integration_needs: string;
   page_title: string;
@@ -68,6 +70,8 @@ export function buildRelayParams(lead: RelayLead): URLSearchParams {
     CompanyDomain: lead.domain || "",
     WorkEmail: lead.email || "",
     Mobile: lead.mobile || "",
+    FirstName: lead.first_name || "",
+    LastName: lead.last_name || "",
     Company: lead.company_name || "",
     IntegrationNeeds: lead.integration_needs || "",
   });

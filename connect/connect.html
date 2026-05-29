@@ -1691,6 +1691,14 @@
           <input type="hidden" id="cq-company-type" name="Company-Type" value="">
           <input type="hidden" id="cq-company-domain" name="Company-Domain" value="">
           <div class="apiant-popup-field">
+<label for="contact-first-name">First Name</label>
+<input id="contact-first-name" maxlength="80" name="First-Name" placeholder="First name" required="" type="text"/>
+</div>
+<div class="apiant-popup-field">
+<label for="contact-last-name">Last Name</label>
+<input id="contact-last-name" maxlength="80" name="Last-Name" placeholder="Last name" required="" type="text"/>
+</div>
+<div class="apiant-popup-field">
             <label for="contact-email">Work Email</label>
             <input type="email" id="contact-email" name="Work-Email" placeholder="you@company.com" maxlength="256" required>
           </div>
@@ -2267,11 +2275,19 @@
         cqShowInlineError('contact-form', 'Please enter your work email.');
         return false;
       }
+      var firstName = ($("#contact-first-name").val() || '').trim();
+      var lastName = ($("#contact-last-name").val() || '').trim();
+      if (!firstName || !lastName) {
+        cqShowInlineError('contact-form', 'Please enter your first and last name.');
+        return false;
+      }
       // Preserve phone data from OTP step, add form fields
       CQ_FORM_DATA.PageTitle = document.title;
       CQ_FORM_DATA.CompanyType = CQ_SELECTED_TYPE;
       CQ_FORM_DATA.CompanyDomain = CQ_VERIFIED_DOMAIN;
       CQ_FORM_DATA.WorkEmail = email;
+      CQ_FORM_DATA.FirstName = firstName;
+      CQ_FORM_DATA.LastName = lastName;
       CQ_FORM_DATA.Company = $("#contact-company").val().trim();
       CQ_FORM_DATA.IntegrationNeeds = $("#contact-needs").val().trim();
       // Submit and route to call/schedule
@@ -2430,6 +2446,8 @@
         detected_type: verifyResult.detected_type || '',
         email: CQ_FORM_DATA.WorkEmail,
         mobile: CQ_FORM_DATA.Mobile || '',
+        first_name: CQ_FORM_DATA.FirstName || '',
+        last_name: CQ_FORM_DATA.LastName || '',
         company_name: CQ_FORM_DATA.Company || '',
         integration_needs: CQ_FORM_DATA.IntegrationNeeds || '',
         source_page: document.title

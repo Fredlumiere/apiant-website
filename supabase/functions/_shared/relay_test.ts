@@ -11,10 +11,18 @@ const lead = {
   domain: "acme.com",
   email: "a@acme.com",
   mobile: "+14155550123",
+  first_name: "Sam",
+  last_name: "Rivera",
   company_name: "Acme",
   integration_needs: "Sync HubSpot to our app",
   page_title: "APIANT | Start Building",
 };
+
+Deno.test("lead relay carries FirstName/LastName", () => {
+  const p = buildRelayParams(lead);
+  assertEquals(p.get("FirstName"), "Sam");
+  assertEquals(p.get("LastName"), "Rivera");
+});
 
 Deno.test("relay maps validated lead to legacy CQ_FORM_DATA field names", () => {
   const p = buildRelayParams(lead);
@@ -50,9 +58,9 @@ Deno.test("relay surface is minimal: no internal fields leak", () => {
   assertEquals(p.has("company_url"), false);
   assertEquals(p.has("form_id"), false);
   assertEquals(p.has("source_url"), false);
-  // Exactly the 8 expected keys.
+  // Exactly the 10 expected keys (incl. FirstName/LastName).
   assertEquals([...p.keys()].sort().join(","),
-    "Company,CompanyDomain,CompanyType,CompanyTypeLabel,IntegrationNeeds,Mobile,PageTitle,WorkEmail");
+    "Company,CompanyDomain,CompanyType,CompanyTypeLabel,FirstName,IntegrationNeeds,LastName,Mobile,PageTitle,WorkEmail");
 });
 
 /* ---- apiapps (Contact Us) builder + routing selection ---- */
@@ -94,9 +102,11 @@ Deno.test("call-now flag is included only when set (lead family)", () => {
 Deno.test("routing selection: families produce distinct field sets", () => {
   const leadKeys = [...buildRelayParams(lead).keys()].sort().join(",");
   const apiappsKeys = [...buildContactParams(contact).keys()].sort().join(",");
-  // lead family carries CompanyType/CompanyDomain; apiapps carries FirstName/LastName/Country
+  // Both families now carry FirstName/LastName. They differ on CompanyType
+  // (lead only) and Country (apiapps only).
   assertEquals(leadKeys.includes("CompanyType"), true);
-  assertEquals(leadKeys.includes("FirstName"), false);
-  assertEquals(apiappsKeys.includes("FirstName"), true);
+  assertEquals(leadKeys.includes("Country"), false);
+  assertEquals(apiappsKeys.includes("Country"), true);
   assertEquals(apiappsKeys.includes("CompanyType"), false);
+  assertEquals(leadKeys.includes("FirstName") && apiappsKeys.includes("FirstName"), true);
 });

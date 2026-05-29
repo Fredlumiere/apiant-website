@@ -750,7 +750,15 @@
           <input type="hidden" name="Source-Page" value="connections">
           <input type="hidden" id="cq-company-type" name="Company-Type" value="">
           <input type="hidden" id="cq-company-domain" name="Company-Domain" value="">
-          <div class="apiant-popup-field"><label for="contact-email">Work Email</label><input type="email" id="contact-email" name="Work-Email" placeholder="you@company.com" maxlength="256" required></div>
+          <div class="apiant-popup-field">
+<label for="contact-first-name">First Name</label>
+<input id="contact-first-name" maxlength="80" name="First-Name" placeholder="First name" required="" type="text"/>
+</div>
+<div class="apiant-popup-field">
+<label for="contact-last-name">Last Name</label>
+<input id="contact-last-name" maxlength="80" name="Last-Name" placeholder="Last name" required="" type="text"/>
+</div>
+<div class="apiant-popup-field"><label for="contact-email">Work Email</label><input type="email" id="contact-email" name="Work-Email" placeholder="you@company.com" maxlength="256" required></div>
           <div class="apiant-popup-field"><label for="contact-company">Company</label><input type="text" id="contact-company" name="Company" placeholder="Acme Inc." maxlength="256" required></div>
           <div class="apiant-popup-field"><label for="contact-needs">What are you looking to integrate?</label><textarea id="contact-needs" name="IntegrationNeeds" placeholder="e.g. We need to sync HubSpot contacts with our app for 200+ customers..." maxlength="5000" required></textarea></div>
           <div class="apiant-popup-recaptcha" style="display:flex; justify-content:center;"></div>
@@ -1171,8 +1179,13 @@
     if (prevErr) prevErr.style.display = 'none';
     var email = $("#contact-email").val().trim();
     if (!email) { cqShowInlineError('contact-form', 'Please enter your work email.'); return false; }
+    var firstName = ($("#contact-first-name").val() || '').trim();
+    var lastName = ($("#contact-last-name").val() || '').trim();
+    if (!firstName || !lastName) { cqShowInlineError('contact-form', 'Please enter your first and last name.'); return false; }
     CQ_FORM_DATA.PageTitle = document.title; CQ_FORM_DATA.CompanyType = CQ_SELECTED_TYPE; CQ_FORM_DATA.CompanyDomain = CQ_VERIFIED_DOMAIN;
-    CQ_FORM_DATA.WorkEmail = email; CQ_FORM_DATA.Company = $("#contact-company").val().trim(); CQ_FORM_DATA.IntegrationNeeds = $("#contact-needs").val().trim();
+    CQ_FORM_DATA.WorkEmail = email;
+      CQ_FORM_DATA.FirstName = firstName;
+      CQ_FORM_DATA.LastName = lastName; CQ_FORM_DATA.Company = $("#contact-company").val().trim(); CQ_FORM_DATA.IntegrationNeeds = $("#contact-needs").val().trim();
     cqSubmitAndRoute();
     return false;
   });
@@ -1214,7 +1227,9 @@
     cqLog('form_submit', { email: CQ_FORM_DATA.WorkEmail, company: CQ_FORM_DATA.Company, company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN });
     // Lead is submitted only to the server-side validated endpoint (submit-lead).
     var verifyResult = CQ_VERIFY_RESULT || {};
-    var leadData = { company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN || '', company_description: verifyResult.description || '', detected_type: verifyResult.detected_type || '', email: CQ_FORM_DATA.WorkEmail, mobile: CQ_FORM_DATA.Mobile || '', company_name: CQ_FORM_DATA.Company || '', integration_needs: CQ_FORM_DATA.IntegrationNeeds || '', source_page: document.title };
+    var leadData = { company_type: CQ_SELECTED_TYPE, domain: CQ_VERIFIED_DOMAIN || '', company_description: verifyResult.description || '', detected_type: verifyResult.detected_type || '', email: CQ_FORM_DATA.WorkEmail, mobile: CQ_FORM_DATA.Mobile || '',
+        first_name: CQ_FORM_DATA.FirstName || '',
+        last_name: CQ_FORM_DATA.LastName || '', company_name: CQ_FORM_DATA.Company || '', integration_needs: CQ_FORM_DATA.IntegrationNeeds || '', source_page: document.title };
     if (!CQ_SUPABASE_URL) { CQ_SUBMITTING = false; cqGoTo('cq-step-success'); return; }
     leadData.turnstile_token = (function(){var w=window.turnstile;if(!w)return '';var t=w.getResponse()||'';try{w.reset()}catch(e){}return t;})();
     fetch(CQ_SUPABASE_URL + '/functions/v1/submit-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) })

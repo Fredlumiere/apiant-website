@@ -3191,6 +3191,14 @@
 <input name="Source-Page" type="hidden" value="mindbody-calendly"/>
 <input id="cq-company-type" name="Company-Type" type="hidden" value=""/>
 <div class="apiant-popup-field">
+<label for="contact-first-name">First Name</label>
+<input id="contact-first-name" maxlength="80" name="First-Name" placeholder="First name" required="" type="text"/>
+</div>
+<div class="apiant-popup-field">
+<label for="contact-last-name">Last Name</label>
+<input id="contact-last-name" maxlength="80" name="Last-Name" placeholder="Last name" required="" type="text"/>
+</div>
+<div class="apiant-popup-field">
 <label for="contact-email">Work Email</label>
 <input id="contact-email" maxlength="256" name="Work-Email" placeholder="you@company.com" required="" type="email"/>
 </div>
@@ -3843,6 +3851,9 @@
       var prevErr = document.querySelector('#contact-form .cq-inline-error');
       if (prevErr) prevErr.style.display = 'none';
 
+      var firstName = (document.getElementById('contact-first-name') || {}).value; firstName = firstName ? firstName.trim() : '';
+      var lastName = (document.getElementById('contact-last-name') || {}).value; lastName = lastName ? lastName.trim() : '';
+      if (!firstName || !lastName) { cqShowInlineError('contact-form', 'Please enter your first and last name.'); return; }
       var email = document.getElementById('contact-email').value.trim();
       if (!email) {
         cqShowInlineError('contact-form', 'Please enter your work email.');
@@ -3873,6 +3884,8 @@
       CQ_FORM_DATA.CompanyTypeLabel = typeLabels[CQ_SELECTED_TYPE] || CQ_SELECTED_TYPE || '';
       CQ_FORM_DATA.CompanyDomain = CQ_VERIFIED_DOMAIN;
       CQ_FORM_DATA.WorkEmail = email;
+      CQ_FORM_DATA.FirstName = firstName;
+      CQ_FORM_DATA.LastName = lastName;
       CQ_FORM_DATA.Mobile = mobile;
       CQ_FORM_DATA.Company = document.getElementById('contact-company').value.trim();
       CQ_FORM_DATA.IntegrationNeeds = document.getElementById('contact-needs').value.trim();
@@ -4031,6 +4044,8 @@
         detected_type: verifyResult.detected_type || '',
         email: CQ_FORM_DATA.WorkEmail,
         mobile: CQ_FORM_DATA.Mobile || '',
+        first_name: CQ_FORM_DATA.FirstName || '',
+        last_name: CQ_FORM_DATA.LastName || '',
         company_name: CQ_FORM_DATA.Company || '',
         integration_needs: CQ_FORM_DATA.IntegrationNeeds || '',
         source_page: document.title
