@@ -721,7 +721,10 @@ input:focus, textarea:focus, select:focus {
 <!-- ===== TOAST ===== -->
 <div class="toast" :class="toastClass" x-show="toastMsg" x-text="toastMsg" x-transition></div>
 
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js" defer></script>
+<!-- Alpine is loaded at the END of the module below, AFTER Alpine.data('cms') is
+     registered. Loading it here with <script defer> raced ahead of this module
+     (which must await the Supabase import first), firing alpine:init before the
+     component existed and leaving x-data="cms" bound to an empty component. -->
 <script src="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -1140,6 +1143,12 @@ document.addEventListener("alpine:init", () => {
     },
   }));
 });
+
+// Load Alpine LAST. The CDN build calls Alpine.start() synchronously on load,
+// which dispatches 'alpine:init' immediately. Registering the listener above
+// and only then importing Alpine guarantees Alpine.data('cms', ...) is in place
+// before the component is initialized, so x-data="cms" binds to a real object.
+await import("https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js");
 </script>
 
 <!--
