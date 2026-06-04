@@ -538,8 +538,22 @@ input:focus, textarea:focus, select:focus {
 </div>
 </template>
 
+<!-- ===== UNAUTHORIZED (signed in, but no blog_authors row) ===== -->
+<template x-if="session && unauthorized">
+<div class="login-shell">
+  <div class="login-card">
+    <h1>Unauthorized user</h1>
+    <p class="sub">
+      <span x-text="editor?.email || 'This account'"></span> is signed in, but it isn't a
+      registered Blog CMS author. Ask an administrator to add you before you can write posts.
+    </p>
+    <button class="btn btn-ghost" @click="signOut()">Sign out</button>
+  </div>
+</div>
+</template>
+
 <!-- ===== AUTHENTICATED APP ===== -->
-<template x-if="session">
+<template x-if="session && !unauthorized">
 
 <!-- LIST VIEW -->
 <div x-show="view === 'list'">
@@ -752,6 +766,7 @@ document.addEventListener("alpine:init", () => {
     // ----- state -----
     session: null,
     editor: null,
+    unauthorized: false,  // signed in but no blog_authors row
     view: "list",         // 'list' | 'edit'
     loading: false,
 
@@ -804,7 +819,7 @@ document.addEventListener("alpine:init", () => {
       if (session) await this.onSignedIn(session);
       supabase.auth.onAuthStateChange(async (_event, sess) => {
         if (sess) await this.onSignedIn(sess);
-        else { this.session = null; this.editor = null; }
+        else { this.session = null; this.editor = null; this.unauthorized = false; }
       });
       // Keyboard shortcuts
       window.addEventListener("keydown", (e) => this.onKey(e));
@@ -812,8 +827,22 @@ document.addEventListener("alpine:init", () => {
 
     async onSignedIn(session) {
       this.session = session;
-      // Sanity-check the user has an editor row, refresh metadata.
       this.editor = { email: session.user.email };
+      // Authorization: the user must have a blog_authors row linked to their
+      // auth user id (the same check the edge functions enforce server-side).
+      // Without it, every API call 403s; show a clear message instead of an
+      // empty CMS. blog_authors is publicly readable via RLS.
+      const { data: author, error: authorErr } = await supabase
+        .from("blog_authors")
+        .select("id, slug, display_name, role")
+        .eq("auth_user_id", session.user.id)
+        .maybeSingle();
+      if (authorErr || !author) {
+        this.unauthorized = true;
+        return;
+      }
+      this.unauthorized = false;
+      this.editor = { email: session.user.email, ...author };
       await this.loadStaticData();
       // Route from hash: #edit/<id> or default to list.
       const hash = location.hash || "";
@@ -842,6 +871,7 @@ document.addEventListener("alpine:init", () => {
       await supabase.auth.signOut();
       this.session = null;
       this.editor = null;
+      this.unauthorized = false;
       this.view = "list";
     },
 
