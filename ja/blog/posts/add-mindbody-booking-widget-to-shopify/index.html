@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ShopifyストアにMindbody予約ウィジェットを追加する方法 | APIANTブログ</title>
+<meta content="MindbodyのライブスケジュールをShopifyストアに掲載するためのステップバイステップガイド、さらに、お住まいの地域でMindbodyの決済処理が利用できない場合にShopifyでパッケージやメンバーシップを販売する方法をご紹介します。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="ShopifyストアにMindbody予約ウィジェットを追加する方法" property="og:title"/>
+<meta content="MindbodyのライブスケジュールをShopifyストアに掲載するためのステップバイステップガイド、さらに、お住まいの地域でMindbodyの決済処理が利用できない場合にShopifyでパッケージやメンバーシップを販売する方法をご紹介します。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/add-mindbody-booking-widget-to-shopify/hero.avif" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/add-mindbody-booking-widget-to-shopify/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ShopifyストアにMindbody予約ウィジェットを追加する方法" property="twitter:title"/>
+<meta content="MindbodyのライブスケジュールをShopifyストアに掲載するためのステップバイステップガイド、さらに、お住まいの地域でMindbodyの決済処理が利用できない場合にShopifyでパッケージやメンバーシップを販売する方法をご紹介します。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/add-mindbody-booking-widget-to-shopify/hero.avif" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to Add a Mindbody Booking Widget to Your Shopify Store",
+  "description": "A step-by-step guide to putting your live Mindbody schedule on your Shopify store, plus how to sell packages and memberships on Shopify when Mindbody payment processing isn't available in your region.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/add-mindbody-booking-widget-to-shopify/hero.avif",
+  "datePublished": "2026-06-04T16:31:33.716628+00:00",
+  "dateModified": "2026-06-04T16:35:31.836031+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Marc Floyd",
+    "url": "https://apiant.com/blog/?author=marc"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/add-mindbody-booking-widget-to-shopify/"
+  },
+  "articleSection": "API Apps"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "API Apps", "item": "https://apiant.com/blog/category/api-apps" },
+    { "@type": "ListItem", "position": 4, "name": "How to Add a Mindbody Booking Widget to Your Shopify Store", "item": "https://apiant.com/blog/posts/add-mindbody-booking-widget-to-shopify/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/add-mindbody-booking-widget-to-shopify/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/add-mindbody-booking-widget-to-shopify/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<!--
+        Blog-scoped language switcher. Class is "blog-lang-switcher" (not
+        the site-wide "lang-switcher") because localize.py's
+        add_language_switcher() decomposes .lang-switcher elements during
+        re-runs. Populated by /js/blog-search.js at runtime.
+      -->
+<div class="blog-lang-switcher" style="position:relative;display:flex;align-items:center;">
+<button aria-expanded="false" aria-haspopup="true" class="blog-lang-switcher-btn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+<span class="blog-lang-switcher-current">EN</span>
+<svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<div class="blog-lang-switcher-dropdown"></div>
+</div>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<style>
+  .blog-lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .blog-lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .blog-lang-switcher-dropdown.open { display: block; }
+  .blog-lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .blog-lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .blog-lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/api-apps" style="color:inherit;text-decoration:none;">APIアプリ</a>
+</div>
+<h1 class="blog-post-h1">ShopifyストアにMindbody予約ウィジェットを追加する方法</h1>
+<p class="blog-post-subtitle">顧客はShopifyストアで講座を購入し、数分後には予約を完了できるべきです。ここでは、理解できないコードを一行も触ることなく、この2つを連携させる方法をご紹介します。</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=marc">Marc Floyd</a></span>
+<span>2026年6月4日</span>
+<span>8分で読める</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=fitness-wellness">#フィットネス＆ウェルネス</a><a class="blog-tag" href="/ja/blog/?tag=mindbody">#心身</a><a class="blog-tag" href="/ja/blog/?tag=shopify">#Shopify</a><a class="blog-tag" href="/ja/blog/?tag=shopconnect">#ショップコネクト</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Shopifyのロゴが、光り輝く予約カレンダーを介してMindbodyのロゴにつながっている。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/add-mindbody-booking-widget-to-shopify/hero.avif"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p>お客様がオンラインであなたのスタジオを見つけ、Shopifyストアにアクセスして10回分のクラスパックを購入しました。素晴らしいですね。では、次はどうしましょうか？多くのシステムでは、ここで顧客体験が停滞してしまいます。お客様は支払いを済ませましたが、実際にクラスを予約する方法が明確ではなく、数分後には「Mindbody」という聞いたこともない会社から、分かりにくいパスワードが記載されたメールが届きます。</p>
+<p>このガイドでは、両方の問題を解決します。まず、Mindbodyの予約ウィジェットをShopifyストアに直接追加して、顧客が数クリックで予約できるようにする方法を解説します。次に、Mindbodyの決済処理が利用できない場合でもShopifyで販売する方法、そしてShopConnectがどのようにして2つのシステムをバックグラウンドで連携させるのかを説明します。</p>
+<p>開発者である必要はありません。Shopifyでページを編集できる方なら、すべて可能です。</p>
+<hr/>
+<h2 id="part-1-add-a-mindbody-booking-widget-to-your-shopify-store">パート1：ShopifyストアにMindbody予約ウィジェットを追加する</h2>
+<p>ここでの目標はシンプルです。Shopifyストアに「今すぐ予約」ページを作成し、そこにMindbodyの最新のスケジュールを表示することで、顧客がサイトを離れることなく予約できるようにすることです。</p>
+<h3 id="what-youll-need-first">まず必要なもの</h3>
+<ul>
+<li>あなたの心と体 <strong>ブランドウェブ</strong> ウィジェットのコードスニペット（これはMindbodyアカウントから取得できます）</li>
+<li>オンラインストア付きのShopifyプラン（ベーシック、グロウ、アドバンスト、プラス）</li>
+<li>Shopifyストアへの管理者アクセス</li>
+<li>オンラインストア2.0テーマ（Dawnのような）</li>
+</ul>
+<p>それら全てが揃っていれば、準備は万端です。</p>
+<h3 id="step-1-create-the-page">ステップ1：ページを作成する</h3>
+<p>Shopifyの管理画面で、 <strong>オンラインストア → ページ → ページを追加</strong>.</p>
+<p>「今すぐ予約」のようなタイトルを付けてください。そのタイトルがページのウェブアドレスも生成します。必要に応じてコンテンツボックスに短い紹介文を追加し、クリックしてください。 <strong>保存</strong>.</p>
+<p><img alt="Shopifyのページ画面で、「ページを追加」ボタンがハイライト表示されている。" src="https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images/1780084122231-shopconnect-shopify-pages-add-page.webp"/></p>
+<h3 id="step-2-create-a-custom-template">ステップ2：カスタムテンプレートを作成する</h3>
+<p>ページを編集している間は、右側を見てください。 <strong>テンプレート</strong> ドロップダウン。クリックして選択 <strong>テンプレートを作成する</strong>.</p>
+<p>テンプレートにページ名を付け（例：「book-now」）、 <strong>デフォルトページ</strong> ベースとして。クリック <strong>保存</strong>.</p>
+<p>これにより、予約ページ専用のテンプレートが作成されるため、ストアの他の部分に影響を与えることなくウィジェットを挿入できます。</p>
+<h3 id="step-3-add-the-widget-code-with-a-custom-liquid-section">ステップ3：カスタムLiquidセクションにウィジェットコードを追加します</h3>
+<p>さあ、次は <strong>オンラインストア → テーマ</strong> そしてクリック <strong>カスタマイズ</strong> ライブテーマで。</p>
+<p>上部のページドロップダウンを使用して、作成したばかりの新しいページとテンプレートを選択します。左側のパネルで、 <strong>セクションを追加 → カスタム液体</strong>.</p>
+<p>Mindbodyの予約ウィジェットコードをボックスに貼り付けてください。コードは以下のようになります。</p>
+<pre class="highlight"><code class="language-html">&lt;div class="mindbody-widget" data-widget-type="Schedules" data-widget-id="XXXXXXXXXXX"&gt;&lt;/div&gt;
+&lt;script async src="https://brandedweb.mindbodyonline.com/embed/widget.js"&gt;&lt;/script&gt;</code></pre>
+<p>交換する <code>XXXXXXXXXXX</code> MindbodyのウィジェットIDを使用してクリックします。 <strong>保存</strong>すると、予約ウィジェットのプレビューがすぐに表示されます。</p>
+<p><img alt="Dawnテーマエディター：Mindbodyウィジェットコードを含むカスタムLiquidセクション。クラススケジュールはページプレビューでリアルタイムにレンダリングされます。" src="https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images/1780084123446-shopconnect-shopify-custom-liquid-widget-customizer.webp"/></p>
+<h3 id="step-4-make-the-page-visible">ステップ4：ページを表示する</h3>
+<p>戻る <strong>オンラインストア → ページ</strong> そして、あなたのページを開いてください。</p>
+<p>セット <strong>可視性 → 可視</strong>次にクリックします <strong>保存</strong>ウィジェットが読み込まれ、スケジュールが表示されることを確認するには、該当ページのウェブアドレスにアクセスしてください。</p>
+<p><img alt="Shopifyの「今すぐ予約」ランディングページ。予約方法の説明、サービスへのリンク、Mindbody Schedulesの予約ウィジェットが含まれています。" src="https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images/1780080307763-shopconnect-shopify-book-now-landing-page-mindbody-booking.webp"/></p>
+<h3 id="step-5-add-the-page-to-your-store-menu">ステップ5：ページをストアメニューに追加する</h3>
+<p>最後のステップ：ページを見つけやすくする。 <strong>オンラインストア → ナビゲーション</strong> そしてあなたの <strong>メインメニュー</strong>.</p>
+<p>クリック <strong>メニュー項目を追加</strong>「今すぐ予約」という名前を付けて、作成したページにリンクします。 <strong>追加</strong>、 それから <strong>保存</strong>.</p>
+<p><img alt="Shopifyのナビゲーション画面には、新しい「今すぐ予約」アイテムが追加されたメインメニューが表示されています。" src="https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images/1780084123982-shopconnect-shopify-add-menu-item.webp"/></p>
+<p>以上です。お客様はあなたのストアから直接予約できるようになりました。</p>
+<h3 id="optional-add-a-registration-page-too">オプション：登録ページも追加できます</h3>
+<p>登録ページも作成したい場合は、手順1～4を以下の登録ウィジェットコードを使用して繰り返してください。</p>
+<pre class="highlight"><code class="language-html">&lt;script src="https://widgets.mindbodyonline.com/javascripts/healcode.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;healcode-widget data-type="registrations" data-widget-partner="object" data-widget-id="XXXXXXXXXXX" data-widget-version="0"&gt;&lt;/healcode-widget&gt;</code></pre>
+<p>次に、顧客が予約ページと登録ページ間を簡単に移動できるように、2つのページを相互リンクさせます。</p>
+<hr/>
+<h2 id="part-2-selling-on-shopify-without-mindbody-payment-processing">パート2：Mindbody Payment Processingを使用せずにShopifyで販売する方法</h2>
+<p>地域によっては、Mindbodyの決済処理機能が利用できないため、Mindbody経由で直接支払いを受け付けることはできません。ただし、Shopifyでサービス、パッケージ、メンバーシップを販売することは可能で、すべての取引はMindbodyに正しく反映されます。ただし、注文の流れが「先に購入、次に予約」というように少し変更されます。</p>
+<h3 id="how-the-flow-works">フローの仕組み</h3>
+<ol>
+<li>顧客があなたのShopifyストアでサービス、パッケージ、またはメンバーシップを購入しました。</li>
+<li><strong>ショップコネクト</strong> Mindbodyの顧客レコードを作成または照合し、購入を記録することで、顧客の信用情報が既にMindbodyに登録されているようにします。</li>
+<li>顧客はその後、Mindbodyにログインして、実際の予約やレッスンを予約します。</li>
+</ol>
+<p>ShopConnectは、この2つのシステムをつなぐ役割を果たします。顧客がShopifyで支払いを行うと、ShopConnectは、あなたが何も再入力することなく、その購入情報がMindbodyの適切な顧客に紐づけられるようにします。</p>
+<h3 id="the-one-rough-edge-and-how-to-smooth-it">唯一の難点、そしてそれをどう改善するか</h3>
+<p>準備を怠ると、顧客を混乱させてしまう瞬間があります。Shopifyストアで支払いを済ませた後、Mindbodyからパスワード確認メールが送信されます。Mindbodyを知らない顧客にとって、そのメールはスパムメールのように見え、無視してしまうかもしれません。そして、自分のクラスはどこにあるのかと疑問に思うのです。</p>
+<p>解決策はコミュニケーションです。ドキュメントでは、単一の <strong>マスターメッセージ</strong> 購入後に顧客が受け取るメール全体で再利用する内容：</p>
+<blockquote>
+<p>「この度は弊社のオンラインストアをご利用いただき、誠にありがとうございます！弊社のオンライン予約システムからパスワードが記載されたメールが送信されますので、ご確認ください。」 <strong>マインドボディオンライン</strong>パスワードを設定したら、クリックしてください。 <strong>ここ</strong> 予約またはレッスンの予約をするには、こちらをクリックしてください。</p>
+</blockquote>
+<p>「ここ」という単語は、予約ページ（パート1で作成したShopifyの「今すぐ予約」ページ、または他のウェブサイト上の同等のページ）へのリンクです。</p>
+<h3 id="where-to-put-the-message-three-emails">メッセージの送信先：3つのメール</h3>
+<p>購入後に顧客が受け取る3通のメールには、すべて同じマスターメッセージが反映されます。</p>
+<p><strong>メール1：Shopifyの注文確認メール。</strong> Shopifyで、 <strong>設定 → 通知 → 注文確認</strong>メールの冒頭、注文概要の上にメインメッセージを追加してください。こうすることで、顧客がチェックアウトを完了し、まだ注意を払っている段階で、期待値を伝えることができます。</p>
+<p><strong>メール2：Mindbodyの「ログイン情報を忘れた場合」メール。</strong> これは共有の自動メールなので、完全に置き換えることはできません。代わりに、既存のコンテンツの後に条件付きブロックを追加してください。</p>
+<blockquote>
+<p>“<strong>弊社のオンラインストアで商品をご購入されましたか？</strong> 上記の情報でログインした後、クリックしてください。 <strong>ここ</strong> ご予約またはご購入いただいたレッスンの予約については、お客様のご購入情報は既に登録されています。</p>
+</blockquote>
+<p>これはMindbody Businessの自動メール設定にあります。顧客にログイン情報を提供すると同時に、購入履歴と紐付けます。</p>
+<p><strong>メール3：Mindbodyからのウェルカムメール。</strong> ShopConnectはビジネスモードでクライアントを作成するため、ビジネスモード版を編集してください。同じ種類のブロックを追加します。</p>
+<blockquote>
+<p>“<strong>弊社のオンラインストアで商品をご購入されましたか？</strong> アカウントにログインしてから、クリックしてください。 <strong>ここ</strong> ご予約またはご購入いただいたレッスンの予約については、お客様のご購入情報は既に登録されています。</p>
+</blockquote>
+<p>これはMindbody Businessの自動送信メールにも含まれています。オンボーディング時の予約手順を改めて確認するものです。</p>
+<h3 id="where-the-here-links-should-point">「ここ」リンクが指すべき場所</h3>
+<p>各「こちら」リンクをクリックすると、MindbodyブランドのWeb予約ウィジェットが埋め込まれたページに顧客が移動するように設定する必要があります。選択肢は2つあります。</p>
+<ul>
+<li><strong>Shopifyのページ</strong> （ベーシックプラン以上が必要です。スタータープランではご利用いただけません。）これはパート1の「今すぐ予約」ページと全く同じです。</li>
+<li><strong>外部ウェブサイト。</strong> 予約ページがSquarespace、Wix、WordPress、またはその他のプラットフォームにある場合は、ウィジェットをそこに埋め込み、リンクをそのページに設定してください。</li>
+</ul>
+<p>どちらにしても、パート1の最後に表示されたページと同じです。上部に説明文があり、下部に予約ウィジェットがあります。</p>
+<h3 id="a-setting-worth-knowing">知っておく価値のある場所</h3>
+<p>ShopConnectには <code>Send_mbo_password_reset_email</code> ShopConnectがMindbodyのパスワードリセットメールを自動的に送信するかどうかを制御する設定です。この設定を知っておくと、メールの内容と実際に送信されるメールの内容を一致させることができるので便利です。</p>
+<hr/>
+<h2 id="why-this-matters">なぜこれが重要なのか</h2>
+<p>予約ウィジェットと編集済みのメール3通だけ聞くと、大したことないように思えるかもしれません。しかし、これらを組み合わせることで、フィットネスやウェルネスサービスをオンラインで販売する際に最もよくあるギャップ、つまり「支払い完了」から「予約完了」までの瞬間を埋めることができます。このギャップこそ、顧客が混乱したり、諦めたり、レッスンがどこに行ったのか問い合わせのメールを送ってきたりする瞬間なのです。</p>
+<p>予約ウィジェットをShopifyストアに直接設置することで、担当者間のやり取りが不要になります。購入後のメールを事前に準備することで、顧客が驚くような事態を防ぐことができます。さらに、ShopConnectは中間段階の手作業を省き、購入情報を適切なMindbodyクライアントに自動的に紐付けることで、2つのシステムを手動で調整する必要がなくなります。</p>
+<h2 id="takeaways">要点</h2>
+<ul>
+<li><strong>予約ウィジェットは、Shopifyの5つのステップからなるタスクです。</strong> ページを作成し、テンプレートを適用し、Custom Liquid を介して Mindbody ウィジェットのコードを挿入し、表示を有効にして、メニューに追加します。</li>
+<li><strong>Mindbodyの決済処理機能を使わなくても、Shopifyで販売できます。</strong> 流れは「まず購入、次に予約」となり、ShopConnectは各購入を自動的に適切なMindbodyクライアントに紐付けて記録します。</li>
+<li><strong>支払い処理を伴わないフローにおいては、コミュニケーションがすべてを左右する。</strong> 3通のメールに共通して使用されるマスターメッセージは、「このMindbodyのパスワードメールは何だろう？」という混乱を防ぐ。</li>
+<li><strong>「こちら」リンクと予約ウィジェットは同じページに設置してください。</strong> 一度構築すれば、あらゆる場所からリンクできます。</li>
+</ul>
+<p><em>ShopConnectをご利用中で、ShopifyストアとMindbodyの連携設定でお困りですか？APIANTチームまでお気軽にお問い合わせください。喜んでお手伝いさせていただきます。</em></p>
+<aside class="blog-apps-cta"><div class="blog-apps-cta-heading">APIアプリの全カタログをご覧ください</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">マインドボディソリューションズ</span><span class="blog-apps-cta-desc">フィットネスとウェルネスの統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">クリニコソリューションズ</span><span class="blog-apps-cta-desc">医療および関連医療分野の統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非営利団体および資金調達との連携</span><span class="blog-apps-cta-arrow">探索する →</span></a></div></aside>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#part-1-add-a-mindbody-booking-widget-to-your-shopify-store">パート1：ShopifyストアにMindbody予約ウィジェットを追加する</a></li><li class="lvl-3"><a href="#what-youll-need-first">まず必要なもの</a></li><li class="lvl-3"><a href="#step-1-create-the-page">ステップ1：ページを作成する</a></li><li class="lvl-3"><a href="#step-2-create-a-custom-template">ステップ2：カスタムテンプレートを作成する</a></li><li class="lvl-3"><a href="#step-3-add-the-widget-code-with-a-custom-liquid-section">ステップ3：カスタムLiquidセクションにウィジェットコードを追加します</a></li><li class="lvl-3"><a href="#step-4-make-the-page-visible">ステップ4：ページを表示する</a></li><li class="lvl-3"><a href="#step-5-add-the-page-to-your-store-menu">ステップ5：ページをストアメニューに追加する</a></li><li class="lvl-3"><a href="#optional-add-a-registration-page-too">オプション：登録ページも追加できます</a></li><li class="lvl-2"><a href="#part-2-selling-on-shopify-without-mindbody-payment-processing">パート2：Mindbody Payment Processingを使用せずにShopifyで販売する方法</a></li><li class="lvl-3"><a href="#how-the-flow-works">フローの仕組み</a></li><li class="lvl-3"><a href="#the-one-rough-edge-and-how-to-smooth-it">唯一の難点、そしてそれをどう改善するか</a></li><li class="lvl-3"><a href="#where-to-put-the-message-three-emails">メッセージの送信先：3つのメール</a></li><li class="lvl-3"><a href="#where-the-here-links-should-point">「ここ」リンクが指すべき場所</a></li><li class="lvl-3"><a href="#a-setting-worth-knowing">知っておく価値のある場所</a></li><li class="lvl-2"><a href="#why-this-matters">なぜこれが重要なのか</a></li><li class="lvl-2"><a href="#takeaways">要点</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="fitness-wellness mindbody highlevel crmconnect data-engine" href="/ja/blog/posts/mindbody-highlevel-enrollments-and-appointments/"><div class="blog-card-image"><img alt="壁一面にマットが敷き詰められ、棚には丸めた柔道着の帯が並び、隅には吊り下げられたサンドバッグがあり、天井には温かみのある照明が灯るブラジリアン柔術アカデミー。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-highlevel-enrollments-and-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">MindbodyとHighLevel：すべてのプログラムで生徒一人につき一つの明確なスケジュール</h3><p class="blog-card-excerpt">もしあなたのスタジオが初心者向けプログラム、長期コース、プライベートレッスンを同時に提供している場合、リマインダーが各生徒が実際に予約した内容と最終的に一致するようにするには、以下の手順を踏む必要があります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月18日</span></div></div></a><a class="blog-card" data-tags="fitness-wellness mindbody klaviyo crmconnect for-enterprise" href="/ja/blog/posts/mindbody-klaviyo-multi-site-appointments/"><div class="blog-card-image"><img alt="スクワットラックがずらりと並び、ゴム製の人工芝、パノラマ窓、つや消しスチールと黒を基調とした内装、間接照明を備えたモダンな筋力トレーニングジム。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/mindbody-klaviyo-multi-site-appointments/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">MindbodyとKlaviyo：6つのジムからなる筋力トレーニングネットワークのための拠点別マーケティング</h3><p class="blog-card-excerpt">中央マーケティングチームが6つのジムからなるネットワークの全メンバーに一斉送信するメールを送ると、コーチの名前とジムの住所が半分の確率で間違ってしまう。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月21日</span></div></div></a><a class="blog-card" data-tags="nonprofit donorperfect hubspot crmconnect" href="/ja/blog/posts/donorperfect-hubspot-board-reporting-dashboards/"><div class="blog-card-image"><img alt="学区の会議室を撮影した写真。様々な背景を持つ大人たちが木製のテーブルを囲んで座り、印刷された報告書を検討している。大きな窓からは午後の光が差し込んでいる。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/migrated/donorperfect-hubspot-board-reporting-dashboards/hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">APIアプリ</div><h3 class="blog-card-title">HubSpotのDonorPerfectデータに基づくライブ資金調達ボードダッシュボード</h3><p class="blog-card-excerpt">理事会はトレンドラインを求めている。スタッフは夜の時間を取り戻したい。寄付額、平均寄付額、キャンペーン実績がHubSpotに集約されることで、月例理事会報告書は4日間かかる作業ではなくなり、保存済みのダッシュボードとして活用できるようになります。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年4月20日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<!-- blog-search.js carries buildLangSwitcher (populates the language
+     dropdown + sets the current-locale label). It early-returns past the
+     search/pagination code when there's no search input, so it is safe
+     and cheap on post pages. Fuse.js is not loaded here: search is
+     hub/category-only and blog-search.js never references Fuse unless a
+     search actually runs. -->
+<script defer="" src="/js/blog-search.js"></script>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>
