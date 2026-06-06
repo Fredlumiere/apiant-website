@@ -319,7 +319,14 @@
       if (match) anyMatch = true;
     });
     removeLoadMore();
-    if (featured) featured.style.display = 'none';
+    // The featured post carries its own data-tags; show it only when it
+    // matches the active tag (otherwise it would never appear under a filter).
+    if (featured) {
+      var ftags = (featured.dataset.tags || '').split(' ').filter(Boolean);
+      var fmatch = ftags.indexOf(tagSlug) !== -1;
+      featured.style.display = fmatch ? '' : 'none';
+      if (fmatch) anyMatch = true;
+    }
     document.querySelectorAll('.blog-tag-pill').forEach(function (p) {
       p.classList.toggle('active', p.dataset.tag === tagSlug);
     });

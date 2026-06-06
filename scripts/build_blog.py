@@ -286,13 +286,22 @@ def render_tag_filter(posts: list[dict], category_slug: str) -> str:
 def render_featured(post: dict) -> str:
     cat = post.get("category") or {}
     hero = post.get("hero_image_url") or ""
+    # Carry the same data-tags as a card so blog-search.js can include the
+    # featured post in tag filtering (without it the featured post is invisible
+    # to every ?tag= filter).
+    tag_slugs = []
+    for t in (post.get("tags") or []):
+        inner = t.get("blog_tags") if isinstance(t, dict) else None
+        if inner and inner.get("slug"):
+            tag_slugs.append(inner["slug"])
+    data_tags = html.escape(" ".join(tag_slugs))
     hero_html = (
         f'<div class="blog-featured-image"><img alt="{html.escape(post.get("hero_image_alt") or post["title"])}" src="{html.escape(hero)}"/></div>'
         if hero else
         '<div class="blog-featured-image"></div>'
     )
     return (
-        '<section class="blog-featured">'
+        f'<section class="blog-featured" data-tags="{data_tags}">'
         f'{hero_html}'
         '<div class="blog-featured-body">'
         f'<div class="blog-category-chip">{html.escape(cat.get("name", ""))}</div>'
