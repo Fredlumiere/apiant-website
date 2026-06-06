@@ -370,6 +370,36 @@ def render_api_apps_cta() -> str:
     )
 
 
+def is_shopconnect_post(post: dict, tag_slugs: set) -> bool:
+    """True for ShopConnect (Mindbody + Shopify) posts. Prefers the explicit
+    tags, falls back to the slug because a few posts are mistagged in the CMS
+    (e.g. the booking-widget post carries crmconnect/highlevel tags)."""
+    if "shopconnect" in tag_slugs or "shopify" in tag_slugs:
+        return True
+    slug = (post.get("slug") or "").lower()
+    return "shopify" in slug and "mindbody" in slug
+
+
+def render_shopconnect_cta() -> str:
+    """Free-trial CTA rendered just above the catalog cards on ShopConnect
+    posts, pointing at the Mindbody + Shopify integration page."""
+    url = "/apipartners/mindbody/mindbody-shopify-integration-and-automation-apiant"
+    return (
+        '<aside class="blog-trial-cta">'
+        '<div class="blog-trial-cta-eyebrow">ShopConnect &middot; Shopify + Mindbody</div>'
+        '<h2 class="blog-trial-cta-title">Run Shopify and Mindbody as one system</h2>'
+        '<p class="blog-trial-cta-text">ShopConnect keeps your Shopify store and Mindbody '
+        'account in sync automatically: orders, products, inventory, taxes, and client '
+        'records line up without anyone re-keying them. Spin it up and watch it run on '
+        'your own data.</p>'
+        f'<a class="blog-trial-cta-btn" href="{url}">Start your free ShopConnect trial '
+        '<span aria-hidden="true">&rarr;</span></a>'
+        '<span class="blog-trial-cta-note">See it working end to end before you commit. '
+        'Plans start at $49/mo.</span>'
+        '</aside>'
+    )
+
+
 def render_hero_image(post: dict) -> str:
     hero = normalize(post.get("hero_image_url"))
     if not hero:
@@ -397,6 +427,7 @@ def write_post_page(post: dict, related: list[dict]) -> Path:
     cat = post.get("category") or {}
     author = post.get("author") or {}
     tags = [t["blog_tags"] for t in (post.get("tags") or []) if t.get("blog_tags")]
+    tag_slugs = {(t.get("slug") or "").lower() for t in tags}
     canonical = normalize(post.get("canonical_url")) or f"{BASE_URL}/blog/posts/{post['slug']}/"
     category_url = f"{BASE_URL}/blog/category/{cat.get('slug', '')}"
     published_iso = post.get("published_at") or post.get("created_at") or ""
@@ -421,7 +452,11 @@ def write_post_page(post: dict, related: list[dict]) -> Path:
         "READ_TIME": str(estimate_read_minutes(post["body_md"])),
         "HERO_IMAGE_BLOCK": render_hero_image(post),
         "BODY_HTML": body_html,
-        "API_APPS_CTA": render_api_apps_cta(),
+        "API_APPS_CTA": (
+            render_shopconnect_cta() + render_api_apps_cta()
+            if is_shopconnect_post(post, tag_slugs)
+            else render_api_apps_cta()
+        ),
         "TOC_BLOCK": render_toc(toc),
         "TAGS_BLOCK": render_tags(tags),
         "RELATED_BLOCK": render_related(related),
