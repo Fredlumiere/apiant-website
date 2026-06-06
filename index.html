@@ -3740,6 +3740,10 @@ document.querySelectorAll('.card').forEach(c=>{
 <input id="contact-email" maxlength="256" name="Work-Email" placeholder="you@company.com" required="" type="email"/>
 </div>
 <div class="apiant-popup-field">
+<label for="contact-job-title">Job Title</label>
+<input id="contact-job-title" maxlength="120" name="Job-Title" placeholder="e.g. CTO, Integrations Lead" required="" type="text"/>
+</div>
+<div class="apiant-popup-field">
 <label for="contact-mobile">Mobile Phone</label>
 <input autocomplete="tel" id="contact-mobile" name="Mobile" placeholder="Mobile number" required="" type="tel"/>
 </div>
@@ -4302,12 +4306,20 @@ document.querySelectorAll('.card').forEach(c=>{
         cqShowInlineError('contact-form', 'Please enter your work email.');
         return;
       }
-      // Mobile number, normalized to E.164 (e.g. +14155550123) for CRM/dialer use
+      var jobTitle = (document.getElementById('contact-job-title') || {}).value; jobTitle = jobTitle ? jobTitle.trim() : '';
+      if (!jobTitle) { cqShowInlineError('contact-form', 'Please enter your job title.'); return; }
+      // Mobile number, normalized to E.164 (e.g. +14155550123) for CRM/dialer use.
+      // Prefer iti.getNumber() (libphonenumber via utils.js): it returns true E.164
+      // and strips national trunk prefixes (e.g. UK leading 0). Fall back to manual
+      // dial-code concat if utils hasn't loaded, then to the raw value.
       var mobile = '';
       var mobileInput = document.getElementById('contact-mobile');
       if (mobileInput) {
-        if (window.cqPhoneIti && window.cqPhoneIti.getSelectedCountryData) {
-          var cc = window.cqPhoneIti.getSelectedCountryData();
+        var iti = window.cqPhoneIti;
+        if (iti && typeof iti.getNumber === 'function' && iti.getNumber()) {
+          mobile = iti.getNumber();
+        } else if (iti && iti.getSelectedCountryData) {
+          var cc = iti.getSelectedCountryData();
           var digits = (mobileInput.value || '').replace(/\D/g, '');
           if (cc && cc.dialCode && digits) mobile = '+' + cc.dialCode + digits;
         } else {
@@ -4329,6 +4341,7 @@ document.querySelectorAll('.card').forEach(c=>{
       CQ_FORM_DATA.WorkEmail = email;
       CQ_FORM_DATA.FirstName = firstName;
       CQ_FORM_DATA.LastName = lastName;
+      CQ_FORM_DATA.JobTitle = jobTitle;
       CQ_FORM_DATA.Mobile = mobile;
       CQ_FORM_DATA.Company = document.getElementById('contact-company').value.trim();
       CQ_FORM_DATA.IntegrationNeeds = document.getElementById('contact-needs').value.trim();
@@ -4490,6 +4503,7 @@ document.querySelectorAll('.card').forEach(c=>{
         mobile: CQ_FORM_DATA.Mobile || '',
         first_name: CQ_FORM_DATA.FirstName || '',
         last_name: CQ_FORM_DATA.LastName || '',
+        job_title: CQ_FORM_DATA.JobTitle || '',
         company_name: CQ_FORM_DATA.Company || '',
         integration_needs: CQ_FORM_DATA.IntegrationNeeds || '',
         source_page: document.title,
@@ -4796,7 +4810,8 @@ document.querySelectorAll('.card').forEach(c=>{
     window.cqPhoneIti = window.intlTelInput(input, {
       initialCountry: 'us',
       separateDialCode: true,
-      preferredCountries: ['us', 'gb', 'ca', 'au']
+      preferredCountries: ['us', 'gb', 'ca', 'au'],
+      utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js'
     });
   }
   if (document.readyState === 'loading') {

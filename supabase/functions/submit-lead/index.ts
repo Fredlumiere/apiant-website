@@ -139,9 +139,10 @@ serve(async (req) => {
         { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
-    // job_title is required only for forms that collect it (e.g. builder-pricing).
-    // Other lead pages don't collect it, so a global requirement would reject them.
-    if (form_id === "builder-pricing" && !job_title) {
+    // job_title is required only for forms that collect it (builder-pricing,
+    // start-building). Other lead pages don't collect it, so a global requirement
+    // would reject them.
+    if ((form_id === "builder-pricing" || form_id === "start-building") && !job_title) {
       logEvent({ evt: "lead_reject", reason: "missing_job_title", ip: getClientIp(req), form_id });
       return new Response(
         JSON.stringify({ error: "Job title is required" }),
