@@ -400,6 +400,35 @@ def render_shopconnect_cta() -> str:
     )
 
 
+# Temporary override: inject demo screenshots into specific posts whose CMS
+# body_md does not yet carry them. The proper home for these is the Supabase
+# post body; once added there, drop the slug entry below. Each image is placed
+# immediately before the named section heading (markdown rendered as a figure).
+_DOCS_IMG = "https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images"
+POST_BODY_IMAGES = {
+    "add-mindbody-booking-widget-to-shopify": [
+        ("## When you can't take payment through Mindbody",
+         f"![The Book Now page customers use: a green how-to-book panel beside the live Mindbody class schedule, embedded right on the Shopify store]({_DOCS_IMG}/1780676074264-shopconnect-demo-book-now-page-styled.webp)"),
+        ("## Kill the confusing password email",
+         f"![The Shopify thank-you page with a green banner explaining how to book: open the Book Now page, pick a class, and the Mindbody sign-in takes over]({_DOCS_IMG}/1780676526661-shopconnect-demo-thank-you-page-banner-inline.webp)"),
+        ("## What ShopConnect is doing in the middle",
+         f"![The Mindbody create-account screen appearing inline at booking, name and email already prefilled, asking the customer to set a password]({_DOCS_IMG}/1780676082583-mindbody-create-account-set-password.webp)"),
+        ("## What closing the gap is worth",
+         f"![The Mindbody profile schedule showing the Intro to Yoga class with status Booked]({_DOCS_IMG}/1780676527275-mindbody-booked-classes-profile.webp)"),
+    ],
+}
+
+
+def inject_body_images(slug: str, body_md: str) -> str:
+    spec = POST_BODY_IMAGES.get(slug)
+    if not spec:
+        return body_md
+    for anchor, img_md in spec:
+        if anchor in body_md:
+            body_md = body_md.replace(anchor, img_md + "\n\n" + anchor, 1)
+    return body_md
+
+
 def render_hero_image(post: dict) -> str:
     hero = normalize(post.get("hero_image_url"))
     if not hero:
@@ -423,7 +452,7 @@ def format_date(value) -> str:
 # ---------- Renderers per page type ----------
 
 def write_post_page(post: dict, related: list[dict]) -> Path:
-    body_html, toc = render_markdown(post["body_md"])
+    body_html, toc = render_markdown(inject_body_images(post["slug"], post["body_md"]))
     cat = post.get("category") or {}
     author = post.get("author") or {}
     tags = [t["blog_tags"] for t in (post.get("tags") or []) if t.get("blog_tags")]
