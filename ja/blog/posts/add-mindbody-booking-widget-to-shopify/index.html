@@ -220,17 +220,21 @@
 <p>まず最初にすべきことは、顧客を他の予約サイトに誘導するのをやめることです。MindbodyのリアルタイムスケジュールをShopifyストアに「今すぐ予約」ページとして直接埋め込むことで、顧客はサイトを離れることなく、数回のクリックで予約を完了できます。</p>
 <p>これはShopifyのページに関する作業であり、開発者の作業ではありません。ページを追加したりテーマを編集したりできる方であれば、この作業もできます。ドキュメントには手順を逐一正確に記載しているので、情報が古くなることはありません。 <a href="https://info.apiant.com/docs/shopconnect-shopify-to-mindbody/add-mindbody-booking-widget-to-shopify">ShopifyにMindbodyの予約ウィジェットを追加する</a>このウィジェットはあなたの実際のスケジュールを表示し、自動的に更新され、あなたが管理するページ上に表示されます。もしあなたのサイトがSquarespace、Wix、またはWordPressで構築されている場合、同じウィジェットがそれらのサイトにも埋め込まれ、顧客をそのページに誘導することができます。</p>
 <p>予約ページは1つだけで、そこに「予約」という言葉が出てくる場所ならどこでもリンクされます。一度作成すればOKです。</p>
+<p><img alt="顧客が利用する「今すぐ予約」ページ：Shopifyストアに直接埋め込まれた、Mindbodyのライブクラススケジュール横にある緑色の予約方法パネル" src="https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images/1780676074264-shopconnect-demo-book-now-page-styled.webp"/></p>
 <h2 id="when-you-cant-take-payment-through-mindbody">Mindbody経由で支払いを受け付けられない場合</h2>
 <p>米国以外の多くのスタジオが直面する問題点があります。地域によっては、Mindbodyの決済処理サービスが利用できないため、Mindbody経由で支払いを受け付けることができません。しかし、これは行き詰まりではありません。Shopifyでサービス、パッケージ、メンバーシップを販売し、Mindbodyに正しく反映させることは可能です。ただ、処理順序が逆になるだけです。まず購入し、次に予約する、という流れになります。</p>
 <p>Cedar &amp; Stone のフローは以下のとおりです。顧客が Shopify でパックを購入すると、ShopConnect が顧客の Mindbody クライアントレコードを作成または照合し、購入を記録します。これにより、顧客が予約を行う前に、すでにクレジットがアカウントに反映されます。次に、顧客は「今すぐ予約」ページを開き、クラスを選択して「予約」をタップします。すると、Mindbody のサインインプロセスが開始されます。注文時に使用したメールアドレスでサインインし、パスワードを作成して、Mindbody から送られてくる確認コードを入力します。サイトへの再訪問や、別途メールを確認する必要は一切ありません。</p>
 <p>適用対象地域や購入優先フローの仕組みなど、設定の詳細はここに記載されています。 <a href="https://info.apiant.com/docs/shopconnect-shopify-to-mindbody/selling-on-shopify-without-mindbody-payment-processing">Mindbody決済処理なしでShopifyで販売する</a>.</p>
+<p><img alt="Shopifyのサンキューページには、予約方法を説明する緑色のバナーが表示されます。「今すぐ予約」ページを開き、クラスを選択すると、Mindbodyのサインイン画面が表示されます。" src="https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images/1780676526661-shopconnect-demo-thank-you-page-banner-inline.webp"/></p>
 <h2 id="kill-the-confusing-password-email">紛らわしいパスワードメールをなくそう</h2>
 <p>冒頭で触れた、スパムメールのようなパスワード入力メールを覚えていますか？あれこそが旧フローにおける最大の欠点でしたが、見事に修正されました。</p>
 <p>Mindbodyがレコード作成時にパスワードリセットメールを送信する代わりに、そのメール送信をオフにして、顧客が「予約」をタップした瞬間にMindbodyがログイン処理をインラインで行うようにします。こうすることで、パスワード入力画面は予約プロセスにおける自然なステップとして表示され、1時間前に受信トレイに届いた謎のメッセージとして表示されることはありません。ShopConnectにはこの設定があり、上記のドキュメントでその変更方法が説明されています。たった1つの変更で、予約プロセス全体の中で最も混乱を招く瞬間が解消されます。</p>
 <p>残りはほとんど何もありません。購入情報が既に登録済みであることをお客様に伝え、「今すぐ予約」ページへ誘導し、予約には約30秒かかることを知らせるだけです。この短いメッセージをShopifyのサンキューページと注文確認メールにも掲載すれば、全員に確実に届きます。文面と掲載場所はドキュメントに記載されています。</p>
+<p><img alt="Mindbodyのアカウント作成画面が予約画面に表示され、名前とメールアドレスは既に入力済みで、顧客にパスワードの設定を求めている。" src="https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images/1780676082583-mindbody-create-account-set-password.webp"/></p>
 <h2 id="what-shopconnect-is-doing-in-the-middle">ShopConnectが中間で行っていること</h2>
 <p>このシステム全体を機能させる鍵となるのが、中間部分でのマッチング処理です。Shopifyからの注文が入ると、ShopConnectはそれがどのMindbodyクライアントに属するかを判断し、新規の場合はレコードを作成し、適切なアカウントに購入を計上することで、顧客が予約手続きを行う際に確実にクレジットが反映されるようにします。</p>
 <p>一見簡単そうに聞こえますが、2つのシステムで同じ人物の情報が異なっていることを考えると、そう簡単ではありません。APIANTの統一されたフォーマット非依存のデータ処理エンジンは、Shopifyの注文情報とMindbodyの顧客情報を1つの一貫した情報に統合するため、誰かが入力し直すことなく、購入情報は常に正しいアカウントに反映されます。週末に2つのシステムを手動で照合する必要はありません。ストアとスケジュールは、誰が何を購入したかを自動的に一致させます。</p>
+<p><img alt="Mindbodyのプロフィールスケジュールには、予約済みの「ヨガ入門クラス」が表示されています。" src="https://lptryjqgqoknvmzotyvz.supabase.co/storage/v1/object/public/images/docs-images/1780676527275-mindbody-booked-classes-profile.webp"/></p>
 <h2 id="what-closing-the-gap-is-worth">格差を縮めることの価値</h2>
 <p>これらは、Cedar &amp; Stoneのようなスタジオ向けの参考合成画像であり、実際の顧客案件から得られた測定結果ではありません。</p>
 <ul>
