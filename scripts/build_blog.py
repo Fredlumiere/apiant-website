@@ -404,7 +404,7 @@ def render_shopconnect_cta() -> str:
         f'<a class="blog-trial-cta-btn" href="{url}">Start your free ShopConnect trial '
         '<span aria-hidden="true">&rarr;</span></a>'
         '<span class="blog-trial-cta-note">See it working end to end before you commit. '
-        'Plans start at $49/mo.</span>'
+        'Plans start at $79/mo.</span>'
         '</aside>'
     )
 
