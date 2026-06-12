@@ -102,3 +102,28 @@ FROM blog_authors WHERE role = 'admin' LIMIT 1;
 -- Then clean up:
 DELETE FROM blog_posts WHERE slug = 'webhook-smoke-test';
 ```
+
+## 10. Unpublishing or deleting a post
+
+The CMS has no delete button. Use the repo script, which handles Supabase,
+storage, and the generated HTML (English + all locales) in one pass:
+
+```bash
+# Take a post off the site but keep it as a CMS draft (row + media kept):
+python3 scripts/delete_blog_post.py --slug <slug> --unpublish
+
+# Permanently delete the row and its blog-media/<slug>/ images:
+python3 scripts/delete_blog_post.py --slug <slug> --delete
+
+# Then commit and push; deploy.yml's scoped rsync --delete removes the
+# folders from apiant.com.
+```
+
+## 11. Social share (og:image) convention
+
+Social scrapers (Facebook, LinkedIn, X) do not decode AVIF. Page heroes can
+be `.avif`, but `og_image_url` must point to a JPEG or PNG copy (ideally
+~1200x630). Convention: upload the hero as `01-hero.avif` plus a JPEG
+sibling `01-hero-og.jpg` in the same `blog-media/<slug>/` folder and set
+`og_image_url` to the `.jpg`. `build_blog.py` prints a WARN at build time
+for any live post whose og:image is `.avif`.

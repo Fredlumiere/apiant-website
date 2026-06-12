@@ -200,6 +200,12 @@ def head_for_post(post: dict) -> str:
     seo_title = normalize(post.get("seo_title")) or f"{title} | APIANT Blog"
     canonical = normalize(post.get("canonical_url")) or f"{BASE_URL}/blog/posts/{post['slug']}/"
     og_image = normalize(post.get("og_image_url")) or normalize(post.get("hero_image_url")) or f"{BASE_URL}/images/Apiant-iso1-02.png"
+    # Social scrapers (Facebook, LinkedIn, X) don't decode AVIF, so an .avif
+    # og:image renders as no image on shares. og_image_url must be jpg/png:
+    # keep the page hero as .avif and upload a JPEG sibling for sharing.
+    if og_image.lower().split("?")[0].endswith(".avif"):
+        print(f"WARN og:image for '{post['slug']}' is .avif; social shares will "
+              f"show no preview image. Set og_image_url to a jpg/png copy.")
     return sub(head_tmpl, {
         "TITLE_TAG": html.escape(seo_title),
         "META_DESCRIPTION": html.escape(excerpt),
