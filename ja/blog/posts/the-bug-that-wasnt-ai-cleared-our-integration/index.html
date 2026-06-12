@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>バグではなかった「バグ」：AIが数分で自社統合をクリア | APIANT for Builder</title>
+<meta content="ある重要顧客は、当社のシステム統合によってデータが破損したと確信し、そのシステムを停止するよう依頼してきました。しかし、プラットフォームのあらゆるレイヤーにAIを組み込んでいたため、わずか数分で1件のレコードの履歴全体を追跡し、変更が上流のサードパーティ製アプリによるものであることを証拠とともに証明することができました。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="バグではなかった「バグ」：AIがわずか数分で自社のシステム統合問題を解決した方法" property="og:title"/>
+<meta content="ある重要顧客は、当社のシステム統合によってデータが破損したと確信し、そのシステムを停止するよう依頼してきました。しかし、プラットフォームのあらゆるレイヤーにAIを組み込んでいたため、わずか数分で1件のレコードの履歴全体を追跡し、変更が上流のサードパーティ製アプリによるものであることを証拠とともに証明することができました。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="バグではなかった「バグ」：AIがわずか数分で自社のシステム統合問題を解決した方法" property="twitter:title"/>
+<meta content="ある重要顧客は、当社のシステム統合によってデータが破損したと確信し、そのシステムを停止するよう依頼してきました。しかし、プラットフォームのあらゆるレイヤーにAIを組み込んでいたため、わずか数分で1件のレコードの履歴全体を追跡し、変更が上流のサードパーティ製アプリによるものであることを証拠とともに証明することができました。" property="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif" property="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css?v=20260606" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The \"Bug\" That Wasn't: How AI Cleared Our Own Integration in Minutes",
+  "description": "A high-value customer was certain our integration had scrambled their data and asked us to switch it off. With AI wired into every layer of the platform, we traced one record's full history and proved the change came from an upstream third-party app, with evidence, in minutes.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif",
+  "datePublished": "2026-06-12T21:15:22+00:00",
+  "dateModified": "2026-06-12T21:27:01.820595+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/"
+  },
+  "articleSection": "For Builders"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "For Builders", "item": "https://apiant.com/blog/category/for-builders" },
+    { "@type": "ListItem", "position": 4, "name": "The \"Bug\" That Wasn't: How AI Cleared Our Own Integration in Minutes", "item": "https://apiant.com/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/ja/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/ja/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">コネクター</a>
+<!--
+        Blog-scoped language switcher. Class is "blog-lang-switcher" (not
+        the site-wide "lang-switcher") because localize.py's
+        add_language_switcher() decomposes .lang-switcher elements during
+        re-runs. Populated by /js/blog-search.js at runtime.
+      -->
+<div class="blog-lang-switcher" style="position:relative;display:flex;align-items:center;">
+<button aria-expanded="false" aria-haspopup="true" class="blog-lang-switcher-btn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+<span class="blog-lang-switcher-current">EN</span>
+<svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<div class="blog-lang-switcher-dropdown"></div>
+</div>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">構築を開始</a>
+</nav>
+</div>
+</header>
+<style>
+  .blog-lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .blog-lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .blog-lang-switcher-dropdown.open { display: block; }
+  .blog-lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .blog-lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .blog-lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/ja/blog/category/for-builders" style="color:inherit;text-decoration:none;">建設業者向け</a>
+</div>
+<h1 class="blog-post-h1">バグではなかった「バグ」：AIがわずか数分で自社のシステム統合問題を解決した方法</h1>
+<p class="blog-post-subtitle">重要な顧客が、当社のシステム統合によってデータが破損したと確信し、システムを停止するよう要求してきました。AI導入以前は、その顧客の主張が誤りであることを証明するには、ベテランエンジニアによる何時間にも及ぶ調査が必要でした。しかし、プラットフォームのあらゆるレイヤーにAIが組み込まれていたおかげで、わずか数分で証拠とともに回答を得ることができました。これこそが、単なるシステム統合と、真の意味でのシステム統合インフラストラクチャの違いです。</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/ja/blog/?author=fred">Fred Lumiere</a></span>
+<span>2026年6月12日</span>
+<span>13分で読めます</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/ja/blog/?tag=ai-copilot">#AIコパイロット</a><a class="blog-tag" href="/ja/blog/?tag=for-saas">#SaaS向け</a><a class="blog-tag" href="/ja/blog/?tag=bi-directional-sync">#双方向同期</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="AIの存在は、一本の明るい糸をたどって、無傷のケーブルを通り過ぎ、変化の真の源である別のサードパーティ製アプリへと遡る。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<blockquote>
+<p><strong>読み始める前に、一つ注意点があります。</strong> この記事はAIによって作成されました。記事に埋め込まれているカスタマーサポートの返信も同様です。どちらも同じ場所、つまり稼働中の統合プラットフォームに深くアクセスできるAIによって生成されました。私たちはAIの素晴らしさを語っているわけではありません。適切なインフラストラクチャが基盤となる場合、AIがどのような働きをするのかを、実際の（匿名化された）チケットを通してお見せしているのです。</p>
+</blockquote>
+<hr/>
+<h2 id="the-9-am-fire-drill-that-lasted-five-minutes">午前9時に始まった5分間の避難訓練</h2>
+<p>すべてのソフトウェア企業が恐れるシナリオを想像してみてください。</p>
+<p>貴社の最も大切な顧客の1社である、複数の都市に拠点を置く急成長中のウェルネス＆フィットネスブランドから、緊急の問い合わせが届きました。件名は「同期エラー？」。データに誤りがあり、CRMの会員プロファイルが混乱し始めています。あるレコードでは、ある人物の名前が、全く別の人物のメールアドレス、電話番号、履歴の上に表示されています。これは社内スタッフにも見えており、マーケティングリストを静かに汚染し、実際の顧客関係にも影響を与えています。彼らは心配しており、何が問題なのかについて明確な推測を立てており、今すぐ修正してほしいと依頼してきました。問題が解決するまで、統合機能をオフにしてほしいとまで言っています。</p>
+<p>このリクエストには落とし穴があります。顧客はあなたのシステム統合を直接指摘しています。その統合は彼らのシステム構成の中で最も新しく、最も謎めいた部分であるため、非難の対象としては最も容易であり、解決が最も困難な部分なのです。そして、その統合を停止してしまうと、本来の問題を解決するどころか、正しく正当なアップデートの流れを止めてしまうことになります。</p>
+<p>通常、ここで時間があっという間に過ぎ去ります。サポートエンジニアが呼び出され、統合スペシャリストにエスカレーションされます。そのスペシャリストはゼロから始め、統合が本来行うべきことを再構築し、過去のチケットを読み、ログを抽出し、仮説を立てます。顧客が同期を非難したため、同期に問題がない場合でも、同期を分解し始めるのが自然な本能です。開発者はロードマップから外されます。1日、あるいは2日が経過します。最悪なのは、チームは実際には壊れていないものを「修正」したり、正常な統合を無効にするように顧客に指示したりする一方で、本当の原因は上流でデータの破損を引き起こし続けることです。</p>
+<p>しかし、ここではそうはなりませんでした。ここでは、ほんの数分で答えが返ってきて、しかも証拠付きでした。</p>
+<p>それが具体的にどのようなものだったのか、分かりやすい言葉で説明しましょう。</p>
+<hr/>
+<h2 id="the-problem-explained-without-jargon">専門用語を使わずに説明すると、問題はこうだ。</h2>
+<p>一人の会員に関する単一の会員記録を想像してみてください。そこには、名前、メールアドレス、電話番号、生年月日、そして訪問履歴が記録されています。これらすべてが、一人の会員に紐づいています。</p>
+<p>ある日突然、CRMの該当レコードに、元の詳細情報の上に全く別の人物の名前が表示される。顧客側のチームには、まるでシステム統合によって2人の異なる人物が1つのレコードに統合されたかのように見える。これは確かに不安を煽る事態であり、疑念を抱くのも当然だ。</p>
+<p>顧客自身の推測は具体的で的確だった。おそらくシステム統合はID番号に基づいてユーザーを照合していたのだろう。そして、異なる場所にいる2人の異なるユーザーがたまたま同じIDを共有していたため、システムが混乱して両者を統合してしまったのかもしれない。正確な顧客データに基づいてビジネスを運営している企業にとって、これはまさに夜も眠れないほどの悩みの種だ。</p>
+<p><img alt="名前だけが変わった：名前バナーが2つの面を交互に表示する連絡先カードで、他のすべてのフィールドは同じままです" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/02-name-swap.avif"/></p>
+<p>難しい問題は「どうやってデータを修正するか」ではなく、「実際に誰がデータを変更したのか、そして統合システムが原因なのか、それとも単なる伝達役なのか」ということだった。この問いに答えるまでは、安全に問題を解決することはできない。推測を誤れば、せっかく健全な統合システムを再構築しても無駄になるか、あるいは真の原因を放置したまま被害が拡大し続けるかのどちらかだ。</p>
+<hr/>
+<h2 id="how-the-ai-actually-solved-it">AIが実際にどのように解決したか</h2>
+<p>ソフトウェアビジネスを経営しているなら、ここが重要な部分です。</p>
+<p><strong>それは、ある特定の記録の全履歴を、項目ごとに読み取った。</strong> AIは理論を立てるのではなく、影響を受けた連絡先の履歴全体を取得し、ソースシステムから送信された個々のイベントに至るまで、すべての変更を追跡した。要約ではなく、何がいつ変更されたのかという実際のシーケンスだ。</p>
+<p><strong>それは事件解決の決め手となる唯一の手がかりを発見した。</strong> 記録上の名前だけが変わっていた。メールアドレス、電話番号、生年月日、そして履歴全体は、変更前も変更後も全く同じだった。この一点の観察で全てが明らかになった。もし本当に二人の異なる人物が共有IDで混同されているのなら、名前だけでなく全ての情報が異なっているはずだ。一つの項目だけが変更され、他の全てが同じままだからといって、二つの記録が統合されたわけではない。それは、元の記録の名前が変更されただけだ。</p>
+<p><img alt="法医学的タイムライン：AIが記録の履歴を調査すると、名前タグが1つ反転するが、メールアドレス、電話番号、誕生日は変更されない。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/03-timeline.avif"/></p>
+<p><strong>それは、その変化がどのようにして起こったのか、そして誰が責任者なのかを明らかにした。</strong> AIは、名前変更が当社の統合機能によるものでも、スタッフが手動で編集したものでもないことを認識しました。変更は、顧客が接続してアカウントへの書き込み権限を付与した別のサードパーティ製アプリによって、ソースプラットフォーム独自のプログラミングインターフェース経由で行われたものです。当社の統合機能は、設計どおりに、上流の変更をCRMに正しく反映させただけです。念のため申し添えますが、この統合機能はソースプラットフォームからメンバーデータを読み取るだけで、書き戻すのは内部同期フラグのみです。名前、メールアドレス、プロファイルフィールドなどは一切変更しません。</p>
+<p>言い換えれば、統合自体が原因ではなかった。統合は、チェーンのさらに上流で行われた変更を忠実に報告する伝達役だったのだ。顧客のID衝突説は良い推測だったが、証拠は全く別のところを指し示していた。</p>
+<p>診断結果（正確なレコード名、名前変更が行われた正確な日付、変更を実施した正確なメカニズム、そして統合が正しく機能していたことの証明）は数分で判明しました。顧客は次のステップも明確に把握できました。レコードの名前を変更している上流のサードパーティ製アプリを特定し、ソース側でデータを修正すればよいのです。統合に関して、再構築、再構成、または停止する必要は一切ありませんでした。</p>
+<p>人間の専門家でも同じ結論に達するだろう。問題は、顧客が何かを指摘するたびに、システム統合のせいにするより手っ取り早くてはるかに危険な近道を選ぶのではなく、毎回徹底的な調査を行うだけの時間と忍耐力があるかどうかだ。</p>
+<hr/>
+<h2 id="the-reply-we-sent-written-by-ai">AIが作成した返信</h2>
+<p>以下は、お客様に実際に送信されたサポート返信です。名前とプラットフォームは匿名化し、若干の修正を加えていますが、内容はAIが生成したものと全く同じです。人間が作成・推敲したものではなく、AIが既に収集した情報に基づいて作成したものです。</p>
+<p><img alt="AIが作成した匿名化されたサポート返信が、「AI作成」バッジ付きでヘルプデスクのチケットインターフェースに表示される。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/05-ai-reply.avif"/></p>
+<blockquote>
+<p><strong>件名：Re: 同期エラー？</strong></p>
+<p>こんにちは、アレックスさん。</p>
+<p>詳細な報告書、特に事例記録をありがとうございました。おかげで何が起こったのかを正確に把握することができました。</p>
+<p>簡単に言うと、これはシステム統合やCRMの問題ではありません。同期機能は正常に動作しています。プロファイルの混同は、予約・会員プラットフォーム内のレコードに変更が加えられたことが原因で発生しており、同期機能はその変更をCRMに忠実に反映させています。</p>
+<p>最初の例を用いて、以下のことが分かりました。</p>
+<ul>
+<li>そのCRM連絡先情報は、貴社のいずれかの拠点にある単一の顧客レコードに基づいています。</li>
+<li>2週間前までは、御社の予約プラットフォームからその顧客が1人のメンバーとして送られてきていました。</li>
+<li>その2日後、同じ顧客記録が全く別の会員名に変更されていた。記録上のその他の情報（メールアドレス、電話番号、生年月日、訪問履歴、メモなど）はすべて同じままだった。名前だけが上書きされたのだ。</li>
+<li>これは予約プラットフォームで直接確認できます。顧客の連絡ログには、1つの顧客レコードに対して、最初のメンバー宛てのシステムメールと、その1週間後の2番目のメンバー宛てのシステムメールが記録されています。</li>
+</ul>
+<p>これがあなたの理論の重要なポイントです。異なる場所にいる2人の人物が同じIDを共有している場合、メールアドレス、電話番号、生年月日も異なるはずです。しかし、ここではそれらが同一であるため、同期によって2つのレコードがマージされたのではなく、ソース側で1つのクライアントレコードの名前が変更されたということになります。</p>
+<p>変更が予約プラットフォームに反映された経緯：変更はプラットフォーム独自のAPIを介して行われました。つまり、お客様のアカウントへの書き込み権限を持つ別のサードパーティ製アプリが変更をプッシュしたということです。これはスタッフによる編集でも、統合機能によるものでもありません。参考までに、統合機能は予約プラットフォームから顧客データを読み取るだけで、書き戻すのは内部同期フラグのみです。名前、メールアドレス、プロフィールフィールドを変更することはありません。</p>
+<p>おすすめ商品：</p>
+<ol>
+<li>どのサードパーティ製アプリが予約プラットフォームへのAPI書き込みアクセス権を持っているかを確認し、顧客レコードの名前変更や統合を行うアプリがないか調べてください。</li>
+<li>各個人の記録が正しい詳細情報で自身の記録に戻されるように、情報源で記録を修正してください。</li>
+</ol>
+<p>統合側やCRM側で再リンクや再設定を行う必要はありません。ソースデータが修正されれば、次回の同期時に正しい情報が自動的に反映されます。</p>
+<p>同期を停止する場合：正常に動作しているため、そのまま実行状態を維持しています。一時停止しても、基となるソースデータは変更または修復されません。クリーンアップ作業中に一時停止をご希望の場合は、お申し付けください。</p>
+<p>さらにサポートが必要な場合は喜んで対応いたします。簡単な電話でも構いません。</p>
+<p>よろしくお願いいたします。
+APIANT AI サポート</p>
+</blockquote>
+<p>読み返して、その内容に注目してください。結論から始まっています。証拠を順序立てて提示しています。顧客自身の仮説を回避せず、正面から取り上げています。統合が影響を与える範囲と与えない範囲を明確に区別しています。そして、安易に同期をオフにするという選択肢は選びません。なぜなら、それは間違った判断だったからです。これは定型的なマクロではありません。これは、実際のレコードの履歴に基づいて構築された、論理的な回答なのです。</p>
+<hr/>
+<h2 id="the-shift-hiding-inside-this-story">この物語の中に隠された変化</h2>
+<p>個々のチケットから一歩引いて、何が起こったのか全体像を見てみよう。</p>
+<p>統合サポートで最も難しいのは、バグを修正することではなく、そもそも問題の責任が誰にあるのかを突き止めることです。データに異常が見られる場合、統合は最も簡単に非難される対象であり、最も責任を否定するのが難しい対象です。「統合は無実であり、データは上流で別の何かによって変更された」ことを証明するのは、まさに証拠収集に多大な労力を要する探偵作業であり、ベテランエンジニアの時間を費やすことになります（そもそも誰かがそれに取り組むかどうかさえ定かではありません）。多くの場合、統合が非難され、一時停止または再構築されるだけで、真の原因は静かに被害を与え続けるのです。</p>
+<p>AIインフラストラクチャは、その状況を一変させました。このチケットを「緊急、停止せよ」から「何が起こったのか、証拠付きで正確に示します」へと、わずか数分で対応してくれたのです。AIは推測するのではなく、原因を突き止めました。そして、私たちのシステム統合における問題点を、自ら解決する意思と能力も持ち合わせていました。これは、想像以上に難しく、そして価値のあることです。なぜなら、ここでの真実の答えは「問題はあなたが探している場所ではない」ということだったからです。</p>
+<p>これが、私たちがプラットフォームを「AIファースト」と呼ぶ理由です。AIは、付け足しのチャットボットではありません。プラットフォームのあらゆるレイヤー、つまりすべての実行、すべての入力フィールド、ソースから受信したすべてのイベントに深く関わっています。この広範な情報処理能力こそが、「このレコードに実際に何が起こったのか、そしてその理由は何か」という問いに、この段落を読む時間で答えることができる理由なのです。</p>
+<hr/>
+<h2 id="why-you-cannot-vibe-code-your-way-to-this">なぜバイブコーディングでこれを実現できないのか</h2>
+<p>ここからは率直に言っておくべき点です。</p>
+<p>生のポイントツーポイント接続を自分で構築することはもちろん可能で、最新のAIコーディングツールを使えば、これまで以上に迅速に構築できます。Claude Codeは、まさにそのコードを書くのが得意です。調子の良い日には、構築したものはうまく動作します。問題は、調子の悪い日です。</p>
+<p>手作業で構築された統合は、いわばパイプのようなものです。データを転送するだけで、その後は何も記録されません。実行履歴も、フィールドレベルで何がいつ変更されたかの記録も、CRM内の値からその変更を引き起こした個々のソースイベントへのリンクも一切保持されません。そのため、数か月後、レコードに誤りが見つかり、顧客から説明を求められても、調査すべき情報が何も残っていません。読み取れるメモリもなく、追跡できる痕跡もありません。あなたもAIアシスタントも、再び推測に頼るしかなく、最も簡単な推測はパイプのせいにして、それを引き抜くことでしょう。</p>
+<p>これはコーディングツールを批判しているわけではありません。重要なのは、ツールがどのようなデータに基づいて動作するかということです。AIを単純なパイプに向けると、読み取るべき履歴データがないため、どんなに優れたモデルでも理論構築に終始してしまいます。しかし、同じAIを、すべての実行、すべての書き込み、すべてのソースイベントを記録したプラットフォームに向けると、先ほどご覧いただいたようなフォレンジック分析を実行できるのです。</p>
+<p><img alt="パイプ対インフラ：記録されたタイムラインが完全に表示された光るプラットフォームの隣にある、忘れ去られた中空のパイプ" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/04-pipe-vs-infra.avif"/></p>
+<p>APIANTは単なるパイプではありません。インフラストラクチャです。設計上、すべての実行、すべての書き込み、すべてのソースイベントがキャプチャされ、監視可能で、クエリ可能です。記録された履歴こそが、AIが必要とする基盤です。これは、単に実行される統合と、調査可能な統合との違いです。データを移動させるものは、バイブレーションコーディングで実現できます。しかし、AIが最も重要な時に数分でデータを診断できるような、フォレンジックメモリとプラットフォーム全体の監視機能は、バイブレーションコーディングでは実現できません。これが、統合と統合インフラストラクチャの境界線です。</p>
+<hr/>
+<h2 id="the-meta-point-ai-did-the-whole-job">メタポイント：AIがすべての仕事をこなした</h2>
+<p>これははっきりと述べておく価値がある。なぜなら、これがここでの真の証拠だからだ。</p>
+<p>AIは単に手助けをしただけではありません。診断作業も行い、レコードの履歴全体を読み込み、変更されたフィールドを特定しました。そして、あなたが上で読んだ顧客への返信、つまり回答を最初に提示し、同期を継続させるべきだという立場を貫いた返信を作成しました。さらに、あなたが今読んでいるこの記事も、AIが作成し、そのすべてをあなたに説明しています。</p>
+<p>1つのAI、3つの仕事、それらはすべて同じものから派生している。それは、あらゆる情報を記憶し、AIがその記憶に対して質問できるようにするプラットフォームだ。これがショーケースだ。「AIは賢い」というわけではない。AIと統合インフラストラクチャのおかげで、コーヒーが冷める前に厄介なチケットを解決できたのだ。</p>
+<p><img alt="最終課題：AIコアを用いてチケットへの返信とブログ記事を作成し、それぞれに「AI作成」と明記する。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/06-meta-capstone.avif"/></p>
+<hr/>
+<h2 id="what-this-means-if-you-sell-software">ソフトウェアを販売する場合、これは何を意味するのでしょうか？</h2>
+<p>製品が他のツールと連携する場合（現在、本格的なSaaS製品のほとんどは連携しています）、統合は最大の成長の原動力であると同時に、最大のサポート負担にもなります。提供するコネクタはすべて、不具合が発生したり、不具合のように見えたりする可能性のある新たな接点となります。そうした不具合はすべてサポートキューに蓄積され、優秀なエンジニアを本来の業務から外さざるを得なくなります。しかも、そうしたチケットの多くは、あなたの責任ではないのです。上流の変更、サードパーティ製アプリ、ソースコード側の編集などが原因で、それらがあなたの責任ではないことを証明しなければならないケースも少なくありません。</p>
+<p>まさにこれが問題なのです <strong>APIANT ビルダー向け、ホワイトラベル</strong> 除去するために作られた。</p>
+<p>貴社独自のブランドで運用されるホワイトラベル統合プラットフォームを、このAIインフラストラクチャを基盤として利用できます。顧客は、求めている高度で信頼性の高い統合機能を利用できます。貴社チームは、午前9時にすべての苦情を手作業で診断する手間から解放されます。AIが履歴を読み取り、根本原因を追跡し、修正すべき箇所が貴社にあるのか、それとも上流のシステムにあるのかに関わらず、正確で証拠に基づいた回答を提供します。</p>
+<p>この事例の顧客は、数分以内に正確で根拠のある回答を得ることができ、正常に稼働しているシステムを維持し、不安から健全なシステムを停止してしまう事態を回避できました。専門家が損害を被ることもなく、開発計画が頓挫することもありませんでした。さあ、これが御社のすべての統合カタログのデフォルト設定となり、御社のロゴが表示されている状態を想像してみてください。</p>
+<hr/>
+<h2 id="see-it-for-yourself">ご自身の目で確かめてください</h2>
+<p>これは一つの事例です。私たちはこのような統合を毎日行っていますが、そのパターンは変わりません。AIが、これまで何時間もかかっていた難解な部分、つまりフォレンジック調査の部分を担い、それを数分で完了させます。貴社ブランドは顧客との関係を維持し、エンジニアは本来の業務に集中できます。</p>
+<p>もしあなたが、統合サポートにかかる費用にうんざりし、チケットごとに統合の正当性を証明することに疲れているSaaS企業なら、自社専用のホワイトラベルAPIANT For Builderサーバーがどのようなものになるかをお見せしましょう。</p>
+<p><strong><a href="/?talk=1">ホワイトラベルのデモを予約する →</a></strong></p>
+<hr/>
+<p><em>この事例研究は完全に匿名化されています。顧客名、連絡先、プラットフォーム、個人を特定できるデータは一切含まれていません。技術的な詳細は一般読者向けに簡略化されています。この記事と埋め込みサポート回答は、いずれもAIによって作成されました。</em></p>
+<aside class="blog-apps-cta"><div class="blog-apps-cta-heading">APIアプリの全カタログをご覧ください</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">マインドボディソリューションズ</span><span class="blog-apps-cta-desc">フィットネスとウェルネスの統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">クリニコソリューションズ</span><span class="blog-apps-cta-desc">医療および関連医療分野の統合</span><span class="blog-apps-cta-arrow">探索する →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">非営利団体および資金調達との連携</span><span class="blog-apps-cta-arrow">探索する →</span></a></div></aside>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">この記事では</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-9-am-fire-drill-that-lasted-five-minutes">午前9時に始まった5分間の避難訓練</a></li><li class="lvl-2"><a href="#the-problem-explained-without-jargon">専門用語を使わずに説明すると、問題はこうだ。</a></li><li class="lvl-2"><a href="#how-the-ai-actually-solved-it">AIが実際にどのように解決したか</a></li><li class="lvl-2"><a href="#the-reply-we-sent-written-by-ai">AIが作成した返信</a></li><li class="lvl-2"><a href="#the-shift-hiding-inside-this-story">この物語の中に隠された変化</a></li><li class="lvl-2"><a href="#why-you-cannot-vibe-code-your-way-to-this">なぜバイブコーディングでこれを実現できないのか</a></li><li class="lvl-2"><a href="#the-meta-point-ai-did-the-whole-job">メタポイント：AIがすべての仕事をこなした</a></li><li class="lvl-2"><a href="#what-this-means-if-you-sell-software">ソフトウェアを販売する場合、これは何を意味するのでしょうか？</a></li><li class="lvl-2"><a href="#see-it-for-yourself">ご自身の目で確かめてください</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">読み続けてください</h2><div class="blog-grid"><a class="blog-card" data-tags="mindbody hubspot zoho-crm crmconnect" href="/ja/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"><div class="blog-card-image"><img alt="分割フレーム図：左側にはサポートチケットとGitHubの課題カード、右側には接続された自動化ノードのネットワークが1本の緑色の線で結ばれている。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif?v=3"/></div><div class="blog-card-body"><div class="blog-category-chip">建設業者向け</div><h3 class="blog-card-title">Claude Code氏によるAIファースト統合エンジニアリング：実践的なデバッグセッション</h3><p class="blog-card-excerpt">実際のAPIANTデバッグセッションを、実際のプロンプトとともにご覧ください。AIが兄弟統合と4年分のバージョン履歴を読み込み、開発者の直感によってコードベースに記録されていなかったリグレッションが阻止される様子をご覧ください。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月20日</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/ja/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="CSVファイルからHubSpotのプロパティを自動作成する" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">建設業者向け</div><h3 class="blog-card-title">Claude Codeを使用してCSVからHubSpotプロパティを自動作成する</h3><p class="blog-card-excerpt">APIANTをベースにしたこの無料のインポート自動化ツールを使用して、HubSpotのプロパティ（連絡先、取引、会社）を自動作成する方法。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2024年9月18日</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/ja/blog/posts/create-a-custom-hubspot-crm-card-without-coding-with-apiant/"><div class="blog-card-image"><img alt="APIANTを使ってコーディングなしでカスタムHubSpot CRMカードを作成する" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png?width=1600&amp;name=Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">建設業者向け</div><h3 class="blog-card-title">Claude Codeを使用して、コードを使わずにカスタムHubSpot CRMカードを作成する</h3><p class="blog-card-excerpt">APIANTを使えば、コーディング不要で簡単にカスタマイズされたHubSpot CRMカードを作成する方法を学ぶことができます。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2024年3月17日</span></div></div></a></div></section>
+</div>
+</article>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="アピアント" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026、Apiant, Inc. 無断複写・転載を禁じます。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/ja/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">ブログ</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">プラットフォーム</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">プライバシー</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条項</a>
+</div>
+</div>
+</footer>
+<!-- blog-search.js carries buildLangSwitcher (populates the language
+     dropdown + sets the current-locale label). It early-returns past the
+     search/pagination code when there's no search input, so it is safe
+     and cheap on post pages. Fuse.js is not loaded here: search is
+     hub/category-only and blog-search.js never references Fuse unless a
+     search actually runs. -->
+<script defer="" src="/js/blog-search.js?v=20260606"></script>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>
