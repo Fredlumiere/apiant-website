@@ -39,7 +39,7 @@
   "description": "A high-value customer was certain our integration had scrambled their data and asked us to switch it off. With AI wired into every layer of the platform, we traced one record's full history and proved the change came from an upstream third-party app, with evidence, in minutes.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif",
   "datePublished": "2026-06-12T21:15:22+00:00",
-  "dateModified": "2026-06-13T18:11:01.536708+00:00",
+  "dateModified": "2026-06-13T18:25:53.285981+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -241,32 +241,36 @@
 <p>İşte müşteriye gönderilen gerçek destek yanıtı. Her isim, e-posta, kimlik ve konum değiştirildi, ancak platformlar gerçek ve içeriği tamamen yapay zekanın ürettiğiyle aynı: tam müşteri kimliği, tam tarihler, tam mekanizma. İnsan tarafından hazırlanıp cilalanmadı. Yapay zeka tarafından, daha önce topladığı kanıtlara dayanarak yazıldı.</p>
 <p><img alt='Yapay zeka tarafından yazılan ve anonimleştirilmiş destek yanıtı, yardım masası bilet arayüzünde "Yapay Zeka Tarafından Yazıldı" rozetiyle birlikte gösteriliyor.' src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/05-ai-reply.avif"/></p>
 <blockquote>
-<p><strong>Konu: Re: Senkronizasyon Hatası?</strong></p>
+<p><strong>Bilet:</strong> Senkronizasyon Hatası mı?</p>
+<p><strong>Müşteri:</strong> Callum</p>
 <p>Merhaba Callum,</p>
 <p>Detaylı rapor ve örnek kayıtlar için teşekkürler, bu sayede sorunu çok daha hızlı tespit edebildik. APIANT MCP AI araçlarımızı kullanarak kapsamlı bir araştırma yürüttük ve her değişikliği tek tek Mindbody olayına kadar takip edebildik. Bu sayede kaynağı bu kadar hassas ve hızlı bir şekilde belirleyebildik.</p>
+<p><strong>Özet</strong></p>
 <p>Özetle: Profil karışıklıkları CRMConnect senkronizasyonundan veya HubSpot'tan kaynaklanmıyor. Senkronizasyon doğru çalışıyor. Kaynakta, Mindbody içinde değiştirilen verileri doğru bir şekilde yansıtıyor. Kayıtlar, Mindbody hesabınıza bağlı harici bir uygulama tarafından Mindbody'de değiştiriliyor ve senkronizasyon daha sonra bu değişiklikleri tam olarak tasarlandığı gibi HubSpot'a iletiyor.</p>
-<p>Bulduğumuz sonuçlar (Megan Hartley / Bronwyn Keane örneğinizi kullanarak, HubSpot iletişim numarası 51003412986):</p>
+<p><strong>Bulgular</strong> (Megan Hartley / Bronwyn Keane örneğinizi kullanarak, HubSpot iletişim numarası 51003412986)</p>
 <ul>
 <li>Bu HubSpot iletişim bilgisi, Mindbody Northside müşteri kimlik numarası 100004217 tarafından beslenmektedir.</li>
 <li>En son 2 Haziran'da Mindbody, bu müşteriyi bize Megan Hartley (megh82@example.com) olarak gönderiyordu.</li>
 <li>3-4 Haziran tarihlerinde, aynı Mindbody müşteri kaydı Bronwyn Keane olarak değiştirildi, ancak kayıttaki diğer her şey (e-posta, telefon, doğum tarihi, ziyaret geçmişi, tedavi notları) aynı kaldı. Sadece isim değiştirildi.</li>
 <li>Bunu Mindbody'de kendiniz de doğrulayabilirsiniz: Müşterinin İletişim Günlüğü, 2 Haziran'da "Megan Hartley" (megh82@example.com) adresine ve 10 Haziran'da Bronwyn Keane adresine gönderilen sistem e-postalarını gösteriyor. Aynı müşteri kaydı, iki farklı kimlik.</li>
 </ul>
-<p>Değişikliğin nasıl yapıldığı: Düzenleme, Mindbody'nin Genel API'si aracılığıyla yapıldı; bu da Mindbody hesabınıza API erişimi olan harici bir uygulamanın güncellemeyi gönderdiği anlamına geliyor. Mindbody arayüzünde düzenleme yapan bir personel üyesi veya CRMConnect değildi. (Referans olarak: CRMConnect yalnızca Mindbody'den müşteri verilerini okur; geri yazdığı tek şey dahili bir senkronizasyon bayrağıdır. Hiçbir zaman müşterinin adını, e-postasını veya profil alanlarını değiştirmez.)</p>
+<p><strong>Değişikliğin nasıl yapıldığı</strong></p>
+<p>Düzenleme, Mindbody'nin Genel API'si aracılığıyla yapıldı; bu da Mindbody hesabınıza API erişimi olan harici bir uygulamanın güncellemeyi gönderdiği anlamına gelir. Bu, Mindbody arayüzünde düzenleme yapan bir personel üyesi veya CRMConnect değildi. (Referans olarak: CRMConnect yalnızca Mindbody'den müşteri verilerini okur; geri yazdığı tek şey dahili bir senkronizasyon bayrağıdır. Hiçbir zaman müşterinin adını, e-postasını veya profil alanlarını değiştirmez.)</p>
 <p>Dolayısıyla Mindbody senkronizasyona "100004217 numaralı müşteri artık Bronwyn Keane" dediğinde, CRMConnect bağlantılı HubSpot kişisini doğru şekilde güncelledi; bu nedenle Megan'ın kaydı artık Bronwyn'in bilgilerini gösteriyor. Mindbody kaydı olduğu gibi kaldığı sürece, herhangi bir yeniden senkronizasyon bunu tekrar uygulayacaktır.</p>
 <p>Tara Whitfield / Erin Doyle vakasının (ve diğerlerinin) aynı örüntüyü izlemesini bekliyoruz: Zihin-Beden sisteminde kaynak tarafında bir değişiklik.</p>
-<p>Önerilen sonraki adımlar:</p>
+<p><strong>Önerilen sonraki adımlar</strong></p>
 <ol>
 <li>Lütfen Mindbody tarafındaki sorunun kaynağını belirleyin. Üçüncü taraf entegrasyonlarının/uygulamalarının Mindbody sitelerinize API (yazma) erişimi olup olmadığını kontrol edin. Müşteri kayıtlarını yeniden adlandıran veya birleştiren bir uygulama arıyoruz. Gerekirse, Mindbody hesap yöneticiniz 3-4 Haziran tarihlerinde hangi uygulamanın değişikliği yaptığını doğrulamanıza yardımcı olabilir.</li>
 <li>Kayıtları kaynakta (Mindbody) düzeltin, böylece her kişi doğru bilgilerle kendi ayrı müşteri kaydına geri dönsün.</li>
 </ol>
+<p><strong>Çözünürlük</strong></p>
 <p>Önemli olan, CRMConnect veya HubSpot tarafında hiçbir şeyin yeniden bağlanmasına veya yeniden yapılandırılmasına gerek olmamasıdır. HubSpot kişileriniz zaten doğru Mindbody istemcilerine eşlenmiştir. Yanlış olan tek şey Mindbody kaynağındaki verilerdir. Bunu Mindbody'de düzelttiğinizde, doğru bilgiler bir sonraki senkronizasyonda otomatik olarak mevcut HubSpot kişilerine aktarılacaktır.</p>
 <p>Senkronizasyonu kapatma önerinize gelince: doğru şekilde çalıştığı ve duraklatmanın temel Mindbody verilerini değiştirmeyeceği veya düzeltmeyeceği için senkronizasyonu açık bıraktık.</p>
 <p>Herhangi bir sorunuz olursa lütfen bizimle iletişime geçmekten çekinmeyin. Yardımcı olmak için buradayız!</p>
 <p>Saygılarımla,
-APIANT Yapay Zeka Destek Ekibi</p>
+APIANT Yapay Zeka Desteği
+Metni tekrar okuyun ve ne yaptığını fark edin. Sonuca odaklanıyor. Kanıtları sırayla inceliyor. Müşterinin kendi teorisini, ondan kaçınmak yerine doğrudan ele alıyor. Entegrasyonun neleri kapsadığını ve neleri kapsamadığını net bir şekilde ortaya koyuyor. Ve senkronizasyonu kapatmanın kolay yoluna başvurmayı reddediyor, çünkü bu yanlış bir karar olurdu. Bu, hazır bir makro değil. Bu, tek bir kaydın gerçek geçmişinden yola çıkarak oluşturulmuş mantıklı bir cevaptır.</p>
 </blockquote>
-<p>Tekrar okuyun ve ne yaptığına dikkat edin. Sonucu ön plana çıkarıyor. Kanıtları sırayla inceliyor. Müşterinin kendi teorisini, ondan kaçınmak yerine doğrudan ele alıyor. Entegrasyonun neleri kapsadığını ve neleri kapsamadığını net bir şekilde ortaya koyuyor. Ve senkronizasyonu kapatmanın kolay yoluna başvurmayı reddediyor, çünkü bu yanlış bir karar olurdu. Bu, hazır bir makro değil. Bu, tek bir kaydın gerçek geçmişinden yola çıkarak oluşturulmuş, mantıklı bir cevaptır.</p>
 <hr/>
 <h2 id="before-and-after-the-manual-hunt-versus-the-ai-assisted-answer">Önce ve sonra: manuel arama ile yapay zeka destekli yanıt arasındaki fark</h2>
 <p>Bu tür bir dağıtımda saman yığınının büyüklüğünü hayal etmekte fayda var. Mindbody ve HubSpot arasındaki CRMConnect entegrasyonu tek bir boru hattı değildir. Büyüyen bir marka birden fazla lokasyonda faaliyet gösterir ve aynı müşteri birden fazla lokasyonda görünebilir, bu nedenle mantık bir lokasyon koruyucusu içerir: iki lokasyonda görünen bir kişi, bir lokasyonun kayıtlarının diğer lokasyon tarafından asla değiştirilmemesi gerekir. Her Mindbody olayı (yeni bir müşteri, satış, randevu, ders rezervasyonu, üyelik, sözleşme) anlık web kancaları ve planlanmış taramalar aracılığıyla hem standart HubSpot kayıtlarına hem de beş özel nesneye akar: randevular, ders rezervasyonları, müşteri hizmetleri, üyelikler ve sözleşmeler. Bu yazma işlemlerinin çoğu çift yönlüdür: tamamlanmış bir randevu, özel bir işlem hattında bir Anlaşma olarak ve aynı anda ayrı bir özel nesne kaydı olarak kaydedilebilir. Altta, yeniden kullanılabilir alt rutinler ortak işi yapar ve her yazma işlemi çok adımlı bir karar ağacı çalıştırır: önbelleğe alınmış bir kayıt kimliğini kontrol eder, güncellemeyi dener ve belirli bir hata durumunda, HubSpot'un döndürdüğü hataya göre daha fazla dallanma ile, kaydı özelliğe göre bulmaya veya yeni bir kayıt oluşturup ilişkilendirmeye geçer. Otomasyon sayısı ve dallanma derinliği müşteri dağıtımına ve yapılandırmasına göre değişir, ancak şekil her yerde aynıdır: bir kayıttaki bir alanın birkaç yönden değiştirilebildiği yoğun, çok katmanlı bir ağ. Bu ağın içinde, önemli olan tek kayıttaki değişen tek alanı bulmak, kelimenin tam anlamıyla samanlıkta iğne aramak gibidir.</p>

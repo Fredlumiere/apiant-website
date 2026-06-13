@@ -39,7 +39,7 @@
   "description": "A high-value customer was certain our integration had scrambled their data and asked us to switch it off. With AI wired into every layer of the platform, we traced one record's full history and proved the change came from an upstream third-party app, with evidence, in minutes.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif",
   "datePublished": "2026-06-12T21:15:22+00:00",
-  "dateModified": "2026-06-13T18:11:01.536708+00:00",
+  "dateModified": "2026-06-13T18:25:53.285981+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -241,33 +241,38 @@
 <p>Voici la réponse du service client. Tous les noms, adresses e-mail, identifiants et lieux ont été modifiés, mais les plateformes sont bien réelles et le contenu est exactement celui généré par l'IA, détails compris : l'identifiant client exact, les dates exactes, le mécanisme exact. Ce texte n'a pas été rédigé par un humain, mais produit par l'IA à partir des informations qu'elle avait déjà collectées.</p>
 <p><img alt="Réponse d'assistance rédigée par une IA, anonymisée, affichée dans l'interface d'un système de tickets d'assistance avec un badge « Rédigé par une IA »." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/05-ai-reply.avif"/></p>
 <blockquote>
-<p><strong>Sujet : Re: Erreur de synchronisation ?</strong></p>
+<p><strong>Billet:</strong> Re: Erreur de synchronisation ?</p>
+<p><strong>Client:</strong> Callum</p>
 <p>Salut Callum,</p>
 <p>Merci pour le rapport détaillé et les exemples d'enregistrements ; ils nous ont permis de résoudre le problème beaucoup plus rapidement. Nous avons mené une enquête complète à l'aide de notre outil d'IA APIANT MCP, qui nous a permis de retracer chaque modification jusqu'à l'événement Mindbody individuel. C'est ainsi que nous avons pu identifier la source avec autant de précision et de rapidité.</p>
+<p><strong>Résumé</strong></p>
 <p>En résumé : les problèmes de profils ne sont pas dus à la synchronisation CRMConnect ni à HubSpot. La synchronisation fonctionne correctement et reflète fidèlement les données modifiées à la source, dans Mindbody. Les enregistrements sont modifiés dans Mindbody par une application externe connectée à votre compte Mindbody, et la synchronisation transmet ensuite ces modifications à HubSpot comme prévu.</p>
-<p>Voici ce que nous avons constaté (en utilisant votre exemple Megan Hartley / Bronwyn Keane, contact HubSpot 51003412986) :</p>
+<p><strong>Résultats</strong> (En reprenant votre exemple Megan Hartley / Bronwyn Keane, contact HubSpot : 51003412986)</p>
 <ul>
 <li>Ce contact HubSpot est alimenté par l'identifiant client Mindbody Northside 100004217.</li>
 <li>Pas plus tard que le 2 juin, Mindbody nous envoyait cette cliente sous le nom de Megan Hartley (megh82@example.com).</li>
 <li>Les 3 et 4 juin, le dossier client de Mindbody a été modifié au nom de Bronwyn Keane, tandis que toutes les autres informations (adresse e-mail, numéro de téléphone, date de naissance, historique des visites, notes de traitement) sont restées inchangées. Seul le nom a été modifié.</li>
 <li>Vous pouvez le vérifier vous-même dans Mindbody : le journal des contacts du client indique des courriels système adressés à « Megan Hartley » (megh82@example.com) le 2 juin et à Bronwyn Keane le 10 juin. Même fiche client, deux identités différentes.</li>
 </ul>
-<p>Comment la modification a été effectuée : la modification a été apportée via l’API publique de Mindbody, ce qui signifie qu’une application externe ayant accès à votre compte Mindbody a effectué la mise à jour. Il ne s’agissait pas d’un membre de votre équipe effectuant la modification dans l’interface Mindbody, ni de CRMConnect. (Pour information : CRMConnect se contente de lire les données client depuis Mindbody ; la seule information qu’il réécrit est un indicateur de synchronisation interne. Il ne modifie jamais le nom, l’adresse e-mail ou les champs de profil d’un client.)</p>
+<p><strong>Comment le changement a été effectué</strong></p>
+<p>La modification a été effectuée via l'API publique de Mindbody, ce qui signifie qu'une application externe ayant accès à votre compte Mindbody a envoyé la mise à jour. Il ne s'agissait pas d'un membre de votre équipe effectuant la modification dans l'interface Mindbody, ni de CRMConnect. (Pour information : CRMConnect se contente de lire les données client depuis Mindbody ; la seule information qu'il renvoie est un indicateur de synchronisation interne. Il ne modifie jamais le nom, l'adresse e-mail ou les champs du profil d'un client.)</p>
 <p>Ainsi, lorsque Mindbody a indiqué à la synchronisation que « le client 100004217 est désormais Bronwyn Keane », CRMConnect a correctement mis à jour le contact HubSpot associé. C’est pourquoi la fiche de Megan affiche maintenant les informations de Bronwyn. Tant que cette fiche Mindbody reste inchangée, toute nouvelle synchronisation la rétablira.</p>
 <p>Nous nous attendons à ce que le cas de Tara Whitfield / Erin Doyle (et tous les autres) suive le même schéma : un changement du côté source dans Mindbody.</p>
-<p>Prochaines étapes recommandées :</p>
+<p><strong>Étapes suivantes recommandées</strong></p>
 <ol>
 <li>Identifiez l'application Mindbody responsable du problème. Veuillez vérifier quelles intégrations/applications tierces disposent d'un accès API (écriture) à vos sites Mindbody. Nous recherchons une application qui renomme ou fusionne les dossiers clients. Votre gestionnaire de compte Mindbody peut vous aider à confirmer quelle application a effectué la modification les 3 et 4 juin, si nécessaire.</li>
 <li>Corrigez les données à la source (Mindbody) afin que chaque personne retrouve son propre dossier client distinct avec les informations correctes.</li>
 </ol>
+<p><strong>Résolution</strong></p>
 <p>Point important : aucune reconfiguration ni liaison n’est nécessaire côté CRMConnect ou HubSpot. Vos contacts HubSpot sont déjà associés aux clients Mindbody correspondants. Seules les données de la source Mindbody sont incorrectes. Une fois corrigées dans Mindbody, les informations correctes seront automatiquement transférées vers vos contacts HubSpot existants lors de la prochaine synchronisation.</p>
 <p>Concernant votre suggestion précédente de désactiver la synchronisation : nous l’avons laissée activée, car elle fonctionne correctement et sa mise en pause ne modifierait ni ne corrigerait les données Mindbody sous-jacentes.</p>
 <p>N'hésitez pas à nous contacter pour toute question. Nous sommes là pour vous aider !</p>
 <p>Cordialement,
 
-Support APIANT AI</p>
+Support APIANT AI
+
+Relisez ce document et observez sa démarche. Il commence par la conclusion. Il présente les éléments de preuve de manière méthodique. Il aborde de front la théorie du client au lieu de l'éluder. Il définit clairement le périmètre de l'intégration. Et il refuse la solution de facilité consistant à désactiver la synchronisation, car cela aurait été une erreur. Il ne s'agit pas d'une réponse automatique, mais d'une réponse argumentée, basée sur l'historique réel d'un enregistrement.</p>
 </blockquote>
-<p>Relisez le document et observez sa structure. Il commence par la conclusion. Il examine les preuves de manière méthodique. Il aborde de front la théorie du client au lieu de l'esquiver. Il définit clairement ce que l'intégration implique et ce qu'elle n'implique pas. Et il refuse de simplifier à l'extrême la désactivation de la synchronisation, car cela aurait été une erreur. Il ne s'agit pas d'une réponse toute faite, mais d'une réponse argumentée, fondée sur l'historique précis d'un enregistrement.</p>
 <hr/>
 <h2 id="before-and-after-the-manual-hunt-versus-the-ai-assisted-answer">Avant et après : la recherche manuelle contre la réponse assistée par l'IA</h2>
 <p>Il est utile de se représenter la complexité d'un déploiement comme celui-ci. L'intégration CRMConnect entre Mindbody et HubSpot ne se limite pas à un seul canal. Une marque en pleine croissance possède plusieurs établissements, et un même client peut apparaître sur plusieurs sites. C'est pourquoi la logique intègre une protection entre les sites : les enregistrements d'un contact présent sur deux sites ne doivent jamais être modifiés dans l'un par l'autre. Chaque événement Mindbody (nouveau client, vente, rendez-vous, réservation de cours, abonnement, contrat) est automatiquement répercuté via des webhooks instantanés et des exécutions planifiées, à la fois dans les enregistrements HubSpot standard et dans cinq objets personnalisés dédiés : rendez-vous, réservations de cours, services clients, abonnements et contrats. Nombre de ces écritures sont doubles : un rendez-vous finalisé peut être enregistré simultanément comme une opportunité dans un pipeline personnalisé et comme un enregistrement d'objet personnalisé distinct. En interne, des sous-routines réutilisables effectuent les tâches partagées, et chaque écriture exécute un arbre de décision à plusieurs étapes : vérification de l’ID d’un enregistrement en cache, tentative de mise à jour, et en cas d’erreur spécifique, recherche de l’enregistrement par propriété ou création et association d’un nouvel enregistrement, avec des branches supplémentaires liées à l’erreur exacte renvoyée par HubSpot. Le nombre exact d’automatisations et la profondeur des branches varient selon le déploiement et la configuration du client, mais la structure reste la même : un réseau dense et complexe où un champ d’un enregistrement peut être modifié de plusieurs manières. Trouver le champ qui a changé, dans l’enregistrement concerné, au sein de ce réseau, revient à chercher une aiguille dans une botte de foin.</p>

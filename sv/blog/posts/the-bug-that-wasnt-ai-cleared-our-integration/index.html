@@ -39,7 +39,7 @@
   "description": "A high-value customer was certain our integration had scrambled their data and asked us to switch it off. With AI wired into every layer of the platform, we traced one record's full history and proved the change came from an upstream third-party app, with evidence, in minutes.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif",
   "datePublished": "2026-06-12T21:15:22+00:00",
-  "dateModified": "2026-06-13T18:11:01.536708+00:00",
+  "dateModified": "2026-06-13T18:25:53.285981+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -241,32 +241,36 @@
 <p>Här är det faktiska supportsvaret som skickades tillbaka till kunden. Varje namn, e-postadress, ID och plats har ändrats, men plattformarna är verkliga och innehållet är exakt vad AI:n producerade, detaljer och allt: det exakta klient-ID:t, de exakta datumen, den exakta mekanismen. Det var inte utarbetat av en människa och polerat. Det skrevs av AI:n utifrån de bevis den redan hade samlat in.</p>
 <p><img alt='Det AI-skrivna supportsvaret, anonymiserat, som visas i ett helpdesk-gränssnitt med märket "Skrivet av AI".' src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/05-ai-reply.avif"/></p>
 <blockquote>
-<p><strong>Ämne: Re: Synkroniseringsfel?</strong></p>
+<p><strong>Biljett:</strong> Re: Synkroniseringsfel?</p>
+<p><strong>Kund:</strong> Callum</p>
 <p>Hej Callum,</p>
 <p>Tack för den detaljerade rapporten och exempelposterna, de gjorde det mycket snabbare att identifiera detta. Vi genomförde en fullständig undersökning med hjälp av våra APIANT MCP AI-verktyg, vilket lät oss spåra varje förändring ända ner till den enskilda Mindbody-händelsen. Det var så vi kunde identifiera källan så här exakt och så här snabbt.</p>
+<p><strong>Sammanfattning</strong></p>
 <p>Kortfattat: profilförväxlingarna orsakas inte av CRMConnect-synkroniseringen eller av HubSpot. Synkroniseringen fungerar korrekt. Den återspeglar troget data som ändras vid källan, inuti Mindbody. Posterna ändras i Mindbody av en extern applikation som är ansluten till ditt Mindbody-konto, och synkroniseringen överför sedan dessa ändringar till HubSpot exakt som avsett.</p>
-<p>Vad vi fann (med hjälp av ditt exempel från Megan Hartley / Bronwyn Keane, HubSpot-kontakt 51003412986):</p>
+<p><strong>Resultat</strong> (med ditt exempel från Megan Hartley / Bronwyn Keane, kontakta HubSpot på 51003412986)</p>
 <ul>
 <li>Den HubSpot-kontakten matas av Mindbody Northside klient-ID 100004217.</li>
 <li>Så sent som den 2 juni skickade Mindbody oss klienten som Megan Hartley (megh82@example.com).</li>
 <li>Den 3-4 juni ändrades samma Mindbody-klient till Bronwyn Keane, medan allt annat på den (e-post, telefon, födelsedatum, besökshistorik, behandlingsanteckningar) förblev identiskt. Endast namnet skrevs över.</li>
 <li>Du kan själv bekräfta detta i Mindbody: klientens kontaktlogg visar systemmejladresser adresserade till ”Megan Hartley” (megh82@example.com) den 2 juni och till Bronwyn Keane senast den 10 juni. Samma klientpost, två olika identiteter.</li>
 </ul>
-<p>Hur ändringen gjordes: redigeringen gjordes via Mindbodys offentliga API, vilket innebär att en extern applikation som har API-åtkomst till ditt Mindbody-konto publicerade uppdateringen. Det var inte en medarbetare som redigerade i Mindbody-gränssnittet, och det var inte CRMConnect. (Som referens: CRMConnect läser bara klientdata från Mindbody; det enda som någonsin skrivs tillbaka är en intern synkroniseringsflagga. Den ändrar aldrig en klients namn, e-postadress eller profilfält.)</p>
+<p><strong>Hur ändringen gjordes</strong></p>
+<p>Redigeringen gjordes via Mindbodys offentliga API, vilket innebär att en extern applikation som har API-åtkomst till ditt Mindbody-konto publicerade uppdateringen. Det var inte en medarbetare som redigerade i Mindbody-gränssnittet, och det var inte CRMConnect. (Som referens: CRMConnect läser bara klientdata från Mindbody; det enda den någonsin skriver tillbaka är en intern synkroniseringsflagga. Den ändrar aldrig en klients namn, e-postadress eller profilfält.)</p>
 <p>Så när Mindbody meddelade synkroniseringen att "klient 100004217 nu är Bronwyn Keane", uppdaterade CRMConnect korrekt den länkade HubSpot-kontakten, vilket är anledningen till att Megans post nu visar Bronwyns detaljer. Så länge Mindbody-posten förblir som den är, kommer alla omsynkroniseringar att fortsätta tillämpa den igen.</p>
 <p>Vi förväntar oss att Tara Whitfield / Erin Doyle-fallet (och alla andra) kommer att ha samma mönster: en förändring på källsidan i Mindbody.</p>
-<p>Rekommenderade nästa steg:</p>
+<p><strong>Rekommenderade nästa steg</strong></p>
 <ol>
 <li>Identifiera boven i dramat på Mindbody-sidan. Vänligen granska vilka tredjepartsintegrationer/appar som har API-åtkomst (skrivåtkomst) till era Mindbody-webbplatser. Vi letar efter en applikation som byter namn på eller slår samman klientregister. Er Mindbody-kontoansvariga kan hjälpa till att bekräfta vilken app som gjorde ändringen den 3-4 juni om det behövs.</li>
 <li>Korrigera uppgifterna vid källan (Mindbody) så att varje person har sin egen distinkta klientjournal tillbaka med korrekta uppgifter.</li>
 </ol>
+<p><strong>Upplösning</strong></p>
 <p>Viktigt är att ingenting behöver länkas om eller konfigureras om på CRMConnect- eller HubSpot-sidan. Dina HubSpot-kontakter är redan mappade till rätt Mindbody-klienter. Det enda som är fel är informationen i Mindbody-källan. När du korrigerar det i Mindbody kommer rätt information att flöda direkt till de befintliga HubSpot-kontakterna vid nästa synkronisering, automatiskt.</p>
 <p>Angående ditt tidigare förslag att stänga av synkroniseringen: vi har låtit den vara igång eftersom den fungerar korrekt och att pausa den inte skulle ändra eller åtgärda den underliggande Mindbody-datan.</p>
 <p>Tveka inte att kontakta oss om du har några frågor. Vi finns här för att hjälpa dig!</p>
 <p>Med vänliga hälsningar,
-APIANT AI-support</p>
+APIANT AI-support
+Läs igenom den och lägg märke till vad den gör. Den inleder med slutsatsen. Den går igenom bevisen i ordning. Den tar upp kundens egen teori direkt istället för att undvika den. Den drar en tydlig linje kring vad integrationen gör och inte gör. Och den vägrar att ta det lätta med att stänga av synkroniseringen, eftersom det skulle ha varit fel beslut. Det är inte ett konserverat makro. Det är ett resonerat svar byggt utifrån den faktiska historiken för en post.</p>
 </blockquote>
-<p>Läs igenom det igen och lägg märke till vad det gör. Det inleder med slutsatsen. Det går igenom bevisen i ordning. Det tar upp kundens egen teori direkt istället för att undvika den. Det drar en tydlig linje kring vad integrationen gör och inte gör. Och det vägrar att ta det lätta med att stänga av synkroniseringen, eftersom det skulle ha varit fel beslut. Det där är inte ett förberett makro. Det där är ett resonerat svar byggt utifrån den faktiska historiken för en enda post.</p>
 <hr/>
 <h2 id="before-and-after-the-manual-hunt-versus-the-ai-assisted-answer">Före och efter: den manuella jakten kontra det AI-assisterade svaret</h2>
 <p>Det är värt att föreställa sig storleken på höstacken i en implementering som denna. En CRMConnect-integration mellan Mindbody och HubSpot är inte ett enda rör. Ett växande varumärke driver flera platser, och samma klient kan dyka upp på mer än en plats, så logiken bär en platsskydd: en kontakt som dyker upp på två platser får aldrig få den ena platsens poster ändrade av den andra. Varje Mindbody-händelse (en ny klient, en försäljning, ett möte, en kursbokning, ett medlemskap, ett kontrakt) flödar genom omedelbara webhooks och schemalagda svep till både standard HubSpot-poster och fem dedikerade anpassade objekt: möten, kursbokningar, kundtjänster, medlemskap och kontrakt. Många av dessa skrivningar är dubbla: ett slutfört möte kan landa som en Deal i en anpassad pipeline och som en separat anpassad objektpost samtidigt. Nedanför gör återanvändbara subrutiner det delade arbetet, och varje skrivning kör ett beslutsträd i flera steg: sök efter ett cachat post-ID, försök uppdatera det och vid ett specifikt fel går man vidare till att hitta posten via egenskap eller skapar och associerar en ny istället, med ytterligare grenar kopplade till det exakta felet som HubSpot returnerar. Exakta automatiseringsantal och förgreningsdjup varierar beroende på kundens implementering och konfiguration, men formen är densamma överallt: en tät, mångskiktad webb där ett fält på en post kan beröras från flera håll. Att hitta det enda fältet som ändrades, på den enda posten som var relevant, inuti den webben, är bokstavligen som en nål i en höstack.</p>
