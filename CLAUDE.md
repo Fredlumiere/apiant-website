@@ -90,6 +90,12 @@ privacy.html / cookie-policy.html / tos.html    Legal pages
 
 `connect/servletTemplateConnect.html` and `connections/servletTemplateConnections.html` are server-side templates. The APIANT backend replaces placeholders like `{TEMPLATE_FROM_APP}`, `{TEMPLATE_TO_APP}`, `{TEMPLATE_FROM_ICON}`, etc. to generate unique SEO pages for every app combination. Do not change the `{TEMPLATE_*}` placeholder syntax.
 
+## Blog System (generated from Supabase, do NOT hand-edit)
+
+Everything under `blog/` is a build artifact: `blog/index.html`, `blog/posts/<slug>/index.html`, `blog/category/<slug>/index.html`, `blog/feed.xml`, `blog/search-index.json`, and all `<lang>/blog/...` copies. `scripts/build_blog.py` regenerates them from the Supabase `blog_posts` table (the post body is the `body_md` Markdown column). The deploy workflow runs `build_blog.py --all` on every push to `main`, so any manual edit to a generated blog file is overwritten on the next deploy.
+
+To change a post, edit `body_md` (or other `blog_posts` fields) in Supabase, then regenerate via `gh workflow run build-blog.yml -f post_id=<uuid>` (or flip the post `status` to `publishing`). The in-article TOC and heading anchors are auto-generated from `##`/`###` headings; pipe tables are supported. Full details: `docs/blog-content-editing.md`.
+
 ## Common Page Patterns
 
 All main pages share:
