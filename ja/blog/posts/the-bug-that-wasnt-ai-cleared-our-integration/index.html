@@ -39,7 +39,7 @@
   "description": "A high-value customer was certain our integration had scrambled their data and asked us to switch it off. With AI wired into every layer of the platform, we traced one record's full history and proved the change came from an upstream third-party app, with evidence, in minutes.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif",
   "datePublished": "2026-06-12T21:15:22+00:00",
-  "dateModified": "2026-06-12T21:49:08.304763+00:00",
+  "dateModified": "2026-06-13T13:44:43.633803+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -248,9 +248,9 @@
 <p>私たちが発見したこと（メーガン・ハートリー／ブロンウィン・キーンの例、HubSpot連絡先51003412986を使用）：</p>
 <ul>
 <li>そのHubSpotの連絡先情報は、Mindbody NorthsideのクライアントID 100004217によって提供されています。</li>
-<li>つい最近の6月2日時点では、Mindbodyは私たちにそのクライアントをMegan Hartley（megh82@gmail.com）として送っていました。</li>
+<li>つい最近の6月2日時点では、MindbodyはMegan Hartley（megh82@example.com）という名前でそのクライアントを私たちに紹介していました。</li>
 <li>6月3日～4日、同じMindbodyの顧客記録がBronwyn Keaneに変更されたが、それ以外の情報（メールアドレス、電話番号、生年月日、来院履歴、治療記録）はすべて同じままだった。名前だけが上書きされた。</li>
-<li>Mindbodyでご自身で確認できます。クライアントの連絡ログには、6月2日に「Megan Hartley」（megh82@gmail.com）宛てのシステムメールと、6月10日までにBronwyn Keane宛てのシステムメールが記録されています。同じクライアントレコードなのに、2つの異なるIDが使用されています。</li>
+<li>Mindbodyでご自身で確認できます。クライアントの連絡ログには、6月2日に「Megan Hartley」（megh82@example.com）宛てのシステムメールと、6月10日までにBronwyn Keane宛てのシステムメールが記録されています。同じクライアントレコードなのに、2つの異なるIDが使用されています。</li>
 </ul>
 <p>変更方法：編集はMindbodyのパブリックAPI経由で行われました。つまり、MindbodyアカウントへのAPIアクセス権を持つ外部アプリケーションが更新をプッシュしたということです。Mindbodyのインターフェースでスタッフが編集したわけでも、CRMConnectが行ったわけでもありません。（参考：CRMConnectはMindbodyからクライアントデータを読み取るだけで、書き戻すのは内部同期フラグのみです。クライアントの名前、メールアドレス、プロフィールフィールドを変更することはありません。）</p>
 <p>Mindbodyが同期処理に「クライアント100004217は現在Bronwyn Keaneです」と通知すると、CRMConnectはリンクされたHubSpotの連絡先を正しく更新しました。そのため、MeganのレコードにはBronwynの詳細が表示されるようになりました。Mindbodyのレコードが現状のままであれば、再同期が行われるたびにそのレコードが再適用されます。</p>
