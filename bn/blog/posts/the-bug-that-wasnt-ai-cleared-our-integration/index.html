@@ -39,7 +39,7 @@
   "description": "A high-value customer was certain our integration had scrambled their data and asked us to switch it off. With AI wired into every layer of the platform, we traced one record's full history and proved the change came from an upstream third-party app, with evidence, in minutes.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif",
   "datePublished": "2026-06-12T21:15:22+00:00",
-  "dateModified": "2026-06-13T13:44:43.633803+00:00",
+  "dateModified": "2026-06-13T18:11:01.536708+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -201,7 +201,7 @@
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/bn/blog/?author=fred">Fred Lumiere</a></span>
 <span>১২ জুন, ২০২৬</span>
-<span>পড়তে ১৪ মিনিট</span>
+<span>পড়তে ১৭ মিনিট</span>
 </div>
 <div class="blog-post-tags"><a class="blog-tag" href="/bn/blog/?tag=ai-copilot">#এআই কো-পাইলট</a><a class="blog-tag" href="/bn/blog/?tag=for-saas">#সাস-এর জন্য</a><a class="blog-tag" href="/bn/blog/?tag=bi-directional-sync">#দ্বিমুখী সিঙ্ক</a></div>
 </header>
@@ -268,6 +268,61 @@
 </blockquote>
 <p>এটি আবার পড়ুন এবং লক্ষ্য করুন এটি কী করছে। এটি উপসংহার দিয়েই শুরু করে। এটি ক্রমানুসারে প্রমাণগুলো তুলে ধরে। এটি গ্রাহকের নিজস্ব তত্ত্বকে এড়িয়ে না গিয়ে সরাসরি তার মোকাবিলা করে। ইন্টিগ্রেশনটি কী কী বিষয় অন্তর্ভুক্ত করে এবং কী কী করে না, তার একটি সুস্পষ্ট সীমারেখা টেনে দেয়। এবং এটি সিঙ্ক বন্ধ করে দেওয়ার সহজ পথটি বেছে নিতে অস্বীকার করে, কারণ সেটি একটি ভুল সিদ্ধান্ত হতো। এটি কোনো পূর্বনির্ধারিত ম্যাক্রো নয়। এটি একটি রেকর্ডের প্রকৃত ইতিহাস থেকে তৈরি একটি যুক্তিযুক্ত উত্তর।</p>
 <hr/>
+<h2 id="before-and-after-the-manual-hunt-versus-the-ai-assisted-answer">আগে ও পরে: হাতে খোঁজাখুঁজি বনাম এআই-এর সাহায্যে উত্তর</h2>
+<p>এই ধরনের একটি ডেপ্লয়মেন্টে কাজের পরিধি কতটা বিশাল, তা কল্পনা করে নেওয়া দরকার। Mindbody এবং HubSpot-এর মধ্যে একটি CRMConnect ইন্টিগ্রেশন কোনো একক পাইপলাইন নয়। একটি ক্রমবর্ধমান ব্র্যান্ড একাধিক স্থানে তাদের কার্যক্রম পরিচালনা করে, এবং একই ক্লায়েন্ট একাধিক সাইটে উপস্থিত থাকতে পারে, তাই এই লজিকে একটি সাইট গার্ড থাকে: যে কন্ট্যাক্ট দুটি স্থানে উপস্থিত থাকে, তার রেকর্ড যেন একটি স্থানের রেকর্ড দ্বারা অন্যটি কখনো পরিবর্তিত না হয়। প্রতিটি Mindbody ইভেন্ট (একজন নতুন ক্লায়েন্ট, একটি সেল, একটি অ্যাপয়েন্টমেন্ট, একটি ক্লাস বুকিং, একটি মেম্বারশিপ, একটি কন্ট্রাক্ট) ইনস্ট্যান্ট ওয়েবহুক এবং শিডিউলড সুইপের মাধ্যমে স্ট্যান্ডার্ড HubSpot রেকর্ড এবং পাঁচটি ডেডিকেটেড কাস্টম অবজেক্টে প্রবাহিত হয়: অ্যাপয়েন্টমেন্ট, ক্লাস বুকিং, ক্লায়েন্ট সার্ভিস, মেম্বারশিপ এবং কন্ট্রাক্ট। এই রাইটগুলোর মধ্যে অনেকগুলোই দ্বৈত: একটি সম্পন্ন হওয়া অ্যাপয়েন্টমেন্ট একই সাথে একটি কাস্টম পাইপলাইনে 'ডিল' হিসেবে এবং একটি পৃথক কাস্টম-অবজেক্ট রেকর্ড হিসেবে যুক্ত হতে পারে। এর গভীরে, পুনঃব্যবহারযোগ্য সাবরুটিনগুলো সম্মিলিত কাজটি করে, এবং প্রতিটি রাইট অপারেশন একটি বহু-ধাপের ডিসিশন ট্রি চালায়: এটি একটি ক্যাশ করা রেকর্ড আইডি পরীক্ষা করে, সেটিকে আপডেট করার চেষ্টা করে, এবং একটি নির্দিষ্ট ত্রুটির ক্ষেত্রে প্রপার্টি দ্বারা রেকর্ডটি খোঁজা বা তার পরিবর্তে একটি নতুন রেকর্ড তৈরি ও সংযুক্ত করার দিকে অগ্রসর হয়, যেখানে হাবস্পট দ্বারা ফেরত আসা সুনির্দিষ্ট ত্রুটির উপর ভিত্তি করে পরবর্তী শাখাগুলো তৈরি হয়। অটোমেশনের সঠিক সংখ্যা এবং শাখার গভীরতা গ্রাহকের ডেপ্লয়মেন্ট ও কনফিগারেশন অনুযায়ী পরিবর্তিত হয়, কিন্তু এর গঠন সর্বত্র একই: একটি ঘন, বহু-স্তরযুক্ত জাল, যেখানে একটি রেকর্ডের একটি ফিল্ডকে বিভিন্ন দিক থেকে প্রভাবিত করা যায়। সেই জালের মধ্যে, গুরুত্বপূর্ণ রেকর্ডের পরিবর্তিত ফিল্ডটি খুঁজে বের করা আক্ষরিক অর্থেই খড়ের গাদায় সূঁচ খোঁজার মতো।</p>
+<p>দুটি ওয়ার্কফ্লোকে পাশাপাশি রাখলে সুবিধা হয়, কারণ পার্থক্যটা সামান্য নয়।</p>
+<p><strong>ম্যানুয়াল পদ্ধতি।</strong> এরকম একটি টিকেট এলে সময় গণনা শুরু হয়ে যায়। একজন সাপোর্ট ইঞ্জিনিয়ার টিকেটটি বাছাই করেন, কিন্তু একা ইন্টিগ্রেশনটির সমাধান করতে না পেরে একজন ইন্টিগ্রেশন বিশেষজ্ঞের কাছে পাঠিয়ে দেন। সেই বিশেষজ্ঞ একেবারে শূন্য থেকে শুরু করেন: ইন্টিগ্রেশনটির কাজ কী, তা নতুন করে শেখেন, পুরোনো টিকেটগুলো পড়েন, হাতে করে লগ সংগ্রহ করেন এবং বিভিন্ন তত্ত্ব তৈরি করেন। যেহেতু গ্রাহক সিঙ্ককে দোষারোপ করেছেন, তাই সিঙ্কটিকে ভেঙে বিশ্লেষণ করার একটি প্রবণতা তৈরি হয়। সাহায্য করার জন্য একজন ডেভেলপারকে রোডম্যাপ থেকে সরিয়ে আনা হয়। প্রতিটি চক্র (লগ সংগ্রহ করা, তত্ত্ব তৈরি করা, পরীক্ষা করা, বাতিল করা, পুনরাবৃত্তি) ধীর এবং হাতে করতে হয়, এবং এটিকে ধরে রাখার জন্য কোনো একক রেকর্ডের ইতিহাস থাকে না। এই পোস্টে আগে যেমন বর্ণনা করা হয়েছে, এভাবেই একটি, কখনও কখনও দুটি দিন উধাও হয়ে যায়, এবং সবচেয়ে খারাপ পরিস্থিতি হলো এমন কিছু "ঠিক" করা যা কখনোই ভাঙা ছিল না।</p>
+<p><strong>এআই-এর সহায়তায়।</strong> এআই একবারে নির্দিষ্ট রেকর্ডের সম্পূর্ণ ফিল্ড-লেভেল ইতিহাস সংগ্রহ করে, পরিবর্তিত হওয়া নির্দিষ্ট ফিল্ডটি চিহ্নিত করে, যে প্রক্রিয়ার মাধ্যমে পরিবর্তনটি আনা হয়েছে তা শনাক্ত করে এবং প্রমাণসহ ইন্টিগ্রেশনের অনুমোদন দেয়। এতে কোনো এস্কেলেশন চেইন নেই, রোডম্যাপে কোনো বাধা নেই, বা অনুমান ও যাচাইয়ের কোনো চক্র নেই। এটি সেই একই সিদ্ধান্তে পৌঁছায় যা একজন সিনিয়র বিশেষজ্ঞ পৌঁছাতে পারতেন, তবে পার্থক্য হলো এটি কয়েক মিনিটের মধ্যেই এবং প্রমাণসহ সেই সিদ্ধান্তে পৌঁছায়।</p>
+<table>
+<thead>
+<tr>
+<th>কী পরিবর্তন হয়</th>
+<th>পূর্বে: ম্যানুয়াল তদন্ত</th>
+<th>পরে: এআই-সহায়তায়</th>
+<th>প্রভাব</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>একটি প্রমাণিত উত্তরের সময় এসেছে</strong></td>
+<td>কয়েক ঘন্টা, প্রায়শই এক বা দুই দিন (উপরের পরিস্থিতি অনুযায়ী)</td>
+<td>মিনিট</td>
+<td>ঘণ্টা মিনিটে রূপান্তরিত (আনুমানিক)</td>
+</tr>
+<tr>
+<td><strong>লোকজনকে টেনে আনা হলো</strong></td>
+<td>সাপোর্ট ইঞ্জিনিয়ার, ইন্টিগ্রেশন স্পেশালিস্ট, এবং প্রায়শই রোডম্যাপ থেকে বাদ পড়া একজন ডেভেলপার।</td>
+<td>একজন ব্যক্তি দ্বারা পর্যালোচিত একটি এআই পাস</td>
+<td>পণ্য সংক্রান্ত কাজের জন্য সিনিয়র ইঞ্জিনিয়ারদের সময় মুক্ত হলো</td>
+</tr>
+<tr>
+<td><strong>প্রতি টিকিটের খরচ</strong></td>
+<td>ফরেনসিক কাজে বেশ কয়েক ঘন্টা সিনিয়র আওয়ার</td>
+<td>তার একটি ভগ্নাংশ</td>
+<td>প্রতি ঘটনায় কম সহায়তা খরচ (গুণগত অনুমান)</td>
+</tr>
+<tr>
+<td><strong>উপসংহারে কীভাবে পৌঁছানো হয়</strong></td>
+<td>তত্ত্বগুলো হাতে-কলমে, অনুমান ও যাচাইয়ের মাধ্যমে পরীক্ষা করা হয়েছে, পড়ার মতো কোনো পূর্ণাঙ্গ ইতিহাস নেই।</td>
+<td>মাঠপর্যায়ের ইতিহাস সরাসরি পড়ুন, প্রমাণই প্রথম।</td>
+<td>উচ্চতর আত্মবিশ্বাস, কম ভুল পদক্ষেপ</td>
+</tr>
+<tr>
+<td><strong>একটি সুস্থ সিস্টেমের জন্য ঝুঁকি</strong></td>
+<td>একটি নির্দোষ একীকরণকে থামানো বা পুনর্গঠনের বাস্তব সম্ভাবনা</td>
+<td>মূল কারণ সঠিকভাবে চিহ্নিত করা হয়েছে (উৎস পর্যায়ে), ইন্টিগ্রেশন চালু রাখা হয়েছে।</td>
+<td>অপ্রয়োজনীয় পুনঃকাজ বা কর্মবিরতি নেই</td>
+</tr>
+<tr>
+<td><strong>গ্রাহক অভিজ্ঞতা</strong></td>
+<td>উদ্বেগজনক অপেক্ষা, “এটি বন্ধ করে দিন” অনুরোধ, সম্ভাব্য ভুল সমাধান</td>
+<td>মিনিটের মধ্যেই প্রমাণ-সমর্থিত উত্তর, ইন্টিগ্রেশন সচল থাকে।</td>
+<td>আস্থা অটুট, গ্রাহক হারানোর ঝুঁকি হ্রাস পেয়েছে</td>
+</tr>
+</tbody>
+</table>
+<p><em>সংখ্যাগুলো সম্পর্কে একটি কথা: উপরের সময় এবং খরচের পরিসংখ্যানগুলো আনুমানিক, এগুলো পরিমাপকৃত মানদণ্ড নয়। এগুলো এই পোস্টে বর্ণিত বহু-ধাপের ম্যানুয়াল এস্কেলেশন পদ্ধতির (যা সম্পন্ন হতে এক বা দুই দিন সময় লাগতে পারে) সাথে এই একটিমাত্র টিকেটে এআই-এর নেওয়া কয়েক মিনিটের তুলনা করে। প্রকৃত পার্থক্য টিকেট, টিম এবং স্ট্যাক অনুযায়ী ভিন্ন হবে।</em></p>
+<hr/>
 <h2 id="the-shift-hiding-inside-this-story">এই গল্পের ভেতরে লুকিয়ে থাকা পরিবর্তন</h2>
 <p>একক দৃষ্টিকোণ থেকে সরে এসে যা ঘটেছে তার সামগ্রিক চিত্রটি দেখুন।</p>
 <p>ইন্টিগ্রেশন সাপোর্টের সবচেয়ে কঠিন অংশটি খুব কমই কোনো বাগ ঠিক করা। আসল কঠিন কাজটা হলো, সমস্যাটি আসলে কার দোষে হচ্ছে তা খুঁজে বের করা। যখন ডেটা ভুল মনে হয়, তখন ইন্টিগ্রেশনকে দোষারোপ করা সবচেয়ে সহজ, কিন্তু দোষমুক্ত করা সবচেয়ে কঠিন। "ইন্টিগ্রেশন নির্দোষ, ডেটা আপস্ট্রিমে অন্য কিছু দ্বারা পরিবর্তিত হয়েছে"—এটা প্রমাণ করা ঠিক সেই ধরনের প্রমাণ-নির্ভর গোয়েন্দা কাজ, যা সিনিয়র ইঞ্জিনিয়ারদের ঘণ্টার পর ঘণ্টা সময় নষ্ট করে, যদি আদৌ কেউ এই কাজটি করার প্রয়োজন মনে করে। বেশিরভাগ সময়ই, ইন্টিগ্রেশনকে দোষারোপ করা হয়, সেটিকে থামিয়ে দেওয়া হয় বা নতুন করে তৈরি করা হয়, এবং আসল কারণটি নীরবে ক্ষতি করে যেতে থাকে।</p>
@@ -302,7 +357,7 @@
 <p><em>এই কেস স্টাডিটি বেনামী করা হয়েছে: প্রতিটি ব্যক্তি, ইমেল ঠিকানা, আইডি এবং অবস্থান পরিবর্তন করা হয়েছে। প্ল্যাটফর্মগুলো বাস্তব। সাধারণ পাঠকদের জন্য প্রযুক্তিগত বিবরণ সরলীকরণ করা হয়েছে। এই নিবন্ধটি এবং এর সাথে সংযুক্ত সাপোর্ট রিপ্লাই—উভয়ই এআই দ্বারা লেখা হয়েছে।</em></p>
 <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">সম্পূর্ণ এপিআই অ্যাপস ক্যাটালগ ব্রাউজ করুন</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">মাইন্ডবডি সলিউশনস</span><span class="blog-apps-cta-desc">ফিটনেস এবং সুস্থতা সমন্বয়</span><span class="blog-apps-cta-arrow">অন্বেষণ করুন →</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">ক্লিনিকো সলিউশনস</span><span class="blog-apps-cta-desc">স্বাস্থ্যসেবা এবং সহযোগী স্বাস্থ্য একীকরণ</span><span class="blog-apps-cta-arrow">অন্বেষণ করুন →</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">ডোনারপারফেক্ট সলিউশনস</span><span class="blog-apps-cta-desc">অলাভজনক এবং তহবিল সংগ্রহের সমন্বয়</span><span class="blog-apps-cta-arrow">অন্বেষণ করুন →</span></a></div></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">এই নিবন্ধে</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-9-am-fire-drill-that-lasted-five-minutes">সকাল ৯টার অগ্নি নির্বাপণ মহড়াটি পাঁচ মিনিট স্থায়ী হয়েছিল।</a></li><li class="lvl-2"><a href="#the-problem-explained-without-jargon">সমস্যাটি, পরিভাষা ছাড়া ব্যাখ্যা করা হলো</a></li><li class="lvl-2"><a href="#how-the-ai-actually-solved-it">এআই আসলে কীভাবে এটি সমাধান করেছে</a></li><li class="lvl-2"><a href="#the-reply-we-sent-written-by-ai">আমরা যে উত্তরটি পাঠিয়েছিলাম, সেটি এআই দ্বারা লিখিত।</a></li><li class="lvl-2"><a href="#the-shift-hiding-inside-this-story">এই গল্পের ভেতরে লুকিয়ে থাকা পরিবর্তন</a></li><li class="lvl-2"><a href="#why-you-cannot-vibe-code-your-way-to-this">কেন আপনি ভাইব-কোড ব্যবহার করে এটি অর্জন করতে পারবেন না</a></li><li class="lvl-2"><a href="#the-meta-point-ai-did-the-whole-job">মূল কথা হলো: পুরো কাজটা এআই-ই করেছে।</a></li><li class="lvl-2"><a href="#what-this-means-if-you-sell-software">আপনি যদি সফটওয়্যার বিক্রি করেন তবে এর মানে কী?</a></li><li class="lvl-2"><a href="#see-it-for-yourself">নিজেই দেখে নিন</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">এই নিবন্ধে</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-9-am-fire-drill-that-lasted-five-minutes">সকাল ৯টার অগ্নি নির্বাপণ মহড়াটি পাঁচ মিনিট স্থায়ী হয়েছিল।</a></li><li class="lvl-2"><a href="#the-problem-explained-without-jargon">সমস্যাটি, পরিভাষা ছাড়া ব্যাখ্যা করা হলো</a></li><li class="lvl-2"><a href="#how-the-ai-actually-solved-it">এআই আসলে কীভাবে এটি সমাধান করেছে</a></li><li class="lvl-2"><a href="#the-reply-we-sent-written-by-ai">আমরা যে উত্তরটি পাঠিয়েছিলাম, সেটি এআই দ্বারা লিখিত।</a></li><li class="lvl-2"><a href="#before-and-after-the-manual-hunt-versus-the-ai-assisted-answer">আগে ও পরে: হাতে খোঁজাখুঁজি বনাম এআই-এর সাহায্যে উত্তর</a></li><li class="lvl-2"><a href="#the-shift-hiding-inside-this-story">এই গল্পের ভেতরে লুকিয়ে থাকা পরিবর্তন</a></li><li class="lvl-2"><a href="#why-you-cannot-vibe-code-your-way-to-this">কেন আপনি ভাইব-কোড ব্যবহার করে এটি অর্জন করতে পারবেন না</a></li><li class="lvl-2"><a href="#the-meta-point-ai-did-the-whole-job">মূল কথা হলো: পুরো কাজটা এআই-ই করেছে।</a></li><li class="lvl-2"><a href="#what-this-means-if-you-sell-software">আপনি যদি সফটওয়্যার বিক্রি করেন তবে এর মানে কী?</a></li><li class="lvl-2"><a href="#see-it-for-yourself">নিজেই দেখে নিন</a></li></ul></aside>
 </div>
 <section class="blog-related"><h2 class="blog-related-heading">পড়তে থাকুন</h2><div class="blog-grid"><a class="blog-card" data-tags="mindbody hubspot zoho-crm crmconnect" href="/bn/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"><div class="blog-card-image"><img alt="স্প্লিট-ফ্রেম চিত্র: বাম দিকে একটি সাপোর্ট টিকেট এবং একটি গিটহাব ইস্যু কার্ড, ডান দিকে একটি সবুজ রেখা দ্বারা যুক্ত সংযুক্ত অটোমেশন নোডের একটি জাল।" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif?v=3"/></div><div class="blog-card-body"><div class="blog-category-chip">নির্মাতাদের জন্য</div><h3 class="blog-card-title">ক্লড কোডের সাথে এআই-ফার্স্ট ইন্টিগ্রেশন ইঞ্জিনিয়ারিং: একটি বাস্তব ডিবাগ সেশন</h3><p class="blog-card-excerpt">আসল প্রম্পটগুলো সহ একটি বাস্তব APIANT ডিবাগিং সেশন। দেখুন কীভাবে একটি AI একটি সিibling ইন্টিগ্রেশন এবং চার বছরের ভার্সন হিস্ট্রি পড়ে, এবং দেখুন কীভাবে একজন নির্মাতার সহজাত ধারণা এমন একটি রিগ্রেশন থামিয়ে দেয় যা কোডবেসে কখনও রেকর্ড করা হয়নি।</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>২০ মে, ২০২৬</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/bn/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="CSV থেকে স্বয়ংক্রিয়ভাবে HubSpot প্রোপার্টি তৈরি করুন" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">নির্মাতাদের জন্য</div><h3 class="blog-card-title">ক্লড কোড ব্যবহার করে CSV ফাইল থেকে স্বয়ংক্রিয়ভাবে HubSpot প্রোপার্টি তৈরি করুন</h3><p class="blog-card-excerpt">APIANT-এর উপর নির্মিত এই বিনামূল্যের ইম্পোর্ট অটোমেশন ব্যবহার করে কীভাবে স্বয়ংক্রিয়ভাবে HubSpot প্রপার্টি (কন্টাক্ট, ডিল বা কোম্পানি) তৈরি করবেন।</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>১৮ সেপ্টেম্বর, ২০২৪</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/bn/blog/posts/create-a-custom-hubspot-crm-card-without-coding-with-apiant/"><div class="blog-card-image"><img alt="APIANT ব্যবহার করে কোডিং ছাড়াই একটি কাস্টম HubSpot CRM কার্ড তৈরি করুন" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png?width=1600&amp;name=Fred%20Lumiere%202024-03-17%20at%202.58.23%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">নির্মাতাদের জন্য</div><h3 class="blog-card-title">ক্লড কোড ব্যবহার করে কোনো কোড ছাড়াই একটি কাস্টম হাবস্পট সিআরএম কার্ড তৈরি করুন</h3><p class="blog-card-excerpt">APIANT ব্যবহার করে কোনো কোডিং ছাড়াই কীভাবে সহজে একটি কাস্টমাইজড HubSpot CRM কার্ড তৈরি করা যায় তা শিখুন।</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>১৭ মার্চ, ২০২৪</span></div></div></a></div></section>
 </div>
