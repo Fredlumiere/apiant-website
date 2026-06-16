@@ -306,7 +306,17 @@
   .blog-grid { grid-template-columns: 1fr; gap: 20px; }
 }
 
+/* Full-page particle background: fixed canvas above the page background,
+   behind all content, non-interactive. See js/blog-particles.js. */
+#blog-particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .blog-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--blog-card-bg);
@@ -315,12 +325,17 @@
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  transition: border-color 180ms ease, transform 180ms ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: border-color 180ms ease, transform 220ms ease, box-shadow 220ms ease;
 }
 
+/* Recreates the old blog's "3D box" card hover: lift + scale + a large
+   soft shadow (dark-mode tuned). */
 .blog-card:hover {
   border-color: var(--blog-accent-hover);
-  transform: translateY(-2px);
+  transform: scale(1.04);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  z-index: 2;
 }
 
 .blog-card-image {
