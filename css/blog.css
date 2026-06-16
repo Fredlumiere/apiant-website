@@ -1097,3 +1097,155 @@
     font-size: 22px;
   }
 }
+
+/* ============================================================
+   Custom video player (js/blog-video.js)
+   ============================================================ */
+.apiant-video {
+  border: 1px solid var(--blog-accent-soft);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+.apiant-video__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: radial-gradient(120% 120% at 50% 0%, #0e1a14 0%, #070b09 60%, #05060a 100%);
+  overflow: hidden;
+  display: block;
+}
+.apiant-video__fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+/* Static hi-tech grid fallback (always present, sits under the canvas;
+   the only visible animated layer when reduced-motion disables the canvas). */
+.apiant-video__poster::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(26, 183, 89, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 183, 89, 0.07) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(circle at 50% 45%, #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 0%, transparent 75%);
+}
+.apiant-video__scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(26, 183, 89, 0.12), transparent 55%),
+              linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 45%);
+}
+.apiant-video__title {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  right: 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(247, 248, 248, 0.92);
+  text-align: left;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+.apiant-video__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.apiant-video__play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid rgba(26, 183, 89, 0.6);
+  background: rgba(26, 183, 89, 0.14);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 0 0 0 rgba(26, 183, 89, 0.45);
+  transition: transform 200ms ease, background 200ms ease, box-shadow 200ms ease;
+  animation: apiant-video-pulse 2.4s ease-out infinite;
+}
+.apiant-video__play svg {
+  width: 26px;
+  height: 26px;
+  margin-left: 4px;
+  fill: #f7f8f8;
+}
+.apiant-video__poster:hover .apiant-video__play {
+  transform: scale(1.1);
+  background: rgba(26, 183, 89, 0.28);
+  animation: none;
+  box-shadow: 0 0 24px rgba(26, 183, 89, 0.5);
+}
+@keyframes apiant-video-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(26, 183, 89, 0.45); }
+  70% { box-shadow: 0 0 0 18px rgba(26, 183, 89, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(26, 183, 89, 0); }
+}
+.apiant-video__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.apiant-video__brand { color: var(--blog-accent); font-weight: 700; }
+.apiant-video__cta { color: rgba(247, 248, 248, 0.55); }
+
+@media (prefers-reduced-motion: reduce) {
+  .apiant-video__play { animation: none; }
+}
+
+/* Fullscreen playback overlay */
+.apiant-video-fs {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.apiant-video-fs iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.apiant-video-fs__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  font-size: 22px;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.apiant-video-fs__close:hover { background: rgba(26, 183, 89, 0.5); }
