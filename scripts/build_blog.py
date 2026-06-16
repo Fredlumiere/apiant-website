@@ -629,14 +629,39 @@ def pick_related(post: dict, all_live: list[dict], limit: int = 3) -> list[dict]
     return (same_cat + others)[:limit]
 
 
+def plain_text_from_md(body_md: str) -> str:
+    """Strip markdown/HTML to plain words for the search index."""
+    t = body_md or ""
+    t = re.sub(r"```.*?```", " ", t, flags=re.S)        # fenced code
+    t = re.sub(r"`[^`]*`", " ", t)                       # inline code
+    t = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", t)          # images
+    t = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", t)       # links -> text
+    t = re.sub(r"<[^>]+>", " ", t)                        # html tags
+    t = re.sub(r"[#>*_~|`=+-]", " ", t)                   # md punctuation
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
+
+
 def write_search_index(posts: list[dict]) -> Path:
     """Emit a flat JSON index used by client-side Fuse.js search on the hub.
-    Keep the payload lean: title, excerpt, category, tag slugs, hero, URL.
+    Includes a `search_text` blob (title + de-hyphenated slug + subtitle +
+    tags + excerpt + capped body) so queries match the article's actual
+    wording and slug, not just the SEO title.
     """
     index = []
     for p in posts:
         cat = p.get("category") or {}
         tags = [t["blog_tags"] for t in (p.get("tags") or []) if t.get("blog_tags")]
+        slug_words = (p["slug"] or "").replace("-", " ")
+        body_plain = plain_text_from_md(p.get("body_md"))[:600]
+        search_text = " ".join(filter(None, [
+            p.get("title") or "",
+            slug_words,
+            p.get("subtitle") or "",
+            " ".join(t.get("name", "") for t in tags),
+            p.get("excerpt") or "",
+            body_plain,
+        ]))
         index.append({
             "slug": p["slug"],
             "title": p["title"],
@@ -645,6 +670,7 @@ def write_search_index(posts: list[dict]) -> Path:
             "category_name": cat.get("name", ""),
             "tags": [t["slug"] for t in tags],
             "tag_names": [t["name"] for t in tags],
+            "search_text": search_text,
             "hero_image_url": p.get("hero_image_url") or "",
             "url": f"/blog/posts/{p['slug']}/",
             "published_at": p.get("published_at"),

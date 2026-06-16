@@ -162,13 +162,15 @@
         index = data;
         fuse = new Fuse(data, {
           keys: [
-            { name: 'title', weight: 0.5 },
-            { name: 'excerpt', weight: 0.25 },
-            { name: 'category_name', weight: 0.1 },
-            { name: 'tag_names', weight: 0.15 },
+            { name: 'title', weight: 0.4 },
+            { name: 'search_text', weight: 0.3 },
+            { name: 'excerpt', weight: 0.15 },
+            { name: 'tag_names', weight: 0.1 },
+            { name: 'category_name', weight: 0.05 },
           ],
-          threshold: 0.35,
+          threshold: 0.4,
           ignoreLocation: true,
+          includeScore: true,
           minMatchCharLength: 2,
         });
         loaded = true;
@@ -290,6 +292,43 @@
     paginate();
   }
 
+  // Common filler words that shouldn't drive matching for long, natural
+  // language queries like "how to copy and paste more than one action".
+  var STOP = {
+    'how': 1, 'to': 1, 'the': 1, 'a': 1, 'an': 1, 'and': 1, 'or': 1, 'of': 1,
+    'in': 1, 'on': 1, 'for': 1, 'with': 1, 'is': 1, 'are': 1, 'be': 1, 'my': 1,
+    'your': 1, 'can': 1, 'do': 1, 'does': 1, 'it': 1, 'this': 1, 'that': 1,
+    'more': 1, 'than': 1, 'one': 1, 'you': 1, 'i': 1, 'we': 1, 'at': 1, 'by': 1,
+  };
+
+  // Multi-word queries: search each meaningful term, then rank documents by
+  // how many distinct terms they match (coverage), tie-broken by Fuse score.
+  // This finds posts even when the words are spread across title/slug/body.
+  function runSearch(q) {
+    var terms = q.toLowerCase().split(/[^a-z0-9]+/).filter(function (t) {
+      return t.length >= 2 && !STOP[t];
+    });
+    if (terms.length <= 1) {
+      return fuse.search(q).map(function (r) { return r.item; }).slice(0, 50);
+    }
+    var agg = {};
+    terms.forEach(function (t) {
+      fuse.search(t).forEach(function (r) {
+        var key = r.item.url;
+        if (!agg[key]) agg[key] = { item: r.item, matched: {}, score: 0 };
+        if (!agg[key].matched[t]) { agg[key].matched[t] = 1; }
+        agg[key].score += (r.score == null ? 0.5 : r.score);
+      });
+    });
+    return Object.keys(agg).map(function (k) {
+      var a = agg[k];
+      a.count = Object.keys(a.matched).length;
+      return a;
+    }).sort(function (a, b) {
+      return b.count - a.count || a.score - b.score;
+    }).map(function (a) { return a.item; }).slice(0, 50);
+  }
+
   function onInput(e) {
     var q = (e.target.value || '').trim();
     if (q.length < 2) {
@@ -298,8 +337,7 @@
     }
     loadIndex().then(function () {
       if (!fuse) return;
-      var results = fuse.search(q).slice(0, 50);
-      renderResults(results);
+      renderResults(runSearch(q));
     });
   }
 
