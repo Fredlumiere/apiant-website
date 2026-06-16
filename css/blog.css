@@ -218,6 +218,7 @@
 
 /* ----- Featured post ----- */
 .blog-featured {
+  position: relative;
   display: grid;
   grid-template-columns: 7fr 5fr;
   gap: 32px;
@@ -260,6 +261,23 @@
 }
 
 .blog-featured-title a:hover { color: var(--blog-accent); }
+
+/* Make the whole featured block clickable via the title link (stretched
+   link). The section is position:relative; this overlay covers it so a
+   click anywhere navigates, with no nested anchors. */
+.blog-featured-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.blog-featured-image img {
+  transition: transform 220ms ease;
+}
+.blog-featured:hover .blog-featured-image img {
+  transform: scale(1.02);
+}
+.blog-featured:hover .blog-featured-title { color: var(--blog-accent); }
 
 .blog-featured-excerpt {
   font-size: 16px;
