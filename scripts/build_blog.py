@@ -415,6 +415,87 @@ def render_shopconnect_cta() -> str:
     )
 
 
+VERTICAL_NAMES = {"mindbody": "Mindbody", "cliniko": "Cliniko", "donorperfect": "DonorPerfect"}
+PARTNER_NAMES = {
+    "hubspot": "HubSpot", "activecampaign": "ActiveCampaign", "keap": "Keap",
+    "klaviyo": "Klaviyo", "highlevel": "HighLevel", "zoho-crm": "Zoho CRM",
+    "shopify": "Shopify", "zapier": "Zapier", "zoom": "Zoom", "calendly": "Calendly",
+    "salesforce": "Salesforce", "mailchimp": "Mailchimp",
+}
+
+_PRODUCT_MAP = None
+
+
+def product_map() -> dict:
+    """(vertical, partner) -> /apipartners/<vertical>/<file> path, scanned from
+    the repo so the odd filenames (e.g. cliniko-hubspot has no '-and-') resolve
+    on their own."""
+    global _PRODUCT_MAP
+    if _PRODUCT_MAP is not None:
+        return _PRODUCT_MAP
+    m = {}
+    for vert in VERTICAL_NAMES:
+        d = ROOT / "apipartners" / vert
+        if not d.is_dir():
+            continue
+        for f in d.glob("*.html"):
+            core = f.stem.split("-integration")[0]   # mindbody-hubspot / mindbody-zoho-crm
+            if not core.startswith(vert + "-"):
+                continue
+            partner = core[len(vert) + 1:]
+            if partner in PARTNER_NAMES:
+                m[(vert, partner)] = f"/apipartners/{vert}/{f.stem}"
+    _PRODUCT_MAP = m
+    return m
+
+
+def detect_product(post: dict, tag_slugs: set):
+    """Map a use-case post to its specific product page via the vertical +
+    partner in its slug. Returns (url, vertical_name, partner_name) or None."""
+    slug = (post.get("slug") or "").lower()
+    s = f"-{slug}-"
+    vertical = next((v for v in VERTICAL_NAMES if f"-{v}-" in s or slug.startswith(v + "-")), None)
+    if not vertical:
+        return None
+    # Longest partner slug first so 'zoho-crm' is matched before any short token.
+    partner = next((p for p in sorted(PARTNER_NAMES, key=len, reverse=True) if f"-{p}-" in s), None)
+    if not partner:
+        return None
+    url = product_map().get((vertical, partner))
+    if not url:
+        return None
+    return url, VERTICAL_NAMES[vertical], PARTNER_NAMES[partner]
+
+
+def render_product_cta(url: str, vertical: str, partner: str) -> str:
+    """Targeted 'this exact integration' CTA, linking a use-case post to its
+    specific product page. Reuses the .blog-trial-cta styles."""
+    v, p = html.escape(vertical), html.escape(partner)
+    return (
+        '<aside class="blog-trial-cta">'
+        f'<div class="blog-trial-cta-eyebrow">{v} + {p}</div>'
+        f'<h2 class="blog-trial-cta-title">Run {v} and {p} as one system</h2>'
+        f'<p class="blog-trial-cta-text">This use case runs on APIANT’s deep, two-way '
+        f'{v} and {p} integration: it keeps both systems in sync automatically, with no '
+        're-keying and no spreadsheets. See exactly what it syncs and how it works.</p>'
+        f'<a class="blog-trial-cta-btn" href="{html.escape(url)}">Explore the {v} + {p} '
+        'integration <span aria-hidden="true">&rarr;</span></a>'
+        '</aside>'
+    )
+
+
+def render_post_ctas(post: dict, tag_slugs: set) -> str:
+    """Foot-of-post CTAs: a specific product CTA when the post maps to one
+    (ShopConnect keeps its dedicated trial CTA), always followed by the
+    three vertical catalog cards."""
+    if is_shopconnect_post(post, tag_slugs):
+        return render_shopconnect_cta() + render_api_apps_cta()
+    prod = detect_product(post, tag_slugs)
+    if prod:
+        return render_product_cta(*prod) + render_api_apps_cta()
+    return render_api_apps_cta()
+
+
 # Temporary override: inject demo screenshots into specific posts whose CMS
 # body_md does not yet carry them. The proper home for these is the Supabase
 # post body; once added there, drop the slug entry below. Each image is placed
@@ -496,11 +577,7 @@ def write_post_page(post: dict, related: list[dict]) -> Path:
         "READ_TIME": str(estimate_read_minutes(post["body_md"])),
         "HERO_IMAGE_BLOCK": render_hero_image(post),
         "BODY_HTML": body_html,
-        "API_APPS_CTA": (
-            render_shopconnect_cta() + render_api_apps_cta()
-            if is_shopconnect_post(post, tag_slugs)
-            else render_api_apps_cta()
-        ),
+        "API_APPS_CTA": render_post_ctas(post, tag_slugs),
         "TOC_BLOCK": render_toc(toc),
         "TAGS_BLOCK": render_tags(tags),
         "RELATED_BLOCK": render_related(related),
