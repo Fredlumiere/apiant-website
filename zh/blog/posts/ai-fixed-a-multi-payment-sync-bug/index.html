@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>人工智能修复了实时多笔支付同步漏洞</title>
+<meta content="一位客户支付了 8400 美元，但 CRM 系统显示只支付了 400 美元。我们将这个漏洞交给 APIANT 上的 AI 进行诊断、重建和端到端测试修复程序。" name="description"/>
+
+<!-- Open Graph -->
+<meta content="我们给人工智能系统提交了支持请求。它重建了集成，并完成了闭环。" property="og:title"/>
+<meta content="一位客户支付了 8400 美元，但 CRM 系统显示只支付了 400 美元。我们将这个漏洞交给 APIANT 上的 AI 进行诊断、重建和端到端测试修复程序。" property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.jpg" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="我们给人工智能系统提交了支持请求。它重建了集成，并完成了闭环。" name="twitter:title"/>
+<meta content="一位客户支付了 8400 美元，但 CRM 系统显示只支付了 400 美元。我们将这个漏洞交给 APIANT 上的 AI 进行诊断、重建和端到端测试修复程序。" name="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.jpg" name="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css?v=20260616b" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop.",
+  "description": "A customer paid $8,400 but the CRM showed $400. We handed the bug to an AI on APIANT and let it diagnose, rebuild, and test the fix end to end.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.avif",
+  "datePublished": "2026-07-02T14:24:37+00:00",
+  "dateModified": "2026-07-02T14:26:21.91586+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/"
+  },
+  "articleSection": "For Builders"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "For Builders", "item": "https://apiant.com/blog/category/for-builders" },
+    { "@type": "ListItem", "position": 4, "name": "We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop.", "item": "https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/zh/blog/posts/ai-fixed-a-multi-payment-sync-bug/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="蜜蜂" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/zh/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">博客</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">平台</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">连接器</a>
+<!--
+        Blog-scoped language switcher. Class is "blog-lang-switcher" (not
+        the site-wide "lang-switcher") because localize.py's
+        add_language_switcher() decomposes .lang-switcher elements during
+        re-runs. Populated by /js/blog-search.js at runtime.
+      -->
+<div class="blog-lang-switcher" style="position:relative;display:flex;align-items:center;">
+<button aria-expanded="false" aria-haspopup="true" class="blog-lang-switcher-btn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+<span class="blog-lang-switcher-current">EN</span>
+<svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<div class="blog-lang-switcher-dropdown"></div>
+</div>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">开始构建</a>
+</nav>
+</div>
+</header>
+<style>
+  .blog-lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .blog-lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .blog-lang-switcher-dropdown.open { display: block; }
+  .blog-lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .blog-lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .blog-lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/zh/blog/category/for-builders" style="color:inherit;text-decoration:none;">对于建筑商</a>
+</div>
+<h1 class="blog-post-h1">我们给人工智能系统提交了支持请求。它重建了集成，并完成了闭环。</h1>
+<p class="blog-post-subtitle">Claude Code 和 APIANT 如何将一个棘手的多支付同步错误转化为一个经过验证的修复方案，而最终只有人为确认。</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/zh/blog/?author=fred">Fred Lumiere</a></span>
+<span>2026年7月2日</span>
+<span>阅读时间：5分钟</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/zh/blog/?tag=mindbody">#身心</a><a class="blog-tag" href="/zh/blog/?tag=hubspot">#HubSpot</a><a class="blog-tag" href="/zh/blog/?tag=crmconnect">#CRM连接</a><a class="blog-tag" href="/zh/blog/?tag=ai-copilot">#人工智能副驾驶</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="在一排排正确的绿色交易中，有一笔估值错误的交易显示为红色，人工智能正在介入并纠正它。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.avif"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p><em>Claude Code 和 APIANT 如何将一个棘手的多支付同步错误转化为一个经过验证的修复方案，而最终只有人为确认。</em></p>
+<p>一位顾客在前台支付了约 8400 美元。但 CRM 系统中的交易记录却显示为 400 美元。一切正常，没有任何错误提示，系统看起来也没什么问题，而且大部分销售记录同步都正常。这笔交易的金额就这样悄无声息地在 Mindbody 和 HubSpot 之间的某个环节损失殆尽。</p>
+<p>这些是最棘手的漏洞：它们隐藏在2%略微异常的交易中。我们把这个问题交给人工智能处理，让它全程负责，从故障诊断到测试修复，再到回复客户。以下是整个过程。</p>
+<h2 id="the-ticket">门票</h2>
+<p>一家精品健身工作室来信讲述了一个令人困惑的小问题。他们的大部分销售订单都能顺利地从 Mindbody 流转到 HubSpot，唯独这笔交易出了问题。</p>
+<p>罪魁祸首原来是多种付款方式。一笔款项被拆分到一张信用卡和账户余额中，而旧的同步系统读取的报告并未包含所有付款方式。因此，最终成交的金额远低于客户实际支付的金额。</p>
+<h2 id="why-this-is-normally-a-slow-painful-fix">为什么这通常是一个缓慢而痛苦的修复过程？</h2>
+<p>像这样的 bug 通常会耗费工程师数天的时间。必须有人重构集成机制，找出多个同步路径中的哪一个出了问题，在不破坏现有路径的前提下修改逻辑，然后在真正难以测试的线上系统上进行测试。销售点软件可不会给你提供一个带有“创建奇怪的分期付款销售”按钮的沙盒环境。</p>
+<p>所以问题就一直搁置着。客户只能等待。修复风险很大。每个人都对动一个已经运行的集成系统有点忐忑。</p>
+<h2 id="we-handed-it-to-the-ai-instead">我们把它交给了人工智能。</h2>
+<p>我们把工单交给了运行在 APIANT 上的 Claude Code，然后让它运行。不是“提供一段代码片段”，而是真正地运行：阅读集成文档，理解它，修改它，用真实的 Mindbody 账户进行测试，然后反馈结果。以下是它完成的工作，全程无需人工编写任何代码。</p>
+<p><strong>它找到了真正的原因。</strong> 它追溯到三个隐藏在一个症状背后的独立问题：同步正在读取一份遗漏了某些付款类型的报告，多件商品销售的计数不正确，以及几笔销售可能因同一个标识符而发生冲突。</p>
+<p><strong>它正确地重建了集成。</strong> 它没有采用简单的修补方案，而是将交易逻辑重构为一个共享组件，供即时同步（销售发生时立即触发）和夜间补录同步使用。相同的逻辑，两个触发器，不再存在数据偏差。它将两者都迁移到了一个更丰富的数据源，该数据源实际上包含了所有付款信息，包括账户余额和会员余额。</p>
+<p><strong>它实现了规模化快速传输。</strong> 它添加了一个缓存，这样夜间作业就不会重复执行耗时的查询，从而避免对成千上万条历史销售记录进行重复查找。第一次运行会构建缓存；之后每次运行都会跳过耗时的搜索。</p>
+<p><strong>它添加了客户想要的细节。</strong> 现在每笔交易都会记录所使用的付款方式，因此工作室可以一目了然地看到销售是如何支付的。</p>
+<h2 id="then-it-tested-on-the-real-system">然后它在实际系统上进行了测试。</h2>
+<p>这部分仍然感觉有点像科幻小说。</p>
+<p>人工智能在浏览器中打开了Mindbody的实际销售点系统，并自行进行了测试结账。测试包括：一件商品一次性付款；一件商品分两次付款；多件商品一次性付款；多件商品分多次付款；以及一位没有客户记录的顾客直接到店。它像店员一样完成了收银操作。</p>
+<p>然后，它监控每笔销售在集成过程中的流转，并逐行读取结果。创建的交易数量是否正确？金额加起来是否等于销售总额？付款方式是否显示？运行两次同步是否创建了重复项，或者它是否正确识别出已经处理过该笔销售？</p>
+<p>所有分行都核对过了。金额一致。没有重复项。付款方式也都已到账。</p>
+<h2 id="it-caught-its-own-mistake">它发现了自己的错误</h2>
+<p>过程中，自身的一项改动导致了一个小的倒退。一个新字段的连接不正确，悄无声息地破坏了新交易的创建功能。</p>
+<p>人工智能之所以能发现问题，是因为它读取的是实时执行数据，而不是想当然地认为自己的工作已经正确。它找到了问题的确切原因，修复了线路，重新执行了失败的交易，并确认修复后的结果正确无误，同时还记录了整个过程。</p>
+<p>这就是编写代码和拥有最终结果之间的区别。</p>
+<h2 id="it-closed-the-loop-with-the-customer">它与客户形成了闭环。</h2>
+<p>修复方案确认无误后，人工智能会用通俗易懂的语言回复客户：说明发生了什么，金额为何显示错误，现在有哪些变化，并保证之前的销售数据会在下次同步时自动更正。系统会将这条消息添加到工单中，随时可以发送。</p>
+<p>有人审阅了内容，表示同意，然后发送。最终发布到生产环境的变更也由人审核通过。这是有意为之。人工智能负责繁重、精确且不知疲倦的工作。而人则始终把持着两项应该由人来做的决定：如何与客户沟通，以及哪些内容最终上线。</p>
+<h2 id="why-apiant-makes-this-possible">APIANT 为何能实现这一点</h2>
+<p>人工智能只能操作它能看到和触摸到的事物。大多数集成平台都是黑匣子，因此人工智能只能从外部编写建议。</p>
+<p>APIANT 的构建方式恰恰相反。每个集成都由 AI 可以实际检查、编辑和运行的部分组成：自动化流程、共享子程序、字段映射、实时执行历史记录和缓存值。AI 可以更改其中一部分，运行它，准确读取每一步发生的情况并进行调整。结合浏览器对源系统的控制，它就可以进行基于实际情况的测试，而不是靠猜测。</p>
+<p>正是这种组合使得一个棘手的现实世界问题变成了一个完整的、经过验证的重构。</p>
+<h2 id="the-takeaway">要点</h2>
+<p>这可不是什么小问题。这是两个重要系统实时集成中一个微妙的、由多种原因导致的漏洞，通常情况下，这种漏洞会让工程师焦虑不安，并导致一周的工作量大幅减少。</p>
+<p>整个流程由人工智能完成。它诊断出真正的原因，以正确的方式重建了集成，针对实际销售点测试了每条路径，发现并修复了自身的错误，并撰写了客户回复。人工干预仅限于批准信息和部署。</p>
+<p>这就是未来的发展方向。人工智能不再只是帮你写几行代码，而是能够解决一个棘手而具体的问题，并在一个专门为此构建的平台上，最终找到一个经过测试、切实可行的解决方案。如果你遇到集成问题，或者某些 bug 只在极少数情况下（比如 2%）出现，那么这就是未来解决问题的方向。</p>
+<p><a href="/?talk=1">请与我们谈谈 APIANT</a></p>
+<aside class="blog-trial-cta"><div class="blog-trial-cta-eyebrow">使用 APIANT 构建</div><h2 class="blog-trial-cta-title">让人工智能助力您的集成工作</h2><p class="blog-trial-cta-text">APIANT 让 AI 真正能够访问您集成中的每一层：自动化流程、共享子程序、字段映射以及实时执行数据。告诉我们您想要连接什么，我们会向您展示它在您的技术栈中是如何实现的。</p><a class="blog-trial-cta-btn" href="/?talk=1">开始构建 <span aria-hidden="true">→</span></a></aside>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-ticket">门票</a></li><li class="lvl-2"><a href="#why-this-is-normally-a-slow-painful-fix">为什么这通常是一个缓慢而痛苦的修复过程？</a></li><li class="lvl-2"><a href="#we-handed-it-to-the-ai-instead">我们把它交给了人工智能。</a></li><li class="lvl-2"><a href="#then-it-tested-on-the-real-system">然后它在实际系统上进行了测试。</a></li><li class="lvl-2"><a href="#it-caught-its-own-mistake">它发现了自己的错误</a></li><li class="lvl-2"><a href="#it-closed-the-loop-with-the-customer">它与客户形成了闭环。</a></li><li class="lvl-2"><a href="#why-apiant-makes-this-possible">APIANT 为何能实现这一点</a></li><li class="lvl-2"><a href="#the-takeaway">要点</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">继续阅读</h2><div class="blog-grid"><a class="blog-card" data-tags="ai-copilot for-saas bi-directional-sync" href="/zh/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/"><div class="blog-card-image"><img alt="人工智能的存在沿着一条清晰的线索，逆着完好的电缆向后追溯，最终指向一个独立的第三方应用程序，这才是真正变革的源头。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">对于建筑商</div><h3 class="blog-card-title">并非真正的“漏洞”：人工智能如何在茫茫系统中找到关键问题并于几分钟内解决我们的集成难题</h3><p class="blog-card-excerpt">一位重要客户确信我们的集成方案扰乱了他们的数据，并要求我们关闭该方案。由于人工智能已融入平台的每一层，我们仅用了几分钟就追踪到一条记录的完整历史记录，并提供了证据证明更改来自上游的第三方应用程序。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年6月12日</span></div></div></a><a class="blog-card" data-tags="mindbody hubspot zoho-crm crmconnect" href="/zh/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"><div class="blog-card-image"><img alt="分屏插图：左侧是支持工单和 GitHub 问题卡片，右侧是相互连接的自动化节点网络，由一条绿线连接。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif?v=3"/></div><div class="blog-card-body"><div class="blog-category-chip">对于建筑商</div><h3 class="blog-card-title">使用 Claude Code 进行 AI 优先集成工程：一次真实的调试会话</h3><p class="blog-card-excerpt">一段真实的 APIANT 调试会话，包含实际的提示信息。观看 AI 读取同级集成和四年的版本历史记录，并见证构建者的直觉如何阻止代码库从未记录过的回归错误。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月20日</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/zh/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="从 CSV 文件自动创建 HubSpot 属性" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">对于建筑商</div><h3 class="blog-card-title">使用 Claude Code 从 CSV 文件自动创建 HubSpot 属性</h3><p class="blog-card-excerpt">如何使用基于 APIANT 构建的免费导入自动化功能自动创建 HubSpot 属性（联系人、交易或公司）。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2024年9月18日</span></div></div></a></div></section>
+</div>
+</article>
+<div aria-hidden="true" id="blog-particles"></div>
+<script defer="" src="/js/particles.min.js"></script>
+<script defer="" src="/js/blog-particles.js?v=20260616"></script>
+<script defer="" src="/js/blog-video.js?v=20260616"></script>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="蜜蜂" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026 Apiant, Inc. 保留所有权利。</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/zh/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">博客</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">平台</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">隐私</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">条款</a>
+</div>
+</div>
+</footer>
+<!-- blog-search.js carries buildLangSwitcher (populates the language
+     dropdown + sets the current-locale label). It early-returns past the
+     search/pagination code when there's no search input, so it is safe
+     and cheap on post pages. Fuse.js is not loaded here: search is
+     hub/category-only and blog-search.js never references Fuse unless a
+     search actually runs. -->
+<script defer="" src="/js/blog-search.js?v=20260616"></script>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>

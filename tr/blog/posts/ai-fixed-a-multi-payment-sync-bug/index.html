@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Yapay Zeka Canlı Çoklu Ödeme Senkronizasyon Hatasını Düzeltti</title>
+<meta content="Bir müşteri 8.400 dolar ödedi ancak CRM sistemi 400 dolar gösterdi. Bu hatayı APIANT üzerindeki bir yapay zekaya devrettik ve teşhis etmesini, yeniden oluşturmasını ve düzeltmeyi baştan sona test etmesini sağladık." name="description"/>
+
+<!-- Open Graph -->
+<meta content="Bir yapay zekaya destek talebi gönderdik. Entegrasyonu yeniden oluşturdu ve sorunu çözdü." property="og:title"/>
+<meta content="Bir müşteri 8.400 dolar ödedi ancak CRM sistemi 400 dolar gösterdi. Bu hatayı APIANT üzerindeki bir yapay zekaya devrettik ve teşhis etmesini, yeniden oluşturmasını ve düzeltmeyi baştan sona test etmesini sağladık." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.jpg" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Bir yapay zekaya destek talebi gönderdik. Entegrasyonu yeniden oluşturdu ve sorunu çözdü." name="twitter:title"/>
+<meta content="Bir müşteri 8.400 dolar ödedi ancak CRM sistemi 400 dolar gösterdi. Bu hatayı APIANT üzerindeki bir yapay zekaya devrettik ve teşhis etmesini, yeniden oluşturmasını ve düzeltmeyi baştan sona test etmesini sağladık." name="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.jpg" name="twitter:image"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css?v=20260616b" rel="stylesheet" type="text/css"/>
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop.",
+  "description": "A customer paid $8,400 but the CRM showed $400. We handed the bug to an AI on APIANT and let it diagnose, rebuild, and test the fix end to end.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.avif",
+  "datePublished": "2026-07-02T14:24:37+00:00",
+  "dateModified": "2026-07-02T14:26:21.91586+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/"
+  },
+  "articleSection": "For Builders"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "For Builders", "item": "https://apiant.com/blog/category/for-builders" },
+    { "@type": "ListItem", "position": 4, "name": "We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop.", "item": "https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<link href="https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="x-default" rel="alternate"/>
+<link href="https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="en" rel="alternate"/>
+<link href="https://apiant.com/es/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="es" rel="alternate"/>
+<link href="https://apiant.com/fr/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="fr" rel="alternate"/>
+<link href="https://apiant.com/zh/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="zh" rel="alternate"/>
+<link href="https://apiant.com/hi/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="hi" rel="alternate"/>
+<link href="https://apiant.com/ar/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="ar" rel="alternate"/>
+<link href="https://apiant.com/he/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="he" rel="alternate"/>
+<link href="https://apiant.com/bn/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="bn" rel="alternate"/>
+<link href="https://apiant.com/pt/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="pt" rel="alternate"/>
+<link href="https://apiant.com/ru/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="ru" rel="alternate"/>
+<link href="https://apiant.com/ja/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="ja" rel="alternate"/>
+<link href="https://apiant.com/de/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="de" rel="alternate"/>
+<link href="https://apiant.com/ko/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="ko" rel="alternate"/>
+<link href="https://apiant.com/it/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="it" rel="alternate"/>
+<link href="https://apiant.com/nl/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="nl" rel="alternate"/>
+<link href="https://apiant.com/tr/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="tr" rel="alternate"/>
+<link href="https://apiant.com/pl/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="pl" rel="alternate"/>
+<link href="https://apiant.com/vi/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="vi" rel="alternate"/>
+<link href="https://apiant.com/th/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="th" rel="alternate"/>
+<link href="https://apiant.com/id/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="id" rel="alternate"/>
+<link href="https://apiant.com/sv/blog/posts/ai-fixed-a-multi-payment-sync-bug/" hreflang="sv" rel="alternate"/>
+<style>
+.lang-switcher-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+.lang-switcher-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px;min-width:170px;z-index:9999;max-height:420px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.lang-switcher-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.lang-switcher-dropdown::-webkit-scrollbar{width:4px;}
+.lang-switcher-dropdown::-webkit-scrollbar-track{background:transparent;}
+.lang-switcher-dropdown::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+.white-mode .lang-switcher-btn,.nav-menu.white-mode .lang-switcher-btn{border-color:rgba(0,0,0,0.2)!important;color:rgba(0,0,0,0.6)!important;}
+.white-mode .lang-switcher-btn:hover,.nav-menu.white-mode .lang-switcher-btn:hover{border-color:rgba(0,0,0,0.4)!important;color:#000!important;}
+.white-mode .lang-switcher-dropdown,.nav-menu.white-mode .lang-switcher-dropdown{background:#fff;border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}
+@media(max-width:991px){.lang-switcher{margin:8px 0 0 0!important;order:10;}.lang-switcher-dropdown{right:auto;left:0;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}
+</style><link href="https://apiant.com/tr/blog/posts/ai-fixed-a-multi-payment-sync-bug/" rel="canonical"/></head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+<div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+<a href="/" style="display:flex;align-items:center;text-decoration:none;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+</a>
+<nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+<a href="/tr/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Bağlayıcılar</a>
+<!--
+        Blog-scoped language switcher. Class is "blog-lang-switcher" (not
+        the site-wide "lang-switcher") because localize.py's
+        add_language_switcher() decomposes .lang-switcher elements during
+        re-runs. Populated by /js/blog-search.js at runtime.
+      -->
+<div class="blog-lang-switcher" style="position:relative;display:flex;align-items:center;">
+<button aria-expanded="false" aria-haspopup="true" class="blog-lang-switcher-btn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+<span class="blog-lang-switcher-current">EN</span>
+<svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<div class="blog-lang-switcher-dropdown"></div>
+</div>
+<a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Oluşturmaya Başla</a>
+</nav>
+</div>
+</header>
+<style>
+  .blog-lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .blog-lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .blog-lang-switcher-dropdown.open { display: block; }
+  .blog-lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .blog-lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .blog-lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
+<article>
+<div class="blog-container">
+<header class="blog-post-hero">
+<div class="blog-category-chip">
+<a href="/tr/blog/category/for-builders" style="color:inherit;text-decoration:none;">İnşaatçılar İçin</a>
+</div>
+<h1 class="blog-post-h1">Bir yapay zekaya destek talebi gönderdik. Entegrasyonu yeniden oluşturdu ve sorunu çözdü.</h1>
+<p class="blog-post-subtitle">Claude Code ve APIANT, karmaşık bir çoklu ödeme senkronizasyon hatasını, insan onayının en sonda verildiği doğrulanmış bir çözüme nasıl dönüştürdüler?</p>
+<div class="blog-post-meta">
+<span class="notranslate"><a href="/tr/blog/?author=fred">Fred Lumiere</a></span>
+<span>2 Temmuz 2026</span>
+<span>5 dakikalık okuma süresi</span>
+</div>
+<div class="blog-post-tags"><a class="blog-tag" href="/tr/blog/?tag=mindbody">#Zihinbeden</a><a class="blog-tag" href="/tr/blog/?tag=hubspot">#HubSpot</a><a class="blog-tag" href="/tr/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/tr/blog/?tag=ai-copilot">#YapayZeka Yardımcı Pilotu</a></div>
+</header>
+<div class="blog-post-hero-image"><img alt="Doğru yeşil işlemlerin sıraları arasında, yanlış değerlenmiş tek bir işlem kırmızı renkte parlıyor ve yapay zeka devreye girerek bu işlemi düzeltiyor." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.avif"/></div>
+<div class="blog-article-layout">
+<div class="blog-article" id="blog-article">
+<p><em>Claude Code ve APIANT, karmaşık bir çoklu ödeme senkronizasyon hatasını, insan onayının en sonda verildiği doğrulanmış bir çözüme nasıl dönüştürdüler?</em></p>
+<p>Bir müşteri resepsiyonda yaklaşık 8.400 dolar ödedi. CRM'deki işlem ise 400 dolar olarak görünüyordu. Hiçbir hata oluşmamıştı, hiçbir şey bozuk görünmüyordu ve çoğu satış sorunsuz bir şekilde senkronize oluyordu. Bu işlem ise Mindbody ve HubSpot arasında bir yerlerde sessizce değerinin büyük bir kısmını kaybetti.</p>
+<p>Bunlar en kötü türden hatalar: biraz sıra dışı olan işlemlerin %2'sinde gizlenenler. Bu hatayı bir yapay zekaya teslim ettik ve teşhisten test edilmiş düzeltmeye ve müşteri yanıtına kadar her şeyi onun yönetmesine izin verdik. İşte sonuç.</p>
+<h2 id="the-ticket">Bilet</h2>
+<p>Butik bir fitness stüdyosu, küçük ve can sıkıcı bir gizemle ilgili olarak bize yazdı. Satışlarının çoğu Mindbody'den HubSpot'a sorunsuz bir şekilde aktarılmıştı. Ancak bu tek işlemde sorun yaşandı.</p>
+<p>Sorunun kaynağı, birden fazla ödeme yöntemiyle yapılan satışlar oldu. Ödeme, kart ve hesap bakiyesi üzerinden bölündüğünde, eski senkronizasyon sistemi her ödeme yöntemini içermeyen bir rapordan okuma yapıyordu. Bu nedenle, işlem müşterinin gerçekte ödediği miktarın çok daha az bir kısmıyla gerçekleşiyordu.</p>
+<h2 id="why-this-is-normally-a-slow-painful-fix">Bu durum genellikle yavaş ve acı verici bir çözüm gerektirir.</h2>
+<p>Bu tür bir hata genellikle günler süren mühendislik zamanını tüketir. Birinin entegrasyonun nasıl çalıştığını yeniden oluşturması, birkaç senkronizasyon yolundan hangisinin hatalı olduğunu bulması, halihazırda çalışan yolları bozmadan mantığı değiştirmesi ve ardından gerçekten kurcalanması zor olan canlı bir sisteme karşı test etmesi gerekir. Satış noktası yazılımı size "garip bir bölünmüş ödeme satışı yap" düğmesi olan bir test ortamı sunmaz.</p>
+<p>Bu yüzden genellikle öylece kalıyor. Müşteri bekliyor. Düzeltme riskli. Herkes çalışan bir entegrasyona dokunmaktan biraz çekiniyor.</p>
+<h2 id="we-handed-it-to-the-ai-instead">Bunun yerine yapay zekaya devrettik.</h2>
+<p>APIANT üzerinde çalışan Claude Code'a bu görevi verdik ve çalışmasına izin verdik. "Kod parçacığı öner" demedik. Gerçekten çalışmasını sağladık: entegrasyonu okuduk, anladık, değiştirdik, gerçek Mindbody hesabına karşı test ettik ve geri bildirimde bulunduk. İşte insan eliyle tek bir satır kod yazılmadan neler oldu.</p>
+<p><strong>Gerçek nedeni buldu.</strong> Sorunun, tek bir belirtinin ardında gizlenen üç ayrı sorundan kaynaklandığı tespit edildi: senkronizasyon, bazı ödeme türlerini atlayan bir rapordan okuma yapıyordu, çoklu ürün satışları yanlış sayılıyordu ve birkaç satış aynı tanımlayıcıda çakışabiliyordu.</p>
+<p><strong>Entegrasyonu doğru şekilde yeniden oluşturdu.</strong> Hızlı bir yama yerine, işlem mantığını hem anlık senkronizasyon (satış gerçekleştiği anda tetiklenir) hem de gece yapılan senkronizasyon tarafından kullanılan tek bir ortak bileşene dönüştürdü. Aynı mantık, iki tetikleyici, aralarında artık bir sapma yok. Her ikisini de, hesap ve üyelik bakiyeleri de dahil olmak üzere her ödemeyi içeren daha zengin bir veri kaynağına taşıdı.</p>
+<p><strong>Bu, büyük ölçekte süreci hızlandırdı.</strong> Gece çalışan işlemin binlerce geçmiş satış üzerinde yavaş sorgulamaları tekrar çalıştırmasını önlemek için bir önbellek eklendi. İlk geçişte önbellek oluşturulur; bundan sonraki her geçişte maliyetli arama atlanır.</p>
+<p><strong>Müşterinin istediği detayı ekledi.</strong> Artık her işlemde kullanılan ödeme yöntemi kaydediliyor, böylece stüdyo bir satışın nasıl ödendiğini bir bakışta görebiliyor.</p>
+<h2 id="then-it-tested-on-the-real-system">Ardından gerçek sistemde test edildi.</h2>
+<p>Burası hâlâ biraz bilim kurgu gibi hissettiren kısım.</p>
+<p>Yapay zeka, tarayıcıda gerçek Mindbody satış noktasını açtı ve kendi kendine test satışları gerçekleştirdi. Tek ürün tek seferde ödendi. Tek ürün iki taksitte ödendi. Birkaç ürün tek seferde ödendi. Birkaç ürün taksitler halinde ödendi. Birkaç ürün farklı ödemelere bölündü. Daha önce müşteri kaydı olmayan bir müşteri de geldi. Yapay zeka, tıpkı bir personel gibi kasada işlemleri tamamladı.</p>
+<p>Ardından entegrasyon sürecinden geçen her satış akışını izledi ve sonuçları satır satır okudu. Doğru sayıda işlem oluşturuldu mu? Tutarlar satış toplamına eşit miydi? Ödeme yöntemi göründü mü? Senkronizasyonun iki kez çalıştırılması kopyalar oluşturdu mu, yoksa satışın zaten işlendiğini doğru bir şekilde algıladı mı?</p>
+<p>Tüm şubeler kontrol edildi. Tutarlar eşleşti. Hiçbiri mükerrer değildi. Ödeme yöntemleri sorunsuz çalıştı.</p>
+<h2 id="it-caught-its-own-mistake">Kendi hatasını fark etti.</h2>
+<p>Sürecin ortasında, yapılan değişikliklerden biri küçük bir gerilemeye yol açtı. Yeni bir alan doğru şekilde bağlanmamıştı ve bu durum sessizce yeni anlaşmaların oluşturulmasını engelledi.</p>
+<p>Yapay zeka, yaptığı işin doğru olduğunu varsaymak yerine canlı yürütme verilerini okuduğu için durumu fark etti. Sorunun kesin nedenini buldu, kablolamayı düzeltti, başarısız olan gerçek satışı yeniden çalıştırdı ve düzeltmenin doğru sonucu verdiğini doğrulayarak tüm süreci belgeledi.</p>
+<p>Kod üretmek ile bir sonucun sahibi olmak arasındaki fark budur.</p>
+<h2 id="it-closed-the-loop-with-the-customer">Müşteriyle olan iletişimi tamamladı.</h2>
+<p>Düzeltme doğrulandığında, yapay zeka müşteriye anlaşılır bir dilde şu yanıtı yazdı: neler olduğunu, tutarın neden yanlış göründüğünü, şimdi nelerin değiştiğini ve geçmiş satışların bir sonraki senkronizasyonda otomatik olarak düzeltileceğine dair güvenceyi verdi. Bu mesajı, gönderilmeye hazır bir şekilde bilet üzerinde sakladı.</p>
+<p>Bir insan okudu, onayladı ve gönderdi. Bir insan ayrıca değişikliğin üretime yayınlanması için son onayı da verdi. Bu kasıtlı bir durum. Yapay zeka ağır, hassas ve yorulmak bilmeyen işi yapıyor. İnsanlar her zaman insan tarafından verilmesi gereken iki karara el atıyor: müşteriye ne söyleyeceğimiz ve neyin yayına alınacağı.</p>
+<h2 id="why-apiant-makes-this-possible">APIANT bunu neden mümkün kılıyor?</h2>
+<p>Yapay zekâ ancak görebildiği ve dokunabildiği şeyleri çalıştırabilir. Çoğu entegrasyon platformu bir kara kutudur, bu nedenle yapay zekâ dışarıdan öneriler yazmakla sınırlı kalır.</p>
+<p>APIANT tam tersi şekilde inşa edilmiştir. Her entegrasyon, yapay zekanın inceleyebileceği, düzenleyebileceği ve çalıştırabileceği parçalardan oluşur: otomasyonlar, paylaşılan alt programlar, alan eşlemeleri, canlı yürütme geçmişi, önbelleğe alınmış değerler. Yapay zeka bir parçayı değiştirebilir, çalıştırabilir, her adımda tam olarak ne olduğunu okuyabilir ve ayarlama yapabilir. Bunu kaynak sistemin tarayıcı kontrolüyle birleştirdiğinizde, tahmin etmek yerine gerçekliğe karşı test edebilir.</p>
+<p>Bu kombinasyon, gerçek dünyadaki karmaşık bir sorunun, tam ve doğrulanmış bir yeniden yapılandırmaya dönüşmesini sağladı.</p>
+<h2 id="the-takeaway">Özetle</h2>
+<p>Bu, oyuncak gibi bir sorun değildi. İki ciddi sistem arasındaki canlı entegrasyonda ortaya çıkan, çok nedenli, incelikli bir hataydı; normalde gergin bir mühendis ve yavaş geçen bir hafta anlamına gelirdi.</p>
+<p>Yapay zeka süreci baştan sona yönetti. Gerçek nedeni teşhis etti, entegrasyonu doğru şekilde yeniden kurdu, her yolu gerçek satış noktasına karşı test etti, kendi hatasını tespit edip düzeltti ve müşteri yanıtını hazırladı. İnsanlar sadece mesajı onaylamak ve dağıtımı gerçekleştirmek için devreye girdi.</p>
+<p>İşte bu yöne doğru gidiyoruz. Sizin için biraz kod yazan bir yapay zeka değil, zorlu, spesifik bir problemi ele alıp, tam olarak bunun için tasarlanmış bir platformda çalışan, test edilmiş bir çözüme kadar götüren bir yapay zeka. Neredeyse doğru olan entegrasyonlarınız veya yalnızca %2'lik garip vakalarda ortaya çıkan hatalarınız varsa, bunları çözmenin nasıl bir şey olmaya başladığı işte bu.</p>
+<p><a href="/?talk=1">APIANT hakkında bizimle konuşun.</a></p>
+<aside class="blog-trial-cta"><div class="blog-trial-cta-eyebrow">APIANT ile derleyin</div><h2 class="blog-trial-cta-title">Entegrasyonlarınızda yapay zekayı kullanın.</h2><p class="blog-trial-cta-text">APIANT, yapay zekaya entegrasyonlarınızın her katmanına gerçek erişim sağlar: otomasyonlar, paylaşılan alt programlar, alan eşlemeleri ve canlı yürütme verileri. Ne bağlamaya çalıştığınızı bize söyleyin, biz de size bu durumun sisteminiz için nasıl görüneceğini gösterelim.</p><a class="blog-trial-cta-btn" href="/?talk=1">Oluşturmaya Başla <span aria-hidden="true">→</span></a></aside>
+</div>
+<aside class="blog-toc"><div class="blog-toc-heading">Bu makalede</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-ticket">Bilet</a></li><li class="lvl-2"><a href="#why-this-is-normally-a-slow-painful-fix">Bu durum genellikle yavaş ve acı verici bir çözüm gerektirir.</a></li><li class="lvl-2"><a href="#we-handed-it-to-the-ai-instead">Bunun yerine yapay zekaya devrettik.</a></li><li class="lvl-2"><a href="#then-it-tested-on-the-real-system">Ardından gerçek sistemde test edildi.</a></li><li class="lvl-2"><a href="#it-caught-its-own-mistake">Kendi hatasını fark etti.</a></li><li class="lvl-2"><a href="#it-closed-the-loop-with-the-customer">Müşteriyle olan iletişimi tamamladı.</a></li><li class="lvl-2"><a href="#why-apiant-makes-this-possible">APIANT bunu neden mümkün kılıyor?</a></li><li class="lvl-2"><a href="#the-takeaway">Özetle</a></li></ul></aside>
+</div>
+<section class="blog-related"><h2 class="blog-related-heading">Okumaya devam edin</h2><div class="blog-grid"><a class="blog-card" data-tags="ai-copilot for-saas bi-directional-sync" href="/tr/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/"><div class="blog-card-image"><img alt="Yapay zekâ varlığı, bozulmamış kabloların ardında geriye doğru uzanan tek bir parlak izi takip ederek, değişimin gerçek kaynağı olan ayrı bir üçüncü taraf uygulamaya ulaşıyor." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">İnşaatçılar İçin</div><h3 class="blog-card-title">"Hata" Olmayan Şey: Yapay Zeka Samanlıkta İğneyi Nasıl Buldu ve Entegrasyonumuzu Dakikalar İçinde Nasıl Tamamladı?</h3><p class="blog-card-excerpt">Değerli bir müşterimiz, entegrasyonumuzun verilerini karıştırdığından emindi ve bunu kapatmamızı istedi. Platformun her katmanına entegre edilmiş yapay zeka sayesinde, bir kaydın tüm geçmişini izledik ve değişikliğin üçüncü taraf bir uygulamadan kaynaklandığını kanıtlarla birlikte dakikalar içinde tespit ettik.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>12 Haziran 2026</span></div></div></a><a class="blog-card" data-tags="mindbody hubspot zoho-crm crmconnect" href="/tr/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"><div class="blog-card-image"><img alt="Bölünmüş çerçeve illüstrasyonu: solda bir destek bileti ve bir GitHub sorun kartı, sağda tek bir yeşil çizgiyle birbirine bağlanmış otomasyon düğümlerinden oluşan bir ağ." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif?v=3"/></div><div class="blog-card-body"><div class="blog-category-chip">İnşaatçılar İçin</div><h3 class="blog-card-title">Claude Code ile Yapay Zeka Odaklı Entegrasyon Mühendisliği: Gerçek Bir Hata Ayıklama Oturumu</h3><p class="blog-card-excerpt">Gerçek komut istemleriyle birlikte gerçek bir APIANT hata ayıklama oturumu. Bir yapay zekanın kardeş entegrasyonu ve dört yıllık sürüm geçmişini okumasını ve bir geliştiricinin sezgisinin, kod tabanında hiç kaydedilmemiş bir gerilemeyi durdurmasını izleyin.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>20 Mayıs 2026</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/tr/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="CSV dosyasından otomatik olarak HubSpot özellikleri oluştur" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">İnşaatçılar İçin</div><h3 class="blog-card-title">Claude Code ile CSV dosyasından otomatik olarak HubSpot özellikleri oluşturun</h3><p class="blog-card-excerpt">APIANT üzerine kurulu bu ücretsiz içe aktarma otomasyonunu kullanarak HubSpot özelliklerini (kişi, fırsat veya şirket) otomatik olarak nasıl oluşturabilirsiniz?</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>18 Eylül 2024</span></div></div></a></div></section>
+</div>
+</article>
+<div aria-hidden="true" id="blog-particles"></div>
+<script defer="" src="/js/particles.min.js"></script>
+<script defer="" src="/js/blog-particles.js?v=20260616"></script>
+<script defer="" src="/js/blog-video.js?v=20260616"></script>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+<div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+<a href="/" style="display:inline-block;">
+<img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+</a>
+<p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. Tüm Hakları Saklıdır.</p>
+</div>
+<div style="display:flex;gap:24px;font-size:13px;">
+<a href="/tr/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+<a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+<a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Mahremiyet</a>
+<a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Şartlar</a>
+</div>
+</div>
+</footer>
+<!-- blog-search.js carries buildLangSwitcher (populates the language
+     dropdown + sets the current-locale label). It early-returns past the
+     search/pagination code when there's no search input, so it is safe
+     and cheap on post pages. Fuse.js is not loaded here: search is
+     hub/category-only and blog-search.js never references Fuse unless a
+     search actually runs. -->
+<script defer="" src="/js/blog-search.js?v=20260616"></script>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script src="/js/i18n.js"></script></body>
+</html>
