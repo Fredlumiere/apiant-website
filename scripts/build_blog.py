@@ -484,10 +484,31 @@ def render_product_cta(url: str, vertical: str, partner: str) -> str:
     )
 
 
+def render_builder_cta() -> str:
+    """Foot-of-post CTA for 'For Builders' posts. Points at the same demo/
+    contact form used site-wide, with a 'Start Building' button (mirrors the
+    nav CTA at /?talk=1). Reuses the .blog-trial-cta styles."""
+    return (
+        '<aside class="blog-trial-cta">'
+        '<div class="blog-trial-cta-eyebrow">Build with APIANT</div>'
+        '<h2 class="blog-trial-cta-title">Put an AI to work on your integrations</h2>'
+        '<p class="blog-trial-cta-text">APIANT gives an AI real access to every layer '
+        'of your integrations: the automations, the shared subroutines, the field '
+        'mappings, and the live execution data. Tell us what you are trying to connect '
+        'and we will show you what this looks like for your stack.</p>'
+        '<a class="blog-trial-cta-btn" href="/?talk=1">Start Building '
+        '<span aria-hidden="true">&rarr;</span></a>'
+        '</aside>'
+    )
+
+
 def render_post_ctas(post: dict, tag_slugs: set) -> str:
-    """Foot-of-post CTAs: a specific product CTA when the post maps to one
-    (ShopConnect keeps its dedicated trial CTA), always followed by the
-    three vertical catalog cards."""
+    """Foot-of-post CTAs: For Builders posts get the 'Start Building' form CTA
+    (the platform audience, not the API App catalog). Otherwise a specific
+    product CTA when the post maps to one (ShopConnect keeps its dedicated
+    trial CTA), always followed by the three vertical catalog cards."""
+    if (post.get("category") or {}).get("slug") == "for-builders":
+        return render_builder_cta()
     if is_shopconnect_post(post, tag_slugs):
         return render_shopconnect_cta() + render_api_apps_cta()
     prod = detect_product(post, tag_slugs)

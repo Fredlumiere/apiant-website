@@ -96,6 +96,8 @@ Everything under `blog/` is a build artifact: `blog/index.html`, `blog/posts/<sl
 
 To change a post, edit `body_md` (or other `blog_posts` fields) in Supabase, then regenerate via `gh workflow run build-blog.yml -f post_id=<uuid>` (or flip the post `status` to `publishing`). The in-article TOC and heading anchors are auto-generated from `##`/`###` headings; pipe tables are supported. Full details: `docs/blog-content-editing.md`.
 
+**Blog images ("nanobanana"):** hero and inline illustrations are generated with **Nano Banana** = Google's `gemini-2.5-flash-image` model via the `@google/genai` SDK (run with `bun`). The key is `GEMINI_API_KEY` (exported in `~/.zshrc`, so it's in the shell env). Images are hosted in the Supabase Storage `blog-media` bucket and referenced from `hero_image_url` / inline `![](url)`. Full recipe (prompt art direction, convert, upload): `docs/blog-image-generation.md`.
+
 ## Common Page Patterns
 
 All main pages share:
