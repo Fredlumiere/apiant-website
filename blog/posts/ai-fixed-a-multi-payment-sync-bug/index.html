@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>An AI Fixed a Live Multi-Payment Sync Bug</title>
+<meta content="A customer paid $8,400 but the CRM showed $400. We handed the bug to an AI on APIANT and let it diagnose, rebuild, and test the fix end to end." name="description"/>
+<link href="https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" rel="canonical"/>
+
+<!-- Open Graph -->
+<meta content="We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop." property="og:title"/>
+<meta content="A customer paid $8,400 but the CRM showed $400. We handed the bug to an AI on APIANT and let it diagnose, rebuild, and test the fix end to end." property="og:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.jpg" property="og:image"/>
+<meta content="https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="APIANT Blog" property="og:site_name"/>
+
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop." name="twitter:title"/>
+<meta content="A customer paid $8,400 but the CRM showed $400. We handed the bug to an AI on APIANT and let it diagnose, rebuild, and test the fix end to end." name="twitter:description"/>
+<meta content="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.jpg" name="twitter:image"/>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+
+<!-- Styles -->
+<link href="/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/css/blog.css?v=20260616b" rel="stylesheet" type="text/css"/>
+
+<!-- RSS -->
+<link href="/blog/feed.xml" rel="alternate" title="APIANT Blog" type="application/rss+xml"/>
+
+<!-- Favicon -->
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+
+
+
+<!-- JSON-LD: BlogPosting + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop.",
+  "description": "A customer paid $8,400 but the CRM showed $400. We handed the bug to an AI on APIANT and let it diagnose, rebuild, and test the fix end to end.",
+  "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.avif",
+  "datePublished": "2026-07-02T14:24:37+00:00",
+  "dateModified": "2026-07-02T14:26:21.91586+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Fred Lumiere",
+    "url": "https://apiant.com/blog/?author=fred"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIANT",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://apiant.com/images/APIANT-LOGO-V4-Dark-Mode.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/"
+  },
+  "articleSection": "For Builders"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://apiant.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://apiant.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "For Builders", "item": "https://apiant.com/blog/category/for-builders" },
+    { "@type": "ListItem", "position": 4, "name": "We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop.", "item": "https://apiant.com/blog/posts/ai-fixed-a-multi-payment-sync-bug/" }
+  ]
+}
+</script>
+</head>
+<body class="blog-shell">
+<div class="blog-progress" id="blog-progress"></div>
+<!-- Blog nav: streamlined version of main site nav. Absolute paths so it
+     works from /blog/, /blog/posts/{slug}/, and /blog/category/{slug}/.
+     Includes the same .lang-switcher shell as the main site; populated by /js/i18n.js. -->
+<header class="blog-nav" style="position:sticky;top:0;z-index:50;background:rgba(12,12,12,0.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);">
+  <div class="blog-container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+    <a href="/" style="display:flex;align-items:center;text-decoration:none;">
+      <img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:24px;"/>
+    </a>
+    <nav style="display:flex;align-items:center;gap:24px;font-family:'DM Sans',sans-serif;font-size:14px;">
+      <a href="/blog/" style="color:#f7f8f8;text-decoration:none;font-weight:500;">Blog</a>
+      <a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+      <a href="/apps" style="color:rgba(247,248,248,0.7);text-decoration:none;">Connectors</a>
+
+      <!--
+        Blog-scoped language switcher. Class is "blog-lang-switcher" (not
+        the site-wide "lang-switcher") because localize.py's
+        add_language_switcher() decomposes .lang-switcher elements during
+        re-runs. Populated by /js/blog-search.js at runtime.
+      -->
+      <div class="blog-lang-switcher" style="position:relative;display:flex;align-items:center;">
+        <button class="blog-lang-switcher-btn" type="button" aria-haspopup="true" aria-expanded="false" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:border-color 0.2s,color 0.2s;">
+          <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span class="blog-lang-switcher-current">EN</span>
+          <svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="10"><path d="M6 9l6 6 6-6"></path></svg>
+        </button>
+        <div class="blog-lang-switcher-dropdown"></div>
+      </div>
+
+      <a href="/?talk=1" style="display:inline-flex;align-items:center;padding:8px 18px;background:linear-gradient(135deg,#0d7a3a,#1ab759);color:#fff;border-radius:8px;text-decoration:none;font-weight:500;">Start Building</a>
+    </nav>
+  </div>
+</header>
+<style>
+  .blog-lang-switcher-btn:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
+  .blog-lang-switcher-dropdown { display:none; position:absolute; top:calc(100% + 4px); right:0; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:4px; min-width:170px; z-index:9999; max-height:420px; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .blog-lang-switcher-dropdown.open { display: block; }
+  .blog-lang-switcher-dropdown a { display:block; padding:8px 12px; color:rgba(255,255,255,0.85); text-decoration:none; font-size:13px; border-radius:6px; transition:background 0.15s; }
+  .blog-lang-switcher-dropdown a:hover { background:rgba(26,183,89,0.15); color:#fff; }
+  .blog-lang-switcher-dropdown a.current { color:#1ab759; }
+</style>
+
+
+<article>
+  <div class="blog-container">
+    <header class="blog-post-hero">
+      <div class="blog-category-chip">
+        <a href="/blog/category/for-builders" style="color:inherit;text-decoration:none;">For Builders</a>
+      </div>
+      <h1 class="blog-post-h1">We Gave an AI a Support Ticket. It Rebuilt the Integration and Closed the Loop.</h1>
+      <p class="blog-post-subtitle">How Claude Code and APIANT turned a messy multi-payment sync bug into a verified fix, with a human only signing off at the very end.</p>
+      <div class="blog-post-meta">
+        <span class="notranslate"><a href="/blog/?author=fred">Fred Lumiere</a></span>
+        <span>Jul 2, 2026</span>
+        <span>5 min read</span>
+      </div>
+      <div class="blog-post-tags"><a class="blog-tag" href="/blog/?tag=mindbody">#Mindbody</a><a class="blog-tag" href="/blog/?tag=hubspot">#HubSpot</a><a class="blog-tag" href="/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/blog/?tag=ai-copilot">#AI Co-Pilot</a></div>
+    </header>
+
+    <div class="blog-post-hero-image"><img alt="A single mis-valued transaction glowing red among rows of correct green transactions, with an AI presence reaching in to correct it." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.avif"/></div>
+
+    <div class="blog-article-layout">
+      <div class="blog-article" id="blog-article">
+        <p><em>How Claude Code and APIANT turned a messy multi-payment sync bug into a verified fix, with a human only signing off at the very end.</em></p>
+<p>A customer paid about $8,400 at the front desk. The deal in the CRM showed $400. Nothing had thrown an error, nothing looked broken, and most sales were syncing fine. This one just quietly lost most of its value somewhere between Mindbody and HubSpot.</p>
+<p>Those are the worst kind of bugs: the ones hiding in the 2% of transactions that are a little unusual. We handed this one to an AI and let it drive the whole thing, from diagnosis to a tested fix to the customer reply. Here is how it went.</p>
+<h2 id="the-ticket">The ticket</h2>
+<p>A boutique fitness studio wrote in with a small, annoying mystery. Most of their sales flowed from Mindbody to HubSpot without a hitch. This one deal did not.</p>
+<p>The culprit turned out to be sales paid in more than one way. Split a payment across a card and an account balance, and the old sync read from a report that did not include every tender. So the deal came through with a fraction of what the customer actually paid.</p>
+<h2 id="why-this-is-normally-a-slow-painful-fix">Why this is normally a slow, painful fix</h2>
+<p>A bug like this usually eats days of engineering time. Someone has to reconstruct how the integration works, figure out which of several sync paths is at fault, change the logic without breaking the paths that already work, then test it against a live system that is genuinely hard to poke at. Point of sale software does not exactly hand you a sandbox with a &ldquo;make a weird split-payment sale&rdquo; button.</p>
+<p>So it tends to sit. The customer waits. The fix is risky. Everyone is a little nervous about touching a working integration.</p>
+<h2 id="we-handed-it-to-the-ai-instead">We handed it to the AI instead</h2>
+<p>We gave the ticket to Claude Code running on APIANT and let it work. Not &ldquo;suggest a code snippet.&rdquo; Actually work: read the integration, understand it, change it, test it against the real Mindbody account, and report back. Here is what it did, without a human writing a line of code.</p>
+<p><strong>It found the real cause.</strong> It traced the problem to three separate issues hiding behind one symptom: the sync was reading from a report that dropped some payment types, multi-item sales were being counted incorrectly, and a couple of sales could collide on the same identifier.</p>
+<p><strong>It rebuilt the integration properly.</strong> Instead of a quick patch, it refactored the deal logic into one shared component used by both the instant sync (fires the moment a sale happens) and the nightly catch-up sync. Same logic, two triggers, no more drift between them. It moved both onto a richer data source that actually includes every payment, including account and membership balances.</p>
+<p><strong>It made it fast at scale.</strong> It added a cache so the nightly job does not re-run slow lookups over thousands of past sales. First pass builds the cache; every pass after that skips the expensive search.</p>
+<p><strong>It added the detail the customer wanted.</strong> Each deal now records the payment method used, so the studio can see at a glance how a sale was paid.</p>
+<h2 id="then-it-tested-on-the-real-system">Then it tested on the real system</h2>
+<p>This is the part that still feels a little like science fiction.</p>
+<p>The AI opened the actual Mindbody point of sale in a browser and rang up test sales itself. One item paid one way. One item split across two payments. Several items on one payment. Several items split across payments. A walk-in with no client record. It clicked through the register like a staff member would.</p>
+<p>Then it watched each sale flow through the integration and read the results line by line. Did the right number of deals get created? Did the amounts add up to the sale total? Did the payment method show up? Did running the sync twice create duplicates, or did it correctly recognize it had already handled the sale?</p>
+<p>Every branch checked out. The amounts matched. No duplicates. The payment methods landed.</p>
+<h2 id="it-caught-its-own-mistake">It caught its own mistake</h2>
+<p>Partway through, one of its own changes introduced a small regression. A new field was not wired up correctly, and it quietly broke new deal creation.</p>
+<p>The AI noticed, because it was reading the live execution data instead of assuming its work was correct. It found the exact cause, fixed the wiring, re-ran the real failing sale, and confirmed the fix produced the right result, documenting the whole thing along the way.</p>
+<p>That is the difference between generating code and owning an outcome.</p>
+<h2 id="it-closed-the-loop-with-the-customer">It closed the loop with the customer</h2>
+<p>When the fix was verified, the AI wrote the reply to the customer in plain language: what was happening, why the amount looked wrong, what changes now, and the reassurance that past sales would self-correct on the next sync. It staged that message on the ticket, ready to go.</p>
+<p>A human read it, agreed, and sent it. A human also gave the final go to publish the change to production. That is on purpose. The AI does the heavy, precise, tireless work. People keep their hand on the two decisions that should always be human: what we say to a customer, and what goes live.</p>
+<h2 id="why-apiant-makes-this-possible">Why APIANT makes this possible</h2>
+<p>An AI can only operate what it can see and touch. Most integration platforms are a black box, so the AI is stuck writing suggestions from the outside.</p>
+<p>APIANT is built the other way around. Every integration is made of parts the AI can actually inspect, edit, and run: the automations, the shared subroutines, the field mappings, the live execution history, the cached values. The AI can change one piece, run it, read exactly what happened at each step, and adjust. Pair that with browser control of the source system, and it can test against reality instead of guessing.</p>
+<p>That combination is what let one messy real-world ticket turn into a full, verified refactor.</p>
+<h2 id="the-takeaway">The takeaway</h2>
+<p>This was not a toy problem. It was a subtle, multi-cause bug in a live integration between two serious systems, the kind that normally means a nervous engineer and a slow week.</p>
+<p>An AI took it end to end. It diagnosed the real cause, rebuilt the integration the right way, tested every path against the real point of sale, caught and fixed its own error, and drafted the customer response. People stepped in only to approve the message and the deploy.</p>
+<p>That is where this is heading. Not AI that writes a bit of code for you, but AI that takes a hard, specific problem and drives it all the way to a working, tested solution on a platform built for exactly that. If you have integrations that are almost right, or bugs that only show up in the weird 2% of cases, this is what solving them is starting to look like.</p>
+<p><a href="/?talk=1">Talk to us about APIANT</a></p>
+        <aside class="blog-apps-cta"><div class="blog-apps-cta-heading">Browse the full API Apps catalog</div><div class="blog-apps-cta-grid"><a class="blog-apps-cta-card" href="/apipartners/mindbody-turnkey-integration-solutions"><span class="blog-apps-cta-name">Mindbody Solutions</span><span class="blog-apps-cta-desc">Fitness and wellness integrations</span><span class="blog-apps-cta-arrow">Explore &rarr;</span></a><a class="blog-apps-cta-card" href="/apipartners/cliniko-turnkey-integration-solutions"><span class="blog-apps-cta-name">Cliniko Solutions</span><span class="blog-apps-cta-desc">Healthcare and allied-health integrations</span><span class="blog-apps-cta-arrow">Explore &rarr;</span></a><a class="blog-apps-cta-card" href="/apipartners/donorperfect-turnkey-integration-solutions"><span class="blog-apps-cta-name">DonorPerfect Solutions</span><span class="blog-apps-cta-desc">Nonprofit and fundraising integrations</span><span class="blog-apps-cta-arrow">Explore &rarr;</span></a></div></aside>
+      </div>
+      <aside class="blog-toc"><div class="blog-toc-heading">In this article</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-ticket">The ticket</a></li><li class="lvl-2"><a href="#why-this-is-normally-a-slow-painful-fix">Why this is normally a slow, painful fix</a></li><li class="lvl-2"><a href="#we-handed-it-to-the-ai-instead">We handed it to the AI instead</a></li><li class="lvl-2"><a href="#then-it-tested-on-the-real-system">Then it tested on the real system</a></li><li class="lvl-2"><a href="#it-caught-its-own-mistake">It caught its own mistake</a></li><li class="lvl-2"><a href="#it-closed-the-loop-with-the-customer">It closed the loop with the customer</a></li><li class="lvl-2"><a href="#why-apiant-makes-this-possible">Why APIANT makes this possible</a></li><li class="lvl-2"><a href="#the-takeaway">The takeaway</a></li></ul></aside>
+    </div>
+
+    <section class="blog-related"><h2 class="blog-related-heading">Keep reading</h2><div class="blog-grid"><a class="blog-card" data-tags="ai-copilot for-saas bi-directional-sync" href="/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/"><div class="blog-card-image"><img alt="An AI presence follows a single bright thread backward past intact cables to a separate third-party app, the true source of the change" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">For Builders</div><h3 class="blog-card-title">The &quot;Bug&quot; That Wasn&#x27;t: How AI Found the Needle in the Haystack and Cleared Our Integration in Minutes</h3><p class="blog-card-excerpt">A high-value customer was certain our integration had scrambled their data and asked us to switch it off. With AI wired into every layer of the platform, we traced one record&#x27;s full history and proved the change came from an upstream third-party app, with evidence, in minutes.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Jun 12, 2026</span></div></div></a><a class="blog-card" data-tags="mindbody hubspot zoho-crm crmconnect" href="/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"><div class="blog-card-image"><img alt="Split-frame illustration: a support ticket and a GitHub issue card on the left, a web of connected automation nodes on the right, joined by a single green line." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif?v=3"/></div><div class="blog-card-body"><div class="blog-category-chip">For Builders</div><h3 class="blog-card-title">AI-First Integration Engineering With Claude Code: A Real Debug Session</h3><p class="blog-card-excerpt">A real APIANT debugging session, with the actual prompts. Watch an AI read a sibling integration and four years of version history, and watch a builder&#x27;s hunch stop a regression the codebase never recorded.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>May 20, 2026</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="Auto create HubSpot properties from a CSV" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">For Builders</div><h3 class="blog-card-title">Auto-Create HubSpot Properties From a CSV With Claude Code</h3><p class="blog-card-excerpt">How to auto-create HubSpot properties (contact, deal or company) using this free import automation built on APIANT.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>Sep 18, 2024</span></div></div></a></div></section>
+  </div>
+</article>
+
+<div id="blog-particles" aria-hidden="true"></div>
+<script src="/js/particles.min.js" defer></script>
+<script src="/js/blog-particles.js?v=20260616" defer></script>
+<script src="/js/blog-video.js?v=20260616" defer></script>
+<footer class="blog-footer" style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 0 32px;margin-top:64px;">
+  <div class="blog-container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-family:'DM Sans',sans-serif;">
+    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+      <a href="/" style="display:inline-block;">
+        <img alt="APIANT" src="/images/APIANT-LOGO-V4-Dark-Mode.svg" style="height:22px;display:block;"/>
+      </a>
+      <p style="font-size:12px;color:rgba(247,248,248,0.4);margin:0;">© 2026, Apiant, Inc. All Rights Reserved.</p>
+    </div>
+    <div style="display:flex;gap:24px;font-size:13px;">
+      <a href="/blog/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Blog</a>
+      <a href="/platform/" style="color:rgba(247,248,248,0.7);text-decoration:none;">Platform</a>
+      <a href="/privacy" style="color:rgba(247,248,248,0.5);text-decoration:none;">Privacy</a>
+      <a href="/tos" style="color:rgba(247,248,248,0.5);text-decoration:none;">Terms</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- blog-search.js carries buildLangSwitcher (populates the language
+     dropdown + sets the current-locale label). It early-returns past the
+     search/pagination code when there's no search input, so it is safe
+     and cheap on post pages. Fuse.js is not loaded here: search is
+     hub/category-only and blog-search.js never references Fuse unless a
+     search actually runs. -->
+<script src="/js/blog-search.js?v=20260616" defer></script>
+<script src="/js/i18n.js" defer></script>
+<script>
+  // Scroll progress bar
+  (function() {
+    var bar = document.getElementById('blog-progress');
+    var article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) { bar.style.transform = 'scaleX(0)'; return; }
+      var scrolled = Math.max(0, -rect.top);
+      var pct = Math.min(1, scrolled / total);
+      bar.style.transform = 'scaleX(' + pct + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // TOC active section highlight
+  (function() {
+    var toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+    var links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    var headings = links.map(function(a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    }).filter(Boolean);
+    if (!headings.length) return;
+    function update() {
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top < 120) active = headings[i];
+      }
+      links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+</body>
+</html>
