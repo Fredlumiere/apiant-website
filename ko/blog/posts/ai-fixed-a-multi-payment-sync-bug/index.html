@@ -39,7 +39,7 @@
   "description": "A customer paid $8,400 but the CRM showed $400. We handed the bug to an AI on APIANT and let it diagnose, rebuild, and test the fix end to end.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.avif",
   "datePublished": "2026-07-02T14:24:37+00:00",
-  "dateModified": "2026-07-02T14:52:43.730381+00:00",
+  "dateModified": "2026-07-02T15:03:10.525037+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -201,7 +201,7 @@
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/ko/blog/?author=fred">Fred Lumiere</a></span>
 <span>2026년 7월 2일</span>
-<span>읽는 데 6분 소요</span>
+<span>7분 읽기</span>
 </div>
 <div class="blog-post-tags"><a class="blog-tag" href="/ko/blog/?tag=mindbody">#심신</a><a class="blog-tag" href="/ko/blog/?tag=hubspot">#허브스팟</a><a class="blog-tag" href="/ko/blog/?tag=crmconnect">#CRMConnect</a><a class="blog-tag" href="/ko/blog/?tag=ai-copilot">#AI 부조종사</a></div>
 </header>
@@ -219,23 +219,29 @@
 <p>이런 버그는 보통 엔지니어링 시간을 며칠씩 잡아먹습니다. 누군가는 통합 작동 방식을 재구성하고, 여러 동기화 경로 중 어떤 경로에 문제가 있는지 파악하고, 이미 작동하는 경로를 손상시키지 않고 로직을 수정하고, 실제 운영 환경에서 테스트해야 하는데, 이 시스템은 함부로 건드리기 어렵습니다. POS(판매 시점 관리) 소프트웨어는 "이상한 분할 결제를 만들어 보세요" 버튼이 있는 샌드박스를 제공하지 않습니다.</p>
 <p>그래서 문제가 해결되지 않고 그대로 남아 있는 경우가 많습니다. 고객은 기다리고, 수정은 위험 부담이 있습니다. 제대로 작동하는 통합 기능을 건드리는 것은 누구에게나 다소 불안한 일입니다.</p>
 <h2 id="we-handed-it-to-the-ai-instead">우리는 그것을 인공지능에게 맡겼습니다.</h2>
+<p><img alt="AI가 복잡하게 얽힌 통합 파이프라인을 하나의 깔끔한 공유 구성 요소로 재구성하고, 이를 즉시 동기화와 야간 동기화로 분리합니다." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/rebuild.avif"/></p>
 <p>저희는 APIANT에서 실행되는 Claude Code에게 티켓을 넘겨주고 직접 작동하도록 했습니다. 단순히 "코드 스니펫 제안"을 하는 것이 아니라, 실제로 작동하도록 한 것입니다. 즉, 통합 내용을 읽고, 이해하고, 수정하고, 실제 Mindbody 계정으로 테스트한 후 결과를 보고하도록 했습니다. 그 결과, 사람이 한 줄도 작성하지 않고 다음과 같은 작업을 수행했습니다.</p>
 <p><strong>그것은 진짜 원인을 찾아냈습니다.</strong> 이 문제는 하나의 증상 뒤에 숨겨진 세 가지 별개의 문제로 밝혀졌습니다. 동기화 과정에서 일부 결제 유형이 누락된 보고서를 읽어들이고 있었고, 여러 품목이 포함된 판매가 잘못 계산되었으며, 여러 판매가 동일한 식별자를 사용하여 충돌할 수 있었습니다.</p>
 <p><strong>통합 기능을 제대로 재구축했습니다.</strong> 임시방편적인 패치 대신, 거래 로직을 즉시 동기화(판매 발생 즉시 실행)와 야간 동기화 모두에서 사용되는 하나의 공유 컴포넌트로 재구성했습니다. 동일한 로직에 두 개의 트리거만 사용하므로 동기화 간의 차이가 더 이상 발생하지 않습니다. 또한, 모든 결제 내역과 계정 및 멤버십 잔액을 포함하는 더욱 풍부한 데이터 소스를 기반으로 동기화를 진행했습니다.</p>
 <p><strong>덕분에 대규모 생산을 빠르게 처리할 수 있었습니다.</strong> 이 기능은 야간 작업에서 수천 건의 과거 판매 내역에 대한 느린 조회 작업을 반복하지 않도록 캐시를 추가했습니다. 첫 번째 실행에서는 캐시를 구축하고, 이후의 모든 실행에서는 비용이 많이 드는 검색을 건너뜁니다.</p>
 <p><strong>고객이 원했던 세부 정보를 추가했습니다.</strong> 이제 모든 거래에 사용된 결제 방식이 기록되므로 스튜디오는 판매 대금이 어떻게 지불되었는지 한눈에 확인할 수 있습니다.</p>
 <h2 id="then-it-tested-on-the-real-system">그런 다음 실제 시스템에서 테스트를 진행했습니다.</h2>
+<p><img alt="인공지능 손이 POS 단말기를 누르는 동안 일련의 거래가 진행되고, 각 거래에는 녹색 체크 표시가 나타납니다." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/tested.avif"/></p>
 <p>이 부분은 여전히 약간 공상 과학 소설처럼 느껴집니다.</p>
 <p>AI는 웹 브라우저에서 Mindbody POS 시스템을 열고 직접 테스트 판매를 진행했습니다. 한 품목은 한 번에 결제했고, 한 품목은 두 번에 나눠서 결제했습니다. 여러 품목을 한 번에 결제하기도 했고, 여러 품목을 나눠서 결제하기도 했습니다. 고객 정보가 없는 방문 고객의 경우에도 직원처럼 계산대를 빠르게 이동하며 결제를 처리했습니다.</p>
 <p>그런 다음 통합 시스템을 통해 흐르는 각 판매를 모니터링하고 결과를 한 줄씩 읽었습니다. 올바른 수의 거래가 생성되었는지, 금액 합계가 총 판매액과 일치하는지, 결제 수단이 표시되는지, 동기화를 두 번 실행하여 중복이 발생하는지, 아니면 이미 처리된 판매임을 정확하게 인식하는지 등을 확인했습니다.</p>
 <p>모든 지점 확인 완료. 금액 일치. 중복 없음. 결제 수단 승인 완료.</p>
 <h2 id="it-caught-its-own-mistake">스스로의 실수를 알아챘다.</h2>
+<p><img alt="빛나는 손이 데이터 파이프라인의 끊어진 연결을 다시 만드는 모습을 지켜보는 인공지능의 눈은 자체적인 회귀 오류를 포착합니다." src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/mistake.avif"/></p>
 <p>진행 도중 자체 변경 사항 중 하나로 인해 작은 오류가 발생했습니다. 새 필드가 제대로 연결되지 않아 새로운 거래 생성 기능이 조용히 작동하지 않게 된 것입니다.</p>
 <p>인공지능은 실시간 실행 데이터를 분석했기 때문에, 자신들의 분석이 정확하다고 가정하는 대신 오류를 감지할 수 있었습니다. 정확한 원인을 찾아내고, 문제를 해결한 후, 실제로 실패했던 거래를 다시 실행하여 수정 사항이 올바른 결과를 가져왔음을 확인하고, 그 과정 전체를 기록했습니다.</p>
 <p>그것이 바로 코드를 생성하는 것과 결과물을 소유하는 것의 차이입니다.</p>
 <h2 id="it-closed-the-loop-with-the-customer">고객과의 소통 과정을 마무리 지었습니다.</h2>
 <p>수정 사항이 확인되면 AI는 고객에게 명확하고 이해하기 쉬운 언어로 답변을 작성했습니다. 무슨 일이 일어나고 있는지, 금액이 왜 잘못 표시되었는지, 어떤 변화가 있는지, 그리고 이전 판매 내역은 다음 동기화 시 자동으로 수정될 것이라는 안심시키는 내용 등을 담았습니다. 그리고 해당 메시지를 티켓에 저장해 두었다가 필요할 때 바로 전송할 수 있도록 했습니다.</p>
 <p>사람이 직접 읽고, 승인하고, 전송했습니다. 최종적으로 변경 사항을 실제 운영 환경에 배포할지 여부도 사람이 결정했습니다. 이는 의도적인 것입니다. AI는 무겁고 정확하며 지칠 줄 모르는 작업을 수행합니다. 하지만 고객에게 전달할 내용과 실제로 적용할 내용, 이 두 가지 결정은 항상 사람이 내려야 하는 부분입니다.</p>
+<h2 id="one-fix-every-customer">하나의 해결책으로 모든 고객</h2>
+<p>만약 당신이 통합 개발을 직업으로 삼고 있다면, 이 부분이 중요할 것입니다. 이것은 단 하나의 계정에만 적용된 일회성 스크립트가 아닙니다. Mindbody와 HubSpot 간의 동기화는 제품화된 솔루션입니다. <a href="/apipartners/mindbody/mindbody-hubspot-integration-and-automation-apiant">API 앱</a>하나의 통합 시스템이 구축되고 단일 위치에서 유지 관리되며, 이를 사용하는 모든 고객에게 적용됩니다. 따라서 AI가 거래 로직을 재구축했을 때, 특정 스튜디오 하나만 수정된 것이 아닙니다. 해당 통합 시스템을 사용하는 모든 고객의 분할 결제 문제를 해결했으며, 모든 신규 고객은 첫날부터 수정된 버전을 사용하게 됩니다.</p>
+<p>이것이 바로 시스템 통합업체들이 끊임없이 요구하는 모델입니다. 솔루션을 한 번 구축하고, 여러 번 판매하며, 한 곳에서만 개선하는 것입니다. 이러한 방식은 전체 설치 기반의 제품 품질을 한 번에 향상시켜, 제품화된 통합 솔루션을 고객별 맞춤형 작업이 아닌, 지속적인 수익을 창출하는 자산으로 만들어 줍니다. 고객별 맞춤형 작업은 규모가 커질수록 더욱 취약해지기만 합니다.</p>
 <h2 id="why-apiant-makes-this-possible">APIANT가 이를 가능하게 하는 이유</h2>
 <p>AI는 보고 만질 수 있는 것만 조작할 수 있습니다. 대부분의 통합 플랫폼은 블랙박스이기 때문에 AI는 외부에서 정보를 받아 제안을 작성하는 데 그칠 수밖에 없습니다.</p>
 <p>APIANT는 정반대로 설계되었습니다. 모든 통합은 AI가 실제로 검사, 편집 및 실행할 수 있는 구성 요소로 이루어져 있습니다. 자동화, 공유 서브루틴, 필드 매핑, 실시간 실행 기록, 캐시된 값 등이 여기에 포함됩니다. AI는 구성 요소 하나를 변경하고 실행하여 각 단계에서 발생한 정확한 내용을 읽고 조정할 수 있습니다. 여기에 소스 시스템에 대한 브라우저 제어 기능을 더하면 추측이 아닌 실제 상황을 기반으로 테스트할 수 있습니다.</p>
@@ -247,7 +253,7 @@
 <p><a href="/?talk=1">APIANT에 대해 이야기해 보세요.</a></p>
 <aside class="blog-trial-cta"><div class="blog-trial-cta-eyebrow">APIANT로 빌드하세요</div><h2 class="blog-trial-cta-title">AI를 활용하여 통합 작업을 효율적으로 처리하세요.</h2><p class="blog-trial-cta-text">APIANT는 AI에게 자동화, 공유 서브루틴, 필드 매핑, 실시간 실행 데이터 등 통합의 모든 계층에 대한 실질적인 접근 권한을 제공합니다. 연결하려는 내용을 알려주시면 해당 스택에서 어떻게 구현되는지 보여드리겠습니다.</p><a class="blog-trial-cta-btn" href="/?talk=1">구축 시작 <span aria-hidden="true">→</span></a></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-ticket">티켓</a></li><li class="lvl-2"><a href="#why-this-is-normally-a-slow-painful-fix">이것이 일반적으로 느리고 고통스러운 해결책이 되는 이유</a></li><li class="lvl-2"><a href="#we-handed-it-to-the-ai-instead">우리는 그것을 인공지능에게 맡겼습니다.</a></li><li class="lvl-2"><a href="#then-it-tested-on-the-real-system">그런 다음 실제 시스템에서 테스트를 진행했습니다.</a></li><li class="lvl-2"><a href="#it-caught-its-own-mistake">스스로의 실수를 알아챘다.</a></li><li class="lvl-2"><a href="#it-closed-the-loop-with-the-customer">고객과의 소통 과정을 마무리 지었습니다.</a></li><li class="lvl-2"><a href="#why-apiant-makes-this-possible">APIANT가 이를 가능하게 하는 이유</a></li><li class="lvl-2"><a href="#the-takeaway">핵심 요약</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">이 기사에서</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-ticket">티켓</a></li><li class="lvl-2"><a href="#why-this-is-normally-a-slow-painful-fix">이것이 일반적으로 느리고 고통스러운 해결책이 되는 이유</a></li><li class="lvl-2"><a href="#we-handed-it-to-the-ai-instead">우리는 그것을 인공지능에게 맡겼습니다.</a></li><li class="lvl-2"><a href="#then-it-tested-on-the-real-system">그런 다음 실제 시스템에서 테스트를 진행했습니다.</a></li><li class="lvl-2"><a href="#it-caught-its-own-mistake">스스로의 실수를 알아챘다.</a></li><li class="lvl-2"><a href="#it-closed-the-loop-with-the-customer">고객과의 소통 과정을 마무리 지었습니다.</a></li><li class="lvl-2"><a href="#one-fix-every-customer">하나의 해결책으로 모든 고객</a></li><li class="lvl-2"><a href="#why-apiant-makes-this-possible">APIANT가 이를 가능하게 하는 이유</a></li><li class="lvl-2"><a href="#the-takeaway">핵심 요약</a></li></ul></aside>
 </div>
 <section class="blog-related"><h2 class="blog-related-heading">계속 읽어보세요</h2><div class="blog-grid"><a class="blog-card" data-tags="ai-copilot for-saas bi-directional-sync" href="/ko/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/"><div class="blog-card-image"><img alt="AI는 하나의 명확한 실마리를 따라 손상되지 않은 케이블을 지나 별도의 타사 앱까지 거슬러 올라가는데, 이것이 변화의 진정한 원인입니다." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">건축업자를 위한</div><h3 class="blog-card-title">"버그"였지만 실제로는 버그가 아니었던 사례: AI가 건초 더미에서 바늘을 찾아내고 단 몇 분 만에 통합 작업을 완료한 방법</h3><p class="blog-card-excerpt">중요한 고객 한 분이 저희 통합 시스템으로 인해 데이터가 손상되었다고 확신하며 시스템을 꺼달라고 요청했습니다. 플랫폼의 모든 계층에 AI가 탑재되어 있었기 때문에, 저희는 단 몇 분 만에 해당 기록의 전체 이력을 추적하여 상위 타사 앱에서 변경 사항이 발생했음을 증거와 함께 입증할 수 있었습니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 6월 12일</span></div></div></a><a class="blog-card" data-tags="mindbody hubspot zoho-crm crmconnect" href="/ko/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"><div class="blog-card-image"><img alt="분할 화면 일러스트레이션: 왼쪽에는 지원 티켓과 GitHub 이슈 카드가 있고, 오른쪽에는 하나의 녹색 선으로 연결된 자동화 노드들의 네트워크가 있습니다." loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif?v=3"/></div><div class="blog-card-body"><div class="blog-category-chip">건축업자를 위한</div><h3 class="blog-card-title">Claude Code를 활용한 AI 우선 통합 엔지니어링: 실제 디버깅 세션</h3><p class="blog-card-excerpt">실제 프롬프트가 표시되는 APIANT 디버깅 세션을 확인해 보세요. AI가 다른 통합 기능과 4년간의 버전 기록을 분석하는 모습, 그리고 개발자의 직감이 코드베이스에 기록되지 않았던 회귀 오류를 막는 모습을 지켜보세요.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026년 5월 20일</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/ko/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="CSV 파일에서 HubSpot 속성을 자동으로 생성합니다." loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">건축업자를 위한</div><h3 class="blog-card-title">Claude 코드를 사용하여 CSV 파일에서 HubSpot 속성을 자동으로 생성하세요</h3><p class="blog-card-excerpt">APIANT 기반의 무료 가져오기 자동화 도구를 사용하여 HubSpot 속성(연락처, 거래 또는 회사)을 자동으로 생성하는 방법입니다.</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2024년 9월 18일</span></div></div></a></div></section>
 </div>

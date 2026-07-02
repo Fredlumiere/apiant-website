@@ -39,7 +39,7 @@
   "description": "A customer paid $8,400 but the CRM showed $400. We handed the bug to an AI on APIANT and let it diagnose, rebuild, and test the fix end to end.",
   "image": "https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/hero.avif",
   "datePublished": "2026-07-02T14:24:37+00:00",
-  "dateModified": "2026-07-02T14:52:43.730381+00:00",
+  "dateModified": "2026-07-02T15:03:10.525037+00:00",
   "author": {
     "@type": "Person",
     "name": "Fred Lumiere",
@@ -201,7 +201,7 @@
 <div class="blog-post-meta">
 <span class="notranslate"><a href="/zh/blog/?author=fred">Fred Lumiere</a></span>
 <span>2026年7月2日</span>
-<span>阅读时间：6分钟</span>
+<span>阅读时间：7分钟</span>
 </div>
 <div class="blog-post-tags"><a class="blog-tag" href="/zh/blog/?tag=mindbody">#身心</a><a class="blog-tag" href="/zh/blog/?tag=hubspot">#HubSpot</a><a class="blog-tag" href="/zh/blog/?tag=crmconnect">#CRM连接</a><a class="blog-tag" href="/zh/blog/?tag=ai-copilot">#人工智能副驾驶</a></div>
 </header>
@@ -219,23 +219,29 @@
 <p>像这样的 bug 通常会耗费工程师数天的时间。必须有人重构集成机制，找出多个同步路径中的哪一个出了问题，在不破坏现有路径的前提下修改逻辑，然后在真正难以测试的线上系统上进行测试。销售点软件可不会给你提供一个带有“创建奇怪的分期付款销售”按钮的沙盒环境。</p>
 <p>所以问题就一直搁置着。客户只能等待。修复风险很大。每个人都对动一个已经运行的集成系统有点忐忑。</p>
 <h2 id="we-handed-it-to-the-ai-instead">我们把它交给了人工智能。</h2>
+<p><img alt="人工智能将错综复杂的集成管道重构为一个清晰的共享组件，该组件分为即时同步和夜间同步两个部分。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/rebuild.avif"/></p>
 <p>我们把工单交给了运行在 APIANT 上的 Claude Code，然后让它运行。不是“提供一段代码片段”，而是真正地运行：阅读集成文档，理解它，修改它，用真实的 Mindbody 账户进行测试，然后反馈结果。以下是它完成的工作，全程无需人工编写任何代码。</p>
 <p><strong>它找到了真正的原因。</strong> 它追溯到三个隐藏在一个症状背后的独立问题：同步正在读取一份遗漏了某些付款类型的报告，多件商品销售的计数不正确，以及几笔销售可能因同一个标识符而发生冲突。</p>
 <p><strong>它正确地重建了集成。</strong> 它没有采用简单的修补方案，而是将交易逻辑重构为一个共享组件，供即时同步（销售发生时立即触发）和夜间补录同步使用。相同的逻辑，两个触发器，不再存在数据偏差。它将两者都迁移到了一个更丰富的数据源，该数据源实际上包含了所有付款信息，包括账户余额和会员余额。</p>
 <p><strong>它实现了规模化快速传输。</strong> 它添加了一个缓存，这样夜间作业就不会重复执行耗时的查询，从而避免对成千上万条历史销售记录进行重复查找。第一次运行会构建缓存；之后每次运行都会跳过耗时的搜索。</p>
 <p><strong>它添加了客户想要的细节。</strong> 现在每笔交易都会记录所使用的付款方式，因此工作室可以一目了然地看到销售是如何支付的。</p>
 <h2 id="then-it-tested-on-the-real-system">然后它在实际系统上进行了测试。</h2>
+<p><img alt="一只人工智能手按下销售终端，源源不断地产生交易，每笔交易都以绿色对勾标记进行验证。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/tested.avif"/></p>
 <p>这部分仍然感觉有点像科幻小说。</p>
 <p>人工智能在浏览器中打开了Mindbody的实际销售点系统，并自行进行了测试结账。测试包括：一件商品一次性付款；一件商品分两次付款；多件商品一次性付款；多件商品分多次付款；以及一位没有客户记录的顾客直接到店。它像店员一样完成了收银操作。</p>
 <p>然后，它监控每笔销售在集成过程中的流转，并逐行读取结果。创建的交易数量是否正确？金额加起来是否等于销售总额？付款方式是否显示？运行两次同步是否创建了重复项，或者它是否正确识别出已经处理过该笔销售？</p>
 <p>所有分行都核对过了。金额一致。没有重复项。付款方式也都已到账。</p>
 <h2 id="it-caught-its-own-mistake">它发现了自己的错误</h2>
+<p><img alt="人工智能之眼注视着一只发光的手重新连接数据管道中断裂的环节，并发现了自身的倒退。" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/ai-fixed-a-multi-payment-sync-bug/mistake.avif"/></p>
 <p>过程中，自身的一项改动导致了一个小的倒退。一个新字段的连接不正确，悄无声息地破坏了新交易的创建功能。</p>
 <p>人工智能之所以能发现问题，是因为它读取的是实时执行数据，而不是想当然地认为自己的工作已经正确。它找到了问题的确切原因，修复了线路，重新执行了失败的交易，并确认修复后的结果正确无误，同时还记录了整个过程。</p>
 <p>这就是编写代码和拥有最终结果之间的区别。</p>
 <h2 id="it-closed-the-loop-with-the-customer">它与客户形成了闭环。</h2>
 <p>修复方案确认无误后，人工智能会用通俗易懂的语言回复客户：说明发生了什么，金额为何显示错误，现在有哪些变化，并保证之前的销售数据会在下次同步时自动更正。系统会将这条消息添加到工单中，随时可以发送。</p>
 <p>有人审阅了内容，表示同意，然后发送。最终发布到生产环境的变更也由人审核通过。这是有意为之。人工智能负责繁重、精确且不知疲倦的工作。而人则始终把持着两项应该由人来做的决定：如何与客户沟通，以及哪些内容最终上线。</p>
+<h2 id="one-fix-every-customer">一次修复，服务每一位客户</h2>
+<p>如果你以构建集成为生，那么以下部分就至关重要了。这并非一个临时脚本，也不是简单地附加到单个账户上。Mindbody 到 HubSpot 的同步是一个产品化的解决方案。 <a href="/apipartners/mindbody/mindbody-hubspot-integration-and-automation-apiant">API 应用</a>：一个集成系统，在单一平台上构建和维护，适用于所有使用该系统的客户。因此，当人工智能重建交易逻辑时，它不仅修复了这一个工作室的问题，还消除了所有使用该集成系统的客户在分期付款方面的差异，并且每个新客户从一开始就能使用修正后的版本。</p>
+<p>这正是系统集成商一直梦寐以求的模式：一次构建解决方案，多次销售，并在一个地方进行改进。这样的改进能够一次性提升所有安装用户的产品质量，这正是将产品化集成转变为真正能够带来持续收入的资产的关键所在，而不是一堆随着规模扩大而变得越来越脆弱的、针对每个客户的定制工作。</p>
 <h2 id="why-apiant-makes-this-possible">APIANT 为何能实现这一点</h2>
 <p>人工智能只能操作它能看到和触摸到的事物。大多数集成平台都是黑匣子，因此人工智能只能从外部编写建议。</p>
 <p>APIANT 的构建方式恰恰相反。每个集成都由 AI 可以实际检查、编辑和运行的部分组成：自动化流程、共享子程序、字段映射、实时执行历史记录和缓存值。AI 可以更改其中一部分，运行它，准确读取每一步发生的情况并进行调整。结合浏览器对源系统的控制，它就可以进行基于实际情况的测试，而不是靠猜测。</p>
@@ -247,7 +253,7 @@
 <p><a href="/?talk=1">请与我们谈谈 APIANT</a></p>
 <aside class="blog-trial-cta"><div class="blog-trial-cta-eyebrow">使用 APIANT 构建</div><h2 class="blog-trial-cta-title">让人工智能助力您的集成工作</h2><p class="blog-trial-cta-text">APIANT 让 AI 真正能够访问您集成中的每一层：自动化流程、共享子程序、字段映射以及实时执行数据。告诉我们您想要连接什么，我们会向您展示它在您的技术栈中是如何实现的。</p><a class="blog-trial-cta-btn" href="/?talk=1">开始构建 <span aria-hidden="true">→</span></a></aside>
 </div>
-<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-ticket">门票</a></li><li class="lvl-2"><a href="#why-this-is-normally-a-slow-painful-fix">为什么这通常是一个缓慢而痛苦的修复过程？</a></li><li class="lvl-2"><a href="#we-handed-it-to-the-ai-instead">我们把它交给了人工智能。</a></li><li class="lvl-2"><a href="#then-it-tested-on-the-real-system">然后它在实际系统上进行了测试。</a></li><li class="lvl-2"><a href="#it-caught-its-own-mistake">它发现了自己的错误</a></li><li class="lvl-2"><a href="#it-closed-the-loop-with-the-customer">它与客户形成了闭环。</a></li><li class="lvl-2"><a href="#why-apiant-makes-this-possible">APIANT 为何能实现这一点</a></li><li class="lvl-2"><a href="#the-takeaway">要点</a></li></ul></aside>
+<aside class="blog-toc"><div class="blog-toc-heading">在本文中</div><ul class="blog-toc-list"><li class="lvl-2"><a href="#the-ticket">门票</a></li><li class="lvl-2"><a href="#why-this-is-normally-a-slow-painful-fix">为什么这通常是一个缓慢而痛苦的修复过程？</a></li><li class="lvl-2"><a href="#we-handed-it-to-the-ai-instead">我们把它交给了人工智能。</a></li><li class="lvl-2"><a href="#then-it-tested-on-the-real-system">然后它在实际系统上进行了测试。</a></li><li class="lvl-2"><a href="#it-caught-its-own-mistake">它发现了自己的错误</a></li><li class="lvl-2"><a href="#it-closed-the-loop-with-the-customer">它与客户形成了闭环。</a></li><li class="lvl-2"><a href="#one-fix-every-customer">一次修复，服务每一位客户</a></li><li class="lvl-2"><a href="#why-apiant-makes-this-possible">APIANT 为何能实现这一点</a></li><li class="lvl-2"><a href="#the-takeaway">要点</a></li></ul></aside>
 </div>
 <section class="blog-related"><h2 class="blog-related-heading">继续阅读</h2><div class="blog-grid"><a class="blog-card" data-tags="ai-copilot for-saas bi-directional-sync" href="/zh/blog/posts/the-bug-that-wasnt-ai-cleared-our-integration/"><div class="blog-card-image"><img alt="人工智能的存在沿着一条清晰的线索，逆着完好的电缆向后追溯，最终指向一个独立的第三方应用程序，这才是真正变革的源头。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/the-bug-that-wasnt-ai-cleared-our-integration/01-hero.avif"/></div><div class="blog-card-body"><div class="blog-category-chip">对于建筑商</div><h3 class="blog-card-title">并非真正的“漏洞”：人工智能如何在茫茫系统中找到关键问题并于几分钟内解决我们的集成难题</h3><p class="blog-card-excerpt">一位重要客户确信我们的集成方案扰乱了他们的数据，并要求我们关闭该方案。由于人工智能已融入平台的每一层，我们仅用了几分钟就追踪到一条记录的完整历史记录，并提供了证据证明更改来自上游的第三方应用程序。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年6月12日</span></div></div></a><a class="blog-card" data-tags="mindbody hubspot zoho-crm crmconnect" href="/zh/blog/posts/the-bug-the-hunch-and-90-versions-of-history/"><div class="blog-card-image"><img alt="分屏插图：左侧是支持工单和 GitHub 问题卡片，右侧是相互连接的自动化节点网络，由一条绿线连接。" loading="lazy" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/posts/the-bug-the-hunch-and-90-versions-of-history/hero.avif?v=3"/></div><div class="blog-card-body"><div class="blog-category-chip">对于建筑商</div><h3 class="blog-card-title">使用 Claude Code 进行 AI 优先集成工程：一次真实的调试会话</h3><p class="blog-card-excerpt">一段真实的 APIANT 调试会话，包含实际的提示信息。观看 AI 读取同级集成和四年的版本历史记录，并见证构建者的直觉如何阻止代码库从未记录过的回归错误。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2026年5月20日</span></div></div></a><a class="blog-card" data-tags="hubspot" href="/zh/blog/posts/auto-create-hubspot-properties-from-a-csv/"><div class="blog-card-image"><img alt="从 CSV 文件自动创建 HubSpot 属性" loading="lazy" src="https://blog.apiant.com/hs-fs/hubfs/HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png?width=1600&amp;name=HubSpot%20Properties%20-%20Google%20Sheets%202024-09-18%20at%2012.19.25%20PM.png"/></div><div class="blog-card-body"><div class="blog-category-chip">对于建筑商</div><h3 class="blog-card-title">使用 Claude Code 从 CSV 文件自动创建 HubSpot 属性</h3><p class="blog-card-excerpt">如何使用基于 APIANT 构建的免费导入自动化功能自动创建 HubSpot 属性（联系人、交易或公司）。</p><div class="blog-card-meta"><span class="notranslate">Fred Lumiere</span><span>2024年9月18日</span></div></div></a></div></section>
 </div>
