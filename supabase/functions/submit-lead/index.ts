@@ -30,6 +30,7 @@ import {
   isValidEmail,
   normalizeCompanyType,
   normalizeEmail,
+  parseEmailBlocklist,
   resolveSource,
 } from "../_shared/leadvalidate.ts";
 
@@ -123,6 +124,16 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ error: "A valid email is required" }),
         { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
+      );
+    }
+    // Known-abusive senders (BLOCKED_EMAILS secret, comma-separated). Treated
+    // like the honeypot: benign success shape, nothing persisted or relayed,
+    // so the sender cannot tell they are blocked.
+    if (parseEmailBlocklist(Deno.env.get("BLOCKED_EMAILS")).has(email)) {
+      logEvent({ evt: "lead_reject", reason: "blocklisted", ip: getClientIp(req), form_id });
+      return new Response(
+        JSON.stringify({ ok: true }),
+        { headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
     if (!isAllowedCompanyType(company_type)) {

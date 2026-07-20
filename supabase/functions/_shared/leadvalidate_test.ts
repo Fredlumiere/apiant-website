@@ -9,8 +9,22 @@ import {
   isValidEmail,
   normalizeCompanyType,
   normalizeEmail,
+  parseEmailBlocklist,
   resolveSource,
 } from "./leadvalidate.ts";
+
+Deno.test("parseEmailBlocklist: normalizes, trims, ignores empties", () => {
+  const s = parseEmailBlocklist(" Spam@Example.com , other@x.io ,, ");
+  assertEquals(s.has("spam@example.com"), true);
+  assertEquals(s.has("other@x.io"), true);
+  assertEquals(s.size, 2);
+});
+
+Deno.test("parseEmailBlocklist: empty or non-string input yields empty set", () => {
+  assertEquals(parseEmailBlocklist("").size, 0);
+  assertEquals(parseEmailBlocklist(undefined).size, 0);
+  assertEquals(parseEmailBlocklist(null).size, 0);
+});
 
 Deno.test("email: valid and normalized", () => {
   assertEquals(normalizeEmail("  Fred@APIANT.com "), "fred@apiant.com");

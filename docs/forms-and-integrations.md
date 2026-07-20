@@ -8,12 +8,13 @@
 2. [Contact/Demo Form ("Start Building")](#contactdemo-form)
 3. [White Paper Download Form](#white-paper-download-form)
 4. [Product Page Forms (Next-Steps)](#product-page-forms)
-5. [reCAPTCHA](#recaptcha)
-6. [Google Analytics](#google-analytics)
-7. [Smartlook Session Recording](#smartlook-session-recording)
-8. [HubSpot Tracking](#hubspot-tracking)
-9. [APIANT Dynamic Script](#apiant-dynamic-script)
-10. [External Scripts Summary](#external-scripts-summary)
+5. [Calendly Scheduling Embeds](#calendly-scheduling-embeds)
+6. [reCAPTCHA](#recaptcha)
+7. [Google Analytics](#google-analytics)
+8. [Smartlook Session Recording](#smartlook-session-recording)
+9. [HubSpot Tracking](#hubspot-tracking)
+10. [APIANT Dynamic Script](#apiant-dynamic-script)
+11. [External Scripts Summary](#external-scripts-summary)
 
 ---
 
@@ -162,6 +163,50 @@ Product pages (next-steps pages and some API App pages) have their own forms wit
 | Other next-steps pages | Similar pattern |
 
 Product pages may also include Recurly billing integration and pricing sliders with their own JavaScript logic. **Do not modify pricing/billing JavaScript** without understanding the full flow.
+
+## Calendly Scheduling Embeds
+
+Scheduling URLs are **never hardcoded in page HTML**. In July 2026 the CRMConnect
+discovery link was scraped from page source and used for repeated spam bookings
+(the slug had already been rotated once, to `-apac2`, for the same reason).
+
+How it works now:
+
+1. Pages ship a placeholder instead of a `calendly-inline-widget` div:
+   ```html
+   <div class="calendly-lazy" data-calendly-event="crmconnect"
+        data-calendly-params="hide_event_type_details=1&amp;hide_gdpr_banner=1&amp;a3=Mindbody and HubSpot"
+        style="min-width:320px;height:100%;"></div>
+   ```
+2. `js/calendly-loader.js` (included before `</body>`) watches placeholders with
+   an IntersectionObserver. When one becomes visible (demo popup opened, or
+   scrolled into view), it fetches the base URL from the `get-calendly-url`
+   Supabase edge function, appends `data-calendly-params`, and injects the
+   Calendly widget via `Calendly.initInlineWidget`.
+3. `get-calendly-url` requires a browser context (allowed Origin or Referer),
+   rate-limits per IP (20/hour), and reads URLs from project secrets:
+
+   | Event key | Secret |
+   |-----------|--------|
+   | `crmconnect` | `CALENDLY_URL_CRMCONNECT` |
+   | `calendarconnect` | `CALENDLY_URL_CALENDARCONNECT` |
+   | `zoomconnect-onboarding` | `CALENDLY_URL_ZOOMCONNECT_ONBOARDING` |
+   | `shopconnect-onboarding` | `CALENDLY_URL_SHOPCONNECT_ONBOARDING` |
+
+**Rotating a burned Calendly link** (after spam): edit the event type's URL slug
+in Calendly, then update the secret; no site redeploy needed:
+
+```bash
+supabase secrets set CALENDLY_URL_CRMCONNECT='https://calendly.com/apiant_discovery/<new-slug>'
+```
+
+The `Talk to Us` popup's Calendly path is separate: it gets its URL from
+`check-availability` (stored in the `admin_settings` table, editable in
+`admin.html`).
+
+**Blocked emails:** `submit-lead` silently drops submissions from addresses in
+the `BLOCKED_EMAILS` secret (comma-separated, exact match after lowercasing).
+The sender still sees a success response, like the honeypot path.
 
 ## reCAPTCHA
 

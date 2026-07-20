@@ -62,6 +62,17 @@ export function allowedUrlHost(
   return null;
 }
 
+/**
+ * Parse a comma-separated blocklist (e.g. the BLOCKED_EMAILS secret) into a
+ * set of normalized emails. Unknown/empty input yields an empty set.
+ */
+export function parseEmailBlocklist(raw: unknown): Set<string> {
+  if (typeof raw !== "string" || !raw) return new Set();
+  return new Set(
+    raw.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean),
+  );
+}
+
 export interface SourceContext {
   /** Authoritative URL observed server-side from the Referer header. */
   refererUrl: string | null;
