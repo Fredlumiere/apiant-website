@@ -177,6 +177,14 @@ def render_markdown(body_md: str) -> tuple[str, list[tuple[int, str, str]]]:
     }
     rendered = md.markdown(body_md or "", extensions=extensions, extension_configs=extension_configs)
 
+    # Open all body links (internal and external, but not same-page #anchors) in a
+    # new tab. Skip anchors that already carry a target.
+    rendered = re.sub(
+        r'<a (?![^>]*\btarget=)href="(?!#)([^"]*)"',
+        r'<a target="_blank" rel="noopener noreferrer" href="\1"',
+        rendered,
+    )
+
     toc: list[tuple[int, str, str]] = []
     for m in re.finditer(r'<h([23])\s+id="([^"]+)"[^>]*>(.*?)</h\1>', rendered, flags=re.DOTALL):
         level = int(m.group(1))
