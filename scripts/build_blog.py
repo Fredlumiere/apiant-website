@@ -344,8 +344,10 @@ def render_toc(toc: list[tuple[int, str, str]]) -> str:
 def render_tags(tags: list[dict]) -> str:
     if not tags:
         return ""
+    # notranslate: tag names are product/proper nouns and must stay English in
+    # every locale (the localizer skips class="notranslate", same as the byline).
     chips = "".join(
-        f'<a class="blog-tag" href="/blog/?tag={html.escape(t["slug"])}">#{html.escape(t["name"])}</a>'
+        f'<a class="blog-tag notranslate" translate="no" href="/blog/?tag={html.escape(t["slug"])}">#{html.escape(t["name"])}</a>'
         for t in tags
     )
     return f'<div class="blog-post-tags">{chips}</div>'
