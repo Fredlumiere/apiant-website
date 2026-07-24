@@ -494,26 +494,98 @@
       .cmp-good { color: #1ab759; font-weight: 700; }
       .cmp-bad { color: #dc2626; }
       .cmp-dim { color: #9ca3af; }
+      /* Paid add-on: deliberately NOT green, so it never reads as included */
+      .cmp-val.cmp-addon {
+        color: #b45309;
+        font-weight: 600;
+      }
+      .cmp-tick {
+        margin-right: 6px;
+      }
+      /* Sub-line that carries a price, so it inherits the add-on colour */
+      .cmp-sub.cmp-sub-addon {
+        color: #b45309;
+      }
+      .cmp-sub {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        color: #9ca3af;
+        margin-top: 3px;
+        white-space: normal;
+      }
       .cmp-grid > div:nth-last-child(-n+4) {
         border-bottom: none;
       }
+      .cmp-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 20px;
+        margin: 22px auto 0;
+        font-size: 13px;
+        color: var(--_white-mode---paragraph-color);
+      }
+      .cmp-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .cmp-legend i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+        flex: 0 0 auto;
+      }
+      .cmp-note {
+        max-width: 640px;
+        margin: 14px auto 0;
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--_white-mode---paragraph-color);
+        text-align: center;
+      }
+
+      .cmp-swipe {
+        display: none;
+      }
 
       @media screen and (max-width: 600px) {
+        /* Let the table keep its natural width and scroll horizontally.
+           Squeezing 4 columns into 390px broke words mid-syllable. */
+        .comparison-wrapper {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding: 0 20px;
+          -webkit-overflow-scrolling: touch;
+        }
         .cmp-grid {
-          grid-template-columns: minmax(90px, auto) repeat(3, 1fr);
           font-size: 12px;
         }
         .cmp-grid > div {
-          padding: 8px 6px;
-          white-space: normal;
-          word-break: break-word;
+          padding: 10px 12px;
         }
         .cmp-head {
-          padding: 10px 6px;
-          font-size: 11px;
+          padding: 12px 12px;
+          font-size: 12px;
         }
         .cmp-head.cmp-crm {
+          font-size: 13px;
+        }
+        .cmp-sub {
+          font-size: 11px;
+        }
+        .cmp-swipe {
+          display: block;
+          margin: 10px auto 0;
           font-size: 12px;
+          color: #9ca3af;
+          text-align: center;
+        }
+        .cmp-legend {
+          font-size: 12px;
+          gap: 8px 14px;
         }
       }
 
@@ -2677,6 +2749,17 @@
 .listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
 .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
 .pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
 
 
 
@@ -3292,21 +3375,33 @@
 <div class="cmp-val cmp-dim">Semaines</div>
 <div class="cmp-val cmp-dim">Mois</div>
 <div class="cmp-feat">140+ proprietes donateur</div>
-<div class="cmp-val cmp-crm cmp-good">✓</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>Inclus</div>
 <div class="cmp-val cmp-bad">✗</div>
 <div class="cmp-val cmp-dim">$$$ a developper</div>
-<div class="cmp-feat">CodeSync pour les menus deroulants</div>
-<div class="cmp-val cmp-crm cmp-good">✓</div>
-<div class="cmp-val cmp-bad">✗</div>
-<div class="cmp-val cmp-dim">Developpement personnalise</div>
-<div class="cmp-feat">Pipeline des dons</div>
-<div class="cmp-val cmp-crm cmp-good">✓</div>
-<div class="cmp-val cmp-bad">✗</div>
-<div class="cmp-val cmp-dim">Developpement personnalise</div>
-<div class="cmp-feat">Synchronisation des indicateurs et codes</div>
-<div class="cmp-val cmp-crm cmp-good">✓</div>
+<div class="cmp-feat">Les drapeaux se synchronisent en tant que balises HubSpot</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>Inclus</div>
 <div class="cmp-val cmp-dim">Configuration complexe</div>
 <div class="cmp-val cmp-dim">$$$ a developper</div>
+<div class="cmp-feat">CodeSync pour les menus deroulants</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>Inclus</div>
+<div class="cmp-val cmp-bad">✗</div>
+<div class="cmp-val cmp-dim">Developpement personnalise</div>
+<div class="cmp-feat">Pipeline des dons<span class="cmp-sub">Les dons sous forme d'offres HubSpot</span></div>
+<div class="cmp-val cmp-crm cmp-addon">+ supplément de 89 $/mois</div>
+<div class="cmp-val cmp-bad">✗</div>
+<div class="cmp-val cmp-dim">Developpement personnalise</div>
+<div class="cmp-feat">Champs personnalises</div>
+<div class="cmp-val cmp-crm cmp-addon">+ supplément de 89 $/mois</div>
+<div class="cmp-val cmp-bad">✗</div>
+<div class="cmp-val cmp-dim">Developpement personnalise</div>
+<div class="cmp-feat">Objets personnalisés</div>
+<div class="cmp-val cmp-crm cmp-addon">+ supplément de 89 $/mois</div>
+<div class="cmp-val cmp-bad">✗</div>
+<div class="cmp-val cmp-dim">Developpement personnalise</div>
+<div class="cmp-feat">Données historiques sur les dons</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>1 mois<span class="cmp-sub cmp-sub-addon">+ 50 $/mois par mois supplémentaire</span></div>
+<div class="cmp-val cmp-bad">✗<span class="cmp-sub">Nouveaux disques seulement</span></div>
+<div class="cmp-val cmp-dim">Developpement personnalise</div>
 <div class="cmp-feat">Maintenance continue</div>
 <div class="cmp-val cmp-crm cmp-good">Aucun</div>
 <div class="cmp-val cmp-dim">Vous maintenez</div>
@@ -3315,12 +3410,24 @@
 <div class="cmp-val cmp-crm cmp-good">VIP</div>
 <div class="cmp-val cmp-dim">Documentation générique</div>
 <div class="cmp-val cmp-dim">Variable</div>
-<div class="cmp-feat">Cout de depart</div>
-<div class="cmp-val cmp-crm cmp-good"><strong>169 $/mois</strong></div>
+<div class="cmp-feat">Prix de base</div>
+<div class="cmp-val cmp-crm cmp-good"><strong>169 $/mois</strong><span class="cmp-sub">Jusqu'à 5 000 donneurs actifs</span></div>
 <div class="cmp-val cmp-dim">200–500+ $/mois</div>
 <div class="cmp-val cmp-dim">2 000+ $/mois</div>
+<div class="cmp-feat">Coût à mesure que vous grandissez</div>
+<div class="cmp-val cmp-crm">+ 99 $/mois<span class="cmp-sub">Pour 2 500 donateurs supplémentaires</span></div>
+<div class="cmp-val cmp-dim">Frais par tâche<span class="cmp-sub">Échelles avec volume</span></div>
+<div class="cmp-val cmp-dim">contrat de développeur<span class="cmp-sub">Chaque modification d'API</span></div>
 </div>
 </div>
+<p class="cmp-swipe">Faites glisser le tableau pour comparer →</p>
+<div class="cmp-legend">
+<span><i style="background:#1ab759"></i>Inclus dans le prix de base</span>
+<span><i style="background:#b45309"></i>module complémentaire payant optionnel</span>
+<span><i style="background:#dc2626"></i>Impossible</span>
+<span><i style="background:#9ca3af"></i>Vous le construisez et l'entretenez</span>
+</div>
+<p class="cmp-note">Le module « Gifts Pipeline », les champs personnalisés et les objets personnalisés sont des options supplémentaires non incluses dans le prix de base de 169 $. Utilisez le calculateur ci-dessous pour estimer le coût des donateurs, du module « Gifts Pipeline » et des champs personnalisés. Les objets personnalisés et l’historique des dons sur plusieurs mois ne sont pas pris en compte par le calculateur ; veuillez nous contacter pour les ajouter à votre abonnement.</p>
 </div>
 </div>
 </div>
