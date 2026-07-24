@@ -494,26 +494,97 @@
       .cmp-good { color: #1ab759; font-weight: 700; }
       .cmp-bad { color: #dc2626; }
       .cmp-dim { color: #9ca3af; }
+      /* Paid add-on: deliberately NOT green, so it never reads as included */
+      .cmp-val.cmp-addon {
+        color: #b45309;
+        font-weight: 600;
+      }
+      .cmp-tick {
+        margin-right: 6px;
+      }
+      /* Sub-line that carries a price, so it inherits the add-on colour */
+      .cmp-sub.cmp-sub-addon {
+        color: #b45309;
+      }
+      .cmp-sub {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        color: #9ca3af;
+        margin-top: 3px;
+        white-space: normal;
+      }
       .cmp-grid > div:nth-last-child(-n+4) {
         border-bottom: none;
       }
+      .cmp-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 20px;
+        margin: 22px auto 0;
+        font-size: 13px;
+        color: var(--_white-mode---paragraph-color);
+      }
+      .cmp-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .cmp-legend i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+        flex: 0 0 auto;
+      }
+      .cmp-note {
+        max-width: 640px;
+        margin: 14px auto 0;
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--_white-mode---paragraph-color);
+        text-align: center;
+      }
+      .cmp-swipe {
+        display: none;
+      }
 
       @media screen and (max-width: 600px) {
+        /* Let the table keep its natural width and scroll horizontally.
+           Squeezing 4 columns into 390px broke words mid-syllable. */
+        .comparison-wrapper {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding: 0 20px;
+          -webkit-overflow-scrolling: touch;
+        }
         .cmp-grid {
-          grid-template-columns: minmax(90px, auto) repeat(3, 1fr);
           font-size: 12px;
         }
         .cmp-grid > div {
-          padding: 8px 6px;
-          white-space: normal;
-          word-break: break-word;
+          padding: 10px 12px;
         }
         .cmp-head {
-          padding: 10px 6px;
-          font-size: 11px;
+          padding: 12px 12px;
+          font-size: 12px;
         }
         .cmp-head.cmp-crm {
+          font-size: 13px;
+        }
+        .cmp-sub {
+          font-size: 11px;
+        }
+        .cmp-swipe {
+          display: block;
+          margin: 10px auto 0;
           font-size: 12px;
+          color: #9ca3af;
+          text-align: center;
+        }
+        .cmp-legend {
+          font-size: 12px;
+          gap: 8px 14px;
         }
       }
 
@@ -2706,6 +2777,17 @@
 .listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
 .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
 .pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
 
 
 
@@ -3147,39 +3229,51 @@
 <div class="cmp-val cmp-dim">أسابيع</div>
 <div class="cmp-val cmp-dim">أشهر</div>
 <div class="cmp-feat">مزامنة بيانات المانحين</div>
-<div class="cmp-val cmp-crm cmp-good">✓ مدمج</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>مشمول</div>
 <div class="cmp-val cmp-bad">✗ يدوي</div>
 <div class="cmp-val cmp-dim">بناء مخصص</div>
 <div class="cmp-feat">تقسيم ديناميكي</div>
-<div class="cmp-val cmp-crm cmp-good">✓ تلقائي</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>مشمول</div>
 <div class="cmp-val cmp-bad">✗ محدود</div>
 <div class="cmp-val cmp-dim">بناء مخصص</div>
 <div class="cmp-feat">مزامنة التبرعات</div>
-<div class="cmp-val cmp-crm cmp-good">✓ في الوقت الحقيقي</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>مشمول</div>
 <div class="cmp-val cmp-bad">✗ أساسي</div>
 <div class="cmp-val cmp-dim">بناء مخصص</div>
 <div class="cmp-feat">تعيين العلامات إلى الوسوم</div>
-<div class="cmp-val cmp-crm cmp-good">✓ تلقائي</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>مشمول</div>
 <div class="cmp-val cmp-bad">✗ لا</div>
 <div class="cmp-val cmp-dim">بناء مخصص</div>
 <div class="cmp-feat">دعم متعدد الفلاتر</div>
-<div class="cmp-val cmp-crm cmp-good">✓ أصلي</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>مشمول<span class="cmp-sub cmp-sub-addon">فلاتر إضافية + 9 دولارات شهريًا لكل فلتر</span></div>
 <div class="cmp-val cmp-bad">✗ معقد</div>
 <div class="cmp-val cmp-dim">بناء مخصص</div>
 <div class="cmp-feat">الصيانة</div>
-<div class="cmp-val cmp-crm cmp-good">صفر - نحن نتولى الأمر</div>
+<div class="cmp-val cmp-crm cmp-good">لا داعي للقلق، نحن نتولى الأمر.</div>
 <div class="cmp-val cmp-bad">قم بإصلاحه</div>
 <div class="cmp-val cmp-bad">حافظ عليها</div>
 <div class="cmp-feat">الدعم</div>
 <div class="cmp-val cmp-crm cmp-good">دعم متخصص VIP</div>
 <div class="cmp-val cmp-dim">المجتمع / عام</div>
 <div class="cmp-val cmp-dim">يعتمد على المطور</div>
-<div class="cmp-feat">التكلفة الابتدائية</div>
-<div class="cmp-val cmp-crm cmp-good">49 دولارًا شهريًا</div>
-<div class="cmp-val">$50–200+/شهرياً</div>
-<div class="cmp-val">$5,000+</div>
+<div class="cmp-feat">السعر الأساسي</div>
+<div class="cmp-val cmp-crm cmp-good"><strong>49 دولارًا شهريًا</strong><span class="cmp-sub">ما يصل إلى 1000 متبرع</span></div>
+<div class="cmp-val cmp-dim">$50–200+/شهرياً</div>
+<div class="cmp-val cmp-dim">$5,000+</div>
+<div class="cmp-feat">التكلفة مع نموك</div>
+<div class="cmp-val cmp-crm">+ 15 دولارًا شهريًا<span class="cmp-sub">لكل 1000 متبرع إضافي</span></div>
+<div class="cmp-val cmp-dim">رسوم لكل مهمة<span class="cmp-sub">موازين ذات حجم</span></div>
+<div class="cmp-val cmp-dim">مستشار تطوير<span class="cmp-sub">كل تغيير في واجهة برمجة التطبيقات (API)</span></div>
 </div>
 </div>
+<p class="cmp-swipe">اسحب الجدول للمقارنة →</p>
+<div class="cmp-legend">
+<span><i style="background:#1ab759"></i>مشمول في السعر الأساسي</span>
+<span><i style="background:#b45309"></i>إضافة مدفوعة اختيارية</span>
+<span><i style="background:#dc2626"></i>غير ممكن</span>
+<span><i style="background:#9ca3af"></i>أنت تقوم ببنائه وصيانته</span>
+</div>
+<p class="cmp-note">يشمل السعر الأساسي البالغ 49 دولارًا 1000 متبرع. أما المتبرعون الإضافيون وفلاتر DonorPerfect الإضافية، فيتم تسعيرها بشكل منفصل. استخدم الحاسبة أدناه لتحديد سعر التكوين المناسب لك.</p>
 </div>
 </div>
 </div>

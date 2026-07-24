@@ -494,26 +494,97 @@
       .cmp-good { color: #1ab759; font-weight: 700; }
       .cmp-bad { color: #dc2626; }
       .cmp-dim { color: #9ca3af; }
+      /* Paid add-on: deliberately NOT green, so it never reads as included */
+      .cmp-val.cmp-addon {
+        color: #b45309;
+        font-weight: 600;
+      }
+      .cmp-tick {
+        margin-right: 6px;
+      }
+      /* Sub-line that carries a price, so it inherits the add-on colour */
+      .cmp-sub.cmp-sub-addon {
+        color: #b45309;
+      }
+      .cmp-sub {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        color: #9ca3af;
+        margin-top: 3px;
+        white-space: normal;
+      }
       .cmp-grid > div:nth-last-child(-n+4) {
         border-bottom: none;
       }
+      .cmp-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 20px;
+        margin: 22px auto 0;
+        font-size: 13px;
+        color: var(--_white-mode---paragraph-color);
+      }
+      .cmp-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .cmp-legend i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+        flex: 0 0 auto;
+      }
+      .cmp-note {
+        max-width: 640px;
+        margin: 14px auto 0;
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--_white-mode---paragraph-color);
+        text-align: center;
+      }
+      .cmp-swipe {
+        display: none;
+      }
 
       @media screen and (max-width: 600px) {
+        /* Let the table keep its natural width and scroll horizontally.
+           Squeezing 4 columns into 390px broke words mid-syllable. */
+        .comparison-wrapper {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding: 0 20px;
+          -webkit-overflow-scrolling: touch;
+        }
         .cmp-grid {
-          grid-template-columns: minmax(90px, auto) repeat(3, 1fr);
           font-size: 12px;
         }
         .cmp-grid > div {
-          padding: 8px 6px;
-          white-space: normal;
-          word-break: break-word;
+          padding: 10px 12px;
         }
         .cmp-head {
-          padding: 10px 6px;
-          font-size: 11px;
+          padding: 12px 12px;
+          font-size: 12px;
         }
         .cmp-head.cmp-crm {
+          font-size: 13px;
+        }
+        .cmp-sub {
+          font-size: 11px;
+        }
+        .cmp-swipe {
+          display: block;
+          margin: 10px auto 0;
           font-size: 12px;
+          color: #9ca3af;
+          text-align: center;
+        }
+        .cmp-legend {
+          font-size: 12px;
+          gap: 8px 14px;
         }
       }
 
@@ -2706,6 +2777,17 @@
 .listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
 .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
 .pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
+<style>.lang-option{display:flex;align-items:center;gap:8px;padding:7px 12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;border-radius:4px;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;}
+.lang-option:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.lang-option.active{color:#1ab759;font-weight:600;}
+.lang-option-code{font-size:11px;opacity:0.5;min-width:20px;}
+.lang-option-name{white-space:nowrap;}
+.white-mode .lang-option,.nav-menu.white-mode .lang-option{color:rgba(0,0,0,0.6);}
+.white-mode .lang-option:hover,.nav-menu.white-mode .lang-option:hover{background:rgba(0,0,0,0.05);color:#000;}
+.white-mode .lang-option.active,.nav-menu.white-mode .lang-option.active{color:#0d7a3a;}}
+.listed-addons{width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;box-sizing:border-box!important;height:auto!important;max-height:none!important;}.listed-addons label.checkbox-field.list{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}.listed-addons .addon-tick.list{max-width:calc(100% - 40px)!important;}.listed-addons .addon-tick.list p,.listed-addons .addon-tick.list .small-price{white-space:normal!important;word-break:break-word!important;overflow-wrap:break-word!important;}.listed-addons .addon-wrapper{max-width:100%!important;box-sizing:border-box!important;}.listed-addons .checkbox-field.list{flex-wrap:wrap!important;gap:8px 12px!important;}.listed-addons .addon-tick{padding-left:0!important;padding-right:0!important;}.listed-addons .addon-tick.list{flex-wrap:wrap!important;}.listed-addons .addon-tick.list .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons .addon-wrapper{flex-wrap:wrap!important;width:100%!important;}.listed-addons .addon-description{min-width:0!important;}.listed-addons .addon-description .dark-paragraph{white-space:normal!important;word-break:break-word!important;}.listed-addons{overflow:visible!important;}.listed-addons .custom-checkbox.horizontal{display:none!important;}.custom-checkbox.horizontal{display:none!important;width:0!important;height:0!important;}.listed-addons .qty{width:60px!important;min-width:0!important;flex:none!important;}
+.addon-description .dark-paragraph{white-space:normal!important;word-break:break-word;}
+.pricing-holder{flex-wrap:nowrap!important;max-width:1060px;margin-left:auto;margin-right:auto;align-items:flex-start!important;gap:20px!important;border:none!important;padding:0!important;}.pricing-holder>.pricing-container{flex:1;border:2px solid #e8e8e8;border-radius:14px;padding:19px;}.addon-container-copy{background:#f0f4f3!important;border:2px solid rgba(26,183,89,0.25)!important;border-radius:14px!important;flex:0 0 220px!important;position:sticky!important;top:100px!important;align-self:flex-start!important;padding:20px 16px!important;}.addon-container-copy .final-price-text{color:#0d7a3a!important;font-size:32px!important;}.addon-container-copy .btn-primary,.addon-container-copy .button.nav{background:#1ab759!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:10px 16px!important;font-size:14px!important;width:100%!important;text-align:center!important;}@media(max-width:991px){.pricing-holder{flex-direction:column!important;max-width:100%!important;}.pricing-holder>.pricing-container{width:100%;}.addon-container-copy{flex:none!important;width:100%!important;position:relative!important;}}</style>
 
 
 
@@ -3147,39 +3229,51 @@
 <div class="cmp-val cmp-dim">주</div>
 <div class="cmp-val cmp-dim">개월</div>
 <div class="cmp-feat">기부자 데이터 동기화</div>
-<div class="cmp-val cmp-crm cmp-good">✓ 내장</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>포함</div>
 <div class="cmp-val cmp-bad">✔ 참고 사항 매뉴얼</div>
 <div class="cmp-val cmp-dim">사용자 지정 빌드</div>
 <div class="cmp-feat">동적 세분화</div>
-<div class="cmp-val cmp-crm cmp-good">✓ 자동</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>포함</div>
 <div class="cmp-val cmp-bad">✔ 제한 사항</div>
 <div class="cmp-val cmp-dim">사용자 지정 빌드</div>
 <div class="cmp-feat">기부 동기화</div>
-<div class="cmp-val cmp-crm cmp-good">실시간</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>포함</div>
 <div class="cmp-val cmp-bad">✔ 기본 사항</div>
 <div class="cmp-val cmp-dim">사용자 지정 빌드</div>
 <div class="cmp-feat">플래그-태그 매핑</div>
-<div class="cmp-val cmp-crm cmp-good">✓ 자동</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>포함</div>
 <div class="cmp-val cmp-bad">참고 사항 없음</div>
 <div class="cmp-val cmp-dim">사용자 지정 빌드</div>
 <div class="cmp-feat">멀티 필터 지원</div>
-<div class="cmp-val cmp-crm cmp-good">✓ 네이티브</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>포함<span class="cmp-sub cmp-sub-addon">추가 필터는 필터당 월 9달러입니다.</span></div>
 <div class="cmp-val cmp-bad">✔ 복잡한 규정</div>
 <div class="cmp-val cmp-dim">사용자 지정 빌드</div>
 <div class="cmp-feat">유지보수</div>
-<div class="cmp-val cmp-crm cmp-good">없음 - 저희가 처리합니다</div>
+<div class="cmp-val cmp-crm cmp-good">제로, 저희가 처리하겠습니다.</div>
 <div class="cmp-val cmp-bad">직접 수정</div>
 <div class="cmp-val cmp-bad">직접 유지보수</div>
 <div class="cmp-feat">지원</div>
 <div class="cmp-val cmp-crm cmp-good">VIP 전문가 지원</div>
 <div class="cmp-val cmp-dim">커뮤니티 / 일반</div>
 <div class="cmp-val cmp-dim">개발팀에 따라 다름</div>
-<div class="cmp-feat">시작 비용</div>
-<div class="cmp-val cmp-crm cmp-good">월 49달러</div>
-<div class="cmp-val">50-200+/월</div>
-<div class="cmp-val">$5,000+</div>
+<div class="cmp-feat">기본 가격</div>
+<div class="cmp-val cmp-crm cmp-good"><strong>월 49달러</strong><span class="cmp-sub">최대 1,000명의 기증자</span></div>
+<div class="cmp-val cmp-dim">50-200+/월</div>
+<div class="cmp-val cmp-dim">$5,000+</div>
+<div class="cmp-feat">성장함에 따라 발생하는 비용</div>
+<div class="cmp-val cmp-crm">+ 월 15달러<span class="cmp-sub">추가 기부자 1,000명당</span></div>
+<div class="cmp-val cmp-dim">작업별 수수료<span class="cmp-sub">부피에 비례하여 크기가 조절됩니다.</span></div>
+<div class="cmp-val cmp-dim">개발 유지비<span class="cmp-sub">모든 API 변경 사항</span></div>
 </div>
 </div>
+<p class="cmp-swipe">표를 넘겨서 비교해 보세요 →</p>
+<div class="cmp-legend">
+<span><i style="background:#1ab759"></i>기본 가격에 포함됨</span>
+<span><i style="background:#b45309"></i>선택 사항 유료 추가 기능</span>
+<span><i style="background:#dc2626"></i>불가능합니다</span>
+<span><i style="background:#9ca3af"></i>당신이 구축하고 유지 관리합니다.</span>
+</div>
+<p class="cmp-note">기본 가격 49달러에는 1,000명의 기증자가 포함됩니다. 추가 기증자 및 추가 DonorPerfect 필터는 개당 가격이 책정됩니다. 아래 계산기를 사용하여 정확한 구성에 대한 가격을 확인하십시오.</p>
 </div>
 </div>
 </div>
