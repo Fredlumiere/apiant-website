@@ -478,26 +478,97 @@
       .cmp-good { color: #1ab759; font-weight: 700; }
       .cmp-bad { color: #dc2626; }
       .cmp-dim { color: #9ca3af; }
+      /* Paid add-on: deliberately NOT green, so it never reads as included */
+      .cmp-val.cmp-addon {
+        color: #b45309;
+        font-weight: 600;
+      }
+      .cmp-tick {
+        margin-right: 6px;
+      }
+      /* Sub-line that carries a price, so it inherits the add-on colour */
+      .cmp-sub.cmp-sub-addon {
+        color: #b45309;
+      }
+      .cmp-sub {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        color: #9ca3af;
+        margin-top: 3px;
+        white-space: normal;
+      }
       .cmp-grid > div:nth-last-child(-n+4) {
         border-bottom: none;
       }
+      .cmp-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 20px;
+        margin: 22px auto 0;
+        font-size: 13px;
+        color: var(--_white-mode---paragraph-color);
+      }
+      .cmp-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .cmp-legend i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+        flex: 0 0 auto;
+      }
+      .cmp-note {
+        max-width: 640px;
+        margin: 14px auto 0;
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--_white-mode---paragraph-color);
+        text-align: center;
+      }
+      .cmp-swipe {
+        display: none;
+      }
 
       @media screen and (max-width: 600px) {
+        /* Let the table keep its natural width and scroll horizontally.
+           Squeezing 4 columns into 390px broke words mid-syllable. */
+        .comparison-wrapper {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding: 0 20px;
+          -webkit-overflow-scrolling: touch;
+        }
         .cmp-grid {
-          grid-template-columns: minmax(90px, auto) repeat(3, 1fr);
           font-size: 12px;
         }
         .cmp-grid > div {
-          padding: 8px 6px;
-          white-space: normal;
-          word-break: break-word;
+          padding: 10px 12px;
         }
         .cmp-head {
-          padding: 10px 6px;
-          font-size: 11px;
+          padding: 12px 12px;
+          font-size: 12px;
         }
         .cmp-head.cmp-crm {
+          font-size: 13px;
+        }
+        .cmp-sub {
+          font-size: 11px;
+        }
+        .cmp-swipe {
+          display: block;
+          margin: 10px auto 0;
           font-size: 12px;
+          color: #9ca3af;
+          text-align: center;
+        }
+        .cmp-legend {
+          font-size: 12px;
+          gap: 8px 14px;
         }
       }
       .demo-section {
@@ -3017,39 +3088,63 @@
 <div class="cmp-val cmp-dim">Weeks</div>
 <div class="cmp-val cmp-dim">Months</div>
 <div class="cmp-feat">Automatic donor sync</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Built-in</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>Included</div>
 <div class="cmp-val cmp-bad">✗ Manual</div>
 <div class="cmp-val cmp-dim">Custom build</div>
 <div class="cmp-feat">Flags-to-tags sync</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Real-time</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>Included</div>
 <div class="cmp-val cmp-bad">✗ Limited</div>
 <div class="cmp-val cmp-dim">Custom build</div>
 <div class="cmp-feat">Dropdown CodeSync</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Automatic</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>Included</div>
 <div class="cmp-val cmp-bad">✗ No</div>
 <div class="cmp-val cmp-dim">Custom build</div>
-<div class="cmp-feat">Gifts pipeline</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Native</div>
-<div class="cmp-val cmp-bad">✗ Complex</div>
-<div class="cmp-val cmp-dim">Custom build</div>
 <div class="cmp-feat">Donor segmentation</div>
-<div class="cmp-val cmp-crm cmp-good">✓ Instant</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>Included</div>
 <div class="cmp-val cmp-bad">✗ Basic</div>
 <div class="cmp-val cmp-dim">Custom build</div>
+<div class="cmp-feat">Gifts pipeline<span class="cmp-sub">Donations as deals</span></div>
+<div class="cmp-val cmp-crm cmp-addon">+ $89/mo add-on</div>
+<div class="cmp-val cmp-bad">✗ Complex</div>
+<div class="cmp-val cmp-dim">Custom build</div>
+<div class="cmp-feat">Custom fields</div>
+<div class="cmp-val cmp-crm cmp-addon">+ $89/mo add-on</div>
+<div class="cmp-val cmp-bad">✗</div>
+<div class="cmp-val cmp-dim">Custom build</div>
+<div class="cmp-feat">Custom objects</div>
+<div class="cmp-val cmp-crm cmp-addon">+ $89/mo add-on</div>
+<div class="cmp-val cmp-bad">✗</div>
+<div class="cmp-val cmp-dim">Custom build</div>
+<div class="cmp-feat">Historical gift data</div>
+<div class="cmp-val cmp-crm cmp-good"><span class="cmp-tick">✓</span>1 month<span class="cmp-sub cmp-sub-addon">Extra months + $50 each</span></div>
+<div class="cmp-val cmp-bad">✗<span class="cmp-sub">New records only</span></div>
+<div class="cmp-val cmp-dim">Custom build</div>
 <div class="cmp-feat">Maintenance</div>
-<div class="cmp-val cmp-crm cmp-good">Zero - we handle it</div>
+<div class="cmp-val cmp-crm cmp-good">Zero, we handle it</div>
 <div class="cmp-val cmp-bad">You fix it</div>
 <div class="cmp-val cmp-bad">You maintain it</div>
 <div class="cmp-feat">Support</div>
 <div class="cmp-val cmp-crm cmp-good">VIP specialist support</div>
 <div class="cmp-val cmp-dim">Community / generic</div>
 <div class="cmp-val cmp-dim">Depends on dev</div>
-<div class="cmp-feat">Starting cost</div>
-<div class="cmp-val cmp-crm cmp-good">$169/mo</div>
-<div class="cmp-val">$50–200+/mo</div>
-<div class="cmp-val">$5,000+</div>
+<div class="cmp-feat">Base price</div>
+<div class="cmp-val cmp-crm cmp-good"><strong>$169/mo</strong><span class="cmp-sub">Up to 5,000 active donors</span></div>
+<div class="cmp-val cmp-dim">$50–200+/mo</div>
+<div class="cmp-val cmp-dim">$5,000+</div>
+<div class="cmp-feat">Cost as you grow</div>
+<div class="cmp-val cmp-crm">+ $99/mo<span class="cmp-sub">Per additional 2,500 donors</span></div>
+<div class="cmp-val cmp-dim">Per-task fees<span class="cmp-sub">Scales with volume</span></div>
+<div class="cmp-val cmp-dim">Dev retainer<span class="cmp-sub">Every API change</span></div>
 </div>
 </div>
+<p class="cmp-swipe">Swipe the table to compare →</p>
+<div class="cmp-legend">
+<span><i style="background:#1ab759"></i>Included in the base price</span>
+<span><i style="background:#b45309"></i>Optional paid add-on</span>
+<span><i style="background:#dc2626"></i>Not possible</span>
+<span><i style="background:#9ca3af"></i>You build and maintain it</span>
+</div>
+<p class="cmp-note">The Gifts Pipeline, Custom fields and Custom objects are optional add-ons, not part of the $169 base price. Use the calculator below to price donors, the Gifts Pipeline and Custom fields. Custom objects and extra months of gift history are not in the calculator, so ask us to add them to your subscription.</p>
 </div>
 </div>
 </div>
