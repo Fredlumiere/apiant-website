@@ -14,6 +14,7 @@ This is the **APIANT marketing website**, a static HTML site originally built wi
 - **Static HTML.** No build system, no bundler, no package.json. Pages are standalone `.html` files.
 - **CSS:** `css/normalize.css`, `css/components.css`, `css/apiant.css` (global). Pages also contain extensive `<style>` blocks for page-specific styles.
 - **JS:** `js/apiant.js` (manages sign-in/dashboard button state). jQuery 3.5.1 loaded from CDN. Heavy use of inline `<script>` blocks per page.
+- **Hosted product widgets (`js/calendarconnect-widget-*.js`):** not part of this site. These are served from `apiant.com/js/` for embedding on *customer* websites. Source of truth is the `calendarconnect-mindbody-calendly` repo (`test/apiant-gym-demo/calendarconnect-widget.js`); the copies here are published artifacts. Do not edit them here, and do not minify or reformat them. `-3.2.js` is the pinned build, `-3.js` is the floating 3.x alias customers embed. To ship a change, edit the source repo and re-copy both files.
 - **Fonts:** Lato, Open Sans, DM Sans, Inter via Google Fonts WebFont loader.
 - **Analytics:** Google Analytics (G-G902ZQ3PZZ), Smartlook session recording, HubSpot (5004658). All loaded conditionally via `js/cookie-consent.js` based on user consent.
 - **Cookie Consent:** Self-hosted banner (`js/cookie-consent.js`, `css/cookie-consent.css`). Controls loading of GA, Smartlook, HubSpot, and Facebook Pixel. Consent stored in `apiant_cc` cookie.
