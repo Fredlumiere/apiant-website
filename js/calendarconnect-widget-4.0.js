@@ -1,39 +1,46 @@
-/* CalendarConnect auto-load booking widget — v3.2
+/* CalendarConnect auto-load booking widget — v4.0 (localisable build)
  *
- * Drop-in replacement for the v3.1 apiant_form.js button embed. On page load it
- * POSTs to the event's Web Service automation, which syncs each host's Mindbody
- * availability into Calendly and returns that event's booking URL. The Calendly
- * inline embed is then rendered, so a visitor only ever sees genuinely bookable
- * slots without clicking anything.
+ * Same behaviour as test/apiant-gym-demo/calendarconnect-widget.js: on page load
+ * it POSTs to the event's Web Service automation, which syncs each host's
+ * Mindbody availability into Calendly and returns that event's booking URL, then
+ * renders Calendly's inline embed. No button, no stale form instance id.
+ *
+ * This build adds label attributes so the visible strings can be set per page.
+ * Defaults are English; the Optiforme demo pages set French.
  *
  * Page snippet:
  *
  *   <div data-calendarconnect-event
- *        data-endpoint="https://dev.apiant.com/automation_webservice/_<automation-uuid>"></div>
+ *        data-endpoint="https://apiant.com/automation_webservice/_<automation-uuid>"></div>
  *   <script src="calendarconnect-widget.js" defer></script>
  *
- * Attributes on the mount element:
+ * Behaviour attributes:
  *   data-endpoint        (required) the event automation's Web Service URL
  *   data-show-details    "true" shows Calendly's own event description panel
- *                        inside the embed; "false" (default) lets the host page
- *                        carry the details and keeps the widget scrollbar-free
- *   data-height          explicit embed height; defaults to 1000px with the
- *                        Calendly details panel, 760px without it
- *   data-refresh         "false" hides the Refresh times button (default shown)
- *   data-cache-minutes   reuse the previous booking URL for N minutes within the
- *                        same tab instead of re-syncing. Default 0 = every load
- *                        runs a live sync. NOTE: each live sync is ~1 billable
- *                        Mindbody call per host on the event.
+ *   data-height          embed height; defaults 1000px with details, 760px without
+ *   data-refresh         "false" hides the refresh button
+ *   data-cache-minutes   reuse the last result for N minutes in this tab. Default 0
+ *                        = every load runs a live sync (~1 billable Mindbody call
+ *                        per host on the event). Set non-zero on customer sites.
  *
- * COST: with data-cache-minutes="0" every page view spends MBO calls, including
- * bots and idle refreshes. Set a cache window before using this on a page with
- * real traffic.
+ * Label attributes (all optional):
+ *   data-label-loading, data-label-loading-sub, data-label-refresh,
+ *   data-label-updated, data-label-error-title, data-label-error-body
  */
 (function () {
   "use strict";
 
   var CALENDLY_JS = "https://assets.calendly.com/assets/external/widget.js";
   var calendlyLoading = false;
+
+  var DEFAULT_LABELS = {
+    loading:    "Checking live availability…",
+    loadingSub: "Pulling real-time openings from the studio calendar",
+    refresh:    "Refresh times",
+    updated:    "Times updated",
+    errorTitle: "We couldn’t load live times.",
+    errorBody:  "Please try again, or check back in a moment."
+  };
 
   function injectStyles() {
     if (document.getElementById("cc_widget_styles")) { return; }
@@ -42,19 +49,19 @@
     css.textContent = [
       ".cc-widget{position:relative}",
       ".cc-toolbar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:10px;min-height:32px}",
-      ".cc-stamp{font-size:12px;color:#5b6b7b;margin-right:auto}",
-      ".cc-refresh{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:7px 14px;font-size:13px;",
-      "font-weight:600;color:#0b1f33;cursor:pointer;display:inline-flex;align-items:center;gap:7px}",
-      ".cc-refresh:hover{border-color:#ff5a1f;color:#ff5a1f}",
+      ".cc-stamp{font-size:12px;color:#61676f;margin-right:auto}",
+      ".cc-refresh{background:#fff;border:1px solid #e6e9ed;border-radius:8px;padding:7px 14px;font-size:13px;",
+      "font-weight:600;color:#16181c;cursor:pointer;display:inline-flex;align-items:center;gap:7px}",
+      ".cc-refresh:hover{border-color:#8cc63f;color:#6fa32c}",
       ".cc-refresh:disabled{opacity:.5;cursor:default}",
-      ".cc-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;color:#5b6b7b}",
-      ".cc-spinner{width:44px;height:44px;border:4px solid #e2e8f0;border-top-color:#ff5a1f;border-radius:50%;",
+      ".cc-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;color:#61676f}",
+      ".cc-spinner{width:44px;height:44px;border:4px solid #e6e9ed;border-top-color:#8cc63f;border-radius:50%;",
       "animation:ccspin .9s linear infinite;margin-bottom:18px}",
       "@keyframes ccspin{to{transform:rotate(360deg)}}",
-      ".cc-loading .cc-msg{font-size:15px;font-weight:600;color:#1f2933}",
-      ".cc-loading .cc-sub{font-size:13px;margin-top:6px}",
-      ".cc-error{padding:40px 20px;text-align:center;color:#5b6b7b}",
-      ".cc-error strong{display:block;color:#1f2933;margin-bottom:8px}"
+      ".cc-loading .cc-msg{font-size:15px;font-weight:600;color:#16181c;text-align:center}",
+      ".cc-loading .cc-sub{font-size:13px;margin-top:6px;text-align:center}",
+      ".cc-error{padding:40px 20px;text-align:center;color:#61676f}",
+      ".cc-error strong{display:block;color:#16181c;margin-bottom:8px}"
     ].join("");
     document.head.appendChild(css);
   }
@@ -79,17 +86,36 @@
     var endpoint = el.getAttribute("data-endpoint");
     if (!endpoint) { return; }   // misconfigured mount: stay silent, leave the page intact
 
+    function label(attr, fallback) {
+      var v = el.getAttribute("data-label-" + attr);
+      return (v === null || v === "") ? fallback : v;
+    }
+    var L = {
+      loading:    label("loading",     DEFAULT_LABELS.loading),
+      loadingSub: label("loading-sub", DEFAULT_LABELS.loadingSub),
+      refresh:    label("refresh",     DEFAULT_LABELS.refresh),
+      updated:    label("updated",     DEFAULT_LABELS.updated),
+      errorTitle: label("error-title", DEFAULT_LABELS.errorTitle),
+      errorBody:  label("error-body",  DEFAULT_LABELS.errorBody)
+    };
+
     var showDetails  = el.getAttribute("data-show-details") === "true";
     var height       = el.getAttribute("data-height") || (showDetails ? "1000px" : "760px");
     var wantRefresh  = el.getAttribute("data-refresh") !== "false";
     var cacheMinutes = parseFloat(el.getAttribute("data-cache-minutes") || "0") || 0;
     var cacheKey     = "cc_widget:" + endpoint;
 
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
     el.className = el.className ? el.className + " cc-widget" : "cc-widget";
     el.innerHTML =
       '<div class="cc-toolbar"><span class="cc-stamp"></span>' +
-      (wantRefresh ? '<button class="cc-refresh" type="button" title="Re-check live availability">&#x21bb; Refresh times</button>' : "") +
-      "</div><div class=\"cc-body\"></div>";
+      (wantRefresh
+        ? '<button class="cc-refresh" type="button">&#x21bb; ' + esc(L.refresh) + "</button>"
+        : "") +
+      '</div><div class="cc-body"></div>';
 
     var body    = el.querySelector(".cc-body");
     var stamp   = el.querySelector(".cc-stamp");
@@ -98,30 +124,24 @@
     function showLoading() {
       body.innerHTML =
         '<div class="cc-loading"><div class="cc-spinner"></div>' +
-        '<div class="cc-msg">Checking live availability…</div>' +
-        '<div class="cc-sub">Pulling real-time openings from the studio calendar</div></div>';
+        '<div class="cc-msg">' + esc(L.loading) + "</div>" +
+        '<div class="cc-sub">' + esc(L.loadingSub) + "</div></div>";
     }
 
     function showError() {
       body.innerHTML =
-        '<div class="cc-error"><strong>We couldn’t load live times.</strong>' +
-        "Please try Refresh, or check back in a moment.</div>";
+        '<div class="cc-error"><strong>' + esc(L.errorTitle) + "</strong>" +
+        esc(L.errorBody) + "</div>";
     }
 
     function embed(url, syncedAt) {
       var params = "hide_gdpr_banner=1" + (showDetails ? "" : "&hide_event_type_details=1");
       var full = url + (url.indexOf("?") > -1 ? "&" : "?") + params;
 
-      // Create the holder only AFTER Calendly's widget.js is present, then init it
-      // ourselves. Ordering matters: widget.js auto-initializes every
-      // ".calendly-inline-widget[data-url]" element it finds, but only during its
-      // own one-time scan at script-load. The previous version created the holder
-      // first (with class AND data-url) and then also called initInlineWidget, so
-      // on a cold load the scan and our call each built an iframe, giving two
-      // stacked embeds in one holder. Building the holder inside this callback means the
-      // scan has already run and can never see it, so exactly one embed is created,
-      // on first load and on every Refresh. data-url is omitted for the same
-      // reason; initInlineWidget receives the URL directly.
+      // Holder is created only AFTER widget.js is present, and carries no
+      // data-url: widget.js auto-initialises ".calendly-inline-widget[data-url]"
+      // during a single scan at its own load, so building it here — and passing
+      // the URL to initInlineWidget directly — guarantees exactly one embed.
       loadCalendlyScript(function () {
         body.innerHTML = "";
         var holder = document.createElement("div");
@@ -133,8 +153,7 @@
         if (window.Calendly && window.Calendly.initInlineWidget) {
           window.Calendly.initInlineWidget({ url: full, parentElement: holder });
         }
-
-        stamp.textContent = "Times updated " + new Date(syncedAt).toLocaleTimeString();
+        stamp.textContent = L.updated + " " + new Date(syncedAt).toLocaleTimeString();
       });
     }
 
@@ -153,7 +172,7 @@
       if (!cacheMinutes) { return; }
       try {
         window.sessionStorage.setItem(cacheKey, JSON.stringify({ url: url, at: at }));
-      } catch (e) { /* private mode / quota — just skip caching */ }
+      } catch (e) { /* private mode / quota — skip caching */ }
     }
 
     function load(force) {
@@ -166,7 +185,6 @@
 
       // No Content-Type header keeps this a "simple" CORS request, so the browser
       // skips the preflight the platform's OPTIONS response does not answer.
-      // cb defeats any intermediary caching of the endpoint.
       fetch(endpoint + "?cb=" + Date.now(), { method: "POST", body: "{}" })
         .then(function (r) { return r.text(); })
         .then(function (text) {
