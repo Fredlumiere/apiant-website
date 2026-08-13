@@ -87,6 +87,9 @@
   function loadHubSpot() {
     if (loaded.functional) return;
     loaded.functional = true;
+    // Tracking only: keep the conversations chat widget from loading on any page.
+    window.hsConversationsSettings = window.hsConversationsSettings || {};
+    window.hsConversationsSettings.loadImmediately = false;
     var s = document.createElement('script');
     s.async = true;
     s.defer = true;
@@ -151,7 +154,7 @@
             '<div class="cc-cats">' +
               ccCat('essential', 'Essential', 'Login sessions and core site functionality. Always on.', true, true) +
               ccCat('analytics', 'Analytics', 'Google Analytics and Smartlook help us understand how you use the site.', false, false) +
-              ccCat('functional', 'Functional', 'HubSpot powers live chat and form interactions.', false, false) +
+              ccCat('functional', 'Functional', 'HubSpot powers visitor identification and form interactions.', false, false) +
               ccCat('advertising', 'Advertising', 'Facebook Pixel measures ad campaign effectiveness.', false, false) +
             '</div>' +
             '<button class="cc-btn cc-btn-save" id="cc-save">Save Preferences</button>' +
