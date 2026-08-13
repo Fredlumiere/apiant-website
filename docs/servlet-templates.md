@@ -24,6 +24,8 @@ The APIANT backend dynamically generates SEO landing pages for every app combina
 
 These URLs are served by the APIANT Java backend (servlet), not by the static file server.
 
+**Which copy is actually served:** the backend renders the copies in `appResources/system_text/` (verified Aug 2026: live pages matched that copy, not `connect/`/`connections/`). The `connect/servletTemplateConnect.html` and `connections/servletTemplateConnections.html` copies had drifted. When editing a servlet template, apply the change to the `appResources/system_text/` copy (and keep the `connect/`/`connections/` copies in sync until the drift is resolved).
+
 ## Template Files
 
 | File | Purpose | URL Pattern |
