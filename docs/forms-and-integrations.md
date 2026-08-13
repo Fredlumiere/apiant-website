@@ -275,6 +275,8 @@ Loaded at the bottom of every page, just before the closing `</body>` tag:
 
 HubSpot tracks pageviews and identifies visitors. It does not handle form submissions (those go to APIANT webhooks).
 
+**Homepage chat auto-open:** `index.html` defines a `window.hsConversationsOnReady` hook (inline script just before the `cookie-consent.js` include) that opens the HubSpot chat widget automatically on the homepage. It fires once per browser session (`sessionStorage` key `apiantChatAutoOpened`) and only at viewport widths of 769px and up, so the chat never covers the hero CTA on phones. The chat still only loads at all if the visitor grants functional-cookie consent.
+
 ## APIANT Dynamic Script
 
 Loaded from the APIANT server at the bottom of every page:
