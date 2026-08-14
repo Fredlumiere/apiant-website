@@ -290,7 +290,7 @@ This script manages the **Sign In / Dashboard** button state in the nav bar. It 
 - **"Sign In"** button (for unauthenticated visitors)
 - **"Dashboard"** button (for authenticated users)
 
-**Important:** This script is served by the APIANT backend, not from the static site files. It cannot be edited in this repository.
+**Important:** As of Aug 2026 this file IS maintained in this repository (`js/apiant_dynamic.js`) and deployed by the website CI, overwriting the copy that previously lived only on the server. It used to force-load the HubSpot chat widget for signed-in APIANT users (identification token + `HubSpotConversations.widget.load()`); that block was removed when chat was retired. If a platform-side deploy ever ships its own copy of this file, it would silently reintroduce the chat for signed-in users, so the chat block should also be removed from wherever the platform sources it.
 
 ## External Scripts Summary
 
