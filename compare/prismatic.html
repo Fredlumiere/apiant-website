@@ -223,6 +223,8 @@ body{padding-top:0}
 .tchip{opacity:0;animation:tchip-in 14s linear infinite}
 @keyframes tchip-in{0%{opacity:0}6%{opacity:1}92%{opacity:1}100%{opacity:0}}
 @media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .chev,a.tq{transition:none}
   .carA{animation:none;transform:translate(149px,147px) rotate(-30deg)}
   .carB{animation:none;transform:translate(577px,169px)}
   .parkedTag,.arrivedTag,.tchip{animation:none;opacity:1}
@@ -237,7 +239,6 @@ a.tq h4{color:var(--text)}
 a.tq p{color:var(--muted)}
 a.tq:hover .tq-jump{color:var(--green)}
 .tq-jump{display:block;margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--faint);transition:color .2s}
-.row{scroll-margin-top:130px}
 
 .backed{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 30px 22px;margin-top:-6px}
 .backed .bk-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
@@ -252,6 +253,115 @@ a.tq:hover .tq-jump{color:var(--green)}
 .site-foot a{color:var(--muted)}
 .site-foot a:hover{color:var(--text)}
 .site-foot .flinks{display:flex;gap:20px;flex-wrap:wrap}
+
+/* ================= READABILITY PASS ================= */
+:root{--faint:rgba(255,255,255,.55);--faint-deco:rgba(255,255,255,.35)}
+.sources li,.sources li a,.tq-jump{color:var(--faint-deco)}
+body{font-size:17px;line-height:1.68}
+.col ol li{font-size:16px;line-height:1.6;margin-bottom:10px}
+.col p{font-size:16px;line-height:1.65}
+.col .outcome{font-size:16px}
+.col .quote{font-size:13.5px;line-height:1.7}
+.scenario p{font-size:16.5px;line-height:1.65}
+.sup p{font-size:15px;line-height:1.62}
+.sup .vs{font-size:15px;line-height:1.62}
+.sup h4{font-size:16.5px}
+.row-head h3{font-size:24px}
+.row-head .cap-sub{font-size:15.5px}
+.row-head .problem{font-size:16px}
+.beat p{font-size:19px}
+.act-head p{font-size:17.5px}
+
+/* ================= STICKY TOOLBAR ================= */
+:root{--nav-h:102px;--tb-h:105px;--stick:calc(var(--nav-h) + var(--tb-h) + 16px)}
+.toolbar{position:sticky;top:var(--nav-h);z-index:20;background:rgba(12,12,12,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.tb-inner{display:flex;align-items:center;gap:14px;padding:12px 24px;max-width:1060px;margin:0 auto;flex-wrap:wrap}
+.tb-search{position:relative;display:flex;align-items:center;flex:1 1 300px;min-width:240px}
+.tb-search svg{position:absolute;left:13px;pointer-events:none;opacity:.45}
+.tb-search input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:var(--font);font-size:15.5px;padding:11px 44px 11px 40px;outline:none}
+.tb-search input::placeholder{color:var(--faint)}
+.tb-search input:focus{border-color:rgba(26,183,89,.55);background:rgba(255,255,255,.045)}
+.tb-search kbd{position:absolute;right:12px;font-family:var(--mono);font-size:11px;color:var(--faint);border:1px solid var(--border);border-radius:4px;padding:2px 6px;pointer-events:none}
+.tb-search input:focus+kbd,.tb-search input:not(:placeholder-shown)+kbd{display:none}
+.tb-count{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em;white-space:nowrap}
+.tb-count b{color:var(--green);font-weight:600}
+.tb-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:8px 13px;cursor:pointer;white-space:nowrap}
+.tb-btn:hover{color:var(--text);border-color:rgba(255,255,255,.22)}
+.tb-filters{display:flex;gap:6px;flex-wrap:wrap;width:100%;padding:0 24px 12px;max-width:1060px;margin:0 auto}
+.fbtn{background:transparent;border:1px solid var(--border);border-radius:999px;color:var(--faint);font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;cursor:pointer}
+.fbtn:hover{color:var(--muted);border-color:rgba(255,255,255,.2)}
+.fbtn[aria-pressed="true"]{color:#04150a;background:var(--green);border-color:var(--green);font-weight:600}
+.fbtn.t1[aria-pressed="true"]{background:var(--green)}
+.fbtn.t2[aria-pressed="true"]{background:var(--cyan);border-color:var(--cyan)}
+.fbtn.t3[aria-pressed="true"]{background:var(--amber);border-color:var(--amber)}
+@media(max-width:760px){
+  .tb-filters{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:10px}
+  .tb-filters::-webkit-scrollbar{display:none}
+  .tb-count{display:inline;font-size:11px}
+}
+
+/* ================= COLLAPSIBLE CAPABILITY ================= */
+.cap{border:1px solid var(--border);border-radius:14px;background:var(--bg2);margin-bottom:12px;overflow:hidden;scroll-margin-top:var(--stick)}
+section.act{scroll-margin-top:var(--stick)}
+.cap[open]{background:var(--bg2);border-color:rgba(255,255,255,.14)}
+.cap>summary{display:flex;align-items:flex-start;gap:16px;padding:20px 22px;cursor:pointer;list-style:none}
+.cap>summary::-webkit-details-marker{display:none}
+.cap>summary:hover{background:rgba(255,255,255,.022)}
+.cap>summary:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
+.cap-num{font-family:var(--mono);font-size:13px;color:var(--faint);font-weight:600;flex:none;width:26px;padding-top:3px}
+.cap[open] .cap-num{color:var(--green)}
+.cap-body{flex:1;min-width:0}
+.cap-label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);margin-bottom:7px}
+.cap-take{font-size:19px;line-height:1.45;color:var(--text);font-weight:500;margin:0;letter-spacing:-.005em}
+.cap-take .cost{color:var(--muted);font-weight:400}
+.cap-meta{display:flex;align-items:center;gap:8px;flex:none;padding-top:2px}
+.tbadge{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:600;border:1px solid}
+.tbadge.t1{color:var(--green);border-color:rgba(26,183,89,.45);background:rgba(26,183,89,.1)}
+.tbadge.t2{color:var(--cyan);border-color:rgba(92,200,255,.45);background:rgba(92,200,255,.1)}
+.tbadge.t3{color:var(--amber);border-color:rgba(245,183,72,.45);background:rgba(245,183,72,.1)}
+.chev{font-family:var(--mono);font-size:12px;color:var(--faint);transition:transform .18s}
+.cap[open] .chev{transform:rotate(180deg);color:var(--green)}
+.cap-detail{border-top:1px solid var(--border)}
+.cap-kind{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);border:1px solid var(--border);border-radius:4px;padding:2px 6px;flex:none;margin-top:2px}
+@media(max-width:700px){
+  .cap>summary{padding:16px 16px;gap:11px}
+  .cap-take{font-size:17px}
+  .cap-num{width:20px;font-size:12px}
+}
+
+/* scenario illustration */
+.scene-photo{display:block;width:100%;height:auto;border-radius:10px;margin:0 0 16px;border:1px solid var(--border)}
+.scene-photo-wrap{position:relative;margin-bottom:16px}
+.scene-teaser{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--faint);margin:8px 0 0}
+
+/* search highlight + empty state */
+mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding:0 1px}
+.cap.hidden,.act.hidden,.supports-wrap.hidden{display:none}
+.no-hits{text-align:center;padding:56px 24px;color:var(--muted);font-size:17px}
+.no-hits b{color:var(--text)}
+.act-count{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.06em;margin-left:10px}
+
+/* print: everything open */
+@media print{
+  .toolbar{display:none}
+  .cap::details-content{content-visibility:visible!important}
+  .cap>summary{cursor:auto}
+  .chev{display:none}
+}
+
+/* supporting rows keep their styling now that .sup became .sup-detail */
+.sup-detail{padding:20px 24px 22px}
+.sup-detail .problem{font-size:15px;color:var(--amber);margin-bottom:9px}
+.sup-detail .problem::before{content:"\2715 ";font-family:var(--mono);opacity:.8}
+.sup-detail h4{font-size:17px;margin-bottom:9px;color:var(--text);font-weight:700}
+.sup-detail p{font-size:15.5px;line-height:1.62;margin-bottom:9px;color:var(--muted)}
+.sup-detail .vs{font-size:15.5px;line-height:1.62;color:var(--muted);border-top:1px dashed var(--border);padding-top:10px;margin-top:4px}
+.sup-detail .vs::before{content:"On Prismatic: ";color:var(--cyan);font-weight:600}
+.sup-detail .sup-backed{margin-top:11px;margin-bottom:0}
+.sup-detail .sup-backed a{font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-dim);border:1px solid rgba(26,183,89,.25);border-radius:5px;padding:2px 8px;text-decoration:none;display:inline-block;margin-right:6px}
+.sup-detail .sup-backed a:hover{border-color:var(--green);text-decoration:none}
+
+.act-take{font-size:19px;line-height:1.5;color:var(--text);font-weight:500;max-width:860px;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -612,21 +722,21 @@ a.tq:hover .tq-jump{color:var(--green)}
     <p class="dim">Apply the same scepticism to us. Read the architecture, not the adjectives. And take three questions with you into every vendor conversation you have after this one:</p>
 
     <div class="three-questions">
-      <a class="tq" href="#test-see">
+      <a class="tq" href="#cap-01">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="1.5"/><circle cx="11" cy="11" r="2.6" stroke="#1ab759" stroke-width="1.5"/></svg>
         <span class="tq-n">TEST 01</span>
         <h4>Can a human still see it?</h4>
         <p>After the AI has done the work, is there a representation a non-developer can open, read, and judge? Building something and being able to look at it afterwards are two different capabilities.</p>
       <span class="tq-jump">Jump to Capability 01, where it bites hardest &rarr;</span>
       </a>
-      <a class="tq" href="#test-depth">
+      <a class="tq" href="#cap-06">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="1.5" stroke-linecap="round"/></svg>
         <span class="tq-n">TEST 02</span>
         <h4>How deep does it actually go?</h4>
         <p>Never accept a depth claim. Test it against the specific API you need: the private endpoint no catalog lists, the forty custom fields, the rate limit, the pagination quirk.</p>
       <span class="tq-jump">Jump to Capability 06, the uncatalogued endpoint &rarr;</span>
       </a>
-      <a class="tq" href="#test-catch">
+      <a class="tq" href="#cap-24">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg>
         <span class="tq-n">TEST 03</span>
         <h4>What catches it when the AI is wrong?</h4>
@@ -649,21 +759,51 @@ a.tq:hover .tq-jump{color:var(--green)}
       <p><b>A note on method.</b> Every vendor in this category claims depth, autonomy, and reliability, and you have no way to adjudicate competing claims. So this page does something else: it takes concrete jobs and shows what each platform's architecture requires to get them done. APIANT's side is a walkthrough of shipping capabilities. Prismatic's side is derived from Prismatic's own documentation, repositories, and pricing page, quoted where a quote beats a paraphrase. Where their design handles a job well, we say so.</p>
     </div>
 
-    <p class="howto"><b>How to read this page.</b> Every entry follows the same shape: the problem that forced the capability to exist, a concrete scenario, how it goes on APIANT<span class="sw" style="background:var(--green)"></span>, and what the same outcome requires on Prismatic<span class="sw" style="background:var(--cyan)"></span>. Skim the bold lines first. The argument is the pile, not any single row.</p>
+    <p class="howto"><b>How to read this page.</b> Skim the sixty-one one-line takeaways, and open any row that matters to you. Inside each: the problem that forced the capability to exist, a concrete scenario, how it goes on APIANT<span class="sw" style="background:var(--green)"></span>, and what the same outcome requires on Prismatic<span class="sw" style="background:var(--cyan)"></span>. Skim the bold lines first. The argument is the pile, not any single row.</p>
   </div>
 </section>
 
+
+<div class="toolbar" id="toolbar">
+  <div class="tb-inner">
+    <div class="tb-search" role="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="Search all 61 capabilities" aria-label="Search capabilities" autocomplete="off" spellcheck="false"/>
+      <kbd>/</kbd>
+    </div>
+    <span class="tb-count" id="tbCount" role="status" aria-live="polite" aria-atomic="true">61 capabilities</span>
+    <button class="tb-btn" id="tbToggle" type="button">Expand all</button>
+  </div>
+  <div class="tb-filters" role="group" aria-label="Filters">
+    <button class="fbtn" data-act="all" aria-pressed="true" type="button">All acts</button>
+    <button class="fbtn" data-act="1" aria-pressed="false" type="button">1 Foundation</button>
+    <button class="fbtn" data-act="2" aria-pressed="false" type="button">2 Any system</button>
+    <button class="fbtn" data-act="3" aria-pressed="false" type="button">3 Business logic</button>
+    <button class="fbtn" data-act="4" aria-pressed="false" type="button">4 Proving it</button>
+    <button class="fbtn" data-act="5" aria-pressed="false" type="button">5 Fleet</button>
+    <button class="fbtn" data-act="6" aria-pressed="false" type="button">6 Years</button>
+    <button class="fbtn" data-act="7" aria-pressed="false" type="button">7 Customers</button>
+    <button class="fbtn" data-act="8" aria-pressed="false" type="button">8 The AI layer</button>
+    <span style="width:12px"></span>
+    <button class="fbtn t1" data-test="1" aria-pressed="false" type="button">Can a human see it</button>
+    <button class="fbtn t2" data-test="2" aria-pressed="false" type="button">How deep it goes</button>
+    <button class="fbtn t3" data-test="3" aria-pressed="false" type="button">What catches mistakes</button>
+  </div>
+</div>
+<div class="no-hits" id="noHits" role="status" style="display:none">Nothing matches <b id="noHitsWhat"></b>. <span id="noHitsAdvice"></span></div>
+
 <!-- ============ ACT 1 ============ -->
-<section class="act">
+<section class="act" data-act="1">
   <div class="wrap">
     <div class="act-head">
-      <span class="act-n">Act 1 of 8</span>
+      <span class="act-n">Act 1 of 8</span><span class="act-count"></span>
       <h2>The foundation. Why any of the rest is possible.</h2>
+      <p class="act-take">Because APIANT builds structured, readable integrations, your team keeps ownership: inspect, change and roll back anything, without the original author.</p>
       <p>Everything on this page traces back to one design decision made years before AI could build integrations: what is an integration made of? On APIANT the answer is structured data, all the way down. That choice looked like an implementation detail for a decade. It is now the whole ballgame.</p>
     </div>
 
     <!-- ROW 1: HERO -->
-    <article class="row" id="test-see">
+    <details class="cap" id="cap-01" data-act="1" data-tests="1" data-kind="hero" data-src="1"><summary><span class="cap-num">01</span><span class="cap-body"><span class="cap-label">Integrations your team can open and read later</span><p class="cap-take">A new hire can rework invoice mapping in twenty minutes, no engineer needed. <span class="cost">Elsewhere, what the AI builds is code your non-developers cannot open.</span></p></span><span class="cap-meta"><span class="tbadge t1" title="Test 01: can a human still see it?">1</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 01 · Everything else on this page depends on this one</span>
         <p class="problem">Code cannot be safely edited by a machine, inspected by a non-developer, or replayed with its state intact.</p>
@@ -672,6 +812,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap01.webp" alt="Meridian&#x27;s new integrations lead must change invoice mapping after the engineer left." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Meridian&#x27;s new integrations lead must change invoice mapping after the engineer left.</p>
         <p><b>Meridian, a field-services SaaS with 4,100 customers.</b> In March, an AI built their QuickBooks invoice sync in a working session. In September, the engineer who supervised that session has left, and Dana, the new integrations lead (sharp, technical, not a developer), needs to change how invoice line items map for a segment of customers. The question that decides Dana's week: <b>what did the AI actually hand Meridian in March?</b></p>
         <svg class="scene" viewBox="0 0 920 240" role="img" aria-label="On APIANT a person reads the same visual flow the AI built. On the competitor the AI-built artifact is a code repository.">
           <!-- APIANT side -->
@@ -725,12 +866,12 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;this is the row where it bites hardest</span>
       </div>
-    </article>
+    </div></details>
 
     <div class="pull"><p>Both let an AI build the integration. The difference is <span class="g">what the AI hands you afterwards.</span></p></div>
 
     <!-- ROW 2: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-02" data-act="1" data-tests="2" data-kind="hero" data-src="2"><summary><span class="cap-num">02</span><span class="cap-body"><span class="cap-label">Any data format, any file size</span><p class="cap-take">Quarter-end&#x27;s 80MB file clears by 4am on the same path as a normal night. <span class="cost">Elsewhere, a documented 6MB webhook ceiling routes anything larger through external storage.</span></p></span><span class="cap-meta"><span class="tbadge t2" title="Test 02: how deep does it actually go?">2</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 02</span>
         <p class="problem">Integrations died on large payloads, and on formats the platform had not anticipated.</p>
@@ -739,6 +880,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap02.webp" alt="Caldera Health&#x27;s 38 clinics need overnight claims reconciled before 7am doors open." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Caldera Health&#x27;s 38 clinics need overnight claims reconciled before 7am doors open.</p>
         <p><b>Caldera Health, a 38-clinic group.</b> Every night at 1am, their practice-management system exports the day's claims and inventory as one file. On a normal Tuesday it is 12MB. At end of quarter it is 80MB. The integration has to parse it, reconcile it against the billing platform, and post corrections before clinics open at 7am. Nobody is awake to babysit it, which is the point.</p>
         <svg class="scene" viewBox="0 0 920 190" role="img" aria-label="An 80MB nightly file flows through APIANT's engine unimpeded; on the competitor it exceeds documented platform limits.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
@@ -786,29 +928,27 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;depth claims dissolve on contact with one big file</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- supporting rows 3-5 -->
-    <div class="supports">
-      <div class="sup">
+    <details class="cap" id="cap-03" data-act="1" data-tests="" data-kind="support" data-src="3"><summary><span class="cap-num">03</span><span class="cap-body"><span class="cap-label">Your own dev and production servers</span><p class="cap-take">Your syncs queue behind your own traffic, at your own domain, on a dedicated server pair from the entry paid plan.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Shared infrastructure means shared rate limits, shared incidents, and commingled customer data.</p>
         <h4>03 · A dedicated dev and production server pair, on your own domain, single tenant, from the first paid tier</h4>
         <p>Your integrations run on servers that are yours, addressed at your domain, with nobody else's traffic in the queue. You can even shut them down.</p>
-        <p class="vs">new accounts are provisioned into a shared multi-tenant region by default; a stack in your own cloud account is how their docs describe the Enterprise deployment option, and a custom domain is "available to customers on specific pricing plans."</p>
-      </div>
-      <div class="sup">
+        <p class="vs">new accounts are provisioned into a shared multi-tenant region by default; a stack in your own cloud account is how their docs describe the Enterprise deployment option, and their custom-domains documentation states the feature is "available to customers on specific pricing plans."</p>
+      </div></div></details>
+      <details class="cap" id="cap-04" data-act="1" data-tests="" data-kind="support" data-src="4"><summary><span class="cap-num">04</span><span class="cap-body"><span class="cap-label">Broken builds refused before they ship</span><p class="cap-take">Structurally invalid work is refused at build time, instead of surfacing later in production logs. <span class="cost">Elsewhere, checking means deploy it, run it, and read the logs.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">A generated integration that is syntactically fine and semantically wrong reaches production, and nobody knows until customer data is wrong.</p>
         <h4>04 · A deterministic compiler that refuses structurally invalid work before it exists</h4>
         <p>The AI's intent passes through a constrained schema, and the compiler rejects invalid structures at the door. Ask for something malformed and watch the platform say no.</p>
         <p class="vs">the validation their AI tooling runs is a code compiler plus a pattern check, then deploy-and-test: compile the TypeScript, push it to the environment, run it, read the logs. A type checker validates that a program compiles, not that an integration behaves.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-05" data-act="1" data-tests="" data-kind="support" data-src="5"><summary><span class="cap-num">05</span><span class="cap-body"><span class="cap-label">Build a piece once, reuse it everywhere</span><p class="cap-take">Fix a broken lookup once and every integration using it inherits the fix, including the ones your team forgot about.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">The same connector logic was being rebuilt per customer, and the copies diverged.</p>
         <h4>05 · Reusable building blocks: assemblies, modules, subassemblies</h4>
         <p>Build an operation once ("get client services by product"), reuse it in every integration that needs it. Fix it once, every user of it inherits the fix.</p>
         <p class="vs">components are reusable across integrations, a genuine strength. Flows are not: their cross-flow mechanism works only inside a single integration, so shared multi-step logic is copied or rebuilt per integration.</p>
-      </div>
-    </div>
+      </div></div></details>
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
@@ -818,16 +958,17 @@ a.tq:hover .tq-jump{color:var(--green)}
 </section>
 
 <!-- ============ ACT 2 ============ -->
-<section class="act">
+<section class="act" data-act="2">
   <div class="wrap">
     <div class="act-head">
-      <span class="act-n">Act 2 of 8</span>
+      <span class="act-n">Act 2 of 8</span><span class="act-count"></span>
       <h2>Reaching any system, not just catalogued ones.</h2>
+      <p class="act-take">New connectors, including APIs no catalog lists, take working sessions instead of sprints, and add library entries instead of codebases.</p>
       <p>Connector catalogs are where integration platforms compete in public, and it is the wrong contest. The integration a deal depends on is reliably the one no catalog lists. The real questions are time-to-new-connector, and how deep the connector goes once it exists.</p>
     </div>
 
     <!-- ROW 6: HERO -->
-    <article class="row" id="test-depth">
+    <details class="cap" id="cap-06" data-act="2" data-tests="2" data-kind="hero" data-src="6"><summary><span class="cap-num">06</span><span class="cap-body"><span class="cap-label">Connectors built straight from an API&#x27;s documentation</span><p class="cap-take">A niche partner API becomes a working connector in one session, and the renewal survives. Elsewhere it arrives as a Node project, times forty clients.</p></span><span class="cap-meta"><span class="tbadge t2" title="Test 02: how deep does it actually go?">2</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 06</span>
         <p class="problem">The integration the deal depended on was never in anyone's catalog, and the catalog vendor had no incentive to add it.</p>
@@ -835,6 +976,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap06.webp" alt="Northgate&#x27;s largest client renews if a niche partner API integration ships this month." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Northgate&#x27;s largest client renews if a niche partner API integration ships this month.</p>
         <p><b>Northgate, a systems integrator with forty managed clients.</b> Their largest client runs bookings on a regional platform nobody has heard of outside its niche. The endpoints that matter, membership holds and multi-site transfers, live in the partner API, behind an NDA, in no catalog anywhere. The client's renewal is conditioned on this integration existing within the month.</p>
         <svg class="scene" viewBox="0 0 920 200" role="img" aria-label="API documentation becomes a full connector on APIANT; on the competitor it becomes a TypeScript project the team owns.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
@@ -883,7 +1025,7 @@ a.tq:hover .tq-jump{color:var(--green)}
           <span class="kicker cyan">On Prismatic</span>
           <p>Prismatic can absolutely reach this API, and their tooling for it is real: a CLI that scaffolds a custom component, including from an API spec file, and a generic HTTP step for one-off calls. Their own definition of the artifact:</p>
           <div class="quote">"Connectors are Node.js/TypeScript projects that accomplish specific tasks or connect to an outside service."<span>prismatic.io docs, custom connectors</span></div>
-          <p>There is no other way to author one. So the path is: scaffold the project, write or finish the TypeScript for each action and trigger, run the build, publish (each republish increments the version), and maintain the project, its dependencies, and its upgrades from now on. Their own material concedes the shortcut's limits: the generic HTTP step "often falls short when you're dealing with atypical API implementations."</p>
+          <p>There is no other way to author one. So the path is: scaffold the project, write or finish the TypeScript for each action and trigger, run the build, publish (each republish increments the version), and maintain the project, its dependencies, and its upgrades from now on. Their own material concedes the shortcut's limits: their own material notes the generic HTTP step "often falls short when you're dealing with atypical API implementations."</p>
           <p>Northgate gets the integration either way. On one platform they also get a codebase, times forty clients' worth of niche systems, times years.</p>
         </div>
       </div>
@@ -891,17 +1033,18 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;name the endpoint, then ask who builds and owns the artifact</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- ROW 9: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-07" data-act="2" data-tests="2" data-kind="hero" data-src="9"><summary><span class="cap-num">07</span><span class="cap-body"><span class="cap-label">Vendor account signup and secure credential storage</span><p class="cap-take">Five integrations clear their vendor portal paperwork in one afternoon, with the credentials landing straight in the vault instead of a spreadsheet.</p></span><span class="cap-meta"><span class="tbadge t2" title="Test 02: how deep does it actually go?">2</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
-        <span class="kicker">Capability 09</span>
+        <span class="kicker">Capability 07</span>
         <p class="problem">Onboarding stalled for days on OAuth paperwork before a single record moved.</p>
         <h3>The authentication layer, including automated registration of OAuth applications on a vendor's developer portal, and credential vaulting</h3>
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap09.webp" alt="Brightline launches five integrations this quarter, each blocked by vendor portal paperwork." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Brightline launches five integrations this quarter, each blocked by vendor portal paperwork.</p>
         <p><b>Brightline, a B2B SaaS company, is launching integrations with five systems this quarter.</b> Each of the five requires Brightline to register an application on that vendor's developer portal first: create the account, fill the forms, describe the use case, set callback URLs, wait, copy the credentials somewhere safe. It is nobody's job, so it becomes the bottleneck for everybody's job.</p>
       </div>
       <div class="cols">
@@ -925,17 +1068,18 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;depth includes the steps before the first API call</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- ROW 10: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-08" data-act="2" data-tests="1" data-kind="hero" data-src="10"><summary><span class="cap-num">08</span><span class="cap-body"><span class="cap-label">Field mapping reads the customer&#x27;s live system</span><p class="cap-take">An onboarding call maps forty-one custom fields and a dropdown their admin invented, because the connector reads the customer&#x27;s live tenant.</p></span><span class="cap-meta"><span class="tbadge t1" title="Test 01: can a human still see it?">1</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
-        <span class="kicker">Capability 10</span>
+        <span class="kicker">Capability 08</span>
         <p class="problem">Field mappings built against documentation break on contact with a customer who renamed things and added forty custom fields.</p>
         <h3>Live field discovery against the customer's own tenant: exact field names, types, custom fields, renamed objects, dropdowns populated from their real data</h3>
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap10.webp" alt="A 60-store retailer onboards a CRM customized for nine years, forty-one custom fields deep." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A 60-store retailer onboards a CRM customized for nine years, forty-one custom fields deep.</p>
         <p><b>A 60-store outdoor retailer is onboarding onto a loyalty integration.</b> Their CRM has been customized for nine years: forty-one custom fields, two renamed objects, and a "member tier" dropdown whose values exist nowhere in any documentation, because their admin invented them. The mapping screen has to show <b>their</b> CRM, not the CRM in the manual.</p>
       </div>
       <div class="cols">
@@ -952,45 +1096,43 @@ a.tq:hover .tq-jump{color:var(--green)}
           <span class="kicker cyan">On Prismatic</span>
           <p>Prismatic has a genuine answer here: data sources can fetch live values from a customer's account and render real field-mapping screens in the config wizard. Their worked example reaches actual object fields in the customer's CRM. The catch is who makes that happen:</p>
           <div class="quote">"A Data Source fetches data from a third-party API that will be used to dynamically generate a config variable."<span>prismatic.io docs, data sources</span></div>
-          <p>A developer writes that data-source code in TypeScript, per app and per object, as part of the connector project. Discovery depth is therefore a line item in each connector's development budget, and the connectors where nobody budgeted it fall back to hand-typed field names, which is where the forty-one custom fields go wrong.</p>
+          <p>A developer writes that data-source code in TypeScript, per app and per object, as part of the connector project. Discovery depth is therefore a line item in each connector's development budget, and where a connector does not implement one, field names are entered by hand.</p>
         </div>
       </div>
       <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-tools">field discovery tools, assembly toolset</a></div>
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;the customer sees their own system, or they see the manual's</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- supporting rows 7, 8, 11, 12 -->
-    <div class="supports">
-      <div class="sup">
+    <details class="cap" id="cap-09" data-act="2" data-tests="" data-kind="support" data-src="7"><summary><span class="cap-num">09</span><span class="cap-body"><span class="cap-label">Every way an API announces a change</span><p class="cap-take">Every API gets a vetted way of announcing changes, so records stop going missing or arriving twice.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Every vendor's API announces change differently, and picking the wrong mechanism means missed or duplicated records.</p>
-        <h4>07 · Six ways a run can start</h4>
+        <h4>09 · Six ways a run can start</h4>
         <p>Polling for new records, polling for new-or-updated, manual webhooks, self-registering webhooks, service webhooks with event filtering, and long-lived protocol listeners. Six vetted patterns; the AI picks the right one per API.</p>
         <p class="vs">webhook and scheduled starts exist as they do everywhere; the difference is that here the trigger strategy is a menu of prebuilt, tested mechanisms rather than a design decision your team re-derives, and re-debugs, for each API's quirks.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">6 trigger skills</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-10" data-act="2" data-tests="" data-kind="support" data-src="8"><summary><span class="cap-num">10</span><span class="cap-body"><span class="cap-label">Any modern API call, still readable</span><p class="cap-take">Even an AI call or a price calculation is something your team can open and check. <span class="cost">Elsewhere, it is code, so only its author can.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Create-read-update-delete alone cannot express what modern APIs do.</p>
-        <h4>08 · Seven action primitives, including calls that return computed or generated data</h4>
+        <h4>10 · Seven action primitives, including calls that return computed or generated data</h4>
         <p>Add, delete, find, get, list, update, and invoke: the last one models operations that compute, transform, or generate (an AI inference, a price calculation), so the whole modern API surface fits the data model.</p>
         <p class="vs">a code step can of course call anything. The point of primitives is different: every operation stays inside the structured model, so it remains visible to the editor, the tester, and the compiler, rather than disappearing into code.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">7 action skills</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-11" data-act="2" data-tests="" data-kind="support" data-src="11"><summary><span class="cap-num">11</span><span class="cap-body"><span class="cap-label">Vendor rate limits enforced across every account</span><p class="cap-take">Type a vendor&#x27;s limit once and every account sharing that API queues against one 185-calls-per-10-seconds budget. <span class="cost">Elsewhere, concurrency caps of 2 to 15 live per flow.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">A vendor's rate limit is the real constraint on a multi-location sync, and hitting it corrupts a run.</p>
         <h4>11 · Throttling at three levels: connector, action, and connection</h4>
-        <p>Type a vendor's limit once and the platform enforces it across every automation and every account that touches that API, with queueing and backoff. One deployment runs 232 locations against a single 185-calls-per-10-seconds budget without a 429 reaching a customer.</p>
+        <p>Type a vendor's limit once and the platform enforces it across every automation and every account that touches that API, with queueing and backoff. One deployment runs 232 locations against a single 185-calls-per-10-seconds budget with the platform queueing and backing off rather than each flow deciding on its own.</p>
         <p class="vs">their documented controls live per flow: retry with backoff, and queue-based concurrency caps of 2 to 15. A budget enforced across every integration that shares one API is a different level of control, and it is the level vendors' rate limits are written at.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-12" data-act="2" data-tests="" data-kind="support" data-src="12"><summary><span class="cap-num">12</span><span class="cap-body"><span class="cap-label">A decade of hand-built work becomes AI-editable</span><p class="cap-take">Integrations your team hand-built years ago become AI-editable without a rewrite. <span class="cost">Elsewhere, the path forward is rewriting them as code.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Years of existing integrations would otherwise be stranded outside the AI's reach.</p>
         <h4>12 · Converting hand-built work to the AI-operable form</h4>
         <p>Integrations built by people over a decade convert into the same structured form the AI operates, so the AI can maintain the estate you already own. Nothing is stranded, and nothing loses its visual form in the process.</p>
         <p class="vs">their documented conversion runs the other way: visual low-code converts to code, one-way, and the visual representation does not survive the trip. Moving toward their AI means moving away from the form a non-developer can read.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">/convert-assembly</a></p>
-      </div>
-    </div>
+      </div></div></details>
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
@@ -1000,24 +1142,26 @@ a.tq:hover .tq-jump{color:var(--green)}
 </section>
 
 <!-- ============ ACT 3 ============ -->
-<section class="act">
+<section class="act" data-act="3">
   <div class="wrap">
     <div class="act-head">
-      <span class="act-n">Act 3 of 8</span>
+      <span class="act-n">Act 3 of 8</span><span class="act-count"></span>
       <h2>Expressing business logic that survives the real world.</h2>
+      <p class="act-take">The rules that make your business unusual stay in a model your team can read, not code they must own.</p>
       <p>Field-to-field mapping is the demo. The business is nested rules, parallel work, digests, approvals, waits, and the awkward requirement that makes your operation yours. The question for any platform: does that logic fit inside the model, where it stays visible and testable, or does it spill into code and patterns your team hand-builds?</p>
     </div>
 
     <!-- ROW 15: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-13" data-act="3" data-tests="3" data-kind="hero" data-src="15"><summary><span class="cap-num">13</span><span class="cap-body"><span class="cap-label">Run hundreds in parallel, know when all finished</span><p class="cap-take">214 stores get overnight prices in minutes, and the 6am report fires once. <span class="cost">Elsewhere, the finish line is polled, on shared state a simultaneous run overwrites.</span></p></span><span class="cap-meta"><span class="tbadge t3" title="Test 03: what catches it when the AI is wrong?">3</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
-        <span class="kicker">Capability 15</span>
+        <span class="kicker">Capability 13</span>
         <p class="problem">Processing two hundred locations in series took hours. In parallel, nothing knew when all of them had finished.</p>
         <h3>Latches: parallel fan-out with a real fan-in</h3>
         <p class="cap-sub">Launch N child runs in parallel, and the platform itself knows when the last one completes, so the "everything is done, now reconcile" step is a primitive, not a science project.</p>
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap15.webp" alt="A 214-store chain updates overnight prices; the 6am report must cover every store." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A 214-store chain updates overnight prices; the 6am report must cover every store.</p>
         <p><b>A 214-location convenience chain pushes overnight price updates.</b> Every store must be updated in parallel (serially it takes past opening), and when the last store finishes, one reconciliation report must go to the merchandising director, listing any store that failed. The hard part was never the fan-out. It is knowing, reliably, that all 214 are done.</p>
         <svg class="scene" viewBox="0 0 920 210" role="img" aria-label="APIANT fans out to 214 parallel runs and joins them with a latch; the competitor pattern polls an API in a loop and accumulates state by hand.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
@@ -1071,17 +1215,18 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;hand-built coordination is where 2am pages come from</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- ROW 16: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-14" data-act="3" data-tests="3" data-kind="hero" data-src="16"><summary><span class="cap-num">14</span><span class="cap-body"><span class="cap-label">Two-way sync without the runaway update loop</span><p class="cap-take">Contact changes flow both ways on day one, without the overnight loop that rewrites one record 4,000 times. <span class="cost">Elsewhere, a hand-made naming convention is the safeguard.</span></p></span><span class="cap-meta"><span class="tbadge t3" title="Test 03: what catches it when the AI is wrong?">3</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
-        <span class="kicker">Capability 16</span>
+        <span class="kicker">Capability 14</span>
         <p class="problem">Two systems updating each other trigger each other, forever.</p>
         <h3>Two-way sync with loop prevention as a first-class primitive</h3>
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap16.webp" alt="22 physio clinics sync patient details both ways; a loop rate-limits every clinic." loading="lazy" width="1344" height="768"/><p class="scene-teaser">22 physio clinics sync patient details both ways; a loop rate-limits every clinic.</p>
         <p><b>Arrowe Physio, 22 clinics.</b> Patient contact details must stay identical in the practice-management system and the marketing CRM, editable from either side. The failure mode is famous: the CRM update fires a webhook, the integration writes to practice management, which fires its webhook, which writes to the CRM, which fires again. By morning one patient record has been "updated" four thousand times and both APIs have rate-limited the clinic.</p>
       </div>
       <div class="cols">
@@ -1105,71 +1250,69 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;a naming convention is what stands between you and 4,000 writes</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- supporting rows 13,14,17-23 -->
-    <div class="supports">
-      <div class="sup">
+    <details class="cap" id="cap-15" data-act="3" data-tests="" data-kind="support" data-src="13"><summary><span class="cap-num">15</span><span class="cap-body"><span class="cap-label">Nested business rules stay readable in the flow</span><p class="cap-take">Your grandfathered-plan exceptions stay readable in the flow, so whoever inherits them can audit them without an engineer.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Real business rules are nested, and field-mapping tools cannot express them.</p>
-        <h4>13 · Conditional branching and nested loops</h4>
+        <h4>15 · Conditional branching and nested loops</h4>
         <p>"For each location, for each membership type, if the plan is grandfathered and the balance is positive..." expresses directly in the flow, and stays visible there.</p>
         <p class="vs">their visual builder has loops and branches too; the difference shows at the edges of the model, where their answer is code, and code is where visibility ends.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-16" data-act="3" data-tests="" data-kind="support" data-src="14"><summary><span class="cap-num">16</span><span class="cap-body"><span class="cap-label">Shared logic fixed once, not nine times</span><p class="cap-take">One fix instead of nine, with nothing left behind in a forgotten copy to drift out of step.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">The same twelve-step sequence appeared in nine automations and had to be fixed nine times.</p>
-        <h4>14 · Reusable subroutines, shared across automations</h4>
+        <h4>16 · Reusable subroutines, shared across automations</h4>
         <p>Extract the sequence once, call it from all nine. Fix it once, all nine inherit it, and the subroutine tests in isolation.</p>
         <p class="vs">their cross-flow invocation works only between flows inside the same integration. Shared multi-step logic across integrations is copied, and copies drift.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-17" data-act="3" data-tests="" data-kind="support" data-src="17"><summary><span class="cap-num">17</span><span class="cap-body"><span class="cap-label">One daily digest instead of hundreds of alerts</span><p class="cap-take">Customers get one 5pm summary instead of 400 pings, and nothing is lost when two runs land at once.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Customers wanted one daily digest, not four hundred notifications.</p>
         <h4>17 · Collector: aggregate items into named buckets across many runs, drained on a schedule</h4>
         <p>Four hundred events land all day; one clean summary goes out at 5pm. A dedicated primitive, safe under concurrency.</p>
         <p class="vs">cross-run aggregation uses their persisted-data feature: a 64MB cap and documented last-write-wins behavior when two runs land at once. The digest pattern is yours to assemble on top.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-collector</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-18" data-act="3" data-tests="" data-kind="support" data-src="18"><summary><span class="cap-num">18</span><span class="cap-body"><span class="cap-label">Pause a job for days, resume automatically</span><p class="cap-take">A three-day follow-up needs one system, not a separate scheduler for somebody to own. <span class="cost">Elsewhere, runs stop at 15 minutes, so real waits are hand-built.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">"Follow up in three days" required an external scheduler and a second system to maintain.</p>
         <h4>18 · Snooze: pause a run until a future moment</h4>
         <p>A run can suspend itself for three days, or until next quarter, and resume with its state intact. One system, one place to look.</p>
         <p class="vs">executions cap at 15 minutes, their sleep step blocks inside that window and their docs advise against leaning on it; a real wait means splitting the work into separate flows with persisted state and a callback. Your team builds the scheduler.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-snooze</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-19" data-act="3" data-tests="" data-kind="support" data-src="19"><summary><span class="cap-num">19</span><span class="cap-body"><span class="cap-label">Hold a record for human approval</span><p class="cap-take">Refunds over $500 wait for a manager&#x27;s approval while everything else keeps moving. <span class="cost">Elsewhere, a plain hold-for-a-manager step is a custom build.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Some records must not sync until a person says yes, and the wait cannot block the platform.</p>
         <h4>19 · Human approval gates with a moderation queue</h4>
         <p>A run pauses on a queue; a person approves or denies from a link; the run resumes. Refunds over $500 wait for a manager, everything else flows.</p>
         <p class="vs">a general workflow approval gate is not in their model; the documented approval pattern lives inside their AI-agent tooling, and a plain "hold this record for a manager" is another split-flow, persisted-state build.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-human-moderation</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-20" data-act="3" data-tests="" data-kind="support" data-src="20"><summary><span class="cap-num">20</span><span class="cap-body"><span class="cap-label">Break big processes into testable pieces</span><p class="cap-take">Change one step of a fifty-step process without re-testing the other forty-nine. <span class="cost">Elsewhere, the pieces coordinate only if your team wires them together.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">One monolithic automation became unmaintainable and untestable.</p>
         <h4>20 · Parent and child automation chaining with parameter passing</h4>
         <p>Big processes decompose into small automations that call each other with parameters, each one testable alone.</p>
         <p class="vs">flows can invoke flows within one integration; across integrations, orchestration goes through webhooks your team wires and versions by hand.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-execute-automation</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-21" data-act="3" data-tests="" data-kind="support" data-src="21"><summary><span class="cap-num">21</span><span class="cap-body"><span class="cap-label">Turn a mapping spreadsheet into working mappings</span><p class="cap-take">A customer&#x27;s 300-row mapping sheet becomes the configuration directly, with unresolved rows flagged, instead of a week of error-prone typing. <span class="cost">Elsewhere, 300 rows get keyed in.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">A customer's mapping requirements arrived as a 300-row spreadsheet, and hand-entering it was a week of error-prone work.</p>
         <h4>21 · Field mappings imported from a spreadsheet</h4>
         <p>The 300-row file becomes the mapping, directly. The AI reads it, applies it, and flags the rows that do not resolve.</p>
         <p class="vs">no spreadsheet import of mappings appears in their documentation; mappings are entered through the config wizard's field-map control, or through a mapping UI your developers build. The 300 rows get keyed in.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-csv-mapping</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-22" data-act="3" data-tests="" data-kind="support" data-src="22"><summary><span class="cap-num">22</span><span class="cap-body"><span class="cap-label">Institutional memory that outlasts your engineers</span><p class="cap-take">Turnover stops costing you the same debugging twice: a quirk solved once stays solved after its author leaves. <span class="cost">Elsewhere, that memory walks out with them.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">The same API quirk was rediscovered every time, by whoever drew the short straw.</p>
         <h4>22 · A pattern library that persists institutional memory</h4>
         <p>Mappings, transforms, gotchas, and templates are saved and searchable. The AI checks the library before building, so the Mindbody pagination quirk gets solved once, ever.</p>
         <p class="vs">reuse units are components and templates, real but coarse. The fine-grained memory (this API lies about timestamps, this enum needs a lookup) lives in your engineers, and leaves with them.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">patterns toolset · 3 tools</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-23" data-act="3" data-tests="" data-kind="support" data-src="23"><summary><span class="cap-num">23</span><span class="cap-body"><span class="cap-label">Custom code as exception, not foundation</span><p class="cap-take">A genuinely odd requirement ships without waiting on a vendor release, and everything around it stays readable. <span class="cost">Elsewhere, code is the ground floor.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Occasionally a requirement is genuinely outside any data model, and waiting for a platform release is not an answer.</p>
         <h4>23 · A server-side scripting escape hatch</h4>
         <p>When you truly need arbitrary logic, a script slots in as one node of the structured document. Code is an optional leaf inside a data document, never the foundation. Everything around that leaf stays visible, testable, and machine-editable.</p>
         <p class="vs">the relationship is inverted: code is the substrate. Their building blocks are code projects, and their AI emits code. The question is not whether code exists on either platform. It is whether code is the exception or the ground you stand on.</p>
-      </div>
-    </div>
+      </div></div></details>
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
@@ -1179,16 +1322,17 @@ a.tq:hover .tq-jump{color:var(--green)}
 </section>
 
 <!-- ============ ACT 4 ============ -->
-<section class="act">
+<section class="act" data-act="4">
   <div class="wrap">
     <div class="act-head">
-      <span class="act-n">Act 4 of 8</span>
+      <span class="act-n">Act 4 of 8</span><span class="act-count"></span>
       <h2>Proving it before a customer ever sees it.</h2>
+      <p class="act-take">Paths get proven on real data before deploy, and the platform measures which ones are still untested, so coverage stops depending on your team&#x27;s memory.</p>
       <p>"It worked when I tried it" tests one path out of eleven. The other ten are where customers live. This act is the answer to the third standing test: when the AI, or a person, gets something wrong, what in the architecture catches it before production data does?</p>
     </div>
 
     <!-- ROW 24: HERO -->
-    <article class="row" id="test-catch">
+    <details class="cap" id="cap-24" data-act="4" data-tests="3" data-kind="hero" data-src="24"><summary><span class="cap-num">24</span><span class="cap-body"><span class="cap-label">Force a rare path to run on demand</span><p class="cap-take">Prove a path that fires once a year works today, not in nine months. <span class="cost">Elsewhere, replays repeat the original path, so rare cases need fake data.</span></p></span><span class="cap-meta"><span class="tbadge t3" title="Test 03: what catches it when the AI is wrong?">3</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 24 · Patent pending</span>
         <p class="problem">The branch nobody could trigger on demand was the branch that broke.</p>
@@ -1196,6 +1340,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap24.webp" alt="United Harvest, 90 food banks: proving a December donation path works in March." loading="lazy" width="1344" height="768"/><p class="scene-teaser">United Harvest, 90 food banks: proving a December donation path works in March.</p>
         <p><b>United Harvest, a federation of 90 food banks.</b> Their donation pipeline has a branch that fires only for tribute gifts carrying a matching-gift employer code, which in practice happens in the last week of December. It is March. The integration was just modified. The question: how do you prove the December branch still works, in March, without waiting nine months or faking an entire donation flow end to end?</p>
         <svg class="scene" viewBox="0 0 920 210" role="img" aria-label="APIANT mutates a saved execution's data to force an untaken branch; the competitor replays only the original payload down the original path.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
@@ -1247,26 +1392,27 @@ a.tq:hover .tq-jump{color:var(--green)}
           <p>Their production replay is documented precisely, and it is the whole story:</p>
           <div class="quote">"Replay reruns the entire integration with the original payload."<span>prismatic.io docs, retry and replay</span></div>
           <p>The replay API takes one argument: the execution's ID. No payload editing, no state modification, no restart from a chosen step. A replayed ordinary gift is still an ordinary gift, and takes the ordinary path.</p>
-          <p>To force the December branch, someone on your team hand-crafts a synthetic payload that impersonates a tribute gift and sends it through the designer's test runner. That works when the person remembers the branch exists, gets the twelve other fields realistic, and does it again for every branch, after every change. Coverage becomes a function of diligence. Diligence is exactly what month nine erodes.</p>
+          <p>To force the December branch, someone on your team hand-crafts a synthetic payload that impersonates a tribute gift and sends it through the designer's test runner. Forcing that branch therefore takes a hand-crafted payload per branch, re-authored after every change. Their documentation describes no mechanism that edits a saved run's state, so branch coverage stays a manual step rather than a platform-measured one.</p>
         </div>
       </div>
       <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-tools">automation_exec · 17 tools: mutate, restart, branch points</a></div>
       <div class="tests">
-        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;this capability is the answer, and it has no equivalent here</span>
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;their documented replay takes one argument: the execution ID</span>
       </div>
-    </article>
+    </div></details>
 
     <div class="pull"><p>The AI tests <span class="g">every branch</span> before it ships. Not the branches somebody thought to write payloads for. Every branch.</p></div>
 
     <!-- ROW 29: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-25" data-act="4" data-tests="1" data-kind="hero" data-src="29"><summary><span class="cap-num">25</span><span class="cap-body"><span class="cap-label">Know which customers a shared fix touches</span><p class="cap-take">Ship a one-line fix across 300 accounts knowing exactly which customers it touches. <span class="cost">Elsewhere, delivery means bumping the version in each integration, then moving each instance.</span></p></span><span class="cap-meta"><span class="tbadge t1" title="Test 01: can a human still see it?">1</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
-        <span class="kicker">Capability 29</span>
+        <span class="kicker">Capability 25</span>
         <p class="problem">A one-line connector fix silently changed behaviour for three hundred accounts.</p>
         <h3>Blast-radius analysis before touching a shared building block: which automations, and which customers, depend on this</h3>
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap29.webp" alt="Beacon, 300 live accounts: a one-line date fix that could break customers." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Beacon, 300 live accounts: a one-line date fix that could break customers.</p>
         <p><b>Beacon, a B2B SaaS vendor with 300 customer accounts live.</b> A date-format bug is found in a shared connector operation. The fix is one line. The question that separates a routine Tuesday from an incident: which automations call this operation, on which customers' accounts, and which of them are relying on the buggy behaviour without knowing it?</p>
       </div>
       <div class="cols">
@@ -1277,7 +1423,7 @@ a.tq:hover .tq-jump{color:var(--green)}
             <li>The fix is applied to the one node it concerns; its blast radius is that node, and the dependents are a known list, not a hope.</li>
             <li>The AI re-tests the affected automations against saved real runs, then the fix rolls out to the fleet deliberately, with rollback armed.</li>
           </ol>
-          <p class="outcome">The one-line fix ships with a printed list of everyone it touches. Surprises: zero.</p>
+          <p class="outcome">The one-line fix ships with a printed list of everyone it touches, so the dependents are known before the edit rather than after it.</p>
         </div>
         <div class="col col-p">
           <span class="kicker cyan">On Prismatic</span>
@@ -1289,45 +1435,43 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;"who depends on this" should be an answer, not an archaeology project</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- supporting rows 25-28, 30 -->
-    <div class="supports">
-      <div class="sup">
+    <details class="cap" id="cap-26" data-act="4" data-tests="" data-kind="support" data-src="25"><summary><span class="cap-num">26</span><span class="cap-body"><span class="cap-label">Measured proof every path was tested</span><p class="cap-take">You know a change is fully tested because the platform counts untested paths, not because someone felt confident. <span class="cost">Elsewhere, deciding you are done is guesswork.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">"It worked when I tried it" tested one path out of eleven.</p>
-        <h4>25 · Branch-coverage test points</h4>
+        <h4>26 · Branch-coverage test points</h4>
         <p>The platform knows every branch an automation has and tracks which ones testing has actually exercised. Coverage is measured, not assumed. A change ships when the walk is complete.</p>
         <p class="vs">no branch-coverage measurement appears in their testing documentation; exercising a different path means crafting a different sample payload, and knowing when you are done is on you.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_get_branch_test_points</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-27" data-act="4" data-tests="" data-kind="support" data-src="26"><summary><span class="cap-num">27</span><span class="cap-body"><span class="cap-label">Retest on real customer data, not samples</span><p class="cap-take">Bugs get retested against the actual record that broke, emoji in the surname included. <span class="cost">Elsewhere, replay works until the run ages out of a 14-day default window.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Synthetic test data does not contain the thing that breaks integrations.</p>
-        <h4>26 · Replay a real execution on real data</h4>
+        <h4>27 · Replay a real execution on real data</h4>
         <p>Any saved run re-executes with its actual data, so the malformed phone number and the emoji in the last-name field, the things that actually break integrations, are in the test.</p>
         <p class="vs">replay exists, whole-flow with the original payload, inside their 14-day default retention window. After that, the run you need to reproduce no longer exists to replay.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_restart_from_step</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-28" data-act="4" data-tests="" data-kind="support" data-src="27"><summary><span class="cap-num">28</span><span class="cap-body"><span class="cap-label">Re-run last month&#x27;s live traffic</span><p class="cap-take">Answer a month-old complaint by re-firing the exact message that failed. <span class="cost">Elsewhere, captured payloads come from build-time listening, and replays rerun the whole flow unchanged.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Testing a webhook-triggered flow meant asking a customer to go and click something in their system.</p>
-        <h4>27 · Webhook replay from historical payloads</h4>
+        <h4>28 · Webhook replay from historical payloads</h4>
         <p>Every webhook ever received is a test case. Re-fire last month's payload against the fixed automation and watch it process, without asking a customer to reproduce anything.</p>
         <p class="vs">their listening mode captures payloads at build time, a genuinely useful dev-loop feature. Replaying history against changed logic is bounded by the same retention window and reruns whole flows as-is.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_replay_webhook</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-29" data-act="4" data-tests="" data-kind="support" data-src="28"><summary><span class="cap-num">29</span><span class="cap-body"><span class="cap-label">Test a shared building block alone</span><p class="cap-take">Shared logic proves itself in one run instead of dragging nine workflows through a test cycle. <span class="cost">Elsewhere, work using prebuilt components is tested by deploying it.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Proving one shared component meant running nine automations.</p>
-        <h4>28 · Test a subroutine in isolation</h4>
+        <h4>29 · Test a subroutine in isolation</h4>
         <p>The shared sequence runs alone, with controlled inputs, and proves itself once, without dragging nine parent automations through a test cycle.</p>
         <p class="vs">their code-native tests hit a documented wall: "If you use [existing components] within your flows, you will not be able to build unit tests for your flows." Anything built on their own component catalog tests only by deploying and running it.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_test_subroutine</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-30" data-act="4" data-tests="" data-kind="support" data-src="30"><summary><span class="cap-num">30</span><span class="cap-body"><span class="cap-label">AI reads production, writes need approval</span><p class="cap-take">An agent with production credentials reads everything and writes nothing until a human approves. <span class="cost">Elsewhere, the equivalent gate covers deployment.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">The fastest way to an outage is a confident agent with production credentials.</p>
         <h4>30 · Production is read-only by default; writes gate on explicit confirmation</h4>
         <p>The AI inspects production freely and changes nothing without an explicit, human-confirmed deploy step. Autonomy without the blast radius.</p>
         <p class="vs">their equivalent safety is real and worth crediting: publishing a version never auto-changes customer instances. The difference is scope: their gate covers deployment; APIANT's covers everything an agent can do in production.</p>
-      </div>
-    </div>
+      </div></div></details>
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
@@ -1337,16 +1481,17 @@ a.tq:hover .tq-jump{color:var(--green)}
 </section>
 
 <!-- ============ ACT 5 ============ -->
-<section class="act">
+<section class="act" data-act="5">
   <div class="wrap">
     <div class="act-head">
-      <span class="act-n">Act 5 of 8</span>
+      <span class="act-n">Act 5 of 8</span><span class="act-count"></span>
       <h2>Shipping to a fleet, not to one customer.</h2>
+      <p class="act-take">Growth in customers and locations does not multiply your operational surface, and it is not metered per deployment.</p>
       <p>Building the integration once is the demo. Running it for three hundred customers, each configured differently, each on their own credentials, all needing the same fix on the same day, is the business. This act is where per-customer platforms and per-fleet platforms part ways.</p>
     </div>
 
     <!-- ROW 31: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-31" data-act="5" data-tests="3" data-kind="hero" data-src="31"><summary><span class="cap-num">31</span><span class="cap-body"><span class="cap-label">One build, hundreds of customers, per-customer settings</span><p class="cap-take">Ship a fix to 232 locations in fifteen minutes, all or none, with one-click rollback. <span class="cost">Elsewhere, the fleet moves instance by instance through a Reconfigure screen.</span></p></span><span class="cap-meta"><span class="tbadge t3" title="Test 03: what catches it when the AI is wrong?">3</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 31</span>
         <p class="problem">Every customer wants the same integration configured differently, and cloning it per customer creates hundreds of divergent copies.</p>
@@ -1355,6 +1500,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap31.webp" alt="A 232-location fitness franchise needs one fix live everywhere before evening classes." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A 232-location fitness franchise needs one fix live everywhere before evening classes.</p>
         <p><b>A fitness franchise with 232 locations</b> runs a booking-system-to-CRM integration at every site. Each location has its own booking credentials and its own quirks (time zones, membership names, feature toggles), but the logic is identical everywhere. Today, a fix needs to reach all 232 before the evening class rush. This is a real deployment shape running on APIANT now.</p>
         <svg class="scene" viewBox="0 0 920 220" role="img" aria-label="One codebase deploys atomically to 232 accounts on APIANT; on the competitor each instance is updated individually or by script.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
@@ -1375,7 +1521,7 @@ a.tq:hover .tq-jump{color:var(--green)}
           <text x="530" y="24" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC</text>
           <rect x="530" y="66" width="120" height="52" rx="10" fill="rgba(92,200,255,.07)" stroke="#5cc8ff"/>
           <text x="590" y="88" fill="#f7f8f8" font-size="12" text-anchor="middle">Publish v14</text>
-          <text x="590" y="105" fill="rgba(255,255,255,.5)" font-size="10" text-anchor="middle">deploys to no one</text>
+          <text x="590" y="105" fill="rgba(255,255,255,.5)" font-size="10" text-anchor="middle">publish only, no change</text>
           <g font-size="10" fill="#f7f8f8">
             <rect x="700" y="36" width="96" height="24" rx="6" fill="rgba(92,200,255,.06)" stroke="rgba(92,200,255,.55)"/><text x="748" y="52" text-anchor="middle">Instance · v14 ✓</text>
             <rect x="700" y="66" width="96" height="24" rx="6" fill="rgba(92,200,255,.06)" stroke="rgba(92,200,255,.55)"/><text x="748" y="82" text-anchor="middle">Instance · v12</text>
@@ -1405,62 +1551,60 @@ a.tq:hover .tq-jump{color:var(--green)}
           <span class="kicker cyan">On Prismatic</span>
           <p>Their model is one configured instance per customer deployment, and publishing is deliberately decoupled from deploying, a safety property they are right to value:</p>
           <div class="quote">"Publishing a new version of an integration does not automatically deploy that version to customers who run that integration."<span>prismatic.io blog, versioning</span></div>
-          <p>Updating the fleet is then per instance, via each instance's Reconfigure screen, or by scripting their management API, which does offer a bulk mutation to move instances to the latest version. No one-click control in the product, no all-or-none atomicity, no built-in staged rollout, and rollback is again instance by instance. Their pricing page also names the unit: plans carry "volume per-instance pricing." A fleet is made of instances, so the meter and the growth curve are the same line.</p>
+          <p>Updating the fleet is then per instance, via each instance's Reconfigure screen, or by scripting their management API, which does offer a bulk mutation to move instances to the latest version. No one-click control in the product, no all-or-none atomicity, no built-in staged rollout, and rollback is again instance by instance. Their pricing page also names the unit: their pricing page names the unit as "volume per-instance pricing." A fleet is made of instances, so the meter and the growth curve are the same line.</p>
         </div>
       </div>
       <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/deploy-automation</a><a href="/ai-operability#inventory-tools">deploy toolset · 7 tools</a></div>
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;version drift across a fleet is a slow-motion incident</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- supporting rows 32-38 -->
-    <div class="supports">
-      <div class="sup">
+    <details class="cap" id="cap-32" data-act="5" data-tests="" data-kind="support" data-src="32"><summary><span class="cap-num">32</span><span class="cap-body"><span class="cap-label">Parent account routes work to child locations</span><p class="cap-take">One incoming request lands in the right location&#x27;s account, on that location&#x27;s own credentials, with hundreds of accounts behind the curtain.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Three hundred locations cannot each hold their own credentials and configuration.</p>
         <h4>32 · Master and child account architecture, with master-account routing</h4>
         <p>A parent account governs hundreds of children. A webhook hits the master, which routes by location to the right child, which processes with its own credentials. The caller never knows there are 232 accounts behind the curtain.</p>
         <p class="vs">the model is customers and instances, flat. A location hierarchy with routing at the top is structure your team encodes inside integration logic, and maintains there.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-33" data-act="5" data-tests="" data-kind="support" data-src="33"><summary><span class="cap-num">33</span><span class="cap-body"><span class="cap-label">Share one credential, keep the rest separate</span><p class="cap-take">One CRM login covers every location while each site keeps its own booking login. <span class="cost">Elsewhere, shared credentials exist; configuration, upgrades and the wizard stay per instance.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Re-authenticating per location does not scale past about twenty.</p>
         <h4>33 · Shared where it matters, isolated where it must be</h4>
         <p>One CRM credential, flagged shared, serves all 232 locations, while each location keeps its own booking-system credential. Sharing is a toggle on the hierarchy, alongside shared settings and shared automations.</p>
         <p class="vs">shared credentials genuinely exist (org-managed connections a customer's instances can reference, set up by your team). What stays per instance is everything else: configuration, upgrades, and the wizard. The credential is shared; the fleet still is not.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-34" data-act="5" data-tests="" data-kind="support" data-src="34"><summary><span class="cap-num">34</span><span class="cap-body"><span class="cap-label">Fleet-wide upgrades and instant rollback in one action</span><p class="cap-take">A week of hand-updating becomes one action, staged if you prefer, reversible in one click. <span class="cost">Elsewhere, atomicity and staging are not properties their bulk update carries.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Shipping a fix to two hundred customers by hand takes a week and misses some.</p>
         <h4>34 · One-click deployment and upgrade to every linked account</h4>
         <p>Deploy or upgrade a codebase group across the fleet in one action, atomically, with staged rollouts when you want caution and instant rollback when you need it.</p>
         <p class="vs">fleet rollout is a management-API script (their bulk mutation moves instances to the latest version); atomicity, staging, and one-click rollback are properties your script either implements or does not have.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">deploy_to_accounts</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-35" data-act="5" data-tests="" data-kind="support" data-src="35"><summary><span class="cap-num">35</span><span class="cap-body"><span class="cap-label">Every version kept, compared, and reversible</span><p class="cap-take">A bad change is compared against the last good version and reversed everywhere in one action. <span class="cost">Elsewhere, the rollback is itself a customer-by-customer rollout.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">A change made things worse, and there was no way back.</p>
         <h4>35 · Version history, comparison, and rollback on a live integration</h4>
         <p>Every committed version is kept, any two versions diff against each other, and rollback restores a known-good state fleet-wide in one action.</p>
         <p class="vs">versions and deprecation exist and work; comparison and restoration happen per instance, which at fleet scale means the rollback is also a rollout.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-36" data-act="5" data-tests="" data-kind="support" data-src="36"><summary><span class="cap-num">36</span><span class="cap-body"><span class="cap-label">Onboarding a new customer is one operation</span><p class="cap-take">A new account is created, linked, and inheriting shared logins, settings and automations in one operation, with no onboarding checklist to work through.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Onboarding a customer was a manual checklist.</p>
         <h4>36 · Account provisioning at scale</h4>
         <p>A new customer account is created, linked into the hierarchy, and inherits shared connections, settings, and automations immediately. Provisioning is an operation, not a project, and the AI can run it.</p>
         <p class="vs">customers and instances are created via UI or API as you would expect; what the new arrival inherits automatically is bounded by the flat model above.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">admin_create_account</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-37" data-act="5" data-tests="" data-kind="support" data-src="37"><summary><span class="cap-num">37</span><span class="cap-body"><span class="cap-label">Permissions scoped by place in the hierarchy</span><p class="cap-take">A regional manager sees their 30 locations, support can look without touching, the master admin sees the whole franchise. <span class="cost">Elsewhere, roles stop at organization and customer.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Support needed to see a customer's runs without being able to change them.</p>
         <h4>37 · Role-based access with account-level permissions</h4>
         <p>Administrators, builders, viewers, scoped by account: the regional manager sees their 30 locations, the master admin sees all 232, support sees without touching.</p>
         <p class="vs">roles exist at organization and customer levels; scoping by position in a location hierarchy does not, because the hierarchy does not.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-38" data-act="5" data-tests="" data-kind="support" data-src="38"><summary><span class="cap-num">38</span><span class="cap-body"><span class="cap-label">One query shows who a vendor change breaks</span><p class="cap-take">A vendor announces a 90-day cutoff and you know which accounts are exposed in minutes. <span class="cost">Elsewhere, that list is a script written inside the 90 days.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">An API deprecation notice arrived, and nobody knew who was exposed.</p>
         <h4>38 · Fleet-wide impact analysis: which of my customers use this connector, this app, this operation</h4>
         <p>The vendor emails "v1 of our API sunsets in 90 days." One query returns every automation and every account affected, which becomes the migration worklist.</p>
         <p class="vs">the same answer is assembled by querying their management API across integrations and instances, a script that gets written during exactly the 90 days you wanted for the migration itself.</p>
-      </div>
-    </div>
+      </div></div></details>
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
@@ -1470,16 +1614,17 @@ a.tq:hover .tq-jump{color:var(--green)}
 </section>
 
 <!-- ============ ACT 6 ============ -->
-<section class="act">
+<section class="act" data-act="6">
   <div class="wrap">
     <div class="act-head">
-      <span class="act-n">Act 6 of 8 · The centrepiece</span>
+      <span class="act-n">Act 6 of 8 · The centrepiece</span><span class="act-count"></span>
       <h2>Running it for years.</h2>
+      <p class="act-take">Years two through five, support costs minutes instead of days, because the evidence and the controls are already there.</p>
       <p>Nobody buys an integration platform for month one. The purchase is really years two through five: the customer reports, the API drift, the 2am incidents, the person who left. Every platform demos the build. This act is about everything after the demo, which is where the money is, and where architectures stop being interchangeable.</p>
     </div>
 
     <!-- ROW 39: HERO OF HEROES -->
-    <article class="row">
+    <details class="cap" id="cap-39" data-act="6" data-tests="1,3" data-kind="hero" data-src="39"><summary><span class="cap-num">39</span><span class="cap-body"><span class="cap-label">Find one customer&#x27;s run from weeks ago</span><p class="cap-take">Answer a three-week-old customer complaint before standup: find the run, fix it, prove it, ship to all 90 sites. <span class="cost">Elsewhere, that evidence is retained 14 days by default.</span></p></span><span class="cap-meta"><span class="tbadge t1" title="Test 01: can a human still see it?">1</span><span class="tbadge t3" title="Test 03: what catches it when the AI is wrong?">3</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 39 · The needle in the haystack</span>
         <p class="problem">"It did not work for this one customer last Tuesday" was a multi-day archaeology project, and often unanswerable.</p>
@@ -1487,6 +1632,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap39.webp" alt="A 90-site franchise asks why one member vanished from their CRM three weeks ago." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A 90-site franchise asks why one member vanished from their CRM three weeks ago.</p>
         <p><b>6:51am, a support inbox.</b> One location of a 90-site franchise writes: "A member signed up on June 30 and she never showed up in our CRM. She's furious. What happened?" It is July 21. Three weeks ago. The platform has run hundreds of thousands of executions since. Somewhere in there is one run that did something wrong to one record, and a customer is waiting to find out whether you are the kind of vendor who can answer.</p>
         <svg class="scene" viewBox="0 0 920 300" role="img" aria-label="APIANT finds one run among hundreds of thousands, traces the data through every step, fixes one node, and ships the fix fleet-wide. On the competitor, the execution data from three weeks ago has aged out of default retention.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
@@ -1547,8 +1693,8 @@ a.tq:hover .tq-jump{color:var(--green)}
           <span class="kicker cyan">On Prismatic</span>
           <p>Start with the fact that decides this scenario before any tooling does:</p>
           <div class="quote">"Prismatic retains logs and step results for 14 days before automatically deleting them."<span>prismatic.io docs, logging</span></div>
-          <p>The run is 21 days old. Unless custom log retention, a feature their pricing page lists under the Enterprise tier, was on the contract, the step-level evidence is gone, and the honest answer to the customer is a guess.</p>
-          <p>Inside the window, their tooling is real: org-wide log search, execution pages with per-step outputs, replay of the original payload. For an AI-built integration the logic itself is TypeScript in a repository, so judging the faulty transform means reading code in one window and logs in another. The fix is a code change: edit, build, re-import, publish, then update each customer instance to the new version. Days of competent work, by a developer, within a two-week evidence window.</p>
+          <p>The run is 21 days old. Unless custom log retention, a feature their pricing page lists under the Enterprise tier, was on the contract, the step-level evidence for that run is outside the documented retention window.</p>
+          <p>Inside the window, their tooling is real: org-wide log search, execution pages with per-step outputs, replay of the original payload. For an AI-built integration the logic itself is TypeScript in a repository, so judging the faulty transform means reading code in one window and logs in another. The fix is a code change: edit, build, re-import, publish, then update each customer instance to the new version. Each of those steps is a developer task, and the evidence sits inside the documented retention window.</p>
         </div>
       </div>
       <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/support</a><a href="/ai-operability#inventory-tools">admin toolset · 24 tools</a><a href="/ai-operability#inventory-tools">automation_exec · 17 tools</a></div>
@@ -1556,12 +1702,12 @@ a.tq:hover .tq-jump{color:var(--green)}
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;can a human watch what the data went through, weeks later</span>
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;the fix is proven on her real run before it ships</span>
       </div>
-    </article>
+    </div></details>
 
     <div class="pull"><p>"It didn't work for one customer last Tuesday" stops being a week of archaeology. <span class="g">It becomes a conversation.</span></p></div>
 
     <!-- ROW 40: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-40" data-act="6" data-tests="3" data-kind="hero" data-src="40"><summary><span class="cap-num">40</span><span class="cap-body"><span class="cap-label">Alert rules that cut noise to real alerts</span><p class="cap-take">A real deployment went from 140 alerts a day to 3. <span class="cost">Elsewhere, monitors are per instance, and a noisy one gets cleared or deleted, not muted.</span></p></span><span class="cap-meta"><span class="tbadge t3" title="Test 03: what catches it when the AI is wrong?">3</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 40</span>
         <p class="problem">Alerting was either silent or so noisy that everyone stopped reading it, which is the same thing.</p>
@@ -1569,6 +1715,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap40.webp" alt="A team muted 140 daily alerts; a real one sat unread nine hours." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A team muted 140 daily alerts; a real one sat unread nine hours.</p>
         <p><b>A platform team's alert channel gets 140 integration alerts a day.</b> A hundred and thirty-eight are a flaky sandbox and a vendor's nightly maintenance window. Two are real. The humans did the rational thing months ago: they muted the channel. Last Thursday, one of the two real ones sat unread for nine hours while a customer's orders silently queued.</p>
       </div>
       <div class="cols">
@@ -1585,24 +1732,25 @@ a.tq:hover .tq-jump{color:var(--green)}
         <div class="col col-p">
           <span class="kicker cyan">On Prismatic</span>
           <p>Their alerting is a monitors system: pick from a documented list of trigger conditions (execution failed, execution overdue, log level exceeded, connection threw), notify email, Slack, PagerDuty, or a webhook. When an alert fires, the event record shows the surrounding logs, which is genuinely useful for diagnosis.</p>
-          <p>Two structural gaps do the damage in this scenario. Monitors are configured per instance and per flow, so alert policy across three hundred instances is three hundred configurations to keep aligned. And their documentation describes no suppression or muting: the controls on a noisy monitor are clearing it after it fires, or deleting it, which is how teams end up choosing between noise and silence. Nothing documented answers "why did the alert I expected not fire," and that question is the nine-hour gap.</p>
+          <p>Two structural gaps do the damage in this scenario. Monitors are configured per instance and per flow, so alert policy across three hundred instances is three hundred configurations to keep aligned. And their documentation describes no suppression or muting: the controls on a noisy monitor are clearing it after it fires, or deleting it.. No documented mechanism explains why an expected alert did not fire.</p>
         </div>
       </div>
       <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/alert-handling</a><a href="/ai-operability#inventory-tools">alerts + admin_alerts · 16 tools</a></div>
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;an alert nobody reads catches nothing</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- ROW 49: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-41" data-act="6" data-tests="3" data-kind="hero" data-src="49"><summary><span class="cap-num">41</span><span class="cap-body"><span class="cap-label">One-command shutdown and exact restore during outages</span><p class="cap-take">Stop 180 automations flooding a dead vendor within two minutes, then restore exactly what was on. <span class="cost">Elsewhere, the bulk pause script gets written during the incident.</span></p></span><span class="cap-meta"><span class="tbadge t3" title="Test 03: what catches it when the AI is wrong?">3</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
-        <span class="kicker">Capability 49</span>
+        <span class="kicker">Capability 41</span>
         <p class="problem">When an upstream vendor breaks, the choice was between flooding a broken API and losing track of what to turn back on.</p>
         <h3>The incident kill switch: snapshot and disable every running automation across a parent account and all its children, then restore exactly what was on</h3>
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap49.webp" alt="180 automations hammer a dead CRM across a parent and 60 child accounts." loading="lazy" width="1344" height="768"/><p class="scene-teaser">180 automations hammer a dead CRM across a parent and 60 child accounts.</p>
         <p><b>Tuesday, 11:40am: a CRM platform your customers depend on goes down hard.</b> Across one parent account and its 60 child accounts, 180 automations are hammering a dead API, burning retries, and generating an alert storm. Every minute they keep running makes the eventual recovery messier. But some of those automations were off already, on purpose, and when the vendor recovers you must restore exactly the previous state, not "turn everything on" and reawaken the three that were disabled for good reasons.</p>
       </div>
       <div class="cols">
@@ -1626,72 +1774,70 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;incident tooling written during the incident is not tooling</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- supporting rows 41-48, 50 -->
-    <div class="supports">
-      <div class="sup">
+    <details class="cap" id="cap-42" data-act="6" data-tests="" data-kind="support" data-src="41"><summary><span class="cap-num">42</span><span class="cap-body"><span class="cap-label">Set which errors retry and which stop</span><p class="cap-take">Transient blips retry themselves while broken credentials stop instead of hammering a customer&#x27;s API, set once for the whole tenant.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Transient failures were treated as fatal, and genuine auth failures were retried forever.</p>
-        <h4>41 · Error policy control: which errors deserve retries, and which must stop</h4>
+        <h4>42 · Error policy control: which errors deserve retries, and which must stop</h4>
         <p>Retryable error classes are tunable tenant-wide, auth failures on named domains get carve-outs, and automatic shutoff behaviour is a policy you set, not a surprise you discover.</p>
         <p class="vs">retry is a per-flow trigger setting: up to 10 attempts with backoff, asynchronous invocations only. Which errors deserve retrying and which must not is logic your flows implement one at a time.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">/alert-handling</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-43" data-act="6" data-tests="" data-kind="support" data-src="42"><summary><span class="cap-num">43</span><span class="cap-body"><span class="cap-label">Bulk retry of everything that failed</span><p class="cap-take">After an outage, hundreds of failed records get reprocessed from one screen instead of by hand. <span class="cost">Elsewhere, replay is capped at 25 per request.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">After an upstream outage, hundreds of records needed reprocessing, and there was no safe way to do it in bulk.</p>
-        <h4>42 · Retry inspection and bulk retry</h4>
+        <h4>43 · Retry inspection and bulk retry</h4>
         <p>See every failed run, inspect what each was carrying, and retry them in bulk once the cause is fixed, from the same surface, at any scale.</p>
         <p class="vs">bulk replay lives in the management API, capped at 25 execution IDs per request, with no product surface documented; the loop that pages through hundreds of failures is a script.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_retry_failed</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-44" data-act="6" data-tests="" data-kind="support" data-src="43"><summary><span class="cap-num">44</span><span class="cap-body"><span class="cap-label">Stop a runaway job while it runs</span><p class="cap-take">A misconfigured job pounding a customer&#x27;s system gets stopped the moment you notice, not when it finishes. <span class="cost">Elsewhere, the backstop is waiting out a 15-minute ceiling.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">A misconfigured run was hammering a customer's API, and the only remedy was waiting.</p>
-        <h4>43 · Halting a runaway execution mid-flight</h4>
+        <h4>44 · Halting a runaway execution mid-flight</h4>
         <p>A running execution can be stopped by an operator, now, before it finishes whatever it was wrongly doing.</p>
-        <p class="vs">no operator cancel for a normal in-flight execution appears in their docs or API schema; the universal backstop is the 15-minute execution ceiling, which is a long time to watch a loop hit someone's API.</p>
+        <p class="vs">no operator cancel for a normal in-flight execution appears in their docs or API schema; the universal backstop is the 15-minute execution ceiling.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_halt</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-45" data-act="6" data-tests="" data-kind="support" data-src="44"><summary><span class="cap-num">45</span><span class="cap-body"><span class="cap-label">See events that arrived but never processed</span><p class="cap-take">Catch a silent backlog before the customer calls: work that arrived but never ran has its own screen. <span class="cost">Elsewhere, that view lives inside one queueing mode.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Silent backlogs: everything looks healthy, and nothing is moving.</p>
-        <h4>44 · Visibility into webhooks received but not yet processed</h4>
+        <h4>45 · Visibility into webhooks received but not yet processed</h4>
         <p>The queue of arrived-but-unprocessed events is a first-class view. "Received but stuck" is visible before a customer notices the gap.</p>
         <p class="vs">queued executions become visible when their FIFO/throttled mode is enabled on a flow; outside that feature, no general received-but-unprocessed inbox is documented.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_list_unprocessed_webhooks</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-46" data-act="6" data-tests="" data-kind="support" data-src="45"><summary><span class="cap-num">46</span><span class="cap-body"><span class="cap-label">Search every account by the data itself</span><p class="cap-take">Type a customer&#x27;s email or order number and land on the runs that touched it across every account. An hour of log reading becomes a minute.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Correlating a failure across accounts meant reading logs by hand.</p>
-        <h4>45 · Cross-tenant search by the data itself</h4>
+        <h4>46 · Cross-tenant search by the data itself</h4>
         <p>Search every account at once for a value, a client ID, an email, an order number, and land on the runs that touched it. Correlation is a query, not a shift.</p>
         <p class="vs">org-wide log and execution pages exist and search log text across customers, credit where due; searching by what the data contained, across step payloads, is the part that turns an hour into a minute.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-47" data-act="6" data-tests="" data-kind="support" data-src="46"><summary><span class="cap-num">47</span><span class="cap-body"><span class="cap-label">Ask questions of your own data instantly</span><p class="cap-take">A support question that used to need a database ticket and two days gets answered in the meeting. <span class="cost">Elsewhere, you get only what was logged.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Diagnosis stalled waiting for someone with database access.</p>
-        <h4>46 · Ad-hoc data queries to validate a hypothesis</h4>
+        <h4>47 · Ad-hoc data queries to validate a hypothesis</h4>
         <p>"Is it only annual-plan members? Only one region?" gets answered in seconds with a guardrailed read-only query, by the person, or the AI, doing the diagnosis.</p>
         <p class="vs">their management API answers structural questions about instances and executions; hypothesis-testing against the data your integrations carried is bounded by what was logged, and by the retention window.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">admin_sql_query · read-only</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-48" data-act="6" data-tests="" data-kind="support" data-src="47"><summary><span class="cap-num">48</span><span class="cap-body"><span class="cap-label">Per-customer usage, health and volume numbers</span><p class="cap-take">Know which customers are heavy, erroring, or growing before renewal talks and capacity planning, per account, on demand.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Capacity and billing questions had no ground truth.</p>
-        <h4>47 · Health, usage, and task totals per tenant and per account</h4>
+        <h4>48 · Health, usage, and task totals per tenant and per account</h4>
         <p>Which customers are heavy, which are erroring, which are growing: per-account ground truth, queryable by your team and your AI, exportable to your monitoring stack.</p>
         <p class="vs">usage views exist per their plans' concurrency limits; per-customer operational ground truth at hierarchy depth is assembled from their API.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-49" data-act="6" data-tests="" data-kind="support" data-src="48"><summary><span class="cap-num">49</span><span class="cap-body"><span class="cap-label">A record of who changed what, when</span><p class="cap-take">When the finger-pointing starts, who changed what and when is a query. <span class="cost">Elsewhere, that record is assembled from event webhooks into a store you retain.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">"Who changed this, and when" had no answer.</p>
-        <h4>48 · An account change log</h4>
+        <h4>49 · An account change log</h4>
         <p>Every material change, who, what, when, is queryable per account when the finger-pointing starts, or before it does.</p>
-        <p class="vs">their documented audit mechanism is do-it-yourself: subscribe to their event webhooks and "keep a record of all platform changes" in a store you build and retain.</p>
+        <p class="vs">their documented audit mechanism is do-it-yourself: subscribe to their event webhooks and their event-webhooks documentation directs you to "keep a record of all platform changes" in a store you build and retain.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">admin_account_changelog</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-50" data-act="6" data-tests="" data-kind="support" data-src="50"><summary><span class="cap-num">50</span><span class="cap-body"><span class="cap-label">Support works inside an account without passwords</span><p class="cap-take">Support sees what the customer sees and fixes it there, without ever asking for a password.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Support asking customers for passwords is both a security problem and a delay.</p>
         <h4>50 · Operating inside a customer account without their credentials</h4>
         <p>Support switches into the customer's account context with its own audited access, sees what the customer sees, and never asks for a password.</p>
         <p class="vs">org team members can view customer instances and logs too; the difference is depth of what support can then do from inside that context without an engineer, which is the previous nine rows.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-tools">admin_switch_account</a></p>
-      </div>
-    </div>
+      </div></div></details>
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
@@ -1701,16 +1847,17 @@ a.tq:hover .tq-jump{color:var(--green)}
 </section>
 
 <!-- ============ ACT 7 ============ -->
-<section class="act">
+<section class="act" data-act="7">
   <div class="wrap">
     <div class="act-head">
-      <span class="act-n">Act 7 of 8</span>
+      <span class="act-n">Act 7 of 8</span><span class="act-count"></span>
       <h2>What your end customer actually touches.</h2>
+      <p class="act-take">Your customers see your product, in their language, on your domain, at every plan, including the tools their AI calls.</p>
       <p>Your customer never sees the engine. They see a setup screen, a connect button, a status page, and increasingly, a tool their own AI can call. Whether those surfaces feel like your product or like someone else's is a brand decision you are making when you pick the platform.</p>
     </div>
 
     <!-- ROW 51: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-51" data-act="7" data-tests="1" data-kind="hero" data-src="51"><summary><span class="cap-num">51</span><span class="cap-body"><span class="cap-label">Setup screens that live inside your product</span><p class="cap-take">Customers set up the integration inside your product, on your domain, with no second settings screen to build. <span class="cost">Elsewhere, your own domain is a plan upgrade.</span></p></span><span class="cap-meta"><span class="tbadge t1" title="Test 01: can a human still see it?">1</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 51</span>
         <p class="problem">Customers were being sent to a third-party integration UI that broke the product experience and advertised the vendor's supplier.</p>
@@ -1719,6 +1866,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap51.webp" alt="Lumen&#x27;s practice managers must connect accounting without ever seeing another company&#x27;s name." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Lumen&#x27;s practice managers must connect accounting without ever seeing another company&#x27;s name.</p>
         <p><b>Lumen, a veterinary-practice SaaS,</b> is shipping a bookkeeping integration inside their product. The bar: a practice manager clicks "Connect accounting" in Lumen's settings, authorizes, maps two fields, done, without ever leaving Lumen, seeing another company's name, or touching a URL that is not lumen-branded. Because the practice manager is not buying an integration platform. She is trusting Lumen.</p>
         <svg class="scene" viewBox="0 0 920 200" role="img" aria-label="APIANT's embedded configuration runs on the vendor's own domain; the competitor embeds its own app in an iframe, with a custom domain gated to specific plans.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
@@ -1759,17 +1907,18 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;what does your customer see, and whose name is on the URL</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- ROW 54: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-52" data-act="7" data-tests="2" data-kind="hero" data-src="54"><summary><span class="cap-num">52</span><span class="cap-body"><span class="cap-label">Your integrations as tools your customers&#x27; AI can call</span><p class="cap-take">Your customers&#x27; AI assistants can drive multi-system work through your product, with an approval gate before anything destructive and a record afterwards. Your domain, every tier.</p></span><span class="cap-meta"><span class="tbadge t2" title="Test 02: how deep does it actually go?">2</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
-        <span class="kicker">Capability 54</span>
+        <span class="kicker">Capability 52</span>
         <p class="problem">Customers now want their own AI agents to reach these systems, and hand-building an interface per client does not scale.</p>
         <h3>Integrations exposed as callable tools for your customers' AI clients</h3>
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap54.webp" alt="A customer&#x27;s operations director expects her AI assistant to reschedule bookings and notify members." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A customer&#x27;s operations director expects her AI assistant to reschedule bookings and notify members.</p>
         <p><b>An operations director at one of your customers types into her AI assistant:</b> "Move every Thursday booking at the Riverside location to Friday and notify the affected members." For that sentence to become action, her AI needs a tool: a governed, authenticated, rate-limited operation that does the multi-system work and reports back. Your customers will judge your product on whether their AI can drive it.</p>
       </div>
       <div class="cols">
@@ -1784,7 +1933,7 @@ a.tq:hover .tq-jump{color:var(--green)}
         </div>
         <div class="col col-p">
           <span class="kicker cyan">On Prismatic</span>
-          <p>Credit first: Prismatic saw this coming too. Flows can be marked agentic and served to AI agents as tools, and their positioning of it is exactly right: agents should "invoke complete flows" instead of improvising chains of raw API calls.</p>
+          <p>Credit first: Prismatic saw this coming too. Flows can be marked agentic and served to AI agents as tools, and their positioning of it is exactly right: their published positioning has agents "invoke complete flows" instead of improvising chains of raw API calls.</p>
           <p>The differences are the ones this page has already established, now wearing an AI face: what stands behind the tool is a flow built under their model (the fan-in, loop-prevention, and approval-gate patterns above are your team's constructions), and the endpoint the customer's agent calls lives on their domain unless the custom-domain plan moved it. The tool interface is comparable. The depth behind the tool, and whose name is on it, are not.</p>
         </div>
       </div>
@@ -1792,41 +1941,39 @@ a.tq:hover .tq-jump{color:var(--green)}
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;judge the automation behind the tool, not the tool listing</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- supporting rows 52,53,55,56,57 -->
-    <div class="supports">
-      <div class="sup">
+    <details class="cap" id="cap-53" data-act="7" data-tests="" data-kind="support" data-src="52"><summary><span class="cap-num">53</span><span class="cap-body"><span class="cap-label">Form building blocks, validation and live data choices</span><p class="cap-take">The setup screen needs no front-end project: it assembles from pieces that validate input and pull live choices from the customer&#x27;s systems.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Configuration UIs were bespoke front-end projects, every time.</p>
-        <h4>52 · Form depth: an element catalog, reusable patterns, validation, live field refresh, embed codes</h4>
+        <h4>53 · Form depth: an element catalog, reusable patterns, validation, live field refresh, embed codes</h4>
         <p>Customer-facing forms assemble from a catalog of elements and saved patterns, validate input, refresh their choices from the customer's live data, and drop into any page with an embed code.</p>
         <p class="vs">the config wizard offers its documented control types; a customer-facing surface beyond them is frontend work against their embedded SDK, owned by your product team.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-54" data-act="7" data-tests="" data-kind="support" data-src="53"><summary><span class="cap-num">54</span><span class="cap-body"><span class="cap-label">Customers connect themselves, no call needed</span><p class="cap-take">A new customer connects, maps and goes live without anyone from your team on the call.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Every new customer connection required a human on both sides.</p>
-        <h4>53 · Self-serve connection flows for end users</h4>
+        <h4>54 · Self-serve connection flows for end users</h4>
         <p>The customer clicks connect, authorizes, maps what needs mapping, and is running, inside your product, with nobody from your team on the call.</p>
         <p class="vs">their embedded marketplace does self-serve deploy and reconfigure well, a fair concession; the experience is their wizard, with the boundaries rows 51 and 52 describe.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-55" data-act="7" data-tests="" data-kind="support" data-src="55"><summary><span class="cap-num">55</span><span class="cap-body"><span class="cap-label">Chat agents that actually do the work</span><p class="cap-take">The assistant you ship resolves requests instead of deflecting them: real lookups, real writes, an approval gate before anything destructive, full logs.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">A chatbot that cannot act is a deflection tool, not an integration.</p>
         <h4>55 · Conversational agents with goals and tools, the whole platform behind them</h4>
         <p>Agents you ship to customers carry explicit goals and scoped tools, and act through the same governed execution engine as everything else: real lookups, real writes, approval gates, full logging.</p>
         <p class="vs">their agent story runs through components in your flows plus the agentic-flow surface; the goal-and-tool guardrail architecture around a customer-facing agent is yours to assemble.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-56" data-act="7" data-tests="" data-kind="support" data-src="56"><summary><span class="cap-num">56</span><span class="cap-body"><span class="cap-label">Twenty-plus languages ready out of the box</span><p class="cap-take">Your customers get the setup screen in twenty-plus languages. <span class="cost">Elsewhere, embedded translation ships with no language packs, so every phrase is supplied per locale.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">The configuration UI is customer-facing, and your customers are not all English speakers.</p>
         <h4>56 · Twenty-plus languages, shipped</h4>
         <p>The end-user surface speaks your customer's language out of the box, across twenty-plus locales.</p>
         <p class="vs">embedded translation support exists, and ships with no language packs: you supply and maintain the dictionary of phrases per language yourself.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-57" data-act="7" data-tests="" data-kind="support" data-src="57"><summary><span class="cap-num">57</span><span class="cap-body"><span class="cap-label">Your brand and domain on every surface</span><p class="cap-take">Every surface a customer&#x27;s IT team inspects, screens, addresses, callbacks, carries your name on every plan. <span class="cost">Elsewhere, colors and fonts are yours; the domain is plan-gated.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">An integration layer that shows a supplier's name tells your customer who really built it.</p>
         <h4>57 · Full white-label: your brand on the interface, your domain on the endpoints</h4>
         <p>Every surface a customer or their IT team can inspect, the UI, the webhook URLs, the authorization callbacks, carries your name, at every tier.</p>
         <p class="vs">theming covers colors, fonts, and terminology; the domain layer, which is what a customer's IT team actually inspects, is the plan-gated nameserver delegation from row 51.</p>
-      </div>
-    </div>
+      </div></div></details>
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
@@ -1836,16 +1983,17 @@ a.tq:hover .tq-jump{color:var(--green)}
 </section>
 
 <!-- ============ ACT 8 ============ -->
-<section class="act">
+<section class="act" data-act="8">
   <div class="wrap">
     <div class="act-head">
-      <span class="act-n">Act 8 of 8</span>
+      <span class="act-n">Act 8 of 8</span><span class="act-count"></span>
       <h2>The layer that operates all of the above.</h2>
+      <p class="act-take">The AI handles day two as well as day one, which is why one person can run the whole thing.</p>
       <p>Everything on this page is exposed to AI, but "AI-powered" is the emptiest phrase in the category. The question with teeth: which phases of the integration lifecycle does the AI have real tooling for? Building is one phase. There are seven more.</p>
     </div>
 
     <!-- ROW 58: HERO -->
-    <article class="row">
+    <details class="cap" id="cap-58" data-act="8" data-tests="2" data-kind="hero" data-src="58"><summary><span class="cap-num">58</span><span class="cap-body"><span class="cap-label">AI runbooks for the whole integration lifecycle</span><p class="cap-take">One person and the AI cover an integration&#x27;s whole life, launch through incidents. Elsewhere the AI diagnoses, then a developer does the fixing.</p></span><span class="cap-meta"><span class="tbadge t2" title="Test 02: how deep does it actually go?">2</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail">
       <div class="row-head">
         <span class="kicker">Capability 58</span>
         <p class="problem">An AI with raw API access improvises. An AI with encoded procedures repeats what works.</p>
@@ -1853,6 +2001,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       </div>
       <div class="scenario">
         <span class="kicker faint">The scenario</span>
+        <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap58.webp" alt="Day two, live integration: a complaint, a rate limit, a fix to ship." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Day two, live integration: a complaint, a rate limit, a fix to ship.</p>
         <p><b>Day two.</b> The integration is built and live; both platforms' AI tooling got you here, and both did it well. Now the real career of an integration begins: a customer reports a discrepancy, an API starts rate-limiting, an alert needs tuning, a fix needs to reach the fleet. The question for the AI is no longer "can you build it." It is <b>"how much of what happens next can you handle?"</b></p>
         <svg class="scene" viewBox="0 0 920 170" role="img" aria-label="Lifecycle phase coverage: APIANT's AI tooling spans all eight phases; Prismatic's covers build through deploy, with operations phases absent from its agent tooling.">
           <g font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,.58)">
@@ -1896,38 +2045,36 @@ a.tq:hover .tq-jump{color:var(--green)}
         <div class="col col-p">
           <span class="kicker cyan">On Prismatic</span>
           <p>Their AI tooling for developers is real, open source, and free at every tier, and it covers building well: scaffolding, code generation, compile, deploy to your environment, test runs, even migration from two rival platforms. Counted from their own repositories, that is where it ends. Their agent tooling contains no operation that acts on production: nothing that mutates execution state, restarts from a step, retries or replays at scale, replays a webhook, halts a run, tunes an alert, or deploys to customer instances.</p>
-          <p>Their operations agent can query their management API, so it can read execution data and diagnose. Diagnosis without intervention means the AI files a good report, and a developer does the work. This is not an oversight in their roadmap so much as a property of the substrate: those missing tools all require operating on execution state as an editable document, and on their platform it is not one.</p>
+          <p>Their operations agent can query their management API, so it can read execution data and diagnose. Diagnosis without intervention means the AI files a good report, and a developer does the work. Those operations all require treating execution state as an editable document, which is a property of how a platform stores integrations.</p>
         </div>
       </div>
       <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">all 42 skills · 10 workflows</a><a href="/ai-operability#inventory-tools">all 138 tools · 10 toolsets</a></div>
       <div class="tests">
         <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;ask which lifecycle phases have tools, never how many tools</span>
       </div>
-    </article>
+    </div></details>
 
     <!-- supporting rows 59-61 -->
-    <div class="supports">
-      <div class="sup">
+    <details class="cap" id="cap-59" data-act="8" data-tests="" data-kind="support" data-src="59"><summary><span class="cap-num">59</span><span class="cap-body"><span class="cap-label">Only the tools the current job needs</span><p class="cap-take">Give an AI forty similar-looking tools and it picks the wrong one. Here it sees only the handful this job needs.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Depth and focus are in tension: an AI drowning in tool definitions gets worse, not better.</p>
         <h4>59 · A deep tool surface, activated on demand</h4>
         <p>The full tool surface stays available, but only the set the current procedure needs is loaded. The AI stays sharp on a platform wide enough to get lost in.</p>
         <p class="vs">a smaller, build-focused surface does not face the problem yet; the moment operations tooling exists, it will, and the loading architecture is the difference between a capable agent and a confused one.</p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-60" data-act="8" data-tests="" data-kind="support" data-src="60"><summary><span class="cap-num">60</span><span class="cap-body"><span class="cap-label">AI checks the manual before it acts</span><p class="cap-take">The AI grounds itself in documented behavior before it acts, rather than in its best guess. Elsewhere the reference is shipped once and ages in place.</p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">An agent that guesses at platform behaviour produces plausible nonsense.</p>
         <h4>60 · The documentation as a corpus the AI consults before acting</h4>
         <p>Before building or answering, the AI queries the platform's knowledge base and grounds itself in documented behaviour, not in its best guess about how the platform probably works.</p>
         <p class="vs">their skills bundle reference documentation for the AI too, credit where due; the difference is a live, versioned corpus the AI queries as a step in every procedure versus knowledge frozen into the plugin.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">/docs · docs_chat</a></p>
-      </div>
-      <div class="sup">
+      </div></div></details>
+      <details class="cap" id="cap-61" data-act="8" data-tests="" data-kind="support" data-src="61"><summary><span class="cap-num">61</span><span class="cap-body"><span class="cap-label">The AI reports platform bugs it hits</span><p class="cap-take">Hit a platform bug and it gets filed and fixed, not papered over by a workaround nobody documented. <span class="cost">Elsewhere, those workarounds are yours forever.</span></p></span><span class="cap-meta"><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Agents silently working around platform bugs means the bugs never get fixed.</p>
         <h4>61 · A toolchain that reports its own defects</h4>
         <p>When the AI hits a platform-layer defect, it files a structured report to engineering, autonomously, instead of quietly routing around it. The tools get better because the agent using them is also their reviewer.</p>
         <p class="vs">no equivalent self-reporting loop appears in their agent tooling; workarounds an AI invents are invisible improvements never made.</p>
         <p class="sup-backed"><a href="/ai-operability#inventory-skills">/report-mcp-issue</a></p>
-      </div>
-    </div>
+      </div></div></details>
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
@@ -2008,7 +2155,7 @@ a.tq:hover .tq-jump{color:var(--green)}
       <li><a href="https://prismatic.io/blog/introducing-prismatic-skills-for-claude-code/">prismatic.io/blog · Skills for Claude Code</a></li>
       <li><a href="https://prismatic.io/blog/how-to-use-versioning-in-prismatic/">prismatic.io/blog · versioning</a></li>
     </ul>
-    <p class="note">Every statement about Prismatic on this page derives from Prismatic's public documentation, public repositories, blog, and pricing page as reviewed in August 2026. Direct quotes are reproduced verbatim for comparison purposes. Prismatic is a trademark of Prismatic, LLC; all product names belong to their owners. Platform capabilities evolve; verify anything decision-critical against the current versions of the linked pages.</p>
+    <p class="note">Scenario companies on this page are composite illustrations drawn from real deployment shapes. Company names are fictional and are not customer references. Where a figure comes from a live APIANT deployment it is identified as such and the customer is not named. Every statement about Prismatic on this page derives from Prismatic's public documentation, public repositories, blog, and pricing page as reviewed in August 2026. Direct quotes are reproduced verbatim for comparison purposes. Prismatic is a trademark of Prismatic, LLC; all product names belong to their owners. Platform capabilities evolve; verify anything decision-critical against the current versions of the linked pages.</p>
       </div>
 </section>
 
@@ -2029,5 +2176,211 @@ a.tq:hover .tq-jump{color:var(--green)}
 <script src="/js/apiant.js" type="text/javascript"></script>
 <script src="/js/gtag-consent.js"></script>
 <script src="/js/cookie-consent.js"></script>
+
+<script>
+(function(){
+  var caps = [].slice.call(document.querySelectorAll('.cap'));
+  var acts = [].slice.call(document.querySelectorAll('section.act'));
+  var q = document.getElementById('q');
+  var countEl = document.getElementById('tbCount');
+  var toggleBtn = document.getElementById('tbToggle');
+  var noHits = document.getElementById('noHits');
+  var noHitsWhat = document.getElementById('noHitsWhat');
+  var noHitsAdvice = document.getElementById('noHitsAdvice');
+  var actBtns = [].slice.call(document.querySelectorAll('.fbtn[data-act]'));
+  var testBtns = [].slice.call(document.querySelectorAll('.fbtn[data-test]'));
+  var TOTAL = caps.length;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // index once: searchable text plus the original markup of the two highlightable fields
+  caps.forEach(function(c){
+    var label = c.querySelector('.cap-label');
+    var take = c.querySelector('.cap-take');
+    c._label = label; c._take = take;
+    c._labelHTML = label ? label.innerHTML : '';
+    c._takeHTML = take ? take.innerHTML : '';
+    c._text = (c.textContent || '').toLowerCase().replace(/\s+/g,' ');
+    c._act = c.getAttribute('data-act') || '';
+    c._tests = (c.getAttribute('data-tests') || '').split(',');
+    c._wasOpen = c.hasAttribute('open');
+    c._userClosed = false;
+  });
+
+  var actFilter = 'all';
+  var testFilter = null;
+  var wasSearching = false;
+
+  function esc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+  // Tokenise into tags and text runs. Never enter an attribute value, never split an
+  // entity reference, and never lose the run after the last tag.
+  function hl(el, orig, needle){
+    if(!el) return;
+    if(!needle){ if(el.innerHTML !== orig) el.innerHTML = orig; return; }
+    var re = new RegExp('('+esc(needle)+')','gi');
+    function mark(text){
+      return text.split(/(&(?:#\d+|#x[0-9a-fA-F]+|[a-zA-Z]+);)/).map(function(part,i){
+        return (i % 2) ? part : part.replace(re,'<mark>$1</mark>');
+      }).join('');
+    }
+    var out = orig.replace(/<[^>]*>|[^<]+/g, function(tok){
+      return tok.charAt(0) === '<' ? tok : mark(tok);
+    });
+    if(el.innerHTML !== out) el.innerHTML = out;
+  }
+
+  function syncToggle(){
+    var anyClosed = caps.some(function(c){
+      return !c.classList.contains('hidden') && !c.hasAttribute('open');
+    });
+    toggleBtn.textContent = anyClosed ? 'Expand all' : 'Collapse all';
+    toggleBtn.setAttribute('aria-expanded', String(!anyClosed));
+  }
+
+  function apply(){
+    var needle = (q.value || '').trim().toLowerCase();
+    var searching = needle.length >= 2;
+    var shown = 0;
+
+    caps.forEach(function(c){
+      var ok = true;
+      if(actFilter !== 'all' && c._act !== actFilter) ok = false;
+      if(ok && testFilter && c._tests.indexOf(testFilter) === -1) ok = false;
+      if(ok && searching && c._text.indexOf(needle) === -1) ok = false;
+
+      c.classList.toggle('hidden', !ok);
+      if(ok){
+        shown++;
+        hl(c._label, c._labelHTML, searching ? needle : null);
+        hl(c._take, c._takeHTML, searching ? needle : null);
+        // auto-open on entering a search, but respect a row the reader closed by hand
+        if(searching){
+          if(!wasSearching) c._userClosed = false;
+          if(!c._userClosed) c.setAttribute('open','');
+        }
+      } else {
+        hl(c._label, c._labelHTML, null);
+        hl(c._take, c._takeHTML, null);
+      }
+      if(!searching && !c._wasOpen && actFilter === 'all' && !testFilter) c.removeAttribute('open');
+    });
+
+    acts.forEach(function(a){
+      var live = a.querySelectorAll('.cap:not(.hidden)').length;
+      a.classList.toggle('hidden', live === 0);
+      var badge = a.querySelector('.act-count');
+      if(badge) badge.textContent = (searching || actFilter !== 'all' || testFilter) ? live + ' matching' : '';
+    });
+
+    var filtering = searching || actFilter !== 'all' || !!testFilter;
+    [].slice.call(document.querySelectorAll('.pull,.beat,.act-head p')).forEach(function(el){
+      el.style.display = filtering ? 'none' : '';
+    });
+
+    countEl.textContent = filtering ? shown + ' of ' + TOTAL + ' capabilities'
+                                    : TOTAL + ' capabilities';
+    noHits.style.display = shown === 0 ? 'block' : 'none';
+    if(shown === 0){
+      if(searching){
+        noHitsWhat.textContent = '"' + q.value + '"';
+        noHitsAdvice.textContent = 'Try a system name, a symptom, or a word like retry, sync, alert or rollback.';
+      } else {
+        noHitsWhat.textContent = 'that combination of filters';
+        noHitsAdvice.textContent = 'Try clearing the standing-test filter, or pick a different act.';
+      }
+    }
+    wasSearching = searching;
+    syncToggle();
+  }
+
+  var t;
+  q.addEventListener('input', function(){ clearTimeout(t); t = setTimeout(apply, 110); });
+  q.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ q.value = ''; apply(); q.blur(); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === '/' && document.activeElement !== q && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)){
+      e.preventDefault(); q.focus();
+    }
+  });
+
+  actBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      actFilter = b.getAttribute('data-act');
+      actBtns.forEach(function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+      apply();
+      if(actFilter !== 'all'){
+        var target = document.querySelector('section.act[data-act="'+actFilter+'"]');
+        if(target) target.scrollIntoView({behavior: reduce.matches ? 'auto' : 'smooth', block:'start'});
+      }
+    });
+  });
+
+  testBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var v = b.getAttribute('data-test');
+      testFilter = (testFilter === v) ? null : v;
+      testBtns.forEach(function(o){ o.setAttribute('aria-pressed', String(o.getAttribute('data-test') === testFilter)); });
+      apply();
+    });
+  });
+
+  toggleBtn.addEventListener('click', function(){
+    var anyClosed = caps.some(function(c){ return !c.classList.contains('hidden') && !c.hasAttribute('open'); });
+    caps.forEach(function(c){
+      if(c.classList.contains('hidden')) return;
+      if(anyClosed){ c.setAttribute('open',''); c._userClosed = false; }
+      else c.removeAttribute('open');
+      if(!q.value.trim()) c._wasOpen = anyClosed;
+    });
+    syncToggle();
+  });
+
+  // record intent so neither a search pass nor a filter pass overrides the reader
+  caps.forEach(function(c){
+    c.addEventListener('toggle', function(){
+      if(q.value.trim()) c._userClosed = !c.hasAttribute('open');
+      else c._wasOpen = c.hasAttribute('open');
+    });
+  });
+
+  // deep links: clear whatever is filtering the target out, then reveal it
+  function openFromHash(scroll){
+    var id = location.hash.replace('#','');
+    if(!id) return;
+    var el = document.getElementById(id);
+    if(!el || !el.classList.contains('cap')) return;
+    q.value = '';
+    actFilter = 'all'; testFilter = null;
+    actBtns.forEach(function(o){ o.setAttribute('aria-pressed', String(o.getAttribute('data-act') === 'all')); });
+    testBtns.forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+    apply();
+    el._wasOpen = true;
+    el._userClosed = false;
+    el.setAttribute('open','');
+    if(scroll) setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 40);
+  }
+  window.addEventListener('hashchange', function(){ openFromHash(true); });
+  // a repeat click on the same hash fires no hashchange, so handle the cards directly
+  [].slice.call(document.querySelectorAll('a.tq[href^="#cap-"]')).forEach(function(a){
+    a.addEventListener('click', function(){ setTimeout(function(){ openFromHash(true); }, 0); });
+  });
+
+  // printing a closed <details> drops its content, so open everything and restore after
+  var printSnapshot = null;
+  window.addEventListener('beforeprint', function(){
+    printSnapshot = caps.map(function(c){ return c.hasAttribute('open'); });
+    caps.forEach(function(c){ c.setAttribute('open',''); });
+  });
+  window.addEventListener('afterprint', function(){
+    if(!printSnapshot) return;
+    caps.forEach(function(c,i){ if(!printSnapshot[i]) c.removeAttribute('open'); });
+    printSnapshot = null;
+  });
+
+  apply();
+  openFromHash(true);
+})();
+</script>
 </body>
 </html>
