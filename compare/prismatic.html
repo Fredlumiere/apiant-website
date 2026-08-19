@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>APIANT vs Prismatic | Integration Platform (iPaaS) Comparison</title>
+<meta name="description" content="A job-by-job comparison of APIANT and Prismatic for the executive who owns the integration decision. Sixty-one capabilities, derived from each platform's own architecture and documentation."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta content="APIANT vs Prismatic | Integration Platform Comparison" property="og:title"/>
+<meta content="Both platforms let an AI build your integrations. The difference is what the AI hands you afterwards." property="og:description"/>
+<meta content="https://apiant.com/images/Apiant-iso1-02.png" property="og:image"/>
+<meta content="article" property="og:type"/>
+<link href="/css/normalize.css" rel="stylesheet"/>
+<link href="/css/components.css" rel="stylesheet"/>
+<link href="/css/apiant.css" rel="stylesheet"/>
+<link href="/css/cookie-consent.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="/images/favicon.png" rel="shortcut icon" type="image/x-icon"/>
+<style>
+
+:root{
+  --bg:#0c0c0c; --bg2:#0f1419; --green:#1ab759; --text:#f7f8f8;
+  --muted:rgba(255,255,255,.58); --faint:rgba(255,255,255,.35);
+  --border:rgba(255,255,255,.08); --card:rgba(255,255,255,.03);
+  --violet:#c084fc; --amber:#f5b748; --cyan:#5cc8ff; --pink:#ff78b4;
+  --font:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  --green-dim:rgba(26,183,89,.12); --cyan-dim:rgba(92,200,255,.10); --amber-dim:rgba(245,183,72,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.kicker{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--green);font-weight:600}
+.kicker.cyan{color:var(--cyan)}
+.kicker.amber{color:var(--amber)}
+.kicker.faint{color:var(--faint)}
+h1,h2,h3,h4{font-weight:700;line-height:1.2;letter-spacing:-.01em}
+p{color:var(--muted)}
+strong{color:var(--text);font-weight:600}
+em{color:var(--text);font-style:italic}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- preamble ---------- */
+.preamble{padding:88px 0 56px;border-bottom:1px solid var(--border)}
+.preamble .kicker{display:block;margin-bottom:20px}
+.preamble p{font-size:19px;line-height:1.7;color:var(--text);max-width:820px;margin-bottom:22px}
+.preamble p.dim{color:var(--muted);font-size:17px}
+.three-questions{margin:44px 0 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tq{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 20px;position:relative}
+.tq .tq-n{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.1em;display:block;margin-bottom:10px}
+.tq h4{font-size:16.5px;margin-bottom:8px;color:var(--text)}
+.tq p{font-size:13.5px;line-height:1.55;color:var(--muted);margin:0}
+.tq svg{position:absolute;top:20px;right:18px;opacity:.9}
+.promise{margin-top:26px;font-family:var(--mono);font-size:13px;color:var(--faint);letter-spacing:.02em}
+.promise b{color:var(--green);font-weight:600}
+
+.preamble h2{font-size:clamp(22px,3vw,30px);margin:0 0 14px;max-width:880px}
+.preamble .lead-in{font-size:15px;color:var(--faint);margin-bottom:14px}
+.scene-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding:2px 2px 10px;display:block}
+.scene-tag b{color:var(--amber);font-weight:600}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 48px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--bg2),var(--bg))}
+.hero h1{font-size:clamp(30px,4.6vw,46px);max-width:900px;margin:18px 0 22px}
+.hero h1 .g{color:var(--green)}
+.hero .stakes{font-size:18px;max-width:780px;color:var(--muted)}
+.method-note{margin-top:36px;border-left:3px solid var(--violet);padding:14px 20px;background:var(--card);border-radius:0 10px 10px 0;max-width:820px}
+.method-note p{font-size:15px;margin:0;color:var(--muted)}
+.method-note p b{color:var(--text)}
+.howto{margin-top:22px;font-size:14px;color:var(--faint);max-width:820px}
+.howto .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 5px -1px 2px}
+
+/* ---------- acts ---------- */
+.act{padding:72px 0 8px}
+.act-head{margin-bottom:40px;max-width:840px}
+.act-head .act-n{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase}
+.act-head h2{font-size:clamp(24px,3.4vw,34px);margin:10px 0 12px}
+.act-head p{font-size:16.5px}
+.beat{margin:48px 0 8px;background:linear-gradient(90deg,var(--green-dim),transparent 70%);border-left:3px solid var(--green);border-radius:0 12px 12px 0;padding:20px 26px}
+.beat .kicker{display:block;margin-bottom:6px}
+.beat p{font-size:18px;color:var(--text);font-weight:600;margin:0;max-width:860px}
+
+/* ---------- hero rows ---------- */
+.row{margin:0 0 56px;border:1px solid var(--border);border-radius:16px;background:var(--bg2);overflow:hidden}
+.row-head{padding:28px 30px 6px}
+.row-head .kicker{display:block;margin-bottom:10px}
+.row-head .problem{font-size:15px;color:var(--amber);margin-bottom:10px;font-weight:500}
+.row-head .problem::before{content:"✕ ";font-family:var(--mono);opacity:.8}
+.row-head h3{font-size:22px;margin-bottom:6px}
+.row-head .cap-sub{font-size:14.5px;color:var(--muted);max-width:800px}
+.scenario{margin:20px 30px;padding:20px 22px;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.scenario .kicker{display:block;margin-bottom:8px}
+.scenario p{font-size:15px;color:var(--muted)}
+.scenario p b{color:var(--text)}
+.scene{display:block;width:100%;height:auto;margin:16px 0 2px;overflow:visible}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+.col{padding:24px 30px 26px}
+.col .kicker{display:block;margin-bottom:12px}
+.col-a{border-left:3px solid var(--green);background:linear-gradient(180deg,rgba(26,183,89,.05),transparent)}
+.col-p{border-left:3px solid var(--cyan);background:linear-gradient(180deg,rgba(92,200,255,.04),transparent)}
+.col ol{margin:0 0 12px 18px}
+.col ol li{font-size:14.5px;color:var(--muted);margin-bottom:8px;padding-left:4px}
+.col ol li b{color:var(--text)}
+.col p{font-size:14.5px;margin-bottom:10px}
+.col .outcome{font-size:14.5px;color:var(--text);font-weight:600;border-top:1px dashed var(--border);padding-top:12px;margin-top:4px}
+.col-a .outcome{color:var(--green)}
+.col .quote{font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--cyan);background:var(--cyan-dim);border-radius:8px;padding:10px 14px;margin:10px 0}
+.col .quote span{color:var(--faint);display:block;margin-top:4px;font-size:11px}
+.tests{display:flex;gap:8px;flex-wrap:wrap;padding:0 30px 24px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:5px 12px;background:var(--card)}
+.chip svg{flex:none}
+.chip b{color:var(--text);font-weight:600}
+
+/* ---------- supporting rows ---------- */
+.supports{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+.sup{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px}
+.sup .problem{font-size:13.5px;color:var(--amber);margin-bottom:8px}
+.sup .problem::before{content:"✕ ";font-family:var(--mono);opacity:.8}
+.sup h4{font-size:15.5px;margin-bottom:6px;color:var(--text)}
+.sup p{font-size:13.5px;line-height:1.6;margin-bottom:8px}
+.sup .vs{font-size:13.5px;line-height:1.6;color:var(--muted);border-top:1px dashed var(--border);padding-top:8px;margin-top:2px}
+.sup .vs::before{content:"On Prismatic: ";color:var(--cyan);font-weight:600}
+
+/* ---------- pull quotes ---------- */
+.pull{margin:56px auto;max-width:860px;text-align:center;padding:0 12px}
+.pull p{font-size:clamp(21px,2.8vw,28px);line-height:1.4;color:var(--text);font-weight:700;letter-spacing:-.01em}
+.pull p .g{color:var(--green)}
+.pull .attr{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-top:12px}
+
+/* ---------- closing sections ---------- */
+.summary,.objections,.cta{padding:72px 0;border-top:1px solid var(--border)}
+.summary p{font-size:18px;line-height:1.7;color:var(--text);max-width:840px;margin-bottom:18px}
+.obj{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 30px;margin-bottom:18px;max-width:900px}
+.obj h3{font-size:18px;margin-bottom:12px}
+.obj h3::before{content:"Q. ";color:var(--violet);font-family:var(--mono)}
+.obj p{font-size:15.5px;margin-bottom:10px}
+.cta{text-align:center;background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.cta h2{font-size:clamp(26px,3.6vw,36px);margin-bottom:14px}
+.cta p{font-size:17px;max-width:640px;margin:0 auto 28px}
+.btn{display:inline-block;background:var(--green);color:#04150a;font-weight:700;font-size:16px;padding:14px 34px;border-radius:10px}
+.btn:hover{text-decoration:none;filter:brightness(1.1)}
+.btn-ghost{display:inline-block;margin-left:14px;color:var(--text);border:1px solid var(--border);font-weight:600;font-size:16px;padding:14px 30px;border-radius:10px}
+.sources{padding:48px 0 72px;border-top:1px solid var(--border)}
+.sources h4{font-size:13px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--faint);margin-bottom:16px}
+.sources ul{list-style:none;columns:2;column-gap:32px}
+.sources li{font-size:12.5px;color:var(--faint);margin-bottom:7px;break-inside:avoid}
+.sources li a{color:var(--faint)}
+.sources li a:hover{color:var(--muted)}
+.sources .note{font-size:12.5px;color:var(--faint);margin-top:18px;max-width:760px}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .three-questions{grid-template-columns:1fr}
+  .cols{grid-template-columns:1fr}
+  .col-p{border-top:1px solid var(--border)}
+  .supports{grid-template-columns:1fr}
+  .sources ul{columns:1}
+}
+/* ---------- print ---------- */
+@media print{
+  :root{--bg:#fff;--bg2:#fff;--text:#111;--muted:#333;--faint:#666;--border:#ddd;--card:#f7f7f7}
+  body{background:#fff;color:#111}
+  .row,.sup,.tq,.obj{break-inside:avoid}
+  .btn,.btn-ghost{border:1px solid #111;color:#111;background:none}
+}
+
+/* ---------- site integration: compare strip, car scene, footer ---------- */
+body{padding-top:0}
+.preamble{padding-top:56px}
+.compare-strip{margin-top:86px;border-bottom:1px solid var(--border);background:var(--bg2)}
+.compare-strip-inner{display:flex;align-items:center;gap:14px;padding:12px 24px;max-width:1060px;margin:0 auto;flex-wrap:wrap}
+.compare-vs{font-weight:700;font-size:15px;color:var(--text)}
+.compare-vs em{color:var(--faint);font-style:normal;font-weight:500;margin-left:4px}
+.compare-select-wrap{position:relative;display:inline-flex;align-items:center;color:var(--green)}
+.compare-select-wrap select{appearance:none;-webkit-appearance:none;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--green);font-family:var(--font);font-weight:700;font-size:15px;padding:7px 34px 7px 14px;cursor:pointer}
+.compare-select-wrap select:hover{border-color:rgba(26,183,89,.45)}
+.compare-select-wrap select:focus{outline:none;border-color:var(--green)}
+.compare-select-wrap svg{position:absolute;right:12px;pointer-events:none}
+.compare-more{font-size:12.5px;color:var(--faint)}
+@media(max-width:700px){.compare-more{display:none}}
+
+.cars-scene{margin:10px 0 40px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:18px 14px 6px;overflow:hidden}
+.cars-svg{display:block;width:100%;height:auto}
+.preamble p.cars-caption,.cars-caption{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--faint);text-align:center;margin:6px 0 12px;max-width:none}
+.carA,.carB{transform-box:fill-box;transform-origin:50% 50%}
+/* car one: forty feet, over in the first second, then it just sits there */
+.carA{animation:carA-park 14s cubic-bezier(.3,.05,.3,1) infinite;transform:translate(91px,179px)}
+@keyframes carA-park{
+  0%,3%{transform:translate(91px,179px) rotate(0deg)}
+  11%,100%{transform:translate(149px,147px) rotate(-30deg)}
+}
+.parkedTag{opacity:0;animation:parked-pop 14s linear infinite}
+@keyframes parked-pop{0%,11%{opacity:0}14%,97%{opacity:1}100%{opacity:0}}
+/* car two: 1,743 miles, nine states, all night */
+.carB{animation:carB-route 14s linear infinite;transform:translate(806px,154px)}
+@keyframes carB-route{
+  0%{transform:translate(806px,154px)}
+  5.7%{transform:translate(784px,151px)}
+  16.4%{transform:translate(743px,156px)}
+  23.6%{transform:translate(715px,161px)}
+  33%{transform:translate(679px,164px)}
+  44.6%{transform:translate(634px,172px)}
+  59.5%{transform:translate(577px,169px)}
+  71.1%{transform:translate(532px,172px)}
+  88%,100%{transform:translate(467px,172px)}
+}
+.routeDash{animation:dash-flow 1s linear infinite}
+@keyframes dash-flow{to{stroke-dashoffset:-13}}
+.rerouteDash{animation:dash-flow 1.4s linear infinite}
+.arrivedTag{opacity:0;animation:arrived-pop 14s linear infinite}
+@keyframes arrived-pop{0%,87%{opacity:0}91%,100%{opacity:1}}
+.progFill{transform-box:fill-box;transform-origin:left center;animation:prog 14s linear infinite}
+@keyframes prog{0%{transform:scaleX(0)}88%,100%{transform:scaleX(1)}}
+.tchip{opacity:0;animation:tchip-in 14s linear infinite}
+@keyframes tchip-in{0%{opacity:0}6%{opacity:1}92%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion: reduce){
+  .carA{animation:none;transform:translate(149px,147px) rotate(-30deg)}
+  .carB{animation:none;transform:translate(577px,169px)}
+  .parkedTag,.arrivedTag,.tchip{animation:none;opacity:1}
+  .routeDash,.rerouteDash,.progFill{animation:none}
+  .progFill{transform:scaleX(1)}
+}
+
+/* clickable standing-test cards */
+a.tq{cursor:pointer;text-decoration:none;transition:border-color .2s,transform .2s,background .2s}
+a.tq:hover{border-color:rgba(26,183,89,.45);background:rgba(26,183,89,.05);transform:translateY(-2px);text-decoration:none}
+a.tq h4{color:var(--text)}
+a.tq p{color:var(--muted)}
+a.tq:hover .tq-jump{color:var(--green)}
+.tq-jump{display:block;margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--faint);transition:color .2s}
+.row{scroll-margin-top:130px}
+
+.backed{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 30px 22px;margin-top:-6px}
+.backed .bk-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.backed a{display:inline-block;font-family:var(--mono);font-size:11.5px;color:var(--green);background:var(--green-dim);border:1px solid rgba(26,183,89,.3);border-radius:6px;padding:3px 10px;text-decoration:none}
+.backed a:hover{border-color:var(--green);text-decoration:none}
+.sup-backed{margin-top:8px}
+.sup-backed a{font-family:var(--mono);font-size:10.5px;color:var(--green);background:var(--green-dim);border:1px solid rgba(26,183,89,.25);border-radius:5px;padding:2px 8px;text-decoration:none;display:inline-block;margin-right:6px}
+.sup-backed a:hover{border-color:var(--green);text-decoration:none}
+
+.site-foot{border-top:1px solid var(--border);padding:40px 0;color:var(--faint);font-size:13px}
+.site-foot .frow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.site-foot a{color:var(--muted)}
+.site-foot a:hover{color:var(--text)}
+.site-foot .flinks{display:flex;gap:20px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<!-- NAV (shared site navigation, adapted for /compare/) -->
+<div class="navbar w-nav" data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner">
+<div class="container navbar dark">
+<div class="nav-holder">
+<a class="brand-2 w-nav-brand" href="/"><img alt="APIANT" class="brand" loading="lazy" src="/images/APIANT-LOGO-V4-Dark-Mode.svg"/></a>
+<div class="nav-menu-holder">
+<nav class="nav-menu w-nav-menu" role="navigation">
+<div class="navlinks-holder">
+<a class="ease-dropdown-toggle w-dropdown-toggle blog-nav-link" href="/blog/" style="text-decoration:none;"><div class="ease-dropdown-title-text">Blog</div></a>
+<!-- Solutions Dropdown -->
+<div class="_w-dropdown w-dropdown" data-delay="0" data-hover="false">
+<div class="ease-dropdown-toggle w-dropdown-toggle">
+<div class="ease-dropdown-title-text">Solutions</div><img alt="Drop Down Icon" class="ease-drop-down-icon" loading="lazy" src="/images/Dropdown-Icon.svg"/>
+</div>
+<nav class="ease-dropdown-list w-dropdown-list">
+<div class="ease-dropdown-03-holder">
+<div class="ease-dropdown-01-container">
+<div class="drop-down-wrapper">
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link nav-audience" href="/for-saas" style="--nav-accent: #3b82f6;">For SaaS Companies</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link nav-audience" href="/for-si" style="--nav-accent: #f59e0b;">For System Integrators</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link nav-audience" href="/for-enterprises" style="--nav-accent: #8b5cf6;">For Enterprises</a>
+</div></div>
+<div style="border-top: 1px solid rgba(255,255,255,0.08); margin: 8px 0;"></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/apipartners/mindbody-turnkey-integration-solutions">Mindbody Integrations</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/apipartners/cliniko-turnkey-integration-solutions">Cliniko Integrations</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/apipartners/donorperfect-turnkey-integration-solutions">DonorPerfect Integrations</a>
+</div></div>
+</div>
+</div>
+</div>
+</nav>
+</div>
+<!-- Platform Dropdown -->
+<div class="_w-dropdown w-dropdown" data-delay="0" data-hover="false">
+<div class="ease-dropdown-toggle w-dropdown-toggle">
+<div class="ease-dropdown-title-text">Platform</div><img alt="Drop Down Icon" class="ease-drop-down-icon" decoding="async" loading="lazy" src="/images/Dropdown-Icon.svg"/>
+</div>
+<nav class="ease-dropdown-list w-dropdown-list">
+<div class="ease-dropdown-03-holder">
+<div class="ease-dropdown-01-container">
+<div class="drop-down-wrapper">
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/platform/">The APIANT Platform</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/platform/automation-editor">Automation Editor</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/platform/assembly-editor">Assembly Editor</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/platform/admin-console">Admin Console</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/ai">AI Capabilities</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/chatbot">AI Chatbot</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/formapps">FormApps</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/mcp-servers">MCP Servers</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/ai-operability">AI Operability</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder">
+<a class="ease-dropdown-link ease-large w-dropdown-link" href="/apps">Connectors</a>
+</div></div>
+<div class="ease-drop-down-larg-icon"><div class="ease-dropdown-list-holder"><a class="ease-dropdown-link ease-large w-dropdown-link" href="/compare/">Compare Platforms</a></div></div>
+</div>
+</div>
+</div>
+</nav>
+</div>
+</div>
+</nav>
+<div class="nav-button-holder">
+<div class="new-visitor">
+<a class="button dark-mode nav login-link w-button" href="https://apiant.com/editor?view=login">Sign In</a>
+</div>
+<div class="subscribed-visitor">
+<a class="button dark-mode nav login-link dashboard w-button" href="https://apiant.com/editor">Dashboard</a>
+</div>
+<a class="button dark-mode nav w-button" href="/pricing" style="background: linear-gradient(135deg, #0d7a3a, #1ab759); color: #fff; border-radius: 8px; padding: 8px 20px; margin-left: 12px; border: none;">Start Building</a>
+</div>
+</div>
+<div class="subscribed-visitor">
+<a class="button dark-mode nav login-link w-button" href="https://apiant.com/editor">Dashboard</a>
+</div>
+<div aria-label="Toggle navigation menu" class="menu-button w-nav-button">
+<div class="w-icon-nav-menu"></div>
+</div>
+</div>
+<div class="container-blur"></div>
+</div>
+
+<!-- Competitor selector strip -->
+<div class="compare-strip">
+  <div class="wrap compare-strip-inner">
+    <span class="kicker faint">Compare</span>
+    <span class="compare-vs">APIANT <em>vs</em></span>
+    <div class="compare-select-wrap">
+      <select id="competitorSelect" aria-label="Choose a competitor to compare with">
+        <option value="prismatic" selected>Prismatic</option>
+      </select>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </div>
+    <span class="compare-more">More comparisons on the way. Same framework, same standing tests.</span>
+  </div>
+</div>
+<script>
+(function(){
+  var sel=document.getElementById('competitorSelect');
+  var current='prismatic';
+  fetch('/compare/competitors.json').then(function(r){return r.json()}).then(function(list){
+    sel.innerHTML='';
+    list.forEach(function(c){
+      if(c.live===false)return;
+      var o=document.createElement('option');
+      o.value=c.slug;o.textContent=c.name;if(c.slug===current)o.selected=true;
+      sel.appendChild(o);
+    });
+  }).catch(function(){});
+  sel.addEventListener('change',function(){
+    if(sel.value!==current)window.location.href='/compare/'+sel.value;
+  });
+})();
+</script>
+
+
+<!-- ============ 0. PREAMBLE ============ -->
+<section class="preamble">
+  <div class="wrap">
+    <span class="kicker">Why this compare page exists</span>
+    <h2>Every integration platform promises the same four words. This page compares what the platforms actually are.</h2>
+    <p class="lead-in">To see why the promises tell you nothing, start with an analogy:</p>
+    <p>Two cars, both advertised as self-driving. One parks itself in your driveway. The other drives Philadelphia to Denver while you sleep. Same words on the brochure. Not the same product.</p>
+
+    <!-- The two-cars animation: same brochure, two different products -->
+    <div class="cars-scene">
+      <span class="scene-tag"><b>The analogy, animated</b> · we make integration software, not cars</span>
+      <svg class="cars-svg" viewBox="0 0 920 452" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two cars, both sold as self-driving. Car one, in a small panel, backs forty feet up a driveway and parks. Car two navigates a mapped 1,743 mile route from Philadelphia to Denver overnight, crossing nine states, re-routing around a highway closure, paying tolls, refuelling, holding its lane through a storm, and climbing the Rockies, with zero handoffs to the driver.">
+        <defs>
+          <g id="carGlyph">
+            <path d="M7 7 q5 -7 13 -7 q9 0 12 7" fill="none" stroke-width="2"/>
+            <rect x="0" y="6" width="38" height="11" rx="5.5" stroke-width="2" fill="none"/>
+            <circle cx="9" cy="19" r="3.6" fill="currentColor" stroke="none"/>
+            <circle cx="29" cy="19" r="3.6" fill="currentColor" stroke="none"/>
+          </g>
+          <clipPath id="usClip">
+            <path d="M273 108 L327 103 L404 98 L480 96 L557 93 L589 108 L615 98 L647 119 L672 108 L698 128 L717 115 L762 98 L800 88 L820 102 L829 147 L841 185 L852 217 L862 256 L871 262 L880 326 L862 320 L852 275 L813 272 L781 277 L749 285 L717 294 L692 307 L672 332 L653 313 L634 298 L596 300 L544 303 L493 306 L442 308 L391 308 L359 307 L337 288 L317 249 L299 204 L282 160 Z"/>
+          </clipPath>
+          <linearGradient id="nightBar" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0" stop-color="rgba(245,183,72,.55)"/>
+            <stop offset=".22" stop-color="rgba(92,200,255,.16)"/>
+            <stop offset=".55" stop-color="rgba(255,255,255,.05)"/>
+            <stop offset=".85" stop-color="rgba(26,183,89,.22)"/>
+            <stop offset="1" stop-color="rgba(26,183,89,.5)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- identical brochure chips -->
+        <g font-family="JetBrains Mono,monospace" font-size="10" letter-spacing="1.4">
+          <rect x="20" y="18" width="196" height="22" rx="11" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.18)"/>
+          <text x="118" y="33" fill="rgba(255,255,255,.6)" text-anchor="middle">BROCHURE: "SELF-DRIVING"</text>
+          <rect x="273" y="18" width="196" height="22" rx="11" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.18)"/>
+          <text x="371" y="33" fill="rgba(255,255,255,.6)" text-anchor="middle">BROCHURE: "SELF-DRIVING"</text>
+        </g>
+
+        <!-- ============ CAR ONE: the driveway ============ -->
+        <text x="20" y="60" font-family="JetBrains Mono,monospace" font-size="10" letter-spacing="1.6" fill="rgba(255,255,255,.45)">CAR ONE</text>
+        <rect x="20" y="70" width="196" height="150" rx="12" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.14)"/>
+        <!-- house, driveway, street -->
+        <g stroke="rgba(255,255,255,.3)" fill="none" stroke-width="1.5">
+          <rect x="150" y="104" width="46" height="30" rx="2"/>
+          <path d="M144 104 L173 84 L202 104"/>
+          <rect x="166" y="118" width="11" height="16"/>
+        </g>
+        <line x1="32" y1="190" x2="204" y2="190" stroke="rgba(255,255,255,.16)" stroke-width="2"/>
+        <path d="M152 190 L170 152" stroke="rgba(255,255,255,.16)" stroke-width="2"/>
+        <!-- the 40 foot dimension bracket -->
+        <g stroke="rgba(255,255,255,.25)" stroke-width="1">
+          <path d="M112 204 v8 M164 204 v8 M112 208 h52"/>
+        </g>
+        <text x="138" y="216" font-family="JetBrains Mono,monospace" font-size="8.5" fill="rgba(255,255,255,.4)" text-anchor="middle">40 FT</text>
+        <g class="carA" color="rgba(247,248,248,.75)" stroke="currentColor"><use href="#carGlyph"/></g>
+        <g class="parkedTag" font-family="JetBrains Mono,monospace" font-size="9.5">
+          <text x="36" y="164" fill="#f7f8f8">PARKED ✓</text>
+          <text x="36" y="178" fill="rgba(255,255,255,.4)">TRIP: 0.008 MI</text>
+        </g>
+        <text x="20" y="244" font-family="Inter,sans-serif" font-size="13" fill="rgba(255,255,255,.58)">Car one parks itself</text>
+        <text x="20" y="262" font-family="Inter,sans-serif" font-size="13" fill="rgba(255,255,255,.58)">in your driveway.</text>
+        <text x="20" y="288" font-family="Inter,sans-serif" font-size="13" fill="rgba(255,255,255,.35)">That is the whole</text>
+        <text x="20" y="306" font-family="Inter,sans-serif" font-size="13" fill="rgba(255,255,255,.35)">product.</text>
+
+        <!-- ============ CAR TWO: the continent ============ -->
+        <text x="273" y="60" font-family="JetBrains Mono,monospace" font-size="10" letter-spacing="1.6" fill="rgba(26,183,89,.75)">CAR TWO</text>
+
+        <!-- overnight timeline -->
+        <rect x="273" y="68" width="607" height="9" rx="4.5" fill="url(#nightBar)"/>
+        <g font-family="JetBrains Mono,monospace" font-size="8.5" fill="rgba(255,255,255,.4)">
+          <text x="880" y="64" text-anchor="end">DEPART 18:40 DUSK</text>
+          <text x="576" y="64" text-anchor="middle">02:40 · YOU ARE ASLEEP</text>
+          <text x="356" y="64">ARRIVE 06:12 DAWN</text>
+        </g>
+
+        <!-- map shell -->
+        <path d="M273 108 L327 103 L404 98 L480 96 L557 93 L589 108 L615 98 L647 119 L672 108 L698 128 L717 115 L762 98 L800 88 L820 102 L829 147 L841 185 L852 217 L862 256 L871 262 L880 326 L862 320 L852 275 L813 272 L781 277 L749 285 L717 294 L692 307 L672 332 L653 313 L634 298 L596 300 L544 303 L493 306 L442 308 L391 308 L359 307 L337 288 L317 249 L299 204 L282 160 Z"
+              fill="rgba(255,255,255,.028)" stroke="rgba(255,255,255,.2)" stroke-width="1.2"/>
+        <!-- graticule and state lines, clipped to the map -->
+        <g clip-path="url(#usClip)" stroke="rgba(255,255,255,.07)" stroke-width="1" fill="none">
+          <path d="M350 88v250 M420 88v250 M490 88v250 M560 88v250 M630 88v250 M700 88v250 M770 88v250 M840 88v250"/>
+          <path d="M273 150h610 M273 200h610 M273 250h610"/>
+        </g>
+        <g clip-path="url(#usClip)" stroke="rgba(255,255,255,.13)" stroke-width="1" fill="none">
+          <path d="M330 205 h95 v-60 M425 205 v65 M470 96 v112 h60 M530 96 v112 M530 208 h60 v-95"/>
+        </g>
+
+        <!-- Rockies -->
+        <g stroke="rgba(255,255,255,.4)" fill="none" stroke-width="1.4">
+          <path d="M404 190 l10 -18 l7 11 l9 -20 l11 22"/>
+          <path d="M436 188 l9 -15 l8 10 l10 -17 l9 19"/>
+        </g>
+        <text x="440" y="222" font-family="JetBrains Mono,monospace" font-size="8.5" fill="rgba(255,255,255,.42)" text-anchor="middle">7,000 FT CLIMB</text>
+
+        <!-- the route -->
+        <polyline class="routeGhost" points="825,165 803,162 762,167 734,172 698,175 653,183 596,180 551,183 486,183"
+                  fill="none" stroke="rgba(26,183,89,.18)" stroke-width="4" stroke-linecap="round"/>
+        <polyline class="routeDash" points="825,165 803,162 762,167 734,172 698,175 653,183 596,180 551,183 486,183"
+                  fill="none" stroke="rgba(26,183,89,.7)" stroke-width="2" stroke-dasharray="7 6" stroke-linecap="round"/>
+
+        <!-- waypoint cities -->
+        <g font-family="JetBrains Mono,monospace" font-size="8.5" fill="rgba(255,255,255,.5)">
+          <circle cx="803" cy="162" r="2" fill="rgba(255,255,255,.45)"/>
+          <circle cx="762" cy="167" r="2" fill="rgba(255,255,255,.45)"/>
+          <circle cx="698" cy="175" r="2" fill="rgba(255,255,255,.45)"/>
+          <circle cx="653" cy="183" r="2" fill="rgba(255,255,255,.45)"/>
+          <circle cx="596" cy="180" r="2" fill="rgba(255,255,255,.45)"/>
+          <circle cx="551" cy="183" r="2" fill="rgba(255,255,255,.45)"/>
+          <text x="762" y="158" text-anchor="middle">PITTSBURGH</text>
+          <text x="653" y="174" text-anchor="middle">ST. LOUIS</text>
+          <text x="551" y="174" text-anchor="middle">SALINA</text>
+        </g>
+        <!-- interstate shields -->
+        <g font-family="JetBrains Mono,monospace" font-size="8" font-weight="600">
+          <rect x="778" y="176" width="26" height="14" rx="3" fill="rgba(92,200,255,.12)" stroke="rgba(92,200,255,.5)"/>
+          <text x="791" y="186" fill="#5cc8ff" text-anchor="middle">I-76</text>
+          <rect x="616" y="192" width="26" height="14" rx="3" fill="rgba(92,200,255,.12)" stroke="rgba(92,200,255,.5)"/>
+          <text x="629" y="202" fill="#5cc8ff" text-anchor="middle">I-70</text>
+        </g>
+
+        <!-- hazards handled en route -->
+        <g font-family="JetBrains Mono,monospace" font-size="8.5" fill="#f5b748">
+          <!-- tolls -->
+          <g stroke="#f5b748" fill="none" stroke-width="1.2"><path d="M789 150v8 M783 150h12"/></g>
+          <text x="795" y="142" text-anchor="middle">TOLLS ×3 PAID</text>
+          <!-- closure and reroute -->
+          <path d="M706 190 l5 -9 l5 9z" fill="#f5b748" stroke="none"/>
+          <path class="rerouteDash" d="M698 175 q22 22 45 8" fill="none" stroke="#f5b748" stroke-width="1.4" stroke-dasharray="5 4" opacity=".75"/>
+          <text x="710" y="214" text-anchor="middle">I-70 CLOSED · RE-ROUTED</text>
+          <!-- storm -->
+          <g stroke="#f5b748" fill="none" stroke-width="1.2">
+            <path d="M632 158 q-6 0 -6 -5 q0 -5 6 -5 q2 -6 9 -5 q7 1 7 6 q5 0 5 4 q0 5 -6 5z"/>
+            <path d="M634 162v5 M641 162v6 M648 162v5"/>
+          </g>
+          <text x="640" y="140" text-anchor="middle">STORM · LANE HELD</text>
+          <!-- fuel -->
+          <g stroke="#f5b748" fill="none" stroke-width="1.2"><rect x="561" y="192" width="9" height="12" rx="1.5"/><path d="M570 196h4v6"/></g>
+          <text x="566" y="220" text-anchor="middle">CHARGE ×2 · UNATTENDED</text>
+        </g>
+
+        <!-- endpoints -->
+        <g font-family="JetBrains Mono,monospace" font-size="10">
+          <circle cx="825" cy="165" r="4" fill="rgba(255,255,255,.6)"/>
+          <text x="838" y="152" fill="rgba(255,255,255,.72)">PHILADELPHIA</text>
+          <circle class="denverDot" cx="486" cy="183" r="4.5" fill="#1ab759"/>
+          <text x="474" y="168" fill="#1ab759" text-anchor="end">DENVER</text>
+        </g>
+        <g class="arrivedTag" font-family="JetBrains Mono,monospace" font-size="9.5">
+          <text x="474" y="196" fill="#f7f8f8" text-anchor="end">ARRIVED ✓ 06:12 MT</text>
+        </g>
+
+        <!-- compass and scale -->
+        <g stroke="rgba(255,255,255,.3)" fill="none" stroke-width="1.2">
+          <circle cx="862" cy="112" r="9"/><path d="M862 105 v14 M857 110 l5 -5 l5 5"/>
+        </g>
+        <text x="862" y="134" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,.35)" text-anchor="middle">N</text>
+        <g stroke="rgba(255,255,255,.28)" stroke-width="1.2">
+          <path d="M292 322 h58 M292 318v8 M321 320v6 M350 318v8"/>
+        </g>
+        <text x="292" y="336" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,.35)">0</text>
+        <text x="350" y="336" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,.35)" text-anchor="middle">500 MI</text>
+
+        <!-- the car -->
+        <g class="carB" color="#1ab759" stroke="currentColor">
+          <g transform="scale(-1,1) translate(-38,0)">
+            <use href="#carGlyph"/>
+            <path d="M40 12 L60 7 L60 17 Z" fill="rgba(26,183,89,.22)" stroke="none"/>
+          </g>
+        </g>
+
+        <!-- telemetry chips -->
+        <g font-family="JetBrains Mono,monospace" font-size="9">
+          <g class="tchip" style="animation-delay:0s">
+            <rect x="273" y="356" width="112" height="20" rx="10" fill="rgba(26,183,89,.08)" stroke="rgba(26,183,89,.35)"/>
+            <text x="329" y="370" fill="rgba(255,255,255,.7)" text-anchor="middle">9 STATES CROSSED</text>
+          </g>
+          <g class="tchip" style="animation-delay:1.6s">
+            <rect x="393" y="356" width="104" height="20" rx="10" fill="rgba(26,183,89,.08)" stroke="rgba(26,183,89,.35)"/>
+            <text x="445" y="370" fill="rgba(255,255,255,.7)" text-anchor="middle">2 RE-ROUTES</text>
+          </g>
+          <g class="tchip" style="animation-delay:3.2s">
+            <rect x="505" y="356" width="118" height="20" rx="10" fill="rgba(26,183,89,.08)" stroke="rgba(26,183,89,.35)"/>
+            <text x="564" y="370" fill="rgba(255,255,255,.7)" text-anchor="middle">14 LANE CHANGES</text>
+          </g>
+          <g class="tchip" style="animation-delay:4.8s">
+            <rect x="631" y="356" width="110" height="20" rx="10" fill="rgba(26,183,89,.08)" stroke="rgba(26,183,89,.35)"/>
+            <text x="686" y="370" fill="rgba(255,255,255,.7)" text-anchor="middle">1 MOUNTAIN PASS</text>
+          </g>
+          <g class="tchip" style="animation-delay:6.4s">
+            <rect x="749" y="356" width="131" height="20" rx="10" fill="rgba(26,183,89,.12)" stroke="rgba(26,183,89,.5)"/>
+            <text x="814" y="370" fill="#1ab759" text-anchor="middle">HANDOFFS TO YOU: 0</text>
+          </g>
+        </g>
+
+        <!-- progress -->
+        <rect x="273" y="396" width="607" height="6" rx="3" fill="rgba(255,255,255,.07)"/>
+        <rect class="progFill" x="273" y="396" width="607" height="6" rx="3" fill="rgba(26,183,89,.55)"/>
+        <g font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,.45)">
+          <text x="273" y="422">1,743 MILES</text>
+          <text x="576" y="422" text-anchor="middle">26 HOURS UNATTENDED</text>
+          <text x="880" y="422" text-anchor="end">ONE PROMPT: "TAKE ME TO DENVER"</text>
+        </g>
+        <text x="273" y="444" font-family="Inter,sans-serif" font-size="13" fill="rgba(255,255,255,.58)">Car two drives Philadelphia to Denver while you sleep.</text>
+      </svg>
+      <p class="cars-caption">Same two words on both brochures. Two completely different products.</p>
+    </div>
+
+    <p>Integration platforms are harder: there is no test drive. Every vendor writes the same words: deep, autonomous, AI-powered, enterprise-grade. Words are free. You find out what you bought in month nine, when a customer reports a failed sync and you need to know exactly what happened. Or in year two, when the engineer who built it is gone.</p>
+    <p>So this is not a page of claims. It is a page of jobs. A real thing that has to happen. What happens on APIANT, step by step. What the same job requires on Prismatic, in its own documentation's words.</p>
+    <p class="dim">Apply the same scepticism to us. Read the architecture, not the adjectives. And take three questions with you into every vendor conversation you have after this one:</p>
+
+    <div class="three-questions">
+      <a class="tq" href="#test-see">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="1.5"/><circle cx="11" cy="11" r="2.6" stroke="#1ab759" stroke-width="1.5"/></svg>
+        <span class="tq-n">TEST 01</span>
+        <h4>Can a human still see it?</h4>
+        <p>After the AI has done the work, is there a representation a non-developer can open, read, and judge? Building something and being able to look at it afterwards are two different capabilities.</p>
+      <span class="tq-jump">Jump to Capability 01, where it bites hardest &rarr;</span>
+      </a>
+      <a class="tq" href="#test-depth">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="tq-n">TEST 02</span>
+        <h4>How deep does it actually go?</h4>
+        <p>Never accept a depth claim. Test it against the specific API you need: the private endpoint no catalog lists, the forty custom fields, the rate limit, the pagination quirk.</p>
+      <span class="tq-jump">Jump to Capability 06, the uncatalogued endpoint &rarr;</span>
+      </a>
+      <a class="tq" href="#test-catch">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span class="tq-n">TEST 03</span>
+        <h4>What catches it when the AI is wrong?</h4>
+        <p>Every AI gets something wrong eventually. The question is what, in the architecture, is positioned to catch a wrong result before your customer sees it.</p>
+      <span class="tq-jump">Jump to Capability 24, the answer to it &rarr;</span>
+      </a>
+    </div>
+    <p class="promise">These three tests run on <b>every one of the sixty-one capabilities</b> on this page. By the third section you will be asking them yourself.</p>
+  </div>
+</section>
+
+<!-- ============ 1. HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker">APIANT vs Prismatic · for the executive who owns the integration decision</span>
+    <h1>Both platforms let an AI build your integrations. The difference is <span class="g">what the AI hands you afterwards.</span></h1>
+    <p class="stakes">Integration work is where your roadmap goes to wait. Deals stall on a connector that does not exist yet, engineers get pulled off product to fix a sync, and a single "it didn't work for one customer last Tuesday" can absorb a week of senior time. Whichever platform you choose, you will live inside its architecture for years. This page shows you what each one actually requires of your team, job by job.</p>
+
+    <div class="method-note">
+      <p><b>A note on method.</b> Every vendor in this category claims depth, autonomy, and reliability, and you have no way to adjudicate competing claims. So this page does something else: it takes concrete jobs and shows what each platform's architecture requires to get them done. APIANT's side is a walkthrough of shipping capabilities. Prismatic's side is derived from Prismatic's own documentation, repositories, and pricing page, quoted where a quote beats a paraphrase. Where their design handles a job well, we say so.</p>
+    </div>
+
+    <p class="howto"><b>How to read this page.</b> Every entry follows the same shape: the problem that forced the capability to exist, a concrete scenario, how it goes on APIANT<span class="sw" style="background:var(--green)"></span>, and what the same outcome requires on Prismatic<span class="sw" style="background:var(--cyan)"></span>. Skim the bold lines first. The argument is the pile, not any single row.</p>
+  </div>
+</section>
+
+<!-- ============ ACT 1 ============ -->
+<section class="act">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="act-n">Act 1 of 8</span>
+      <h2>The foundation. Why any of the rest is possible.</h2>
+      <p>Everything on this page traces back to one design decision made years before AI could build integrations: what is an integration made of? On APIANT the answer is structured data, all the way down. That choice looked like an implementation detail for a decade. It is now the whole ballgame.</p>
+    </div>
+
+    <!-- ROW 1: HERO -->
+    <article class="row" id="test-see">
+      <div class="row-head">
+        <span class="kicker">Capability 01 · Everything else on this page depends on this one</span>
+        <p class="problem">Code cannot be safely edited by a machine, inspected by a non-developer, or replayed with its state intact.</p>
+        <h3>The AI builds your integration as a visual flow your team can open, read, and change. Not as code only its author understood.</h3>
+        <p class="cap-sub">And that holds at every layer: the flow, the connectors inside it, each API operation, every mapping, every setting. All of it is structured data. That one choice is why a machine can edit it safely, a person can always inspect it, and a saved run can be replayed with its state intact.</p>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Meridian, a field-services SaaS with 4,100 customers.</b> In March, an AI built their QuickBooks invoice sync in a working session. In September, the engineer who supervised that session has left, and Dana, the new integrations lead (sharp, technical, not a developer), needs to change how invoice line items map for a segment of customers. The question that decides Dana's week: <b>what did the AI actually hand Meridian in March?</b></p>
+        <svg class="scene" viewBox="0 0 920 240" role="img" aria-label="On APIANT a person reads the same visual flow the AI built. On the competitor the AI-built artifact is a code repository.">
+          <!-- APIANT side -->
+          <text x="20" y="26" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
+          <rect x="20" y="42" width="400" height="150" rx="12" fill="rgba(26,183,89,.06)" stroke="rgba(26,183,89,.4)"/>
+          <!-- flow nodes -->
+          <rect x="48" y="70" width="86" height="34" rx="8" fill="none" stroke="#1ab759"/><text x="91" y="91" fill="#f7f8f8" font-size="12" text-anchor="middle">Trigger</text>
+          <rect x="168" y="70" width="86" height="34" rx="8" fill="none" stroke="#1ab759"/><text x="211" y="91" fill="#f7f8f8" font-size="12" text-anchor="middle">Map</text>
+          <rect x="288" y="70" width="106" height="34" rx="8" fill="none" stroke="#1ab759"/><text x="341" y="91" fill="#f7f8f8" font-size="12" text-anchor="middle">QuickBooks</text>
+          <path d="M134 87h30M254 87h30" stroke="#1ab759" stroke-width="1.5" marker-end="url(#ga)"/>
+          <text x="48" y="132" fill="rgba(255,255,255,.58)" font-size="12">The AI built this. Dana opens the same</text>
+          <text x="48" y="150" fill="rgba(255,255,255,.58)" font-size="12">artifact, reads it, edits one mapping node.</text>
+          <!-- person -->
+          <circle cx="440" cy="120" r="11" fill="none" stroke="#f7f8f8" stroke-width="1.5"/>
+          <path d="M440 131v26M440 140l-14 14M440 140l14 14M427 178h26" stroke="#f7f8f8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M424 108C412 96 420 92 420 92" stroke="#1ab759" stroke-width="1.5" fill="none" stroke-dasharray="3 3"/>
+          <text x="440" y="212" fill="rgba(255,255,255,.35)" font-size="11" text-anchor="middle">Dana</text>
+          <!-- Prismatic side -->
+          <text x="520" y="26" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC (AI-BUILT)</text>
+          <rect x="520" y="42" width="380" height="150" rx="12" fill="rgba(92,200,255,.05)" stroke="rgba(92,200,255,.35)"/>
+          <rect x="548" y="66" width="150" height="104" rx="8" fill="rgba(92,200,255,.07)" stroke="#5cc8ff"/>
+          <text x="560" y="88" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="10">flows.ts</text>
+          <path d="M560 100h110M560 114h90M560 128h120M560 142h70M560 156h100" stroke="rgba(92,200,255,.45)" stroke-width="2" stroke-linecap="round"/>
+          <text x="726" y="98" fill="rgba(255,255,255,.58)" font-size="12">A code project.</text>
+          <text x="726" y="116" fill="rgba(255,255,255,.58)" font-size="12">No visual form exists</text>
+          <text x="726" y="134" fill="rgba(255,255,255,.58)" font-size="12">for it, by design.</text>
+          <text x="726" y="160" fill="#f5b748" font-size="12">Dana files a ticket.</text>
+          <defs><marker id="ga" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker></defs>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>Dana opens the integration the AI built. It renders as the <b>same visual flow the AI created</b>, because the AI and the editor operate one artifact: a structured document, not code.</li>
+            <li>She reads the steps in order, clicks the line-item mapping, and sees exactly which fields feed which. The building blocks inside the flow open the same way; nothing in the path is opaque.</li>
+            <li>She changes the mapping for the affected segment, or asks the AI to. Either way the edit targets one node, so its blast radius is that node.</li>
+            <li>She retests against a saved real run and commits a new version. Rollback is one click if she is wrong.</li>
+          </ol>
+          <p class="outcome">Elapsed: about twenty minutes. No engineer involved. The March artifact and the September artifact are the same living thing.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Here the outcomes are not the same, and no amount of work makes them the same. Prismatic has a real visual designer, and its low-code flows are stored as structured data. But its AI build tooling produces only the other mode: code-native TypeScript projects, and their own documentation closes the road back:</p>
+          <div class="quote">"Converting a low-code integration to code-native is a one-way operation. You cannot convert a code-native integration back to low-code."<span>prismatic.io docs, code-native conversion</span></div>
+          <p>So what the AI handed Meridian in March is a TypeScript repository. If the AI built it, Dana cannot see it. There is no visual form of it to open, ever; some code constructs have no visual equivalent, which is exactly why the conversion only runs one way. Her mapping change is now a developer task: edit code, build, re-import, redeploy.</p>
+          <p>Their flows can be data. Their building blocks cannot, and their AI path abandons even the flow-level data form. On Prismatic you choose between the visual representation and the AI. On APIANT that choice does not exist.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/edit-automation</a><a href="/ai-operability#inventory-skills">/edit-assembly</a><a href="/ai-operability#inventory-tools">automation_manage · 14 tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;this is the row where it bites hardest</span>
+      </div>
+    </article>
+
+    <div class="pull"><p>Both let an AI build the integration. The difference is <span class="g">what the AI hands you afterwards.</span></p></div>
+
+    <!-- ROW 2: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 02</span>
+        <p class="problem">Integrations died on large payloads, and on formats the platform had not anticipated.</p>
+        <h3>One unified data processing engine: format-agnostic, no payload ceilings, one open query standard</h3>
+        <p class="cap-sub">Every record, file, and API response flows through a single engine with a small memory footprint. The platform does not care what shape your data arrives in or how much of it there is.</p>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Caldera Health, a 38-clinic group.</b> Every night at 1am, their practice-management system exports the day's claims and inventory as one file. On a normal Tuesday it is 12MB. At end of quarter it is 80MB. The integration has to parse it, reconcile it against the billing platform, and post corrections before clinics open at 7am. Nobody is awake to babysit it, which is the point.</p>
+        <svg class="scene" viewBox="0 0 920 190" role="img" aria-label="An 80MB nightly file flows through APIANT's engine unimpeded; on the competitor it exceeds documented platform limits.">
+          <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
+          <rect x="20" y="60" width="120" height="52" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.25)"/>
+          <text x="80" y="83" fill="#f7f8f8" font-size="12" text-anchor="middle">Nightly file</text>
+          <text x="80" y="100" fill="#f5b748" font-size="11" text-anchor="middle">80MB at quarter end</text>
+          <path d="M140 86h60" stroke="#1ab759" stroke-width="2" marker-end="url(#ga2)"/>
+          <rect x="200" y="52" width="140" height="68" rx="10" fill="rgba(26,183,89,.08)" stroke="#1ab759"/>
+          <text x="270" y="82" fill="#f7f8f8" font-size="12" text-anchor="middle">Unified engine</text>
+          <text x="270" y="99" fill="rgba(255,255,255,.58)" font-size="11" text-anchor="middle">any format, any size</text>
+          <path d="M340 86h60" stroke="#1ab759" stroke-width="2" marker-end="url(#ga2)"/>
+          <rect x="400" y="60" width="110" height="52" rx="10" fill="none" stroke="#1ab759"/>
+          <text x="455" y="90" fill="#f7f8f8" font-size="12" text-anchor="middle">Billing, 7am</text>
+          <text x="540" y="24" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC</text>
+          <rect x="540" y="60" width="120" height="52" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.25)"/>
+          <text x="600" y="83" fill="#f7f8f8" font-size="12" text-anchor="middle">Same file</text>
+          <text x="600" y="100" fill="rgba(255,255,255,.58)" font-size="11" text-anchor="middle">inbound</text>
+          <path d="M660 86h48" stroke="#5cc8ff" stroke-width="2" stroke-dasharray="5 4"/>
+          <rect x="708" y="46" width="8" height="80" rx="2" fill="#f5b748"/>
+          <text x="732" y="72" fill="#f5b748" font-size="12">6MB webhook cap</text>
+          <text x="732" y="90" fill="rgba(255,255,255,.58)" font-size="11">detour via external storage,</text>
+          <text x="732" y="106" fill="rgba(255,255,255,.58)" font-size="11">chunking, 15-min ceiling</text>
+          <defs><marker id="ga2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker></defs>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>The file lands. The engine <b>normalizes any format into one internal model</b>, so the same transformation logic runs whether the source sends structured records, spreadsheets, or something custom.</li>
+            <li>Queries against the data use one open standard everywhere, so the person who wrote the reconciliation logic wrote it once, not once per format.</li>
+            <li>The engine's memory footprint stays small on large payloads. The 80MB quarter-end file goes through the same path as Tuesday's 12MB file. No special-case plumbing.</li>
+          </ol>
+          <p class="outcome">Corrections post by 4am. Quarter end is not an incident category.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Prismatic's runner publishes its ceilings plainly, which is to their credit:</p>
+          <div class="quote">"Webhook payload size is limited to 6MB." · "An instance will run for up to 15 minutes." · "Step results have a maximum size of 500MB."<span>prismatic.io docs, runner environment limits</span></div>
+          <p>For files over 6MB their docs direct you to route through external file storage and pass a reference. Their memory-management guide documents that loops accumulate results in memory and prescribes adding a no-op step inside loops to avoid out-of-memory failures. All workable, and their mid-2026 batch engine helps for large syncs, in code-native TypeScript.</p>
+          <p>The consequence is architectural: your team designs the integration around the platform's limits (external storage hops, chunking, memory hygiene inside loops), and owns that plumbing in every integration that touches a big file.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-tools">the unified data engine, under every one of the 138 tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;depth claims dissolve on contact with one big file</span>
+      </div>
+    </article>
+
+    <!-- supporting rows 3-5 -->
+    <div class="supports">
+      <div class="sup">
+        <p class="problem">Shared infrastructure means shared rate limits, shared incidents, and commingled customer data.</p>
+        <h4>03 · A dedicated dev and production server pair, on your own domain, single tenant, from the first paid tier</h4>
+        <p>Your integrations run on servers that are yours, addressed at your domain, with nobody else's traffic in the queue. You can even shut them down.</p>
+        <p class="vs">new accounts are provisioned into a shared multi-tenant region by default; a stack in your own cloud account is how their docs describe the Enterprise deployment option, and a custom domain is "available to customers on specific pricing plans."</p>
+      </div>
+      <div class="sup">
+        <p class="problem">A generated integration that is syntactically fine and semantically wrong reaches production, and nobody knows until customer data is wrong.</p>
+        <h4>04 · A deterministic compiler that refuses structurally invalid work before it exists</h4>
+        <p>The AI's intent passes through a constrained schema, and the compiler rejects invalid structures at the door. Ask for something malformed and watch the platform say no.</p>
+        <p class="vs">the validation their AI tooling runs is a code compiler plus a pattern check, then deploy-and-test: compile the TypeScript, push it to the environment, run it, read the logs. A type checker validates that a program compiles, not that an integration behaves.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">The same connector logic was being rebuilt per customer, and the copies diverged.</p>
+        <h4>05 · Reusable building blocks: assemblies, modules, subassemblies</h4>
+        <p>Build an operation once ("get client services by product"), reuse it in every integration that needs it. Fix it once, every user of it inherits the fix.</p>
+        <p class="vs">components are reusable across integrations, a genuine strength. Flows are not: their cross-flow mechanism works only inside a single integration, so shared multi-step logic is copied or rebuilt per integration.</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="kicker">At scale, this means</span>
+      <p>The asset your company accumulates is a library of inspectable building blocks that any successor can open, not a portfolio of codebases that each had exactly one fluent reader, who has since changed jobs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 2 ============ -->
+<section class="act">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="act-n">Act 2 of 8</span>
+      <h2>Reaching any system, not just catalogued ones.</h2>
+      <p>Connector catalogs are where integration platforms compete in public, and it is the wrong contest. The integration a deal depends on is reliably the one no catalog lists. The real questions are time-to-new-connector, and how deep the connector goes once it exists.</p>
+    </div>
+
+    <!-- ROW 6: HERO -->
+    <article class="row" id="test-depth">
+      <div class="row-head">
+        <span class="kicker">Capability 06</span>
+        <p class="problem">The integration the deal depended on was never in anyone's catalog, and the catalog vendor had no incentive to add it.</p>
+        <h3>Connectors built from an API's own documentation, exposing every trigger and action the API offers, including private and partner endpoints no catalog lists</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Northgate, a systems integrator with forty managed clients.</b> Their largest client runs bookings on a regional platform nobody has heard of outside its niche. The endpoints that matter, membership holds and multi-site transfers, live in the partner API, behind an NDA, in no catalog anywhere. The client's renewal is conditioned on this integration existing within the month.</p>
+        <svg class="scene" viewBox="0 0 920 200" role="img" aria-label="API documentation becomes a full connector on APIANT; on the competitor it becomes a TypeScript project the team owns.">
+          <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
+          <rect x="20" y="52" width="120" height="70" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.25)"/>
+          <text x="80" y="82" fill="#f7f8f8" font-size="12" text-anchor="middle">Partner API</text>
+          <text x="80" y="99" fill="rgba(255,255,255,.58)" font-size="11" text-anchor="middle">docs, NDA'd</text>
+          <path d="M140 87h56" stroke="#1ab759" stroke-width="2" marker-end="url(#ga3)"/>
+          <rect x="196" y="52" width="110" height="70" rx="10" fill="rgba(26,183,89,.08)" stroke="#1ab759"/>
+          <text x="251" y="82" fill="#f7f8f8" font-size="12" text-anchor="middle">AI reads docs,</text>
+          <text x="251" y="99" fill="#f7f8f8" font-size="12" text-anchor="middle">builds + live-tests</text>
+          <path d="M306 87h56" stroke="#1ab759" stroke-width="2" marker-end="url(#ga3)"/>
+          <rect x="362" y="42" width="130" height="90" rx="10" fill="none" stroke="#1ab759"/>
+          <text x="427" y="66" fill="#f7f8f8" font-size="12" text-anchor="middle">Connector</text>
+          <path d="M375 78h104M375 92h104M375 106h104" stroke="rgba(26,183,89,.5)" stroke-width="1.5"/>
+          <text x="427" y="150" fill="rgba(255,255,255,.58)" font-size="11" text-anchor="middle">every endpoint, stored as data</text>
+          <text x="540" y="24" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC</text>
+          <rect x="540" y="52" width="100" height="70" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.25)"/>
+          <text x="590" y="90" fill="#f7f8f8" font-size="12" text-anchor="middle">Same docs</text>
+          <path d="M640 87h36" stroke="#5cc8ff" stroke-width="2" marker-end="url(#ca3)"/>
+          <rect x="676" y="52" width="104" height="70" rx="10" fill="rgba(92,200,255,.06)" stroke="#5cc8ff"/>
+          <text x="728" y="82" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">component</text>
+          <text x="728" y="99" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">project (TS)</text>
+          <path d="M780 87h36" stroke="#5cc8ff" stroke-width="2" marker-end="url(#ca3)"/>
+          <rect x="816" y="52" width="84" height="70" rx="10" fill="none" stroke="rgba(92,200,255,.5)"/>
+          <text x="858" y="78" fill="rgba(255,255,255,.58)" font-size="11" text-anchor="middle">build,</text>
+          <text x="858" y="94" fill="rgba(255,255,255,.58)" font-size="11" text-anchor="middle">publish,</text>
+          <text x="858" y="110" fill="rgba(255,255,255,.58)" font-size="11" text-anchor="middle">maintain</text>
+          <defs>
+            <marker id="ga3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker>
+            <marker id="ca3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#5cc8ff"/></marker>
+          </defs>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>Northgate points the AI at the partner API's documentation. It reads the docs, determines the authentication scheme, and <b>builds the connection itself</b>.</li>
+            <li>It scans the API's full capability surface and builds out the operations that matter, including the NDA'd endpoints no public catalog will ever carry.</li>
+            <li>It tests each operation against the live API with test data it creates itself, reads the real responses, and self-corrects until they pass.</li>
+            <li>The result is a connector stored as structured data: inspectable, reusable across all forty clients, and serviceable by whoever is on staff in three years.</li>
+          </ol>
+          <p class="outcome">The connector exists in a working session. The renewal conversation changes subject.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Prismatic can absolutely reach this API, and their tooling for it is real: a CLI that scaffolds a custom component, including from an API spec file, and a generic HTTP step for one-off calls. Their own definition of the artifact:</p>
+          <div class="quote">"Connectors are Node.js/TypeScript projects that accomplish specific tasks or connect to an outside service."<span>prismatic.io docs, custom connectors</span></div>
+          <p>There is no other way to author one. So the path is: scaffold the project, write or finish the TypeScript for each action and trigger, run the build, publish (each republish increments the version), and maintain the project, its dependencies, and its upgrades from now on. Their own material concedes the shortcut's limits: the generic HTTP step "often falls short when you're dealing with atypical API implementations."</p>
+          <p>Northgate gets the integration either way. On one platform they also get a codebase, times forty clients' worth of niche systems, times years.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/build-assembly</a><a href="/ai-operability#inventory-tools">assembly toolset · 35 tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;name the endpoint, then ask who builds and owns the artifact</span>
+      </div>
+    </article>
+
+    <!-- ROW 9: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 09</span>
+        <p class="problem">Onboarding stalled for days on OAuth paperwork before a single record moved.</p>
+        <h3>The authentication layer, including automated registration of OAuth applications on a vendor's developer portal, and credential vaulting</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Brightline, a B2B SaaS company, is launching integrations with five systems this quarter.</b> Each of the five requires Brightline to register an application on that vendor's developer portal first: create the account, fill the forms, describe the use case, set callback URLs, wait, copy the credentials somewhere safe. It is nobody's job, so it becomes the bottleneck for everybody's job.</p>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>The agent <b>drives a browser on the vendor's developer portal</b>: registers the application, sets the callback, and captures the issued credentials directly into the platform's encrypted vault. The paperwork step itself is automated.</li>
+            <li>The connection layer then determines the right authentication method per API (OAuth, key-based, or others), builds the connection, and verifies it with a live call.</li>
+            <li>From then on, tokens refresh themselves and every end customer authorizes with a click.</li>
+          </ol>
+          <p class="outcome">Five portals, one afternoon, zero credentials in a spreadsheet.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Prismatic's OAuth machinery downstream of registration is solid: they host the callback, exchange and refresh tokens, and store credentials encrypted with per-tenant keys. The registration step itself, their docs assign to you:</p>
+          <div class="quote">"You as a software vendor register with the third-party application. You tell them your application's name, a description, and a callback URL."<span>prismatic.io docs, OAuth 2.0 authorization code</span></div>
+          <p>No automation of that step is documented. Five systems means five rounds of portal paperwork on your team's calendar, this quarter and every quarter you add connectors.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/register-oauth-app</a><a href="/ai-operability#inventory-tools">keyvault tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;depth includes the steps before the first API call</span>
+      </div>
+    </article>
+
+    <!-- ROW 10: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 10</span>
+        <p class="problem">Field mappings built against documentation break on contact with a customer who renamed things and added forty custom fields.</p>
+        <h3>Live field discovery against the customer's own tenant: exact field names, types, custom fields, renamed objects, dropdowns populated from their real data</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>A 60-store outdoor retailer is onboarding onto a loyalty integration.</b> Their CRM has been customized for nine years: forty-one custom fields, two renamed objects, and a "member tier" dropdown whose values exist nowhere in any documentation, because their admin invented them. The mapping screen has to show <b>their</b> CRM, not the CRM in the manual.</p>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>At configuration time the connector <b>interrogates the customer's own tenant live</b>: exact field names and types as they exist today, custom fields included, renamed objects under their real names.</li>
+            <li>Dropdowns populate from the customer's actual data, so "member tier" offers the five values their admin invented, not a guess.</li>
+            <li>This works on every connector by architecture, because field discovery is part of the building-block model, not a per-connector development project.</li>
+          </ol>
+          <p class="outcome">The onboarding call maps forty-one custom fields without a single "we'll get back to you."</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Prismatic has a genuine answer here: data sources can fetch live values from a customer's account and render real field-mapping screens in the config wizard. Their worked example reaches actual object fields in the customer's CRM. The catch is who makes that happen:</p>
+          <div class="quote">"A Data Source fetches data from a third-party API that will be used to dynamically generate a config variable."<span>prismatic.io docs, data sources</span></div>
+          <p>A developer writes that data-source code in TypeScript, per app and per object, as part of the connector project. Discovery depth is therefore a line item in each connector's development budget, and the connectors where nobody budgeted it fall back to hand-typed field names, which is where the forty-one custom fields go wrong.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-tools">field discovery tools, assembly toolset</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;the customer sees their own system, or they see the manual's</span>
+      </div>
+    </article>
+
+    <!-- supporting rows 7, 8, 11, 12 -->
+    <div class="supports">
+      <div class="sup">
+        <p class="problem">Every vendor's API announces change differently, and picking the wrong mechanism means missed or duplicated records.</p>
+        <h4>07 · Six ways a run can start</h4>
+        <p>Polling for new records, polling for new-or-updated, manual webhooks, self-registering webhooks, service webhooks with event filtering, and long-lived protocol listeners. Six vetted patterns; the AI picks the right one per API.</p>
+        <p class="vs">webhook and scheduled starts exist as they do everywhere; the difference is that here the trigger strategy is a menu of prebuilt, tested mechanisms rather than a design decision your team re-derives, and re-debugs, for each API's quirks.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">6 trigger skills</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Create-read-update-delete alone cannot express what modern APIs do.</p>
+        <h4>08 · Seven action primitives, including calls that return computed or generated data</h4>
+        <p>Add, delete, find, get, list, update, and invoke: the last one models operations that compute, transform, or generate (an AI inference, a price calculation), so the whole modern API surface fits the data model.</p>
+        <p class="vs">a code step can of course call anything. The point of primitives is different: every operation stays inside the structured model, so it remains visible to the editor, the tester, and the compiler, rather than disappearing into code.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">7 action skills</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">A vendor's rate limit is the real constraint on a multi-location sync, and hitting it corrupts a run.</p>
+        <h4>11 · Throttling at three levels: connector, action, and connection</h4>
+        <p>Type a vendor's limit once and the platform enforces it across every automation and every account that touches that API, with queueing and backoff. One deployment runs 232 locations against a single 185-calls-per-10-seconds budget without a 429 reaching a customer.</p>
+        <p class="vs">their documented controls live per flow: retry with backoff, and queue-based concurrency caps of 2 to 15. A budget enforced across every integration that shares one API is a different level of control, and it is the level vendors' rate limits are written at.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">Years of existing integrations would otherwise be stranded outside the AI's reach.</p>
+        <h4>12 · Converting hand-built work to the AI-operable form</h4>
+        <p>Integrations built by people over a decade convert into the same structured form the AI operates, so the AI can maintain the estate you already own. Nothing is stranded, and nothing loses its visual form in the process.</p>
+        <p class="vs">their documented conversion runs the other way: visual low-code converts to code, one-way, and the visual representation does not survive the trip. Moving toward their AI means moving away from the form a non-developer can read.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">/convert-assembly</a></p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="kicker">At scale, this means</span>
+      <p>Time-to-new-connector is measured in working sessions, not sprints, and every connector you add, however obscure the API, joins the same inspectable library instead of adding one more codebase to the pile someone must maintain.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 3 ============ -->
+<section class="act">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="act-n">Act 3 of 8</span>
+      <h2>Expressing business logic that survives the real world.</h2>
+      <p>Field-to-field mapping is the demo. The business is nested rules, parallel work, digests, approvals, waits, and the awkward requirement that makes your operation yours. The question for any platform: does that logic fit inside the model, where it stays visible and testable, or does it spill into code and patterns your team hand-builds?</p>
+    </div>
+
+    <!-- ROW 15: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 15</span>
+        <p class="problem">Processing two hundred locations in series took hours. In parallel, nothing knew when all of them had finished.</p>
+        <h3>Latches: parallel fan-out with a real fan-in</h3>
+        <p class="cap-sub">Launch N child runs in parallel, and the platform itself knows when the last one completes, so the "everything is done, now reconcile" step is a primitive, not a science project.</p>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>A 214-location convenience chain pushes overnight price updates.</b> Every store must be updated in parallel (serially it takes past opening), and when the last store finishes, one reconciliation report must go to the merchandising director, listing any store that failed. The hard part was never the fan-out. It is knowing, reliably, that all 214 are done.</p>
+        <svg class="scene" viewBox="0 0 920 210" role="img" aria-label="APIANT fans out to 214 parallel runs and joins them with a latch; the competitor pattern polls an API in a loop and accumulates state by hand.">
+          <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
+          <rect x="20" y="76" width="92" height="40" rx="9" fill="none" stroke="#1ab759"/>
+          <text x="66" y="100" fill="#f7f8f8" font-size="12" text-anchor="middle">Parent run</text>
+          <path d="M112 96h30M142 96l40-44M142 96h40M142 96l40 44" stroke="#1ab759" stroke-width="1.6" fill="none" marker-end="url(#ga4)"/>
+          <rect x="184" y="38" width="96" height="28" rx="7" fill="rgba(26,183,89,.08)" stroke="#1ab759"/><text x="232" y="56" fill="#f7f8f8" font-size="11" text-anchor="middle">Store 001</text>
+          <rect x="184" y="82" width="96" height="28" rx="7" fill="rgba(26,183,89,.08)" stroke="#1ab759"/><text x="232" y="100" fill="#f7f8f8" font-size="11" text-anchor="middle">Store 002 …</text>
+          <rect x="184" y="126" width="96" height="28" rx="7" fill="rgba(26,183,89,.08)" stroke="#1ab759"/><text x="232" y="144" fill="#f7f8f8" font-size="11" text-anchor="middle">Store 214</text>
+          <path d="M280 52l40 44M280 96h40M280 140l40-44" stroke="#1ab759" stroke-width="1.6" fill="none"/>
+          <rect x="320" y="76" width="80" height="40" rx="9" fill="rgba(26,183,89,.14)" stroke="#1ab759"/>
+          <text x="360" y="94" fill="#f7f8f8" font-size="11" text-anchor="middle">Latch</text>
+          <text x="360" y="108" fill="rgba(255,255,255,.58)" font-size="10" text-anchor="middle">214 / 214</text>
+          <path d="M400 96h34" stroke="#1ab759" stroke-width="2" marker-end="url(#ga4)"/>
+          <rect x="434" y="76" width="86" height="40" rx="9" fill="none" stroke="#1ab759"/>
+          <text x="477" y="100" fill="#f7f8f8" font-size="11" text-anchor="middle">Reconcile</text>
+          <text x="560" y="24" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC</text>
+          <rect x="560" y="50" width="120" height="34" rx="8" fill="rgba(92,200,255,.06)" stroke="#5cc8ff"/><text x="620" y="71" fill="#f7f8f8" font-size="11" text-anchor="middle">Invoke flows async</text>
+          <rect x="560" y="98" width="120" height="34" rx="8" fill="rgba(92,200,255,.06)" stroke="#5cc8ff"/><text x="620" y="119" fill="#f7f8f8" font-size="11" text-anchor="middle">Poll their API</text>
+          <rect x="560" y="146" width="120" height="34" rx="8" fill="rgba(92,200,255,.06)" stroke="#5cc8ff"/><text x="620" y="167" fill="#f7f8f8" font-size="11" text-anchor="middle">Persist results</text>
+          <path d="M620 84v14M620 132v14" stroke="#5cc8ff" stroke-width="1.5" marker-end="url(#ca4)"/>
+          <path d="M680 115c40 0 40-36 0-42" stroke="#5cc8ff" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#ca4)"/>
+          <text x="726" y="98" fill="rgba(255,255,255,.58)" font-size="11">a polling loop your</text>
+          <text x="726" y="114" fill="rgba(255,255,255,.58)" font-size="11">team designs and owns</text>
+          <text x="726" y="140" fill="#f5b748" font-size="11">shared state: 64MB cap,</text>
+          <text x="726" y="156" fill="#f5b748" font-size="11">last write wins</text>
+          <defs>
+            <marker id="ga4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker>
+            <marker id="ca4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#5cc8ff"/></marker>
+          </defs>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>The parent run fans out <b>214 child runs in parallel</b>, one per store, each with that store's settings.</li>
+            <li>A latch, a first-class primitive, counts them in as they complete. Not a polling loop. Not shared state your team invented. A platform feature with one job.</li>
+            <li>When the count reaches 214, the latch releases and the reconciliation step runs exactly once, with every store's result in hand.</li>
+          </ol>
+          <p class="outcome">Prices land in minutes, the report is on the director's desk at 6am, and nobody wrote coordination logic.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Their visual builder has loops and branches but no parallel join step. Their own documentation's parallel-processing pattern: invoke sibling flows asynchronously, then detect completion by polling their management API in a loop, accumulating results with their persisted-data feature. That feature's documented properties matter at 214 locations:</p>
+          <div class="quote">"The maximum amount of data you can persist is 64 MB." · "If two executions run at the same time, the execution that finishes last will overwrite any state that the first execution wrote."<span>prismatic.io docs, persist data</span></div>
+          <p>True parallel execution in ordinary code exists in their code-native mode, which is TypeScript your developers write. Either way, the fan-in, the part that was ever hard, is your team's design to build, test, and debug.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">pattern-latches</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;hand-built coordination is where 2am pages come from</span>
+      </div>
+    </article>
+
+    <!-- ROW 16: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 16</span>
+        <p class="problem">Two systems updating each other trigger each other, forever.</p>
+        <h3>Two-way sync with loop prevention as a first-class primitive</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Arrowe Physio, 22 clinics.</b> Patient contact details must stay identical in the practice-management system and the marketing CRM, editable from either side. The failure mode is famous: the CRM update fires a webhook, the integration writes to practice management, which fires its webhook, which writes to the CRM, which fires again. By morning one patient record has been "updated" four thousand times and both APIs have rate-limited the clinic.</p>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>Two-way sync is a built pattern, and <b>echo suppression is a primitive inside it</b>: the platform recognizes changes the integration itself wrote and declines to bounce them back.</li>
+            <li>The AI builds bidirectional syncs with this on by default, and the test suite explicitly pushes a change from each side and verifies no echo returns.</li>
+            <li>Conflict handling (both sides changed the same field) is part of the same model, visible and configurable, not folklore.</li>
+          </ol>
+          <p class="outcome">The sync runs both directions on day one, and "infinite loop" is not in the runbook.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Their documentation describes no built-in echo prevention. Their own published bidirectional-sync tutorial handles it by hand: the flow prepends a marker string to every record it writes, then inspects each inbound webhook for that marker and stops if it finds one. The tutorial says of its approach:</p>
+          <div class="quote">"There are likely more elegant approaches... but for illustration purposes this is sufficient."<span>prismatic.io tutorial, bi-directional sync example</span></div>
+          <p>Which is honest, and is the point: the elegant approach is your team's to invent, per sync, and to prove correct under the race conditions that make this problem hard. A convention is not a guarantee. Every bidirectional sync your team ships re-solves a problem the platform could have owned.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">assembly-bidirectional-sync</a><a href="/ai-operability#inventory-skills">/test-integration</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;a naming convention is what stands between you and 4,000 writes</span>
+      </div>
+    </article>
+
+    <!-- supporting rows 13,14,17-23 -->
+    <div class="supports">
+      <div class="sup">
+        <p class="problem">Real business rules are nested, and field-mapping tools cannot express them.</p>
+        <h4>13 · Conditional branching and nested loops</h4>
+        <p>"For each location, for each membership type, if the plan is grandfathered and the balance is positive..." expresses directly in the flow, and stays visible there.</p>
+        <p class="vs">their visual builder has loops and branches too; the difference shows at the edges of the model, where their answer is code, and code is where visibility ends.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">The same twelve-step sequence appeared in nine automations and had to be fixed nine times.</p>
+        <h4>14 · Reusable subroutines, shared across automations</h4>
+        <p>Extract the sequence once, call it from all nine. Fix it once, all nine inherit it, and the subroutine tests in isolation.</p>
+        <p class="vs">their cross-flow invocation works only between flows inside the same integration. Shared multi-step logic across integrations is copied, and copies drift.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">Customers wanted one daily digest, not four hundred notifications.</p>
+        <h4>17 · Collector: aggregate items into named buckets across many runs, drained on a schedule</h4>
+        <p>Four hundred events land all day; one clean summary goes out at 5pm. A dedicated primitive, safe under concurrency.</p>
+        <p class="vs">cross-run aggregation uses their persisted-data feature: a 64MB cap and documented last-write-wins behavior when two runs land at once. The digest pattern is yours to assemble on top.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-collector</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">"Follow up in three days" required an external scheduler and a second system to maintain.</p>
+        <h4>18 · Snooze: pause a run until a future moment</h4>
+        <p>A run can suspend itself for three days, or until next quarter, and resume with its state intact. One system, one place to look.</p>
+        <p class="vs">executions cap at 15 minutes, their sleep step blocks inside that window and their docs advise against leaning on it; a real wait means splitting the work into separate flows with persisted state and a callback. Your team builds the scheduler.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-snooze</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Some records must not sync until a person says yes, and the wait cannot block the platform.</p>
+        <h4>19 · Human approval gates with a moderation queue</h4>
+        <p>A run pauses on a queue; a person approves or denies from a link; the run resumes. Refunds over $500 wait for a manager, everything else flows.</p>
+        <p class="vs">a general workflow approval gate is not in their model; the documented approval pattern lives inside their AI-agent tooling, and a plain "hold this record for a manager" is another split-flow, persisted-state build.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-human-moderation</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">One monolithic automation became unmaintainable and untestable.</p>
+        <h4>20 · Parent and child automation chaining with parameter passing</h4>
+        <p>Big processes decompose into small automations that call each other with parameters, each one testable alone.</p>
+        <p class="vs">flows can invoke flows within one integration; across integrations, orchestration goes through webhooks your team wires and versions by hand.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-execute-automation</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">A customer's mapping requirements arrived as a 300-row spreadsheet, and hand-entering it was a week of error-prone work.</p>
+        <h4>21 · Field mappings imported from a spreadsheet</h4>
+        <p>The 300-row file becomes the mapping, directly. The AI reads it, applies it, and flags the rows that do not resolve.</p>
+        <p class="vs">no spreadsheet import of mappings appears in their documentation; mappings are entered through the config wizard's field-map control, or through a mapping UI your developers build. The 300 rows get keyed in.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">pattern-csv-mapping</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">The same API quirk was rediscovered every time, by whoever drew the short straw.</p>
+        <h4>22 · A pattern library that persists institutional memory</h4>
+        <p>Mappings, transforms, gotchas, and templates are saved and searchable. The AI checks the library before building, so the Mindbody pagination quirk gets solved once, ever.</p>
+        <p class="vs">reuse units are components and templates, real but coarse. The fine-grained memory (this API lies about timestamps, this enum needs a lookup) lives in your engineers, and leaves with them.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">patterns toolset · 3 tools</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Occasionally a requirement is genuinely outside any data model, and waiting for a platform release is not an answer.</p>
+        <h4>23 · A server-side scripting escape hatch</h4>
+        <p>When you truly need arbitrary logic, a script slots in as one node of the structured document. Code is an optional leaf inside a data document, never the foundation. Everything around that leaf stays visible, testable, and machine-editable.</p>
+        <p class="vs">the relationship is inverted: code is the substrate. Their building blocks are code projects, and their AI emits code. The question is not whether code exists on either platform. It is whether code is the exception or the ground you stand on.</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="kicker">At scale, this means</span>
+      <p>Logic complexity does not convert into code ownership. The awkward rules that make your business yours stay inside a model that your people can read, your tests can cover, and your AI can safely change.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 4 ============ -->
+<section class="act">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="act-n">Act 4 of 8</span>
+      <h2>Proving it before a customer ever sees it.</h2>
+      <p>"It worked when I tried it" tests one path out of eleven. The other ten are where customers live. This act is the answer to the third standing test: when the AI, or a person, gets something wrong, what in the architecture catches it before production data does?</p>
+    </div>
+
+    <!-- ROW 24: HERO -->
+    <article class="row" id="test-catch">
+      <div class="row-head">
+        <span class="kicker">Capability 24 · Patent pending</span>
+        <p class="problem">The branch nobody could trigger on demand was the branch that broke.</p>
+        <h3>Execution-state mutation: change a saved run's data and re-execute from any step, forcing the path that only happens for one customer in December</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>United Harvest, a federation of 90 food banks.</b> Their donation pipeline has a branch that fires only for tribute gifts carrying a matching-gift employer code, which in practice happens in the last week of December. It is March. The integration was just modified. The question: how do you prove the December branch still works, in March, without waiting nine months or faking an entire donation flow end to end?</p>
+        <svg class="scene" viewBox="0 0 920 210" role="img" aria-label="APIANT mutates a saved execution's data to force an untaken branch; the competitor replays only the original payload down the original path.">
+          <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
+          <rect x="20" y="52" width="118" height="44" rx="9" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.3)"/>
+          <text x="79" y="71" fill="#f7f8f8" font-size="11" text-anchor="middle">Saved real run</text>
+          <text x="79" y="87" fill="rgba(255,255,255,.5)" font-size="10" text-anchor="middle">ordinary gift</text>
+          <path d="M138 74h34" stroke="#1ab759" stroke-width="2" marker-end="url(#ga5)"/>
+          <rect x="172" y="52" width="110" height="44" rx="9" fill="rgba(26,183,89,.14)" stroke="#1ab759"/>
+          <text x="227" y="71" fill="#f7f8f8" font-size="11" text-anchor="middle">Mutate state</text>
+          <text x="227" y="87" fill="rgba(255,255,255,.58)" font-size="10" text-anchor="middle">+ employer code</text>
+          <path d="M282 74h34" stroke="#1ab759" stroke-width="2" marker-end="url(#ga5)"/>
+          <circle cx="342" cy="74" r="7" fill="none" stroke="#1ab759" stroke-width="2"/>
+          <path d="M349 74c30 0 30-34 62-34M349 74c30 0 30 34 62 34" stroke="rgba(255,255,255,.28)" stroke-width="1.6" fill="none"/>
+          <path d="M349 74c30 0 30-34 62-34" stroke="#1ab759" stroke-width="2.4" fill="none" marker-end="url(#ga5)"/>
+          <rect x="411" y="24" width="118" height="32" rx="8" fill="rgba(26,183,89,.1)" stroke="#1ab759"/>
+          <text x="470" y="44" fill="#f7f8f8" font-size="11" text-anchor="middle">December branch ✓</text>
+          <rect x="411" y="92" width="118" height="32" rx="8" fill="none" stroke="rgba(255,255,255,.25)"/>
+          <text x="470" y="112" fill="rgba(255,255,255,.45)" font-size="11" text-anchor="middle">ordinary branch</text>
+          <text x="20" y="160" fill="rgba(255,255,255,.58)" font-size="12">Re-execute from any step. The untaken path runs today, on real data, in March.</text>
+          <text x="580" y="24" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC</text>
+          <rect x="580" y="52" width="118" height="44" rx="9" fill="rgba(92,200,255,.06)" stroke="#5cc8ff"/>
+          <text x="639" y="71" fill="#f7f8f8" font-size="11" text-anchor="middle">Replay</text>
+          <text x="639" y="87" fill="rgba(255,255,255,.5)" font-size="10" text-anchor="middle">original payload only</text>
+          <path d="M698 74h30" stroke="#5cc8ff" stroke-width="2" marker-end="url(#ca5)"/>
+          <circle cx="742" cy="74" r="7" fill="none" stroke="#5cc8ff" stroke-width="2"/>
+          <path d="M749 74c26 0 26-30 54-30" stroke="rgba(255,255,255,.25)" stroke-width="1.5" fill="none"/>
+          <path d="M749 74c26 0 26 30 54 30" stroke="#5cc8ff" stroke-width="2.2" fill="none" marker-end="url(#ca5)"/>
+          <text x="828" y="48" fill="rgba(255,255,255,.4)" font-size="11">untaken, untested</text>
+          <text x="828" y="112" fill="rgba(255,255,255,.58)" font-size="11">same path again</text>
+          <defs>
+            <marker id="ga5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker>
+            <marker id="ca5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#5cc8ff"/></marker>
+          </defs>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>Take any saved execution, a real donation from last Tuesday, with every step's actual data intact.</li>
+            <li><b>Mutate its state</b>: mark it a tribute gift, add the employer code. The platform can do this because an execution is a structured document, definition and runtime state together.</li>
+            <li>Re-execute from any step. The December branch fires, in March, on data that is real in every respect except the two fields you changed.</li>
+            <li>The AI does this systematically across every branch, which is how a freshly modified integration proves all of its paths before deploy.</li>
+          </ol>
+          <p class="outcome">The branch that used to be tested by December is tested by lunch.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Their production replay is documented precisely, and it is the whole story:</p>
+          <div class="quote">"Replay reruns the entire integration with the original payload."<span>prismatic.io docs, retry and replay</span></div>
+          <p>The replay API takes one argument: the execution's ID. No payload editing, no state modification, no restart from a chosen step. A replayed ordinary gift is still an ordinary gift, and takes the ordinary path.</p>
+          <p>To force the December branch, someone on your team hand-crafts a synthetic payload that impersonates a tribute gift and sends it through the designer's test runner. That works when the person remembers the branch exists, gets the twelve other fields realistic, and does it again for every branch, after every change. Coverage becomes a function of diligence. Diligence is exactly what month nine erodes.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-tools">automation_exec · 17 tools: mutate, restart, branch points</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;this capability is the answer, and it has no equivalent here</span>
+      </div>
+    </article>
+
+    <div class="pull"><p>The AI tests <span class="g">every branch</span> before it ships. Not the branches somebody thought to write payloads for. Every branch.</p></div>
+
+    <!-- ROW 29: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 29</span>
+        <p class="problem">A one-line connector fix silently changed behaviour for three hundred accounts.</p>
+        <h3>Blast-radius analysis before touching a shared building block: which automations, and which customers, depend on this</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Beacon, a B2B SaaS vendor with 300 customer accounts live.</b> A date-format bug is found in a shared connector operation. The fix is one line. The question that separates a routine Tuesday from an incident: which automations call this operation, on which customers' accounts, and which of them are relying on the buggy behaviour without knowing it?</p>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>Before the edit, one query answers <b>"who references this block":</b> every automation, every account. Because every layer is data, dependency lookup is a lookup, not an investigation.</li>
+            <li>The fix is applied to the one node it concerns; its blast radius is that node, and the dependents are a known list, not a hope.</li>
+            <li>The AI re-tests the affected automations against saved real runs, then the fix rolls out to the fleet deliberately, with rollback armed.</li>
+          </ol>
+          <p class="outcome">The one-line fix ships with a printed list of everyone it touches. Surprises: zero.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Prismatic deserves credit for the guardrail they do have: component versions are pinned, so republishing a fixed component does not silently change running integrations. That prevents the accident. It does not answer the question.</p>
+          <p>Finding every integration and customer instance that depends on the flawed version means walking their management API relationships, a script your team writes. Then the rollout: bump the component version in each integration that uses it, republish each integration, and update each customer instance to the new integration version. The fix is one line. The delivery of the fix is a project.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-tools">asm_find_referencers, assembly toolset</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;"who depends on this" should be an answer, not an archaeology project</span>
+      </div>
+    </article>
+
+    <!-- supporting rows 25-28, 30 -->
+    <div class="supports">
+      <div class="sup">
+        <p class="problem">"It worked when I tried it" tested one path out of eleven.</p>
+        <h4>25 · Branch-coverage test points</h4>
+        <p>The platform knows every branch an automation has and tracks which ones testing has actually exercised. Coverage is measured, not assumed. A change ships when the walk is complete.</p>
+        <p class="vs">no branch-coverage measurement appears in their testing documentation; exercising a different path means crafting a different sample payload, and knowing when you are done is on you.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_get_branch_test_points</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Synthetic test data does not contain the thing that breaks integrations.</p>
+        <h4>26 · Replay a real execution on real data</h4>
+        <p>Any saved run re-executes with its actual data, so the malformed phone number and the emoji in the last-name field, the things that actually break integrations, are in the test.</p>
+        <p class="vs">replay exists, whole-flow with the original payload, inside their 14-day default retention window. After that, the run you need to reproduce no longer exists to replay.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_restart_from_step</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Testing a webhook-triggered flow meant asking a customer to go and click something in their system.</p>
+        <h4>27 · Webhook replay from historical payloads</h4>
+        <p>Every webhook ever received is a test case. Re-fire last month's payload against the fixed automation and watch it process, without asking a customer to reproduce anything.</p>
+        <p class="vs">their listening mode captures payloads at build time, a genuinely useful dev-loop feature. Replaying history against changed logic is bounded by the same retention window and reruns whole flows as-is.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_replay_webhook</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Proving one shared component meant running nine automations.</p>
+        <h4>28 · Test a subroutine in isolation</h4>
+        <p>The shared sequence runs alone, with controlled inputs, and proves itself once, without dragging nine parent automations through a test cycle.</p>
+        <p class="vs">their code-native tests hit a documented wall: "If you use [existing components] within your flows, you will not be able to build unit tests for your flows." Anything built on their own component catalog tests only by deploying and running it.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_test_subroutine</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">The fastest way to an outage is a confident agent with production credentials.</p>
+        <h4>30 · Production is read-only by default; writes gate on explicit confirmation</h4>
+        <p>The AI inspects production freely and changes nothing without an explicit, human-confirmed deploy step. Autonomy without the blast radius.</p>
+        <p class="vs">their equivalent safety is real and worth crediting: publishing a version never auto-changes customer instances. The difference is scope: their gate covers deployment; APIANT's covers everything an agent can do in production.</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="kicker">At scale, this means</span>
+      <p>Test coverage is a property of the platform, not of your team's imagination for payloads. Across months of daily production builds on APIANT, no hallucinated mapping, structure, or logic has been observed reaching production. That is what the compiler and the branch walk are for.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 5 ============ -->
+<section class="act">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="act-n">Act 5 of 8</span>
+      <h2>Shipping to a fleet, not to one customer.</h2>
+      <p>Building the integration once is the demo. Running it for three hundred customers, each configured differently, each on their own credentials, all needing the same fix on the same day, is the business. This act is where per-customer platforms and per-fleet platforms part ways.</p>
+    </div>
+
+    <!-- ROW 31: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 31</span>
+        <p class="problem">Every customer wants the same integration configured differently, and cloning it per customer creates hundreds of divergent copies.</p>
+        <h3>Build once, deploy to hundreds: universal logic, per-customer settings</h3>
+        <p class="cap-sub">One codebase carries the logic. Settings (which fields sync, which features are on, time zones, branding) vary per customer. The same automation serves a single-location studio and a 232-location franchise.</p>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>A fitness franchise with 232 locations</b> runs a booking-system-to-CRM integration at every site. Each location has its own booking credentials and its own quirks (time zones, membership names, feature toggles), but the logic is identical everywhere. Today, a fix needs to reach all 232 before the evening class rush. This is a real deployment shape running on APIANT now.</p>
+        <svg class="scene" viewBox="0 0 920 220" role="img" aria-label="One codebase deploys atomically to 232 accounts on APIANT; on the competitor each instance is updated individually or by script.">
+          <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
+          <rect x="20" y="66" width="130" height="52" rx="10" fill="rgba(26,183,89,.1)" stroke="#1ab759"/>
+          <text x="85" y="88" fill="#f7f8f8" font-size="12" text-anchor="middle">One codebase</text>
+          <text x="85" y="105" fill="rgba(255,255,255,.58)" font-size="10" text-anchor="middle">logic, universal</text>
+          <path d="M150 92h40M190 92l50-44M190 92l50-15M190 92l50 15M190 92l50 44" stroke="#1ab759" stroke-width="1.5" fill="none" marker-end="url(#ga6)"/>
+          <g font-size="10" fill="#f7f8f8">
+            <rect x="240" y="36" width="92" height="24" rx="6" fill="rgba(26,183,89,.07)" stroke="rgba(26,183,89,.6)"/><text x="286" y="52" text-anchor="middle">Location 001</text>
+            <rect x="240" y="66" width="92" height="24" rx="6" fill="rgba(26,183,89,.07)" stroke="rgba(26,183,89,.6)"/><text x="286" y="82" text-anchor="middle">Location 002</text>
+            <rect x="240" y="96" width="92" height="24" rx="6" fill="rgba(26,183,89,.07)" stroke="rgba(26,183,89,.6)"/><text x="286" y="112" text-anchor="middle">⋮</text>
+            <rect x="240" y="126" width="92" height="24" rx="6" fill="rgba(26,183,89,.07)" stroke="rgba(26,183,89,.6)"/><text x="286" y="142" text-anchor="middle">Location 232</text>
+          </g>
+          <text x="352" y="52" fill="rgba(255,255,255,.58)" font-size="11">own credentials,</text>
+          <text x="352" y="68" fill="rgba(255,255,255,.58)" font-size="11">own settings</text>
+          <text x="352" y="110" fill="#1ab759" font-size="11">one click, atomic:</text>
+          <text x="352" y="126" fill="#1ab759" font-size="11">all 232 or none</text>
+          <text x="530" y="24" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC</text>
+          <rect x="530" y="66" width="120" height="52" rx="10" fill="rgba(92,200,255,.07)" stroke="#5cc8ff"/>
+          <text x="590" y="88" fill="#f7f8f8" font-size="12" text-anchor="middle">Publish v14</text>
+          <text x="590" y="105" fill="rgba(255,255,255,.5)" font-size="10" text-anchor="middle">deploys to no one</text>
+          <g font-size="10" fill="#f7f8f8">
+            <rect x="700" y="36" width="96" height="24" rx="6" fill="rgba(92,200,255,.06)" stroke="rgba(92,200,255,.55)"/><text x="748" y="52" text-anchor="middle">Instance · v14 ✓</text>
+            <rect x="700" y="66" width="96" height="24" rx="6" fill="rgba(92,200,255,.06)" stroke="rgba(92,200,255,.55)"/><text x="748" y="82" text-anchor="middle">Instance · v12</text>
+            <rect x="700" y="96" width="96" height="24" rx="6" fill="rgba(92,200,255,.06)" stroke="rgba(92,200,255,.55)"/><text x="748" y="112" text-anchor="middle">Instance · v13</text>
+            <rect x="700" y="126" width="96" height="24" rx="6" fill="rgba(92,200,255,.06)" stroke="rgba(92,200,255,.55)"/><text x="748" y="142" text-anchor="middle">Instance · v9</text>
+          </g>
+          <path d="M650 92h44" stroke="#5cc8ff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ca6)"/>
+          <text x="620" y="176" fill="rgba(255,255,255,.58)" font-size="11">updated one Reconfigure at a time,</text>
+          <text x="620" y="192" fill="rgba(255,255,255,.58)" font-size="11">or by a script your team writes</text>
+          <defs>
+            <marker id="ga6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker>
+            <marker id="ca6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#5cc8ff"/></marker>
+          </defs>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>The integration exists once, as universal logic. Each location's differences live in <b>settings, not in copies</b>.</li>
+            <li>The fix is made once, tested against saved real runs, and deployed to all 232 linked accounts in one click. The deploy is <b>atomic: all accounts get it, or none do</b>. Staged rollout to a subset first is one option away.</li>
+            <li>Rollback, if needed, is one click. No version drift, no missed locations, no spreadsheet tracking who is on what.</li>
+          </ol>
+          <p class="outcome">Fix at 2pm, fleet-wide by 2:15, evening classes uneventful.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Their model is one configured instance per customer deployment, and publishing is deliberately decoupled from deploying, a safety property they are right to value:</p>
+          <div class="quote">"Publishing a new version of an integration does not automatically deploy that version to customers who run that integration."<span>prismatic.io blog, versioning</span></div>
+          <p>Updating the fleet is then per instance, via each instance's Reconfigure screen, or by scripting their management API, which does offer a bulk mutation to move instances to the latest version. No one-click control in the product, no all-or-none atomicity, no built-in staged rollout, and rollback is again instance by instance. Their pricing page also names the unit: plans carry "volume per-instance pricing." A fleet is made of instances, so the meter and the growth curve are the same line.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/deploy-automation</a><a href="/ai-operability#inventory-tools">deploy toolset · 7 tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;version drift across a fleet is a slow-motion incident</span>
+      </div>
+    </article>
+
+    <!-- supporting rows 32-38 -->
+    <div class="supports">
+      <div class="sup">
+        <p class="problem">Three hundred locations cannot each hold their own credentials and configuration.</p>
+        <h4>32 · Master and child account architecture, with master-account routing</h4>
+        <p>A parent account governs hundreds of children. A webhook hits the master, which routes by location to the right child, which processes with its own credentials. The caller never knows there are 232 accounts behind the curtain.</p>
+        <p class="vs">the model is customers and instances, flat. A location hierarchy with routing at the top is structure your team encodes inside integration logic, and maintains there.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">Re-authenticating per location does not scale past about twenty.</p>
+        <h4>33 · Shared where it matters, isolated where it must be</h4>
+        <p>One CRM credential, flagged shared, serves all 232 locations, while each location keeps its own booking-system credential. Sharing is a toggle on the hierarchy, alongside shared settings and shared automations.</p>
+        <p class="vs">shared credentials genuinely exist (org-managed connections a customer's instances can reference, set up by your team). What stays per instance is everything else: configuration, upgrades, and the wizard. The credential is shared; the fleet still is not.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">Shipping a fix to two hundred customers by hand takes a week and misses some.</p>
+        <h4>34 · One-click deployment and upgrade to every linked account</h4>
+        <p>Deploy or upgrade a codebase group across the fleet in one action, atomically, with staged rollouts when you want caution and instant rollback when you need it.</p>
+        <p class="vs">fleet rollout is a management-API script (their bulk mutation moves instances to the latest version); atomicity, staging, and one-click rollback are properties your script either implements or does not have.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">deploy_to_accounts</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">A change made things worse, and there was no way back.</p>
+        <h4>35 · Version history, comparison, and rollback on a live integration</h4>
+        <p>Every committed version is kept, any two versions diff against each other, and rollback restores a known-good state fleet-wide in one action.</p>
+        <p class="vs">versions and deprecation exist and work; comparison and restoration happen per instance, which at fleet scale means the rollback is also a rollout.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">Onboarding a customer was a manual checklist.</p>
+        <h4>36 · Account provisioning at scale</h4>
+        <p>A new customer account is created, linked into the hierarchy, and inherits shared connections, settings, and automations immediately. Provisioning is an operation, not a project, and the AI can run it.</p>
+        <p class="vs">customers and instances are created via UI or API as you would expect; what the new arrival inherits automatically is bounded by the flat model above.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">admin_create_account</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Support needed to see a customer's runs without being able to change them.</p>
+        <h4>37 · Role-based access with account-level permissions</h4>
+        <p>Administrators, builders, viewers, scoped by account: the regional manager sees their 30 locations, the master admin sees all 232, support sees without touching.</p>
+        <p class="vs">roles exist at organization and customer levels; scoping by position in a location hierarchy does not, because the hierarchy does not.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">An API deprecation notice arrived, and nobody knew who was exposed.</p>
+        <h4>38 · Fleet-wide impact analysis: which of my customers use this connector, this app, this operation</h4>
+        <p>The vendor emails "v1 of our API sunsets in 90 days." One query returns every automation and every account affected, which becomes the migration worklist.</p>
+        <p class="vs">the same answer is assembled by querying their management API across integrations and instances, a script that gets written during exactly the 90 days you wanted for the migration itself.</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="kicker">At scale, this means</span>
+      <p>Customer three hundred costs what customer three cost. Growth in breadth, more customers, more locations, does not multiply your operational surface, and does not show up as a per-deployment line item on the platform bill.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 6 ============ -->
+<section class="act">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="act-n">Act 6 of 8 · The centrepiece</span>
+      <h2>Running it for years.</h2>
+      <p>Nobody buys an integration platform for month one. The purchase is really years two through five: the customer reports, the API drift, the 2am incidents, the person who left. Every platform demos the build. This act is about everything after the demo, which is where the money is, and where architectures stop being interchangeable.</p>
+    </div>
+
+    <!-- ROW 39: HERO OF HEROES -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 39 · The needle in the haystack</span>
+        <p class="problem">"It did not work for this one customer last Tuesday" was a multi-day archaeology project, and often unanswerable.</p>
+        <h3>Out of hundreds of thousands of runs: find the one, watch what it did to the data at every step, fix it, prove the fix, and ship it to everyone. Conversationally.</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>6:51am, a support inbox.</b> One location of a 90-site franchise writes: "A member signed up on June 30 and she never showed up in our CRM. She's furious. What happened?" It is July 21. Three weeks ago. The platform has run hundreds of thousands of executions since. Somewhere in there is one run that did something wrong to one record, and a customer is waiting to find out whether you are the kind of vendor who can answer.</p>
+        <svg class="scene" viewBox="0 0 920 300" role="img" aria-label="APIANT finds one run among hundreds of thousands, traces the data through every step, fixes one node, and ships the fix fleet-wide. On the competitor, the execution data from three weeks ago has aged out of default retention.">
+          <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
+          <!-- haystack -->
+          <g fill="rgba(255,255,255,.14)">
+            <rect x="20" y="44" width="14" height="8" rx="2"/><rect x="38" y="44" width="14" height="8" rx="2"/><rect x="56" y="44" width="14" height="8" rx="2"/><rect x="74" y="44" width="14" height="8" rx="2"/><rect x="92" y="44" width="14" height="8" rx="2"/>
+            <rect x="20" y="58" width="14" height="8" rx="2"/><rect x="38" y="58" width="14" height="8" rx="2"/><rect x="74" y="58" width="14" height="8" rx="2"/><rect x="92" y="58" width="14" height="8" rx="2"/>
+            <rect x="20" y="72" width="14" height="8" rx="2"/><rect x="38" y="72" width="14" height="8" rx="2"/><rect x="56" y="72" width="14" height="8" rx="2"/><rect x="74" y="72" width="14" height="8" rx="2"/><rect x="92" y="72" width="14" height="8" rx="2"/>
+            <rect x="20" y="86" width="14" height="8" rx="2"/><rect x="56" y="86" width="14" height="8" rx="2"/><rect x="74" y="86" width="14" height="8" rx="2"/><rect x="92" y="86" width="14" height="8" rx="2"/>
+          </g>
+          <rect x="56" y="58" width="14" height="8" rx="2" fill="#1ab759"/>
+          <text x="63" y="110" fill="rgba(255,255,255,.45)" font-size="10" text-anchor="middle">June 30, 09:12</text>
+          <text x="63" y="124" fill="rgba(255,255,255,.35)" font-size="10" text-anchor="middle">found by her email</text>
+          <path d="M112 76h40" stroke="#1ab759" stroke-width="2" marker-end="url(#ga7)"/>
+          <!-- step trace -->
+          <g font-size="10.5" fill="#f7f8f8">
+            <rect x="152" y="48" width="98" height="26" rx="6" fill="rgba(26,183,89,.07)" stroke="rgba(26,183,89,.6)"/><text x="201" y="65" text-anchor="middle">1 · signup event</text>
+            <rect x="152" y="82" width="98" height="26" rx="6" fill="rgba(26,183,89,.07)" stroke="rgba(26,183,89,.6)"/><text x="201" y="99" text-anchor="middle">2 · fetch member</text>
+            <rect x="262" y="48" width="98" height="26" rx="6" fill="#3d2c10" stroke="#f5b748"/><text x="311" y="65" text-anchor="middle" fill="#f5b748">3 · tier lookup ✕</text>
+            <rect x="262" y="82" width="98" height="26" rx="6" fill="rgba(26,183,89,.07)" stroke="rgba(26,183,89,.6)"/><text x="311" y="99" text-anchor="middle">4 · CRM write</text>
+          </g>
+          <text x="256" y="132" fill="#f5b748" font-size="11">step 3 dropped legacy plan codes: the record died here, silently</text>
+          <!-- fix path -->
+          <path d="M311 140v18" stroke="#1ab759" stroke-width="2" marker-end="url(#ga7)"/>
+          <g font-size="10.5" fill="#f7f8f8">
+            <rect x="150" y="162" width="106" height="28" rx="7" fill="rgba(26,183,89,.1)" stroke="#1ab759"/><text x="203" y="180" text-anchor="middle">fix one node</text>
+            <rect x="268" y="162" width="130" height="28" rx="7" fill="rgba(26,183,89,.1)" stroke="#1ab759"/><text x="333" y="180" text-anchor="middle">replay her real run ✓</text>
+            <rect x="410" y="162" width="120" height="28" rx="7" fill="rgba(26,183,89,.1)" stroke="#1ab759"/><text x="470" y="180" text-anchor="middle">deploy to 90 sites</text>
+          </g>
+          <path d="M256 176h12M398 176h12" stroke="#1ab759" stroke-width="2" marker-end="url(#ga7)"/>
+          <text x="20" y="222" fill="rgba(255,255,255,.58)" font-size="12">Directed in plain English. Rollback armed the whole time. Answered before the 9:30 standup.</text>
+          <!-- prismatic -->
+          <text x="600" y="24" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC</text>
+          <rect x="600" y="44" width="300" height="118" rx="12" fill="rgba(92,200,255,.04)" stroke="rgba(92,200,255,.3)"/>
+          <text x="620" y="72" fill="#f7f8f8" font-size="12">The run is from three weeks ago.</text>
+          <text x="620" y="94" fill="#f5b748" font-size="12">Default retention: 14 days.</text>
+          <text x="620" y="116" fill="rgba(255,255,255,.58)" font-size="11.5">The step results you would need to trace</text>
+          <text x="620" y="132" fill="rgba(255,255,255,.58)" font-size="11.5">no longer exist, unless the Enterprise tier's</text>
+          <text x="620" y="148" fill="rgba(255,255,255,.58)" font-size="11.5">custom retention was on the contract.</text>
+          <text x="600" y="192" fill="rgba(255,255,255,.45)" font-size="11.5">Within the window: org-wide log search, per-step outputs,</text>
+          <text x="600" y="208" fill="rgba(255,255,255,.45)" font-size="11.5">then a code fix in the repo and a per-instance rollout.</text>
+          <defs><marker id="ga7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker></defs>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li><b>Find her.</b> Search by the data itself, her email, and the platform returns the exact run from June 30 at 09:12, out of hundreds of thousands.</li>
+            <li><b>Watch what happened.</b> The run replays visually, step by step, showing the data as it was transformed at each stage. Step 3, a tier-lookup transform, silently dropped members carrying a legacy plan code. Rendered so a person can look at it and judge.</li>
+            <li><b>Fix one node.</b> The transform is corrected where it lives. Blast radius: that node.</li>
+            <li><b>Prove it.</b> Her actual June 30 run re-executes through the fixed logic; she lands in the CRM. The branch walk confirms nothing else moved.</li>
+            <li><b>Ship it everywhere.</b> The fix deploys to all 90 sites at once, rollback armed. Then one query answers the follow-up that separates good vendors from great ones: who else did this silently affect since June?</li>
+          </ol>
+          <p class="outcome">All of it directed conversationally, by one person, before the 9:30 standup. The reply to the location: what happened, why, fixed, and here are the other three members we caught and restored.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Start with the fact that decides this scenario before any tooling does:</p>
+          <div class="quote">"Prismatic retains logs and step results for 14 days before automatically deleting them."<span>prismatic.io docs, logging</span></div>
+          <p>The run is 21 days old. Unless custom log retention, a feature their pricing page lists under the Enterprise tier, was on the contract, the step-level evidence is gone, and the honest answer to the customer is a guess.</p>
+          <p>Inside the window, their tooling is real: org-wide log search, execution pages with per-step outputs, replay of the original payload. For an AI-built integration the logic itself is TypeScript in a repository, so judging the faulty transform means reading code in one window and logs in another. The fix is a code change: edit, build, re-import, publish, then update each customer instance to the new version. Days of competent work, by a developer, within a two-week evidence window.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/support</a><a href="/ai-operability#inventory-tools">admin toolset · 24 tools</a><a href="/ai-operability#inventory-tools">automation_exec · 17 tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;can a human watch what the data went through, weeks later</span>
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;the fix is proven on her real run before it ships</span>
+      </div>
+    </article>
+
+    <div class="pull"><p>"It didn't work for one customer last Tuesday" stops being a week of archaeology. <span class="g">It becomes a conversation.</span></p></div>
+
+    <!-- ROW 40: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 40</span>
+        <p class="problem">Alerting was either silent or so noisy that everyone stopped reading it, which is the same thing.</p>
+        <h3>Alert governance: per-automation and per-step rules, system-level mappings, a trace of why an alert fired or did not, suppression lists</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>A platform team's alert channel gets 140 integration alerts a day.</b> A hundred and thirty-eight are a flaky sandbox and a vendor's nightly maintenance window. Two are real. The humans did the rational thing months ago: they muted the channel. Last Thursday, one of the two real ones sat unread for nine hours while a customer's orders silently queued.</p>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>Alert rules exist at every level that matters: per automation, per step, and system-wide mappings that classify errors once for the whole tenant.</li>
+            <li>The known noise, the sandbox, the maintenance window, goes onto <b>suppression lists</b>, deliberately and auditable, instead of into the humans' learned indifference.</li>
+            <li>When an alert fires, or when one should have and did not, a <b>trace shows exactly why</b>: which rule matched, which mapping transformed it, which suppression swallowed it.</li>
+            <li>The AI runs this hygiene on request: one working session took a real deployment from 140 alerts a day to 3.</li>
+          </ol>
+          <p class="outcome">Three alerts a day, each one real, each one read. The channel gets unmuted.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Their alerting is a monitors system: pick from a documented list of trigger conditions (execution failed, execution overdue, log level exceeded, connection threw), notify email, Slack, PagerDuty, or a webhook. When an alert fires, the event record shows the surrounding logs, which is genuinely useful for diagnosis.</p>
+          <p>Two structural gaps do the damage in this scenario. Monitors are configured per instance and per flow, so alert policy across three hundred instances is three hundred configurations to keep aligned. And their documentation describes no suppression or muting: the controls on a noisy monitor are clearing it after it fires, or deleting it, which is how teams end up choosing between noise and silence. Nothing documented answers "why did the alert I expected not fire," and that question is the nine-hour gap.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/alert-handling</a><a href="/ai-operability#inventory-tools">alerts + admin_alerts · 16 tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;an alert nobody reads catches nothing</span>
+      </div>
+    </article>
+
+    <!-- ROW 49: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 49</span>
+        <p class="problem">When an upstream vendor breaks, the choice was between flooding a broken API and losing track of what to turn back on.</p>
+        <h3>The incident kill switch: snapshot and disable every running automation across a parent account and all its children, then restore exactly what was on</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Tuesday, 11:40am: a CRM platform your customers depend on goes down hard.</b> Across one parent account and its 60 child accounts, 180 automations are hammering a dead API, burning retries, and generating an alert storm. Every minute they keep running makes the eventual recovery messier. But some of those automations were off already, on purpose, and when the vendor recovers you must restore exactly the previous state, not "turn everything on" and reawaken the three that were disabled for good reasons.</p>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>One command <b>snapshots the current on/off state</b> of every automation across the parent and all 60 children, then disables everything that is running. The flood stops at 11:42.</li>
+            <li>The snapshot is the restore plan. Nobody keeps a spreadsheet, because the platform kept the truth.</li>
+            <li>Vendor recovers at 3:15. One command restores exactly what was on, and only what was on. The three deliberately-disabled automations stay off.</li>
+            <li>Then the mop-up: the failed runs from the outage window are inspected and retried in bulk.</li>
+          </ol>
+          <p class="outcome">Total human attention: minutes at the start, minutes at the end. No flood, no amnesia.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>The unit of control is the instance: instances can be paused, individually in the UI, or in bulk by a script your team writes against their management API during the incident, at 11:40, under pressure. The record of which instances were already off before you started is whatever that script thought to save.</p>
+          <p>Stopping the executions already in flight is its own problem: no operator control for cancelling a normal running execution appears in their documentation or public API schema (their batch-sync mode has one; ordinary executions run to completion or to the 15-minute ceiling). Recovery is the same script in reverse, plus bulk replay of the failures, which their API caps at 25 execution IDs per request.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/support · kill switch tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 6l8 6 8-6M3 6v10l8-4M19 6v10l-8-4" stroke="#f5b748" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Test 03</b>&nbsp;incident tooling written during the incident is not tooling</span>
+      </div>
+    </article>
+
+    <!-- supporting rows 41-48, 50 -->
+    <div class="supports">
+      <div class="sup">
+        <p class="problem">Transient failures were treated as fatal, and genuine auth failures were retried forever.</p>
+        <h4>41 · Error policy control: which errors deserve retries, and which must stop</h4>
+        <p>Retryable error classes are tunable tenant-wide, auth failures on named domains get carve-outs, and automatic shutoff behaviour is a policy you set, not a surprise you discover.</p>
+        <p class="vs">retry is a per-flow trigger setting: up to 10 attempts with backoff, asynchronous invocations only. Which errors deserve retrying and which must not is logic your flows implement one at a time.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">/alert-handling</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">After an upstream outage, hundreds of records needed reprocessing, and there was no safe way to do it in bulk.</p>
+        <h4>42 · Retry inspection and bulk retry</h4>
+        <p>See every failed run, inspect what each was carrying, and retry them in bulk once the cause is fixed, from the same surface, at any scale.</p>
+        <p class="vs">bulk replay lives in the management API, capped at 25 execution IDs per request, with no product surface documented; the loop that pages through hundreds of failures is a script.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_retry_failed</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">A misconfigured run was hammering a customer's API, and the only remedy was waiting.</p>
+        <h4>43 · Halting a runaway execution mid-flight</h4>
+        <p>A running execution can be stopped by an operator, now, before it finishes whatever it was wrongly doing.</p>
+        <p class="vs">no operator cancel for a normal in-flight execution appears in their docs or API schema; the universal backstop is the 15-minute execution ceiling, which is a long time to watch a loop hit someone's API.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_halt</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Silent backlogs: everything looks healthy, and nothing is moving.</p>
+        <h4>44 · Visibility into webhooks received but not yet processed</h4>
+        <p>The queue of arrived-but-unprocessed events is a first-class view. "Received but stuck" is visible before a customer notices the gap.</p>
+        <p class="vs">queued executions become visible when their FIFO/throttled mode is enabled on a flow; outside that feature, no general received-but-unprocessed inbox is documented.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">exec_list_unprocessed_webhooks</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Correlating a failure across accounts meant reading logs by hand.</p>
+        <h4>45 · Cross-tenant search by the data itself</h4>
+        <p>Search every account at once for a value, a client ID, an email, an order number, and land on the runs that touched it. Correlation is a query, not a shift.</p>
+        <p class="vs">org-wide log and execution pages exist and search log text across customers, credit where due; searching by what the data contained, across step payloads, is the part that turns an hour into a minute.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">Diagnosis stalled waiting for someone with database access.</p>
+        <h4>46 · Ad-hoc data queries to validate a hypothesis</h4>
+        <p>"Is it only annual-plan members? Only one region?" gets answered in seconds with a guardrailed read-only query, by the person, or the AI, doing the diagnosis.</p>
+        <p class="vs">their management API answers structural questions about instances and executions; hypothesis-testing against the data your integrations carried is bounded by what was logged, and by the retention window.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">admin_sql_query · read-only</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Capacity and billing questions had no ground truth.</p>
+        <h4>47 · Health, usage, and task totals per tenant and per account</h4>
+        <p>Which customers are heavy, which are erroring, which are growing: per-account ground truth, queryable by your team and your AI, exportable to your monitoring stack.</p>
+        <p class="vs">usage views exist per their plans' concurrency limits; per-customer operational ground truth at hierarchy depth is assembled from their API.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">"Who changed this, and when" had no answer.</p>
+        <h4>48 · An account change log</h4>
+        <p>Every material change, who, what, when, is queryable per account when the finger-pointing starts, or before it does.</p>
+        <p class="vs">their documented audit mechanism is do-it-yourself: subscribe to their event webhooks and "keep a record of all platform changes" in a store you build and retain.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">admin_account_changelog</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Support asking customers for passwords is both a security problem and a delay.</p>
+        <h4>50 · Operating inside a customer account without their credentials</h4>
+        <p>Support switches into the customer's account context with its own audited access, sees what the customer sees, and never asks for a password.</p>
+        <p class="vs">org team members can view customer instances and logs too; the difference is depth of what support can then do from inside that context without an engineer, which is the previous nine rows.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-tools">admin_switch_account</a></p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="kicker">At scale, this means</span>
+      <p>Support stops being the silent tax on your margin. The question every vendor dreads, "what happened for this one customer three weeks ago," has a fixed cost of minutes, answered by one person, with the evidence still there.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 7 ============ -->
+<section class="act">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="act-n">Act 7 of 8</span>
+      <h2>What your end customer actually touches.</h2>
+      <p>Your customer never sees the engine. They see a setup screen, a connect button, a status page, and increasingly, a tool their own AI can call. Whether those surfaces feel like your product or like someone else's is a brand decision you are making when you pick the platform.</p>
+    </div>
+
+    <!-- ROW 51: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 51</span>
+        <p class="problem">Customers were being sent to a third-party integration UI that broke the product experience and advertised the vendor's supplier.</p>
+        <h3>FormApps: platform settings become a customer-facing interface, embedded in your own product, fully white-label</h3>
+        <p class="cap-sub">The settings that drive the integration are the interface the customer configures it with. No translation layer, no second UI to build and keep in sync. Your customers never see the platform. They think it is you.</p>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Lumen, a veterinary-practice SaaS,</b> is shipping a bookkeeping integration inside their product. The bar: a practice manager clicks "Connect accounting" in Lumen's settings, authorizes, maps two fields, done, without ever leaving Lumen, seeing another company's name, or touching a URL that is not lumen-branded. Because the practice manager is not buying an integration platform. She is trusting Lumen.</p>
+        <svg class="scene" viewBox="0 0 920 200" role="img" aria-label="APIANT's embedded configuration runs on the vendor's own domain; the competitor embeds its own app in an iframe, with a custom domain gated to specific plans.">
+          <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
+          <rect x="20" y="40" width="400" height="130" rx="12" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.25)"/>
+          <rect x="20" y="40" width="400" height="26" rx="12" fill="rgba(255,255,255,.05)"/>
+          <text x="40" y="58" fill="rgba(255,255,255,.58)" font-size="11" font-family="JetBrains Mono,monospace">app.lumen.vet/settings</text>
+          <rect x="44" y="84" width="352" height="66" rx="8" fill="rgba(26,183,89,.07)" stroke="#1ab759"/>
+          <text x="62" y="108" fill="#f7f8f8" font-size="12">Connect accounting</text>
+          <text x="62" y="128" fill="rgba(255,255,255,.58)" font-size="11">Lumen's brand, Lumen's domain, settings ARE the UI</text>
+          <text x="480" y="24" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON PRISMATIC</text>
+          <rect x="480" y="40" width="420" height="130" rx="12" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.25)"/>
+          <rect x="480" y="40" width="420" height="26" rx="12" fill="rgba(255,255,255,.05)"/>
+          <text x="500" y="58" fill="rgba(255,255,255,.58)" font-size="11" font-family="JetBrains Mono,monospace">app.lumen.vet/settings</text>
+          <rect x="504" y="84" width="372" height="66" rx="8" fill="rgba(92,200,255,.06)" stroke="#5cc8ff" stroke-dasharray="6 4"/>
+          <text x="522" y="106" fill="#5cc8ff" font-size="11" font-family="JetBrains Mono,monospace">iframe · *.prismatic.io</text>
+          <text x="522" y="126" fill="rgba(255,255,255,.58)" font-size="11">their app inside yours; your domain on the endpoints</text>
+          <text x="522" y="142" fill="rgba(255,255,255,.58)" font-size="11">is "available on specific pricing plans"</text>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>The integration's settings, built once in the automation, <b>surface directly as the customer-facing form</b>. There is no separate UI project and no mapping layer to drift out of sync.</li>
+            <li>It embeds in Lumen's product with Lumen's styling, and runs on <b>Lumen's own domain, from the first paid tier</b>: the setup flow, the endpoints the integration answers on, all of it.</li>
+            <li>Fields refresh from the customer's live systems, validation and conditional logic are built in, and the practice manager finishes in minutes.</li>
+          </ol>
+          <p class="outcome">The customer's takeaway: "Lumen's integrations are great." Which is the entire point.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>This is Prismatic's home ground, and their embedded marketplace is a mature product: an SDK renders their configuration experience inside your app, themable in your colors and fonts, with your terminology, and their Enterprise tier adds an embedded workflow builder whose AI copilot builds visual, editable workflows for your customers. Real strengths, plainly conceded.</p>
+          <p>Two structural facts remain. What embeds is their application, in an iframe, so the experience is their config wizard wearing your colors, and a customer-facing form beyond what the wizard's controls express is a development project against their SDK. And by default the iframe and every endpoint (webhooks, authorization callbacks) live on their domain; moving to yours means delegating a subdomain's nameservers to them, on the plans that include it:</p>
+          <div class="quote">"The custom domains feature is available to customers on specific pricing plans."<span>prismatic.io docs, custom domains</span></div>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">/build-form</a><a href="/ai-operability#inventory-tools">form design tools</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M1.5 11s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" stroke="#1ab759" stroke-width="2"/><circle cx="11" cy="11" r="2.6" fill="#1ab759"/></svg><b>Test 01</b>&nbsp;what does your customer see, and whose name is on the URL</span>
+      </div>
+    </article>
+
+    <!-- ROW 54: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 54</span>
+        <p class="problem">Customers now want their own AI agents to reach these systems, and hand-building an interface per client does not scale.</p>
+        <h3>Integrations exposed as callable tools for your customers' AI clients</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>An operations director at one of your customers types into her AI assistant:</b> "Move every Thursday booking at the Riverside location to Friday and notify the affected members." For that sentence to become action, her AI needs a tool: a governed, authenticated, rate-limited operation that does the multi-system work and reports back. Your customers will judge your product on whether their AI can drive it.</p>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>Any automation, at any depth, becomes a callable tool for AI clients: <b>a thin pass-through, or a multi-step operation spanning several systems</b>, transforming data and enforcing business rules before returning a clean result.</li>
+            <li>The tool inherits everything the platform enforces: authentication, throttling, error handling, full request logging, and, where you want it, a human approval gate before anything destructive.</li>
+            <li>It is served white-label, on your domain, at every tier. Her AI is calling <em>your product's</em> tools.</li>
+          </ol>
+          <p class="outcome">The Thursday bookings move, the members get notified, and the audit trail shows exactly what her agent did.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Credit first: Prismatic saw this coming too. Flows can be marked agentic and served to AI agents as tools, and their positioning of it is exactly right: agents should "invoke complete flows" instead of improvising chains of raw API calls.</p>
+          <p>The differences are the ones this page has already established, now wearing an AI face: what stands behind the tool is a flow built under their model (the fan-in, loop-prevention, and approval-gate patterns above are your team's constructions), and the endpoint the customer's agent calls lives on their domain unless the custom-domain plan moved it. The tool interface is comparable. The depth behind the tool, and whose name is on it, are not.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">pattern-mcp-tool</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;judge the automation behind the tool, not the tool listing</span>
+      </div>
+    </article>
+
+    <!-- supporting rows 52,53,55,56,57 -->
+    <div class="supports">
+      <div class="sup">
+        <p class="problem">Configuration UIs were bespoke front-end projects, every time.</p>
+        <h4>52 · Form depth: an element catalog, reusable patterns, validation, live field refresh, embed codes</h4>
+        <p>Customer-facing forms assemble from a catalog of elements and saved patterns, validate input, refresh their choices from the customer's live data, and drop into any page with an embed code.</p>
+        <p class="vs">the config wizard offers its documented control types; a customer-facing surface beyond them is frontend work against their embedded SDK, owned by your product team.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">Every new customer connection required a human on both sides.</p>
+        <h4>53 · Self-serve connection flows for end users</h4>
+        <p>The customer clicks connect, authorizes, maps what needs mapping, and is running, inside your product, with nobody from your team on the call.</p>
+        <p class="vs">their embedded marketplace does self-serve deploy and reconfigure well, a fair concession; the experience is their wizard, with the boundaries rows 51 and 52 describe.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">A chatbot that cannot act is a deflection tool, not an integration.</p>
+        <h4>55 · Conversational agents with goals and tools, the whole platform behind them</h4>
+        <p>Agents you ship to customers carry explicit goals and scoped tools, and act through the same governed execution engine as everything else: real lookups, real writes, approval gates, full logging.</p>
+        <p class="vs">their agent story runs through components in your flows plus the agentic-flow surface; the goal-and-tool guardrail architecture around a customer-facing agent is yours to assemble.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">The configuration UI is customer-facing, and your customers are not all English speakers.</p>
+        <h4>56 · Twenty-plus languages, shipped</h4>
+        <p>The end-user surface speaks your customer's language out of the box, across twenty-plus locales.</p>
+        <p class="vs">embedded translation support exists, and ships with no language packs: you supply and maintain the dictionary of phrases per language yourself.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">An integration layer that shows a supplier's name tells your customer who really built it.</p>
+        <h4>57 · Full white-label: your brand on the interface, your domain on the endpoints</h4>
+        <p>Every surface a customer or their IT team can inspect, the UI, the webhook URLs, the authorization callbacks, carries your name, at every tier.</p>
+        <p class="vs">theming covers colors, fonts, and terminology; the domain layer, which is what a customer's IT team actually inspects, is the plan-gated nameserver delegation from row 51.</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="kicker">At scale, this means</span>
+      <p>The integration experience compounds into your brand instead of your supplier's. Every setup flow, every status page, every AI tool call is a moment your product looks finished, in your customer's language, on your domain.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 8 ============ -->
+<section class="act">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="act-n">Act 8 of 8</span>
+      <h2>The layer that operates all of the above.</h2>
+      <p>Everything on this page is exposed to AI, but "AI-powered" is the emptiest phrase in the category. The question with teeth: which phases of the integration lifecycle does the AI have real tooling for? Building is one phase. There are seven more.</p>
+    </div>
+
+    <!-- ROW 58: HERO -->
+    <article class="row">
+      <div class="row-head">
+        <span class="kicker">Capability 58</span>
+        <p class="problem">An AI with raw API access improvises. An AI with encoded procedures repeats what works.</p>
+        <h3>A skill set where every skill encodes a procedure a senior integration engineer would follow, spanning setup, build, edit, test, deploy, monitor, support, and incident response</h3>
+      </div>
+      <div class="scenario">
+        <span class="kicker faint">The scenario</span>
+        <p><b>Day two.</b> The integration is built and live; both platforms' AI tooling got you here, and both did it well. Now the real career of an integration begins: a customer reports a discrepancy, an API starts rate-limiting, an alert needs tuning, a fix needs to reach the fleet. The question for the AI is no longer "can you build it." It is <b>"how much of what happens next can you handle?"</b></p>
+        <svg class="scene" viewBox="0 0 920 170" role="img" aria-label="Lifecycle phase coverage: APIANT's AI tooling spans all eight phases; Prismatic's covers build through deploy, with operations phases absent from its agent tooling.">
+          <g font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,.58)">
+            <text x="120" y="30">SETUP</text><text x="220" y="30">BUILD</text><text x="320" y="30">EDIT</text><text x="420" y="30">TEST</text><text x="520" y="30">DEPLOY</text><text x="620" y="30">MONITOR</text><text x="720" y="30">SUPPORT</text><text x="820" y="30">INCIDENT</text>
+          </g>
+          <text x="20" y="66" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11">APIANT</text>
+          <g>
+            <rect x="112" y="50" width="84" height="24" rx="6" fill="rgba(26,183,89,.25)" stroke="#1ab759"/>
+            <rect x="212" y="50" width="84" height="24" rx="6" fill="rgba(26,183,89,.25)" stroke="#1ab759"/>
+            <rect x="312" y="50" width="84" height="24" rx="6" fill="rgba(26,183,89,.25)" stroke="#1ab759"/>
+            <rect x="412" y="50" width="84" height="24" rx="6" fill="rgba(26,183,89,.25)" stroke="#1ab759"/>
+            <rect x="512" y="50" width="84" height="24" rx="6" fill="rgba(26,183,89,.25)" stroke="#1ab759"/>
+            <rect x="612" y="50" width="84" height="24" rx="6" fill="rgba(26,183,89,.25)" stroke="#1ab759"/>
+            <rect x="712" y="50" width="84" height="24" rx="6" fill="rgba(26,183,89,.25)" stroke="#1ab759"/>
+            <rect x="812" y="50" width="84" height="24" rx="6" fill="rgba(26,183,89,.25)" stroke="#1ab759"/>
+          </g>
+          <text x="20" y="116" fill="#5cc8ff" font-family="JetBrains Mono,monospace" font-size="11">PRISMATIC</text>
+          <g>
+            <rect x="112" y="100" width="84" height="24" rx="6" fill="rgba(92,200,255,.2)" stroke="#5cc8ff"/>
+            <rect x="212" y="100" width="84" height="24" rx="6" fill="rgba(92,200,255,.2)" stroke="#5cc8ff"/>
+            <rect x="312" y="100" width="84" height="24" rx="6" fill="rgba(92,200,255,.2)" stroke="#5cc8ff"/>
+            <rect x="412" y="100" width="84" height="24" rx="6" fill="rgba(92,200,255,.2)" stroke="#5cc8ff"/>
+            <rect x="512" y="100" width="84" height="24" rx="6" fill="rgba(92,200,255,.2)" stroke="#5cc8ff"/>
+            <rect x="612" y="100" width="84" height="24" rx="6" fill="none" stroke="rgba(92,200,255,.25)" stroke-dasharray="4 3"/>
+            <rect x="712" y="100" width="84" height="24" rx="6" fill="none" stroke="rgba(92,200,255,.25)" stroke-dasharray="4 3"/>
+            <rect x="812" y="100" width="84" height="24" rx="6" fill="none" stroke="rgba(92,200,255,.25)" stroke-dasharray="4 3"/>
+          </g>
+          <text x="612" y="150" fill="rgba(255,255,255,.45)" font-size="11">read-only diagnosis via their API; no tools that intervene</text>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col col-a">
+          <span class="kicker">On APIANT</span>
+          <ol>
+            <li>Every skill the AI runs is a <b>procedure a senior APIANT engineer follows, encoded</b>: with verification steps, not improvisation. Build has skills. So do edit, test, deploy, monitor, support, and incident response.</li>
+            <li>Day-two work is where this shows: the diagnose procedure, the alert-hygiene procedure, the kill-switch procedure, the fleet-upgrade procedure. Acts 4 through 6 of this page are the AI's working repertoire, not just the human's.</li>
+            <li>Production stays read-only to the AI by default; interventions gate on explicit confirmation. Autonomy with a harness.</li>
+          </ol>
+          <p class="outcome">One person and the AI cover the lifecycle. Day two looks like day one.</p>
+        </div>
+        <div class="col col-p">
+          <span class="kicker cyan">On Prismatic</span>
+          <p>Their AI tooling for developers is real, open source, and free at every tier, and it covers building well: scaffolding, code generation, compile, deploy to your environment, test runs, even migration from two rival platforms. Counted from their own repositories, that is where it ends. Their agent tooling contains no operation that acts on production: nothing that mutates execution state, restarts from a step, retries or replays at scale, replays a webhook, halts a run, tunes an alert, or deploys to customer instances.</p>
+          <p>Their operations agent can query their management API, so it can read execution data and diagnose. Diagnosis without intervention means the AI files a good report, and a developer does the work. This is not an oversight in their roadmap so much as a property of the substrate: those missing tools all require operating on execution state as an editable document, and on their platform it is not one.</p>
+        </div>
+      </div>
+      <div class="backed"><span class="bk-label">Built for this, in the live inventory:</span><a href="/ai-operability#inventory-skills">all 42 skills · 10 workflows</a><a href="/ai-operability#inventory-tools">all 138 tools · 10 toolsets</a></div>
+      <div class="tests">
+        <span class="chip"><svg width="13" height="13" viewBox="0 0 22 22" fill="none"><path d="M3 4h16M5 9h12M7 14h8M9 19h4" stroke="#5cc8ff" stroke-width="2" stroke-linecap="round"/></svg><b>Test 02</b>&nbsp;ask which lifecycle phases have tools, never how many tools</span>
+      </div>
+    </article>
+
+    <!-- supporting rows 59-61 -->
+    <div class="supports">
+      <div class="sup">
+        <p class="problem">Depth and focus are in tension: an AI drowning in tool definitions gets worse, not better.</p>
+        <h4>59 · A deep tool surface, activated on demand</h4>
+        <p>The full tool surface stays available, but only the set the current procedure needs is loaded. The AI stays sharp on a platform wide enough to get lost in.</p>
+        <p class="vs">a smaller, build-focused surface does not face the problem yet; the moment operations tooling exists, it will, and the loading architecture is the difference between a capable agent and a confused one.</p>
+      </div>
+      <div class="sup">
+        <p class="problem">An agent that guesses at platform behaviour produces plausible nonsense.</p>
+        <h4>60 · The documentation as a corpus the AI consults before acting</h4>
+        <p>Before building or answering, the AI queries the platform's knowledge base and grounds itself in documented behaviour, not in its best guess about how the platform probably works.</p>
+        <p class="vs">their skills bundle reference documentation for the AI too, credit where due; the difference is a live, versioned corpus the AI queries as a step in every procedure versus knowledge frozen into the plugin.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">/docs · docs_chat</a></p>
+      </div>
+      <div class="sup">
+        <p class="problem">Agents silently working around platform bugs means the bugs never get fixed.</p>
+        <h4>61 · A toolchain that reports its own defects</h4>
+        <p>When the AI hits a platform-layer defect, it files a structured report to engineering, autonomously, instead of quietly routing around it. The tools get better because the agent using them is also their reviewer.</p>
+        <p class="vs">no equivalent self-reporting loop appears in their agent tooling; workarounds an AI invents are invisible improvements never made.</p>
+        <p class="sup-backed"><a href="/ai-operability#inventory-skills">/report-mcp-issue</a></p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="kicker">At scale, this means</span>
+      <p>The AI is not a build accelerator bolted to the front of the lifecycle. It is a colleague with a runbook for all of it, which is why one person can run what used to take a team.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT JUST HAPPENED ============ -->
+<section class="summary">
+  <div class="wrap">
+    <span class="kicker">What you just read</span>
+    <h2 style="font-size:clamp(24px,3.4vw,34px);margin:14px 0 22px">Sixty-one capabilities. One pattern.</h2>
+    <p>Every row on this page reduced to the same fork. On APIANT, the job was a walkthrough: find it, see it, change one node, prove it, ship it everywhere. On Prismatic, the same outcome was reachable, usually, and it was a project: a code artifact to edit, a pattern to hand-build, a script to write against their API, a window that had already closed. Not because their team built a careless product. They built a serious one. But their platform is made of code at the layer that matters, and their AI's output is code, so every question on this page eventually hit the same wall: <strong>the thing that runs your business is an artifact only developers can safely touch, and the AI that builds it cannot fully operate it afterwards.</strong> On APIANT the integration is a structured document at every layer, which is why the AI can build it, a compiler can refuse the invalid version of it, a test can force every branch of it, a person can read it, and one command can ship it to a fleet. That is not sixty-one features. It is one architecture, showing up sixty-one ways.</p>
+  </div>
+</section>
+
+<!-- ============ OBJECTIONS ============ -->
+<section class="objections">
+  <div class="wrap">
+    <span class="kicker">The two questions a sharp CTO asks next</span>
+    <h2 style="font-size:clamp(24px,3.2vw,32px);margin:14px 0 26px">Good questions. Better answers.</h2>
+
+    <div class="obj">
+      <h3>"What happens when your data model doesn't express something I need?"</h3>
+      <p>Then you write code, in the one place code belongs: a scripting escape hatch that slots in as a single node of the structured document. <strong>Code is an optional leaf inside a data document, never the foundation.</strong> The loop, the branches, the mappings, the tests around that leaf all remain visible, machine-editable, and compiler-checked; the custom logic is contained to the one spot that genuinely needed it.</p>
+      <p>Compare the shape of the same answer elsewhere: when the model runs out, the escape hatch is more code on a foundation that is already code. The exception and the rule are indistinguishable. Here, the exception stays the exception, and a decade of production has kept it rare.</p>
+    </div>
+
+    <div class="obj">
+      <h3>"What if I'd rather own the code?"</h3>
+      <p>Own the outcome, and be precise about what owning the artifact costs. A code integration is cheap on day one and priced like a liability thereafter: it is reviewed by whoever has time, it carries a dependency tree that ages, every API drift re-opens it, and its real documentation is the memory of whoever wrote it. Multiply by every integration you will ever ship, then by the years you will run them, then subtract the engineers who will have moved on. That is the asset you would own.</p>
+      <p>What you own on APIANT is the thing you actually wanted: integrations that run, on your domain, inspectable by your team, provable before they ship, and operable by AI for as long as you run them. The buildings your company works in are owned this way too: you own the use of something built and maintained by people whose whole business is that it never falls down.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="wrap">
+    <span class="kicker">The next step is smaller than a sales cycle</span>
+    <h2>Bring us the integration you think can't be done.</h2>
+    <p>The API with no catalog entry, the forty custom fields, the sync that loops, the customer report from three weeks ago. One working session, on your systems, and you watch it built, tested on every branch, and running. Judge the architecture with your own scenario, which is what this page has been asking you to do all along.</p>
+    <a class="btn" href="/pricing">Book a working session</a>
+    <a class="btn-ghost" href="/ai-operability">See the AI operate the platform</a>
+  </div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section class="sources">
+  <div class="wrap">
+    <h4>Sources for Prismatic statements</h4>
+    <ul>
+      <li><a href="https://prismatic.io/docs/integrations/low-code-integration-designer/">prismatic.io/docs · low-code integration designer</a></li>
+      <li><a href="https://prismatic.io/docs/custom-connectors/">prismatic.io/docs · custom connectors</a></li>
+      <li><a href="https://prismatic.io/docs/integrations/code-native/get-started/convert-low-code-code-native/">prismatic.io/docs · converting low-code to code-native</a></li>
+      <li><a href="https://prismatic.io/docs/integrations/integration-runner-environment-limits/">prismatic.io/docs · runner environment limits</a></li>
+      <li><a href="https://prismatic.io/docs/components/persist-data.md">prismatic.io/docs · persist data component</a></li>
+      <li><a href="https://prismatic.io/docs/integrations/common-patterns/processing-data-in-parallel/">prismatic.io/docs · processing data in parallel</a></li>
+      <li><a href="https://prismatic.io/docs/integrations/triggers/cross-flow/">prismatic.io/docs · cross-flow triggers</a></li>
+      <li><a href="https://prismatic.io/docs/monitor-instances/retry-and-replay/">prismatic.io/docs · retry and replay</a></li>
+      <li><a href="https://prismatic.io/docs/api/schema/mutation/bulkReplayExecutions/">prismatic.io/docs · bulkReplayExecutions</a></li>
+      <li><a href="https://prismatic.io/docs/monitor-instances/logging/">prismatic.io/docs · logging and retention</a></li>
+      <li><a href="https://prismatic.io/docs/monitor-instances/alerting/alert-monitors/">prismatic.io/docs · alert monitors</a></li>
+      <li><a href="https://prismatic.io/docs/instances/deploying/">prismatic.io/docs · deploying instances</a></li>
+      <li><a href="https://prismatic.io/docs/integrations/config-wizard/user-level-configuration/">prismatic.io/docs · user level configuration</a></li>
+      <li><a href="https://prismatic.io/docs/integrations/connections/oauth2/authorization-code-grant-type/">prismatic.io/docs · OAuth 2.0 authorization code</a></li>
+      <li><a href="https://prismatic.io/docs/configure-prismatic/custom-domains/">prismatic.io/docs · custom domains</a></li>
+      <li><a href="https://prismatic.io/docs/configure-prismatic/deployment-regions/">prismatic.io/docs · deployment regions</a></li>
+      <li><a href="https://prismatic.io/docs/integrations/code-native/testing/">prismatic.io/docs · code-native testing</a></li>
+      <li><a href="https://prismatic.io/docs/webhooks/">prismatic.io/docs · event webhooks</a></li>
+      <li><a href="https://prismatic.io/docs/embed/marketplace/">prismatic.io/docs · embedded marketplace</a></li>
+      <li><a href="https://prismatic.io/docs/embed/theming/">prismatic.io/docs · embedded theming</a></li>
+      <li><a href="https://prismatic.io/docs/embed/translations-and-internationalization/">prismatic.io/docs · embedded translations</a></li>
+      <li><a href="https://prismatic.io/pricing/">prismatic.io · pricing</a></li>
+      <li><a href="https://github.com/prismatic-io/prismatic-skills">github.com/prismatic-io/prismatic-skills</a></li>
+      <li><a href="https://github.com/prismatic-io/prism-mcp">github.com/prismatic-io/prism-mcp</a></li>
+      <li><a href="https://prismatic.io/blog/introducing-prismatic-skills-for-claude-code/">prismatic.io/blog · Skills for Claude Code</a></li>
+      <li><a href="https://prismatic.io/blog/how-to-use-versioning-in-prismatic/">prismatic.io/blog · versioning</a></li>
+    </ul>
+    <p class="note">Every statement about Prismatic on this page derives from Prismatic's public documentation, public repositories, blog, and pricing page as reviewed in August 2026. Direct quotes are reproduced verbatim for comparison purposes. Prismatic is a trademark of Prismatic, LLC; all product names belong to their owners. Platform capabilities evolve; verify anything decision-critical against the current versions of the linked pages.</p>
+      </div>
+</section>
+
+<footer class="site-foot">
+<div class="wrap frow">
+<div>© 2026 APIANT. Patent pending.</div>
+<div class="flinks">
+<a href="/">Home</a>
+<a href="/platform/">Platform</a>
+<a href="/ai-operability">AI Operability</a>
+<a href="/privacy">Privacy</a>
+<a href="/tos">Terms</a>
+<a href="/cookie-policy">Cookies</a>
+</div>
+</div>
+</footer>
+<script crossorigin="anonymous" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=678c19c54e46b91197837d73" type="text/javascript"></script>
+<script src="/js/apiant.js" type="text/javascript"></script>
+<script src="/js/gtag-consent.js"></script>
+<script src="/js/cookie-consent.js"></script>
+</body>
+</html>

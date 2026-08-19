@@ -56,6 +56,10 @@ chatbot.html                          AI Chatbot (GDPR compliance example)
 formapps.html                         FormApps (embeddable UIs)
 mcp-servers.html                      MCP Servers
 
+compare/
+  prismatic.html                      APIANT vs Prismatic executive comparison (noindex; framework page, one file per competitor)
+  competitors.json                    Manifest the competitor selector reads; add an entry per new comparison page
+
 platform/
   index.html                          Platform overview
   automation-editor.html              Automation Editor
