@@ -426,6 +426,37 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
   .act-head h2{font-size:21px}
 }
 
+/* ================= WHOSE CAPABILITY IS THIS ================= */
+/* Supporting rows labelled the Prismatic side but not the APIANT side. Mirror it. */
+.sup-detail > p:not(.problem):not(.vs):not(.sup-backed)::before{
+  content:"On APIANT: ";color:var(--green);font-weight:600}
+
+/* Hero columns: make the two side labels read as headers, not captions */
+.col .kicker{font-size:12px;letter-spacing:.1em}
+.col-a .kicker::before,.col-p .kicker::before{
+  content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;
+  vertical-align:1px}
+.col-a .kicker::before{background:var(--green)}
+.col-p .kicker::before{background:var(--cyan)}
+
+/* Collapsed rows: a green edge marks the bright text as the APIANT outcome, and the
+   muted clause as what the same job costs elsewhere. 19 rows carry no contrast clause
+   at all, so the edge is what tells a skimmer whose capability they are reading. */
+.cap>summary{border-left:3px solid transparent}
+.cap>summary{border-left-color:rgba(26,183,89,.55)}
+.cap[open]>summary{border-left-color:var(--green)}
+.cap-take .cost::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--cyan);margin:0 6px 0 2px;vertical-align:1px}
+
+/* Persistent legend so the colour convention never has to be remembered */
+.legend{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;color:var(--faint);margin-left:auto;white-space:nowrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.legend .a i{background:var(--green)}
+.legend .p i{background:var(--cyan)}
+@media(max-width:760px){.legend{margin-left:0;font-size:10px;gap:10px}}
+
 .act-take{font-size:19px;line-height:1.5;color:var(--text);font-weight:500;max-width:860px;margin-bottom:6px}
 </style>
 </head>
@@ -825,7 +856,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
       <p><b>A note on method.</b> Every vendor in this category claims depth, autonomy, and reliability, and you have no way to adjudicate competing claims. So this page does something else: it takes concrete jobs and shows what each platform's architecture requires to get them done. APIANT's side is a walkthrough of shipping capabilities. Prismatic's side is derived from Prismatic's own documentation, repositories, and pricing page, quoted where a quote beats a paraphrase. Where their design handles a job well, we say so.</p>
     </div>
 
-    <p class="howto"><b>How to read this page.</b> Skim the sixty-one one-line takeaways, and open any row that matters to you. Inside each: the problem that forced the capability to exist, a concrete scenario, how it goes on APIANT<span class="sw" style="background:var(--green)"></span>, and what the same outcome requires on Prismatic<span class="sw" style="background:var(--cyan)"></span>. Skim the bold lines first. The argument is the pile, not any single row.</p>
+    <p class="howto"><b>How to read this page.</b> Every row is one capability. Bright text is what you get on APIANT; muted text after the dot is what the same job costs on Prismatic. Skim the sixty-one takeaways and open any row that matters. Inside each: the problem that forced the capability to exist, a concrete scenario, how it goes on APIANT<span class="sw" style="background:var(--green)"></span>, and what the same outcome requires on Prismatic<span class="sw" style="background:var(--cyan)"></span>. Skim the bold lines first. The argument is the pile, not any single row.</p>
   </div>
 </section>
 
@@ -854,6 +885,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
     <button class="fbtn t1" data-test="1" aria-pressed="false" type="button">Can a human see it</button>
     <button class="fbtn t2" data-test="2" aria-pressed="false" type="button">How deep it goes</button>
     <button class="fbtn t3" data-test="3" aria-pressed="false" type="button">What catches mistakes</button>
+    <span class="legend" aria-hidden="true"><span class="a"><i></i>APIANT</span><span class="p"><i></i>Prismatic</span></span>
   </div>
 </div>
 <div class="no-hits" id="noHits" role="status" style="display:none">Nothing matches <b id="noHitsWhat"></b>. <span id="noHitsAdvice"></span></div>
