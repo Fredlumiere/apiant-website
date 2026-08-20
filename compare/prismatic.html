@@ -288,7 +288,7 @@ body{font-size:17px;line-height:1.68}
 .tb-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:8px 13px;cursor:pointer;white-space:nowrap}
 .tb-btn:hover{color:var(--text);border-color:rgba(255,255,255,.22)}
 .tb-filters{display:flex;gap:6px;flex-wrap:wrap;width:100%;padding:0 24px 12px;max-width:1060px;margin:0 auto}
-.fbtn{background:transparent;border:1px solid var(--border);border-radius:999px;color:var(--faint);font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;cursor:pointer}
+.fbtn{background:transparent;border:1px solid var(--border);border-radius:999px;color:var(--faint);font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;cursor:pointer;flex:0 0 auto;white-space:nowrap}
 .fbtn:hover{color:var(--muted);border-color:rgba(255,255,255,.2)}
 .fbtn[aria-pressed="true"]{color:#04150a;background:var(--green);border-color:var(--green);font-weight:600}
 .fbtn.t1[aria-pressed="true"]{background:var(--green)}
@@ -449,13 +449,37 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
   background:var(--cyan);margin:0 6px 0 2px;vertical-align:1px}
 
 /* Persistent legend so the colour convention never has to be remembered */
-.legend{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:10.5px;
+.legend{display:flex;align-items:center;gap:14px;flex:0 0 auto;font-family:var(--mono);font-size:10.5px;
   letter-spacing:.06em;color:var(--faint);margin-left:auto;white-space:nowrap}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
 .legend .a i{background:var(--green)}
 .legend .p i{background:var(--cyan)}
 @media(max-width:760px){.legend{margin-left:0;font-size:10px;gap:10px}}
+
+/* ================= WIDE DIAGRAMS ON SMALL SCREENS ================= */
+.scene-scroll{position:relative}
+.scroll-hint{display:none}
+@media(max-width:820px){
+  /* keep the labels legible and let the diagram scroll inside its own box */
+  .scene-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
+                border:1px solid var(--border);border-radius:10px;padding:10px 10px 6px;
+                background:rgba(255,255,255,.015)}
+  .scene-scroll svg.scene,.cars-scroll .cars-svg{min-width:780px}
+  .cars-scroll .cars-svg{min-width:840px}
+  .scroll-hint{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+               text-transform:uppercase;color:var(--faint);padding-bottom:8px}
+  .scene-scroll::-webkit-scrollbar{height:6px}
+  .scene-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:3px}
+  .cars-scene{padding:12px 10px 4px}
+}
+/* ================= TAP TARGETS ================= */
+@media(max-width:760px){
+  .tb-btn{min-height:44px;display:inline-flex;align-items:center}
+  .compare-select-wrap select{min-height:44px;padding-top:0;padding-bottom:0}
+  .fbtn{min-height:36px;display:inline-flex;align-items:center}
+  .compare-strip-inner{padding:10px 14px}
+}
 
 .act-take{font-size:19px;line-height:1.5;color:var(--text);font-weight:500;max-width:860px;margin-bottom:6px}
 </style>
@@ -617,7 +641,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
     <!-- The two-cars animation: same brochure, two different products -->
     <div class="cars-scene">
       <span class="scene-tag"><b>The analogy, animated</b> · we make integration software, not cars</span>
-      <svg class="cars-svg" viewBox="0 0 920 452" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two cars, both sold as self-driving. Car one, in a small panel, backs forty feet up a driveway and parks. Car two navigates a mapped 1,743 mile route from Philadelphia to Denver overnight, crossing nine states, re-routing around a highway closure, paying tolls, refuelling, holding its lane through a storm, and climbing the Rockies, with zero handoffs to the driver.">
+      <div class="scene-scroll cars-scroll"><span class="scroll-hint">Swipe to see both cars</span><svg class="cars-svg" viewBox="0 0 920 452" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two cars, both sold as self-driving. Car one, in a small panel, backs forty feet up a driveway and parks. Car two navigates a mapped 1,743 mile route from Philadelphia to Denver overnight, crossing nine states, re-routing around a highway closure, paying tolls, refuelling, holding its lane through a storm, and climbing the Rockies, with zero handoffs to the driver.">
         <defs>
           <g id="carGlyph">
             <path d="M7 7 q5 -7 13 -7 q9 0 12 7" fill="none" stroke-width="2"/>
@@ -810,7 +834,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
           <text x="880" y="422" text-anchor="end">ONE PROMPT: "TAKE ME TO DENVER"</text>
         </g>
         <text x="273" y="444" font-family="Inter,sans-serif" font-size="13" fill="rgba(255,255,255,.58)">Car two drives Philadelphia to Denver while you sleep.</text>
-      </svg>
+      </svg></div>
       <p class="cars-caption">Same two words on both brochures. Two completely different products.</p>
     </div>
 
@@ -912,7 +936,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap01.webp" alt="Meridian&#x27;s new integrations lead must change invoice mapping after the engineer left." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Meridian&#x27;s new integrations lead must change invoice mapping after the engineer left.</p>
         <p><b>Meridian, a field-services SaaS with 4,100 customers.</b> In March, an AI built their QuickBooks invoice sync in a working session. In September, the engineer who supervised that session has left, and Dana, the new integrations lead (sharp, technical, not a developer), needs to change how invoice line items map for a segment of customers. The question that decides Dana's week: <b>what did the AI actually hand Meridian in March?</b></p>
-        <svg class="scene" viewBox="0 0 920 240" role="img" aria-label="On APIANT a person reads the same visual flow the AI built. On the competitor the AI-built artifact is a code repository.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 240" role="img" aria-label="On APIANT a person reads the same visual flow the AI built. On the competitor the AI-built artifact is a code repository.">
           <!-- APIANT side -->
           <text x="20" y="26" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
           <rect x="20" y="42" width="400" height="150" rx="12" fill="rgba(26,183,89,.06)" stroke="rgba(26,183,89,.4)"/>
@@ -939,7 +963,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
           <text x="726" y="134" fill="rgba(255,255,255,.58)" font-size="12">for it, by design.</text>
           <text x="726" y="160" fill="#f5b748" font-size="12">Dana files a ticket.</text>
           <defs><marker id="ga" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker></defs>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
@@ -980,7 +1004,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap02.webp" alt="Caldera Health&#x27;s 38 clinics need overnight claims reconciled before 7am doors open." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Caldera Health&#x27;s 38 clinics need overnight claims reconciled before 7am doors open.</p>
         <p><b>Caldera Health, a 38-clinic group.</b> Every night at 1am, their practice-management system exports the day's claims and inventory as one file. On a normal Tuesday it is 12MB. At end of quarter it is 80MB. The integration has to parse it, reconcile it against the billing platform, and post corrections before clinics open at 7am. Nobody is awake to babysit it, which is the point.</p>
-        <svg class="scene" viewBox="0 0 920 190" role="img" aria-label="An 80MB nightly file flows through APIANT's engine unimpeded; on the competitor it exceeds documented platform limits.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 190" role="img" aria-label="An 80MB nightly file flows through APIANT's engine unimpeded; on the competitor it exceeds documented platform limits.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
           <rect x="20" y="60" width="120" height="52" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.25)"/>
           <text x="80" y="83" fill="#f7f8f8" font-size="12" text-anchor="middle">Nightly file</text>
@@ -1002,7 +1026,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
           <text x="732" y="90" fill="rgba(255,255,255,.58)" font-size="11">detour via external storage,</text>
           <text x="732" y="106" fill="rgba(255,255,255,.58)" font-size="11">chunking, 15-min ceiling</text>
           <defs><marker id="ga2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker></defs>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
@@ -1076,7 +1100,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap06.webp" alt="Northgate&#x27;s largest client renews if a niche partner API integration ships this month." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Northgate&#x27;s largest client renews if a niche partner API integration ships this month.</p>
         <p><b>Northgate, a systems integrator with forty managed clients.</b> Their largest client runs bookings on a regional platform nobody has heard of outside its niche. The endpoints that matter, membership holds and multi-site transfers, live in the partner API, behind an NDA, in no catalog anywhere. The client's renewal is conditioned on this integration existing within the month.</p>
-        <svg class="scene" viewBox="0 0 920 200" role="img" aria-label="API documentation becomes a full connector on APIANT; on the competitor it becomes a TypeScript project the team owns.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 200" role="img" aria-label="API documentation becomes a full connector on APIANT; on the competitor it becomes a TypeScript project the team owns.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
           <rect x="20" y="52" width="120" height="70" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.25)"/>
           <text x="80" y="82" fill="#f7f8f8" font-size="12" text-anchor="middle">Partner API</text>
@@ -1106,7 +1130,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
             <marker id="ga3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker>
             <marker id="ca3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#5cc8ff"/></marker>
           </defs>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
@@ -1261,7 +1285,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap15.webp" alt="A 214-store chain updates overnight prices; the 6am report must cover every store." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A 214-store chain updates overnight prices; the 6am report must cover every store.</p>
         <p><b>A 214-location convenience chain pushes overnight price updates.</b> Every store must be updated in parallel (serially it takes past opening), and when the last store finishes, one reconciliation report must go to the merchandising director, listing any store that failed. The hard part was never the fan-out. It is knowing, reliably, that all 214 are done.</p>
-        <svg class="scene" viewBox="0 0 920 210" role="img" aria-label="APIANT fans out to 214 parallel runs and joins them with a latch; the competitor pattern polls an API in a loop and accumulates state by hand.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 210" role="img" aria-label="APIANT fans out to 214 parallel runs and joins them with a latch; the competitor pattern polls an API in a loop and accumulates state by hand.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
           <rect x="20" y="76" width="92" height="40" rx="9" fill="none" stroke="#1ab759"/>
           <text x="66" y="100" fill="#f7f8f8" font-size="12" text-anchor="middle">Parent run</text>
@@ -1290,7 +1314,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
             <marker id="ga4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker>
             <marker id="ca4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#5cc8ff"/></marker>
           </defs>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
@@ -1440,7 +1464,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap24.webp" alt="United Harvest, 90 food banks: proving a December donation path works in March." loading="lazy" width="1344" height="768"/><p class="scene-teaser">United Harvest, 90 food banks: proving a December donation path works in March.</p>
         <p><b>United Harvest, a federation of 90 food banks.</b> Their donation pipeline has a branch that fires only for tribute gifts carrying a matching-gift employer code, which in practice happens in the last week of December. It is March. The integration was just modified. The question: how do you prove the December branch still works, in March, without waiting nine months or faking an entire donation flow end to end?</p>
-        <svg class="scene" viewBox="0 0 920 210" role="img" aria-label="APIANT mutates a saved execution's data to force an untaken branch; the competitor replays only the original payload down the original path.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 210" role="img" aria-label="APIANT mutates a saved execution's data to force an untaken branch; the competitor replays only the original payload down the original path.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
           <rect x="20" y="52" width="118" height="44" rx="9" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.3)"/>
           <text x="79" y="71" fill="#f7f8f8" font-size="11" text-anchor="middle">Saved real run</text>
@@ -1472,7 +1496,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
             <marker id="ga5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker>
             <marker id="ca5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#5cc8ff"/></marker>
           </defs>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
@@ -1600,7 +1624,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap31.webp" alt="A 232-location fitness franchise needs one fix live everywhere before evening classes." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A 232-location fitness franchise needs one fix live everywhere before evening classes.</p>
         <p><b>A fitness franchise with 232 locations</b> runs a booking-system-to-CRM integration at every site. Each location has its own booking credentials and its own quirks (time zones, membership names, feature toggles), but the logic is identical everywhere. Today, a fix needs to reach all 232 before the evening class rush. This is a real deployment shape running on APIANT now.</p>
-        <svg class="scene" viewBox="0 0 920 220" role="img" aria-label="One codebase deploys atomically to 232 accounts on APIANT; on the competitor each instance is updated individually or by script.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 220" role="img" aria-label="One codebase deploys atomically to 232 accounts on APIANT; on the competitor each instance is updated individually or by script.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
           <rect x="20" y="66" width="130" height="52" rx="10" fill="rgba(26,183,89,.1)" stroke="#1ab759"/>
           <text x="85" y="88" fill="#f7f8f8" font-size="12" text-anchor="middle">One codebase</text>
@@ -1633,7 +1657,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
             <marker id="ga6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker>
             <marker id="ca6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#5cc8ff"/></marker>
           </defs>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
@@ -1732,7 +1756,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap39.webp" alt="A 90-site franchise asks why one member vanished from their CRM three weeks ago." loading="lazy" width="1344" height="768"/><p class="scene-teaser">A 90-site franchise asks why one member vanished from their CRM three weeks ago.</p>
         <p><b>6:51am, a support inbox.</b> One location of a 90-site franchise writes: "A member signed up on June 30 and she never showed up in our CRM. She's furious. What happened?" It is July 21. Three weeks ago. The platform has run hundreds of thousands of executions since. Somewhere in there is one run that did something wrong to one record, and a customer is waiting to find out whether you are the kind of vendor who can answer.</p>
-        <svg class="scene" viewBox="0 0 920 300" role="img" aria-label="APIANT finds one run among hundreds of thousands, traces the data through every step, fixes one node, and ships the fix fleet-wide. On the competitor, the execution data from three weeks ago has aged out of default retention.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 300" role="img" aria-label="APIANT finds one run among hundreds of thousands, traces the data through every step, fixes one node, and ships the fix fleet-wide. On the competitor, the execution data from three weeks ago has aged out of default retention.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
           <!-- haystack -->
           <g fill="rgba(255,255,255,.14)">
@@ -1773,7 +1797,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
           <text x="600" y="192" fill="rgba(255,255,255,.45)" font-size="11.5">Within the window: org-wide log search, per-step outputs,</text>
           <text x="600" y="208" fill="rgba(255,255,255,.45)" font-size="11.5">then a code fix in the repo and a per-instance rollout.</text>
           <defs><marker id="ga7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#1ab759"/></marker></defs>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
@@ -1966,7 +1990,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap51.webp" alt="Lumen&#x27;s practice managers must connect accounting without ever seeing another company&#x27;s name." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Lumen&#x27;s practice managers must connect accounting without ever seeing another company&#x27;s name.</p>
         <p><b>Lumen, a veterinary-practice SaaS,</b> is shipping a bookkeeping integration inside their product. The bar: a practice manager clicks "Connect accounting" in Lumen's settings, authorizes, maps two fields, done, without ever leaving Lumen, seeing another company's name, or touching a URL that is not lumen-branded. Because the practice manager is not buying an integration platform. She is trusting Lumen.</p>
-        <svg class="scene" viewBox="0 0 920 200" role="img" aria-label="APIANT's embedded configuration runs on the vendor's own domain; the competitor embeds its own app in an iframe, with a custom domain gated to specific plans.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 200" role="img" aria-label="APIANT's embedded configuration runs on the vendor's own domain; the competitor embeds its own app in an iframe, with a custom domain gated to specific plans.">
           <text x="20" y="24" fill="#1ab759" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2">ON APIANT</text>
           <rect x="20" y="40" width="400" height="130" rx="12" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.25)"/>
           <rect x="20" y="40" width="400" height="26" rx="12" fill="rgba(255,255,255,.05)"/>
@@ -1982,7 +2006,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
           <text x="522" y="106" fill="#5cc8ff" font-size="11" font-family="JetBrains Mono,monospace">iframe · *.prismatic.io</text>
           <text x="522" y="126" fill="rgba(255,255,255,.58)" font-size="11">their app inside yours; your domain on the endpoints</text>
           <text x="522" y="142" fill="rgba(255,255,255,.58)" font-size="11">is "available on specific pricing plans"</text>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
@@ -2101,7 +2125,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <span class="kicker faint">The scenario</span>
         <img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/prismatic-scenarios/cap58.webp" alt="Day two, live integration: a complaint, a rate limit, a fix to ship." loading="lazy" width="1344" height="768"/><p class="scene-teaser">Day two, live integration: a complaint, a rate limit, a fix to ship.</p>
         <p><b>Day two.</b> The integration is built and live; both platforms' AI tooling got you here, and both did it well. Now the real career of an integration begins: a customer reports a discrepancy, an API starts rate-limiting, an alert needs tuning, a fix needs to reach the fleet. The question for the AI is no longer "can you build it." It is <b>"how much of what happens next can you handle?"</b></p>
-        <svg class="scene" viewBox="0 0 920 170" role="img" aria-label="Lifecycle phase coverage: APIANT's AI tooling spans all eight phases; Prismatic's covers build through deploy, with operations phases absent from its agent tooling.">
+        <div class="scene-scroll"><span class="scroll-hint">Swipe to see the whole diagram</span><svg class="scene" viewBox="0 0 920 170" role="img" aria-label="Lifecycle phase coverage: APIANT's AI tooling spans all eight phases; Prismatic's covers build through deploy, with operations phases absent from its agent tooling.">
           <g font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,.58)">
             <text x="120" y="30">SETUP</text><text x="220" y="30">BUILD</text><text x="320" y="30">EDIT</text><text x="420" y="30">TEST</text><text x="520" y="30">DEPLOY</text><text x="620" y="30">MONITOR</text><text x="720" y="30">SUPPORT</text><text x="820" y="30">INCIDENT</text>
           </g>
@@ -2128,7 +2152,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
             <rect x="812" y="100" width="84" height="24" rx="6" fill="none" stroke="rgba(92,200,255,.25)" stroke-dasharray="4 3"/>
           </g>
           <text x="612" y="150" fill="rgba(255,255,255,.45)" font-size="11">read-only diagnosis via their API; no tools that intervene</text>
-        </svg>
+        </svg></div>
       </div>
       <div class="cols">
         <div class="col col-a">
