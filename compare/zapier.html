@@ -176,17 +176,30 @@ a:hover{text-decoration:underline}
 /* ---------- site integration: compare strip, car scene, footer ---------- */
 body{padding-top:0}
 .preamble{padding-top:56px}
-.compare-strip{margin-top:86px;border-bottom:1px solid var(--border);background:var(--bg2)}
-.compare-strip-inner{display:flex;align-items:center;gap:14px;padding:12px 24px;max-width:1060px;margin:0 auto;flex-wrap:wrap}
-.compare-vs{font-weight:700;font-size:15px;color:var(--text)}
-.compare-vs em{color:var(--faint);font-style:normal;font-weight:500;margin-left:4px}
-.compare-select-wrap{position:relative;display:inline-flex;align-items:center;color:var(--green)}
-.compare-select-wrap select{appearance:none;-webkit-appearance:none;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--green);font-family:var(--font);font-weight:700;font-size:15px;padding:7px 34px 7px 14px;cursor:pointer}
+/* ---------- compare strip: selector plus provenance ----------
+   THE 86px FIX. .navbar is position:sticky;top:0 with padding:16px around a 70px
+   card, so it occupies its own 102px in normal flow and nothing below it ever
+   needed a top offset. margin-top:86px was a fixed-nav offset applied to a
+   sticky nav. Measured at 390px: strip top 188px -> 102px.
+   The two-class selector on the inner is load-bearing: .wrap{padding:0 14px} in
+   the mobile block is later in source, so a single-class rule loses the
+   shorthand at <=700px and the vertical padding goes to zero. */
+.compare-strip{margin-top:0;border-bottom:1px solid var(--border);background:var(--bg2)}
+.compare-strip .compare-strip-inner{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:9px 14px;max-width:1060px;margin:0 auto}
+.compare-vs{flex:none;font-weight:700;font-size:15px;color:var(--text);white-space:nowrap}
+.compare-vs em{color:var(--muted);font-style:normal;font-weight:500;margin-left:4px}
+.compare-select-wrap{flex:none;position:relative;display:inline-flex;align-items:center;color:var(--green)}
+.compare-select-wrap select{appearance:none;-webkit-appearance:none;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--green);font-family:var(--font);font-weight:700;font-size:15px;line-height:1;min-height:44px;padding:0 34px 0 14px;cursor:pointer}
 .compare-select-wrap select:hover{border-color:rgba(26,183,89,.45)}
-.compare-select-wrap select:focus{outline:none;border-color:var(--green)}
+.compare-select-wrap select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .compare-select-wrap svg{position:absolute;right:12px;pointer-events:none}
-.compare-more{font-size:12.5px;color:var(--faint)}
-@media(max-width:700px){.compare-more{display:none}}
+.compare-src{flex:0 1 auto;min-width:136px;margin-left:auto;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
+.compare-src b{color:var(--text);font-weight:500}
+.compare-src time{color:var(--green);font-weight:500;font-variant-numeric:tabular-nums}
+@media(min-width:701px){
+  .compare-strip .compare-strip-inner{gap:8px 16px;padding:10px 24px}
+  .compare-src{text-align:right}
+}
 
 .cars-scene{margin:10px 0 40px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:18px 14px 6px;overflow:hidden}
 .cars-svg{display:block;width:100%;height:auto}
@@ -409,7 +422,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
   .tb-btn{padding:8px 11px;font-size:11px}
   .cars-scene{padding:12px 8px 4px;margin-bottom:28px}
   .three-questions{gap:10px}
-  .preamble{padding:40px 0 40px}
+  .preamble{padding:26px 0 40px}
   .preamble p{font-size:17px}
   .preamble .cmp-sub{font-size:17px}
   .hero{padding:44px 0 36px}
@@ -476,9 +489,9 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 /* ================= TAP TARGETS ================= */
 @media(max-width:760px){
   .tb-btn{min-height:44px;display:inline-flex;align-items:center}
-  .compare-select-wrap select{min-height:44px;padding-top:0;padding-bottom:0}
+  
   .fbtn{min-height:36px;display:inline-flex;align-items:center}
-  .compare-strip-inner{padding:10px 14px}
+  
 }
 
 /* ================= THE VERDICT ================= */
@@ -531,6 +544,12 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 }
 
 .act-take{font-size:19px;line-height:1.5;color:var(--text);font-weight:500;max-width:860px;margin-bottom:6px}
+/* Quoted API paths and endpoint names are long unbreakable tokens. Workato act 5
+   carried "/api/managed_users/:managed_user_id/imports," at 44 characters, which is
+   427px at 19px in a 362px column and scrolled the whole page sideways on a phone.
+   These blocks all quote vendor documentation, so any of them can hit it. */
+.act-take,.cap-take,.act-intro,p.vs,p.us,p.outcome,p.problem,p.sup-backed,.scene-teaser,.vbody,.vcost,.cap-label{overflow-wrap:anywhere}
+
 </style>
 </head>
 <body>
@@ -647,7 +666,6 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 <!-- Competitor selector strip -->
 <div class="compare-strip">
   <div class="wrap compare-strip-inner">
-    <span class="kicker faint">Compare</span>
     <span class="compare-vs">APIANT <em>vs</em></span>
     <div class="compare-select-wrap">
       <select id="competitorSelect" aria-label="Choose a competitor to compare with">
@@ -655,7 +673,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
       </select>
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
     </div>
-    <span class="compare-more">More comparisons on the way. Same framework, same standing tests.</span>
+    <span class="compare-src">Sources:&nbsp;<b>Zapier&nbsp;docs</b>, reviewed&nbsp;<time datetime="2026-08">Aug&nbsp;2026</time></span>
   </div>
 </div>
 <script>
