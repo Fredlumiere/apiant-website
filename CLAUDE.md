@@ -1,5 +1,10 @@
 # CLAUDE.md
 
+<!-- qa-board:pointer -->
+> **QA for this product:** https://claude.ai/code/artifact/ec361dc1-2cff-44dd-a06c-dac05a0b1f60
+> Data lives in `.claude/qa/board.json`. Claude Code: use `/qa-board`, and
+> see the QA section at the bottom of this file before testing anything.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
@@ -196,3 +201,76 @@ Languages: es, fr, zh, hi, ar, bn, pt, ru, ja, de, ko, it, nl, tr, pl, vi, th, i
 ## UI Reference Assets (uisnap)
 
 When asked to generate SVG illustrations, Lottie animations, or animated SVGs from screenshots or recordings, look in `.uisnap/` for processed reference materials. Each subdirectory contains a `manifest.json` describing the source material, extracted frames (if video/GIF), and any style or format hints provided by the user. Read the manifest first, then read the image files to understand the visual content before generating assets.
+
+<!-- qa-board:start -->
+## QA: where it happens
+
+QA for apiant-website lives on a published board, not in this file and not in a
+test runner. One page, one URL, updated from inside this repo.
+
+- **Board:** https://claude.ai/code/artifact/ec361dc1-2cff-44dd-a06c-dac05a0b1f60
+- **Portfolio:** https://claude.ai/code/artifact/55be025c-e2fb-490c-93a2-dc7d2e3ea009 places this product next to the other APIANT
+  ones. Internal only: to show a single product to someone outside the team,
+  send that product's own board above, never the portfolio.
+
+The page is a render. `.claude/qa/board.json`, committed here, **is** the
+board: areas, test rows, coverage decisions, issues and the run log. Read the
+JSON to know the truth; open the URL to show someone.
+
+### Instructions for Claude Code
+
+Read `.claude/qa/board.json` before doing any QA work in this repo and treat
+it as the record of what is tested. Do not build a parallel checklist in chat:
+work that is not on the board is work nobody else can see.
+
+Use the `/qa-board` skill for every QA action.
+
+| You want to | Run |
+|---|---|
+| see what needs testing | `/qa-board` |
+| find surfaces with no row | `/qa-board scan` |
+| find passes whose code has since changed | `/qa-board drift` |
+| reconcile the board against the tracker | `/qa-board issues` |
+| all three, then publish | `/qa-board refresh` |
+| run tests and record verdicts | `/qa-board start` |
+| fix a failing row and re-verify it | `/qa-board fix` |
+| push the page live again | `/qa-board publish` |
+
+**Always publish to the URL in `.claude/qa/artifact-url`.** Publishing
+without it creates a second artifact, and everyone holding the old link keeps
+reading a page that will never update again.
+
+**Only mark a row `pass` from something you observed in that session.** A
+merged fix is not a pass. A green CI run is not a pass for a product
+behaviour. If the code shipped but nobody exercised it, the row stays
+`pending` and the note says exactly that. This rule is the only reason the
+board is worth reading.
+
+**For anything with an allow path and a deny path, test both.** An endpoint
+that serves the right caller and an endpoint that refuses the wrong one are
+two different tests, and passing only the first is how an auth hole ships
+green.
+
+Never hand-edit `.claude/qa/board.html`. It is generated, it is gitignored,
+and `render.mjs` validates the data before it writes.
+
+### GitHub issues
+
+The board and the tracker have to agree, and `/qa-board issues` is the pass
+that checks both directions: rows whose status drifted from the tracker, and
+open issues the board never mentions. Run it before you publish.
+
+- When a test fails and it is a real bug, file the issue **first**, then fix,
+  then re-run the test that caught it. Link the issue from the row's note:
+  notes accept inline HTML, so `<a href='...'>#12</a>` works.
+  Use `gh issue create --label bug`.
+- Reference the issue in the commit (`Fixes #12`) so it closes on push.
+- When an issue closes, reconcile the row that referenced it. A row still
+  reading `fail` against a closed issue is the most common way this board
+  goes stale, and it is read as a live problem by everyone holding the link.
+- **Do not open issues automatically during a QA run.** Report what you found
+  and recommend what deserves a ticket, then wait. A tracker filling itself
+  with plausible-looking findings nobody triaged is worse than an empty one.
+
+Tracker: https://github.com/Fredlumiere/apiant-website/issues
+<!-- qa-board:end -->
