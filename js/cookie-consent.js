@@ -18,16 +18,36 @@
 
   function getConsent() {
     var match = document.cookie.match(new RegExp('(?:^|;\\s*)' + COOKIE_NAME + '=([^;]*)'));
-    if (!match) return null;
-    try { return JSON.parse(decodeURIComponent(match[1])); } catch(e) { return null; }
+    var raw = match ? match[1] : null;
+    var fromCookie = !!raw;
+    if (!raw) {
+      // Cookie gone but the choice may survive in localStorage: see setConsent.
+      try { raw = localStorage.getItem(COOKIE_NAME); } catch (e) { raw = null; }
+    }
+    if (!raw) return null;
+    var parsed;
+    try { parsed = JSON.parse(decodeURIComponent(raw)); } catch (e) { return null; }
+    // Recovered from the mirror: rewrite the cookie so the rest of the code, and any
+    // server-side reader, sees it as normal.
+    if (!fromCookie && parsed) { setConsent(parsed); }
+    return parsed;
   }
 
   function setConsent(obj) {
     obj.essential = true;
+    obj.ts = Date.now();
     var val = encodeURIComponent(JSON.stringify(obj));
     var d = new Date();
     d.setTime(d.getTime() + COOKIE_DAYS * 86400000);
-    document.cookie = COOKIE_NAME + '=' + val + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+    // Secure matters on Safari, which is stricter about SameSite cookies without it.
+    var secure = location.protocol === 'https:' ? ';Secure' : '';
+    document.cookie = COOKIE_NAME + '=' + val + ';expires=' + d.toUTCString() +
+      ';path=/;SameSite=Lax' + secure;
+    // Mirror to localStorage. Safari's tracking prevention caps a JS-set cookie at
+    // seven days, so on iPhone the banner returns weekly even though we asked for a
+    // year. The mirror gives getConsent a second place to look. Wrapped because
+    // localStorage throws, not returns null, in some privacy modes.
+    try { localStorage.setItem(COOKIE_NAME, val); } catch (e) {}
   }
 
   function deleteCookie(name) {
@@ -149,7 +169,7 @@
     banner.innerHTML =
       '<div class="cc-inner">' +
         '<div class="cc-text">' +
-          '<p>We use essential cookies to make our site work. With your consent, we also use analytics cookies (Google Analytics, Smartlook), functional cookies (HubSpot), and advertising cookies (Facebook Pixel) to improve your experience and measure our marketing. See our <a href="/cookie-policy.html">Cookie Policy</a> for details.</p>' +
+          '<p>Essential cookies keep the site working. With your consent we also use analytics, functional and advertising cookies. See our <a href="/cookie-policy.html">Cookie Policy</a> for details.</p>' +
           '<div class="cc-prefs" id="cc-prefs">' +
             '<div class="cc-cats">' +
               ccCat('essential', 'Essential', 'Login sessions and core site functionality. Always on.', true, true) +

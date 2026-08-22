@@ -43,10 +43,42 @@
   .cc-inner{flex-direction:column;}
   .cc-buttons{width:100%;}
 }
+
+/* ---------- phone: a floating card, not a page section ----------
+   It previously ran edge to edge at the bottom with three stacked full-width
+   buttons under four lines of copy, which reads as content rather than as a
+   consent overlay. Fred: "people are getting confused that this is part of
+   page". Three changes do the work: inset it so the page shows around all four
+   edges, round and lift it so it sits above rather than within, and put the two
+   primary buttons side by side so the card stops being a slab. Tap targets stay
+   at 44px. */
 @media(max-width:640px){
-  .cc-banner{padding:16px;}
-  .cc-buttons{flex-direction:column;}
-  .cc-btn{width:100%;text-align:center;}
+  .cc-banner{
+    left:10px; right:10px; bottom:10px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:14px;
+    padding:14px 14px 12px;
+    font-size:12.5px; line-height:1.5;
+    box-shadow:0 10px 34px rgba(0,0,0,.62), 0 0 0 1px rgba(0,0,0,.4);
+    max-height:76vh; overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:calc(12px + env(safe-area-inset-bottom));
+  }
+  .cc-inner{gap:12px;}
+  .cc-text p{font-size:12.5px;}
+  /* two primary actions across, the tertiary one full width beneath */
+  .cc-buttons{flex-direction:row;flex-wrap:wrap;gap:8px;}
+  .cc-btn{flex:1 1 0;min-width:0;width:auto;min-height:44px;padding:11px 12px;
+    font-size:13px;text-align:center;display:inline-flex;align-items:center;
+    justify-content:center;}
+  .cc-btn-prefs{flex:1 1 100%;order:3;}
   .cc-cats{grid-template-columns:1fr;}
-  .cc-btn-save{width:100%;text-align:center;}
+  .cc-btn-save{width:100%;text-align:center;min-height:44px;}
+  .cc-cat{padding:11px 12px;}
+  .cc-cat-desc{font-size:11.5px;}
+}
+
+/* Respect a user who has asked for less motion or a smaller interface. */
+@media(prefers-reduced-motion:reduce){
+  .cc-btn,.cc-toggle-track,.cc-toggle-knob{transition:none;}
 }
