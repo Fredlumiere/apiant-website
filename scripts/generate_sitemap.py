@@ -27,6 +27,10 @@ LOCALES = [
 ]
 
 EXCLUDE_DIRS = {
+    # robots.txt disallows /private/, so a sitemap entry for it is a contradictory
+    # signal and publishes a URL we asked crawlers to skip. Added 2026-08-22 after the
+    # generator listed private/builder-pricing-2026-07-two-plans.
+    "private",
     "backup", "node_modules", ".git", ".claude", "scripts",
     "appResources", "ai", ".uisnap", "__pycache__",
     "connect", "connections",
