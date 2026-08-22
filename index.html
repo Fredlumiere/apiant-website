@@ -2714,6 +2714,74 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 .compare-col.bad{background:rgba(255,80,80,.04);border:1px solid rgba(255,80,80,.12)}
 .compare-col.warn{background:rgba(245,183,72,.04);border:1px solid rgba(245,183,72,.14)}
 .compare-col.good{background:rgba(26,183,89,.04);border:1px solid rgba(26,183,89,.22)}
+/* ---------- "How does APIANT compare with ___?" selector ----------
+   Lives at the foot of the comparison section on purpose. The three columns above
+   argue that other platforms are shallow in the abstract; a reader's next thought is
+   "which ones, and prove it". This names all eight and links the evidence at exactly
+   that moment.
+
+   Fred asked for a dropdown. It behaves as one, but every competitor is a real anchor
+   in the markup rather than a select option, so the names are crawlable and the thing
+   still works with JavaScript off. The details and summary elements give us the
+   open/close behaviour and keyboard handling for free. */
+.cmpsel{position:relative;z-index:6;max-width:980px;margin:44px auto 0;padding:34px 30px 30px;border-radius:16px;
+  border:1px solid var(--border);background:
+    radial-gradient(120% 140% at 50% 0%,rgba(26,183,89,.07),transparent 62%),var(--card);
+  text-align:center;position:relative}
+.cmpsel-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--green);margin-bottom:14px}
+.cmpsel-q{font-family:var(--font);font-size:clamp(21px,2.5vw,31px);font-weight:700;
+  letter-spacing:-.018em;line-height:1.32;color:var(--text);margin:0 0 16px;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.32em}
+.cmpsel-sub{font-size:15px;line-height:1.62;color:var(--muted);max-width:640px;margin:0 auto}
+.cmpsel-sub b{color:var(--text);font-weight:600}
+
+/* the blank in the sentence */
+.cmpsel-dd{position:relative;display:inline-block;text-align:left}
+.cmpsel-dd[open]{z-index:60}
+.cmpsel-dd>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;
+  gap:.45em;font:inherit;color:var(--green);padding:2px 12px 3px;border-radius:9px;
+  border:1px dashed rgba(26,183,89,.42);background:rgba(26,183,89,.07);
+  transition:background .16s,border-color .16s}
+.cmpsel-dd>summary::-webkit-details-marker{display:none}
+.cmpsel-dd>summary:hover,.cmpsel-dd>summary:focus-visible{background:rgba(26,183,89,.13);
+  border-color:rgba(26,183,89,.7);outline:none}
+.cmpsel-dd>summary .cmpsel-caret{flex:none;transition:transform .18s}
+.cmpsel-dd[open]>summary{border-style:solid}
+.cmpsel-dd[open]>summary .cmpsel-caret{transform:rotate(180deg)}
+
+/* the menu */
+.cmpsel-menu{position:absolute;z-index:40;top:calc(100% + 10px);left:50%;
+  transform:translateX(-50%);width:min(500px,86vw);padding:8px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.13);background:#12141a;
+  box-shadow:0 22px 54px -12px rgba(0,0,0,.82);
+  display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.cmpsel-item{display:flex;align-items:baseline;gap:8px;padding:10px 12px;border-radius:9px;
+  text-decoration:none;transition:background .13s}
+.cmpsel-item:hover,.cmpsel-item:focus-visible{background:rgba(255,255,255,.07);outline:none}
+.cmpsel-name{font-family:var(--font);font-size:15px;font-weight:600;color:var(--text);
+  letter-spacing:-.01em;white-space:nowrap}
+.cmpsel-n{font-family:var(--mono);font-size:10.5px;color:var(--faint);
+  letter-spacing:.04em;margin-left:auto;white-space:nowrap}
+.cmpsel-all{grid-column:1/-1;margin-top:2px;padding:10px 12px;border-top:1px solid var(--border);
+  font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--green);text-decoration:none;border-radius:0 0 9px 9px;display:block}
+.cmpsel-all:hover{background:rgba(26,183,89,.09)}
+
+@media(max-width:700px){
+  .cmpsel{margin-top:30px;padding:26px 18px 24px}
+  .cmpsel-q{font-size:20px;line-height:1.4;gap:.5em;flex-direction:column}
+  .cmpsel-dd{display:block;width:100%}
+  .cmpsel-dd>summary{justify-content:center;width:100%;padding:9px 12px 10px;box-sizing:border-box}
+  .cmpsel-menu{grid-template-columns:1fr;left:0;right:0;transform:none;width:auto;
+    max-height:58vh;overflow-y:auto}
+  .cmpsel-item{padding:12px}
+  .cmpsel-sub{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .cmpsel-dd>summary,.cmpsel-dd>summary .cmpsel-caret,.cmpsel-item{transition:none}
+}
+
 .compare-patent{position:absolute;top:-10px;right:20px;background:linear-gradient(135deg,#d4af37,#c5a028);color:#000;font-size:10px;font-weight:700;letter-spacing:.5px;padding:4px 12px;border-radius:100px}
 .compare-tag{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px;font-family:'DM Sans',sans-serif}
 .compare-col.bad .compare-tag{color:rgba(255,80,80,.7)}
@@ -3615,6 +3683,23 @@ footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
 <li><span class="ci-c"></span>Deep integrations with business logic, not just field mapping</li>
 </ul>
 </div>
+</div>
+
+<!-- COMPARE SELECTOR: names the eight platforms and links the evidence -->
+<div class="cmpsel">
+<div class="cmpsel-eyebrow">Side by side, capability by capability</div>
+<h3 class="cmpsel-q"><span>How does APIANT compare with</span><details class="cmpsel-dd" id="cmpsel"><summary aria-label="Choose a platform to compare against APIANT">pick a platform<svg class="cmpsel-caret" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="cmpsel-menu" role="menu">
+<a class="cmpsel-item" href="/compare/prismatic"><span class="cmpsel-name">Prismatic</span><span class="cmpsel-n">60 caps</span></a>
+<a class="cmpsel-item" href="/compare/zapier"><span class="cmpsel-name">Zapier</span><span class="cmpsel-n">60 caps</span></a>
+<a class="cmpsel-item" href="/compare/tray"><span class="cmpsel-name">Tray.ai</span><span class="cmpsel-n">54 caps</span></a>
+<a class="cmpsel-item" href="/compare/cyclr"><span class="cmpsel-name">Cyclr</span><span class="cmpsel-n">48 caps</span></a>
+<a class="cmpsel-item" href="/compare/workato"><span class="cmpsel-name">Workato</span><span class="cmpsel-n">46 caps</span></a>
+<a class="cmpsel-item" href="/compare/paragon"><span class="cmpsel-name">Paragon</span><span class="cmpsel-n">46 caps</span></a>
+<a class="cmpsel-item" href="/compare/boomi"><span class="cmpsel-name">Boomi</span><span class="cmpsel-n">46 caps</span></a>
+<a class="cmpsel-item" href="/compare/n8n"><span class="cmpsel-name">n8n</span><span class="cmpsel-n">33 caps</span></a>
+<a class="cmpsel-all" href="/compare/">See all eight comparisons &#8594;</a>
+</div></details></h3>
+<p class="cmpsel-sub"><b>393 capabilities compared</b> across eight platforms. Every row asks one question: can you get this by asking their AI, or does a person still do it by hand&#63; Each answer is sourced and dated.</p>
 </div>
 </div>
 </section>
@@ -6023,5 +6108,46 @@ document.querySelectorAll('.card').forEach(c=>{
   });
 })();
 </script>
-<script src="/js/i18n.js"></script></body>
+<script src="/js/i18n.js"></script>
+<script>
+/* Compare selector. Two jobs only.
+   1. Close the disclosure on Escape or an outside click, which it does not do itself.
+   2. Pick up any competitor added to /compare/competitors.json after this page shipped,
+      so a ninth comparison needs no homepage edit. The eight are hard-coded in the
+      markup so crawlers and no-JS readers still see them; this only appends what is
+      missing, and never removes. */
+(function(){
+  var dd = document.getElementById('cmpsel');
+  if (!dd) return;
+  document.addEventListener('click', function(e){
+    if (dd.open && !dd.contains(e.target)) dd.open = false;
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && dd.open) { dd.open = false; dd.querySelector('summary').focus(); }
+  });
+  var menu = dd.querySelector('.cmpsel-menu'), all = dd.querySelector('.cmpsel-all');
+  if (!menu || !all) return;
+  fetch('/compare/competitors.json', {cache:'no-cache'}).then(function(r){
+    return r.ok ? r.json() : null;
+  }).then(function(list){
+    if (!Array.isArray(list)) return;
+    var have = {};
+    Array.prototype.forEach.call(menu.querySelectorAll('a[href^="/compare/"]'), function(a){
+      have[a.getAttribute('href').replace('/compare/','')] = 1;
+    });
+    list.filter(function(c){ return c && c.live && c.slug && !have[c.slug]; })
+        .forEach(function(c){
+      var a = document.createElement('a');
+      a.className = 'cmpsel-item';
+      a.href = '/compare/' + c.slug;
+      var s = document.createElement('span');
+      s.className = 'cmpsel-name';
+      s.textContent = c.name || c.slug;
+      a.appendChild(s);
+      menu.insertBefore(a, all);
+    });
+  }).catch(function(){});
+})();
+</script>
+</body>
 </html>
