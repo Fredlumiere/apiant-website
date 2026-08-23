@@ -193,12 +193,12 @@ body{padding-top:0}
 .compare-select-wrap select:hover{border-color:rgba(26,183,89,.45)}
 .compare-select-wrap select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .compare-select-wrap svg{position:absolute;right:12px;pointer-events:none}
-.compare-src{flex:0 1 auto;min-width:136px;margin-left:auto;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
+.compare-src{flex:0 1 auto;min-width:136px;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
 .compare-src b{color:var(--text);font-weight:500}
 .compare-src time{color:var(--green);font-weight:500;font-variant-numeric:tabular-nums}
 @media(min-width:701px){
   .compare-strip .compare-strip-inner{gap:8px 16px;padding:10px 24px}
-  .compare-src{text-align:right}
+  .compare-src{text-align:left}
 }
 
 .cars-scene{margin:10px 0 40px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:18px 14px 6px;overflow:hidden}
@@ -729,41 +729,26 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 <!-- Competitor selector strip -->
 <div class="compare-strip">
   <div class="wrap compare-strip-inner">
-    <span class="compare-vs">APIANT <em>vs</em></span>
-    <div class="compare-select-wrap">
-      <select id="competitorSelect" aria-label="Choose a competitor to compare with">
-        <option value="tray" selected>Tray.ai</option>
-      </select>
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-    </div>
     <span class="compare-src">Sources:&nbsp;<b>Tray.ai&nbsp;docs</b>, reviewed&nbsp;<time datetime="2026-08-20">20&nbsp;Aug&nbsp;2026</time></span>
   </div>
 </div>
-<script>
-(function(){
-  var sel=document.getElementById('competitorSelect');
-  var current='tray';
-  fetch('/compare/competitors.json').then(function(r){return r.json()}).then(function(list){
-    sel.innerHTML='';
-    list.forEach(function(c){
-      if(c.live===false)return;
-      var o=document.createElement('option');
-      o.value=c.slug;o.textContent=c.name;if(c.slug===current)o.selected=true;
-      sel.appendChild(o);
-    });
-  }).catch(function(){});
-  sel.addEventListener('change',function(){
-    if(sel.value!==current)window.location.href='/compare/'+sel.value;
-  });
-})();
-</script>
+
 
 
 <!-- ============ 0. PREAMBLE ============ -->
 <section class="preamble">
   <div class="wrap">
     <span class="kicker">Why this compare page exists</span>
-    <h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <span class="p">Tray.ai</span></h1>
+    <div class="cmpsw cmpsw--inline" data-cmpsw data-cmpsw-self="tray"><h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <button type="button" class="p cmpsw-btn" aria-expanded="false" aria-controls="cmpTitleMenu">Tray.ai<svg class="cmpsw-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h1><span class="cmpsw-menu" id="cmpTitleMenu">
+<a href="/compare/prismatic">Prismatic<span class="cmpsw-n">60</span></a>
+<a href="/compare/zapier">Zapier<span class="cmpsw-n">60</span></a>
+<a href="/compare/cyclr">Cyclr<span class="cmpsw-n">48</span></a>
+<a href="/compare/workato">Workato<span class="cmpsw-n">46</span></a>
+<a href="/compare/paragon">Paragon<span class="cmpsw-n">46</span></a>
+<a href="/compare/boomi">Boomi<span class="cmpsw-n">46</span></a>
+<a href="/compare/n8n">n8n<span class="cmpsw-n">33</span></a>
+<a class="cmpsw-all" href="/compare/">All comparisons</a>
+</span></div>
     <p class="cmp-sub">Two integration platforms. One has a catalogue of prebuilt apps; the other builds what you need from an API’s own documentation. This page compares what each actually requires of your team, across fifty-four jobs.</p>
     
     <section class="verdict" aria-labelledby="verdictH"><span class="kicker">The verdict, if you read nothing else</span><h2 id="verdictH">Tray&#x27;s AI builds, validates and debugs a failed run, on every plan. What it does not reach is a run already in flight, or one fix shipped to an installed base.</h2><ol class="vlist"><li><a href="#cap-37"><span class="vn">1</span><span class="vbody"><b>Turning the whole estate off is one call, and one call turns exactly that set back on.</b><span class="vcost">On Tray the stop is a button per workflow, and neither published OpenAPI spec carries an endpoint that stops an execution.</span></span><span class="vgo">Capability 37</span></a></li><li><a href="#cap-31"><span class="vn">2</span><span class="vbody"><b>One corrected integration reaches every linked customer account in a single deploy, verified at 232 locations.</b><span class="vcost">Tray upgrades a breaking change one solution instance per call, and their own sequence ends &quot;Notify the end users of these instances to run the config wizard.&quot;</span></span><span class="vgo">Capability 31</span></a></li><li><a href="#cap-34"><span class="vn">3</span><span class="vbody"><b>A vendor&#x27;s breaking API change is fixed in one connector, and the platform names which automations reference it.</b><span class="vcost">Tray: &quot;you will need to manually update it yourself&quot;, with no way to &quot;subscribe to updates for a particular connector&quot;.</span></span><span class="vgo">Capability 34</span></a></li><li><a href="#cap-02"><span class="vn">4</span><span class="vbody"><b>Quarter end&#x27;s 80 MB file takes the same path as a normal night&#x27;s 12 MB.</b><span class="vcost">Tray publishes 6 MB between any two steps, 1 MB into a webhook trigger, and 400 KB per parallel thread.</span></span><span class="vgo">Capability 02</span></a></li><li><a href="#cap-50"><span class="vn">5</span><span class="vbody"><b>The configuration host, the authentication callback and the webhook receiver are hostnames you own.</b><span class="vcost">Tray&#x27;s de-branding substitutes their own wildcard domains, and the OAuth callback stays on auth.tray.io where a vendor accepts a single redirect URL.</span></span><span class="vgo">Capability 50</span></a></li><li><a href="#cap-28"><span class="vn">6</span><span class="vbody"><b>One build serves hundreds of customers, and the screen they configure on is built with the platform&#x27;s own form tools.</b><span class="vcost">Tray Embedded &quot;is available to Enterprise customers as an optional add-on&quot;, and the application behind the wizard is yours to write.</span></span><span class="vgo">Capability 28</span></a></li></ol><p class="vfoot">Each line opens the row it came from, with the scenario and the documentation behind it. Read them sceptically: that is what the rest of this page is for.</p></section>
@@ -2441,5 +2426,6 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
   openFromHash(true);
 })();
 </script>
+<script src="/js/compare-switch.js" defer></script>
 </body>
 </html>

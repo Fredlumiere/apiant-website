@@ -193,12 +193,12 @@ body{padding-top:0}
 .compare-select-wrap select:hover{border-color:rgba(26,183,89,.45)}
 .compare-select-wrap select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .compare-select-wrap svg{position:absolute;right:12px;pointer-events:none}
-.compare-src{flex:0 1 auto;min-width:136px;margin-left:auto;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
+.compare-src{flex:0 1 auto;min-width:136px;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
 .compare-src b{color:var(--text);font-weight:500}
 .compare-src time{color:var(--green);font-weight:500;font-variant-numeric:tabular-nums}
 @media(min-width:701px){
   .compare-strip .compare-strip-inner{gap:8px 16px;padding:10px 24px}
-  .compare-src{text-align:right}
+  .compare-src{text-align:left}
 }
 
 .cars-scene{margin:10px 0 40px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:18px 14px 6px;overflow:hidden}
@@ -729,41 +729,26 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 <!-- Competitor selector strip -->
 <div class="compare-strip">
   <div class="wrap compare-strip-inner">
-    <span class="compare-vs">APIANT <em>vs</em></span>
-    <div class="compare-select-wrap">
-      <select id="competitorSelect" aria-label="Choose a competitor to compare with">
-        <option value="paragon" selected>Paragon</option>
-      </select>
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-    </div>
     <span class="compare-src">Sources:&nbsp;<b>Paragon&nbsp;docs</b>, reviewed&nbsp;<time datetime="2026-08-20">20&nbsp;Aug&nbsp;2026</time></span>
   </div>
 </div>
-<script>
-(function(){
-  var sel=document.getElementById('competitorSelect');
-  var current='paragon';
-  fetch('/compare/competitors.json').then(function(r){return r.json()}).then(function(list){
-    sel.innerHTML='';
-    list.forEach(function(c){
-      if(c.live===false)return;
-      var o=document.createElement('option');
-      o.value=c.slug;o.textContent=c.name;if(c.slug===current)o.selected=true;
-      sel.appendChild(o);
-    });
-  }).catch(function(){});
-  sel.addEventListener('change',function(){
-    if(sel.value!==current)window.location.href='/compare/'+sel.value;
-  });
-})();
-</script>
+
 
 
 <!-- ============ 0. PREAMBLE ============ -->
 <section class="preamble">
   <div class="wrap">
     <span class="kicker">Why this compare page exists</span>
-    <h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <span class="p">Paragon</span></h1>
+    <div class="cmpsw cmpsw--inline" data-cmpsw data-cmpsw-self="paragon"><h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <button type="button" class="p cmpsw-btn" aria-expanded="false" aria-controls="cmpTitleMenu">Paragon<svg class="cmpsw-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h1><span class="cmpsw-menu" id="cmpTitleMenu">
+<a href="/compare/prismatic">Prismatic<span class="cmpsw-n">60</span></a>
+<a href="/compare/zapier">Zapier<span class="cmpsw-n">60</span></a>
+<a href="/compare/tray">Tray.ai<span class="cmpsw-n">54</span></a>
+<a href="/compare/cyclr">Cyclr<span class="cmpsw-n">48</span></a>
+<a href="/compare/workato">Workato<span class="cmpsw-n">46</span></a>
+<a href="/compare/boomi">Boomi<span class="cmpsw-n">46</span></a>
+<a href="/compare/n8n">n8n<span class="cmpsw-n">33</span></a>
+<a class="cmpsw-all" href="/compare/">All comparisons</a>
+</span></div>
     <p class="cmp-sub">Two integration platforms. One has a catalogue of prebuilt apps; the other builds what you need from an API’s own documentation. This page compares what each actually requires of your team, across forty-six jobs.</p>
     
     <section class="verdict" aria-labelledby="verdictH"><span class="kicker">The verdict, if you read nothing else</span><h2 id="verdictH">Paragon&#x27;s agent authors integrations in TypeScript and type-checks them. Their own build page states a push cannot reach Staging or Production, and a Release is a dashboard action.</h2><ol class="vlist"><li><a href="#cap-45"><span class="vn">1</span><span class="vbody"><b>APIANT&#x27;s agent surface runs the platform after ship: read a failed run, halt the runaway, retune the alert, push the fix.</b><span class="vcost">Paragon&#x27;s four published skills author workflow TypeScript and pause a live Sync; their build page states &quot;Workflows cannot be pushed to Staging or Production Release Environments&quot;.</span></span><span class="vgo">Capability 45</span></a></li><li><a href="#cap-27"><span class="vn">2</span><span class="vbody"><b>One corrected integration reaches the linked customer accounts in a single deploy, verified at 232 locations.</b><span class="vcost">On Paragon shipping is a dashboard Release: no release, deployment or rollback endpoint appears in Users, Task History, Proxy, ActionKit, Managed Sync, or their CLI&#x27;s twelve commands.</span></span><span class="vgo">Capability 27</span></a></li><li><a href="#cap-25"><span class="vn">3</span><span class="vbody"><b>Both bills grow with the business. Ours meters production servers and connections, so outgrowing a tier is a move to the next one.</b><span class="vcost">Paragon counts your customer roster, and their billing docs put the ceiling on your customer&#x27;s connect flow: &quot;When you exceed this limit, new Connected Users will be unable to connect integrations.&quot;</span></span><span class="vgo">Capability 25</span></a></li><li><a href="#cap-13"><span class="vn">4</span><span class="vbody"><b>Shared logic is a subroutine other automations call, so one fix lands in all its callers and the call is not a network hop.</b><span class="vcost">Paragon documents workflow-to-workflow as a Function step that signs a user token plus a Request step, and their billing page counts each as a task.</span></span><span class="vgo">Capability 13</span></a></li><li><a href="#cap-11"><span class="vn">5</span><span class="vbody"><b>Parallel capacity is bounded where the pressure is, by throttles set per connector, per action and per connection.</b><span class="vcost">Paragon&#x27;s ceiling is &quot;a shared pool of execution capacity&quot; across all Connected Users, published at 20 step executions on Pro and 50 on Enterprise cloud.</span></span><span class="vgo">Capability 11</span></a></li><li><a href="#cap-32"><span class="vn">6</span><span class="vbody"><b>Alerting is a rule set tuned per error: what pages a human, what is rewritten, what is suppressed, what retries.</b><span class="vcost">Paragon&#x27;s Event Destinations is Admin-only, over two events, Workflow Failure and Credential Failure, then &quot;We are working on adding support for more events&quot;.</span></span><span class="vgo">Capability 32</span></a></li></ol><p class="vfoot">Each line opens the row it came from, with the scenario and the documentation behind it. Read them sceptically: that is what the rest of this page is for.</p></section>
@@ -2353,5 +2338,6 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
   openFromHash(true);
 })();
 </script>
+<script src="/js/compare-switch.js" defer></script>
 </body>
 </html>

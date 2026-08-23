@@ -8782,3 +8782,76 @@ input[type="submit"][style*="1ab759"]:hover {
 .blog-rail-section .fade-in-on-scroll{opacity:1!important;transform:none!important;}
 @media (max-width:991px){.blog-rail-section{margin-top:56px;padding-top:8px;}}
 
+
+
+/* ============================================================================
+   Compare switch. Shared by the homepage selector and the competitor name in each
+   /compare/ page's H1, so there is one definition rather than one per page.
+   Behaviour lives in js/compare-switch.js; the markup contract is documented there.
+
+   Two skins on the same structure:
+     .cmpsw--pill    homepage, the control is a pill filling a blank in the sentence
+     .cmpsw--inline  compare page H1, the control IS the competitor name at heading size
+
+   The menu is positioned against the wrapper, never against the button, so it always
+   opens at the left edge of the heading and cannot run off a narrow screen wherever
+   the label lands when the heading wraps.
+   ============================================================================ */
+.cmpsw{position:relative}
+.cmpsw-btn{font:inherit;color:inherit;background:none;border:0;margin:0;cursor:pointer;
+  text-align:left}
+.cmpsw-caret{flex:none;transition:transform .18s,opacity .18s}
+.cmpsw-btn[aria-expanded="true"] .cmpsw-caret{transform:rotate(180deg);opacity:1}
+.cmpsw-menu{display:none;position:absolute;z-index:60;padding:7px;border-radius:13px;
+  border:1px solid rgba(255,255,255,.13);background:#101319;
+  box-shadow:0 20px 50px -12px rgba(0,0,0,.82);
+  grid-template-columns:1fr 1fr;gap:3px;
+  font-family:'Inter','DM Sans',system-ui,sans-serif;font-size:15px;font-weight:500;
+  font-style:normal;letter-spacing:0;line-height:1.2;text-transform:none}
+.cmpsw-menu.open{display:grid}
+.cmpsw-menu a{display:flex;align-items:baseline;gap:7px;padding:9px 11px;border-radius:8px;
+  text-decoration:none;color:#f7f8f8;white-space:nowrap}
+.cmpsw-menu a:hover,.cmpsw-menu a:focus-visible{background:rgba(255,255,255,.07);outline:none}
+.cmpsw-menu .cmpsw-n{margin-left:auto;font-family:'JetBrains Mono','SF Mono',Menlo,monospace;
+  font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.04em}
+.cmpsw-menu .cmpsw-all{grid-column:1/-1;margin-top:2px;
+  border-top:1px solid rgba(255,255,255,.09);border-radius:0 0 8px 8px;
+  font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:10.5px;
+  letter-spacing:.07em;text-transform:uppercase}
+
+/* homepage skin: a pill filling the blank in "How does APIANT compare with ___" */
+.cmpsw--pill .cmpsw-btn{display:inline-flex;align-items:center;gap:.45em;
+  color:#1ab759;padding:2px 12px 3px;border-radius:9px;
+  border:1px dashed rgba(26,183,89,.42);background:rgba(26,183,89,.07);
+  transition:background .16s,border-color .16s}
+.cmpsw--pill .cmpsw-btn:hover,.cmpsw--pill .cmpsw-btn:focus-visible{
+  background:rgba(26,183,89,.13);border-color:rgba(26,183,89,.7);outline:none}
+.cmpsw--pill .cmpsw-btn[aria-expanded="true"]{border-style:solid}
+.cmpsw--pill .cmpsw-caret{width:13px;height:13px}
+.cmpsw--pill .cmpsw-menu{top:100%;left:50%;transform:translateX(-50%);
+  width:min(500px,86vw);margin-top:10px}
+.cmpsw--pill .cmpsw-all{color:#1ab759}
+.cmpsw--pill .cmpsw-all:hover{background:rgba(26,183,89,.09)}
+
+/* compare page skin: the control is the competitor name itself, at heading size */
+.cmpsw--inline .cmpsw-btn{display:inline;padding:0;
+  text-decoration:underline;text-decoration-thickness:.045em;text-underline-offset:.15em;
+  text-decoration-color:rgba(92,200,255,.38)}
+.cmpsw--inline .cmpsw-btn:hover,.cmpsw--inline .cmpsw-btn:focus-visible{
+  text-decoration-color:#5cc8ff;outline:none}
+.cmpsw--inline .cmpsw-caret{display:inline-block;width:.4em;height:.4em;
+  margin-left:.16em;vertical-align:.08em;opacity:.5}
+.cmpsw--inline .cmpsw-btn:hover .cmpsw-caret{opacity:1}
+.cmpsw--inline .cmpsw-menu{top:100%;left:0;margin-top:-4px;width:min(420px,calc(100vw - 40px))}
+.cmpsw--inline .cmpsw-all{color:#5cc8ff}
+.cmpsw--inline .cmpsw-all:hover{background:rgba(92,200,255,.09)}
+
+@media (max-width:640px){
+  .cmpsw-menu{grid-template-columns:1fr;max-height:56vh;overflow-y:auto;font-size:14.5px}
+  .cmpsw-menu a{padding:12px}
+  .cmpsw--pill .cmpsw-menu{left:0;right:0;transform:none;width:auto}
+  .cmpsw--inline .cmpsw-menu{width:min(320px,calc(100vw - 34px))}
+}
+@media (prefers-reduced-motion:reduce){
+  .cmpsw-caret,.cmpsw--pill .cmpsw-btn{transition:none}
+}

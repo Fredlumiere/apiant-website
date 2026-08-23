@@ -193,12 +193,12 @@ body{padding-top:0}
 .compare-select-wrap select:hover{border-color:rgba(26,183,89,.45)}
 .compare-select-wrap select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .compare-select-wrap svg{position:absolute;right:12px;pointer-events:none}
-.compare-src{flex:0 1 auto;min-width:136px;margin-left:auto;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
+.compare-src{flex:0 1 auto;min-width:136px;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
 .compare-src b{color:var(--text);font-weight:500}
 .compare-src time{color:var(--green);font-weight:500;font-variant-numeric:tabular-nums}
 @media(min-width:701px){
   .compare-strip .compare-strip-inner{gap:8px 16px;padding:10px 24px}
-  .compare-src{text-align:right}
+  .compare-src{text-align:left}
 }
 
 .cars-scene{margin:10px 0 40px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:18px 14px 6px;overflow:hidden}
@@ -729,41 +729,26 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 <!-- Competitor selector strip -->
 <div class="compare-strip">
   <div class="wrap compare-strip-inner">
-    <span class="compare-vs">APIANT <em>vs</em></span>
-    <div class="compare-select-wrap">
-      <select id="competitorSelect" aria-label="Choose a competitor to compare with">
-        <option value="prismatic" selected>Prismatic</option>
-      </select>
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-    </div>
     <span class="compare-src">Sources:&nbsp;<b>Prismatic&nbsp;docs</b>, reviewed&nbsp;<time datetime="2026-08">Aug&nbsp;2026</time></span>
   </div>
 </div>
-<script>
-(function(){
-  var sel=document.getElementById('competitorSelect');
-  var current='prismatic';
-  fetch('/compare/competitors.json').then(function(r){return r.json()}).then(function(list){
-    sel.innerHTML='';
-    list.forEach(function(c){
-      if(c.live===false)return;
-      var o=document.createElement('option');
-      o.value=c.slug;o.textContent=c.name;if(c.slug===current)o.selected=true;
-      sel.appendChild(o);
-    });
-  }).catch(function(){});
-  sel.addEventListener('change',function(){
-    if(sel.value!==current)window.location.href='/compare/'+sel.value;
-  });
-})();
-</script>
+
 
 
 <!-- ============ 0. PREAMBLE ============ -->
 <section class="preamble">
   <div class="wrap">
     <span class="kicker">Why this compare page exists</span>
-    <h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <span class="p">Prismatic</span></h1>
+    <div class="cmpsw cmpsw--inline" data-cmpsw data-cmpsw-self="prismatic"><h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <button type="button" class="p cmpsw-btn" aria-expanded="false" aria-controls="cmpTitleMenu">Prismatic<svg class="cmpsw-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h1><span class="cmpsw-menu" id="cmpTitleMenu">
+<a href="/compare/zapier">Zapier<span class="cmpsw-n">60</span></a>
+<a href="/compare/tray">Tray.ai<span class="cmpsw-n">54</span></a>
+<a href="/compare/cyclr">Cyclr<span class="cmpsw-n">48</span></a>
+<a href="/compare/workato">Workato<span class="cmpsw-n">46</span></a>
+<a href="/compare/paragon">Paragon<span class="cmpsw-n">46</span></a>
+<a href="/compare/boomi">Boomi<span class="cmpsw-n">46</span></a>
+<a href="/compare/n8n">n8n<span class="cmpsw-n">33</span></a>
+<a class="cmpsw-all" href="/compare/">All comparisons</a>
+</span></div>
     <p class="cmp-sub">Two integration platforms. Both promise depth, autonomy and AI. This page compares what each one actually requires of your team, across sixty jobs.</p>
     
     <section class="verdict" aria-labelledby="verdictH">
@@ -2517,5 +2502,6 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
   openFromHash(true);
 })();
 </script>
+<script src="/js/compare-switch.js" defer></script>
 </body>
 </html>

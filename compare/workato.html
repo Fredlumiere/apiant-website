@@ -193,12 +193,12 @@ body{padding-top:0}
 .compare-select-wrap select:hover{border-color:rgba(26,183,89,.45)}
 .compare-select-wrap select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .compare-select-wrap svg{position:absolute;right:12px;pointer-events:none}
-.compare-src{flex:0 1 auto;min-width:136px;margin-left:auto;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
+.compare-src{flex:0 1 auto;min-width:136px;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
 .compare-src b{color:var(--text);font-weight:500}
 .compare-src time{color:var(--green);font-weight:500;font-variant-numeric:tabular-nums}
 @media(min-width:701px){
   .compare-strip .compare-strip-inner{gap:8px 16px;padding:10px 24px}
-  .compare-src{text-align:right}
+  .compare-src{text-align:left}
 }
 
 .cars-scene{margin:10px 0 40px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:18px 14px 6px;overflow:hidden}
@@ -729,41 +729,26 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 <!-- Competitor selector strip -->
 <div class="compare-strip">
   <div class="wrap compare-strip-inner">
-    <span class="compare-vs">APIANT <em>vs</em></span>
-    <div class="compare-select-wrap">
-      <select id="competitorSelect" aria-label="Choose a competitor to compare with">
-        <option value="workato" selected>Workato</option>
-      </select>
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-    </div>
     <span class="compare-src">Sources:&nbsp;<b>Workato&nbsp;docs</b>, reviewed&nbsp;<time datetime="2026-08-21">21&nbsp;Aug&nbsp;2026</time></span>
   </div>
 </div>
-<script>
-(function(){
-  var sel=document.getElementById('competitorSelect');
-  var current='workato';
-  fetch('/compare/competitors.json').then(function(r){return r.json()}).then(function(list){
-    sel.innerHTML='';
-    list.forEach(function(c){
-      if(c.live===false)return;
-      var o=document.createElement('option');
-      o.value=c.slug;o.textContent=c.name;if(c.slug===current)o.selected=true;
-      sel.appendChild(o);
-    });
-  }).catch(function(){});
-  sel.addEventListener('change',function(){
-    if(sel.value!==current)window.location.href='/compare/'+sel.value;
-  });
-})();
-</script>
+
 
 
 <!-- ============ 0. PREAMBLE ============ -->
 <section class="preamble">
   <div class="wrap">
     <span class="kicker">Why this compare page exists</span>
-    <h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <span class="p">Workato</span></h1>
+    <div class="cmpsw cmpsw--inline" data-cmpsw data-cmpsw-self="workato"><h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <button type="button" class="p cmpsw-btn" aria-expanded="false" aria-controls="cmpTitleMenu">Workato<svg class="cmpsw-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h1><span class="cmpsw-menu" id="cmpTitleMenu">
+<a href="/compare/prismatic">Prismatic<span class="cmpsw-n">60</span></a>
+<a href="/compare/zapier">Zapier<span class="cmpsw-n">60</span></a>
+<a href="/compare/tray">Tray.ai<span class="cmpsw-n">54</span></a>
+<a href="/compare/cyclr">Cyclr<span class="cmpsw-n">48</span></a>
+<a href="/compare/paragon">Paragon<span class="cmpsw-n">46</span></a>
+<a href="/compare/boomi">Boomi<span class="cmpsw-n">46</span></a>
+<a href="/compare/n8n">n8n<span class="cmpsw-n">33</span></a>
+<a class="cmpsw-all" href="/compare/">All comparisons</a>
+</span></div>
     <p class="cmp-sub">Two integration platforms. One has a catalogue of prebuilt apps; the other builds what you need from an API’s own documentation. This page compares what each actually requires of your team, across forty-six jobs.</p>
     
     <section class="verdict" aria-labelledby="verdictH"><span class="kicker">The verdict, if you read nothing else</span><h2 id="verdictH">Workato&#x27;s agent builds, reads job history and drives a deployment. What differs is what the next change costs per customer, and whose hostnames your customer&#x27;s security team writes down.</h2><ol class="vlist"><li><a href="#cap-20"><span class="vn">1</span><span class="vbody"><b>A rare path is proven on a real run, by correcting a saved execution and restarting it from that step.</b><span class="vcost">Workato treats editing a step as deleting and creating one, so the test that proved the path no longer applies to it.</span></span><span class="vgo">Capability 20</span></a></li><li><a href="#cap-24"><span class="vn">2</span><span class="vbody"><b>A captured run replays with its values corrected, so the fix is proven against the payload that broke it.</b><span class="vcost">Workato: &quot;All job reruns use cached data, meaning: The trigger event&#x27;s original data is reused.&quot;</span></span><span class="vgo">Capability 24</span></a></li><li><a href="#cap-19"><span class="vn">3</span><span class="vbody"><b>A shared connector keeps its own version history, and a change reaches a customer only when you deploy it there.</b><span class="vcost">On Workato, releasing a connector version moves every recipe in the account that uses it, from its next job.</span></span><span class="vgo">Capability 19</span></a></li><li><a href="#cap-26"><span class="vn">4</span><span class="vbody"><b>One deploy call carries a fix to a named list of customer accounts, and returns the plan before it writes.</b><span class="vcost">Workato&#x27;s embedded deploy endpoints each take a single managed_user_id, so a fleet rollout is a loop you write and own.</span></span><span class="vgo">Capability 26</span></a></li><li><a href="#cap-43"><span class="vn">5</span><span class="vbody"><b>The configuration host, the authentication callback and the webhook receiver are hostnames you own.</b><span class="vcost">Workato&#x27;s embedded surface loads app.workato.com and embedding.workato.com, and the OAuth callback is fixed at workato.com/oauth/callback.</span></span><span class="vgo">Capability 43</span></a></li></ol><p class="vfoot">Each line opens the row it came from, with the scenario and the documentation behind it. Read them sceptically: that is what the rest of this page is for.</p></section>
@@ -2326,5 +2311,6 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
   openFromHash(true);
 })();
 </script>
+<script src="/js/compare-switch.js" defer></script>
 </body>
 </html>

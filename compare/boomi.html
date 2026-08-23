@@ -193,12 +193,12 @@ body{padding-top:0}
 .compare-select-wrap select:hover{border-color:rgba(26,183,89,.45)}
 .compare-select-wrap select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .compare-select-wrap svg{position:absolute;right:12px;pointer-events:none}
-.compare-src{flex:0 1 auto;min-width:136px;margin-left:auto;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
+.compare-src{flex:0 1 auto;min-width:136px;text-align:left;font-family:var(--mono);font-size:11px;line-height:1.45;letter-spacing:.01em;color:var(--muted)}
 .compare-src b{color:var(--text);font-weight:500}
 .compare-src time{color:var(--green);font-weight:500;font-variant-numeric:tabular-nums}
 @media(min-width:701px){
   .compare-strip .compare-strip-inner{gap:8px 16px;padding:10px 24px}
-  .compare-src{text-align:right}
+  .compare-src{text-align:left}
 }
 
 .cars-scene{margin:10px 0 40px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:18px 14px 6px;overflow:hidden}
@@ -729,41 +729,26 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 <!-- Competitor selector strip -->
 <div class="compare-strip">
   <div class="wrap compare-strip-inner">
-    <span class="compare-vs">APIANT <em>vs</em></span>
-    <div class="compare-select-wrap">
-      <select id="competitorSelect" aria-label="Choose a competitor to compare with">
-        <option value="boomi" selected>Boomi</option>
-      </select>
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-    </div>
     <span class="compare-src">Sources:&nbsp;<b>Boomi&nbsp;docs</b>, reviewed&nbsp;<time datetime="2026-08-19">19&nbsp;Aug&nbsp;2026</time></span>
   </div>
 </div>
-<script>
-(function(){
-  var sel=document.getElementById('competitorSelect');
-  var current='boomi';
-  fetch('/compare/competitors.json').then(function(r){return r.json()}).then(function(list){
-    sel.innerHTML='';
-    list.forEach(function(c){
-      if(c.live===false)return;
-      var o=document.createElement('option');
-      o.value=c.slug;o.textContent=c.name;if(c.slug===current)o.selected=true;
-      sel.appendChild(o);
-    });
-  }).catch(function(){});
-  sel.addEventListener('change',function(){
-    if(sel.value!==current)window.location.href='/compare/'+sel.value;
-  });
-})();
-</script>
+
 
 
 <!-- ============ 0. PREAMBLE ============ -->
 <section class="preamble">
   <div class="wrap">
     <span class="kicker">Why this compare page exists</span>
-    <h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <span class="p">Boomi</span></h1>
+    <div class="cmpsw cmpsw--inline" data-cmpsw data-cmpsw-self="boomi"><h1 class="cmp-title"><span class="a">APIANT</span> <em>vs</em> <button type="button" class="p cmpsw-btn" aria-expanded="false" aria-controls="cmpTitleMenu">Boomi<svg class="cmpsw-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h1><span class="cmpsw-menu" id="cmpTitleMenu">
+<a href="/compare/prismatic">Prismatic<span class="cmpsw-n">60</span></a>
+<a href="/compare/zapier">Zapier<span class="cmpsw-n">60</span></a>
+<a href="/compare/tray">Tray.ai<span class="cmpsw-n">54</span></a>
+<a href="/compare/cyclr">Cyclr<span class="cmpsw-n">48</span></a>
+<a href="/compare/workato">Workato<span class="cmpsw-n">46</span></a>
+<a href="/compare/paragon">Paragon<span class="cmpsw-n">46</span></a>
+<a href="/compare/n8n">n8n<span class="cmpsw-n">33</span></a>
+<a class="cmpsw-all" href="/compare/">All comparisons</a>
+</span></div>
     <p class="cmp-sub">Two integration platforms. One has a catalogue of prebuilt apps; the other builds what you need from an API’s own documentation. This page compares what each actually requires of your team, across forty-six jobs.</p>
     
     <section class="verdict" aria-labelledby="verdictH"><span class="kicker">The verdict, if you read nothing else</span><h2 id="verdictH">Boomi is candid about its own ceilings, and the ceilings are the story: a catalog connector priced in Java at two to three months, the agent that deploys and retests carrying no SLA, and an alert you narrow by deleting the subscription and building it again.</h2><ol class="vlist"><li><a href="#cap-03"><span class="vn">1</span><span class="vbody"><b>A connector no catalog lists gets built from the API&#x27;s own documentation in a working session.</b><span class="vcost">Boomi&#x27;s FAQ prices the SDK route to a catalog connector at &quot;it may take 2-3 months&quot;, in Java under a signed agreement; the ~80% faster Gradle route builds &quot;from an OpenAPI specification&quot; a partner API under NDA does not publish, and the route that reads documentation instead lands on the generic REST connector, where &quot;Object - Not supported for this connector.&quot;</span></span><span class="vgo">Capability 03</span></a></li><li><a href="#cap-44"><span class="vn">2</span><span class="vbody"><b>The tools that deploy and operate production are part of the platform, not a separate offering with its own disclaimer.</b><span class="vcost">Boomi publishes the agent that redeploys as &quot;a publicly available developer offering, not an officially supported Boomi product&quot;, &quot;not covered by Boomi support agreements or SLAs&quot;.</span></span><span class="vgo">Capability 44</span></a></li><li><a href="#cap-39"><span class="vn">3</span><span class="vbody"><b>The embedded setup screen ships inside your product, on the platform region you already sell into.</b><span class="vcost">Boomi&#x27;s embedded Spaces path &quot;must be registered and onboarded as a Partner (in Spaces)&quot; and is &quot;available only on the US platform&quot;. Their EmbedKit path carries neither gate.</span></span><span class="vgo">Capability 39</span></a></li><li><a href="#cap-20"><span class="vn">4</span><span class="vbody"><b>Every conditional branch is enumerated with a covered flag, and the uncovered side is forced by restarting from that step.</b><span class="vcost">Boomi&#x27;s own bc-integration skill pack: &quot;Critical ExecutionRequest Limitation: The Boomi API cannot inject document payloads into process executions.&quot;</span></span><span class="vgo">Capability 20</span></a></li><li><a href="#cap-31"><span class="vn">5</span><span class="vbody"><b>A three-week-old complaint is answered from the run itself, searched by the customer&#x27;s own data, then fixed and shipped.</b><span class="vcost">Boomi caps searchable identifiers at &quot;a maximum of 20 tracked fields&quot;, and &quot;Tracked fields cannot be used with integration packs&quot;, which is the deployment shape this page is about.</span></span><span class="vgo">Capability 31</span></a></li><li><a href="#cap-04"><span class="vn">6</span><span class="vbody"><b>The developer-portal registration is driven from inside the session, and the client ID and secret land in the vault.</b><span class="vcost">Boomi&#x27;s own AI guidance: &quot;Some operations genuinely require the GUI: OAuth authorization flows ... it is flagging a real platform limitation.&quot;</span></span><span class="vgo">Capability 04</span></a></li></ol><p class="vfoot">Each line opens the row it came from, with the scenario and the documentation behind it. Read them sceptically: that is what the rest of this page is for.</p></section>
@@ -2345,5 +2330,6 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
   openFromHash(true);
 })();
 </script>
+<script src="/js/compare-switch.js" defer></script>
 </body>
 </html>
