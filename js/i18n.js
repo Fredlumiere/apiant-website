@@ -89,7 +89,13 @@
 
   // Paths that are NOT localized (no /{lang}/ copy exists) or must never
   // be rewritten. Matched against the start of a root-relative href.
-  var NO_LOCALE = /^\/(editor|admin|api|webhook|oauth|css|js|images|videos|fonts|appResources|sitemap|robots|blog\/feed\.xml|blog\/search-index\.json)\b/;
+  // 'compare' is here because the competitor comparison pages are deliberately
+  // NOT localized: they carry sourced, dated claims about named competitors, and a
+  // machine translation of a claim like that is a liability, not a feature. Without
+  // this entry every /compare/ link on a localized page was rewritten to a locale
+  // path that does not exist, so all 9 of them 404'd on all 19 locales, including
+  // the nav's own "Compare Platforms" item.
+  var NO_LOCALE = /^\/(editor|admin|api|webhook|oauth|css|js|images|videos|fonts|appResources|sitemap|robots|compare|blog\/feed\.xml|blog\/search-index\.json)\b/;
 
   /**
    * Site-wide language stickiness: when on a localized page, rewrite

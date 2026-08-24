@@ -72,9 +72,15 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (list) {
         if (!Array.isArray(list)) return;
+        /* Key on the slug wherever it sits in the href, not on the href starting with
+           /compare/. On a localized page js/i18n.js rewrites root-relative links to
+           carry the locale prefix, so the anchors became /fr/compare/prismatic, the
+           prefix-anchored selector matched nothing, and every competitor was appended
+           a second time. Dedupe has to survive anything that rewrites the path. */
         var have = {};
-        Array.prototype.forEach.call(menu.querySelectorAll('a[href^="/compare/"]'), function (a) {
-          have[a.getAttribute('href').replace('/compare/', '').replace(/\.html$/, '')] = 1;
+        Array.prototype.forEach.call(menu.querySelectorAll('a[href]'), function (a) {
+          var m = (a.getAttribute('href') || '').match(/\/compare\/([a-z0-9.-]+?)(?:\.html)?$/);
+          if (m) have[m[1]] = 1;
         });
         list.forEach(function (c) {
           if (!c || c.live === false || !c.slug) return;

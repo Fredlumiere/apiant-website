@@ -64,6 +64,12 @@ PROTECTED_TERMS = [
     'Zapier', 'Calendly', 'Zoom', 'Mailchimp', 'CRMConnect', 'ShopConnect',
     'ZoomConnect', 'CalendarConnect', 'AppConnect', 'MailConnect', 'FormApps',
     'MCP Servers', 'iPaaS', 'XPath', 'Co-Pilot',
+    # Competitors named on the /compare/ pages. Absent from this list, Google
+    # Translate treated them as common nouns and shipped Paragon as 'Dechado' in
+    # Spanish, Workato as 'Lavorare' in Italian, Cyclr as 'Pesepeda' in Indonesian
+    # and Boomi as a Bengali word for land. A brand name on a page that makes
+    # sourced claims about that brand has to survive translation verbatim.
+    'Prismatic', 'Tray.ai', 'Workato', 'Paragon', 'n8n', 'Cyclr', 'Boomi',
 ]
 
 BATCH_SIZE = 50  # Strings per API call
