@@ -755,7 +755,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
     
     <section class="verdict" aria-labelledby="verdictH">
       <span class="kicker">The verdict, if you read nothing else</span>
-      <h2 id="verdictH">Both platforms let an AI build the integration, so speed to the first one is not the difference. What differs is how deep it goes, whether one build carries that depth to hundreds of accounts, and how much of the life after build the AI still runs.</h2>
+      <h2 id="verdictH">Both platforms let an AI build the integration, so speed to the first one is not the difference. What differs is how deep it goes, how much logic it writes in one pass, whether one build carries that depth to hundreds of accounts, and how much of the life after build the AI still runs.</h2>
       <ol class="vlist">
         <li><a href="#cap-06">
           <span class="vn">1</span>
@@ -767,28 +767,33 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
           <span class="vbody"><b>And it stays a document, so changing it next year is a one-node edit, not a code review.</b>
           <span class="vcost">There the same change is a code edit, a build, a re-import, a publish, then an update to each customer instance.</span></span>
           <span class="vgo">Capability 01</span></a></li>
-        <li><a href="#cap-14">
+        <li><a href="#cap-16">
           <span class="vn">3</span>
+          <span class="vbody"><b>The AI writes a whole automation in one pass, not a step at a time: nested conditions, loops, subroutines any automation can call, and parallel fan-out with a real join, described in one document the platform compiles.</b>
+          <span class="vcost">There that logic is the TypeScript their AI emits, and a flow calling another flow stays inside a single integration.</span></span>
+          <span class="vgo">Capability 16</span></a></li>
+        <li><a href="#cap-14">
+          <span class="vn">4</span>
           <span class="vbody"><b>Two-way sync that does not loop, as a built-in.</b>
           <span class="vcost">Their own tutorial prevents the loop by prepending marker strings to records and checking for them on the way back in.</span></span>
           <span class="vgo">Capability 14</span></a></li>
         <li><a href="#cap-24">
-          <span class="vn">4</span>
+          <span class="vn">5</span>
           <span class="vbody"><b>Every branch proven before deploy, including the one that fires once a year.</b>
           <span class="vcost">Their documented replay reruns the whole flow with the original payload, and takes one argument: the execution ID.</span></span>
           <span class="vgo">Capability 24</span></a></li>
         <li><a href="#cap-31">
-          <span class="vn">5</span>
+          <span class="vn">6</span>
           <span class="vbody"><b>One build serves hundreds of accounts, each one's differences held in settings, and a fix reaches all of them in a single confirmed deploy, with rollback.</b>
           <span class="vcost">Publishing a version updates no customer; instances move one at a time through a Reconfigure screen, or by a script against their API.</span></span>
           <span class="vgo">Capability 31</span></a></li>
         <li><a href="#cap-39">
-          <span class="vn">6</span>
+          <span class="vn">7</span>
           <span class="vbody"><b>You can still answer what happened to one customer weeks later.</b>
           <span class="vcost">Their logs and step results are kept 14 days by default; longer retention is listed on their Enterprise tier.</span></span>
           <span class="vgo">Capability 39</span></a></li>
         <li><a href="#cap-57">
-          <span class="vn">7</span>
+          <span class="vn">8</span>
           <span class="vbody"><b>The AI does not stop at build: it tests every branch, deploys to the fleet, monitors, halts a runaway run, retries in bulk and rolls back.</b>
           <span class="vcost">Counted from their own published repositories, their agent tooling scaffolds, generates, compiles, deploys to an environment and tests; the phases after that are a person's.</span></span>
           <span class="vgo">Capability 57</span></a></li>
@@ -1380,7 +1385,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
     <div class="act-head">
       <span class="act-n">Act 3 of 8</span><span class="act-count"></span>
       <h2>Expressing business logic that survives the real world.</h2>
-      <p class="act-take">The rules that make your business unusual stay in a model your team can read, not code they must own.</p>
+      <p class="act-take">The rules that make your business unusual stay in a model your team can read, not code they must own, and the AI writes them a whole automation at a time: nested conditions, loops, subroutines callable from any automation and parallel fan-out are elements it emits in one document and then operates.</p>
       <p>Field-to-field mapping is the demo. The business is nested rules, parallel work, digests, approvals, waits, and the awkward requirement that makes your operation yours. The question for any platform: does that logic fit inside the model, where it stays visible and testable, or does it spill into code and patterns your team hand-builds?</p>
     </div>
 
@@ -1430,7 +1435,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
       <div class="cols">
         <div class="col col-a">
           <span class="kicker">On APIANT</span>
-          <ol><li>She asks for the overnight push with one report at the end, and the AI builds it: a parent that fans out 214 child runs, one per store with that store&#x27;s settings, and a wait step held by a latch. Or she assembles the same pattern herself and reads it back in the flow.</li><li>Either way the latch is a platform primitive: each child checks in and out of a shared counter, the wait step watches that counter until it empties, and the interval and the race conditions are the platform&#x27;s to get right rather than coordination logic your team writes, tests and maintains per integration. When the last of the 214 checks out, the latch releases and the reconciliation step runs exactly once, with every store&#x27;s result in hand.</li><li>Prices land in minutes, the report is on the director&#x27;s desk at 6am, and your team wrote no coordination logic.</li></ol>
+          <ol><li>She asks for the overnight push with one report at the end, and the AI builds it: a parent that fans out 214 child runs, one per store with that store&#x27;s settings, and a wait step held by a latch. The fan-out, the child runs and the latch group come out of the same build, described in one document rather than assembled step by step. Or she assembles the same pattern herself and reads it back in the flow.</li><li>Either way the latch is a platform primitive: each child checks in and out of a shared counter, the wait step watches that counter until it empties, and the interval and the race conditions are the platform&#x27;s to get right rather than coordination logic your team writes, tests and maintains per integration. When the last of the 214 checks out, the latch releases and the reconciliation step runs exactly once, with every store&#x27;s result in hand.</li><li>Prices land in minutes, the report is on the director&#x27;s desk at 6am, and your team wrote no coordination logic.</li></ol>
           <p class="outcome">Prices land in minutes, the report is on the director's desk at 6am, and nobody wrote coordination logic.</p>
         </div>
         <div class="col col-p"><span class="kicker cyan">On Prismatic</span><p><b class="noai">Not something their AI can do.</b> There is no join step to ask for. Their documented pattern is a fan-in your team designs on their persisted-data feature, whose own docs note what happens when two runs land together.</p></div>
@@ -1471,13 +1476,13 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
     <details class="cap" id="cap-15" data-act="3" data-tests="" data-kind="support" data-src="13"><summary><span class="cap-num">15</span><span class="cap-body"><span class="cap-label">Nested business rules stay readable in the flow</span><p class="cap-take">Your grandfathered-plan exceptions stay readable in the flow, so whoever inherits them can audit them without an engineer. <span class="cost">Elsewhere, the AI's version of the rules is code.</span></p><span class="cap-open">Open the scenario<svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span></span><span class="cap-meta"><span class="vchip vm" title="Not reachable from their AI: a person does this by hand">MANUAL</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Real business rules are nested, and field-mapping tools cannot express them.</p>
         <h4>15 · Conditional branching and nested loops</h4><div class="scenario"><span class="kicker faint">The scenario</span><img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/scenarios/cap13.webp" alt="Redlands Sanitation: nested tariff rules across 46 city contracts, audit clause looming" loading="lazy" width="1344" height="768"/><p class="scene-teaser">Redlands Sanitation: nested tariff rules across 46 city contracts, audit clause looming</p><p>The rule behind 46 municipal waste contracts is nested four deep and lives in a spreadsheet the billing manager maintains by hand. Get one wrong and that city reopens twelve months of invoices.</p></div>
-        <p>The billing manager states the rule, &quot;for each contract, for each service class, if the rate is grandfathered and the account is in credit,&quot; and the AI writes it as nested branches. Or she nests them herself in the editor. Either way the rule lives in the flow, readable by whoever inherits it.</p>
+        <p>The billing manager states the rule, &quot;for each contract, for each service class, if the rate is grandfathered and the account is in credit,&quot; and the AI writes it as nested branches. Or she nests them herself in the editor. A condition carries its nested boolean tree as one element, so a rule four levels deep is written in the same pass as the rest of the automation. Either way the rule lives in the flow, readable by whoever inherits it.</p>
         <p class="vs"><b class="noai">Not something their AI can do.</b> Their visual builder has loops and branches, and a person can nest them there. What their AI emits is TypeScript, so what it authors is readable to a developer, and to no other reader on the team.</p>
       </div></div></details>
       <details class="cap" id="cap-16" data-act="3" data-tests="" data-kind="support" data-src="14"><summary><span class="cap-num">16</span><span class="cap-body"><span class="cap-label">Shared logic fixed once, not nine times</span><p class="cap-take">One fix instead of nine, with nothing left behind in a forgotten copy to drift out of step. <span class="cost">Elsewhere, the same fix is applied nine times by hand.</span></p><span class="cap-open">Open the scenario<svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span></span><span class="cap-meta"><span class="vchip vm" title="Not reachable from their AI: a person does this by hand">MANUAL</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">The same twelve-step sequence appeared in nine automations and had to be fixed nine times.</p>
         <h4>16 · Reusable subroutines, shared across automations</h4><div class="scenario"><span class="kicker faint">The scenario</span><img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/scenarios/cap14.webp" alt="Halyard Staffing: one payroll rule change, nine drifting copies of one sequence" loading="lazy" width="1344" height="768"/><p class="scene-teaser">Halyard Staffing: one payroll rule change, nine drifting copies of one sequence</p><p>A twelve-step onboarding sequence sits inside nine automations. The April rule change meant the identical edit nine times, and copy seven had drifted: a welder paid at the wrong rate for five weeks.</p></div>
-        <p>Ask the AI to extract the twelve steps into one subroutine and repoint all nine automations at it, or do the extraction by hand. Either way the fix lands once, all nine inherit it, and the subroutine tests on its own.</p>
+        <p>Ask the AI to extract the twelve steps into one subroutine and repoint all nine automations at it, or do the extraction by hand. Either way the fix lands once, all nine inherit it, and the subroutine tests on its own. A subroutine is a typed unit with its own inputs and outputs, called from any automation in the account rather than only from the one it was born in, which is why the AI can write the caller and the callee in a single build. In a product we ship, one shared subroutine is called from six separate automations.</p>
         <p class="vs"><b class="noai">Not something their AI can do.</b> No prompt links flows across integrations, because their invocation stays inside a single integration. A person copies the shared sequence into each integration and fixes each copy.</p>
       </div></div></details>
       <details class="cap" id="cap-17" data-act="3" data-tests="" data-kind="support" data-src="17"><summary><span class="cap-num">17</span><span class="cap-body"><span class="cap-label">One daily digest instead of hundreds of alerts</span><p class="cap-take">Customers get one 5pm summary instead of 400 pings, and nothing is lost when two runs land at once. <span class="cost">Elsewhere, the digest is assembled on 64MB of shared state.</span></p><span class="cap-open">Open the scenario<svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span></span><span class="cap-meta"><span class="vchip vm" title="Not reachable from their AI: a person does this by hand">MANUAL</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
@@ -1531,7 +1536,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
 
     <div class="beat">
       <span class="kicker">At scale, this means</span>
-      <p>Logic complexity does not convert into code ownership. The awkward rules that make your business yours stay inside a model that your people can read, your tests can cover, and your AI can safely change.</p>
+      <p>Logic complexity does not convert into code ownership. The awkward rules that make your business yours stay inside a model that your people can read, your tests can cover, and your AI can safely change. Two of the integrations we ship are built this way. One runs 65 automations across 8 folders, with shared subroutines called from many of them and an installer automation past 100 steps, in production and versioned through v3.9.3. The other was specified in a one-hour meeting and existed two working days later, tested branch by branch, with its own connector, 46 automations and 15 event metrics behind it.</p>
     </div>
   </div>
 </section>
@@ -1968,7 +1973,7 @@ mark{background:rgba(245,183,72,.28);color:var(--text);border-radius:2px;padding
         <p>Ask with the claim reference and the AI searches every account at once for that value, returning the runs that touched it. Eoin can run the same search. Correlation across 74 accounts is a query, not a shift.</p>
         <p class="vs">Their agent can search log text across customers through their API. Matching on what a step's payload contained is not a documented search, so it pulls executions and scans them, one page at a time.</p>
       </div></div></details>
-      <details class="cap" id="cap-47" data-act="6" data-tests="" data-kind="support" data-src="46"><summary><span class="cap-num">47</span><span class="cap-body"><span class="cap-label">Ask questions of your own data instantly</span><p class="cap-take">A support question that used to need a database ticket and two days gets answered in the meeting. <span class="cost">Elsewhere, you get what was logged, and nothing beyond it.</span></p><span class="cap-open">Open the scenario<svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span></span><span class="cap-meta"><span class="vchip vl" title="Their AI can get there, with more steps">LONGER</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
+      <details class="cap" id="cap-47" data-act="6" data-tests="" data-kind="support" data-src="46"><summary><span class="cap-num">47</span><span class="cap-body"><span class="cap-label">Ask questions of your own data in the meeting</span><p class="cap-take">A support question that used to need a database ticket and two days gets answered in the meeting. <span class="cost">Elsewhere, you get what was logged, and nothing beyond it.</span></p><span class="cap-open">Open the scenario<svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span></span><span class="cap-meta"><span class="vchip vl" title="Their AI can get there, with more steps">LONGER</span><span class="chev">&#9662;</span></span></summary><div class="cap-detail"><div class="sup-detail">
         <p class="problem">Diagnosis stalled waiting for someone with database access.</p>
         <h4>47 · Ad-hoc data queries to validate a hypothesis</h4><div class="scenario"><span class="kicker faint">The scenario</span><img class="scene-photo" src="https://kereljzjgeerrdnssttu.supabase.co/storage/v1/object/public/blog-media/compare/scenarios/cap46.webp" alt="Northfell Polytechnic: 260 students without timetables on day two of term" loading="lazy" width="1344" height="768"/><p class="scene-teaser">Northfell Polytechnic: 260 students without timetables on day two of term</p><p>The overnight sync left 260 students without timetable records, and a queue is forming at the registry counter on day two of term. The registrar has a theory she cannot test without database access.</p></div>
         <p>Is it the part-time cohort at one campus? The AI answers in seconds with a guardrailed read-only query, and Alison can run the same query herself. Tested in the meeting, not in a database ticket.</p>
