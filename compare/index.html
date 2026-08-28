@@ -976,10 +976,13 @@ a.mx-cell:hover{background:rgba(255,255,255,.06)}
    you asked for ends up behind the navbar. scroll-margin alone cannot fix that, since
    the position it computed was right at the time and wrong a moment later. */
 (function(){
-  var IDS = {'#matrix-intro':1, '#capability-matrix':1};
+  // #capability-matrix is the section id, and the section opens with the analogy, so a
+  // link to it landed on a car driving to Denver. Both hashes resolve to the paragraph
+  // that sets up the table, with the table itself immediately below.
+  var IDS = {'#matrix-intro':'#matrix-intro', '#capability-matrix':'#matrix-intro'};
   function align(){
     if (!IDS[location.hash]) return;
-    var el = document.querySelector(location.hash);
+    var el = document.querySelector(IDS[location.hash]) || document.querySelector(location.hash);
     if (!el) return;
     var nav = document.querySelector('.navbar');
     var pad = (nav ? nav.getBoundingClientRect().height : 0) + 16;
