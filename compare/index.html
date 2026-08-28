@@ -88,25 +88,55 @@ a.ccard:hover{border-color:rgba(26,183,89,.5);text-decoration:none;transform:tra
    more steps, b3 a person in their product, b2 a script you own, b1 nothing
    published. The APIANT column is pinned so the comparison survives scrolling. */
 .mx-section{padding-top:8px}
+/* The table is the widest thing on the site, so this section alone opens out to
+   1440 while its prose stays at a readable measure. At that width all fifteen
+   columns fit and the scroll container has nothing to scroll. */
+.mx-section .wrap{max-width:1440px}
+.mx-section h2,.mx-section .sub,.mx-section .mx-legend{max-width:860px}
 .mx-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 18px}
 .mx-key{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
 .mx-key i{width:22px;height:8px;border-radius:3px;flex:none}
-.mx-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:var(--card)}
-.mx-table{border-collapse:separate;border-spacing:0;width:100%;min-width:1180px;font-size:13px}
+.mx-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:var(--card);
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent}
+.mx-scroll::-webkit-scrollbar{height:10px}
+.mx-scroll::-webkit-scrollbar-track{background:transparent}
+.mx-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:99px;
+  border:3px solid transparent;background-clip:content-box}
+.mx-scroll:hover::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);background-clip:content-box}
+/* The content sets the real floor at about 1210: the 250px capability column, plus
+   fourteen columns no narrower than a meter and a header like "Power Automate". The
+   min-width is only a backstop, and it is deliberately under that floor so it never
+   adds width the table does not need and so turns into a scrollbar. */
+.mx-table{border-collapse:separate;border-spacing:0;width:100%;min-width:1120px;font-size:13px}
 .mx-table th,.mx-table td{padding:0;vertical-align:middle}
+/* sticky here buys the horizontal pin below, not a floating header row: overflow-x on
+   the scroll box makes it the containing block, so top has nothing to scroll against. */
 .mx-table thead th{position:sticky;top:0;z-index:3;background:#101314;
   border-bottom:1px solid var(--border);padding:11px 8px;font-weight:600;font-size:12px;
   letter-spacing:.01em;text-align:center;white-space:nowrap}
-.mx-cap-h{text-align:left!important;padding-left:16px!important;min-width:250px}
+/* Capability and APIANT stay put while the vendors scroll under them: a meter is
+   meaningless once you cannot see which row it is on or what it is measured against.
+   Both offsets depend on the capability column being exactly 250px, which is why the
+   width is pinned at both ends rather than left to the auto layout. */
+.mx-cap-h,.mx-cap{width:250px;min-width:250px;max-width:250px;
+  position:sticky;left:0;z-index:2}
+.mx-cap-h{text-align:left!important;padding-left:22px!important}
+.mx-us-h,.mx-td.mx-us{position:sticky;left:250px;z-index:2;
+  border-right:1px solid var(--border);box-shadow:12px 0 14px -12px rgba(0,0,0,.85)}
+/* qualified by thead th, which is more specific than the class alone and would
+   otherwise hold these two at z-index 3 and let the vendor headers paint over them */
+.mx-table thead th.mx-cap-h,.mx-table thead th.mx-us-h{z-index:5}
 .mx-v-h a{color:var(--muted);text-decoration:none}
 .mx-v-h a:hover{color:var(--text)}
-.mx-us-h{color:var(--green)!important;background:rgba(26,183,89,.10)!important}
-.mx-cap{text-align:left;padding:12px 14px 12px 16px;border-bottom:1px solid rgba(255,255,255,.05);
-  min-width:250px;font-weight:400}
+/* Pinned cells sit over scrolling content, so their fills have to be opaque: these
+   are the translucent card and green tints resolved against the page background. */
+.mx-us-h{color:var(--green)!important;background:#11231b!important}
+.mx-cap{text-align:left;padding:12px 14px 12px 22px;border-bottom:1px solid rgba(255,255,255,.05);
+  background:#131313;font-weight:400}
 .mx-cap b{display:block;color:var(--text);font-weight:600;font-size:13.5px;line-height:1.35}
 .mx-cap span{display:block;color:var(--faint);font-size:11.5px;line-height:1.45;margin-top:3px}
 .mx-td{padding:7px 6px;border-bottom:1px solid rgba(255,255,255,.05);text-align:center}
-.mx-td.mx-us{background:rgba(26,183,89,.07)}
+.mx-td.mx-us{background:#141f18}
 .mx-cell{display:flex;flex-direction:column;align-items:center;gap:4px;padding:5px 4px;
   border-radius:7px;text-decoration:none;min-width:62px}
 a.mx-cell:hover{background:rgba(255,255,255,.06)}
@@ -124,7 +154,10 @@ a.mx-cell:hover{background:rgba(255,255,255,.06)}
 @media(max-width:700px){
   .mx-scroll{border-radius:10px}
   .mx-table{min-width:1020px;font-size:12px}
-  .mx-cap{min-width:190px}
+  .mx-cap-h,.mx-cap{width:176px;min-width:176px;max-width:176px}
+  .mx-cap-h{padding-left:14px!important}
+  .mx-cap{padding-left:14px;padding-right:10px}
+  .mx-us-h,.mx-td.mx-us{left:176px}
   .mx-cap b{font-size:12.5px}
   .mx-cap span{display:none}
   .mx-legend{gap:6px 12px}
