@@ -100,9 +100,11 @@ def load_existing_translations(lang):
     path = I18N_DIR / f'{lang}.json'
     if path.exists():
         data = json.load(open(path))
-        for k, v in data.items():
-            if k != v:
-                translations[k] = v
+        # Cache every entry, including ones whose translation equals the
+        # source. Brand names, part numbers and the like translate to
+        # themselves; skipping them here dropped them from the cache, so
+        # every CI run re-sent ~3.3k strings and paid for identical results.
+        translations.update(data)
 
     return translations
 
