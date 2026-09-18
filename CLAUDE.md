@@ -21,8 +21,8 @@ This is the **APIANT marketing website**, a static HTML site originally built wi
 - **JS:** `js/apiant.js` (manages sign-in/dashboard button state). jQuery 3.5.1 loaded from CDN. Heavy use of inline `<script>` blocks per page.
 - **Hosted product widgets (`js/calendarconnect-widget-*.js`):** not part of this site. These are served from `apiant.com/js/` for embedding on *customer* websites. Source of truth is the `calendarconnect-mindbody-calendly` repo, `test/optiforme-demo/calendarconnect-widget.js` (the localisable v4.0 build, the one with `data-label-*` support; the `test/apiant-gym-demo/` build is the same widget without it, so it is a subset). The copies here are published artifacts and must match the source byte for byte. Do not edit them here, do not minify, transpile, reformat or lint-fix them, and exclude them from any pipeline that touches `js/`. The header comment is customer-facing documentation and must survive. `-4.0.js` is the immutable pinned build, `-4.js` is the floating 4.x alias customers embed. To ship a change, edit the source repo and re-copy both files.
 - **Fonts:** Lato, Open Sans, DM Sans, Inter via Google Fonts WebFont loader.
-- **Analytics:** Google Analytics (G-G902ZQ3PZZ), Smartlook session recording, HubSpot (5004658). All loaded conditionally via `js/cookie-consent.js` based on user consent.
-- **Cookie Consent:** Self-hosted banner (`js/cookie-consent.js`, `css/cookie-consent.css`). Controls loading of GA, Smartlook, HubSpot, and Facebook Pixel. Consent stored in `apiant_cc` cookie.
+- **Analytics:** Google Analytics (G-G902ZQ3PZZ), HubSpot (5004658). Both loaded conditionally via `js/cookie-consent.js` based on user consent. Smartlook session recording was removed in September 2026 when Cisco ended the contract; there is no replacement recorder.
+- **Cookie Consent:** Self-hosted banner (`js/cookie-consent.js`, `css/cookie-consent.css`). Controls loading of GA, HubSpot, and Facebook Pixel. Consent stored in `apiant_cc` cookie.
 - **Forms:** Google reCAPTCHA v2, submissions go to APIANT webhooks.
 - **Legal content:** Privacy, Cookie Policy, Terms of Service, and DPA pages are native HTML (no third-party embeds).
 
@@ -155,7 +155,7 @@ From the revision plan (these apply to all page copy):
 
 ## Localization (i18n)
 
-The site is localized into 20 languages (English + 19). Localized pages live in subdirectories (`/es/`, `/fr/`, `/de/`, etc.).
+The site is localized into 21 languages (English + 20). Localized pages live in subdirectories (`/es/`, `/fr/`, `/de/`, etc.). Arabic and Hebrew are RTL.
 
 **Translations run in CI on every push to `main`.** `.github/workflows/deploy.yml` runs `scripts/update_translations.sh` against the new English source, auto-commits the regenerated locale files with `[skip ci]` to avoid recursion, then rsyncs to apiant.com. `GOOGLE_TRANSLATE_API_KEY` lives in GitHub Actions secrets; collaborators do not need a local key.
 
@@ -186,7 +186,15 @@ Key files:
 - `js/i18n.js` - browser language detection, auto-redirect, language switcher
 - `css/rtl.css` - RTL support for Arabic
 
-Languages: es, fr, zh, hi, ar, bn, pt, ru, ja, de, ko, it, nl, tr, pl, vi, th, id, sv
+`localize.py` also owns four things on every page it touches, English included, and
+regenerates them on each push. Do not hand-edit them in the HTML:
+`og:url` (always the page's own canonical, per locale), `og:type` (exactly one),
+the FAQPage JSON-LD (generated from the rendered FAQ text so it cannot drift from
+what a visitor reads, in whatever language), and the
+`<style data-apiant="lang-switcher-css">` block. Details and the reasoning:
+`docs/site-maintenance-guide.md`.
+
+Languages: es, fr, zh, hi, ar, bn, pt, ru, ja, de, ko, it, nl, tr, pl, vi, th, id, sv, he
 
 ## Important Conventions
 

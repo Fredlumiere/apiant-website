@@ -404,6 +404,34 @@ def add_hreflang_tags(soup, page_path):
     head.append('\n')
 
 
+SWITCHER_STYLE_MARK = 'lang-switcher-css'
+
+
+def _switcher_css_rules():
+    """Every rule declared by SWITCHER_CSS, as a set, for orphan detection."""
+    return {r.strip() for r in re.findall(r'[^{}]+\{[^}]*\}', SWITCHER_CSS) if r.strip()}
+
+
+def _is_orphaned_switcher_css(css):
+    """True when a <style> block is a leftover copy of our own switcher CSS.
+
+    Builds before this fix removed the injected CSS by deleting the lines that
+    mentioned '.lang-switcher'. Everything else SWITCHER_CSS declares
+    ('.lang-option*', and the page CSS that had been folded into the constant)
+    survived, the block was kept because it was not empty, and a fresh copy was
+    appended on top. That left one orphan per run: 250 of them, 92% of some
+    pages, before anyone noticed.
+
+    A block only counts as an orphan when every rule in it is one SWITCHER_CSS
+    already declares, so a page's own CSS is never at risk.
+    """
+    body = (css or '').strip()
+    if not body.startswith('.lang-option'):
+        return False
+    rules = {r.strip() for r in re.findall(r'[^{}]+\{[^}]*\}', body) if r.strip()}
+    return bool(rules) and rules <= _switcher_css_rules()
+
+
 def add_language_switcher(soup, lang_code):
     """Insert language switcher into the navigation bar."""
     # Remove any existing switchers and their CSS (from previous runs)
@@ -411,6 +439,10 @@ def add_language_switcher(soup, lang_code):
         existing.decompose()
     for existing in soup.find_all('style'):
         css = existing.string or ''
+        # Blocks we injected: drop whole, by marker or by signature.
+        if existing.get('data-apiant') == SWITCHER_STYLE_MARK or _is_orphaned_switcher_css(css):
+            existing.decompose()
+            continue
         if '.lang-switcher' not in css:
             continue
         # Strip only the lang-switcher rules (and their media queries) from this block,
@@ -428,7 +460,10 @@ def add_language_switcher(soup, lang_code):
             cleaned,
         )
         cleaned = cleaned.strip()
-        if cleaned:
+        # What is left after stripping the '.lang-switcher' lines is usually
+        # the rest of our own injected block, which is what used to survive as
+        # an orphan. Drop it rather than re-emit it.
+        if cleaned and not _is_orphaned_switcher_css(cleaned):
             existing.string = cleaned
         else:
             existing.decompose()
@@ -440,6 +475,7 @@ def add_language_switcher(soup, lang_code):
     head = soup.find('head')
     if head:
         style_tag = soup.new_tag('style')
+        style_tag['data-apiant'] = SWITCHER_STYLE_MARK
         style_tag.string = SWITCHER_CSS
         head.append(style_tag)
 
@@ -564,6 +600,119 @@ def translate_data_attrs(soup, translations):
                 el[attr] = translated
 
 
+def _faq_pairs_from_dom(soup):
+    """Question/answer pairs exactly as the page renders them.
+
+    Two markup shapes are in use: the Webflow accordion on the API-App product
+    pages (.question-text followed by .answer-text) and the plainer .faq-item
+    block on the partner hub pages (h3 + p).
+    """
+    pairs = []
+
+    for q in soup.select('.question-text'):
+        holder = q.find_parent('div')
+        answer = None
+        node = holder.find_next('div', class_='answer-text') if holder else None
+        if node is not None:
+            answer = node
+        if answer is None:
+            continue
+        qt = answer_text = None
+        qt = q.get_text(' ', strip=True)
+        answer_text = answer.get_text(' ', strip=True)
+        if qt and answer_text:
+            pairs.append((qt, answer_text))
+
+    for item in soup.select('.faq-item'):
+        q = item.find(['h2', 'h3', 'h4'])
+        a = item.find('p')
+        if q and a:
+            qt = q.get_text(' ', strip=True)
+            at = a.get_text(' ', strip=True)
+            if qt and at:
+                pairs.append((qt, at))
+
+    return pairs
+
+
+def rebuild_faq_jsonld(soup):
+    """Regenerate any FAQPage block from the text the page actually renders.
+
+    Run after translation, so a Spanish page carries Spanish schema rather than
+    the English source's. Google requires FAQ schema to match visible content,
+    and generating it from the DOM is the only way the two cannot drift.
+
+    Leaves the page alone when there is no FAQPage block or nothing to read.
+    """
+    pairs = _faq_pairs_from_dom(soup)
+    if not pairs:
+        return
+
+    for script in soup.find_all('script', attrs={'type': 'application/ld+json'}):
+        raw = script.string or ''
+        if '"FAQPage"' not in raw:
+            continue
+        try:
+            data = json.loads(raw)
+        except (ValueError, TypeError):
+            continue
+        if data.get('@type') != 'FAQPage':
+            continue
+        data['mainEntity'] = [
+            {
+                '@type': 'Question',
+                'name': q,
+                'acceptedAnswer': {'@type': 'Answer', 'text': a},
+            }
+            for q, a in pairs
+        ]
+        script.string = '\n' + json.dumps(data, indent=2, ensure_ascii=False) + '\n'
+
+
+def normalize_open_graph(soup):
+    """Keep the Open Graph tags honest and singular.
+
+    og:url must be the page's own absolute canonical URL. A bare slug is not a
+    URL, and a locale page pointing at the English URL tells Facebook and
+    LinkedIn to fold every locale's shares onto one page. og:type must appear
+    once; Webflow's original tag plus a later hand-added one gave us two.
+
+    Runs after the canonical is set, so it always has a canonical to read.
+    Idempotent.
+    """
+    head = soup.find('head')
+    if not head:
+        return
+
+    def drop(tag):
+        """Remove a tag and the blank line it leaves behind, so re-running
+        this does not slowly pad the <head> with empty lines."""
+        nxt = tag.next_sibling
+        if isinstance(nxt, NavigableString) and not nxt.strip():
+            nxt.extract()
+        tag.decompose()
+
+    # og:type: keep the first, drop the rest.
+    for extra in soup.find_all('meta', attrs={'property': 'og:type'})[1:]:
+        drop(extra)
+
+    canonical = soup.find('link', rel='canonical')
+    if not canonical or not canonical.get('href'):
+        return
+    href = canonical['href']
+
+    og_urls = soup.find_all('meta', attrs={'property': 'og:url'})
+    if og_urls:
+        og_urls[0]['content'] = href
+        for extra in og_urls[1:]:
+            drop(extra)
+    else:
+        tag = soup.new_tag('meta')
+        tag['property'] = 'og:url'
+        tag['content'] = href
+        head.append(tag)
+
+
 def process_page(html_content, lang, translations, page_path):
     """Process a single page: translate, fix URLs, add hreflang, add switcher."""
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -615,6 +764,9 @@ def process_page(html_content, lang, translations, page_path):
         canonical['href'] = strip_html_ext(f'{BASE_URL}/{lang}/{page_path}')
         head.append(canonical)
 
+    rebuild_faq_jsonld(soup)
+    normalize_open_graph(soup)
+
     return str(soup)
 
 
@@ -632,6 +784,9 @@ def update_english_page(html_content, page_path):
 
     # Add language switcher
     add_language_switcher(soup, 'en')
+
+    rebuild_faq_jsonld(soup)
+    normalize_open_graph(soup)
 
     return str(soup)
 

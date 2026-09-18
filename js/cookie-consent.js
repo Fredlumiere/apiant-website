@@ -1,7 +1,7 @@
 /**
  * APIANT Cookie Consent Banner
  * Self-hosted, GDPR/CCPA compliant cookie consent management.
- * Controls loading of Google Analytics, Smartlook, HubSpot, and Facebook Pixel.
+ * Controls loading of Google Analytics, HubSpot, and Facebook Pixel.
  */
 (function() {
   'use strict';
@@ -9,6 +9,9 @@
   var COOKIE_NAME = 'apiant_cc';
   var COOKIE_DAYS = 365;
 
+  // SL_C_... is Smartlook's. Smartlook was removed in September 2026 (Cisco ended
+  // the contract on 2026-08-31); the cookie stays on this list so a returning
+  // visitor who withdraws analytics consent still gets their old one cleared.
   var ANALYTICS_COOKIES = ['_ga', '_ga_G902ZQ3PZZ', '_ga_R3WL536TPE', 'SL_C_23361dd035530_SID'];
   var FUNCTIONAL_COOKIES = ['hubspotutk', 'messagesUtk'];
   var ADVERTISING_COOKIES = ['_fbp'];
@@ -90,20 +93,6 @@
     }
   }
 
-  function loadSmartlook() {
-    if (window.smartlook) return;
-    window.smartlook = function() { window.smartlook.api.push(arguments); };
-    window.smartlook.api = [];
-    var s = document.createElement('script');
-    s.async = true;
-    s.type = 'text/javascript';
-    s.charset = 'utf-8';
-    s.src = 'https://rec.smartlook.com/recorder.js';
-    document.head.appendChild(s);
-    window.smartlook('init', '61b74e67b734857ecfff330d0bf2543efa3e601e');
-    window.smartlook('record', { forms: true, numbers: true, emails: false, ips: true });
-  }
-
   function loadHubSpot() {
     if (loaded.functional) return;
     loaded.functional = true;
@@ -136,7 +125,6 @@
 
     if (consent.analytics) {
       loadGA();
-      loadSmartlook();
     } else {
       denyGA();
       deleteCookies(ANALYTICS_COOKIES);
@@ -173,7 +161,7 @@
           '<div class="cc-prefs" id="cc-prefs">' +
             '<div class="cc-cats">' +
               ccCat('essential', 'Essential', 'Login sessions and core site functionality. Always on.', true, true) +
-              ccCat('analytics', 'Analytics', 'Google Analytics and Smartlook help us understand how you use the site.', false, false) +
+              ccCat('analytics', 'Analytics', 'Google Analytics helps us understand how you use the site.', false, false) +
               ccCat('functional', 'Functional', 'HubSpot powers visitor identification and form interactions.', false, false) +
               ccCat('advertising', 'Advertising', 'Facebook Pixel measures ad campaign effectiveness.', false, false) +
             '</div>' +

@@ -11,7 +11,7 @@
 5. [Calendly Scheduling Embeds](#calendly-scheduling-embeds)
 6. [reCAPTCHA](#recaptcha)
 7. [Google Analytics](#google-analytics)
-8. [Smartlook Session Recording](#smartlook-session-recording)
+8. [Smartlook Session Recording (removed)](#smartlook-session-recording-removed)
 9. [HubSpot Tracking](#hubspot-tracking)
 10. [APIANT Dynamic Script](#apiant-dynamic-script)
 11. [External Scripts Summary](#external-scripts-summary)
@@ -244,24 +244,22 @@ Loaded on every page in the `<head>`:
 
 No custom events are tracked beyond pageviews. Form submissions go to APIANT webhooks, not GA events.
 
-## Smartlook Session Recording
+## Smartlook Session Recording (removed)
 
-**Project ID:** `61b74e67b734857ecfff330d0bf2543efa3e601e`
+Smartlook was removed from the site in September 2026. Cisco ended the contract
+on 2026-08-31, with last day of support 2027-08-31, and the capability moved
+into Splunk Observability Cloud. No replacement session recorder has been
+adopted.
 
-Loaded on most pages in the `<head>` after the page-specific `<style>` block:
-```html
-<script>
-  window.smartlook||(function(d){
-    var o=smartlook=function(){o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-    c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
-  })(document);
-  smartlook('init', '61b74e67b734857ecfff330d0bf2543efa3e601e');
-  smartlook('record', { forms: true, numbers: true, emails: true, ips: true });
-</script>
-```
+The loader is gone from `js/cookie-consent.js` and from every page. One trace is
+deliberately left: the `SL_C_23361dd035530_SID` cookie name stays in that file's
+`ANALYTICS_COOKIES` list, so a returning visitor who withdraws analytics consent
+still gets their old Smartlook cookie cleared. Drop it once the cookie's one
+year TTL has expired for everyone, so after September 2027.
 
-**Recording settings:** Forms, numbers, emails, and IPs are all recorded (not masked). This is configured in the `smartlook('record', ...)` call.
+Smartlook was also removed from the privacy policy's third-party list, the
+cookie policy's cookie table and opt-out list, and the DPA's sub-processor
+table, because leaving it there would name a processor the site no longer uses.
 
 ## HubSpot Tracking
 
@@ -301,7 +299,6 @@ All external scripts loaded on the site, in order of loading:
 | WebFont loader | Google | Font loading | `<head>` |
 | reCAPTCHA | Google | Form spam protection | `<head>` |
 | GA4 | Google | Analytics | `<head>` |
-| Smartlook | Smartlook | Session recording | `<head>` |
 | jQuery 3.5.1 | Cloudfront CDN | DOM manipulation, AJAX | Before `</body>` |
 | `js/apiant.js` | Local | Webflow runtime | Before `</body>` |
 | HubSpot | HubSpot | Visitor tracking | Before `</body>` |

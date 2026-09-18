@@ -6,20 +6,24 @@
 
 1. [No Templating System](#no-templating-system)
 2. [Head Boilerplate](#head-boilerplate)
-3. [Navigation Bar](#navigation-bar)
-4. [Footer](#footer)
-5. [Adding a New Page](#adding-a-new-page)
-6. [CSS Architecture](#css-architecture)
-7. [Page-Specific Styles](#page-specific-styles)
-8. [Webflow Class Conventions](#webflow-class-conventions)
-9. [Images and Assets](#images-and-assets)
-10. [Cross-Page Update Checklist](#cross-page-update-checklist)
+3. [Structured Data and Open Graph (enforced by the build)](#structured-data-and-open-graph-enforced-by-the-build)
+4. [The language-switcher `<style>` block](#the-language-switcher-style-block)
+5. [Navigation Bar](#navigation-bar)
+6. [Footer](#footer)
+7. [Adding a New Page](#adding-a-new-page)
+8. [CSS Architecture](#css-architecture)
+9. [Page-Specific Styles](#page-specific-styles)
+10. [Webflow Class Conventions](#webflow-class-conventions)
+11. [Images and Assets](#images-and-assets)
+12. [Cross-Page Update Checklist](#cross-page-update-checklist)
 
 ---
 
 ## No Templating System
 
-This site has **no includes, partials, or build system**. Every HTML file is standalone. The navigation bar, footer, head boilerplate, and popup forms are duplicated across all 43+ pages. When any shared element changes, the update must be applied to every page manually.
+This site has **no includes, partials, or build system for page content**. Every HTML file is standalone. The navigation bar, footer, head boilerplate, and popup forms are duplicated across all 94 English pages. When any shared element changes, the update must be applied to every page manually.
+
+There is one exception worth knowing, because it is the closest thing to a template the site has. `scripts/localize.py` reads each English page and writes the 20 localised copies, and while it is there it also normalises the hreflang tags, the canonical, the Open Graph tags, the language switcher and the FAQ structured data. Anything that function owns is regenerated on every push to `main`, so hand-editing it in the HTML is wasted work. See [Structured Data and Open Graph](#structured-data-and-open-graph-enforced-by-the-build) for what it owns.
 
 **Pages that contain shared elements (43 total):**
 - Root: `index.html`, `apps.html`, `ai.html`, `formapps.html`, `mcp-servers.html`, `for-saas.html`, `for-si.html`, `for-enterprises.html`
@@ -83,17 +87,71 @@ Every page includes the same `<head>` structure in this order:
 
   <!-- 7. Page-specific <style> block -->
   <style>/* page styles */</style>
-
-  <!-- 8. Smartlook (on most pages) -->
-  <script>
-    window.smartlook||(function(d){...})(...);
-    smartlook('init', '61b74e67b734857ecfff330d0bf2543efa3e601e');
-    smartlook('record', { forms: true, numbers: true, emails: true, ips: true });
-  </script>
 </head>
 ```
 
 **Important:** CSS paths are relative. Pages at the root use `css/apiant.css`, pages in `platform/` use `../css/apiant.css`, and pages in `apipartners/mindbody/` use `../../css/apiant.css`. Get this wrong and the page loses all styling.
+
+## Structured Data and Open Graph (enforced by the build)
+
+Three invariants hold on every page the localisation pipeline touches. They are
+enforced in `scripts/localize.py`, which runs in CI on every push to `main`, so
+you do not hand-maintain them and you should not hand-edit them:
+
+1. **`og:url` equals the page's own canonical URL.** Absolute, and per locale:
+   the Spanish page points at the Spanish URL, not the English one. Set by
+   `normalize_open_graph()`. A page with no canonical is left alone; the
+   function never invents one.
+2. **`og:type` appears exactly once.** Webflow emitted one and a later hand-edit
+   added a second on all 20 API-partner pages. `normalize_open_graph()` keeps
+   the first and drops the rest.
+3. **FAQPage JSON-LD is generated from the rendered FAQ, never written by
+   hand.** `rebuild_faq_jsonld()` reads the question and answer text out of the
+   DOM after translation and rewrites the block, so a Spanish page carries
+   Spanish schema and the schema cannot drift from what a visitor reads. Google
+   requires FAQ schema to match visible content; generating it is the only way
+   that stays true.
+
+Two FAQ markup shapes are recognised: the Webflow accordion on the API-App
+product pages (`.question-text` followed by `.answer-text`) and the simpler
+`.faq-item` block (`h3` + `p`) on the partner hub pages. A third shape would be
+invisible to the generator, so reuse one of these two.
+
+To add a FAQ to a page, write the visible accordion and add an empty FAQPage
+block; the next build fills it in. To check the current state without a build:
+
+```bash
+# every FAQPage entry must be findable in the page's own rendered text
+python3 - <<'EOF'
+import re, json, glob, html
+for p in glob.glob('apipartners/*/*.html'):
+    h = open(p).read()
+    vis = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', re.sub(r'<(script|style).*?</\1>', '', h, flags=re.S)))
+    for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', h, re.S):
+        if '"FAQPage"' not in b: continue
+        for e in json.loads(b)['mainEntity']:
+            if e['name'] not in vis: print('NOT ON PAGE:', p, e['name'][:60])
+EOF
+```
+
+## The language-switcher `<style>` block
+
+`add_language_switcher()` appends one `<style data-apiant="lang-switcher-css">`
+block per page. **Do not remove the `data-apiant` attribute**: it is how the
+next build finds its own block to replace.
+
+Before this marker existed the build removed the previous block by deleting the
+lines that mentioned `.lang-switcher`. Everything else the block declared
+survived, the leftover was kept because it was not empty, and a fresh copy went
+on top. One dead 3.4 KB block accumulated per deploy: by September 2026 there
+were 250 of them on some pages, 92% of the bytes of `/es/platform/admin-console`,
+and 757 MB across the repo. If you ever change what that block contains, change
+it in `SWITCHER_CSS` and leave the removal logic matching on the marker.
+
+`SWITCHER_CSS` also carries `.listed-addons`, `.pricing-holder` and
+`.addon-container-copy` rules that have nothing to do with the switcher; they
+were folded into the constant at some point and every page now depends on being
+served them. Untangle that before trusting the constant's name.
 
 ## Navigation Bar
 

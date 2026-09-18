@@ -686,7 +686,6 @@ All marked `noindex`. Shown after a user signs up for a free trial.
 
 ### Analytics & Tracking
 - Google Analytics: G-G902ZQ3PZZ
-- Smartlook session recording (records forms, numbers, IPs; not emails)
 - HubSpot embed code (account 5004658)
 - Google reCAPTCHA v2 on forms
 

@@ -147,7 +147,6 @@ IMPORTANT: Do not touch any of the following:
 - Form logic and webhook URLs
 - reCAPTCHA setup
 - HubSpot tracking script
-- Smartlook tracking
 - Google Analytics
 - Recurly billing URLs and pricing JavaScript
 - data.js globalOverrides script
@@ -870,7 +869,7 @@ PRICING DUAL CTA (replaces single button inside existing pricing section):
 
 === PRESERVE EVERYTHING ELSE ===
 
-Do not touch any form logic, webhook URLs, reCAPTCHA setup, HubSpot tracking, Smartlook, Google Analytics, Recurly billing, data.js globalOverrides, or existing Webflow CSS classes. Only modify CTA copy, section ordering, button anchor targets, and inject the new sections. The page must still function exactly as before.
+Do not touch any form logic, webhook URLs, reCAPTCHA setup, HubSpot tracking, Google Analytics, Recurly billing, data.js globalOverrides, or existing Webflow CSS classes. Only modify CTA copy, section ordering, button anchor targets, and inject the new sections. The page must still function exactly as before.
 
 Output the fully updated HTML file when done.
 ```
