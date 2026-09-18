@@ -98,7 +98,13 @@ privacy.html / cookie-policy.html / tos.html    Legal pages
 
 ## Servlet Template Pages
 
-`connect/servletTemplateConnect.html` and `connections/servletTemplateConnections.html` are server-side templates. The APIANT backend replaces placeholders like `{TEMPLATE_FROM_APP}`, `{TEMPLATE_TO_APP}`, `{TEMPLATE_FROM_ICON}`, etc. to generate unique SEO pages for every app combination. Do not change the `{TEMPLATE_*}` placeholder syntax.
+The APIANT backend replaces placeholders like `{TEMPLATE_FROM_APP}`, `{TEMPLATE_TO_APP}`, `{TEMPLATE_FROM_ICON}` to generate a unique SEO page for every app combination: 39,006 `/connect/<A>-to-<B>` pages and 198 `/connections/<A>` pages. Do not change the `{TEMPLATE_*}` placeholder syntax.
+
+**Edit the copies under `appResources/system_text/`, not the ones under `connect/` and `connections/`.** Two divergent copies of each template are in this repo and only one is rendered. Verified 2026-09-18 by fingerprinting the live output of `/connect/Stripe-to-Ontraport` against both: `appResources/system_text/servletTemplateConnect.html` matched 21 of 26 distinctive fragments, `connect/servletTemplateConnect.html` matched 0. The `connect/` and `connections/` copies are a newer, larger redesign that has never gone live. Both paths rsync to the web root, so the stale pair is reachable but unused.
+
+Each page carries an APIANT.AI handoff banner below the hero. It ships as a generic link to apiant.ai and an inline script upgrades it to the exact counterpart page when one exists: 3,079 of the 39,006 pairs and 59 of the 198 apps. The allowlists are inlined into the template from `apiant-ai-connect-sources.txt`, `apiant-ai-connect-targets.txt` and `apiant-ai-apps.txt`; regenerate them with `python3 scripts/probe_apiant_ai_catalog.py` and re-run the inliner when apiant.ai's catalog grows. Never link a pair unconditionally: the other ~36,000 have no counterpart and would 404.
+
+`apache-connect-redirect.conf` would 302 the matched pairs to apiant.ai instead. It is written and validated but **not installed**; installing it needs root on the web host. The banner and the redirect are alternatives, so install the config only if you want those 3,079 pages out of apiant.com's index.
 
 ## Blog System (generated from Supabase, do NOT hand-edit)
 

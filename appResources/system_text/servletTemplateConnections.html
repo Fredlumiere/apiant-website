@@ -37,11 +37,6 @@
     gtag('js', new Date());
     gtag('config', 'G-G902ZQ3PZZ');
   </script>
-  <script type="text/javascript">
-    window.smartlook||(function(d){var o=smartlook=function(){o.api.push(arguments)},h=d.getElementsByTagName('head')[0];var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);})(document);
-    smartlook('init','61b74e67b734857ecfff330d0bf2543efa3e601e');
-    smartlook('record',{forms:true,numbers:true,emails:false,ips:true});
-  </script>
   <style>
     :root {
       --cn-bg: #0c0c0c;
@@ -56,6 +51,46 @@
       --cn-font: 'Inter', 'DM Sans', sans-serif;
       --cn-transition: 0.2s ease;
     }
+
+      /* === APIANT.AI handoff === */
+      .cn-ai { padding: 0 0 64px; }
+      .cn-ai-card {
+        position: relative; overflow: hidden;
+        border: 1px solid var(--cn-border); border-radius: var(--cn-radius);
+        background:
+          radial-gradient(120% 140% at 0% 0%, rgba(26,183,89,0.10), transparent 60%),
+          var(--cn-surface);
+        padding: 32px; text-align: center;
+      }
+      .cn-ai-badge {
+        display: inline-block; margin-bottom: 14px;
+        padding: 5px 12px; border-radius: 999px;
+        border: 1px solid var(--cn-border-hover); background: var(--cn-green-dim);
+        color: var(--cn-green); font-family: var(--cn-font);
+        font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
+      }
+      .cn-ai-title {
+        font-family: var(--cn-font); font-size: 26px; font-weight: 700;
+        color: var(--cn-text); margin: 0 0 10px; line-height: 1.25;
+      }
+      .cn-ai-copy {
+        font-family: var(--cn-font); font-size: 15px; line-height: 1.6;
+        color: var(--cn-muted); margin: 0 auto 22px; max-width: 620px;
+      }
+      .cn-ai-cta {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 13px 24px; border-radius: 10px;
+        background: var(--cn-green); color: #05140b;
+        font-family: var(--cn-font); font-size: 15px; font-weight: 600;
+        text-decoration: none; transition: var(--cn-transition);
+      }
+      .cn-ai-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+      .cn-ai-cta svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; }
+      @media (max-width: 600px) {
+        .cn-ai-card { padding: 24px 18px; }
+        .cn-ai-title { font-size: 21px; }
+        .cn-ai-cta { width: 100%; justify-content: center; }
+      }
 
     /* Hero */
     .cn-hero {
@@ -426,6 +461,19 @@
       </div>
     </div>
   </section>
+
+  <!-- APIANT.AI HANDOFF -->
+  <section class="cn-ai" data-app="{TEMPLATE_APP_NAME}">
+    <div class="container">
+      <div class="cn-ai-card">
+        <div class="cn-ai-badge">APIANT.AI</div>
+        <h2 class="cn-ai-title" id="cn-ai-title">Build this on APIANT.AI</h2>
+        <p class="cn-ai-copy" id="cn-ai-copy">APIANT.AI is our AI platform for integration work. Describe what you need and it builds the connector, tests it, and runs it in production, including for APIs that are not in this catalog.</p>
+        <a class="cn-ai-cta" id="cn-ai-cta" href="https://apiant.ai/">Go to APIANT.AI<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></a>
+      </div>
+    </div>
+  </section>
+
 
   <!-- TRIGGERS & ACTIONS -->
   <section class="cn-endpoints">
@@ -1359,5 +1407,39 @@
   </script>
   <script src="../js/reveal.js"></script>
   <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+
+  <!-- APIANT.AI handoff: upgrade the generic link to this app's page on
+       apiant.ai when it exists there. 59 of the legacy 198 apps do, so the
+       markup ships with the generic link and this only ever improves it.
+       Regenerate the list with scripts/probe_apiant_ai_catalog.py. -->
+  <script>
+  (function () {
+    var APPS = [
+      'activecampaign','agile-crm','airbrake','anthropic','asana','beanstalk',
+      'beehiiv','bigml','bitly','capsule-crm','caspio','cliniko',
+      'cnbc','donorperfect','freeagent','freshdesk','freshworks-crm','geckoboard',
+      'geonames','hellosign','hubspot','intercom','ip2location','jira',
+      'jotform','klaviyo','knack','leankit','mailchimp','mailjet',
+      'mindbody','mysql','nethunt-crm','ontraport','openai','pagerduty',
+      'pandadoc','picreel','pipedrive','pushbullet','pushover','quickbooks-online',
+      'recurly','salesforce','sendgrid','shopify','slack','sql-server',
+      'streak','stripe','teamwork','trello','twilio','typeform',
+      'wachete','webflow','wistia','wufoo','zoom'
+    ];
+    var el = document.querySelector('.cn-ai');
+    if (!el) return;
+    var name = (el.getAttribute('data-app') || '').trim();
+    var slug = name.toLowerCase();
+    if (!slug || APPS.indexOf(slug) === -1) return;
+
+    document.getElementById('cn-ai-title').textContent = name + ' runs on APIANT.AI';
+    document.getElementById('cn-ai-copy').textContent =
+      name + ' is live on APIANT.AI, the AI platform that builds the connector, tests it, ' +
+      'and operates it in production. Open it there to connect your account.';
+    var cta = document.getElementById('cn-ai-cta');
+    cta.href = 'https://apiant.ai/connections/' + slug;
+    cta.firstChild.nodeValue = 'Open ' + name + ' on APIANT.AI';
+  })();
+  </script>
 </body>
 </html>
