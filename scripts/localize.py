@@ -65,7 +65,6 @@ PAGES = [
     'index2.html',
     'pricing.html',
     'ai.html',
-    'ai-operability.html',
     'apps.html',
     'chatbot.html',
     'formapps.html',
