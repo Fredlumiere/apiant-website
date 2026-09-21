@@ -495,9 +495,9 @@ def render_product_cta(url: str, vertical: str, partner: str) -> str:
 
 
 def render_builder_cta() -> str:
-    """Foot-of-post CTA for 'For Builders' posts. Points at the same demo/
-    contact form used site-wide, with a 'Start Building' button (mirrors the
-    nav CTA at /?talk=1). Reuses the .blog-trial-cta styles."""
+    """Foot-of-post CTA for 'For Builders' posts. The 'Start Building' button
+    sends the reader to registration on apiant.ai, matching the nav CTA
+    site-wide. Reuses the .blog-trial-cta styles."""
     return (
         '<aside class="blog-trial-cta">'
         '<div class="blog-trial-cta-eyebrow">Build with APIANT</div>'
@@ -506,7 +506,7 @@ def render_builder_cta() -> str:
         'of your integrations: the automations, the shared subroutines, the field '
         'mappings, and the live execution data. Tell us what you are trying to connect '
         'and we will show you what this looks like for your stack.</p>'
-        '<a class="blog-trial-cta-btn" href="/?talk=1">Start Building '
+        '<a class="blog-trial-cta-btn" href="https://app.apiant.ai/register">Start Building '
         '<span aria-hidden="true">&rarr;</span></a>'
         '</aside>'
     )
