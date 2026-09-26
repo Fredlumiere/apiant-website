@@ -1,0 +1,85 @@
+/* APIANT.AI launch announcement: the site-wide bar (js/launch-bar.js), the homepage
+   block (#apiant-ai) and the per-page callouts. Amber is APIANT.AI's brand accent,
+   used here on purpose so the new product reads as distinct from apiant.com green. */
+:root{
+  --aai-1:#facd61;--aai-2:#f8a434;--aai-3:#d96c27;
+  --aai-grad:linear-gradient(160deg,#facd61 0%,#f8a434 47%,#d96c27 100%);
+  --aai-on:#2a1503;
+}
+
+/* ---- bar ---- */
+.aai-bar{position:relative;z-index:60;background:#15110a;border-bottom:1px solid rgba(248,164,52,.28);
+  font-family:'DM Sans','Inter',system-ui,sans-serif;color:#f7f8f8}
+.aai-bar::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--aai-grad)}
+.aai-bar.is-hidden{display:none}
+.aai-bar-in{max-width:1320px;margin:0 auto;padding:10px 52px 10px 20px;display:flex;align-items:center;
+  justify-content:center;gap:14px;flex-wrap:wrap}
+.aai-bar-tag{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11px;font-weight:600;
+  letter-spacing:.08em;color:var(--aai-on);background:var(--aai-grad);border-radius:999px;padding:3px 9px;
+  white-space:nowrap}
+.aai-bar-msg{margin:0;padding:0;letter-spacing:0;font-size:14px;line-height:1.45;color:rgba(247,248,248,.82);text-align:center}
+.aai-bar-msg b{color:#fff;font-weight:600}
+.aai-bar-cta{letter-spacing:0;font-size:14px;font-weight:600;color:var(--aai-1);text-decoration:none;white-space:nowrap;
+  border-bottom:1px solid rgba(250,205,97,.4)}
+.aai-bar-cta:hover{color:#fff;border-bottom-color:#fff}
+.aai-bar-x{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:32px;height:32px;
+  border:0;border-radius:8px;background:transparent;color:rgba(247,248,248,.6);font-size:20px;line-height:1;
+  cursor:pointer}
+.aai-bar-x:hover{background:rgba(255,255,255,.08);color:#fff}
+.aai-bar-x:focus-visible,.aai-bar-cta:focus-visible{outline:2px solid var(--aai-2);outline-offset:2px}
+@media (max-width:1180px){.aai-bar-more{display:none}}
+@media (max-width:720px){
+  .aai-bar-in{justify-content:flex-start;gap:6px 10px;padding:10px 48px 10px 16px}
+  .aai-bar-msg{text-align:left;font-size:13.5px}
+}
+
+/* ---- shared pieces ---- */
+.aai-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--aai-1)}
+.aai-dot{width:8px;height:8px;border-radius:50%;background:var(--aai-2);box-shadow:0 0 0 4px rgba(248,164,52,.18)}
+.aai-grad{background:var(--aai-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.aai-ctas{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap}
+.aai-btn{display:inline-block;background:var(--aai-grad);color:var(--aai-on)!important;font-weight:700;font-size:15px;
+  text-decoration:none!important;padding:12px 22px;border-radius:10px;white-space:nowrap;
+  box-shadow:0 8px 26px rgba(248,164,52,.22);transition:transform .15s ease,box-shadow .15s ease}
+.aai-btn:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(248,164,52,.32)}
+.aai-link{color:var(--aai-1)!important;font-weight:600;font-size:15px;text-decoration:none!important;white-space:nowrap}
+.aai-link:hover{color:#fff!important}
+.aai-note{font-size:13px;color:rgba(247,248,248,.55)}
+.aai-btn:focus-visible,.aai-link:focus-visible{outline:2px solid var(--aai-2);outline-offset:3px}
+
+/* ---- homepage block ---- */
+.aai-launch{padding:24px 20px 72px;font-family:'DM Sans','Inter',system-ui,sans-serif}
+.aai-card{position:relative;max-width:1120px;margin:0 auto;padding:44px 44px 40px;border-radius:18px;overflow:hidden;
+  background:radial-gradient(120% 90% at 100% 0%,rgba(248,164,52,.14) 0%,rgba(248,164,52,0) 55%),#12100c;
+  border:1px solid rgba(248,164,52,.26);color:#f7f8f8}
+.aai-card h2{margin:16px 0 0;font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-.02em;line-height:1.1;
+  max-width:24em;color:#fff;text-wrap:balance}
+.aai-lead{margin:18px 0 0;max-width:46em;font-size:clamp(16px,1.6vw,18px);line-height:1.6;color:rgba(247,248,248,.78)}
+.aai-lead b{color:#fff;font-weight:600}
+.aai-grid{display:grid;grid-template-columns:repeat(3,1fr);margin:34px 0 32px;border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;overflow:hidden;background:rgba(0,0,0,.25)}
+.aai-grid>div{padding:24px 22px;border-right:1px solid rgba(255,255,255,.08)}
+.aai-grid>div:last-child{border-right:0}
+.aai-k{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:12px;color:var(--aai-2);letter-spacing:.06em;margin-bottom:12px}
+.aai-grid h3{margin:0 0 8px;font-size:18px;font-weight:600;color:#fff}
+.aai-grid p{margin:0;font-size:15px;line-height:1.55;color:rgba(247,248,248,.66)}
+.aai-grid code{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:13px;color:var(--aai-1)}
+@media (max-width:860px){
+  .aai-card{padding:30px 22px 28px}
+  .aai-grid{grid-template-columns:1fr}
+  .aai-grid>div{border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .aai-grid>div:last-child{border-bottom:0}
+}
+
+/* ---- per-page callout ---- */
+.aai-callout-wrap{padding:8px 20px 40px;font-family:'DM Sans','Inter',system-ui,sans-serif}
+.aai-callout{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px 32px;
+  padding:24px 28px;border-radius:16px;border:1px solid rgba(248,164,52,.26);color:#f7f8f8;text-align:left;
+  background:radial-gradient(90% 140% at 100% 0%,rgba(248,164,52,.12) 0%,rgba(248,164,52,0) 60%),#12100c}
+.aai-callout p{margin:10px 0 0;max-width:48em;font-size:16px;line-height:1.55;color:rgba(247,248,248,.74)}
+.aai-callout p b{color:#fff;font-weight:600}
+.aai-callout .aai-ctas{flex:none}
+@media (max-width:760px){.aai-callout{flex-direction:column;align-items:flex-start;padding:22px 20px}}
+
+@media (prefers-reduced-motion:reduce){.aai-btn{transition:none}.aai-btn:hover{transform:none}}

@@ -15,7 +15,8 @@
 9. [Page-Specific Styles](#page-specific-styles)
 10. [Webflow Class Conventions](#webflow-class-conventions)
 11. [Images and Assets](#images-and-assets)
-12. [Cross-Page Update Checklist](#cross-page-update-checklist)
+12. [APIANT.AI Launch Announcement](#apiantai-launch-announcement)
+13. [Cross-Page Update Checklist](#cross-page-update-checklist)
 
 ---
 
@@ -270,6 +271,32 @@ The site was originally built in Webflow. All classes follow Webflow's naming:
 - **Formats**: PNG, SVG, AVIF, WebP, JPG
 - **Videos**: `/videos/` (MP4 files, some also on YouTube/Wistia)
 - **External images**: Some OG images reference `cdn.prod.website-files.com` (Webflow CDN from the original export)
+
+## APIANT.AI Launch Announcement
+
+Added 2026-09-26 to point apiant.com visitors at APIANT.AI, positioned as the next
+generation of APIANT running alongside classic. Three pieces, all styled by
+`css/launch.css` (amber, APIANT.AI's brand accent, not apiant.com green):
+
+- **Announcement bar**: markup directly after `<body>`, between the
+  `<!-- APIANT.AI launch bar -->` comments, followed by `<script src="/js/launch-bar.js">`.
+  Dismissal is stored in `localStorage` (`apiant_aai_bar_dismissed`) and applies site-wide.
+  On 28 English pages: home, the four platform pages, ai, mcp-servers, for-saas, for-si,
+  for-enterprises, chatbot, formapps, apps, pricing and every `compare/` page.
+  Deliberately **not** on the API App pages (`apipartners/`), the post-signup
+  next-steps pages, legal and error pages, or the servlet templates (which already
+  carry their own APIANT.AI handoff banner).
+- **Homepage block**: `<section id="apiant-ai" class="aai-launch">`, between the hero and
+  the partner strip.
+- **Callouts**: `<section id="apiant-ai" class="aai-callout-wrap">` directly under the hero on
+  `platform/index.html`, `ai.html`, `mcp-servers.html` and `for-saas.html`, each with its
+  own copy.
+
+Every link carries `utm_source=apiant.com&utm_medium=referral&utm_campaign=apiant-ai-launch`
+and a `utm_content` naming the placement, so apiant.ai's GA4 shows which one sent the visit.
+The text is ordinary HTML, so the translation pipeline picks it up; the brand name is
+wrapped in `notranslate`. To retire the announcement, delete the three marked blocks and
+the `launch.css` link from each page.
 
 ## Cross-Page Update Checklist
 
