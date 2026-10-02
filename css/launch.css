@@ -8,7 +8,17 @@
 }
 
 /* ---- bar ---- */
-.aai-bar{position:relative;z-index:60;border-bottom:1px solid rgba(248,164,52,.35);
+/* The bar stays pinned while the page scrolls. js/launch-bar.js keeps --aai-h equal to the
+   bar's height (0 once dismissed), and every sticky header that used to sit at top:0 is
+   pushed down by it so the two stack instead of overlapping. */
+:root{--aai-h:0px}
+html{scroll-padding-top:var(--aai-h)}
+.aai-bar{position:sticky!important;top:0}
+.navbar.w-nav,.blog-nav,.cn-filter-bar{top:var(--aai-h)!important}
+.toolbar,.tb-inner{top:calc(var(--nav-h) + var(--aai-h))!important}
+/* apps.html: its nav does not stick, so the filter bar pins straight under the APIANT.AI bar. */
+.apps2-filterbar{top:var(--aai-h)!important}
+.aai-bar{z-index:1000;border-bottom:1px solid rgba(248,164,52,.35);
   background:radial-gradient(60% 180% at 50% 0%,rgba(248,164,52,.22) 0%,rgba(248,164,52,0) 70%),#17120a;
   font-family:'DM Sans','Inter',system-ui,sans-serif;color:#f7f8f8}
 .aai-bar::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--aai-grad)}
@@ -30,13 +40,14 @@
 .aai-bar-x:hover{background:rgba(255,255,255,.08);color:#fff}
 .aai-bar-x:focus-visible,.aai-bar-cta:focus-visible{outline:2px solid var(--aai-1);outline-offset:3px}
 @media (max-width:1400px){.aai-bar-more{display:none}}
-@media (max-width:720px){
-  .aai-bar-in{justify-content:flex-start;gap:10px 12px;padding:14px 52px 14px 16px}
-  .aai-bar-msg{flex-basis:100%;text-align:left;font-size:16px}
-  .aai-bar-tag{order:-1}
-  .aai-bar-cta{font-size:14px;padding:8px 14px}
-  .aai-bar-x{right:8px;top:12px;transform:none}
+@media (max-width:900px){
+  .aai-bar-in{flex-wrap:nowrap;justify-content:flex-start;gap:12px;padding:11px 46px 10px 14px}
+  .aai-bar-msg{flex:1 1 auto;min-width:0;text-align:left;font-size:14px;line-height:1.3}
+  .aai-bar-cta{flex:none;font-size:13px;padding:8px 11px;border-radius:8px;box-shadow:none}
+  .aai-bar-x{right:4px;width:36px;height:36px;font-size:22px}
 }
+@media (max-width:600px){.aai-bar-tag{display:none}}
+@media (max-width:420px){.aai-bar-cta-v{display:none}.aai-bar-in{gap:10px}.aai-bar-msg{font-size:13px}}
 @media (prefers-reduced-motion:reduce){.aai-bar-cta{transition:none}.aai-bar-cta:hover{transform:none}}
 
 /* ---- shared pieces ---- */
@@ -86,6 +97,8 @@
 .aai-callout p{margin:10px 0 0;max-width:48em;font-size:16px;line-height:1.55;color:rgba(247,248,248,.74)}
 .aai-callout p b{color:#fff;font-weight:600}
 .aai-callout .aai-ctas{flex:none}
+.aai-callout-wrap.aai-inline{padding:28px 0 8px}
+.aai-inline .aai-callout{max-width:880px;text-align:left}
 @media (max-width:760px){.aai-callout{flex-direction:column;align-items:flex-start;padding:22px 20px}}
 
 @media (prefers-reduced-motion:reduce){.aai-btn{transition:none}.aai-btn:hover{transform:none}}

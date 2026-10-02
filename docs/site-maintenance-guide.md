@@ -281,11 +281,26 @@ generation of APIANT running alongside classic. Three pieces, all styled by
 - **Announcement bar**: markup directly after `<body>`, between the
   `<!-- APIANT.AI launch bar -->` comments, followed by `<script src="/js/launch-bar.js">`.
   Dismissal is stored in `localStorage` (`apiant_aai_bar_dismissed`) and applies site-wide.
-  On 28 English pages: home, the four platform pages, ai, mcp-servers, for-saas, for-si,
-  for-enterprises, chatbot, formapps, apps, pricing and every `compare/` page.
-  Deliberately **not** on the API App pages (`apipartners/`), the post-signup
-  next-steps pages, legal and error pages, or the servlet templates (which already
-  carry their own APIANT.AI handoff banner).
+  The bar is sticky and stays pinned while the page scrolls. `launch-bar.js` writes its height
+  to `--aai-h` on `<html>` (0 once dismissed), and `css/launch.css` pushes every sticky header
+  down by it: `.navbar.w-nav`, `.blog-nav`, `.cn-filter-bar`, the compare `.toolbar`/`.tb-inner`
+  and the apps `.apps2-filterbar`. A new page with its own sticky header at `top:0` needs
+  adding to that list, or the header slides under the bar. Below 900px the bar is one row;
+  below 600px the APIANT.AI pill is hidden; below 420px the button reads "APIANT.AI" (the
+  `.aai-bar-cta-v` span holding "Explore" is hidden).
+  On every public English page except the API App pages (`apipartners/`, hubs and
+  product pages). That is: home, the four platform pages, ai, mcp-servers, for-saas,
+  for-si, for-enterprises, chatbot, formapps, apps, pricing, every `compare/` page,
+  privacy, cookie-policy, tos, dpa, 401, 404, the four post-signup next-steps pages,
+  workshop-appointment-confirmation, `connect/connect.html`, `connections/connections.html`,
+  and the two live servlet templates in `appResources/system_text/` (so all 39,006
+  `/connect/` and 198 `/connections/` pages, which also keep their own handoff banner).
+  The blog gets it from `blog/_templates/_nav.html` (markup) and `_head.html` (stylesheet),
+  so every generated blog page carries it after the next `build_blog.py` run.
+  Not on internal or orphaned pages: admin, `private/`, investor-deck, hq, temp,
+  architecture illustrations, style guide, redirect stubs, apps2, apiant-ai-advantage,
+  or the unused `connect/` and `connections/` servlet template copies.
+  `utm_content` is `bar-<page>`.
 - **Homepage block**: `<section id="apiant-ai" class="aai-launch">`, between the hero and
   the partner strip.
 - **Callouts**: `<section id="apiant-ai" class="aai-callout-wrap">` directly under the hero on
