@@ -307,6 +307,28 @@ generation of APIANT running alongside classic. Three pieces, all styled by
   `platform/index.html`, `ai.html`, `mcp-servers.html` and `for-saas.html`, each with its
   own copy.
 
+- **Ask box on the API App pages** (added 2026-10-23): `<section id="build-with-apiant-ai"
+  class="aai-ask">` on the three hubs and the 17 product pages under `apipartners/`, styled by
+  `css/aai-ask.css` (not `launch.css`, which also moves sticky headers these pages do not
+  have) with `js/aai-ask.js` firing one GA4 event, `apiant_ai_ask_submit`, on submit. It is
+  the main call to action on those pages: a plain top-level form POST to
+  `https://app.apiant.ai/chat/start` with the visitor's sentence in `text` and the
+  vertical's catalog slug in the hidden `apps` field (`mindbody`, `cliniko`, `donorperfect`),
+  the same handoff apiant.ai's own catalog pages use. The app holds the sentence, takes the
+  visitor through sign-in or free registration, and drafts it into the composer. Nothing
+  runs until they press Send there. Placement: hubs, a direct child of `.left-headings`
+  right after the h1 block; product pages, a direct child of `.hero-section-center` above
+  the "Schedule a Demo" block; the retired Mindbody + Zapier page uses it in place of its
+  hero callout, with a kicker and placeholder of its own and the Booker link kept under the
+  form. The route accepts only an allowlist of origins on the platform side
+  (go-apiant `web/assistantchat/chat.go`, `marketingOrigins`); `https://apiant.com` and
+  `https://www.apiant.com` must be on it or every post answers 403. The post is cross-site,
+  so a visitor already signed in to app.apiant.ai arrives as a stranger and signs in again
+  (the session cookie is SameSite=Lax). No attribution travels with it: the route reads
+  only `text` and `apps`, and apiant.ai's attribution cookie cannot be set from apiant.com.
+  Every string is plain HTML or a `placeholder`, so the translation pipeline picks it up;
+  the brand name is wrapped in `notranslate`.
+
 Every link carries `utm_source=apiant.com&utm_medium=referral&utm_campaign=apiant-ai-launch`
 and a `utm_content` naming the placement, so apiant.ai's GA4 shows which one sent the visit.
 The text is ordinary HTML, so the translation pipeline picks it up; the brand name is

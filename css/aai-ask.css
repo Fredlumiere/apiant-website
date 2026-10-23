@@ -1,0 +1,88 @@
+/* APIANT.AI ask box: the main CTA on the API App hubs and product pages.
+   A plain top-level POST to app.apiant.ai/chat/start; no JS. Light, native to
+   the host page. The amber ramp is APIANT.AI's accent (brand-identity.md s.2);
+   it reads var(--aai-*) from css/launch.css when that file is on the page and
+   falls back to the same literal values when it is not. */
+.aai-ask{
+  --aai-ask-grad:var(--aai-grad,linear-gradient(160deg,#facd61 0%,#f8a434 47%,#d96c27 100%));
+  --aai-ask-on:var(--aai-on,#2a1503);
+  --aai-ask-edge:#d96c27;           /* focus ring: 3.4:1 on white */
+  --aai-ask-ink:#0f131a;            /* = --_white-mode---heading-color */
+  --aai-ask-dim:rgba(15,19,26,.72);
+  --aai-ask-mute:rgba(15,19,26,.62);
+  --aai-ask-line:#c9ced6;
+  box-sizing:border-box;width:100%;max-width:820px;margin:0 auto;align-self:center;
+  font-family:'DM Sans','Inter',system-ui,sans-serif;text-align:left;color:var(--aai-ask-ink);
+}
+.aai-ask *,.aai-ask *::before,.aai-ask *::after{box-sizing:border-box}
+.aai-ask-card{
+  position:relative;overflow:hidden;padding:30px 30px 24px;border-radius:16px;
+  border:1px solid rgba(217,108,39,.30);
+  background:radial-gradient(70% 120% at 100% 0%,rgba(248,164,52,.10) 0%,rgba(248,164,52,0) 60%),#fff;
+  box-shadow:0 14px 36px rgba(15,19,26,.07),0 2px 6px rgba(15,19,26,.04);
+}
+.aai-ask-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--aai-ask-grad)}
+.aai-ask-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:0 0 14px}
+.aai-ask-tag{
+  display:inline-block;padding:5px 11px;border-radius:999px;background:var(--aai-ask-grad);color:var(--aai-ask-on);
+  font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:700;letter-spacing:.08em;
+  line-height:1.2;white-space:nowrap;
+}
+.aai-ask-kicker{font-size:15px;font-weight:600;line-height:1.35;color:var(--aai-ask-dim)}
+/* (0,2,0): beats the global h2/p/label rules in components.css and apiant.css. */
+.aai-ask .aai-ask-title{
+  margin:0 0 10px;font-family:'DM Sans','Inter',system-ui,sans-serif;font-size:clamp(24px,3vw,32px);font-weight:700;
+  line-height:1.15;letter-spacing:-.02em;color:var(--aai-ask-ink);text-wrap:balance;
+}
+.aai-ask .aai-ask-sub{margin:0 0 20px;max-width:40em;font-family:Inter,'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.55;color:var(--aai-ask-dim)}
+.aai-ask .aai-ask-sub b{color:var(--aai-ask-ink);font-weight:600}
+.aai-ask-form{margin:0}
+.aai-ask .aai-ask-label{
+  display:block;margin:0 0 8px;font-family:'DM Sans','Inter',system-ui,sans-serif;font-size:16px;font-weight:600;
+  line-height:1.4;color:var(--aai-ask-ink);
+}
+/* 16px: iOS Safari zooms the page on focus below 16px. */
+.aai-ask-box{
+  display:block;width:100%;min-height:108px;margin:0;resize:vertical;padding:14px 15px;border-radius:12px;
+  border:1px solid var(--aai-ask-line);background:#fff;color:var(--aai-ask-ink);
+  font-family:Inter,'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.5;
+  box-shadow:inset 0 1px 2px rgba(15,19,26,.05);outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.aai-ask-box:hover{border-color:#a9b0bb}
+.aai-ask-box:focus{border-color:var(--aai-ask-edge);box-shadow:0 0 0 3px rgba(248,164,52,.30)}
+.aai-ask-box::placeholder{color:#6b7280;opacity:1}
+.aai-ask-go{display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px;margin-top:14px}
+.aai-ask-btn{
+  appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:48px;margin:0;padding:0 22px;border:0;border-radius:10px;cursor:pointer;
+  background:var(--aai-ask-grad);color:var(--aai-ask-on);
+  font-family:'DM Sans','Inter',system-ui,sans-serif;font-size:17px;font-weight:700;line-height:1;white-space:nowrap;
+  box-shadow:0 8px 22px rgba(217,108,39,.22);transition:transform .15s ease,box-shadow .15s ease;
+}
+.aai-ask-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(217,108,39,.30)}
+.aai-ask-btn:focus-visible{outline:2px solid var(--aai-ask-edge);outline-offset:3px}
+.aai-ask-free{
+  padding:4px 9px;border-radius:999px;border:1px solid rgba(42,21,3,.24);background:rgba(42,21,3,.12);
+  font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;line-height:1;
+}
+.aai-ask .aai-ask-fine{flex:1 1 220px;margin:0;font-family:Inter,'DM Sans',system-ui,sans-serif;font-size:13px;line-height:1.45;color:var(--aai-ask-mute)}
+/* Optional secondary link (retired AppConnect page only). */
+.aai-ask .aai-ask-alt{display:inline-block;margin-top:14px;padding:12px 0;font-size:15px;font-weight:600;color:var(--aai-ask-ink);text-decoration:underline;text-decoration-color:var(--aai-ask-edge);text-underline-offset:3px}
+.aai-ask .aai-ask-alt:hover{text-decoration-thickness:2px}
+.aai-ask .aai-ask-alt:focus-visible{outline:2px solid var(--aai-ask-edge);outline-offset:2px;border-radius:4px}
+/* Placement. Hub: a direct child of .left-headings (a 40px-gap flex column).
+   Product: a direct child of .hero-section-center (align-items:flex-end), so it
+   centres itself and takes the page's 40px rhythm above the illustration. */
+.left-headings > .aai-ask{max-width:100%;margin:0}
+.hero-section-center > .aai-ask{margin:36px auto 20px}
+@media (max-width:560px){
+  .aai-ask-card{padding:24px 16px 18px;border-radius:14px}
+  .aai-ask-head{margin-bottom:12px}
+  .aai-ask .aai-ask-sub{font-size:15px;margin-bottom:16px}
+  .aai-ask-box{min-height:132px}
+  .aai-ask-btn{width:100%}
+  .aai-ask .aai-ask-fine{flex-basis:100%}
+  .hero-section-center > .aai-ask{margin:28px auto 12px}
+}
+@media (prefers-reduced-motion:reduce){.aai-ask-btn,.aai-ask-box{transition:none}.aai-ask-btn:hover{transform:none}}
