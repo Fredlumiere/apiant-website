@@ -318,14 +318,18 @@ generation of APIANT running alongside classic. Three pieces, all styled by
   visitor through sign-in or free registration, and drafts it into the composer. Nothing
   runs until they press Send there. Placement: hubs, a direct child of `.left-headings`
   right after the h1 block; product pages, a direct child of `.hero-section-center` above
-  the "Schedule a Demo" block; the retired Mindbody + Zapier page uses it in place of its
-  hero callout, with a kicker and placeholder of its own and the Booker link kept under the
-  form. The route accepts only an allowlist of origins on the platform side
+  the "Schedule a Demo" block; the retired Mindbody + Zapier page uses it in place of both
+  of its callouts (hero and end of page, ids `build-with-apiant-ai` and
+  `build-with-apiant-ai-end`), with a kicker and placeholder of its own and the Booker link
+  kept under each form. The route accepts only an allowlist of origins on the platform side
   (go-apiant `web/assistantchat/chat.go`, `marketingOrigins`); `https://apiant.com` and
   `https://www.apiant.com` must be on it or every post answers 403. The post is cross-site,
   so a visitor already signed in to app.apiant.ai arrives as a stranger and signs in again
-  (the session cookie is SameSite=Lax). No attribution travels with it: the route reads
-  only `text` and `apps`, and apiant.ai's attribution cookie cannot be set from apiant.com.
+  (the session cookie is SameSite=Lax). apiant.ai's attribution cookie cannot be set from
+  apiant.com, so the platform derives the signup attribution at `/chat/start` from the
+  post's Origin and Referer (go-apiant `websiteAttribution`: utm_source apiant.com,
+  utm_medium referral, utm_campaign apiant-ai-launch, utm_content `ask-box-<slug>`) and the
+  register doors read it where the cookie is silent.
   Every string is plain HTML or a `placeholder`, so the translation pipeline picks it up;
   the brand name is wrapped in `notranslate`.
 
