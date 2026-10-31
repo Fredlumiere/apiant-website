@@ -317,8 +317,9 @@ generation of APIANT running alongside classic. Three pieces, all styled by
   the same handoff apiant.ai's own catalog pages use. The app holds the sentence, takes the
   visitor through sign-in or free registration, and drafts it into the composer. Nothing
   runs until they press Send there. Placement: hubs, a direct child of `.left-headings`
-  right after the h1 block; product pages, a direct child of `.hero-section-center` above
-  the "Schedule a Demo" block; the retired Mindbody + Zapier page uses it in place of both
+  right after the h1 block; product pages, its own `<div class="section aai-ask-section">`
+  (with a `.container`) between the blog rail and the FAQ, moved there from the hero on
+  2026-10-31 at Fred's request; the retired Mindbody + Zapier page uses it in place of both
   of its callouts (hero and end of page, ids `build-with-apiant-ai` and
   `build-with-apiant-ai-end`), with a kicker and placeholder of its own and the Booker link
   kept under each form. The route accepts only an allowlist of origins on the platform side
