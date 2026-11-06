@@ -16,7 +16,8 @@
 10. [Webflow Class Conventions](#webflow-class-conventions)
 11. [Images and Assets](#images-and-assets)
 12. [APIANT.AI Launch Announcement](#apiantai-launch-announcement)
-13. [Cross-Page Update Checklist](#cross-page-update-checklist)
+13. [API App Hero Videos](#api-app-hero-videos)
+14. [Cross-Page Update Checklist](#cross-page-update-checklist)
 
 ---
 
@@ -339,6 +340,20 @@ and a `utm_content` naming the placement, so apiant.ai's GA4 shows which one sen
 The text is ordinary HTML, so the translation pipeline picks it up; the brand name is
 wrapped in `notranslate`. To retire the announcement, delete the three marked blocks and
 the `launch.css` link from each page.
+
+## API App Hero Videos
+
+Each API App product page (`apipartners/<vertical>/*.html`) has a `.zc-hero-video` block below the hero: two Wistia
+`<wistia-player>` elements, `.zc-vid.zc-wide` (16:9, desktop) and `.zc-vid.zc-tall` (9:16, shown under 767 px), each
+with a `.zc-cta` link laid over the film's end-card button.
+
+`/js/hero-video-lightbox.js` (one `<script defer>` tag placed inside that block) makes the videos open gallery style:
+a click moves the player into a centred full-screen overlay and plays it; close with the button, the backdrop or Esc.
+Clicking the end-card CTA inside the overlay closes it first, so the pricing anchor or demo popup lands on the page.
+Deep links open it on load: `?video=wide`, `?video=vertical`, `?video=1` (variant that fits the screen), or
+`#video`, `#video-wide`, `#video-vertical`. Links play muted, because browsers block audible autoplay without a click.
+Closing restarts the film, because Wistia re-initialises the player when it moves. A new product page with the same
+block needs only the script tag.
 
 ## Cross-Page Update Checklist
 
