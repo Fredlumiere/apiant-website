@@ -39,7 +39,9 @@ import { isValidEmail, normalizeEmail } from "../_shared/leadvalidate.ts";
 
 const RECURLY = "https://v3.recurly.com";
 const RECURLY_ACCEPT = "application/vnd.recurly.v2021-02-25";
-const DEFAULT_REDIRECT = "https://apiant.com/";
+// Plans with no "Return URL after success" in Recurly land on the checkout
+// page's own confirmation view, not on the homepage with no acknowledgement.
+const DEFAULT_REDIRECT = "https://apiant.com/checkout.html?done=1";
 
 /** Attempts one IP may make per hour. A person retyping a card needs a few. */
 const PER_IP_MAX = 6;

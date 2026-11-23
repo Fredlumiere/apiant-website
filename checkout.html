@@ -77,6 +77,12 @@
     <p class="co-sub">Go back to the product page and choose a plan, or write to <a href="mailto:support@apiant.com">support@apiant.com</a> and we will set you up.</p>
   </div>
 
+  <div id="co-done" class="co-unavailable" hidden>
+    <h1>Your subscription is confirmed</h1>
+    <p class="co-sub">Thank you. If you have a question about setup or billing, write to <a href="mailto:support@apiant.com">support@apiant.com</a>.</p>
+    <p class="co-sub"><a href="/">Back to apiant.com</a></p>
+  </div>
+
   <main id="co-main" class="co-wrap" hidden>
     <section>
       <h1 id="co-heading">Start your subscription</h1>
@@ -259,6 +265,7 @@
       });
     }
 
+    if (qs.get('done') === '1') { $('co-done').hidden = false; return; }
     if (!plan || !window.recurly) { return fail(); }
     var url = API + '?plan=' + encodeURIComponent(plan) + '&add_on_code=' + encodeURIComponent(addOnCode) + '&add_on_quantity=' + encodeURIComponent(addOnQty);
     fetch(url).then(function (r) { return r.json(); }).then(function (j) {
