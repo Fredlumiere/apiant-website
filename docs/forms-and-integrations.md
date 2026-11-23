@@ -164,6 +164,51 @@ Product pages (next-steps pages and some API App pages) have their own forms wit
 
 Product pages may also include Recurly billing integration and pricing sliders with their own JavaScript logic. **Do not modify pricing/billing JavaScript** without understanding the full flow.
 
+## API App Checkout (gated, in front of Recurly)
+
+API App "Start Free Trial" and pricing-calculator buttons are meant to go to
+`/checkout.html?plan=<alias>`, not to Recurly's hosted payment pages.
+
+> **Status, 2026-11-23:** the page and the function are live and their refusal paths are
+> tested. Product pages still link to the Recurly hosted pages until one live purchase has been
+> completed through `/checkout.html`. After that: repoint the links, then change the Recurly
+> plan codes so the old hosted page addresses stop working. Remove this note when both are done.
+ This exists because a card-testing bot used the public
+hosted pages (`apiant.recurly.com/subscribe/<plan code>`) in November 2026: nothing stood
+between an anonymous request and a card authorisation.
+
+**Flow**
+
+1. `checkout.html` reads `plan`, `add_on_code` and `add_on_quantity` from the query string (the
+   same add-on parameters the hosted page took) and asks the `checkout` edge function for the
+   plan summary (`GET`).
+2. The visitor fills in name, email, billing address and card. Card fields are Recurly.js
+   Elements (iframes served by Recurly), so card numbers never reach APIANT. Recurly.js returns
+   a one-time token.
+3. The page shows a **visible** Cloudflare Turnstile widget and sends its token with the form.
+4. `supabase/functions/checkout/index.ts` (`POST`) checks, in order: allowed Origin, per-IP limit
+   (6 per hour), Turnstile, then a site-wide ceiling of 40 verified attempts per hour (fails
+   closed). Only then does it call Recurly `POST /purchases`. The ceiling is counted after
+   Turnstile so junk requests cannot use it to close checkout for real customers.
+5. On success the browser is sent to the plan's "Return URL after success" from Recurly (the
+   next-steps pages). If the bank requires 3-D Secure, the function returns a challenge token
+   and a short-lived signed pass; the page runs the challenge and resubmits with the pass.
+
+**Rules**
+
+- **Plans are addressed by alias, never by Recurly plan code.** The alias to plan code map is
+  the `CHECKOUT_PLANS` secret on the Supabase project. A Recurly plan code *is* a hosted page
+  URL, and this repo is public, so do not write plan codes into pages, scripts or docs.
+- To sell a new plan: add `"<alias>": "<plan code>"` to `CHECKOUT_PLANS`
+  (`supabase secrets set`), then link `/checkout.html?plan=<alias>`.
+- The shared `verifyTurnstile()` helper is switched off site-wide for lead forms. Checkout does
+  not use it; it has its own strict verification that fails closed. Do not "simplify" it back.
+- An email that already holds a live subscription is refused with a "contact support" message,
+  so an anonymous form cannot replace an existing customer's billing details.
+- Secrets used: `RECURLY_API_KEY`, `TURNSTILE_SECRET_KEY`, `CHECKOUT_PLANS`,
+  `CHECKOUT_SIGNING_SECRET`. Public keys in the page: Recurly public key, Turnstile site key.
+- `checkout.html` is English only (not in `localize.py` `PAGES`) and `noindex`.
+
 ## Calendly Scheduling Embeds
 
 Scheduling URLs are **never hardcoded in page HTML**. In July 2026 the CRMConnect

@@ -8,9 +8,10 @@
  *
  * A card reaches the payment gateway only after, in this order:
  *   1. the request carries an allowed browser Origin,
- *   2. the per-IP and site-wide attempt limits have room,
+ *   2. the per-IP attempt limit has room,
  *   3. a Cloudflare Turnstile token verifies (or a signed pass from a
- *      verified first attempt, used only to finish a 3-D Secure challenge).
+ *      verified first attempt, used only to finish a 3-D Secure challenge),
+ *   4. the site-wide ceiling on verified attempts has room.
  *
  * Plans are addressed by a public alias ("shopconnect-monthly"). The alias to
  * Recurly plan code map lives in the CHECKOUT_PLANS secret, so the real plan
@@ -316,17 +317,12 @@ serve(async (req) => {
     if (!first_name || !last_name) return reply(cors, 400, { error: "First and last name are required." });
     if (!/^[A-Za-z0-9_-]{10,64}$/.test(token_id)) return reply(cors, 400, { error: "Card details are missing. Please re-enter your card." });
 
-    // 2. Attempt limits, counted before any gateway call.
+    // 2. Per-IP attempt limit.
     const rl = await checkRateLimit(req, { bucket: "checkout", max: PER_IP_MAX, windowSeconds: 3600 });
     if (!rl.ok) {
       logEvent({ evt: "checkout_reject", reason: "rate_limited", ip });
       return reply(cors, 429, { error: "Too many attempts. Please wait an hour or contact support@apiant.com." });
     }
-    if (!(await siteWindowOk())) {
-      logEvent({ evt: "checkout_reject", reason: "site_window", ip });
-      return reply(cors, 429, { error: "Checkout is temporarily unavailable. Please contact support@apiant.com and we will set you up." });
-    }
-
     // 3. Bot check: a fresh Turnstile token, or a pass when finishing 3-D Secure.
     let verified = false;
     if (threeDsResult && body.pass) verified = await passOk(cap(body.pass, 200), email, alias);
@@ -336,6 +332,14 @@ serve(async (req) => {
         logEvent({ evt: "checkout_reject", reason: "turnstile", detail: t.reason, ip });
         return reply(cors, 403, { error: "We could not confirm you are a person. Please reload the page and try again." });
       }
+    }
+
+    // 4. Site-wide ceiling on attempts that are about to reach the gateway.
+    // Counted after the bot check on purpose: counted before it, 40 junk
+    // requests an hour would close checkout for every real customer.
+    if (!(await siteWindowOk())) {
+      logEvent({ evt: "checkout_reject", reason: "site_window", ip });
+      return reply(cors, 429, { error: "Checkout is temporarily unavailable. Please contact support@apiant.com and we will set you up." });
     }
 
     const r = await resolve(alias, cap(body.add_on_code, 2000), cap(body.add_on_quantity, 400));
