@@ -240,6 +240,18 @@
 
     function netFail() { showMsg('We could not reach the server. Check your connection and try again.'); resetTurnstile(); setBusy(false); }
 
+    // Recurly's own validation message is generic ("There was an error
+    // validating your request"), so name the fields it flagged.
+    function cardError(err) {
+      var names = { number: 'card number', month: 'expiry date', year: 'expiry date', cvv: 'security code',
+        first_name: 'first name', last_name: 'last name', address1: 'street address', city: 'city',
+        state: 'state or region', postal_code: 'postal code', country: 'country' };
+      var seen = [];
+      (err.fields || []).forEach(function (f) { var n = names[f]; if (n && seen.indexOf(n) < 0) seen.push(n); });
+      if (seen.length) return 'Please check: ' + seen.join(', ') + '.';
+      return err.message || 'Please check your card details.';
+    }
+
     function onSubmit(e) {
       e.preventDefault();
       if (busy) return;
@@ -254,7 +266,7 @@
 
       setBusy(true);
       recurly.token(elements, $('co-form'), function (err, token) {
-        if (err) { setBusy(false); return showMsg(err.message || 'Please check your card details.'); }
+        if (err) { setBusy(false); return showMsg(cardError(err)); }
         var base = {
           plan: plan, add_on_code: addOnCode, add_on_quantity: addOnQty,
           token_id: token.id, turnstile_token: ts,
