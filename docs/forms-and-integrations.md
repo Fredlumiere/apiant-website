@@ -169,11 +169,12 @@ Product pages may also include Recurly billing integration and pricing sliders w
 API App "Start Free Trial" and pricing-calculator buttons are meant to go to
 `/checkout.html?plan=<alias>`, not to Recurly's hosted payment pages.
 
-> **Status, 2026-11-23:** the page and the function are live and their refusal paths are
-> tested. Product pages still link to the Recurly hosted pages until one live purchase has been
-> completed through `/checkout.html`. After that: repoint the links, then change the Recurly
-> plan codes so the old hosted page addresses stop working. Remove this note when both are done.
- This exists because a card-testing bot used the public
+> **Status, 2026-11-23:** the bot returned at 19:32 UTC, so the Recurly plan codes were changed
+> the same hour (the old hosted page addresses now return 404) and every English product page
+> link was pointed at `/checkout.html?plan=<alias>`. The refusal paths are tested. A successful
+> live purchase and the 3-D Secure step have not been observed yet. Remove this note once one
+> has been.
+This exists because a card-testing bot used the public
 hosted pages (`apiant.recurly.com/subscribe/<plan code>`) in November 2026: nothing stood
 between an anonymous request and a card authorisation.
 
