@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Checkout - APIANT</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="noindex, nofollow" name="robots">
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/x-icon">
+  <link rel="icon" href="https://apiant.com/favicon.ico">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+  <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
+  <link href="/css/cookie-consent.css" rel="stylesheet" type="text/css"/>
+  <style>
+    /* Checkout is one self-contained page: the gate in front of Recurly.
+       See supabase/functions/checkout/index.ts and docs/forms-and-integrations.md. */
+    :root {
+      --bg: #0c0c0c; --panel: #151515; --line: #2c2c2c; --text: #f7f8f8;
+      --dim: #ffffffa6; --accent: #f36725; --error: #ff6b5e; --field: #1c1c1c;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+    a { color: var(--accent); }
+    .co-top { padding: 24px 16px; border-bottom: 1px solid var(--line); }
+    .co-top-inner, .co-wrap { max-width: 1040px; margin: 0 auto; }
+    .co-top img { height: 28px; display: block; }
+    .co-wrap { padding: 40px 16px 80px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+    h1 { font-family: "DM Sans", sans-serif; font-size: 30px; line-height: 1.2; margin: 0 0 8px; font-weight: 600; }
+    h2 { font-family: "DM Sans", sans-serif; font-size: 16px; margin: 28px 0 12px; font-weight: 600; letter-spacing: .01em; }
+    .co-sub { color: var(--dim); margin: 0 0 8px; }
+    .co-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .co-full { grid-column: 1 / -1; }
+    label { display: block; font-size: 13px; color: var(--dim); margin-bottom: 6px; }
+    input[type=text], input[type=email], select {
+      width: 100%; height: 46px; padding: 0 12px; background: var(--field); color: var(--text);
+      border: 1px solid var(--line); border-radius: 8px; font: inherit; outline: none;
+    }
+    input:focus, select:focus { border-color: var(--accent); }
+    #co-card { margin: 0; }
+    .recurly-element, .recurly-hosted-field { background: var(--field); border: 1px solid var(--line); border-radius: 8px; height: 46px; margin: 0; padding: 0 12px; }
+    .recurly-element-focus, .recurly-hosted-field-focus { border-color: var(--accent); }
+    .co-turnstile { margin: 24px 0 8px; min-height: 65px; }
+    .co-btn {
+      width: 100%; height: 52px; border: 0; border-radius: 10px; background: var(--accent); color: #fff;
+      font: 600 16px "DM Sans", sans-serif; cursor: pointer; margin-top: 12px;
+    }
+    .co-btn[disabled] { opacity: .55; cursor: default; }
+    .co-msg { display: none; margin: 16px 0 0; padding: 12px 14px; border: 1px solid var(--error); border-radius: 8px; color: var(--error); font-size: 14px; }
+    .co-msg.show { display: block; }
+    .co-fine { color: var(--dim); font-size: 13px; margin-top: 14px; }
+    .co-summary { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; position: sticky; top: 24px; }
+    .co-summary h2 { margin-top: 0; }
+    .co-plan { font-family: "DM Sans", sans-serif; font-size: 20px; font-weight: 600; margin: 0 0 16px; }
+    .co-row { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; font-size: 14px; color: var(--dim); }
+    .co-row span:last-child { color: var(--text); white-space: nowrap; }
+    .co-total { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 14px; font-size: 16px; color: var(--text); font-weight: 600; }
+    .co-trial { margin-top: 14px; padding: 12px 14px; border-radius: 8px; background: #f367251a; font-size: 14px; }
+    #co-3ds { display: none; margin-top: 20px; }
+    #co-3ds.show { display: block; }
+    #co-3ds > div { min-height: 420px; }
+    .co-unavailable { max-width: 560px; margin: 80px auto; padding: 0 16px; text-align: center; }
+    @media (max-width: 820px) {
+      .co-wrap { grid-template-columns: 1fr; gap: 24px; padding-top: 24px; }
+      .co-summary { position: static; order: -1; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="co-top">
+    <div class="co-top-inner"><a href="/" aria-label="APIANT home"><img src="/images/APIANT-LOGO-V4-Dark-Mode.svg" alt="APIANT"></a></div>
+  </header>
+
+  <div id="co-unavailable" class="co-unavailable" hidden>
+    <h1>This checkout link is not available</h1>
+    <p class="co-sub">Go back to the product page and choose a plan, or write to <a href="mailto:support@apiant.com">support@apiant.com</a> and we will set you up.</p>
+  </div>
+
+  <main id="co-main" class="co-wrap" hidden>
+    <section>
+      <h1 id="co-heading">Start your subscription</h1>
+      <p class="co-sub" id="co-lede"></p>
+
+      <form id="co-form" novalidate>
+        <h2>Your details</h2>
+        <div class="co-grid">
+          <div><label for="co-first">First name</label><input id="co-first" type="text" data-recurly="first_name" autocomplete="given-name" required></div>
+          <div><label for="co-last">Last name</label><input id="co-last" type="text" data-recurly="last_name" autocomplete="family-name" required></div>
+          <div class="co-full"><label for="co-email">Work email</label><input id="co-email" type="email" autocomplete="email" required></div>
+          <div class="co-full"><label for="co-company">Company</label><input id="co-company" type="text" autocomplete="organization"></div>
+        </div>
+
+        <h2>Billing address</h2>
+        <div class="co-grid">
+          <div class="co-full"><label for="co-addr">Street address</label><input id="co-addr" type="text" data-recurly="address1" autocomplete="address-line1" required></div>
+          <div><label for="co-city">City</label><input id="co-city" type="text" data-recurly="city" autocomplete="address-level2" required></div>
+          <div><label for="co-state">State or region</label><input id="co-state" type="text" data-recurly="state" autocomplete="address-level1" required></div>
+          <div><label for="co-zip">Postal code</label><input id="co-zip" type="text" data-recurly="postal_code" autocomplete="postal-code" required></div>
+          <div><label for="co-country">Country</label><select id="co-country" data-recurly="country" autocomplete="country" required></select></div>
+        </div>
+
+        <h2>Card</h2>
+        <div id="co-card"></div>
+
+        <!-- Visible on purpose. The earlier site-wide Turnstile was an offscreen
+             widget, so a visitor Cloudflare chose to challenge had nothing to
+             click and was blocked. Here the challenge is on the page. -->
+        <div class="co-turnstile" id="co-turnstile"></div>
+
+        <div id="co-msg" class="co-msg" role="alert"></div>
+        <button id="co-submit" class="co-btn" type="submit" disabled>Loading</button>
+        <div id="co-3ds"><h2>Confirm with your bank</h2><div id="co-3ds-frame"></div></div>
+        <p class="co-fine">Card details go straight to our payment processor and never touch APIANT servers. By subscribing you agree to the <a href="/tos.html">Terms of Service</a> and <a href="/privacy.html">Privacy Policy</a>. Cancel any time.</p>
+      </form>
+    </section>
+
+    <aside class="co-summary" aria-live="polite">
+      <h2>Order summary</h2>
+      <p class="co-plan" id="co-plan"></p>
+      <div id="co-lines"></div>
+      <div class="co-row co-total"><span id="co-total-label"></span><span id="co-total"></span></div>
+      <div class="co-trial" id="co-trial" hidden></div>
+      <p class="co-fine">Prices in USD. Tax is added where it applies.</p>
+    </aside>
+  </main>
+
+  <script src="https://js.recurly.com/v4/recurly.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+  <script>
+  (function () {
+    var API = 'https://kereljzjgeerrdnssttu.supabase.co/functions/v1/checkout';
+    var RECURLY_PUBLIC_KEY = 'ewr1-PS2cMt9TeOvoEJFpOnIPb8';
+    var TURNSTILE_SITE_KEY = '0x4AAAAAACqP7kMK5m2aXb3g';
+
+    var qs = new URLSearchParams(location.search);
+    var plan = qs.get('plan') || '';
+    var addOnCode = qs.get('add_on_code') || '';
+    var addOnQty = qs.get('add_on_quantity') || '';
+
+    var $ = function (id) { return document.getElementById(id); };
+    var money = function (n) {
+      return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+    };
+    var widgetId = null, elements = null, busy = false, submitLabel = 'Subscribe';
+
+    function fail() { $('co-main').hidden = true; $('co-unavailable').hidden = false; }
+    function showMsg(t) { var m = $('co-msg'); m.textContent = t || ''; m.classList.toggle('show', !!t); }
+    function setBusy(b, label) {
+      busy = b;
+      var btn = $('co-submit');
+      btn.disabled = b;
+      btn.textContent = label || (b ? 'Working' : submitLabel);
+    }
+    function row(label, value) {
+      var d = document.createElement('div'); d.className = 'co-row';
+      var a = document.createElement('span'); a.textContent = label;
+      var b = document.createElement('span'); b.textContent = value;
+      d.appendChild(a); d.appendChild(b); return d;
+    }
+
+    function fillCountries() {
+      var codes = 'US CA GB AU NZ IE AD AE AG AL AM AO AR AT AZ BA BB BD BE BF BG BH BJ BM BN BO BR BS BT BW BZ CH CI CL CM CN CO CR CV CY CZ DE DK DM DO DZ EC EE EG ES ET FI FJ FR GA GD GE GH GI GM GR GT GY HK HN HR HT HU ID IL IN IS IT JM JO JP KE KG KH KR KW KY KZ LA LB LC LI LK LT LU LV MA MC MD ME MG MK ML MN MO MT MU MV MW MX MY MZ NA NE NG NI NL NO NP OM PA PE PG PH PK PL PR PT PY QA RO RS RW SA SC SE SG SI SK SN SR SV TH TN TO TR TT TW TZ UA UG UY UZ VC VN ZA ZM ZW'.split(' ');
+      var names;
+      try { names = new Intl.DisplayNames(['en'], { type: 'region' }); } catch (e) { names = null; }
+      var sel = $('co-country');
+      codes.forEach(function (c) {
+        var o = document.createElement('option'); o.value = c; o.textContent = names ? names.of(c) : c; sel.appendChild(o);
+      });
+    }
+
+    function renderSummary(p) {
+      $('co-plan').textContent = p.name;
+      var lines = $('co-lines'); lines.textContent = '';
+      lines.appendChild(row('Plan', p.base ? money(p.base) + ' / ' + p.interval : 'Included'));
+      p.lines.forEach(function (l) {
+        var label = l.name + (l.quantity > 1 ? ' x ' + l.quantity : '');
+        lines.appendChild(row(label, l.amount === null || isNaN(l.amount) ? 'Priced at signup' : money(l.amount)));
+      });
+      if (p.setup_fee) lines.appendChild(row('One-time setup', money(p.setup_fee)));
+      $('co-total-label').textContent = 'Per ' + p.interval;
+      $('co-total').textContent = money(p.recurring_total);
+      if (p.trial) {
+        var t = $('co-trial'); t.hidden = false;
+        t.textContent = p.trial + ' free trial. Your card is not charged until the trial ends, and you can cancel before then.';
+        submitLabel = 'Start free trial';
+        $('co-heading').textContent = 'Start your free trial';
+      }
+      $('co-lede').textContent = p.name;
+    }
+
+    function renderTurnstile() {
+      if (!window.turnstile) { return setTimeout(renderTurnstile, 150); }
+      widgetId = turnstile.render('#co-turnstile', { sitekey: TURNSTILE_SITE_KEY, theme: 'dark', appearance: 'always' });
+    }
+    function turnstileToken() {
+      try { return (window.turnstile && widgetId !== null && turnstile.getResponse(widgetId)) || ''; } catch (e) { return ''; }
+    }
+    function resetTurnstile() { try { if (window.turnstile && widgetId !== null) turnstile.reset(widgetId); } catch (e) {} }
+
+    function post(payload) {
+      return fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j }; }); });
+    }
+
+    function handle(res, base) {
+      var b = res.body || {};
+      if (b.ok && b.redirect) { setBusy(true, 'Done'); location.href = b.redirect; return; }
+      if (b.three_d_secure_action_token_id) { return challenge(b, base); }
+      showMsg(b.error || 'Something went wrong. Please try again.');
+      resetTurnstile();
+      setBusy(false);
+    }
+
+    // Some banks require a 3-D Secure confirmation. Recurly runs it in a frame
+    // and hands back a result token, which goes back with the signed pass.
+    function challenge(b, base) {
+      var box = $('co-3ds'); box.classList.add('show');
+      setBusy(true, 'Waiting for your bank');
+      var tds = recurly.Risk().ThreeDSecure({ actionTokenId: b.three_d_secure_action_token_id });
+      tds.on('error', function () {
+        box.classList.remove('show');
+        showMsg('Your bank did not confirm the card. Please try again or use another card.');
+        resetTurnstile(); setBusy(false);
+      });
+      tds.on('token', function (result) {
+        box.classList.remove('show');
+        var again = Object.assign({}, base, { pass: b.pass, three_d_secure_action_result_token_id: result.id, turnstile_token: '' });
+        post(again).then(function (r) { handle(r, base); }).catch(netFail);
+      });
+      tds.attach($('co-3ds-frame'));
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function netFail() { showMsg('We could not reach the server. Check your connection and try again.'); resetTurnstile(); setBusy(false); }
+
+    function onSubmit(e) {
+      e.preventDefault();
+      if (busy) return;
+      showMsg('');
+      var required = ['co-first', 'co-last', 'co-email', 'co-addr', 'co-city', 'co-state', 'co-zip'];
+      for (var i = 0; i < required.length; i++) {
+        if (!$(required[i]).value.trim()) { $(required[i]).focus(); return showMsg('Please fill in every required field.'); }
+      }
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($('co-email').value.trim())) { $('co-email').focus(); return showMsg('Please enter a valid email address.'); }
+      var ts = turnstileToken();
+      if (!ts) return showMsg('Please complete the "verify you are human" check above the button.');
+
+      setBusy(true);
+      recurly.token(elements, $('co-form'), function (err, token) {
+        if (err) { setBusy(false); return showMsg(err.message || 'Please check your card details.'); }
+        var base = {
+          plan: plan, add_on_code: addOnCode, add_on_quantity: addOnQty,
+          token_id: token.id, turnstile_token: ts,
+          first_name: $('co-first').value.trim(), last_name: $('co-last').value.trim(),
+          email: $('co-email').value.trim(), company: $('co-company').value.trim()
+        };
+        post(base).then(function (r) { handle(r, base); }).catch(netFail);
+      });
+    }
+
+    if (!plan || !window.recurly) { return fail(); }
+    var url = API + '?plan=' + encodeURIComponent(plan) + '&add_on_code=' + encodeURIComponent(addOnCode) + '&add_on_quantity=' + encodeURIComponent(addOnQty);
+    fetch(url).then(function (r) { return r.json(); }).then(function (j) {
+      if (!j.ok) return fail();
+      $('co-main').hidden = false;
+      fillCountries();
+      renderSummary(j.plan);
+      recurly.configure(RECURLY_PUBLIC_KEY);
+      elements = recurly.Elements();
+      elements.CardElement({ style: { fontColor: '#f7f8f8', fontSize: '16px', placeholder: { color: '#8a8a8a' } } }).attach('#co-card');
+      renderTurnstile();
+      $('co-form').addEventListener('submit', onSubmit);
+      setBusy(false);
+    }).catch(fail);
+  })();
+  </script>
+  <script src="/js/cookie-consent.js"></script>
+</body>
+</html>
